@@ -106,27 +106,25 @@ const (
 	// View announcements in Google Classroom
 	ClassroomAnnouncementsReadonlyScope = "https://www.googleapis.com/auth/classroom.announcements.readonly"
 
-	// See, edit, create, and permanently delete your Google Classroom
-	// classes
+	// See, edit, create, and permanently delete your Google Classroom classes
 	ClassroomCoursesScope = "https://www.googleapis.com/auth/classroom.courses"
 
 	// View your Google Classroom classes
 	ClassroomCoursesReadonlyScope = "https://www.googleapis.com/auth/classroom.courses.readonly"
 
-	// See, create and edit coursework items including assignments,
-	// questions, and grades
+	// See, create and edit coursework items including assignments, questions, and
+	// grades
 	ClassroomCourseworkMeScope = "https://www.googleapis.com/auth/classroom.coursework.me"
 
 	// View your course work and grades in Google Classroom
 	ClassroomCourseworkMeReadonlyScope = "https://www.googleapis.com/auth/classroom.coursework.me.readonly"
 
-	// Manage course work and grades for students in the Google Classroom
-	// classes you teach and view the course work and grades for classes you
-	// administer
+	// Manage course work and grades for students in the Google Classroom classes
+	// you teach and view the course work and grades for classes you administer
 	ClassroomCourseworkStudentsScope = "https://www.googleapis.com/auth/classroom.coursework.students"
 
-	// View course work and grades for students in the Google Classroom
-	// classes you teach or administer
+	// View course work and grades for students in the Google Classroom classes you
+	// teach or administer
 	ClassroomCourseworkStudentsReadonlyScope = "https://www.googleapis.com/auth/classroom.coursework.students.readonly"
 
 	// See, edit, and create classwork materials in Google Classroom
@@ -138,8 +136,7 @@ const (
 	// View your Google Classroom guardians
 	ClassroomGuardianlinksMeReadonlyScope = "https://www.googleapis.com/auth/classroom.guardianlinks.me.readonly"
 
-	// View and manage guardians for students in your Google Classroom
-	// classes
+	// View and manage guardians for students in your Google Classroom classes
 	ClassroomGuardianlinksStudentsScope = "https://www.googleapis.com/auth/classroom.guardianlinks.students"
 
 	// View guardians for students in your Google Classroom classes
@@ -163,8 +160,8 @@ const (
 	// View your course work and grades in Google Classroom
 	ClassroomStudentSubmissionsMeReadonlyScope = "https://www.googleapis.com/auth/classroom.student-submissions.me.readonly"
 
-	// View course work and grades for students in the Google Classroom
-	// classes you teach or administer
+	// View course work and grades for students in the Google Classroom classes you
+	// teach or administer
 	ClassroomStudentSubmissionsStudentsReadonlyScope = "https://www.googleapis.com/auth/classroom.student-submissions.students.readonly"
 
 	// See, create, and edit topics in Google Classroom
@@ -414,239 +411,185 @@ type UserProfilesGuardiansService struct {
 	s *Service
 }
 
-// Announcement: Announcement created by a teacher for students of the
-// course
+// Announcement: Announcement created by a teacher for students of the course
 type Announcement struct {
-	// AlternateLink: Absolute link to this announcement in the Classroom
-	// web UI. This is only populated if `state` is `PUBLISHED`. Read-only.
+	// AlternateLink: Absolute link to this announcement in the Classroom web UI.
+	// This is only populated if `state` is `PUBLISHED`. Read-only.
 	AlternateLink string `json:"alternateLink,omitempty"`
-
-	// AssigneeMode: Assignee mode of the announcement. If unspecified, the
-	// default value is `ALL_STUDENTS`.
+	// AssigneeMode: Assignee mode of the announcement. If unspecified, the default
+	// value is `ALL_STUDENTS`.
 	//
 	// Possible values:
-	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never
-	// returned.
-	//   "ALL_STUDENTS" - All students can see the item. This is the default
-	// state.
+	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never returned.
+	//   "ALL_STUDENTS" - All students can see the item. This is the default state.
 	//   "INDIVIDUAL_STUDENTS" - A subset of the students can see the item.
 	AssigneeMode string `json:"assigneeMode,omitempty"`
-
 	// CourseId: Identifier of the course. Read-only.
 	CourseId string `json:"courseId,omitempty"`
-
-	// CreationTime: Timestamp when this announcement was created.
-	// Read-only.
+	// CreationTime: Timestamp when this announcement was created. Read-only.
 	CreationTime string `json:"creationTime,omitempty"`
-
 	// CreatorUserId: Identifier for the user that created the announcement.
 	// Read-only.
 	CreatorUserId string `json:"creatorUserId,omitempty"`
-
-	// Id: Classroom-assigned identifier of this announcement, unique per
-	// course. Read-only.
+	// Id: Classroom-assigned identifier of this announcement, unique per course.
+	// Read-only.
 	Id string `json:"id,omitempty"`
-
 	// IndividualStudentsOptions: Identifiers of students with access to the
 	// announcement. This field is set only if `assigneeMode` is
-	// `INDIVIDUAL_STUDENTS`. If the `assigneeMode` is
-	// `INDIVIDUAL_STUDENTS`, then only students specified in this field can
-	// see the announcement.
+	// `INDIVIDUAL_STUDENTS`. If the `assigneeMode` is `INDIVIDUAL_STUDENTS`, then
+	// only students specified in this field can see the announcement.
 	IndividualStudentsOptions *IndividualStudentsOptions `json:"individualStudentsOptions,omitempty"`
-
-	// Materials: Additional materials. Announcements must have no more than
-	// 20 material items.
+	// Materials: Additional materials. Announcements must have no more than 20
+	// material items.
 	Materials []*Material `json:"materials,omitempty"`
-
-	// ScheduledTime: Optional timestamp when this announcement is scheduled
-	// to be published.
+	// ScheduledTime: Optional timestamp when this announcement is scheduled to be
+	// published.
 	ScheduledTime string `json:"scheduledTime,omitempty"`
-
-	// State: Status of this announcement. If unspecified, the default state
-	// is `DRAFT`.
+	// State: Status of this announcement. If unspecified, the default state is
+	// `DRAFT`.
 	//
 	// Possible values:
-	//   "ANNOUNCEMENT_STATE_UNSPECIFIED" - No state specified. This is
-	// never returned.
-	//   "PUBLISHED" - Status for announcement that has been published. This
-	// is the default state.
+	//   "ANNOUNCEMENT_STATE_UNSPECIFIED" - No state specified. This is never
+	// returned.
+	//   "PUBLISHED" - Status for announcement that has been published. This is the
+	// default state.
 	//   "DRAFT" - Status for an announcement that is not yet published.
-	// Announcement in this state is visible only to course teachers and
-	// domain administrators.
-	//   "DELETED" - Status for announcement that was published but is now
-	// deleted. Announcement in this state is visible only to course
-	// teachers and domain administrators. Announcement in this state is
-	// deleted after some time.
+	// Announcement in this state is visible only to course teachers and domain
+	// administrators.
+	//   "DELETED" - Status for announcement that was published but is now deleted.
+	// Announcement in this state is visible only to course teachers and domain
+	// administrators. Announcement in this state is deleted after some time.
 	State string `json:"state,omitempty"`
-
-	// Text: Description of this announcement. The text must be a valid
-	// UTF-8 string containing no more than 30,000 characters.
+	// Text: Description of this announcement. The text must be a valid UTF-8
+	// string containing no more than 30,000 characters.
 	Text string `json:"text,omitempty"`
-
 	// UpdateTime: Timestamp of the most recent change to this announcement.
 	// Read-only.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternateLink") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AlternateLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Announcement) MarshalJSON() ([]byte, error) {
 	type NoMethod Announcement
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Assignment: Additional details for assignments.
 type Assignment struct {
-	// StudentWorkFolder: Drive folder where attachments from student
-	// submissions are placed. This is only populated for course teachers
-	// and administrators.
+	// StudentWorkFolder: Drive folder where attachments from student submissions
+	// are placed. This is only populated for course teachers and administrators.
 	StudentWorkFolder *DriveFolder `json:"studentWorkFolder,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "StudentWorkFolder")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "StudentWorkFolder") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "StudentWorkFolder") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "StudentWorkFolder") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Assignment) MarshalJSON() ([]byte, error) {
 	type NoMethod Assignment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AssignmentSubmission: Student work for an assignment.
 type AssignmentSubmission struct {
-	// Attachments: Attachments added by the student. Drive files that
-	// correspond to materials with a share mode of STUDENT_COPY may not
-	// exist yet if the student has not accessed the assignment in
-	// Classroom. Some attachment metadata is only populated if the
-	// requesting user has permission to access it. Identifier and
-	// alternate_link fields are always available, but others (for example,
-	// title) may not be.
+	// Attachments: Attachments added by the student. Drive files that correspond
+	// to materials with a share mode of STUDENT_COPY may not exist yet if the
+	// student has not accessed the assignment in Classroom. Some attachment
+	// metadata is only populated if the requesting user has permission to access
+	// it. Identifier and alternate_link fields are always available, but others
+	// (for example, title) may not be.
 	Attachments []*Attachment `json:"attachments,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Attachments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attachments") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attachments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AssignmentSubmission) MarshalJSON() ([]byte, error) {
 	type NoMethod AssignmentSubmission
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Attachment: Attachment added to student assignment work. When
-// creating attachments, setting the `form` field is not supported.
+// Attachment: Attachment added to student assignment work. When creating
+// attachments, setting the `form` field is not supported.
 type Attachment struct {
 	// DriveFile: Google Drive file attachment.
 	DriveFile *DriveFile `json:"driveFile,omitempty"`
-
 	// Form: Google Forms attachment.
 	Form *Form `json:"form,omitempty"`
-
 	// Link: Link attachment.
 	Link *Link `json:"link,omitempty"`
-
 	// YouTubeVideo: Youtube video attachment.
 	YouTubeVideo *YouTubeVideo `json:"youTubeVideo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DriveFile") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DriveFile") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DriveFile") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Attachment) MarshalJSON() ([]byte, error) {
 	type NoMethod Attachment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudPubsubTopic: A reference to a Cloud Pub/Sub topic. To register
-// for notifications, the owner of the topic must grant
+// CloudPubsubTopic: A reference to a Cloud Pub/Sub topic. To register for
+// notifications, the owner of the topic must grant
 // `classroom-notifications@system.gserviceaccount.com` the
 // `projects.topics.publish` permission.
 type CloudPubsubTopic struct {
 	// TopicName: The `name` field of a Cloud Pub/Sub Topic
 	// (https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topics#Topic).
 	TopicName string `json:"topicName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "TopicName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TopicName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "TopicName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CloudPubsubTopic) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudPubsubTopic
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Course: A Course in Classroom.
@@ -654,463 +597,363 @@ type Course struct {
 	// AlternateLink: Absolute link to this course in the Classroom web UI.
 	// Read-only.
 	AlternateLink string `json:"alternateLink,omitempty"`
-
-	// CalendarId: The Calendar ID for a calendar that all course members
-	// can see, to which Classroom adds events for course work and
-	// announcements in the course. The Calendar for a course is created
-	// asynchronously when the course is set to `CourseState.ACTIVE` for the
-	// first time (at creation time or when it is updated to `ACTIVE`
-	// through the UI or the API). The Calendar ID will not be populated
-	// until the creation process is completed. Read-only.
+	// CalendarId: The Calendar ID for a calendar that all course members can see,
+	// to which Classroom adds events for course work and announcements in the
+	// course. The Calendar for a course is created asynchronously when the course
+	// is set to `CourseState.ACTIVE` for the first time (at creation time or when
+	// it is updated to `ACTIVE` through the UI or the API). The Calendar ID will
+	// not be populated until the creation process is completed. Read-only.
 	CalendarId string `json:"calendarId,omitempty"`
-
-	// CourseGroupEmail: The email address of a Google group containing all
-	// members of the course. This group does not accept email and can only
-	// be used for permissions. Read-only.
+	// CourseGroupEmail: The email address of a Google group containing all members
+	// of the course. This group does not accept email and can only be used for
+	// permissions. Read-only.
 	CourseGroupEmail string `json:"courseGroupEmail,omitempty"`
-
-	// CourseMaterialSets: Sets of materials that appear on the "about" page
-	// of this course. Read-only.
+	// CourseMaterialSets: Sets of materials that appear on the "about" page of
+	// this course. Read-only.
 	CourseMaterialSets []*CourseMaterialSet `json:"courseMaterialSets,omitempty"`
-
-	// CourseState: State of the course. If unspecified, the default state
-	// is `PROVISIONED`.
+	// CourseState: State of the course. If unspecified, the default state is
+	// `PROVISIONED`.
 	//
 	// Possible values:
-	//   "COURSE_STATE_UNSPECIFIED" - No course state. No returned Course
-	// message will use this value.
+	//   "COURSE_STATE_UNSPECIFIED" - No course state. No returned Course message
+	// will use this value.
 	//   "ACTIVE" - The course is active.
-	//   "ARCHIVED" - The course has been archived. You cannot modify it
-	// except to change it to a different state.
-	//   "PROVISIONED" - The course has been created, but not yet activated.
-	// It is accessible by the primary teacher and domain administrators,
-	// who may modify it or change it to the `ACTIVE` or `DECLINED` states.
-	// A course may only be changed to `PROVISIONED` if it is in the
-	// `DECLINED` state.
-	//   "DECLINED" - The course has been created, but declined. It is
-	// accessible by the course owner and domain administrators, though it
-	// will not be displayed in the web UI. You cannot modify the course
-	// except to change it to the `PROVISIONED` state. A course may only be
-	// changed to `DECLINED` if it is in the `PROVISIONED` state.
-	//   "SUSPENDED" - The course has been suspended. You cannot modify the
-	// course, and only the user identified by the `owner_id` can view the
-	// course. A course may be placed in this state if it potentially
-	// violates the Terms of Service.
+	//   "ARCHIVED" - The course has been archived. You cannot modify it except to
+	// change it to a different state.
+	//   "PROVISIONED" - The course has been created, but not yet activated. It is
+	// accessible by the primary teacher and domain administrators, who may modify
+	// it or change it to the `ACTIVE` or `DECLINED` states. A course may only be
+	// changed to `PROVISIONED` if it is in the `DECLINED` state.
+	//   "DECLINED" - The course has been created, but declined. It is accessible
+	// by the course owner and domain administrators, though it will not be
+	// displayed in the web UI. You cannot modify the course except to change it to
+	// the `PROVISIONED` state. A course may only be changed to `DECLINED` if it is
+	// in the `PROVISIONED` state.
+	//   "SUSPENDED" - The course has been suspended. You cannot modify the course,
+	// and only the user identified by the `owner_id` can view the course. A course
+	// may be placed in this state if it potentially violates the Terms of Service.
 	CourseState string `json:"courseState,omitempty"`
-
-	// CreationTime: Creation time of the course. Specifying this field in a
-	// course update mask results in an error. Read-only.
+	// CreationTime: Creation time of the course. Specifying this field in a course
+	// update mask results in an error. Read-only.
 	CreationTime string `json:"creationTime,omitempty"`
-
-	// Description: Optional description. For example, "We'll be learning
-	// about the structure of living creatures from a combination of
-	// textbooks, guest lectures, and lab work. Expect to be excited!" If
-	// set, this field must be a valid UTF-8 string and no longer than
-	// 30,000 characters.
+	// Description: Optional description. For example, "We'll be learning about the
+	// structure of living creatures from a combination of textbooks, guest
+	// lectures, and lab work. Expect to be excited!" If set, this field must be a
+	// valid UTF-8 string and no longer than 30,000 characters.
 	Description string `json:"description,omitempty"`
-
-	// DescriptionHeading: Optional heading for the description. For
-	// example, "Welcome to 10th Grade Biology." If set, this field must be
-	// a valid UTF-8 string and no longer than 3600 characters.
+	// DescriptionHeading: Optional heading for the description. For example,
+	// "Welcome to 10th Grade Biology." If set, this field must be a valid UTF-8
+	// string and no longer than 3600 characters.
 	DescriptionHeading string `json:"descriptionHeading,omitempty"`
-
-	// EnrollmentCode: Enrollment code to use when joining this course.
-	// Specifying this field in a course update mask results in an error.
-	// Read-only.
-	EnrollmentCode string `json:"enrollmentCode,omitempty"`
-
-	// GradebookSettings: The gradebook settings that specify how a
-	// student's overall grade for the course will be calculated and who it
-	// will be displayed to. Read-only
-	GradebookSettings *GradebookSettings `json:"gradebookSettings,omitempty"`
-
-	// GuardiansEnabled: Whether or not guardian notifications are enabled
-	// for this course. Read-only.
-	GuardiansEnabled bool `json:"guardiansEnabled,omitempty"`
-
-	// Id: Identifier for this course assigned by Classroom. When creating a
-	// course, you may optionally set this identifier to an alias string in
-	// the request to create a corresponding alias. The `id` is still
-	// assigned by Classroom and cannot be updated after the course is
-	// created. Specifying this field in a course update mask results in an
-	// error.
-	Id string `json:"id,omitempty"`
-
-	// Name: Name of the course. For example, "10th Grade Biology". The name
-	// is required. It must be between 1 and 750 characters and a valid
-	// UTF-8 string.
-	Name string `json:"name,omitempty"`
-
-	// OwnerId: The identifier of the owner of a course. When specified as a
-	// parameter of a create course request, this field is required. The
-	// identifier can be one of the following: * the numeric identifier for
-	// the user * the email address of the user * the string literal "me",
-	// indicating the requesting user This must be set in a create request.
-	// Admins can also specify this field in a patch course request to
-	// transfer ownership. In other contexts, it is read-only.
-	OwnerId string `json:"ownerId,omitempty"`
-
-	// Room: Optional room location. For example, "301". If set, this field
-	// must be a valid UTF-8 string and no longer than 650 characters.
-	Room string `json:"room,omitempty"`
-
-	// Section: Section of the course. For example, "Period 2". If set, this
-	// field must be a valid UTF-8 string and no longer than 2800
-	// characters.
-	Section string `json:"section,omitempty"`
-
-	// TeacherFolder: Information about a Drive Folder that is shared with
-	// all teachers of the course. This field will only be set for teachers
-	// of the course and domain administrators. Read-only.
-	TeacherFolder *DriveFolder `json:"teacherFolder,omitempty"`
-
-	// TeacherGroupEmail: The email address of a Google group containing all
-	// teachers of the course. This group does not accept email and can only
-	// be used for permissions. Read-only.
-	TeacherGroupEmail string `json:"teacherGroupEmail,omitempty"`
-
-	// UpdateTime: Time of the most recent update to this course. Specifying
+	// EnrollmentCode: Enrollment code to use when joining this course. Specifying
 	// this field in a course update mask results in an error. Read-only.
+	EnrollmentCode string `json:"enrollmentCode,omitempty"`
+	// GradebookSettings: The gradebook settings that specify how a student's
+	// overall grade for the course will be calculated and who it will be displayed
+	// to. Read-only
+	GradebookSettings *GradebookSettings `json:"gradebookSettings,omitempty"`
+	// GuardiansEnabled: Whether or not guardian notifications are enabled for this
+	// course. Read-only.
+	GuardiansEnabled bool `json:"guardiansEnabled,omitempty"`
+	// Id: Identifier for this course assigned by Classroom. When creating a
+	// course, you may optionally set this identifier to an alias string in the
+	// request to create a corresponding alias. The `id` is still assigned by
+	// Classroom and cannot be updated after the course is created. Specifying this
+	// field in a course update mask results in an error.
+	Id string `json:"id,omitempty"`
+	// Name: Name of the course. For example, "10th Grade Biology". The name is
+	// required. It must be between 1 and 750 characters and a valid UTF-8 string.
+	Name string `json:"name,omitempty"`
+	// OwnerId: The identifier of the owner of a course. When specified as a
+	// parameter of a create course request, this field is required. The identifier
+	// can be one of the following: * the numeric identifier for the user * the
+	// email address of the user * the string literal "me", indicating the
+	// requesting user This must be set in a create request. Admins can also
+	// specify this field in a patch course request to transfer ownership. In other
+	// contexts, it is read-only.
+	OwnerId string `json:"ownerId,omitempty"`
+	// Room: Optional room location. For example, "301". If set, this field must be
+	// a valid UTF-8 string and no longer than 650 characters.
+	Room string `json:"room,omitempty"`
+	// Section: Section of the course. For example, "Period 2". If set, this field
+	// must be a valid UTF-8 string and no longer than 2800 characters.
+	Section string `json:"section,omitempty"`
+	// TeacherFolder: Information about a Drive Folder that is shared with all
+	// teachers of the course. This field will only be set for teachers of the
+	// course and domain administrators. Read-only.
+	TeacherFolder *DriveFolder `json:"teacherFolder,omitempty"`
+	// TeacherGroupEmail: The email address of a Google group containing all
+	// teachers of the course. This group does not accept email and can only be
+	// used for permissions. Read-only.
+	TeacherGroupEmail string `json:"teacherGroupEmail,omitempty"`
+	// UpdateTime: Time of the most recent update to this course. Specifying this
+	// field in a course update mask results in an error. Read-only.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternateLink") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AlternateLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Course) MarshalJSON() ([]byte, error) {
 	type NoMethod Course
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CourseAlias: Alternative identifier for a course. An alias uniquely
-// identifies a course. It must be unique within one of the following
-// scopes: * domain: A domain-scoped alias is visible to all users
-// within the alias creator's domain and can be created only by a domain
-// admin. A domain-scoped alias is often used when a course has an
-// identifier external to Classroom. * project: A project-scoped alias
-// is visible to any request from an application using the Developer
-// Console project ID that created the alias and can be created by any
-// project. A project-scoped alias is often used when an application has
-// alternative identifiers. A random value can also be used to avoid
-// duplicate courses in the event of transmission failures, as retrying
-// a request will return `ALREADY_EXISTS` if a previous one has
+// identifies a course. It must be unique within one of the following scopes: *
+// domain: A domain-scoped alias is visible to all users within the alias
+// creator's domain and can be created only by a domain admin. A domain-scoped
+// alias is often used when a course has an identifier external to Classroom. *
+// project: A project-scoped alias is visible to any request from an
+// application using the Developer Console project ID that created the alias
+// and can be created by any project. A project-scoped alias is often used when
+// an application has alternative identifiers. A random value can also be used
+// to avoid duplicate courses in the event of transmission failures, as
+// retrying a request will return `ALREADY_EXISTS` if a previous one has
 // succeeded.
 type CourseAlias struct {
-	// Alias: Alias string. The format of the string indicates the desired
-	// alias scoping. * `d:` indicates a domain-scoped alias. Example:
-	// `d:math_101` * `p:` indicates a project-scoped alias. Example:
-	// `p:abc123` This field has a maximum length of 256 characters.
+	// Alias: Alias string. The format of the string indicates the desired alias
+	// scoping. * `d:` indicates a domain-scoped alias. Example: `d:math_101` *
+	// `p:` indicates a project-scoped alias. Example: `p:abc123` This field has a
+	// maximum length of 256 characters.
 	Alias string `json:"alias,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Alias") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Alias") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Alias") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CourseAlias) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseAlias
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CourseMaterial: A material attached to a course as part of a material
-// set.
+// CourseMaterial: A material attached to a course as part of a material set.
 type CourseMaterial struct {
 	// DriveFile: Google Drive file attachment.
 	DriveFile *DriveFile `json:"driveFile,omitempty"`
-
 	// Form: Google Forms attachment.
 	Form *Form `json:"form,omitempty"`
-
 	// Link: Link atatchment.
 	Link *Link `json:"link,omitempty"`
-
 	// YouTubeVideo: Youtube video attachment.
 	YouTubeVideo *YouTubeVideo `json:"youTubeVideo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DriveFile") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DriveFile") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DriveFile") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CourseMaterial) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseMaterial
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CourseMaterialSet: A set of materials that appears on the "About"
-// page of the course. These materials might include a syllabus,
-// schedule, or other background information relating to the course as a
-// whole.
+// CourseMaterialSet: A set of materials that appears on the "About" page of
+// the course. These materials might include a syllabus, schedule, or other
+// background information relating to the course as a whole.
 type CourseMaterialSet struct {
 	// Materials: Materials attached to this set.
 	Materials []*CourseMaterial `json:"materials,omitempty"`
-
 	// Title: Title for this set.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Materials") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Materials") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Materials") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CourseMaterialSet) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseMaterialSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CourseRosterChangesInfo: Information about a `Feed` with a
-// `feed_type` of `COURSE_ROSTER_CHANGES`.
+// CourseRosterChangesInfo: Information about a `Feed` with a `feed_type` of
+// `COURSE_ROSTER_CHANGES`.
 type CourseRosterChangesInfo struct {
-	// CourseId: The `course_id` of the course to subscribe to roster
-	// changes for.
+	// CourseId: The `course_id` of the course to subscribe to roster changes for.
 	CourseId string `json:"courseId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CourseId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CourseId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CourseRosterChangesInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseRosterChangesInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CourseWork: Course work created by a teacher for students of the
-// course.
+// CourseWork: Course work created by a teacher for students of the course.
 type CourseWork struct {
-	// AlternateLink: Absolute link to this course work in the Classroom web
-	// UI. This is only populated if `state` is `PUBLISHED`. Read-only.
+	// AlternateLink: Absolute link to this course work in the Classroom web UI.
+	// This is only populated if `state` is `PUBLISHED`. Read-only.
 	AlternateLink string `json:"alternateLink,omitempty"`
-
-	// AssigneeMode: Assignee mode of the coursework. If unspecified, the
-	// default value is `ALL_STUDENTS`.
+	// AssigneeMode: Assignee mode of the coursework. If unspecified, the default
+	// value is `ALL_STUDENTS`.
 	//
 	// Possible values:
-	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never
-	// returned.
-	//   "ALL_STUDENTS" - All students can see the item. This is the default
-	// state.
+	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never returned.
+	//   "ALL_STUDENTS" - All students can see the item. This is the default state.
 	//   "INDIVIDUAL_STUDENTS" - A subset of the students can see the item.
 	AssigneeMode string `json:"assigneeMode,omitempty"`
-
-	// Assignment: Assignment details. This is populated only when
-	// `work_type` is `ASSIGNMENT`. Read-only.
+	// Assignment: Assignment details. This is populated only when `work_type` is
+	// `ASSIGNMENT`. Read-only.
 	Assignment *Assignment `json:"assignment,omitempty"`
-
-	// AssociatedWithDeveloper: Whether this course work item is associated
-	// with the Developer Console project making the request. See
-	// CreateCourseWork for more details. Read-only.
+	// AssociatedWithDeveloper: Whether this course work item is associated with
+	// the Developer Console project making the request. See CreateCourseWork for
+	// more details. Read-only.
 	AssociatedWithDeveloper bool `json:"associatedWithDeveloper,omitempty"`
-
 	// CourseId: Identifier of the course. Read-only.
 	CourseId string `json:"courseId,omitempty"`
-
 	// CreationTime: Timestamp when this course work was created. Read-only.
 	CreationTime string `json:"creationTime,omitempty"`
-
 	// CreatorUserId: Identifier for the user that created the coursework.
 	// Read-only.
 	CreatorUserId string `json:"creatorUserId,omitempty"`
-
 	// Description: Optional description of this course work. If set, the
-	// description must be a valid UTF-8 string containing no more than
-	// 30,000 characters.
+	// description must be a valid UTF-8 string containing no more than 30,000
+	// characters.
 	Description string `json:"description,omitempty"`
-
-	// DueDate: Optional date, in UTC, that submissions for this course work
-	// are due. This must be specified if `due_time` is specified.
+	// DueDate: Optional date, in UTC, that submissions for this course work are
+	// due. This must be specified if `due_time` is specified.
 	DueDate *Date `json:"dueDate,omitempty"`
-
-	// DueTime: Optional time of day, in UTC, that submissions for this
-	// course work are due. This must be specified if `due_date` is
-	// specified.
+	// DueTime: Optional time of day, in UTC, that submissions for this course work
+	// are due. This must be specified if `due_date` is specified.
 	DueTime *TimeOfDay `json:"dueTime,omitempty"`
-
-	// GradeCategory: The category that this coursework's grade contributes
-	// to. Present only when a category has been chosen for the coursework.
-	// May be used in calculating the overall grade. Read-only.
+	// GradeCategory: The category that this coursework's grade contributes to.
+	// Present only when a category has been chosen for the coursework. May be used
+	// in calculating the overall grade. Read-only.
 	GradeCategory *GradeCategory `json:"gradeCategory,omitempty"`
-
-	// Id: Classroom-assigned identifier of this course work, unique per
-	// course. Read-only.
+	// Id: Classroom-assigned identifier of this course work, unique per course.
+	// Read-only.
 	Id string `json:"id,omitempty"`
-
 	// IndividualStudentsOptions: Identifiers of students with access to the
 	// coursework. This field is set only if `assigneeMode` is
-	// `INDIVIDUAL_STUDENTS`. If the `assigneeMode` is
-	// `INDIVIDUAL_STUDENTS`, then only students specified in this field are
-	// assigned the coursework.
+	// `INDIVIDUAL_STUDENTS`. If the `assigneeMode` is `INDIVIDUAL_STUDENTS`, then
+	// only students specified in this field are assigned the coursework.
 	IndividualStudentsOptions *IndividualStudentsOptions `json:"individualStudentsOptions,omitempty"`
-
 	// Materials: Additional materials. CourseWork must have no more than 20
 	// material items.
 	Materials []*Material `json:"materials,omitempty"`
-
-	// MaxPoints: Maximum grade for this course work. If zero or
-	// unspecified, this assignment is considered ungraded. This must be a
-	// non-negative integer value.
+	// MaxPoints: Maximum grade for this course work. If zero or unspecified, this
+	// assignment is considered ungraded. This must be a non-negative integer
+	// value.
 	MaxPoints float64 `json:"maxPoints,omitempty"`
-
 	// MultipleChoiceQuestion: Multiple choice question details. For read
 	// operations, this field is populated only when `work_type` is
 	// `MULTIPLE_CHOICE_QUESTION`. For write operations, this field must be
 	// specified when creating course work with a `work_type` of
 	// `MULTIPLE_CHOICE_QUESTION`, and it must not be set otherwise.
 	MultipleChoiceQuestion *MultipleChoiceQuestion `json:"multipleChoiceQuestion,omitempty"`
-
-	// ScheduledTime: Optional timestamp when this course work is scheduled
-	// to be published.
+	// ScheduledTime: Optional timestamp when this course work is scheduled to be
+	// published.
 	ScheduledTime string `json:"scheduledTime,omitempty"`
-
-	// State: Status of this course work. If unspecified, the default state
-	// is `DRAFT`.
+	// State: Status of this course work. If unspecified, the default state is
+	// `DRAFT`.
 	//
 	// Possible values:
 	//   "COURSE_WORK_STATE_UNSPECIFIED" - No state specified. This is never
 	// returned.
-	//   "PUBLISHED" - Status for work that has been published. This is the
-	// default state.
-	//   "DRAFT" - Status for work that is not yet published. Work in this
-	// state is visible only to course teachers and domain administrators.
-	//   "DELETED" - Status for work that was published but is now deleted.
-	// Work in this state is visible only to course teachers and domain
-	// administrators. Work in this state is deleted after some time.
+	//   "PUBLISHED" - Status for work that has been published. This is the default
+	// state.
+	//   "DRAFT" - Status for work that is not yet published. Work in this state is
+	// visible only to course teachers and domain administrators.
+	//   "DELETED" - Status for work that was published but is now deleted. Work in
+	// this state is visible only to course teachers and domain administrators.
+	// Work in this state is deleted after some time.
 	State string `json:"state,omitempty"`
-
-	// SubmissionModificationMode: Setting to determine when students are
-	// allowed to modify submissions. If unspecified, the default value is
+	// SubmissionModificationMode: Setting to determine when students are allowed
+	// to modify submissions. If unspecified, the default value is
 	// `MODIFIABLE_UNTIL_TURNED_IN`.
 	//
 	// Possible values:
 	//   "SUBMISSION_MODIFICATION_MODE_UNSPECIFIED" - No modification mode
 	// specified. This is never returned.
-	//   "MODIFIABLE_UNTIL_TURNED_IN" - Submissions can be modified before
-	// being turned in.
+	//   "MODIFIABLE_UNTIL_TURNED_IN" - Submissions can be modified before being
+	// turned in.
 	//   "MODIFIABLE" - Submissions can be modified at any time.
 	SubmissionModificationMode string `json:"submissionModificationMode,omitempty"`
-
-	// Title: Title of this course work. The title must be a valid UTF-8
-	// string containing between 1 and 3000 characters.
+	// Title: Title of this course work. The title must be a valid UTF-8 string
+	// containing between 1 and 3000 characters.
 	Title string `json:"title,omitempty"`
-
-	// TopicId: Identifier for the topic that this coursework is associated
-	// with. Must match an existing topic in the course.
+	// TopicId: Identifier for the topic that this coursework is associated with.
+	// Must match an existing topic in the course.
 	TopicId string `json:"topicId,omitempty"`
-
 	// UpdateTime: Timestamp of the most recent change to this course work.
 	// Read-only.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// WorkType: Type of this course work. The type is set when the course
-	// work is created and cannot be changed.
+	// WorkType: Type of this course work. The type is set when the course work is
+	// created and cannot be changed.
 	//
 	// Possible values:
-	//   "COURSE_WORK_TYPE_UNSPECIFIED" - No work type specified. This is
-	// never returned.
+	//   "COURSE_WORK_TYPE_UNSPECIFIED" - No work type specified. This is never
+	// returned.
 	//   "ASSIGNMENT" - An assignment.
 	//   "SHORT_ANSWER_QUESTION" - A short answer question.
 	//   "MULTIPLE_CHOICE_QUESTION" - A multiple-choice question.
 	WorkType string `json:"workType,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternateLink") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AlternateLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CourseWork) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseWork
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CourseWork) UnmarshalJSON(data []byte) error {
@@ -1127,375 +970,293 @@ func (s *CourseWork) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// CourseWorkChangesInfo: Information about a `Feed` with a `feed_type`
-// of `COURSE_WORK_CHANGES`.
+// CourseWorkChangesInfo: Information about a `Feed` with a `feed_type` of
+// `COURSE_WORK_CHANGES`.
 type CourseWorkChangesInfo struct {
-	// CourseId: The `course_id` of the course to subscribe to work changes
-	// for.
+	// CourseId: The `course_id` of the course to subscribe to work changes for.
 	CourseId string `json:"courseId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CourseId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CourseId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CourseWorkChangesInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseWorkChangesInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CourseWorkMaterial: Course work material created by a teacher for
-// students of the course
+// CourseWorkMaterial: Course work material created by a teacher for students
+// of the course
 type CourseWorkMaterial struct {
-	// AlternateLink: Absolute link to this course work material in the
-	// Classroom web UI. This is only populated if `state` is `PUBLISHED`.
-	// Read-only.
+	// AlternateLink: Absolute link to this course work material in the Classroom
+	// web UI. This is only populated if `state` is `PUBLISHED`. Read-only.
 	AlternateLink string `json:"alternateLink,omitempty"`
-
-	// AssigneeMode: Assignee mode of the course work material. If
-	// unspecified, the default value is `ALL_STUDENTS`.
+	// AssigneeMode: Assignee mode of the course work material. If unspecified, the
+	// default value is `ALL_STUDENTS`.
 	//
 	// Possible values:
-	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never
-	// returned.
-	//   "ALL_STUDENTS" - All students can see the item. This is the default
-	// state.
+	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never returned.
+	//   "ALL_STUDENTS" - All students can see the item. This is the default state.
 	//   "INDIVIDUAL_STUDENTS" - A subset of the students can see the item.
 	AssigneeMode string `json:"assigneeMode,omitempty"`
-
 	// CourseId: Identifier of the course. Read-only.
 	CourseId string `json:"courseId,omitempty"`
-
 	// CreationTime: Timestamp when this course work material was created.
 	// Read-only.
 	CreationTime string `json:"creationTime,omitempty"`
-
 	// CreatorUserId: Identifier for the user that created the course work
 	// material. Read-only.
 	CreatorUserId string `json:"creatorUserId,omitempty"`
-
-	// Description: Optional description of this course work material. The
-	// text must be a valid UTF-8 string containing no more than 30,000
-	// characters.
+	// Description: Optional description of this course work material. The text
+	// must be a valid UTF-8 string containing no more than 30,000 characters.
 	Description string `json:"description,omitempty"`
-
-	// Id: Classroom-assigned identifier of this course work material,
-	// unique per course. Read-only.
+	// Id: Classroom-assigned identifier of this course work material, unique per
+	// course. Read-only.
 	Id string `json:"id,omitempty"`
-
-	// IndividualStudentsOptions: Identifiers of students with access to the
-	// course work material. This field is set only if `assigneeMode` is
-	// `INDIVIDUAL_STUDENTS`. If the `assigneeMode` is
-	// `INDIVIDUAL_STUDENTS`, then only students specified in this field can
-	// see the course work material.
+	// IndividualStudentsOptions: Identifiers of students with access to the course
+	// work material. This field is set only if `assigneeMode` is
+	// `INDIVIDUAL_STUDENTS`. If the `assigneeMode` is `INDIVIDUAL_STUDENTS`, then
+	// only students specified in this field can see the course work material.
 	IndividualStudentsOptions *IndividualStudentsOptions `json:"individualStudentsOptions,omitempty"`
-
-	// Materials: Additional materials. A course work material must have no
-	// more than 20 material items.
+	// Materials: Additional materials. A course work material must have no more
+	// than 20 material items.
 	Materials []*Material `json:"materials,omitempty"`
-
 	// ScheduledTime: Optional timestamp when this course work material is
 	// scheduled to be published.
 	ScheduledTime string `json:"scheduledTime,omitempty"`
-
-	// State: Status of this course work material. If unspecified, the
-	// default state is `DRAFT`.
+	// State: Status of this course work material. If unspecified, the default
+	// state is `DRAFT`.
 	//
 	// Possible values:
-	//   "COURSEWORK_MATERIAL_STATE_UNSPECIFIED" - No state specified. This
-	// is never returned.
-	//   "PUBLISHED" - Status for course work material that has been
-	// published. This is the default state.
-	//   "DRAFT" - Status for a course work material that is not yet
-	// published. Course work material in this state is visible only to
-	// course teachers and domain administrators.
-	//   "DELETED" - Status for course work material that was published but
-	// is now deleted. Course work material in this state is visible only to
-	// course teachers and domain administrators. Course work material in
-	// this state is deleted after some time.
+	//   "COURSEWORK_MATERIAL_STATE_UNSPECIFIED" - No state specified. This is
+	// never returned.
+	//   "PUBLISHED" - Status for course work material that has been published.
+	// This is the default state.
+	//   "DRAFT" - Status for a course work material that is not yet published.
+	// Course work material in this state is visible only to course teachers and
+	// domain administrators.
+	//   "DELETED" - Status for course work material that was published but is now
+	// deleted. Course work material in this state is visible only to course
+	// teachers and domain administrators. Course work material in this state is
+	// deleted after some time.
 	State string `json:"state,omitempty"`
-
-	// Title: Title of this course work material. The title must be a valid
-	// UTF-8 string containing between 1 and 3000 characters.
+	// Title: Title of this course work material. The title must be a valid UTF-8
+	// string containing between 1 and 3000 characters.
 	Title string `json:"title,omitempty"`
-
 	// TopicId: Identifier for the topic that this course work material is
 	// associated with. Must match an existing topic in the course.
 	TopicId string `json:"topicId,omitempty"`
-
 	// UpdateTime: Timestamp of the most recent change to this course work
 	// material. Read-only.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternateLink") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AlternateLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CourseWorkMaterial) MarshalJSON() ([]byte, error) {
 	type NoMethod CourseWorkMaterial
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole or partial calendar date, such as a
-// birthday. The time of day and time zone are either specified
-// elsewhere or are insignificant. The date is relative to the Gregorian
-// Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values. * A month and day, with a
-// zero year (for example, an anniversary). * A year on its own, with a
-// zero month and a zero day. * A year and month, with a zero day (for
-// example, a credit card expiration date). Related types: *
-// google.type.TimeOfDay * google.type.DateTime *
+// Date: Represents a whole or partial calendar date, such as a birthday. The
+// time of day and time zone are either specified elsewhere or are
+// insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
 // google.protobuf.Timestamp
 type Date struct {
-	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 to specify a year by itself or a year and month where the
-	// day isn't significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
 	Day int64 `json:"day,omitempty"`
-
-	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
-	// without a month and day.
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
 	Month int64 `json:"month,omitempty"`
-
-	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
-	// date without a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
 	Year int64 `json:"year,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Day") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Day") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveFile: Representation of a Google Drive file.
 type DriveFile struct {
-	// AlternateLink: URL that can be used to access the Drive item.
-	// Read-only.
+	// AlternateLink: URL that can be used to access the Drive item. Read-only.
 	AlternateLink string `json:"alternateLink,omitempty"`
-
 	// Id: Drive API resource ID.
 	Id string `json:"id,omitempty"`
-
 	// ThumbnailUrl: URL of a thumbnail image of the Drive item. Read-only.
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
-
 	// Title: Title of the Drive item. Read-only.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternateLink") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AlternateLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DriveFile) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveFile
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DriveFolder: Representation of a Google Drive folder.
 type DriveFolder struct {
-	// AlternateLink: URL that can be used to access the Drive folder.
-	// Read-only.
+	// AlternateLink: URL that can be used to access the Drive folder. Read-only.
 	AlternateLink string `json:"alternateLink,omitempty"`
-
 	// Id: Drive API resource ID.
 	Id string `json:"id,omitempty"`
-
 	// Title: Title of the Drive folder. Read-only.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternateLink") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AlternateLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DriveFolder) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveFolder
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Feed: A class of notifications that an application can register to
-// receive. For example: "all roster changes for a domain".
+// Feed: A class of notifications that an application can register to receive.
+// For example: "all roster changes for a domain".
 type Feed struct {
-	// CourseRosterChangesInfo: Information about a `Feed` with a
-	// `feed_type` of `COURSE_ROSTER_CHANGES`. This field must be specified
-	// if `feed_type` is `COURSE_ROSTER_CHANGES`.
+	// CourseRosterChangesInfo: Information about a `Feed` with a `feed_type` of
+	// `COURSE_ROSTER_CHANGES`. This field must be specified if `feed_type` is
+	// `COURSE_ROSTER_CHANGES`.
 	CourseRosterChangesInfo *CourseRosterChangesInfo `json:"courseRosterChangesInfo,omitempty"`
-
-	// CourseWorkChangesInfo: Information about a `Feed` with a `feed_type`
-	// of `COURSE_WORK_CHANGES`. This field must be specified if `feed_type`
-	// is `COURSE_WORK_CHANGES`.
+	// CourseWorkChangesInfo: Information about a `Feed` with a `feed_type` of
+	// `COURSE_WORK_CHANGES`. This field must be specified if `feed_type` is
+	// `COURSE_WORK_CHANGES`.
 	CourseWorkChangesInfo *CourseWorkChangesInfo `json:"courseWorkChangesInfo,omitempty"`
-
 	// FeedType: The type of feed.
 	//
 	// Possible values:
 	//   "FEED_TYPE_UNSPECIFIED" - Should never be returned or provided.
-	//   "DOMAIN_ROSTER_CHANGES" - All roster changes for a particular
-	// domain. Notifications will be generated whenever a user joins or
-	// leaves a course. No notifications will be generated when an
-	// invitation is created or deleted, but notifications will be generated
-	// when a user joins a course by accepting an invitation.
-	//   "COURSE_ROSTER_CHANGES" - All roster changes for a particular
-	// course. Notifications will be generated whenever a user joins or
-	// leaves a course. No notifications will be generated when an
-	// invitation is created or deleted, but notifications will be generated
-	// when a user joins a course by accepting an invitation.
-	//   "COURSE_WORK_CHANGES" - All course work activity for a particular
-	// course. Notifications will be generated when a CourseWork or
-	// StudentSubmission object is created or modified. No notification will
-	// be generated when a StudentSubmission object is created in connection
-	// with the creation or modification of its parent CourseWork object
-	// (but a notification will be generated for that CourseWork object's
-	// creation or modification).
+	//   "DOMAIN_ROSTER_CHANGES" - All roster changes for a particular domain.
+	// Notifications will be generated whenever a user joins or leaves a course. No
+	// notifications will be generated when an invitation is created or deleted,
+	// but notifications will be generated when a user joins a course by accepting
+	// an invitation.
+	//   "COURSE_ROSTER_CHANGES" - All roster changes for a particular course.
+	// Notifications will be generated whenever a user joins or leaves a course. No
+	// notifications will be generated when an invitation is created or deleted,
+	// but notifications will be generated when a user joins a course by accepting
+	// an invitation.
+	//   "COURSE_WORK_CHANGES" - All course work activity for a particular course.
+	// Notifications will be generated when a CourseWork or StudentSubmission
+	// object is created or modified. No notification will be generated when a
+	// StudentSubmission object is created in connection with the creation or
+	// modification of its parent CourseWork object (but a notification will be
+	// generated for that CourseWork object's creation or modification).
 	FeedType string `json:"feedType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CourseRosterChangesInfo") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CourseRosterChangesInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CourseRosterChangesInfo")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CourseRosterChangesInfo") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Feed) MarshalJSON() ([]byte, error) {
 	type NoMethod Feed
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Form: Google Forms item.
 type Form struct {
 	// FormUrl: URL of the form.
 	FormUrl string `json:"formUrl,omitempty"`
-
-	// ResponseUrl: URL of the form responses document. Only set if
-	// responses have been recorded and only when the requesting user is an
-	// editor of the form. Read-only.
+	// ResponseUrl: URL of the form responses document. Only set if responses have
+	// been recorded and only when the requesting user is an editor of the form.
+	// Read-only.
 	ResponseUrl string `json:"responseUrl,omitempty"`
-
 	// ThumbnailUrl: URL of a thumbnail image of the Form. Read-only.
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
-
 	// Title: Title of the Form. Read-only.
 	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FormUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "FormUrl") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormUrl") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FormUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Form) MarshalJSON() ([]byte, error) {
 	type NoMethod Form
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GlobalPermission: Global user permission description.
@@ -1507,128 +1268,99 @@ type GlobalPermission struct {
 	// returned and is not a valid value.
 	//   "CREATE_COURSE" - User is permitted to create a course.
 	Permission string `json:"permission,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Permission") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permission") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permission") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GlobalPermission) MarshalJSON() ([]byte, error) {
 	type NoMethod GlobalPermission
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GradeCategory: Details for a grade category in a course. Coursework
-// may have zero or one grade category, and the category may be used in
-// computing the overall grade. See the help center article
-// (https://support.google.com/edu/classroom/answer/9184995) for
-// details.
+// GradeCategory: Details for a grade category in a course. Coursework may have
+// zero or one grade category, and the category may be used in computing the
+// overall grade. See the help center article
+// (https://support.google.com/edu/classroom/answer/9184995) for details.
 type GradeCategory struct {
-	// DefaultGradeDenominator: Default value of denominator. Only
-	// applicable when grade calculation type is TOTAL_POINTS.
+	// DefaultGradeDenominator: Default value of denominator. Only applicable when
+	// grade calculation type is TOTAL_POINTS.
 	DefaultGradeDenominator int64 `json:"defaultGradeDenominator,omitempty"`
-
 	// Id: ID of the grade category.
 	Id string `json:"id,omitempty"`
-
 	// Name: Name of the grade category.
 	Name string `json:"name,omitempty"`
-
-	// Weight: The weight of the category average as part of overall
-	// average. A weight of 12.34% is represented as 123400 (100% is
-	// 1,000,000). The last two digits should always be zero since we use
-	// two decimal precision. Only applicable when grade calculation type is
-	// WEIGHTED_CATEGORIES.
+	// Weight: The weight of the category average as part of overall average. A
+	// weight of 12.34% is represented as 123400 (100% is 1,000,000). The last two
+	// digits should always be zero since we use two decimal precision. Only
+	// applicable when grade calculation type is WEIGHTED_CATEGORIES.
 	Weight int64 `json:"weight,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DefaultGradeDenominator") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DefaultGradeDenominator") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DefaultGradeDenominator")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DefaultGradeDenominator") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GradeCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod GradeCategory
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GradeHistory: The history of each grade on this submission.
 type GradeHistory struct {
 	// ActorUserId: The teacher who made the grade change.
 	ActorUserId string `json:"actorUserId,omitempty"`
-
-	// GradeChangeType: The type of grade change at this time in the
-	// submission grade history.
+	// GradeChangeType: The type of grade change at this time in the submission
+	// grade history.
 	//
 	// Possible values:
-	//   "UNKNOWN_GRADE_CHANGE_TYPE" - No grade change type specified. This
-	// should never be returned.
-	//   "DRAFT_GRADE_POINTS_EARNED_CHANGE" - A change in the numerator of
-	// the draft grade.
-	//   "ASSIGNED_GRADE_POINTS_EARNED_CHANGE" - A change in the numerator
-	// of the assigned grade.
+	//   "UNKNOWN_GRADE_CHANGE_TYPE" - No grade change type specified. This should
+	// never be returned.
+	//   "DRAFT_GRADE_POINTS_EARNED_CHANGE" - A change in the numerator of the
+	// draft grade.
+	//   "ASSIGNED_GRADE_POINTS_EARNED_CHANGE" - A change in the numerator of the
+	// assigned grade.
 	//   "MAX_POINTS_CHANGE" - A change in the denominator of the grade.
 	GradeChangeType string `json:"gradeChangeType,omitempty"`
-
 	// GradeTimestamp: When the grade of the submission was changed.
 	GradeTimestamp string `json:"gradeTimestamp,omitempty"`
-
-	// MaxPoints: The denominator of the grade at this time in the
-	// submission grade history.
+	// MaxPoints: The denominator of the grade at this time in the submission grade
+	// history.
 	MaxPoints float64 `json:"maxPoints,omitempty"`
-
-	// PointsEarned: The numerator of the grade at this time in the
-	// submission grade history.
+	// PointsEarned: The numerator of the grade at this time in the submission
+	// grade history.
 	PointsEarned float64 `json:"pointsEarned,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ActorUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActorUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ActorUserId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GradeHistory) MarshalJSON() ([]byte, error) {
 	type NoMethod GradeHistory
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GradeHistory) UnmarshalJSON(data []byte) error {
@@ -1647,9 +1379,8 @@ func (s *GradeHistory) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GradebookSettings: The gradebook settings for a course. See the help
-// center article
-// (https://support.google.com/edu/classroom/answer/9184995) for
+// GradebookSettings: The gradebook settings for a course. See the help center
+// article (https://support.google.com/edu/classroom/answer/9184995) for
 // details.
 type GradebookSettings struct {
 	// CalculationType: Indicates how the overall grade is calculated.
@@ -1657,113 +1388,87 @@ type GradebookSettings struct {
 	// Possible values:
 	//   "CALCULATION_TYPE_UNSPECIFIED" - No method specified. This is never
 	// returned.
-	//   "TOTAL_POINTS" - Overall grade is the sum of grades divided by the
-	// sum of total points regardless of category.
-	//   "WEIGHTED_CATEGORIES" - Overall grade is the weighted average by
-	// category.
+	//   "TOTAL_POINTS" - Overall grade is the sum of grades divided by the sum of
+	// total points regardless of category.
+	//   "WEIGHTED_CATEGORIES" - Overall grade is the weighted average by category.
 	CalculationType string `json:"calculationType,omitempty"`
-
 	// DisplaySetting: Indicates who can see the overall grade..
 	//
 	// Possible values:
 	//   "DISPLAY_SETTING_UNSPECIFIED" - No setting specified. This is never
 	// returned.
-	//   "SHOW_OVERALL_GRADE" - Shows overall grade in the gradebook and
-	// student profile to both teachers and students.
-	//   "HIDE_OVERALL_GRADE" - Does not show overall grade in the gradebook
-	// or student profile.
+	//   "SHOW_OVERALL_GRADE" - Shows overall grade in the gradebook and student
+	// profile to both teachers and students.
+	//   "HIDE_OVERALL_GRADE" - Does not show overall grade in the gradebook or
+	// student profile.
 	//   "SHOW_TEACHERS_ONLY" - Shows the overall grade to teachers in the
-	// gradebook and student profile. Hides from students in their student
-	// profile.
+	// gradebook and student profile. Hides from students in their student profile.
 	DisplaySetting string `json:"displaySetting,omitempty"`
-
-	// GradeCategories: Grade categories that are available for coursework
-	// in the course.
+	// GradeCategories: Grade categories that are available for coursework in the
+	// course.
 	GradeCategories []*GradeCategory `json:"gradeCategories,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CalculationType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CalculationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CalculationType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GradebookSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GradebookSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Guardian: Association between a student and a guardian of that
-// student. The guardian may receive information about the student's
-// course work.
+// Guardian: Association between a student and a guardian of that student. The
+// guardian may receive information about the student's course work.
 type Guardian struct {
 	// GuardianId: Identifier for the guardian.
 	GuardianId string `json:"guardianId,omitempty"`
-
 	// GuardianProfile: User profile for the guardian.
 	GuardianProfile *UserProfile `json:"guardianProfile,omitempty"`
-
 	// InvitedEmailAddress: The email address to which the initial guardian
-	// invitation was sent. This field is only visible to domain
-	// administrators.
+	// invitation was sent. This field is only visible to domain administrators.
 	InvitedEmailAddress string `json:"invitedEmailAddress,omitempty"`
-
-	// StudentId: Identifier for the student to whom the guardian
-	// relationship applies.
+	// StudentId: Identifier for the student to whom the guardian relationship
+	// applies.
 	StudentId string `json:"studentId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "GuardianId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GuardianId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GuardianId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Guardian) MarshalJSON() ([]byte, error) {
 	type NoMethod Guardian
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GuardianInvitation: An invitation to become the guardian of a
-// specified user, sent to a specified email address.
+// GuardianInvitation: An invitation to become the guardian of a specified
+// user, sent to a specified email address.
 type GuardianInvitation struct {
 	// CreationTime: The time that this invitation was created. Read-only.
 	CreationTime string `json:"creationTime,omitempty"`
-
 	// InvitationId: Unique identifier for this invitation. Read-only.
 	InvitationId string `json:"invitationId,omitempty"`
-
-	// InvitedEmailAddress: Email address that the invitation was sent to.
-	// This field is only visible to domain administrators.
+	// InvitedEmailAddress: Email address that the invitation was sent to. This
+	// field is only visible to domain administrators.
 	InvitedEmailAddress string `json:"invitedEmailAddress,omitempty"`
-
 	// State: The state that this invitation is in.
 	//
 	// Possible values:
@@ -1772,76 +1477,59 @@ type GuardianInvitation struct {
 	//   "COMPLETE" - The invitation is no longer active. It may have been
 	// accepted, declined, withdrawn or it may have expired.
 	State string `json:"state,omitempty"`
-
 	// StudentId: ID of the student (in standard format)
 	StudentId string `json:"studentId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreationTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreationTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreationTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GuardianInvitation) MarshalJSON() ([]byte, error) {
 	type NoMethod GuardianInvitation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// IndividualStudentsOptions: Assignee details about a
-// coursework/announcement. This field is set if and only if
-// `assigneeMode` is `INDIVIDUAL_STUDENTS`.
+// IndividualStudentsOptions: Assignee details about a coursework/announcement.
+// This field is set if and only if `assigneeMode` is `INDIVIDUAL_STUDENTS`.
 type IndividualStudentsOptions struct {
 	// StudentIds: Identifiers for the students that have access to the
 	// coursework/announcement.
 	StudentIds []string `json:"studentIds,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "StudentIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "StudentIds") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "StudentIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *IndividualStudentsOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod IndividualStudentsOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Invitation: An invitation to join a course.
 type Invitation struct {
 	// CourseId: Identifier of the course to invite the user to.
 	CourseId string `json:"courseId,omitempty"`
-
 	// Id: Identifier assigned by Classroom. Read-only.
 	Id string `json:"id,omitempty"`
-
 	// Role: Role to invite the user to have. Must not be
 	// `COURSE_ROLE_UNSPECIFIED`.
 	//
@@ -1851,851 +1539,656 @@ type Invitation struct {
 	//   "TEACHER" - Teacher of the course.
 	//   "OWNER" - Owner of the course.
 	Role string `json:"role,omitempty"`
-
-	// UserId: Identifier of the invited user. When specified as a parameter
-	// of a request, this identifier can be set to one of the following: *
-	// the numeric identifier for the user * the email address of the user *
-	// the string literal "me", indicating the requesting user
+	// UserId: Identifier of the invited user. When specified as a parameter of a
+	// request, this identifier can be set to one of the following: * the numeric
+	// identifier for the user * the email address of the user * the string literal
+	// "me", indicating the requesting user
 	UserId string `json:"userId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CourseId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CourseId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Invitation) MarshalJSON() ([]byte, error) {
 	type NoMethod Invitation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Link: URL item.
 type Link struct {
 	// ThumbnailUrl: URL of a thumbnail image of the target URL. Read-only.
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
-
 	// Title: Title of the target of the URL. Read-only.
 	Title string `json:"title,omitempty"`
-
-	// Url: URL to link to. This must be a valid UTF-8 string containing
-	// between 1 and 2024 characters.
+	// Url: URL to link to. This must be a valid UTF-8 string containing between 1
+	// and 2024 characters.
 	Url string `json:"url,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ThumbnailUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ThumbnailUrl") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ThumbnailUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Link) MarshalJSON() ([]byte, error) {
 	type NoMethod Link
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAnnouncementsResponse: Response when listing course work.
 type ListAnnouncementsResponse struct {
 	// Announcements: Announcement items that match the request.
 	Announcements []*Announcement `json:"announcements,omitempty"`
-
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Announcements") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Announcements") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Announcements") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAnnouncementsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAnnouncementsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCourseAliasesResponse: Response when listing course aliases.
 type ListCourseAliasesResponse struct {
 	// Aliases: The course aliases.
 	Aliases []*CourseAlias `json:"aliases,omitempty"`
-
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Aliases") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Aliases") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Aliases") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Aliases") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCourseAliasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCourseAliasesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListCourseWorkMaterialResponse: Response when listing course work
-// material.
+// ListCourseWorkMaterialResponse: Response when listing course work material.
 type ListCourseWorkMaterialResponse struct {
-	// CourseWorkMaterial: Course work material items that match the
-	// request.
+	// CourseWorkMaterial: Course work material items that match the request.
 	CourseWorkMaterial []*CourseWorkMaterial `json:"courseWorkMaterial,omitempty"`
-
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CourseWorkMaterial")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CourseWorkMaterial") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CourseWorkMaterial") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CourseWorkMaterial") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCourseWorkMaterialResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCourseWorkMaterialResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCourseWorkResponse: Response when listing course work.
 type ListCourseWorkResponse struct {
 	// CourseWork: Course work items that match the request.
 	CourseWork []*CourseWork `json:"courseWork,omitempty"`
-
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CourseWork") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CourseWork") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CourseWork") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCourseWorkResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCourseWorkResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCoursesResponse: Response when listing courses.
 type ListCoursesResponse struct {
 	// Courses: Courses that match the list request.
 	Courses []*Course `json:"courses,omitempty"`
-
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Courses") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Courses") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Courses") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Courses") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCoursesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCoursesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListGuardianInvitationsResponse: Response when listing guardian
-// invitations.
+// ListGuardianInvitationsResponse: Response when listing guardian invitations.
 type ListGuardianInvitationsResponse struct {
-	// GuardianInvitations: Guardian invitations that matched the list
-	// request.
+	// GuardianInvitations: Guardian invitations that matched the list request.
 	GuardianInvitations []*GuardianInvitation `json:"guardianInvitations,omitempty"`
-
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "GuardianInvitations")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "GuardianInvitations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GuardianInvitations") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GuardianInvitations") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListGuardianInvitationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGuardianInvitationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGuardiansResponse: Response when listing guardians.
 type ListGuardiansResponse struct {
-	// Guardians: Guardians on this page of results that met the criteria
-	// specified in the request.
+	// Guardians: Guardians on this page of results that met the criteria specified
+	// in the request.
 	Guardians []*Guardian `json:"guardians,omitempty"`
-
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Guardians") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Guardians") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Guardians") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListGuardiansResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGuardiansResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInvitationsResponse: Response when listing invitations.
 type ListInvitationsResponse struct {
 	// Invitations: Invitations that match the list request.
 	Invitations []*Invitation `json:"invitations,omitempty"`
-
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Invitations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Invitations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Invitations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListInvitationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInvitationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListStudentSubmissionsResponse: Response when listing student
-// submissions.
+// ListStudentSubmissionsResponse: Response when listing student submissions.
 type ListStudentSubmissionsResponse struct {
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// StudentSubmissions: Student work that matches the request.
 	StudentSubmissions []*StudentSubmission `json:"studentSubmissions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListStudentSubmissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListStudentSubmissionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListStudentsResponse: Response when listing students.
 type ListStudentsResponse struct {
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Students: Students who match the list request.
 	Students []*Student `json:"students,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListStudentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListStudentsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTeachersResponse: Response when listing teachers.
 type ListTeachersResponse struct {
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Teachers: Teachers who match the list request.
 	Teachers []*Teacher `json:"teachers,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTeachersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTeachersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTopicResponse: Response when listing topics.
 type ListTopicResponse struct {
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further results are available.
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Topic: Topic items that match the request.
 	Topic []*Topic `json:"topic,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTopicResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTopicResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Material: Material attached to course work. When creating
-// attachments, setting the `form` field is not supported.
+// Material: Material attached to course work. When creating attachments,
+// setting the `form` field is not supported.
 type Material struct {
 	// DriveFile: Google Drive file material.
 	DriveFile *SharedDriveFile `json:"driveFile,omitempty"`
-
 	// Form: Google Forms material.
 	Form *Form `json:"form,omitempty"`
-
-	// Link: Link material. On creation, this is upgraded to a more
-	// appropriate type if possible, and this is reflected in the response.
+	// Link: Link material. On creation, this is upgraded to a more appropriate
+	// type if possible, and this is reflected in the response.
 	Link *Link `json:"link,omitempty"`
-
 	// YoutubeVideo: YouTube video material.
 	YoutubeVideo *YouTubeVideo `json:"youtubeVideo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DriveFile") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DriveFile") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DriveFile") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Material) MarshalJSON() ([]byte, error) {
 	type NoMethod Material
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ModifyAnnouncementAssigneesRequest: Request to modify assignee mode
-// and options of an announcement.
+// ModifyAnnouncementAssigneesRequest: Request to modify assignee mode and
+// options of an announcement.
 type ModifyAnnouncementAssigneesRequest struct {
-	// AssigneeMode: Mode of the announcement describing whether it is
-	// accessible by all students or specified individual students.
+	// AssigneeMode: Mode of the announcement describing whether it is accessible
+	// by all students or specified individual students.
 	//
 	// Possible values:
-	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never
-	// returned.
-	//   "ALL_STUDENTS" - All students can see the item. This is the default
-	// state.
+	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never returned.
+	//   "ALL_STUDENTS" - All students can see the item. This is the default state.
 	//   "INDIVIDUAL_STUDENTS" - A subset of the students can see the item.
 	AssigneeMode string `json:"assigneeMode,omitempty"`
-
-	// ModifyIndividualStudentsOptions: Set which students can view or
-	// cannot view the announcement. Must be specified only when
-	// `assigneeMode` is `INDIVIDUAL_STUDENTS`.
+	// ModifyIndividualStudentsOptions: Set which students can view or cannot view
+	// the announcement. Must be specified only when `assigneeMode` is
+	// `INDIVIDUAL_STUDENTS`.
 	ModifyIndividualStudentsOptions *ModifyIndividualStudentsOptions `json:"modifyIndividualStudentsOptions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AssigneeMode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AssigneeMode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AssigneeMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ModifyAnnouncementAssigneesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyAnnouncementAssigneesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ModifyAttachmentsRequest: Request to modify the attachments of a
-// student submission.
+// ModifyAttachmentsRequest: Request to modify the attachments of a student
+// submission.
 type ModifyAttachmentsRequest struct {
-	// AddAttachments: Attachments to add. A student submission may not have
-	// more than 20 attachments. Form attachments are not supported.
+	// AddAttachments: Attachments to add. A student submission may not have more
+	// than 20 attachments. Form attachments are not supported.
 	AddAttachments []*Attachment `json:"addAttachments,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AddAttachments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddAttachments") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AddAttachments") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ModifyAttachmentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyAttachmentsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyCourseWorkAssigneesRequest: Request to modify assignee mode and
 // options of a coursework.
 type ModifyCourseWorkAssigneesRequest struct {
-	// AssigneeMode: Mode of the coursework describing whether it will be
-	// assigned to all students or specified individual students.
+	// AssigneeMode: Mode of the coursework describing whether it will be assigned
+	// to all students or specified individual students.
 	//
 	// Possible values:
-	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never
-	// returned.
-	//   "ALL_STUDENTS" - All students can see the item. This is the default
-	// state.
+	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never returned.
+	//   "ALL_STUDENTS" - All students can see the item. This is the default state.
 	//   "INDIVIDUAL_STUDENTS" - A subset of the students can see the item.
 	AssigneeMode string `json:"assigneeMode,omitempty"`
-
-	// ModifyIndividualStudentsOptions: Set which students are assigned or
-	// not assigned to the coursework. Must be specified only when
-	// `assigneeMode` is `INDIVIDUAL_STUDENTS`.
+	// ModifyIndividualStudentsOptions: Set which students are assigned or not
+	// assigned to the coursework. Must be specified only when `assigneeMode` is
+	// `INDIVIDUAL_STUDENTS`.
 	ModifyIndividualStudentsOptions *ModifyIndividualStudentsOptions `json:"modifyIndividualStudentsOptions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AssigneeMode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AssigneeMode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AssigneeMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ModifyCourseWorkAssigneesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyCourseWorkAssigneesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ModifyIndividualStudentsOptions: Contains fields to add or remove
-// students from a course work or announcement where the `assigneeMode`
-// is set to `INDIVIDUAL_STUDENTS`.
+// ModifyIndividualStudentsOptions: Contains fields to add or remove students
+// from a course work or announcement where the `assigneeMode` is set to
+// `INDIVIDUAL_STUDENTS`.
 type ModifyIndividualStudentsOptions struct {
 	// AddStudentIds: IDs of students to be added as having access to this
 	// coursework/announcement.
 	AddStudentIds []string `json:"addStudentIds,omitempty"`
-
-	// RemoveStudentIds: IDs of students to be removed from having access to
-	// this coursework/announcement.
+	// RemoveStudentIds: IDs of students to be removed from having access to this
+	// coursework/announcement.
 	RemoveStudentIds []string `json:"removeStudentIds,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AddStudentIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddStudentIds") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AddStudentIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ModifyIndividualStudentsOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyIndividualStudentsOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MultipleChoiceQuestion: Additional details for multiple-choice
-// questions.
+// MultipleChoiceQuestion: Additional details for multiple-choice questions.
 type MultipleChoiceQuestion struct {
 	// Choices: Possible choices.
 	Choices []string `json:"choices,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Choices") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Choices") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Choices") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Choices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MultipleChoiceQuestion) MarshalJSON() ([]byte, error) {
 	type NoMethod MultipleChoiceQuestion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MultipleChoiceSubmission: Student work for a multiple-choice
-// question.
+// MultipleChoiceSubmission: Student work for a multiple-choice question.
 type MultipleChoiceSubmission struct {
 	// Answer: Student's select choice.
 	Answer string `json:"answer,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Answer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Answer") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MultipleChoiceSubmission) MarshalJSON() ([]byte, error) {
 	type NoMethod MultipleChoiceSubmission
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Name: Details of the user's name.
 type Name struct {
 	// FamilyName: The user's last name. Read-only.
 	FamilyName string `json:"familyName,omitempty"`
-
-	// FullName: The user's full name formed by concatenating the first and
-	// last name values. Read-only.
+	// FullName: The user's full name formed by concatenating the first and last
+	// name values. Read-only.
 	FullName string `json:"fullName,omitempty"`
-
 	// GivenName: The user's first name. Read-only.
 	GivenName string `json:"givenName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FamilyName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FamilyName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FamilyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Name) MarshalJSON() ([]byte, error) {
 	type NoMethod Name
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ReclaimStudentSubmissionRequest: Request to reclaim a student
-// submission.
+// ReclaimStudentSubmissionRequest: Request to reclaim a student submission.
 type ReclaimStudentSubmissionRequest struct {
 }
 
-// Registration: An instruction to Classroom to send notifications from
-// the `feed` to the provided destination.
+// Registration: An instruction to Classroom to send notifications from the
+// `feed` to the provided destination.
 type Registration struct {
-	// CloudPubsubTopic: The Cloud Pub/Sub topic that notifications are to
-	// be sent to.
+	// CloudPubsubTopic: The Cloud Pub/Sub topic that notifications are to be sent
+	// to.
 	CloudPubsubTopic *CloudPubsubTopic `json:"cloudPubsubTopic,omitempty"`
-
-	// ExpiryTime: The time until which the `Registration` is effective.
-	// This is a read-only field assigned by the server.
+	// ExpiryTime: The time until which the `Registration` is effective. This is a
+	// read-only field assigned by the server.
 	ExpiryTime string `json:"expiryTime,omitempty"`
-
-	// Feed: Specification for the class of notifications that Classroom
-	// should deliver to the destination.
+	// Feed: Specification for the class of notifications that Classroom should
+	// deliver to the destination.
 	Feed *Feed `json:"feed,omitempty"`
-
 	// RegistrationId: A server-generated unique identifier for this
 	// `Registration`. Read-only.
 	RegistrationId string `json:"registrationId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CloudPubsubTopic") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CloudPubsubTopic") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CloudPubsubTopic") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Registration) MarshalJSON() ([]byte, error) {
 	type NoMethod Registration
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ReturnStudentSubmissionRequest: Request to return a student
-// submission.
+// ReturnStudentSubmissionRequest: Request to return a student submission.
 type ReturnStudentSubmissionRequest struct {
 }
 
@@ -2703,281 +2196,221 @@ type ReturnStudentSubmissionRequest struct {
 type SharedDriveFile struct {
 	// DriveFile: Drive file details.
 	DriveFile *DriveFile `json:"driveFile,omitempty"`
-
 	// ShareMode: Mechanism by which students access the Drive item.
 	//
 	// Possible values:
-	//   "UNKNOWN_SHARE_MODE" - No sharing mode specified. This should never
-	// be returned.
+	//   "UNKNOWN_SHARE_MODE" - No sharing mode specified. This should never be
+	// returned.
 	//   "VIEW" - Students can view the shared file.
 	//   "EDIT" - Students can edit the shared file.
 	//   "STUDENT_COPY" - Students have a personal copy of the shared file.
 	ShareMode string `json:"shareMode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DriveFile") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DriveFile") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DriveFile") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SharedDriveFile) MarshalJSON() ([]byte, error) {
 	type NoMethod SharedDriveFile
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ShortAnswerSubmission: Student work for a short answer question.
 type ShortAnswerSubmission struct {
 	// Answer: Student response to a short-answer question.
 	Answer string `json:"answer,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Answer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Answer") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ShortAnswerSubmission) MarshalJSON() ([]byte, error) {
 	type NoMethod ShortAnswerSubmission
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // StateHistory: The history of each state this submission has been in.
 type StateHistory struct {
 	// ActorUserId: The teacher or student who made the change.
 	ActorUserId string `json:"actorUserId,omitempty"`
-
 	// State: The workflow pipeline stage.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - No state specified. This should never be
-	// returned.
+	//   "STATE_UNSPECIFIED" - No state specified. This should never be returned.
 	//   "CREATED" - The Submission has been created.
-	//   "TURNED_IN" - The student has turned in an assigned document, which
-	// may or may not be a template.
+	//   "TURNED_IN" - The student has turned in an assigned document, which may or
+	// may not be a template.
 	//   "RETURNED" - The teacher has returned the assigned document to the
 	// student.
-	//   "RECLAIMED_BY_STUDENT" - The student turned in the assigned
-	// document, and then chose to "unsubmit" the assignment, giving the
-	// student control again as the owner.
-	//   "STUDENT_EDITED_AFTER_TURN_IN" - The student edited their
-	// submission after turning it in. Currently, only used by Questions,
-	// when the student edits their answer.
+	//   "RECLAIMED_BY_STUDENT" - The student turned in the assigned document, and
+	// then chose to "unsubmit" the assignment, giving the student control again as
+	// the owner.
+	//   "STUDENT_EDITED_AFTER_TURN_IN" - The student edited their submission after
+	// turning it in. Currently, only used by Questions, when the student edits
+	// their answer.
 	State string `json:"state,omitempty"`
-
 	// StateTimestamp: When the submission entered this state.
 	StateTimestamp string `json:"stateTimestamp,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ActorUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActorUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ActorUserId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StateHistory) MarshalJSON() ([]byte, error) {
 	type NoMethod StateHistory
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Student: Student in a course.
 type Student struct {
 	// CourseId: Identifier of the course. Read-only.
 	CourseId string `json:"courseId,omitempty"`
-
 	// Profile: Global user information for the student. Read-only.
 	Profile *UserProfile `json:"profile,omitempty"`
-
-	// StudentWorkFolder: Information about a Drive Folder for this
-	// student's work in this course. Only visible to the student and domain
-	// administrators. Read-only.
+	// StudentWorkFolder: Information about a Drive Folder for this student's work
+	// in this course. Only visible to the student and domain administrators.
+	// Read-only.
 	StudentWorkFolder *DriveFolder `json:"studentWorkFolder,omitempty"`
-
-	// UserId: Identifier of the user. When specified as a parameter of a
-	// request, this identifier can be one of the following: * the numeric
-	// identifier for the user * the email address of the user * the string
-	// literal "me", indicating the requesting user
+	// UserId: Identifier of the user. When specified as a parameter of a request,
+	// this identifier can be one of the following: * the numeric identifier for
+	// the user * the email address of the user * the string literal "me",
+	// indicating the requesting user
 	UserId string `json:"userId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CourseId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CourseId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Student) MarshalJSON() ([]byte, error) {
 	type NoMethod Student
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// StudentSubmission: Student submission for course work.
-// `StudentSubmission` items are generated when a `CourseWork` item is
-// created. Student submissions that have never been accessed (i.e. with
-// `state` = NEW) may not have a creation time or update time.
+// StudentSubmission: Student submission for course work. `StudentSubmission`
+// items are generated when a `CourseWork` item is created. Student submissions
+// that have never been accessed (i.e. with `state` = NEW) may not have a
+// creation time or update time.
 type StudentSubmission struct {
-	// AlternateLink: Absolute link to the submission in the Classroom web
-	// UI. Read-only.
+	// AlternateLink: Absolute link to the submission in the Classroom web UI.
+	// Read-only.
 	AlternateLink string `json:"alternateLink,omitempty"`
-
-	// AssignedGrade: Optional grade. If unset, no grade was set. This value
-	// must be non-negative. Decimal (that is, non-integer) values are
-	// allowed, but are rounded to two decimal places. This may be modified
-	// only by course teachers.
+	// AssignedGrade: Optional grade. If unset, no grade was set. This value must
+	// be non-negative. Decimal (that is, non-integer) values are allowed, but are
+	// rounded to two decimal places. This may be modified only by course teachers.
 	AssignedGrade float64 `json:"assignedGrade,omitempty"`
-
 	// AssignmentSubmission: Submission content when course_work_type is
 	// ASSIGNMENT. Students can modify this content using ModifyAttachments.
 	AssignmentSubmission *AssignmentSubmission `json:"assignmentSubmission,omitempty"`
-
-	// AssociatedWithDeveloper: Whether this student submission is
-	// associated with the Developer Console project making the request. See
-	// CreateCourseWork for more details. Read-only.
+	// AssociatedWithDeveloper: Whether this student submission is associated with
+	// the Developer Console project making the request. See CreateCourseWork for
+	// more details. Read-only.
 	AssociatedWithDeveloper bool `json:"associatedWithDeveloper,omitempty"`
-
 	// CourseId: Identifier of the course. Read-only.
 	CourseId string `json:"courseId,omitempty"`
-
-	// CourseWorkId: Identifier for the course work this corresponds to.
-	// Read-only.
+	// CourseWorkId: Identifier for the course work this corresponds to. Read-only.
 	CourseWorkId string `json:"courseWorkId,omitempty"`
-
-	// CourseWorkType: Type of course work this submission is for.
-	// Read-only.
+	// CourseWorkType: Type of course work this submission is for. Read-only.
 	//
 	// Possible values:
-	//   "COURSE_WORK_TYPE_UNSPECIFIED" - No work type specified. This is
-	// never returned.
+	//   "COURSE_WORK_TYPE_UNSPECIFIED" - No work type specified. This is never
+	// returned.
 	//   "ASSIGNMENT" - An assignment.
 	//   "SHORT_ANSWER_QUESTION" - A short answer question.
 	//   "MULTIPLE_CHOICE_QUESTION" - A multiple-choice question.
 	CourseWorkType string `json:"courseWorkType,omitempty"`
-
-	// CreationTime: Creation time of this submission. This may be unset if
-	// the student has not accessed this item. Read-only.
+	// CreationTime: Creation time of this submission. This may be unset if the
+	// student has not accessed this item. Read-only.
 	CreationTime string `json:"creationTime,omitempty"`
-
-	// DraftGrade: Optional pending grade. If unset, no grade was set. This
-	// value must be non-negative. Decimal (that is, non-integer) values are
-	// allowed, but are rounded to two decimal places. This is only visible
-	// to and modifiable by course teachers.
+	// DraftGrade: Optional pending grade. If unset, no grade was set. This value
+	// must be non-negative. Decimal (that is, non-integer) values are allowed, but
+	// are rounded to two decimal places. This is only visible to and modifiable by
+	// course teachers.
 	DraftGrade float64 `json:"draftGrade,omitempty"`
-
-	// Id: Classroom-assigned Identifier for the student submission. This is
-	// unique among submissions for the relevant course work. Read-only.
+	// Id: Classroom-assigned Identifier for the student submission. This is unique
+	// among submissions for the relevant course work. Read-only.
 	Id string `json:"id,omitempty"`
-
 	// Late: Whether this submission is late. Read-only.
 	Late bool `json:"late,omitempty"`
-
 	// MultipleChoiceSubmission: Submission content when course_work_type is
 	// MULTIPLE_CHOICE_QUESTION.
 	MultipleChoiceSubmission *MultipleChoiceSubmission `json:"multipleChoiceSubmission,omitempty"`
-
 	// ShortAnswerSubmission: Submission content when course_work_type is
 	// SHORT_ANSWER_QUESTION.
 	ShortAnswerSubmission *ShortAnswerSubmission `json:"shortAnswerSubmission,omitempty"`
-
 	// State: State of this submission. Read-only.
 	//
 	// Possible values:
-	//   "SUBMISSION_STATE_UNSPECIFIED" - No state specified. This should
-	// never be returned.
-	//   "NEW" - The student has never accessed this submission. Attachments
-	// are not returned and timestamps is not set.
+	//   "SUBMISSION_STATE_UNSPECIFIED" - No state specified. This should never be
+	// returned.
+	//   "NEW" - The student has never accessed this submission. Attachments are
+	// not returned and timestamps is not set.
 	//   "CREATED" - Has been created.
 	//   "TURNED_IN" - Has been turned in to the teacher.
 	//   "RETURNED" - Has been returned to the student.
-	//   "RECLAIMED_BY_STUDENT" - Student chose to "unsubmit" the
-	// assignment.
+	//   "RECLAIMED_BY_STUDENT" - Student chose to "unsubmit" the assignment.
 	State string `json:"state,omitempty"`
-
-	// SubmissionHistory: The history of the submission (includes state and
-	// grade histories). Read-only.
+	// SubmissionHistory: The history of the submission (includes state and grade
+	// histories). Read-only.
 	SubmissionHistory []*SubmissionHistory `json:"submissionHistory,omitempty"`
-
-	// UpdateTime: Last update time of this submission. This may be unset if
-	// the student has not accessed this item. Read-only.
+	// UpdateTime: Last update time of this submission. This may be unset if the
+	// student has not accessed this item. Read-only.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// UserId: Identifier for the student that owns this submission.
-	// Read-only.
+	// UserId: Identifier for the student that owns this submission. Read-only.
 	UserId string `json:"userId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternateLink") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AlternateLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StudentSubmission) MarshalJSON() ([]byte, error) {
 	type NoMethod StudentSubmission
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *StudentSubmission) UnmarshalJSON(data []byte) error {
@@ -2996,270 +2429,203 @@ func (s *StudentSubmission) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// SubmissionHistory: The history of the submission. This currently
-// includes state and grade histories.
+// SubmissionHistory: The history of the submission. This currently includes
+// state and grade histories.
 type SubmissionHistory struct {
-	// GradeHistory: The grade history information of the submission, if
-	// present.
+	// GradeHistory: The grade history information of the submission, if present.
 	GradeHistory *GradeHistory `json:"gradeHistory,omitempty"`
-
-	// StateHistory: The state history information of the submission, if
-	// present.
+	// StateHistory: The state history information of the submission, if present.
 	StateHistory *StateHistory `json:"stateHistory,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GradeHistory") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GradeHistory") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GradeHistory") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SubmissionHistory) MarshalJSON() ([]byte, error) {
 	type NoMethod SubmissionHistory
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Teacher: Teacher of a course.
 type Teacher struct {
 	// CourseId: Identifier of the course. Read-only.
 	CourseId string `json:"courseId,omitempty"`
-
 	// Profile: Global user information for the teacher. Read-only.
 	Profile *UserProfile `json:"profile,omitempty"`
-
-	// UserId: Identifier of the user. When specified as a parameter of a
-	// request, this identifier can be one of the following: * the numeric
-	// identifier for the user * the email address of the user * the string
-	// literal "me", indicating the requesting user
+	// UserId: Identifier of the user. When specified as a parameter of a request,
+	// this identifier can be one of the following: * the numeric identifier for
+	// the user * the email address of the user * the string literal "me",
+	// indicating the requesting user
 	UserId string `json:"userId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CourseId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CourseId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Teacher) MarshalJSON() ([]byte, error) {
 	type NoMethod Teacher
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TimeOfDay: Represents a time of day. The date and time zone are
-// either not significant or are specified elsewhere. An API may choose
-// to allow leap seconds. Related types are google.type.Date and
-// `google.protobuf.Timestamp`.
+// TimeOfDay: Represents a time of day. The date and time zone are either not
+// significant or are specified elsewhere. An API may choose to allow leap
+// seconds. Related types are google.type.Date and `google.protobuf.Timestamp`.
 type TimeOfDay struct {
-	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API
-	// may choose to allow the value "24:00:00" for scenarios like business
-	// closing time.
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
+	// choose to allow the value "24:00:00" for scenarios like business closing
+	// time.
 	Hours int64 `json:"hours,omitempty"`
-
 	// Minutes: Minutes of hour of day. Must be from 0 to 59.
 	Minutes int64 `json:"minutes,omitempty"`
-
-	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to
-	// 999,999,999.
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
 	Nanos int64 `json:"nanos,omitempty"`
-
-	// Seconds: Seconds of minutes of the time. Must normally be from 0 to
-	// 59. An API may allow the value 60 if it allows leap-seconds.
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
+	// API may allow the value 60 if it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Hours") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Hours") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Topic: Topic created by a teacher for the course
 type Topic struct {
 	// CourseId: Identifier of the course. Read-only.
 	CourseId string `json:"courseId,omitempty"`
-
-	// Name: The name of the topic, generated by the user. Leading and
-	// trailing whitespaces, if any, are trimmed. Also, multiple consecutive
-	// whitespaces are collapsed into one inside the name. The result must
-	// be a non-empty string. Topic names are case sensitive, and must be no
-	// longer than 100 characters.
+	// Name: The name of the topic, generated by the user. Leading and trailing
+	// whitespaces, if any, are trimmed. Also, multiple consecutive whitespaces are
+	// collapsed into one inside the name. The result must be a non-empty string.
+	// Topic names are case sensitive, and must be no longer than 100 characters.
 	Name string `json:"name,omitempty"`
-
 	// TopicId: Unique identifier for the topic. Read-only.
 	TopicId string `json:"topicId,omitempty"`
-
-	// UpdateTime: The time the topic was last updated by the system.
-	// Read-only.
+	// UpdateTime: The time the topic was last updated by the system. Read-only.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CourseId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CourseId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Topic) MarshalJSON() ([]byte, error) {
 	type NoMethod Topic
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TurnInStudentSubmissionRequest: Request to turn in a student
-// submission.
+// TurnInStudentSubmissionRequest: Request to turn in a student submission.
 type TurnInStudentSubmissionRequest struct {
 }
 
 // UserProfile: Global information for a user.
 type UserProfile struct {
 	// EmailAddress: Email address of the user. Must request
-	// `https://www.googleapis.com/auth/classroom.profile.emails` scope for
-	// this field to be populated in a response body. Read-only.
+	// `https://www.googleapis.com/auth/classroom.profile.emails` scope for this
+	// field to be populated in a response body. Read-only.
 	EmailAddress string `json:"emailAddress,omitempty"`
-
 	// Id: Identifier of the user. Read-only.
 	Id string `json:"id,omitempty"`
-
 	// Name: Name of the user. Read-only.
 	Name *Name `json:"name,omitempty"`
-
 	// Permissions: Global permissions of the user. Read-only.
 	Permissions []*GlobalPermission `json:"permissions,omitempty"`
-
 	// PhotoUrl: URL of user's profile photo. Must request
-	// `https://www.googleapis.com/auth/classroom.profile.photos` scope for
-	// this field to be populated in a response body. Read-only.
+	// `https://www.googleapis.com/auth/classroom.profile.photos` scope for this
+	// field to be populated in a response body. Read-only.
 	PhotoUrl string `json:"photoUrl,omitempty"`
-
-	// VerifiedTeacher: Represents whether a Google Workspace for Education
-	// user's domain administrator has explicitly verified them as being a
-	// teacher. This field is always false if the user is not a member of a
-	// Google Workspace for Education domain. Read-only
+	// VerifiedTeacher: Represents whether a Google Workspace for Education user's
+	// domain administrator has explicitly verified them as being a teacher. This
+	// field is always false if the user is not a member of a Google Workspace for
+	// Education domain. Read-only
 	VerifiedTeacher bool `json:"verifiedTeacher,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EmailAddress") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EmailAddress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UserProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod UserProfile
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // YouTubeVideo: YouTube video item.
 type YouTubeVideo struct {
-	// AlternateLink: URL that can be used to view the YouTube video.
-	// Read-only.
+	// AlternateLink: URL that can be used to view the YouTube video. Read-only.
 	AlternateLink string `json:"alternateLink,omitempty"`
-
 	// Id: YouTube API resource ID.
 	Id string `json:"id,omitempty"`
-
-	// ThumbnailUrl: URL of a thumbnail image of the YouTube video.
-	// Read-only.
+	// ThumbnailUrl: URL of a thumbnail image of the YouTube video. Read-only.
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
-
 	// Title: Title of the YouTube video. Read-only.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternateLink") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AlternateLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *YouTubeVideo) MarshalJSON() ([]byte, error) {
 	type NoMethod YouTubeVideo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "classroom.courses.create":
 
 type CoursesCreateCall struct {
 	s          *Service
@@ -3269,18 +2635,16 @@ type CoursesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a course. The user specified in `ownerId` is the
-// owner of the created course and added as a teacher. A non-admin
-// requesting user can only create a course with themselves as the
-// owner. Domain admins can create courses owned by any user within
-// their domain. This method returns the following error codes: *
-// `PERMISSION_DENIED` if the requesting user is not permitted to create
-// courses or for access errors. * `NOT_FOUND` if the primary teacher is
-// not a valid user. * `FAILED_PRECONDITION` if the course owner's
-// account is disabled or for the following request errors: *
-// UserCannotOwnCourse * UserGroupsMembershipLimitReached *
-// `ALREADY_EXISTS` if an alias was specified in the `id` and already
-// exists.
+// Create: Creates a course. The user specified in `ownerId` is the owner of
+// the created course and added as a teacher. A non-admin requesting user can
+// only create a course with themselves as the owner. Domain admins can create
+// courses owned by any user within their domain. This method returns the
+// following error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to create courses or for access errors. * `NOT_FOUND` if the
+// primary teacher is not a valid user. * `FAILED_PRECONDITION` if the course
+// owner's account is disabled or for the following request errors: *
+// UserCannotOwnCourse * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if
+// an alias was specified in the `id` and already exists.
 func (r *CoursesService) Create(course *Course) *CoursesCreateCall {
 	c := &CoursesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.course = course
@@ -3288,23 +2652,21 @@ func (r *CoursesService) Create(course *Course) *CoursesCreateCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCreateCall) Fields(s ...googleapi.Field) *CoursesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCreateCall) Context(ctx context.Context) *CoursesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3313,18 +2675,12 @@ func (c *CoursesCreateCall) Header() http.Header {
 }
 
 func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.course)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses")
@@ -3338,12 +2694,10 @@ func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.create" call.
-// Exactly one of *Course or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Course.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Course.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesCreateCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3374,28 +2728,7 @@ func (c *CoursesCreateCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a course. The user specified in `ownerId` is the owner of the created course and added as a teacher. A non-admin requesting user can only create a course with themselves as the owner. Domain admins can create courses owned by any user within their domain. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create courses or for access errors. * `NOT_FOUND` if the primary teacher is not a valid user. * `FAILED_PRECONDITION` if the course owner's account is disabled or for the following request errors: * UserCannotOwnCourse * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if an alias was specified in the `id` and already exists.",
-	//   "flatPath": "v1/courses",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/courses",
-	//   "request": {
-	//     "$ref": "Course"
-	//   },
-	//   "response": {
-	//     "$ref": "Course"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courses"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.delete":
 
 type CoursesDeleteCall struct {
 	s          *Service
@@ -3405,13 +2738,13 @@ type CoursesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a course. This method returns the following error
-// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to delete the requested course or for access errors. * `NOT_FOUND` if
-// no course exists with the requested ID.
+// Delete: Deletes a course. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user is not permitted to delete the
+// requested course or for access errors. * `NOT_FOUND` if no course exists
+// with the requested ID.
 //
-//   - id: Identifier of the course to delete. This identifier can be
-//     either the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course to delete. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesService) Delete(id string) *CoursesDeleteCall {
 	c := &CoursesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3419,23 +2752,21 @@ func (r *CoursesService) Delete(id string) *CoursesDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesDeleteCall) Fields(s ...googleapi.Field) *CoursesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesDeleteCall) Context(ctx context.Context) *CoursesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3444,12 +2775,7 @@ func (c *CoursesDeleteCall) Header() http.Header {
 }
 
 func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3467,12 +2793,10 @@ func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3503,34 +2827,7 @@ func (c *CoursesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID.",
-	//   "flatPath": "v1/courses/{id}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.courses.delete",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "Identifier of the course to delete. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{id}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courses"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.get":
 
 type CoursesGetCall struct {
 	s            *Service
@@ -3541,13 +2838,13 @@ type CoursesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a course. This method returns the following error codes:
-// * `PERMISSION_DENIED` if the requesting user is not permitted to
-// access the requested course or for access errors. * `NOT_FOUND` if no
-// course exists with the requested ID.
+// Get: Returns a course. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user is not permitted to access the
+// requested course or for access errors. * `NOT_FOUND` if no course exists
+// with the requested ID.
 //
-//   - id: Identifier of the course to return. This identifier can be
-//     either the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course to return. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesService) Get(id string) *CoursesGetCall {
 	c := &CoursesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3555,33 +2852,29 @@ func (r *CoursesService) Get(id string) *CoursesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesGetCall) Fields(s ...googleapi.Field) *CoursesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesGetCall) IfNoneMatch(entityTag string) *CoursesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesGetCall) Context(ctx context.Context) *CoursesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3590,12 +2883,7 @@ func (c *CoursesGetCall) Header() http.Header {
 }
 
 func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3616,12 +2904,10 @@ func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.get" call.
-// Exactly one of *Course or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Course.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Course.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesGetCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3652,35 +2938,7 @@ func (c *CoursesGetCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID.",
-	//   "flatPath": "v1/courses/{id}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.get",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "Identifier of the course to return. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{id}",
-	//   "response": {
-	//     "$ref": "Course"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courses",
-	//     "https://www.googleapis.com/auth/classroom.courses.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.list":
 
 type CoursesListCall struct {
 	s            *Service
@@ -3690,70 +2948,66 @@ type CoursesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of courses that the requesting user is permitted
-// to view, restricted to those that match the request. Returned courses
-// are ordered by creation time, with the most recently created coming
-// first. This method returns the following error codes: *
-// `PERMISSION_DENIED` for access errors. * `INVALID_ARGUMENT` if the
-// query argument is malformed. * `NOT_FOUND` if any users specified in
-// the query arguments do not exist.
+// List: Returns a list of courses that the requesting user is permitted to
+// view, restricted to those that match the request. Returned courses are
+// ordered by creation time, with the most recently created coming first. This
+// method returns the following error codes: * `PERMISSION_DENIED` for access
+// errors. * `INVALID_ARGUMENT` if the query argument is malformed. *
+// `NOT_FOUND` if any users specified in the query arguments do not exist.
 func (r *CoursesService) List() *CoursesListCall {
 	c := &CoursesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// CourseStates sets the optional parameter "courseStates": Restricts
-// returned courses to those in one of the specified states The default
-// value is ACTIVE, ARCHIVED, PROVISIONED, DECLINED.
+// CourseStates sets the optional parameter "courseStates": Restricts returned
+// courses to those in one of the specified states The default value is ACTIVE,
+// ARCHIVED, PROVISIONED, DECLINED.
 //
 // Possible values:
 //
-//	"COURSE_STATE_UNSPECIFIED" - No course state. No returned Course
+//	"COURSE_STATE_UNSPECIFIED" - No course state. No returned Course message
 //
-// message will use this value.
+// will use this value.
 //
 //	"ACTIVE" - The course is active.
-//	"ARCHIVED" - The course has been archived. You cannot modify it
+//	"ARCHIVED" - The course has been archived. You cannot modify it except to
 //
-// except to change it to a different state.
+// change it to a different state.
 //
-//	"PROVISIONED" - The course has been created, but not yet activated.
+//	"PROVISIONED" - The course has been created, but not yet activated. It is
 //
-// It is accessible by the primary teacher and domain administrators,
-// who may modify it or change it to the `ACTIVE` or `DECLINED` states.
-// A course may only be changed to `PROVISIONED` if it is in the
-// `DECLINED` state.
+// accessible by the primary teacher and domain administrators, who may modify
+// it or change it to the `ACTIVE` or `DECLINED` states. A course may only be
+// changed to `PROVISIONED` if it is in the `DECLINED` state.
 //
-//	"DECLINED" - The course has been created, but declined. It is
+//	"DECLINED" - The course has been created, but declined. It is accessible
 //
-// accessible by the course owner and domain administrators, though it
-// will not be displayed in the web UI. You cannot modify the course
-// except to change it to the `PROVISIONED` state. A course may only be
-// changed to `DECLINED` if it is in the `PROVISIONED` state.
+// by the course owner and domain administrators, though it will not be
+// displayed in the web UI. You cannot modify the course except to change it to
+// the `PROVISIONED` state. A course may only be changed to `DECLINED` if it is
+// in the `PROVISIONED` state.
 //
-//	"SUSPENDED" - The course has been suspended. You cannot modify the
+//	"SUSPENDED" - The course has been suspended. You cannot modify the course,
 //
-// course, and only the user identified by the `owner_id` can view the
-// course. A course may be placed in this state if it potentially
-// violates the Terms of Service.
+// and only the user identified by the `owner_id` can view the course. A course
+// may be placed in this state if it potentially violates the Terms of Service.
 func (c *CoursesListCall) CourseStates(courseStates ...string) *CoursesListCall {
 	c.urlParams_.SetMulti("courseStates", append([]string{}, courseStates...))
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. Zero or unspecified indicates that the server may
-// assign a maximum. The server may return fewer than the specified
-// number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. Zero or unspecified indicates that the server may assign a maximum.
+// The server may return fewer than the specified number of results.
 func (c *CoursesListCall) PageSize(pageSize int64) *CoursesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *CoursesListCall) PageToken(pageToken string) *CoursesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3761,9 +3015,9 @@ func (c *CoursesListCall) PageToken(pageToken string) *CoursesListCall {
 
 // StudentId sets the optional parameter "studentId": Restricts returned
 // courses to those having a student with the specified identifier. The
-// identifier can be one of the following: * the numeric identifier for
-// the user * the email address of the user * the string literal "me",
-// indicating the requesting user
+// identifier can be one of the following: * the numeric identifier for the
+// user * the email address of the user * the string literal "me", indicating
+// the requesting user
 func (c *CoursesListCall) StudentId(studentId string) *CoursesListCall {
 	c.urlParams_.Set("studentId", studentId)
 	return c
@@ -3771,42 +3025,38 @@ func (c *CoursesListCall) StudentId(studentId string) *CoursesListCall {
 
 // TeacherId sets the optional parameter "teacherId": Restricts returned
 // courses to those having a teacher with the specified identifier. The
-// identifier can be one of the following: * the numeric identifier for
-// the user * the email address of the user * the string literal "me",
-// indicating the requesting user
+// identifier can be one of the following: * the numeric identifier for the
+// user * the email address of the user * the string literal "me", indicating
+// the requesting user
 func (c *CoursesListCall) TeacherId(teacherId string) *CoursesListCall {
 	c.urlParams_.Set("teacherId", teacherId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesListCall) Fields(s ...googleapi.Field) *CoursesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesListCall) IfNoneMatch(entityTag string) *CoursesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesListCall) Context(ctx context.Context) *CoursesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3815,12 +3065,7 @@ func (c *CoursesListCall) Header() http.Header {
 }
 
 func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3838,12 +3083,11 @@ func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.list" call.
-// Exactly one of *ListCoursesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListCoursesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCoursesResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CoursesListCall) Do(opts ...googleapi.CallOption) (*ListCoursesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3874,67 +3118,6 @@ func (c *CoursesListCall) Do(opts ...googleapi.CallOption) (*ListCoursesResponse
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of courses that the requesting user is permitted to view, restricted to those that match the request. Returned courses are ordered by creation time, with the most recently created coming first. This method returns the following error codes: * `PERMISSION_DENIED` for access errors. * `INVALID_ARGUMENT` if the query argument is malformed. * `NOT_FOUND` if any users specified in the query arguments do not exist.",
-	//   "flatPath": "v1/courses",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "courseStates": {
-	//       "description": "Restricts returned courses to those in one of the specified states The default value is ACTIVE, ARCHIVED, PROVISIONED, DECLINED.",
-	//       "enum": [
-	//         "COURSE_STATE_UNSPECIFIED",
-	//         "ACTIVE",
-	//         "ARCHIVED",
-	//         "PROVISIONED",
-	//         "DECLINED",
-	//         "SUSPENDED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "No course state. No returned Course message will use this value.",
-	//         "The course is active.",
-	//         "The course has been archived. You cannot modify it except to change it to a different state.",
-	//         "The course has been created, but not yet activated. It is accessible by the primary teacher and domain administrators, who may modify it or change it to the `ACTIVE` or `DECLINED` states. A course may only be changed to `PROVISIONED` if it is in the `DECLINED` state.",
-	//         "The course has been created, but declined. It is accessible by the course owner and domain administrators, though it will not be displayed in the web UI. You cannot modify the course except to change it to the `PROVISIONED` state. A course may only be changed to `DECLINED` if it is in the `PROVISIONED` state.",
-	//         "The course has been suspended. You cannot modify the course, and only the user identified by the `owner_id` can view the course. A course may be placed in this state if it potentially violates the Terms of Service."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "studentId": {
-	//       "description": "Restricts returned courses to those having a student with the specified identifier. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "teacherId": {
-	//       "description": "Restricts returned courses to those having a teacher with the specified identifier. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses",
-	//   "response": {
-	//     "$ref": "ListCoursesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courses",
-	//     "https://www.googleapis.com/auth/classroom.courses.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3942,7 +3125,7 @@ func (c *CoursesListCall) Do(opts ...googleapi.CallOption) (*ListCoursesResponse
 // The provided context supersedes any context provided to the Context method.
 func (c *CoursesListCall) Pages(ctx context.Context, f func(*ListCoursesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3958,8 +3141,6 @@ func (c *CoursesListCall) Pages(ctx context.Context, f func(*ListCoursesResponse
 	}
 }
 
-// method id "classroom.courses.patch":
-
 type CoursesPatchCall struct {
 	s          *Service
 	id         string
@@ -3969,17 +3150,16 @@ type CoursesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates one or more fields in a course. This method returns
-// the following error codes: * `PERMISSION_DENIED` if the requesting
-// user is not permitted to modify the requested course or for access
-// errors. * `NOT_FOUND` if no course exists with the requested ID. *
-// `INVALID_ARGUMENT` if invalid fields are specified in the update mask
-// or if no update mask is supplied. * `FAILED_PRECONDITION` for the
-// following request errors: * CourseNotModifiable * InactiveCourseOwner
-// * IneligibleOwner
+// Patch: Updates one or more fields in a course. This method returns the
+// following error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to modify the requested course or for access errors. * `NOT_FOUND`
+// if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid
+// fields are specified in the update mask or if no update mask is supplied. *
+// `FAILED_PRECONDITION` for the following request errors: *
+// CourseNotModifiable * InactiveCourseOwner * IneligibleOwner
 //
-//   - id: Identifier of the course to update. This identifier can be
-//     either the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course to update. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesService) Patch(id string, course *Course) *CoursesPatchCall {
 	c := &CoursesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3987,38 +3167,36 @@ func (r *CoursesService) Patch(id string, course *Course) *CoursesPatchCall {
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Mask that
-// identifies which fields on the course to update. This field is
-// required to do an update. The update will fail if invalid fields are
-// specified. The following fields are valid: * `name` * `section` *
-// `descriptionHeading` * `description` * `room` * `courseState` *
-// `ownerId` Note: patches to ownerId are treated as being effective
-// immediately, but in practice it may take some time for the ownership
-// transfer of all affected resources to complete. When set in a query
-// parameter, this field should be specified as `updateMask=,,...`
+// UpdateMask sets the optional parameter "updateMask": Mask that identifies
+// which fields on the course to update. This field is required to do an
+// update. The update will fail if invalid fields are specified. The following
+// fields are valid: * `name` * `section` * `descriptionHeading` *
+// `description` * `room` * `courseState` * `ownerId` Note: patches to ownerId
+// are treated as being effective immediately, but in practice it may take some
+// time for the ownership transfer of all affected resources to complete. When
+// set in a query parameter, this field should be specified as
+// `updateMask=,,...`
 func (c *CoursesPatchCall) UpdateMask(updateMask string) *CoursesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesPatchCall) Fields(s ...googleapi.Field) *CoursesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesPatchCall) Context(ctx context.Context) *CoursesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4027,18 +3205,12 @@ func (c *CoursesPatchCall) Header() http.Header {
 }
 
 func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.course)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{id}")
@@ -4055,12 +3227,10 @@ func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.patch" call.
-// Exactly one of *Course or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Course.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Course.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesPatchCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4091,43 +3261,7 @@ func (c *CoursesPatchCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates one or more fields in a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid fields are specified in the update mask or if no update mask is supplied. * `FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable * InactiveCourseOwner * IneligibleOwner",
-	//   "flatPath": "v1/courses/{id}",
-	//   "httpMethod": "PATCH",
-	//   "id": "classroom.courses.patch",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "Identifier of the course to update. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the course to update. This field is required to do an update. The update will fail if invalid fields are specified. The following fields are valid: * `name` * `section` * `descriptionHeading` * `description` * `room` * `courseState` * `ownerId` Note: patches to ownerId are treated as being effective immediately, but in practice it may take some time for the ownership transfer of all affected resources to complete. When set in a query parameter, this field should be specified as `updateMask=,,...`",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{id}",
-	//   "request": {
-	//     "$ref": "Course"
-	//   },
-	//   "response": {
-	//     "$ref": "Course"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courses"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.update":
 
 type CoursesUpdateCall struct {
 	s          *Service
@@ -4138,14 +3272,14 @@ type CoursesUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a course. This method returns the following error
-// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to modify the requested course or for access errors. * `NOT_FOUND` if
-// no course exists with the requested ID. * `FAILED_PRECONDITION` for
-// the following request errors: * CourseNotModifiable
+// Update: Updates a course. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user is not permitted to modify the
+// requested course or for access errors. * `NOT_FOUND` if no course exists
+// with the requested ID. * `FAILED_PRECONDITION` for the following request
+// errors: * CourseNotModifiable
 //
-//   - id: Identifier of the course to update. This identifier can be
-//     either the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course to update. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesService) Update(id string, course *Course) *CoursesUpdateCall {
 	c := &CoursesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -4154,23 +3288,21 @@ func (r *CoursesService) Update(id string, course *Course) *CoursesUpdateCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesUpdateCall) Fields(s ...googleapi.Field) *CoursesUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesUpdateCall) Context(ctx context.Context) *CoursesUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4179,18 +3311,12 @@ func (c *CoursesUpdateCall) Header() http.Header {
 }
 
 func (c *CoursesUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.course)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{id}")
@@ -4207,12 +3333,10 @@ func (c *CoursesUpdateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.update" call.
-// Exactly one of *Course or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Course.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Course.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesUpdateCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4243,37 +3367,7 @@ func (c *CoursesUpdateCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID. * `FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable",
-	//   "flatPath": "v1/courses/{id}",
-	//   "httpMethod": "PUT",
-	//   "id": "classroom.courses.update",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "Identifier of the course to update. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{id}",
-	//   "request": {
-	//     "$ref": "Course"
-	//   },
-	//   "response": {
-	//     "$ref": "Course"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courses"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.aliases.create":
 
 type CoursesAliasesCreateCall struct {
 	s           *Service
@@ -4284,16 +3378,16 @@ type CoursesAliasesCreateCall struct {
 	header_     http.Header
 }
 
-// Create: Creates an alias for a course. This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to create the alias or for access errors. *
-// `NOT_FOUND` if the course does not exist. * `ALREADY_EXISTS` if the
-// alias already exists. * `FAILED_PRECONDITION` if the alias requested
-// does not make sense for the requesting user or course (for example,
-// if a user not in a domain attempts to access a domain-scoped alias).
+// Create: Creates an alias for a course. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not permitted
+// to create the alias or for access errors. * `NOT_FOUND` if the course does
+// not exist. * `ALREADY_EXISTS` if the alias already exists. *
+// `FAILED_PRECONDITION` if the alias requested does not make sense for the
+// requesting user or course (for example, if a user not in a domain attempts
+// to access a domain-scoped alias).
 //
-//   - courseId: Identifier of the course to alias. This identifier can be
-//     either the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course to alias. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesAliasesService) Create(courseId string, coursealias *CourseAlias) *CoursesAliasesCreateCall {
 	c := &CoursesAliasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4302,23 +3396,21 @@ func (r *CoursesAliasesService) Create(courseId string, coursealias *CourseAlias
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesAliasesCreateCall) Fields(s ...googleapi.Field) *CoursesAliasesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesAliasesCreateCall) Context(ctx context.Context) *CoursesAliasesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesAliasesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4327,18 +3419,12 @@ func (c *CoursesAliasesCreateCall) Header() http.Header {
 }
 
 func (c *CoursesAliasesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.coursealias)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/aliases")
@@ -4355,12 +3441,10 @@ func (c *CoursesAliasesCreateCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "classroom.courses.aliases.create" call.
-// Exactly one of *CourseAlias or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CourseAlias.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CourseAlias.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesAliasesCreateCall) Do(opts ...googleapi.CallOption) (*CourseAlias, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4391,37 +3475,7 @@ func (c *CoursesAliasesCreateCall) Do(opts ...googleapi.CallOption) (*CourseAlia
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an alias for a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create the alias or for access errors. * `NOT_FOUND` if the course does not exist. * `ALREADY_EXISTS` if the alias already exists. * `FAILED_PRECONDITION` if the alias requested does not make sense for the requesting user or course (for example, if a user not in a domain attempts to access a domain-scoped alias).",
-	//   "flatPath": "v1/courses/{courseId}/aliases",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.aliases.create",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course to alias. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/aliases",
-	//   "request": {
-	//     "$ref": "CourseAlias"
-	//   },
-	//   "response": {
-	//     "$ref": "CourseAlias"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courses"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.aliases.delete":
 
 type CoursesAliasesDeleteCall struct {
 	s          *Service
@@ -4432,19 +3486,16 @@ type CoursesAliasesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an alias of a course. This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to remove the alias or for access errors. *
-// `NOT_FOUND` if the alias does not exist. * `FAILED_PRECONDITION` if
-// the alias requested does not make sense for the requesting user or
-// course (for example, if a user not in a domain attempts to delete a
-// domain-scoped alias).
+// Delete: Deletes an alias of a course. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not permitted
+// to remove the alias or for access errors. * `NOT_FOUND` if the alias does
+// not exist. * `FAILED_PRECONDITION` if the alias requested does not make
+// sense for the requesting user or course (for example, if a user not in a
+// domain attempts to delete a domain-scoped alias).
 //
-//   - alias: Alias to delete. This may not be the Classroom-assigned
-//     identifier.
-//   - courseId: Identifier of the course whose alias should be deleted.
-//     This identifier can be either the Classroom-assigned identifier or
-//     an alias.
+//   - alias: Alias to delete. This may not be the Classroom-assigned identifier.
+//   - courseId: Identifier of the course whose alias should be deleted. This
+//     identifier can be either the Classroom-assigned identifier or an alias.
 func (r *CoursesAliasesService) Delete(courseId string, aliasid string) *CoursesAliasesDeleteCall {
 	c := &CoursesAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4453,23 +3504,21 @@ func (r *CoursesAliasesService) Delete(courseId string, aliasid string) *Courses
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesAliasesDeleteCall) Fields(s ...googleapi.Field) *CoursesAliasesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesAliasesDeleteCall) Context(ctx context.Context) *CoursesAliasesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesAliasesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4478,12 +3527,7 @@ func (c *CoursesAliasesDeleteCall) Header() http.Header {
 }
 
 func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4502,12 +3546,10 @@ func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "classroom.courses.aliases.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesAliasesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4538,41 +3580,7 @@ func (c *CoursesAliasesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an alias of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to remove the alias or for access errors. * `NOT_FOUND` if the alias does not exist. * `FAILED_PRECONDITION` if the alias requested does not make sense for the requesting user or course (for example, if a user not in a domain attempts to delete a domain-scoped alias).",
-	//   "flatPath": "v1/courses/{courseId}/aliases/{alias}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.courses.aliases.delete",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "alias"
-	//   ],
-	//   "parameters": {
-	//     "alias": {
-	//       "description": "Alias to delete. This may not be the Classroom-assigned identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "courseId": {
-	//       "description": "Identifier of the course whose alias should be deleted. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/aliases/{alias}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courses"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.aliases.list":
 
 type CoursesAliasesListCall struct {
 	s            *Service
@@ -4584,64 +3592,59 @@ type CoursesAliasesListCall struct {
 }
 
 // List: Returns a list of aliases for a course. This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to access the course or for access errors. *
-// `NOT_FOUND` if the course does not exist.
+// following error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to access the course or for access errors. * `NOT_FOUND` if the
+// course does not exist.
 //
-//   - courseId: The identifier of the course. This identifier can be
-//     either the Classroom-assigned identifier or an alias.
+//   - courseId: The identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesAliasesService) List(courseId string) *CoursesAliasesListCall {
 	c := &CoursesAliasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. Zero or unspecified indicates that the server may
-// assign a maximum. The server may return fewer than the specified
-// number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. Zero or unspecified indicates that the server may assign a maximum.
+// The server may return fewer than the specified number of results.
 func (c *CoursesAliasesListCall) PageSize(pageSize int64) *CoursesAliasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *CoursesAliasesListCall) PageToken(pageToken string) *CoursesAliasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesAliasesListCall) Fields(s ...googleapi.Field) *CoursesAliasesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesAliasesListCall) IfNoneMatch(entityTag string) *CoursesAliasesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesAliasesListCall) Context(ctx context.Context) *CoursesAliasesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesAliasesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4650,12 +3653,7 @@ func (c *CoursesAliasesListCall) Header() http.Header {
 }
 
 func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4676,12 +3674,11 @@ func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.aliases.list" call.
-// Exactly one of *ListCourseAliasesResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListCourseAliasesResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListCourseAliasesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CoursesAliasesListCall) Do(opts ...googleapi.CallOption) (*ListCourseAliasesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4712,43 +3709,6 @@ func (c *CoursesAliasesListCall) Do(opts ...googleapi.CallOption) (*ListCourseAl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of aliases for a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the course or for access errors. * `NOT_FOUND` if the course does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/aliases",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.aliases.list",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "The identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/aliases",
-	//   "response": {
-	//     "$ref": "ListCourseAliasesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courses",
-	//     "https://www.googleapis.com/auth/classroom.courses.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4756,7 +3716,7 @@ func (c *CoursesAliasesListCall) Do(opts ...googleapi.CallOption) (*ListCourseAl
 // The provided context supersedes any context provided to the Context method.
 func (c *CoursesAliasesListCall) Pages(ctx context.Context, f func(*ListCourseAliasesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4772,8 +3732,6 @@ func (c *CoursesAliasesListCall) Pages(ctx context.Context, f func(*ListCourseAl
 	}
 }
 
-// method id "classroom.courses.announcements.create":
-
 type CoursesAnnouncementsCreateCall struct {
 	s            *Service
 	courseId     string
@@ -4783,16 +3741,16 @@ type CoursesAnnouncementsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates an announcement. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting user is not
-// permitted to access the requested course, create announcements in the
-// requested course, share a Drive attachment, or for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
-// requested course does not exist. * `FAILED_PRECONDITION` for the
-// following request error: * AttachmentNotVisible
+// Create: Creates an announcement. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to
+// access the requested course, create announcements in the requested course,
+// share a Drive attachment, or for access errors. * `INVALID_ARGUMENT` if the
+// request is malformed. * `NOT_FOUND` if the requested course does not exist.
+// * `FAILED_PRECONDITION` for the following request error: *
+// AttachmentNotVisible
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesAnnouncementsService) Create(courseId string, announcement *Announcement) *CoursesAnnouncementsCreateCall {
 	c := &CoursesAnnouncementsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4801,23 +3759,21 @@ func (r *CoursesAnnouncementsService) Create(courseId string, announcement *Anno
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesAnnouncementsCreateCall) Fields(s ...googleapi.Field) *CoursesAnnouncementsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesAnnouncementsCreateCall) Context(ctx context.Context) *CoursesAnnouncementsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesAnnouncementsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4826,18 +3782,12 @@ func (c *CoursesAnnouncementsCreateCall) Header() http.Header {
 }
 
 func (c *CoursesAnnouncementsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.announcement)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/announcements")
@@ -4854,12 +3804,10 @@ func (c *CoursesAnnouncementsCreateCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "classroom.courses.announcements.create" call.
-// Exactly one of *Announcement or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Announcement.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Announcement.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesAnnouncementsCreateCall) Do(opts ...googleapi.CallOption) (*Announcement, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4890,37 +3838,7 @@ func (c *CoursesAnnouncementsCreateCall) Do(opts ...googleapi.CallOption) (*Anno
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an announcement. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, create announcements in the requested course, share a Drive attachment, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist. * `FAILED_PRECONDITION` for the following request error: * AttachmentNotVisible",
-	//   "flatPath": "v1/courses/{courseId}/announcements",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.announcements.create",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/announcements",
-	//   "request": {
-	//     "$ref": "Announcement"
-	//   },
-	//   "response": {
-	//     "$ref": "Announcement"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.announcements"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.announcements.delete":
 
 type CoursesAnnouncementsDeleteCall struct {
 	s          *Service
@@ -4931,19 +3849,18 @@ type CoursesAnnouncementsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an announcement. This request must be made by the
-// Developer Console project of the OAuth client ID
+// Delete: Deletes an announcement. This request must be made by the Developer
+// Console project of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the
-// corresponding announcement item. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting developer
-// project did not create the corresponding announcement, if the
-// requesting user is not permitted to delete the requested course or
-// for access errors. * `FAILED_PRECONDITION` if the requested
-// announcement has already been deleted. * `NOT_FOUND` if no course
-// exists with the requested ID.
+// corresponding announcement item. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting developer project did not
+// create the corresponding announcement, if the requesting user is not
+// permitted to delete the requested course or for access errors. *
+// `FAILED_PRECONDITION` if the requested announcement has already been
+// deleted. * `NOT_FOUND` if no course exists with the requested ID.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the announcement to delete. This identifier is a
 //     Classroom-assigned identifier.
 func (r *CoursesAnnouncementsService) Delete(courseId string, id string) *CoursesAnnouncementsDeleteCall {
@@ -4954,23 +3871,21 @@ func (r *CoursesAnnouncementsService) Delete(courseId string, id string) *Course
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesAnnouncementsDeleteCall) Fields(s ...googleapi.Field) *CoursesAnnouncementsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesAnnouncementsDeleteCall) Context(ctx context.Context) *CoursesAnnouncementsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesAnnouncementsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4979,12 +3894,7 @@ func (c *CoursesAnnouncementsDeleteCall) Header() http.Header {
 }
 
 func (c *CoursesAnnouncementsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5003,12 +3913,10 @@ func (c *CoursesAnnouncementsDeleteCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "classroom.courses.announcements.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesAnnouncementsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5039,41 +3947,7 @@ func (c *CoursesAnnouncementsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an announcement. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding announcement item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding announcement, if the requesting user is not permitted to delete the requested course or for access errors. * `FAILED_PRECONDITION` if the requested announcement has already been deleted. * `NOT_FOUND` if no course exists with the requested ID.",
-	//   "flatPath": "v1/courses/{courseId}/announcements/{id}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.courses.announcements.delete",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the announcement to delete. This identifier is a Classroom-assigned identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/announcements/{id}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.announcements"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.announcements.get":
 
 type CoursesAnnouncementsGetCall struct {
 	s            *Service
@@ -5085,14 +3959,14 @@ type CoursesAnnouncementsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns an announcement. This method returns the following error
-// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to access the requested course or announcement, or for access errors.
-// * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
-// the requested course or announcement does not exist.
+// Get: Returns an announcement. This method returns the following error codes:
+// * `PERMISSION_DENIED` if the requesting user is not permitted to access the
+// requested course or announcement, or for access errors. * `INVALID_ARGUMENT`
+// if the request is malformed. * `NOT_FOUND` if the requested course or
+// announcement does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) Get(courseId string, id string) *CoursesAnnouncementsGetCall {
 	c := &CoursesAnnouncementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5102,33 +3976,29 @@ func (r *CoursesAnnouncementsService) Get(courseId string, id string) *CoursesAn
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesAnnouncementsGetCall) Fields(s ...googleapi.Field) *CoursesAnnouncementsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesAnnouncementsGetCall) IfNoneMatch(entityTag string) *CoursesAnnouncementsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesAnnouncementsGetCall) Context(ctx context.Context) *CoursesAnnouncementsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesAnnouncementsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5137,12 +4007,7 @@ func (c *CoursesAnnouncementsGetCall) Header() http.Header {
 }
 
 func (c *CoursesAnnouncementsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5164,12 +4029,10 @@ func (c *CoursesAnnouncementsGetCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "classroom.courses.announcements.get" call.
-// Exactly one of *Announcement or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Announcement.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Announcement.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesAnnouncementsGetCall) Do(opts ...googleapi.CallOption) (*Announcement, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5200,42 +4063,7 @@ func (c *CoursesAnnouncementsGetCall) Do(opts ...googleapi.CallOption) (*Announc
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns an announcement. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or announcement, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course or announcement does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/announcements/{id}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.announcements.get",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the announcement.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/announcements/{id}",
-	//   "response": {
-	//     "$ref": "Announcement"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.announcements",
-	//     "https://www.googleapis.com/auth/classroom.announcements.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.announcements.list":
 
 type CoursesAnnouncementsListCall struct {
 	s            *Service
@@ -5246,16 +4074,16 @@ type CoursesAnnouncementsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of announcements that the requester is permitted
-// to view. Course students may only view `PUBLISHED` announcements.
-// Course teachers and domain administrators may view all announcements.
-// This method returns the following error codes: * `PERMISSION_DENIED`
-// if the requesting user is not permitted to access the requested
-// course or for access errors. * `INVALID_ARGUMENT` if the request is
-// malformed. * `NOT_FOUND` if the requested course does not exist.
+// List: Returns a list of announcements that the requester is permitted to
+// view. Course students may only view `PUBLISHED` announcements. Course
+// teachers and domain administrators may view all announcements. This method
+// returns the following error codes: * `PERMISSION_DENIED` if the requesting
+// user is not permitted to access the requested course or for access errors. *
+// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesAnnouncementsService) List(courseId string) *CoursesAnnouncementsListCall {
 	c := &CoursesAnnouncementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5263,91 +4091,84 @@ func (r *CoursesAnnouncementsService) List(courseId string) *CoursesAnnouncement
 }
 
 // AnnouncementStates sets the optional parameter "announcementStates":
-// Restriction on the `state` of announcements returned. If this
-// argument is left unspecified, the default value is `PUBLISHED`.
+// Restriction on the `state` of announcements returned. If this argument is
+// left unspecified, the default value is `PUBLISHED`.
 //
 // Possible values:
 //
-//	"ANNOUNCEMENT_STATE_UNSPECIFIED" - No state specified. This is
+//	"ANNOUNCEMENT_STATE_UNSPECIFIED" - No state specified. This is never
 //
-// never returned.
+// returned.
 //
-//	"PUBLISHED" - Status for announcement that has been published. This
+//	"PUBLISHED" - Status for announcement that has been published. This is the
 //
-// is the default state.
+// default state.
 //
 //	"DRAFT" - Status for an announcement that is not yet published.
 //
-// Announcement in this state is visible only to course teachers and
-// domain administrators.
+// Announcement in this state is visible only to course teachers and domain
+// administrators.
 //
-//	"DELETED" - Status for announcement that was published but is now
+//	"DELETED" - Status for announcement that was published but is now deleted.
 //
-// deleted. Announcement in this state is visible only to course
-// teachers and domain administrators. Announcement in this state is
-// deleted after some time.
+// Announcement in this state is visible only to course teachers and domain
+// administrators. Announcement in this state is deleted after some time.
 func (c *CoursesAnnouncementsListCall) AnnouncementStates(announcementStates ...string) *CoursesAnnouncementsListCall {
 	c.urlParams_.SetMulti("announcementStates", append([]string{}, announcementStates...))
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Optional sort ordering
-// for results. A comma-separated list of fields with an optional sort
-// direction keyword. Supported field is `updateTime`. Supported
-// direction keywords are `asc` and `desc`. If not specified,
-// `updateTime desc` is the default behavior. Examples: `updateTime
-// asc`, `updateTime`
+// OrderBy sets the optional parameter "orderBy": Optional sort ordering for
+// results. A comma-separated list of fields with an optional sort direction
+// keyword. Supported field is `updateTime`. Supported direction keywords are
+// `asc` and `desc`. If not specified, `updateTime desc` is the default
+// behavior. Examples: `updateTime asc`, `updateTime`
 func (c *CoursesAnnouncementsListCall) OrderBy(orderBy string) *CoursesAnnouncementsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. Zero or unspecified indicates that the server may
-// assign a maximum. The server may return fewer than the specified
-// number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. Zero or unspecified indicates that the server may assign a maximum.
+// The server may return fewer than the specified number of results.
 func (c *CoursesAnnouncementsListCall) PageSize(pageSize int64) *CoursesAnnouncementsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *CoursesAnnouncementsListCall) PageToken(pageToken string) *CoursesAnnouncementsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesAnnouncementsListCall) Fields(s ...googleapi.Field) *CoursesAnnouncementsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesAnnouncementsListCall) IfNoneMatch(entityTag string) *CoursesAnnouncementsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesAnnouncementsListCall) Context(ctx context.Context) *CoursesAnnouncementsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesAnnouncementsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5356,12 +4177,7 @@ func (c *CoursesAnnouncementsListCall) Header() http.Header {
 }
 
 func (c *CoursesAnnouncementsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5382,12 +4198,11 @@ func (c *CoursesAnnouncementsListCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "classroom.courses.announcements.list" call.
-// Exactly one of *ListAnnouncementsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListAnnouncementsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListAnnouncementsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CoursesAnnouncementsListCall) Do(opts ...googleapi.CallOption) (*ListAnnouncementsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5418,66 +4233,6 @@ func (c *CoursesAnnouncementsListCall) Do(opts ...googleapi.CallOption) (*ListAn
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of announcements that the requester is permitted to view. Course students may only view `PUBLISHED` announcements. Course teachers and domain administrators may view all announcements. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/announcements",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.announcements.list",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "announcementStates": {
-	//       "description": "Restriction on the `state` of announcements returned. If this argument is left unspecified, the default value is `PUBLISHED`.",
-	//       "enum": [
-	//         "ANNOUNCEMENT_STATE_UNSPECIFIED",
-	//         "PUBLISHED",
-	//         "DRAFT",
-	//         "DELETED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "No state specified. This is never returned.",
-	//         "Status for announcement that has been published. This is the default state.",
-	//         "Status for an announcement that is not yet published. Announcement in this state is visible only to course teachers and domain administrators.",
-	//         "Status for announcement that was published but is now deleted. Announcement in this state is visible only to course teachers and domain administrators. Announcement in this state is deleted after some time."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional sort ordering for results. A comma-separated list of fields with an optional sort direction keyword. Supported field is `updateTime`. Supported direction keywords are `asc` and `desc`. If not specified, `updateTime desc` is the default behavior. Examples: `updateTime asc`, `updateTime`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/announcements",
-	//   "response": {
-	//     "$ref": "ListAnnouncementsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.announcements",
-	//     "https://www.googleapis.com/auth/classroom.announcements.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5485,7 +4240,7 @@ func (c *CoursesAnnouncementsListCall) Do(opts ...googleapi.CallOption) (*ListAn
 // The provided context supersedes any context provided to the Context method.
 func (c *CoursesAnnouncementsListCall) Pages(ctx context.Context, f func(*ListAnnouncementsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5501,8 +4256,6 @@ func (c *CoursesAnnouncementsListCall) Pages(ctx context.Context, f func(*ListAn
 	}
 }
 
-// method id "classroom.courses.announcements.modifyAssignees":
-
 type CoursesAnnouncementsModifyAssigneesCall struct {
 	s                                  *Service
 	courseId                           string
@@ -5513,16 +4266,15 @@ type CoursesAnnouncementsModifyAssigneesCall struct {
 	header_                            http.Header
 }
 
-// ModifyAssignees: Modifies assignee mode and options of an
-// announcement. Only a teacher of the course that contains the
-// announcement may call this method. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting user is not
-// permitted to access the requested course or course work or for access
-// errors. * `INVALID_ARGUMENT` if the request is malformed. *
-// `NOT_FOUND` if the requested course or course work does not exist.
+// ModifyAssignees: Modifies assignee mode and options of an announcement. Only
+// a teacher of the course that contains the announcement may call this method.
+// This method returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user is not permitted to access the requested course or course
+// work or for access errors. * `INVALID_ARGUMENT` if the request is malformed.
+// * `NOT_FOUND` if the requested course or course work does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) ModifyAssignees(courseId string, id string, modifyannouncementassigneesrequest *ModifyAnnouncementAssigneesRequest) *CoursesAnnouncementsModifyAssigneesCall {
 	c := &CoursesAnnouncementsModifyAssigneesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5533,23 +4285,21 @@ func (r *CoursesAnnouncementsService) ModifyAssignees(courseId string, id string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesAnnouncementsModifyAssigneesCall) Fields(s ...googleapi.Field) *CoursesAnnouncementsModifyAssigneesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesAnnouncementsModifyAssigneesCall) Context(ctx context.Context) *CoursesAnnouncementsModifyAssigneesCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesAnnouncementsModifyAssigneesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5558,18 +4308,12 @@ func (c *CoursesAnnouncementsModifyAssigneesCall) Header() http.Header {
 }
 
 func (c *CoursesAnnouncementsModifyAssigneesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifyannouncementassigneesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/announcements/{id}:modifyAssignees")
@@ -5587,12 +4331,10 @@ func (c *CoursesAnnouncementsModifyAssigneesCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "classroom.courses.announcements.modifyAssignees" call.
-// Exactly one of *Announcement or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Announcement.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Announcement.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesAnnouncementsModifyAssigneesCall) Do(opts ...googleapi.CallOption) (*Announcement, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5623,44 +4365,7 @@ func (c *CoursesAnnouncementsModifyAssigneesCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modifies assignee mode and options of an announcement. Only a teacher of the course that contains the announcement may call this method. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course or course work does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/announcements/{id}:modifyAssignees",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.announcements.modifyAssignees",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the announcement.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/announcements/{id}:modifyAssignees",
-	//   "request": {
-	//     "$ref": "ModifyAnnouncementAssigneesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Announcement"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.announcements"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.announcements.patch":
 
 type CoursesAnnouncementsPatchCall struct {
 	s            *Service
@@ -5672,16 +4377,15 @@ type CoursesAnnouncementsPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates one or more fields of an announcement. This method
-// returns the following error codes: * `PERMISSION_DENIED` if the
-// requesting developer project did not create the corresponding
-// announcement or for access errors. * `INVALID_ARGUMENT` if the
-// request is malformed. * `FAILED_PRECONDITION` if the requested
-// announcement has already been deleted. * `NOT_FOUND` if the requested
-// course or announcement does not exist
+// Patch: Updates one or more fields of an announcement. This method returns
+// the following error codes: * `PERMISSION_DENIED` if the requesting developer
+// project did not create the corresponding announcement or for access errors.
+// * `INVALID_ARGUMENT` if the request is malformed. * `FAILED_PRECONDITION` if
+// the requested announcement has already been deleted. * `NOT_FOUND` if the
+// requested course or announcement does not exist
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) Patch(courseId string, id string, announcement *Announcement) *CoursesAnnouncementsPatchCall {
 	c := &CoursesAnnouncementsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5691,14 +4395,13 @@ func (r *CoursesAnnouncementsService) Patch(courseId string, id string, announce
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Mask that
-// identifies which fields on the announcement to update. This field is
-// required to do an update. The update fails if invalid fields are
-// specified. If a field supports empty values, it can be cleared by
-// specifying it in the update mask and not in the Announcement object.
-// If a field that does not support empty values is included in the
-// update mask and not set in the Announcement object, an
-// `INVALID_ARGUMENT` error is returned. The following fields may be
+// UpdateMask sets the optional parameter "updateMask": Mask that identifies
+// which fields on the announcement to update. This field is required to do an
+// update. The update fails if invalid fields are specified. If a field
+// supports empty values, it can be cleared by specifying it in the update mask
+// and not in the Announcement object. If a field that does not support empty
+// values is included in the update mask and not set in the Announcement
+// object, an `INVALID_ARGUMENT` error is returned. The following fields may be
 // specified by teachers: * `text` * `state` * `scheduled_time`
 func (c *CoursesAnnouncementsPatchCall) UpdateMask(updateMask string) *CoursesAnnouncementsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -5706,23 +4409,21 @@ func (c *CoursesAnnouncementsPatchCall) UpdateMask(updateMask string) *CoursesAn
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesAnnouncementsPatchCall) Fields(s ...googleapi.Field) *CoursesAnnouncementsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesAnnouncementsPatchCall) Context(ctx context.Context) *CoursesAnnouncementsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesAnnouncementsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5731,18 +4432,12 @@ func (c *CoursesAnnouncementsPatchCall) Header() http.Header {
 }
 
 func (c *CoursesAnnouncementsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.announcement)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/announcements/{id}")
@@ -5760,12 +4455,10 @@ func (c *CoursesAnnouncementsPatchCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "classroom.courses.announcements.patch" call.
-// Exactly one of *Announcement or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Announcement.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Announcement.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesAnnouncementsPatchCall) Do(opts ...googleapi.CallOption) (*Announcement, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5796,50 +4489,7 @@ func (c *CoursesAnnouncementsPatchCall) Do(opts ...googleapi.CallOption) (*Annou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates one or more fields of an announcement. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding announcement or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `FAILED_PRECONDITION` if the requested announcement has already been deleted. * `NOT_FOUND` if the requested course or announcement does not exist",
-	//   "flatPath": "v1/courses/{courseId}/announcements/{id}",
-	//   "httpMethod": "PATCH",
-	//   "id": "classroom.courses.announcements.patch",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the announcement.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the announcement to update. This field is required to do an update. The update fails if invalid fields are specified. If a field supports empty values, it can be cleared by specifying it in the update mask and not in the Announcement object. If a field that does not support empty values is included in the update mask and not set in the Announcement object, an `INVALID_ARGUMENT` error is returned. The following fields may be specified by teachers: * `text` * `state` * `scheduled_time`",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/announcements/{id}",
-	//   "request": {
-	//     "$ref": "Announcement"
-	//   },
-	//   "response": {
-	//     "$ref": "Announcement"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.announcements"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWork.create":
 
 type CoursesCourseWorkCreateCall struct {
 	s          *Service
@@ -5850,22 +4500,21 @@ type CoursesCourseWorkCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates course work. The resulting course work (and
-// corresponding student submissions) are associated with the Developer
-// Console project of the OAuth client ID
-// (https://support.google.com/cloud/answer/6158849) used to make the
-// request. Classroom API requests to modify course work and student
-// submissions must be made with an OAuth client ID from the associated
-// Developer Console project. This method returns the following error
-// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to access the requested course, create course work in the requested
-// course, share a Drive attachment, or for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
-// requested course does not exist. * `FAILED_PRECONDITION` for the
-// following request error: * AttachmentNotVisible
+// Create: Creates course work. The resulting course work (and corresponding
+// student submissions) are associated with the Developer Console project of
+// the OAuth client ID (https://support.google.com/cloud/answer/6158849) used
+// to make the request. Classroom API requests to modify course work and
+// student submissions must be made with an OAuth client ID from the associated
+// Developer Console project. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user is not permitted to access the
+// requested course, create course work in the requested course, share a Drive
+// attachment, or for access errors. * `INVALID_ARGUMENT` if the request is
+// malformed. * `NOT_FOUND` if the requested course does not exist. *
+// `FAILED_PRECONDITION` for the following request error: *
+// AttachmentNotVisible
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkService) Create(courseId string, coursework *CourseWork) *CoursesCourseWorkCreateCall {
 	c := &CoursesCourseWorkCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5874,23 +4523,21 @@ func (r *CoursesCourseWorkService) Create(courseId string, coursework *CourseWor
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkCreateCall) Fields(s ...googleapi.Field) *CoursesCourseWorkCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkCreateCall) Context(ctx context.Context) *CoursesCourseWorkCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5899,18 +4546,12 @@ func (c *CoursesCourseWorkCreateCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.coursework)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork")
@@ -5927,12 +4568,10 @@ func (c *CoursesCourseWorkCreateCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "classroom.courses.courseWork.create" call.
-// Exactly one of *CourseWork or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CourseWork.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CourseWork.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesCourseWorkCreateCall) Do(opts ...googleapi.CallOption) (*CourseWork, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5963,37 +4602,7 @@ func (c *CoursesCourseWorkCreateCall) Do(opts ...googleapi.CallOption) (*CourseW
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates course work. The resulting course work (and corresponding student submissions) are associated with the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to make the request. Classroom API requests to modify course work and student submissions must be made with an OAuth client ID from the associated Developer Console project. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, create course work in the requested course, share a Drive attachment, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist. * `FAILED_PRECONDITION` for the following request error: * AttachmentNotVisible",
-	//   "flatPath": "v1/courses/{courseId}/courseWork",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.courseWork.create",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork",
-	//   "request": {
-	//     "$ref": "CourseWork"
-	//   },
-	//   "response": {
-	//     "$ref": "CourseWork"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.students"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWork.delete":
 
 type CoursesCourseWorkDeleteCall struct {
 	s          *Service
@@ -6004,19 +4613,18 @@ type CoursesCourseWorkDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a course work. This request must be made by the
-// Developer Console project of the OAuth client ID
+// Delete: Deletes a course work. This request must be made by the Developer
+// Console project of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the
-// corresponding course work item. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting developer
-// project did not create the corresponding course work, if the
-// requesting user is not permitted to delete the requested course or
-// for access errors. * `FAILED_PRECONDITION` if the requested course
-// work has already been deleted. * `NOT_FOUND` if no course exists with
-// the requested ID.
+// corresponding course work item. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting developer project did not
+// create the corresponding course work, if the requesting user is not
+// permitted to delete the requested course or for access errors. *
+// `FAILED_PRECONDITION` if the requested course work has already been deleted.
+// * `NOT_FOUND` if no course exists with the requested ID.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the course work to delete. This identifier is a
 //     Classroom-assigned identifier.
 func (r *CoursesCourseWorkService) Delete(courseId string, id string) *CoursesCourseWorkDeleteCall {
@@ -6027,23 +4635,21 @@ func (r *CoursesCourseWorkService) Delete(courseId string, id string) *CoursesCo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkDeleteCall) Fields(s ...googleapi.Field) *CoursesCourseWorkDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkDeleteCall) Context(ctx context.Context) *CoursesCourseWorkDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6052,12 +4658,7 @@ func (c *CoursesCourseWorkDeleteCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -6076,12 +4677,10 @@ func (c *CoursesCourseWorkDeleteCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "classroom.courses.courseWork.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesCourseWorkDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6112,41 +4711,7 @@ func (c *CoursesCourseWorkDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a course work. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding course work, if the requesting user is not permitted to delete the requested course or for access errors. * `FAILED_PRECONDITION` if the requested course work has already been deleted. * `NOT_FOUND` if no course exists with the requested ID.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork/{id}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.courses.courseWork.delete",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the course work to delete. This identifier is a Classroom-assigned identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork/{id}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.students"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWork.get":
 
 type CoursesCourseWorkGetCall struct {
 	s            *Service
@@ -6158,14 +4723,14 @@ type CoursesCourseWorkGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns course work. This method returns the following error
-// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to access the requested course or course work, or for access errors.
-// * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
-// the requested course or course work does not exist.
+// Get: Returns course work. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user is not permitted to access the
+// requested course or course work, or for access errors. * `INVALID_ARGUMENT`
+// if the request is malformed. * `NOT_FOUND` if the requested course or course
+// work does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the course work.
 func (r *CoursesCourseWorkService) Get(courseId string, id string) *CoursesCourseWorkGetCall {
 	c := &CoursesCourseWorkGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6175,33 +4740,29 @@ func (r *CoursesCourseWorkService) Get(courseId string, id string) *CoursesCours
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkGetCall) Fields(s ...googleapi.Field) *CoursesCourseWorkGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesCourseWorkGetCall) IfNoneMatch(entityTag string) *CoursesCourseWorkGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkGetCall) Context(ctx context.Context) *CoursesCourseWorkGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6210,12 +4771,7 @@ func (c *CoursesCourseWorkGetCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6237,12 +4793,10 @@ func (c *CoursesCourseWorkGetCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "classroom.courses.courseWork.get" call.
-// Exactly one of *CourseWork or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CourseWork.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CourseWork.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesCourseWorkGetCall) Do(opts ...googleapi.CallOption) (*CourseWork, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6273,44 +4827,7 @@ func (c *CoursesCourseWorkGetCall) Do(opts ...googleapi.CallOption) (*CourseWork
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns course work. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course or course work does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork/{id}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.courseWork.get",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the course work.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork/{id}",
-	//   "response": {
-	//     "$ref": "CourseWork"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.me",
-	//     "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
-	//     "https://www.googleapis.com/auth/classroom.coursework.students",
-	//     "https://www.googleapis.com/auth/classroom.coursework.students.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWork.list":
 
 type CoursesCourseWorkListCall struct {
 	s            *Service
@@ -6321,26 +4838,25 @@ type CoursesCourseWorkListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of course work that the requester is permitted
-// to view. Course students may only view `PUBLISHED` course work.
-// Course teachers and domain administrators may view all course work.
-// This method returns the following error codes: * `PERMISSION_DENIED`
-// if the requesting user is not permitted to access the requested
-// course or for access errors. * `INVALID_ARGUMENT` if the request is
-// malformed. * `NOT_FOUND` if the requested course does not exist.
+// List: Returns a list of course work that the requester is permitted to view.
+// Course students may only view `PUBLISHED` course work. Course teachers and
+// domain administrators may view all course work. This method returns the
+// following error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to access the requested course or for access errors. *
+// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkService) List(courseId string) *CoursesCourseWorkListCall {
 	c := &CoursesCourseWorkListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
 	return c
 }
 
-// CourseWorkStates sets the optional parameter "courseWorkStates":
-// Restriction on the work status to return. Only courseWork that
-// matches is returned. If unspecified, items with a work status of
-// `PUBLISHED` is returned.
+// CourseWorkStates sets the optional parameter "courseWorkStates": Restriction
+// on the work status to return. Only courseWork that matches is returned. If
+// unspecified, items with a work status of `PUBLISHED` is returned.
 //
 // Possible values:
 //
@@ -6348,80 +4864,75 @@ func (r *CoursesCourseWorkService) List(courseId string) *CoursesCourseWorkListC
 //
 // returned.
 //
-//	"PUBLISHED" - Status for work that has been published. This is the
+//	"PUBLISHED" - Status for work that has been published. This is the default
 //
-// default state.
+// state.
 //
-//	"DRAFT" - Status for work that is not yet published. Work in this
+//	"DRAFT" - Status for work that is not yet published. Work in this state is
 //
-// state is visible only to course teachers and domain administrators.
+// visible only to course teachers and domain administrators.
 //
-//	"DELETED" - Status for work that was published but is now deleted.
+//	"DELETED" - Status for work that was published but is now deleted. Work in
 //
-// Work in this state is visible only to course teachers and domain
-// administrators. Work in this state is deleted after some time.
+// this state is visible only to course teachers and domain administrators.
+// Work in this state is deleted after some time.
 func (c *CoursesCourseWorkListCall) CourseWorkStates(courseWorkStates ...string) *CoursesCourseWorkListCall {
 	c.urlParams_.SetMulti("courseWorkStates", append([]string{}, courseWorkStates...))
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Optional sort ordering
-// for results. A comma-separated list of fields with an optional sort
-// direction keyword. Supported fields are `updateTime` and `dueDate`.
-// Supported direction keywords are `asc` and `desc`. If not specified,
-// `updateTime desc` is the default behavior. Examples: `dueDate
-// asc,updateTime desc`, `updateTime,dueDate desc`
+// OrderBy sets the optional parameter "orderBy": Optional sort ordering for
+// results. A comma-separated list of fields with an optional sort direction
+// keyword. Supported fields are `updateTime` and `dueDate`. Supported
+// direction keywords are `asc` and `desc`. If not specified, `updateTime desc`
+// is the default behavior. Examples: `dueDate asc,updateTime desc`,
+// `updateTime,dueDate desc`
 func (c *CoursesCourseWorkListCall) OrderBy(orderBy string) *CoursesCourseWorkListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. Zero or unspecified indicates that the server may
-// assign a maximum. The server may return fewer than the specified
-// number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. Zero or unspecified indicates that the server may assign a maximum.
+// The server may return fewer than the specified number of results.
 func (c *CoursesCourseWorkListCall) PageSize(pageSize int64) *CoursesCourseWorkListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *CoursesCourseWorkListCall) PageToken(pageToken string) *CoursesCourseWorkListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkListCall) Fields(s ...googleapi.Field) *CoursesCourseWorkListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesCourseWorkListCall) IfNoneMatch(entityTag string) *CoursesCourseWorkListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkListCall) Context(ctx context.Context) *CoursesCourseWorkListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6430,12 +4941,7 @@ func (c *CoursesCourseWorkListCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6456,12 +4962,11 @@ func (c *CoursesCourseWorkListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "classroom.courses.courseWork.list" call.
-// Exactly one of *ListCourseWorkResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListCourseWorkResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCourseWorkResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CoursesCourseWorkListCall) Do(opts ...googleapi.CallOption) (*ListCourseWorkResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6492,68 +4997,6 @@ func (c *CoursesCourseWorkListCall) Do(opts ...googleapi.CallOption) (*ListCours
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of course work that the requester is permitted to view. Course students may only view `PUBLISHED` course work. Course teachers and domain administrators may view all course work. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.courseWork.list",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "courseWorkStates": {
-	//       "description": "Restriction on the work status to return. Only courseWork that matches is returned. If unspecified, items with a work status of `PUBLISHED` is returned.",
-	//       "enum": [
-	//         "COURSE_WORK_STATE_UNSPECIFIED",
-	//         "PUBLISHED",
-	//         "DRAFT",
-	//         "DELETED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "No state specified. This is never returned.",
-	//         "Status for work that has been published. This is the default state.",
-	//         "Status for work that is not yet published. Work in this state is visible only to course teachers and domain administrators.",
-	//         "Status for work that was published but is now deleted. Work in this state is visible only to course teachers and domain administrators. Work in this state is deleted after some time."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional sort ordering for results. A comma-separated list of fields with an optional sort direction keyword. Supported fields are `updateTime` and `dueDate`. Supported direction keywords are `asc` and `desc`. If not specified, `updateTime desc` is the default behavior. Examples: `dueDate asc,updateTime desc`, `updateTime,dueDate desc`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork",
-	//   "response": {
-	//     "$ref": "ListCourseWorkResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.me",
-	//     "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
-	//     "https://www.googleapis.com/auth/classroom.coursework.students",
-	//     "https://www.googleapis.com/auth/classroom.coursework.students.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6561,7 +5004,7 @@ func (c *CoursesCourseWorkListCall) Do(opts ...googleapi.CallOption) (*ListCours
 // The provided context supersedes any context provided to the Context method.
 func (c *CoursesCourseWorkListCall) Pages(ctx context.Context, f func(*ListCourseWorkResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6577,8 +5020,6 @@ func (c *CoursesCourseWorkListCall) Pages(ctx context.Context, f func(*ListCours
 	}
 }
 
-// method id "classroom.courses.courseWork.modifyAssignees":
-
 type CoursesCourseWorkModifyAssigneesCall struct {
 	s                                *Service
 	courseId                         string
@@ -6589,16 +5030,15 @@ type CoursesCourseWorkModifyAssigneesCall struct {
 	header_                          http.Header
 }
 
-// ModifyAssignees: Modifies assignee mode and options of a coursework.
-// Only a teacher of the course that contains the coursework may call
-// this method. This method returns the following error codes: *
-// `PERMISSION_DENIED` if the requesting user is not permitted to access
-// the requested course or course work or for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
-// requested course or course work does not exist.
+// ModifyAssignees: Modifies assignee mode and options of a coursework. Only a
+// teacher of the course that contains the coursework may call this method.
+// This method returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user is not permitted to access the requested course or course
+// work or for access errors. * `INVALID_ARGUMENT` if the request is malformed.
+// * `NOT_FOUND` if the requested course or course work does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the coursework.
 func (r *CoursesCourseWorkService) ModifyAssignees(courseId string, id string, modifycourseworkassigneesrequest *ModifyCourseWorkAssigneesRequest) *CoursesCourseWorkModifyAssigneesCall {
 	c := &CoursesCourseWorkModifyAssigneesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6609,23 +5049,21 @@ func (r *CoursesCourseWorkService) ModifyAssignees(courseId string, id string, m
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkModifyAssigneesCall) Fields(s ...googleapi.Field) *CoursesCourseWorkModifyAssigneesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkModifyAssigneesCall) Context(ctx context.Context) *CoursesCourseWorkModifyAssigneesCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkModifyAssigneesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6634,18 +5072,12 @@ func (c *CoursesCourseWorkModifyAssigneesCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkModifyAssigneesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifycourseworkassigneesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{id}:modifyAssignees")
@@ -6663,12 +5095,10 @@ func (c *CoursesCourseWorkModifyAssigneesCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "classroom.courses.courseWork.modifyAssignees" call.
-// Exactly one of *CourseWork or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CourseWork.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CourseWork.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesCourseWorkModifyAssigneesCall) Do(opts ...googleapi.CallOption) (*CourseWork, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6699,44 +5129,7 @@ func (c *CoursesCourseWorkModifyAssigneesCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modifies assignee mode and options of a coursework. Only a teacher of the course that contains the coursework may call this method. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course or course work does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork/{id}:modifyAssignees",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.courseWork.modifyAssignees",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the coursework.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork/{id}:modifyAssignees",
-	//   "request": {
-	//     "$ref": "ModifyCourseWorkAssigneesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "CourseWork"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.students"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWork.patch":
 
 type CoursesCourseWorkPatchCall struct {
 	s          *Service
@@ -6749,21 +5142,20 @@ type CoursesCourseWorkPatchCall struct {
 }
 
 // Patch: Updates one or more fields of a course work. See
-// google.classroom.v1.CourseWork for details of which fields may be
-// updated and who may change them. This request must be made by the
-// Developer Console project of the OAuth client ID
+// google.classroom.v1.CourseWork for details of which fields may be updated
+// and who may change them. This request must be made by the Developer Console
+// project of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the
-// corresponding course work item. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting developer
-// project did not create the corresponding course work, if the user is
-// not permitted to make the requested modification to the student
-// submission, or for access errors. * `INVALID_ARGUMENT` if the request
-// is malformed. * `FAILED_PRECONDITION` if the requested course work
-// has already been deleted. * `NOT_FOUND` if the requested course,
-// course work, or student submission does not exist.
+// corresponding course work item. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting developer project did not
+// create the corresponding course work, if the user is not permitted to make
+// the requested modification to the student submission, or for access errors.
+// * `INVALID_ARGUMENT` if the request is malformed. * `FAILED_PRECONDITION` if
+// the requested course work has already been deleted. * `NOT_FOUND` if the
+// requested course, course work, or student submission does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the course work.
 func (r *CoursesCourseWorkService) Patch(courseId string, id string, coursework *CourseWork) *CoursesCourseWorkPatchCall {
 	c := &CoursesCourseWorkPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6773,16 +5165,15 @@ func (r *CoursesCourseWorkService) Patch(courseId string, id string, coursework 
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Mask that
-// identifies which fields on the course work to update. This field is
-// required to do an update. The update fails if invalid fields are
-// specified. If a field supports empty values, it can be cleared by
-// specifying it in the update mask and not in the `CourseWork` object.
-// If a field that does not support empty values is included in the
-// update mask and not set in the `CourseWork` object, an
-// `INVALID_ARGUMENT` error is returned. The following fields may be
-// specified by teachers: * `title` * `description` * `state` *
-// `due_date` * `due_time` * `max_points` * `scheduled_time` *
+// UpdateMask sets the optional parameter "updateMask": Mask that identifies
+// which fields on the course work to update. This field is required to do an
+// update. The update fails if invalid fields are specified. If a field
+// supports empty values, it can be cleared by specifying it in the update mask
+// and not in the `CourseWork` object. If a field that does not support empty
+// values is included in the update mask and not set in the `CourseWork`
+// object, an `INVALID_ARGUMENT` error is returned. The following fields may be
+// specified by teachers: * `title` * `description` * `state` * `due_date` *
+// `due_time` * `max_points` * `scheduled_time` *
 // `submission_modification_mode` * `topic_id`
 func (c *CoursesCourseWorkPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -6790,23 +5181,21 @@ func (c *CoursesCourseWorkPatchCall) UpdateMask(updateMask string) *CoursesCours
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkPatchCall) Fields(s ...googleapi.Field) *CoursesCourseWorkPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkPatchCall) Context(ctx context.Context) *CoursesCourseWorkPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6815,18 +5204,12 @@ func (c *CoursesCourseWorkPatchCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.coursework)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{id}")
@@ -6844,12 +5227,10 @@ func (c *CoursesCourseWorkPatchCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "classroom.courses.courseWork.patch" call.
-// Exactly one of *CourseWork or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CourseWork.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CourseWork.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesCourseWorkPatchCall) Do(opts ...googleapi.CallOption) (*CourseWork, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6880,50 +5261,7 @@ func (c *CoursesCourseWorkPatchCall) Do(opts ...googleapi.CallOption) (*CourseWo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates one or more fields of a course work. See google.classroom.v1.CourseWork for details of which fields may be updated and who may change them. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding course work, if the user is not permitted to make the requested modification to the student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `FAILED_PRECONDITION` if the requested course work has already been deleted. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork/{id}",
-	//   "httpMethod": "PATCH",
-	//   "id": "classroom.courses.courseWork.patch",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the course work.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the course work to update. This field is required to do an update. The update fails if invalid fields are specified. If a field supports empty values, it can be cleared by specifying it in the update mask and not in the `CourseWork` object. If a field that does not support empty values is included in the update mask and not set in the `CourseWork` object, an `INVALID_ARGUMENT` error is returned. The following fields may be specified by teachers: * `title` * `description` * `state` * `due_date` * `due_time` * `max_points` * `scheduled_time` * `submission_modification_mode` * `topic_id`",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork/{id}",
-	//   "request": {
-	//     "$ref": "CourseWork"
-	//   },
-	//   "response": {
-	//     "$ref": "CourseWork"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.students"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWork.studentSubmissions.get":
 
 type CoursesCourseWorkStudentSubmissionsGetCall struct {
 	s            *Service
@@ -6936,14 +5274,14 @@ type CoursesCourseWorkStudentSubmissionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a student submission. * `PERMISSION_DENIED` if the
-// requesting user is not permitted to access the requested course,
-// course work, or student submission or for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
-// requested course, course work, or student submission does not exist.
+// Get: Returns a student submission. * `PERMISSION_DENIED` if the requesting
+// user is not permitted to access the requested course, course work, or
+// student submission or for access errors. * `INVALID_ARGUMENT` if the request
+// is malformed. * `NOT_FOUND` if the requested course, course work, or student
+// submission does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - courseWorkId: Identifier of the course work.
 //   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Get(courseId string, courseWorkId string, id string) *CoursesCourseWorkStudentSubmissionsGetCall {
@@ -6955,33 +5293,29 @@ func (r *CoursesCourseWorkStudentSubmissionsService) Get(courseId string, course
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkStudentSubmissionsGetCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesCourseWorkStudentSubmissionsGetCall) IfNoneMatch(entityTag string) *CoursesCourseWorkStudentSubmissionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkStudentSubmissionsGetCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkStudentSubmissionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6990,12 +5324,7 @@ func (c *CoursesCourseWorkStudentSubmissionsGetCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkStudentSubmissionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7018,12 +5347,11 @@ func (c *CoursesCourseWorkStudentSubmissionsGetCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.get" call.
-// Exactly one of *StudentSubmission or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *StudentSubmission.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *StudentSubmission.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CoursesCourseWorkStudentSubmissionsGetCall) Do(opts ...googleapi.CallOption) (*StudentSubmission, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7054,53 +5382,7 @@ func (c *CoursesCourseWorkStudentSubmissionsGetCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a student submission. * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, course work, or student submission or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.courseWork.studentSubmissions.get",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "courseWorkId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "courseWorkId": {
-	//       "description": "Identifier of the course work.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the student submission.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
-	//   "response": {
-	//     "$ref": "StudentSubmission"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.me",
-	//     "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
-	//     "https://www.googleapis.com/auth/classroom.coursework.students",
-	//     "https://www.googleapis.com/auth/classroom.coursework.students.readonly",
-	//     "https://www.googleapis.com/auth/classroom.student-submissions.me.readonly",
-	//     "https://www.googleapis.com/auth/classroom.student-submissions.students.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWork.studentSubmissions.list":
 
 type CoursesCourseWorkStudentSubmissionsListCall struct {
 	s            *Service
@@ -7112,22 +5394,21 @@ type CoursesCourseWorkStudentSubmissionsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of student submissions that the requester is
-// permitted to view, factoring in the OAuth scopes of the request. `-`
-// may be specified as the `course_work_id` to include student
-// submissions for multiple course work items. Course students may only
-// view their own work. Course teachers and domain administrators may
-// view all student submissions. This method returns the following error
-// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to access the requested course or course work, or for access errors.
-// * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
-// the requested course does not exist.
+// List: Returns a list of student submissions that the requester is permitted
+// to view, factoring in the OAuth scopes of the request. `-` may be specified
+// as the `course_work_id` to include student submissions for multiple course
+// work items. Course students may only view their own work. Course teachers
+// and domain administrators may view all student submissions. This method
+// returns the following error codes: * `PERMISSION_DENIED` if the requesting
+// user is not permitted to access the requested course or course work, or for
+// access errors. * `INVALID_ARGUMENT` if the request is malformed. *
+// `NOT_FOUND` if the requested course does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
-//   - courseWorkId: Identifier of the student work to request. This may
-//     be set to the string literal "-" to request student work for all
-//     course work in the specified course.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
+//   - courseWorkId: Identifier of the student work to request. This may be set
+//     to the string literal "-" to request student work for all course work in
+//     the specified course.
 func (r *CoursesCourseWorkStudentSubmissionsService) List(courseId string, courseWorkId string) *CoursesCourseWorkStudentSubmissionsListCall {
 	c := &CoursesCourseWorkStudentSubmissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7136,15 +5417,14 @@ func (r *CoursesCourseWorkStudentSubmissionsService) List(courseId string, cours
 }
 
 // Late sets the optional parameter "late": Requested lateness value. If
-// specified, returned student submissions are restricted by the
-// requested value. If unspecified, submissions are returned regardless
-// of `late` value.
+// specified, returned student submissions are restricted by the requested
+// value. If unspecified, submissions are returned regardless of `late` value.
 //
 // Possible values:
 //
-//	"LATE_VALUES_UNSPECIFIED" - No restriction on submission late
+//	"LATE_VALUES_UNSPECIFIED" - No restriction on submission late values
 //
-// values specified.
+// specified.
 //
 //	"LATE_ONLY" - Return StudentSubmissions where late is true.
 //	"NOT_LATE_ONLY" - Return StudentSubmissions where late is false.
@@ -7153,87 +5433,80 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) Late(late string) *Courses
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. Zero or unspecified indicates that the server may
-// assign a maximum. The server may return fewer than the specified
-// number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. Zero or unspecified indicates that the server may assign a maximum.
+// The server may return fewer than the specified number of results.
 func (c *CoursesCourseWorkStudentSubmissionsListCall) PageSize(pageSize int64) *CoursesCourseWorkStudentSubmissionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *CoursesCourseWorkStudentSubmissionsListCall) PageToken(pageToken string) *CoursesCourseWorkStudentSubmissionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// States sets the optional parameter "states": Requested submission
-// states. If specified, returned student submissions match one of the
-// specified submission states.
+// States sets the optional parameter "states": Requested submission states. If
+// specified, returned student submissions match one of the specified
+// submission states.
 //
 // Possible values:
 //
-//	"SUBMISSION_STATE_UNSPECIFIED" - No state specified. This should
+//	"SUBMISSION_STATE_UNSPECIFIED" - No state specified. This should never be
 //
-// never be returned.
+// returned.
 //
-//	"NEW" - The student has never accessed this submission. Attachments
+//	"NEW" - The student has never accessed this submission. Attachments are
 //
-// are not returned and timestamps is not set.
+// not returned and timestamps is not set.
 //
 //	"CREATED" - Has been created.
 //	"TURNED_IN" - Has been turned in to the teacher.
 //	"RETURNED" - Has been returned to the student.
-//	"RECLAIMED_BY_STUDENT" - Student chose to "unsubmit" the
-//
-// assignment.
+//	"RECLAIMED_BY_STUDENT" - Student chose to "unsubmit" the assignment.
 func (c *CoursesCourseWorkStudentSubmissionsListCall) States(states ...string) *CoursesCourseWorkStudentSubmissionsListCall {
 	c.urlParams_.SetMulti("states", append([]string{}, states...))
 	return c
 }
 
-// UserId sets the optional parameter "userId": Optional argument to
-// restrict returned student work to those owned by the student with the
-// specified identifier. The identifier can be one of the following: *
-// the numeric identifier for the user * the email address of the user *
-// the string literal "me", indicating the requesting user
+// UserId sets the optional parameter "userId": Optional argument to restrict
+// returned student work to those owned by the student with the specified
+// identifier. The identifier can be one of the following: * the numeric
+// identifier for the user * the email address of the user * the string literal
+// "me", indicating the requesting user
 func (c *CoursesCourseWorkStudentSubmissionsListCall) UserId(userId string) *CoursesCourseWorkStudentSubmissionsListCall {
 	c.urlParams_.Set("userId", userId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkStudentSubmissionsListCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesCourseWorkStudentSubmissionsListCall) IfNoneMatch(entityTag string) *CoursesCourseWorkStudentSubmissionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkStudentSubmissionsListCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkStudentSubmissionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7242,12 +5515,7 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkStudentSubmissionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7269,12 +5537,11 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.list" call.
-// Exactly one of *ListStudentSubmissionsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListStudentSubmissionsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListStudentSubmissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CoursesCourseWorkStudentSubmissionsListCall) Do(opts ...googleapi.CallOption) (*ListStudentSubmissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7305,96 +5572,6 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of student submissions that the requester is permitted to view, factoring in the OAuth scopes of the request. `-` may be specified as the `course_work_id` to include student submissions for multiple course work items. Course students may only view their own work. Course teachers and domain administrators may view all student submissions. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.courseWork.studentSubmissions.list",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "courseWorkId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "courseWorkId": {
-	//       "description": "Identifier of the student work to request. This may be set to the string literal `\"-\"` to request student work for all course work in the specified course.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "late": {
-	//       "description": "Requested lateness value. If specified, returned student submissions are restricted by the requested value. If unspecified, submissions are returned regardless of `late` value.",
-	//       "enum": [
-	//         "LATE_VALUES_UNSPECIFIED",
-	//         "LATE_ONLY",
-	//         "NOT_LATE_ONLY"
-	//       ],
-	//       "enumDescriptions": [
-	//         "No restriction on submission late values specified.",
-	//         "Return StudentSubmissions where late is true.",
-	//         "Return StudentSubmissions where late is false."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "states": {
-	//       "description": "Requested submission states. If specified, returned student submissions match one of the specified submission states.",
-	//       "enum": [
-	//         "SUBMISSION_STATE_UNSPECIFIED",
-	//         "NEW",
-	//         "CREATED",
-	//         "TURNED_IN",
-	//         "RETURNED",
-	//         "RECLAIMED_BY_STUDENT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "No state specified. This should never be returned.",
-	//         "The student has never accessed this submission. Attachments are not returned and timestamps is not set.",
-	//         "Has been created.",
-	//         "Has been turned in to the teacher.",
-	//         "Has been returned to the student.",
-	//         "Student chose to \"unsubmit\" the assignment."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "description": "Optional argument to restrict returned student work to those owned by the student with the specified identifier. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions",
-	//   "response": {
-	//     "$ref": "ListStudentSubmissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.me",
-	//     "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
-	//     "https://www.googleapis.com/auth/classroom.coursework.students",
-	//     "https://www.googleapis.com/auth/classroom.coursework.students.readonly",
-	//     "https://www.googleapis.com/auth/classroom.student-submissions.me.readonly",
-	//     "https://www.googleapis.com/auth/classroom.student-submissions.students.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7402,7 +5579,7 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) Do(opts ...googleapi.CallO
 // The provided context supersedes any context provided to the Context method.
 func (c *CoursesCourseWorkStudentSubmissionsListCall) Pages(ctx context.Context, f func(*ListStudentSubmissionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7418,8 +5595,6 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) Pages(ctx context.Context,
 	}
 }
 
-// method id "classroom.courses.courseWork.studentSubmissions.modifyAttachments":
-
 type CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall struct {
 	s                        *Service
 	courseId                 string
@@ -7431,21 +5606,20 @@ type CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall struct {
 	header_                  http.Header
 }
 
-// ModifyAttachments: Modifies attachments of student submission.
-// Attachments may only be added to student submissions belonging to
-// course work objects with a `workType` of `ASSIGNMENT`. This request
-// must be made by the Developer Console project of the OAuth client ID
+// ModifyAttachments: Modifies attachments of student submission. Attachments
+// may only be added to student submissions belonging to course work objects
+// with a `workType` of `ASSIGNMENT`. This request must be made by the
+// Developer Console project of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the
-// corresponding course work item. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting user is not
-// permitted to access the requested course or course work, if the user
-// is not permitted to modify attachments on the requested student
-// submission, or for access errors. * `INVALID_ARGUMENT` if the request
-// is malformed. * `NOT_FOUND` if the requested course, course work, or
-// student submission does not exist.
+// corresponding course work item. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to
+// access the requested course or course work, if the user is not permitted to
+// modify attachments on the requested student submission, or for access
+// errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
+// the requested course, course work, or student submission does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - courseWorkId: Identifier of the course work.
 //   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) ModifyAttachments(courseId string, courseWorkId string, id string, modifyattachmentsrequest *ModifyAttachmentsRequest) *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall {
@@ -7458,23 +5632,21 @@ func (r *CoursesCourseWorkStudentSubmissionsService) ModifyAttachments(courseId 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7483,18 +5655,12 @@ func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Header() http
 }
 
 func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifyattachmentsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:modifyAttachments")
@@ -7513,12 +5679,11 @@ func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) doRequest(alt
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.modifyAttachments" call.
-// Exactly one of *StudentSubmission or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *StudentSubmission.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *StudentSubmission.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Do(opts ...googleapi.CallOption) (*StudentSubmission, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7549,52 +5714,7 @@ func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Do(opts ...go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modifies attachments of student submission. Attachments may only be added to student submissions belonging to course work objects with a `workType` of `ASSIGNMENT`. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, if the user is not permitted to modify attachments on the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:modifyAttachments",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.courseWork.studentSubmissions.modifyAttachments",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "courseWorkId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "courseWorkId": {
-	//       "description": "Identifier of the course work.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the student submission.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:modifyAttachments",
-	//   "request": {
-	//     "$ref": "ModifyAttachmentsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "StudentSubmission"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.me",
-	//     "https://www.googleapis.com/auth/classroom.coursework.students"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWork.studentSubmissions.patch":
 
 type CoursesCourseWorkStudentSubmissionsPatchCall struct {
 	s                 *Service
@@ -7608,20 +5728,19 @@ type CoursesCourseWorkStudentSubmissionsPatchCall struct {
 }
 
 // Patch: Updates one or more fields of a student submission. See
-// google.classroom.v1.StudentSubmission for details of which fields may
-// be updated and who may change them. This request must be made by the
-// Developer Console project of the OAuth client ID
+// google.classroom.v1.StudentSubmission for details of which fields may be
+// updated and who may change them. This request must be made by the Developer
+// Console project of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the
-// corresponding course work item. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting developer
-// project did not create the corresponding course work, if the user is
-// not permitted to make the requested modification to the student
-// submission, or for access errors. * `INVALID_ARGUMENT` if the request
-// is malformed. * `NOT_FOUND` if the requested course, course work, or
-// student submission does not exist.
+// corresponding course work item. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting developer project did not
+// create the corresponding course work, if the user is not permitted to make
+// the requested modification to the student submission, or for access errors.
+// * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course, course work, or student submission does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - courseWorkId: Identifier of the course work.
 //   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Patch(courseId string, courseWorkId string, id string, studentsubmission *StudentSubmission) *CoursesCourseWorkStudentSubmissionsPatchCall {
@@ -7633,34 +5752,32 @@ func (r *CoursesCourseWorkStudentSubmissionsService) Patch(courseId string, cour
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Mask that
-// identifies which fields on the student submission to update. This
-// field is required to do an update. The update fails if invalid fields
-// are specified. The following fields may be specified by teachers: *
-// `draft_grade` * `assigned_grade`
+// UpdateMask sets the optional parameter "updateMask": Mask that identifies
+// which fields on the student submission to update. This field is required to
+// do an update. The update fails if invalid fields are specified. The
+// following fields may be specified by teachers: * `draft_grade` *
+// `assigned_grade`
 func (c *CoursesCourseWorkStudentSubmissionsPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkStudentSubmissionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7669,18 +5786,12 @@ func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkStudentSubmissionsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.studentsubmission)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}")
@@ -7699,12 +5810,11 @@ func (c *CoursesCourseWorkStudentSubmissionsPatchCall) doRequest(alt string) (*h
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.patch" call.
-// Exactly one of *StudentSubmission or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *StudentSubmission.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *StudentSubmission.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Do(opts ...googleapi.CallOption) (*StudentSubmission, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7735,58 +5845,7 @@ func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates one or more fields of a student submission. See google.classroom.v1.StudentSubmission for details of which fields may be updated and who may change them. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding course work, if the user is not permitted to make the requested modification to the student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
-	//   "httpMethod": "PATCH",
-	//   "id": "classroom.courses.courseWork.studentSubmissions.patch",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "courseWorkId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "courseWorkId": {
-	//       "description": "Identifier of the course work.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the student submission.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the student submission to update. This field is required to do an update. The update fails if invalid fields are specified. The following fields may be specified by teachers: * `draft_grade` * `assigned_grade`",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}",
-	//   "request": {
-	//     "$ref": "StudentSubmission"
-	//   },
-	//   "response": {
-	//     "$ref": "StudentSubmission"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.me",
-	//     "https://www.googleapis.com/auth/classroom.coursework.students"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWork.studentSubmissions.reclaim":
 
 type CoursesCourseWorkStudentSubmissionsReclaimCall struct {
 	s                               *Service
@@ -7799,24 +5858,23 @@ type CoursesCourseWorkStudentSubmissionsReclaimCall struct {
 	header_                         http.Header
 }
 
-// Reclaim: Reclaims a student submission on behalf of the student that
-// owns it. Reclaiming a student submission transfers ownership of
-// attached Drive files to the student and updates the submission state.
-// Only the student that owns the requested student submission may call
-// this method, and only for a student submission that has been turned
-// in. This request must be made by the Developer Console project of the
-// OAuth client ID (https://support.google.com/cloud/answer/6158849)
-// used to create the corresponding course work item. This method
-// returns the following error codes: * `PERMISSION_DENIED` if the
-// requesting user is not permitted to access the requested course or
-// course work, unsubmit the requested student submission, or for access
-// errors. * `FAILED_PRECONDITION` if the student submission has not
-// been turned in. * `INVALID_ARGUMENT` if the request is malformed. *
-// `NOT_FOUND` if the requested course, course work, or student
+// Reclaim: Reclaims a student submission on behalf of the student that owns
+// it. Reclaiming a student submission transfers ownership of attached Drive
+// files to the student and updates the submission state. Only the student that
+// owns the requested student submission may call this method, and only for a
+// student submission that has been turned in. This request must be made by the
+// Developer Console project of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to create the
+// corresponding course work item. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to
+// access the requested course or course work, unsubmit the requested student
+// submission, or for access errors. * `FAILED_PRECONDITION` if the student
+// submission has not been turned in. * `INVALID_ARGUMENT` if the request is
+// malformed. * `NOT_FOUND` if the requested course, course work, or student
 // submission does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - courseWorkId: Identifier of the course work.
 //   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Reclaim(courseId string, courseWorkId string, id string, reclaimstudentsubmissionrequest *ReclaimStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReclaimCall {
@@ -7829,23 +5887,21 @@ func (r *CoursesCourseWorkStudentSubmissionsService) Reclaim(courseId string, co
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsReclaimCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsReclaimCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7854,18 +5910,12 @@ func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reclaimstudentsubmissionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:reclaim")
@@ -7884,12 +5934,10 @@ func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) doRequest(alt string) (
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.reclaim" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7920,51 +5968,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Reclaims a student submission on behalf of the student that owns it. Reclaiming a student submission transfers ownership of attached Drive files to the student and updates the submission state. Only the student that owns the requested student submission may call this method, and only for a student submission that has been turned in. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, unsubmit the requested student submission, or for access errors. * `FAILED_PRECONDITION` if the student submission has not been turned in. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:reclaim",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.courseWork.studentSubmissions.reclaim",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "courseWorkId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "courseWorkId": {
-	//       "description": "Identifier of the course work.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the student submission.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:reclaim",
-	//   "request": {
-	//     "$ref": "ReclaimStudentSubmissionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.me"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWork.studentSubmissions.return":
 
 type CoursesCourseWorkStudentSubmissionsReturnCall struct {
 	s                              *Service
@@ -7978,22 +5982,21 @@ type CoursesCourseWorkStudentSubmissionsReturnCall struct {
 }
 
 // Return: Returns a student submission. Returning a student submission
-// transfers ownership of attached Drive files to the student and may
-// also update the submission state. Unlike the Classroom application,
-// returning a student submission does not set assignedGrade to the
-// draftGrade value. Only a teacher of the course that contains the
-// requested student submission may call this method. This request must
-// be made by the Developer Console project of the OAuth client ID
-// (https://support.google.com/cloud/answer/6158849) used to create the
-// corresponding course work item. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting user is not
+// transfers ownership of attached Drive files to the student and may also
+// update the submission state. Unlike the Classroom application, returning a
+// student submission does not set assignedGrade to the draftGrade value. Only
+// a teacher of the course that contains the requested student submission may
+// call this method. This request must be made by the Developer Console project
+// of the OAuth client ID (https://support.google.com/cloud/answer/6158849)
+// used to create the corresponding course work item. This method returns the
+// following error codes: * `PERMISSION_DENIED` if the requesting user is not
 // permitted to access the requested course or course work, return the
-// requested student submission, or for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
-// requested course, course work, or student submission does not exist.
+// requested student submission, or for access errors. * `INVALID_ARGUMENT` if
+// the request is malformed. * `NOT_FOUND` if the requested course, course
+// work, or student submission does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - courseWorkId: Identifier of the course work.
 //   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Return(courseId string, courseWorkId string, id string, returnstudentsubmissionrequest *ReturnStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReturnCall {
@@ -8006,23 +6009,21 @@ func (r *CoursesCourseWorkStudentSubmissionsService) Return(courseId string, cou
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsReturnCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsReturnCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8031,18 +6032,12 @@ func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkStudentSubmissionsReturnCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.returnstudentsubmissionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:return")
@@ -8061,12 +6056,10 @@ func (c *CoursesCourseWorkStudentSubmissionsReturnCall) doRequest(alt string) (*
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.return" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8097,51 +6090,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a student submission. Returning a student submission transfers ownership of attached Drive files to the student and may also update the submission state. Unlike the Classroom application, returning a student submission does not set assignedGrade to the draftGrade value. Only a teacher of the course that contains the requested student submission may call this method. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, return the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:return",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.courseWork.studentSubmissions.return",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "courseWorkId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "courseWorkId": {
-	//       "description": "Identifier of the course work.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the student submission.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:return",
-	//   "request": {
-	//     "$ref": "ReturnStudentSubmissionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.students"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWork.studentSubmissions.turnIn":
 
 type CoursesCourseWorkStudentSubmissionsTurnInCall struct {
 	s                              *Service
@@ -8154,21 +6103,21 @@ type CoursesCourseWorkStudentSubmissionsTurnInCall struct {
 	header_                        http.Header
 }
 
-// TurnIn: Turns in a student submission. Turning in a student
-// submission transfers ownership of attached Drive files to the teacher
-// and may also update the submission state. This may only be called by
-// the student that owns the specified student submission. This request
-// must be made by the Developer Console project of the OAuth client ID
+// TurnIn: Turns in a student submission. Turning in a student submission
+// transfers ownership of attached Drive files to the teacher and may also
+// update the submission state. This may only be called by the student that
+// owns the specified student submission. This request must be made by the
+// Developer Console project of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the
-// corresponding course work item. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting user is not
-// permitted to access the requested course or course work, turn in the
-// requested student submission, or for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
-// requested course, course work, or student submission does not exist.
+// corresponding course work item. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to
+// access the requested course or course work, turn in the requested student
+// submission, or for access errors. * `INVALID_ARGUMENT` if the request is
+// malformed. * `NOT_FOUND` if the requested course, course work, or student
+// submission does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - courseWorkId: Identifier of the course work.
 //   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) TurnIn(courseId string, courseWorkId string, id string, turninstudentsubmissionrequest *TurnInStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsTurnInCall {
@@ -8181,23 +6130,21 @@ func (r *CoursesCourseWorkStudentSubmissionsService) TurnIn(courseId string, cou
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Fields(s ...googleapi.Field) *CoursesCourseWorkStudentSubmissionsTurnInCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Context(ctx context.Context) *CoursesCourseWorkStudentSubmissionsTurnInCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8206,18 +6153,12 @@ func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.turninstudentsubmissionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:turnIn")
@@ -8236,12 +6177,10 @@ func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) doRequest(alt string) (*
 }
 
 // Do executes the "classroom.courses.courseWork.studentSubmissions.turnIn" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8272,51 +6211,7 @@ func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Turns in a student submission. Turning in a student submission transfers ownership of attached Drive files to the teacher and may also update the submission state. This may only be called by the student that owns the specified student submission. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, turn in the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:turnIn",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.courseWork.studentSubmissions.turnIn",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "courseWorkId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "courseWorkId": {
-	//       "description": "Identifier of the course work.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the student submission.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:turnIn",
-	//   "request": {
-	//     "$ref": "TurnInStudentSubmissionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.coursework.me"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWorkMaterials.create":
 
 type CoursesCourseWorkMaterialsCreateCall struct {
 	s                  *Service
@@ -8327,17 +6222,16 @@ type CoursesCourseWorkMaterialsCreateCall struct {
 	header_            http.Header
 }
 
-// Create: Creates a course work material. This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to access the requested course, create course work
-// material in the requested course, share a Drive attachment, or for
-// access errors. * `INVALID_ARGUMENT` if the request is malformed or if
-// more than 20 * materials are provided. * `NOT_FOUND` if the requested
-// course does not exist. * `FAILED_PRECONDITION` for the following
-// request error: * AttachmentNotVisible
+// Create: Creates a course work material. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not permitted
+// to access the requested course, create course work material in the requested
+// course, share a Drive attachment, or for access errors. * `INVALID_ARGUMENT`
+// if the request is malformed or if more than 20 * materials are provided. *
+// `NOT_FOUND` if the requested course does not exist. * `FAILED_PRECONDITION`
+// for the following request error: * AttachmentNotVisible
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkMaterialsService) Create(courseId string, courseworkmaterial *CourseWorkMaterial) *CoursesCourseWorkMaterialsCreateCall {
 	c := &CoursesCourseWorkMaterialsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8346,23 +6240,21 @@ func (r *CoursesCourseWorkMaterialsService) Create(courseId string, courseworkma
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkMaterialsCreateCall) Fields(s ...googleapi.Field) *CoursesCourseWorkMaterialsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkMaterialsCreateCall) Context(ctx context.Context) *CoursesCourseWorkMaterialsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkMaterialsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8371,18 +6263,12 @@ func (c *CoursesCourseWorkMaterialsCreateCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkMaterialsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.courseworkmaterial)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWorkMaterials")
@@ -8399,12 +6285,11 @@ func (c *CoursesCourseWorkMaterialsCreateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "classroom.courses.courseWorkMaterials.create" call.
-// Exactly one of *CourseWorkMaterial or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *CourseWorkMaterial.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CourseWorkMaterial.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CoursesCourseWorkMaterialsCreateCall) Do(opts ...googleapi.CallOption) (*CourseWorkMaterial, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8435,37 +6320,7 @@ func (c *CoursesCourseWorkMaterialsCreateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a course work material. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, create course work material in the requested course, share a Drive attachment, or for access errors. * `INVALID_ARGUMENT` if the request is malformed or if more than 20 * materials are provided. * `NOT_FOUND` if the requested course does not exist. * `FAILED_PRECONDITION` for the following request error: * AttachmentNotVisible",
-	//   "flatPath": "v1/courses/{courseId}/courseWorkMaterials",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.courseWorkMaterials.create",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWorkMaterials",
-	//   "request": {
-	//     "$ref": "CourseWorkMaterial"
-	//   },
-	//   "response": {
-	//     "$ref": "CourseWorkMaterial"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWorkMaterials.delete":
 
 type CoursesCourseWorkMaterialsDeleteCall struct {
 	s          *Service
@@ -8476,21 +6331,20 @@ type CoursesCourseWorkMaterialsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a course work material. This request must be made by
-// the Developer Console project of the OAuth client ID
+// Delete: Deletes a course work material. This request must be made by the
+// Developer Console project of the OAuth client ID
 // (https://support.google.com/cloud/answer/6158849) used to create the
-// corresponding course work material item. This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting
-// developer project did not create the corresponding course work
-// material, if the requesting user is not permitted to delete the
-// requested course or for access errors. * `FAILED_PRECONDITION` if the
-// requested course work material has already been deleted. *
-// `NOT_FOUND` if no course exists with the requested ID.
+// corresponding course work material item. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting developer project did
+// not create the corresponding course work material, if the requesting user is
+// not permitted to delete the requested course or for access errors. *
+// `FAILED_PRECONDITION` if the requested course work material has already been
+// deleted. * `NOT_FOUND` if no course exists with the requested ID.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
-//   - id: Identifier of the course work material to delete. This
-//     identifier is a Classroom-assigned identifier.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course work material to delete. This identifier is a
+//     Classroom-assigned identifier.
 func (r *CoursesCourseWorkMaterialsService) Delete(courseId string, id string) *CoursesCourseWorkMaterialsDeleteCall {
 	c := &CoursesCourseWorkMaterialsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8499,23 +6353,21 @@ func (r *CoursesCourseWorkMaterialsService) Delete(courseId string, id string) *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkMaterialsDeleteCall) Fields(s ...googleapi.Field) *CoursesCourseWorkMaterialsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkMaterialsDeleteCall) Context(ctx context.Context) *CoursesCourseWorkMaterialsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkMaterialsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8524,12 +6376,7 @@ func (c *CoursesCourseWorkMaterialsDeleteCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkMaterialsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8548,12 +6395,10 @@ func (c *CoursesCourseWorkMaterialsDeleteCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "classroom.courses.courseWorkMaterials.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesCourseWorkMaterialsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8584,41 +6429,7 @@ func (c *CoursesCourseWorkMaterialsDeleteCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a course work material. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work material item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding course work material, if the requesting user is not permitted to delete the requested course or for access errors. * `FAILED_PRECONDITION` if the requested course work material has already been deleted. * `NOT_FOUND` if no course exists with the requested ID.",
-	//   "flatPath": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.courses.courseWorkMaterials.delete",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the course work material to delete. This identifier is a Classroom-assigned identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWorkMaterials.get":
 
 type CoursesCourseWorkMaterialsGetCall struct {
 	s            *Service
@@ -8630,15 +6441,14 @@ type CoursesCourseWorkMaterialsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a course work material. This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to access the requested course or course work
-// material, or for access errors. * `INVALID_ARGUMENT` if the request
-// is malformed. * `NOT_FOUND` if the requested course or course work
-// material does not exist.
+// Get: Returns a course work material. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to
+// access the requested course or course work material, or for access errors. *
+// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course or course work material does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the course work material.
 func (r *CoursesCourseWorkMaterialsService) Get(courseId string, id string) *CoursesCourseWorkMaterialsGetCall {
 	c := &CoursesCourseWorkMaterialsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8648,33 +6458,29 @@ func (r *CoursesCourseWorkMaterialsService) Get(courseId string, id string) *Cou
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkMaterialsGetCall) Fields(s ...googleapi.Field) *CoursesCourseWorkMaterialsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesCourseWorkMaterialsGetCall) IfNoneMatch(entityTag string) *CoursesCourseWorkMaterialsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkMaterialsGetCall) Context(ctx context.Context) *CoursesCourseWorkMaterialsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkMaterialsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8683,12 +6489,7 @@ func (c *CoursesCourseWorkMaterialsGetCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkMaterialsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8710,12 +6511,11 @@ func (c *CoursesCourseWorkMaterialsGetCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "classroom.courses.courseWorkMaterials.get" call.
-// Exactly one of *CourseWorkMaterial or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *CourseWorkMaterial.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CourseWorkMaterial.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CoursesCourseWorkMaterialsGetCall) Do(opts ...googleapi.CallOption) (*CourseWorkMaterial, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8746,42 +6546,7 @@ func (c *CoursesCourseWorkMaterialsGetCall) Do(opts ...googleapi.CallOption) (*C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a course work material. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work material, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course or course work material does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.courseWorkMaterials.get",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the course work material.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "response": {
-	//     "$ref": "CourseWorkMaterial"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials",
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.courseWorkMaterials.list":
 
 type CoursesCourseWorkMaterialsListCall struct {
 	s            *Service
@@ -8792,17 +6557,16 @@ type CoursesCourseWorkMaterialsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of course work material that the requester is
-// permitted to view. Course students may only view `PUBLISHED` course
-// work material. Course teachers and domain administrators may view all
-// course work material. This method returns the following error codes:
-// * `PERMISSION_DENIED` if the requesting user is not permitted to
-// access the requested course or for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
-// requested course does not exist.
+// List: Returns a list of course work material that the requester is permitted
+// to view. Course students may only view `PUBLISHED` course work material.
+// Course teachers and domain administrators may view all course work material.
+// This method returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user is not permitted to access the requested course or for
+// access errors. * `INVALID_ARGUMENT` if the request is malformed. *
+// `NOT_FOUND` if the requested course does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkMaterialsService) List(courseId string) *CoursesCourseWorkMaterialsListCall {
 	c := &CoursesCourseWorkMaterialsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8810,110 +6574,103 @@ func (r *CoursesCourseWorkMaterialsService) List(courseId string) *CoursesCourse
 }
 
 // CourseWorkMaterialStates sets the optional parameter
-// "courseWorkMaterialStates": Restriction on the work status to return.
-// Only course work material that matches is returned. If unspecified,
-// items with a work status of `PUBLISHED` is returned.
+// "courseWorkMaterialStates": Restriction on the work status to return. Only
+// course work material that matches is returned. If unspecified, items with a
+// work status of `PUBLISHED` is returned.
 //
 // Possible values:
 //
-//	"COURSEWORK_MATERIAL_STATE_UNSPECIFIED" - No state specified. This
+//	"COURSEWORK_MATERIAL_STATE_UNSPECIFIED" - No state specified. This is
 //
-// is never returned.
+// never returned.
 //
-//	"PUBLISHED" - Status for course work material that has been
+//	"PUBLISHED" - Status for course work material that has been published.
 //
-// published. This is the default state.
+// This is the default state.
 //
-//	"DRAFT" - Status for a course work material that is not yet
+//	"DRAFT" - Status for a course work material that is not yet published.
 //
-// published. Course work material in this state is visible only to
-// course teachers and domain administrators.
+// Course work material in this state is visible only to course teachers and
+// domain administrators.
 //
-//	"DELETED" - Status for course work material that was published but
+//	"DELETED" - Status for course work material that was published but is now
 //
-// is now deleted. Course work material in this state is visible only to
-// course teachers and domain administrators. Course work material in
-// this state is deleted after some time.
+// deleted. Course work material in this state is visible only to course
+// teachers and domain administrators. Course work material in this state is
+// deleted after some time.
 func (c *CoursesCourseWorkMaterialsListCall) CourseWorkMaterialStates(courseWorkMaterialStates ...string) *CoursesCourseWorkMaterialsListCall {
 	c.urlParams_.SetMulti("courseWorkMaterialStates", append([]string{}, courseWorkMaterialStates...))
 	return c
 }
 
-// MaterialDriveId sets the optional parameter "materialDriveId":
-// Optional filtering for course work material with at least one Drive
-// material whose ID matches the provided string. If `material_link` is
-// also specified, course work material must have materials matching
-// both filters.
+// MaterialDriveId sets the optional parameter "materialDriveId": Optional
+// filtering for course work material with at least one Drive material whose ID
+// matches the provided string. If `material_link` is also specified, course
+// work material must have materials matching both filters.
 func (c *CoursesCourseWorkMaterialsListCall) MaterialDriveId(materialDriveId string) *CoursesCourseWorkMaterialsListCall {
 	c.urlParams_.Set("materialDriveId", materialDriveId)
 	return c
 }
 
-// MaterialLink sets the optional parameter "materialLink": Optional
-// filtering for course work material with at least one link material
-// whose URL partially matches the provided string.
+// MaterialLink sets the optional parameter "materialLink": Optional filtering
+// for course work material with at least one link material whose URL partially
+// matches the provided string.
 func (c *CoursesCourseWorkMaterialsListCall) MaterialLink(materialLink string) *CoursesCourseWorkMaterialsListCall {
 	c.urlParams_.Set("materialLink", materialLink)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Optional sort ordering
-// for results. A comma-separated list of fields with an optional sort
-// direction keyword. Supported field is `updateTime`. Supported
-// direction keywords are `asc` and `desc`. If not specified,
-// `updateTime desc` is the default behavior. Examples: `updateTime
-// asc`, `updateTime`
+// OrderBy sets the optional parameter "orderBy": Optional sort ordering for
+// results. A comma-separated list of fields with an optional sort direction
+// keyword. Supported field is `updateTime`. Supported direction keywords are
+// `asc` and `desc`. If not specified, `updateTime desc` is the default
+// behavior. Examples: `updateTime asc`, `updateTime`
 func (c *CoursesCourseWorkMaterialsListCall) OrderBy(orderBy string) *CoursesCourseWorkMaterialsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. Zero or unspecified indicates that the server may
-// assign a maximum. The server may return fewer than the specified
-// number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. Zero or unspecified indicates that the server may assign a maximum.
+// The server may return fewer than the specified number of results.
 func (c *CoursesCourseWorkMaterialsListCall) PageSize(pageSize int64) *CoursesCourseWorkMaterialsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *CoursesCourseWorkMaterialsListCall) PageToken(pageToken string) *CoursesCourseWorkMaterialsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkMaterialsListCall) Fields(s ...googleapi.Field) *CoursesCourseWorkMaterialsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesCourseWorkMaterialsListCall) IfNoneMatch(entityTag string) *CoursesCourseWorkMaterialsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkMaterialsListCall) Context(ctx context.Context) *CoursesCourseWorkMaterialsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkMaterialsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8922,12 +6679,7 @@ func (c *CoursesCourseWorkMaterialsListCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkMaterialsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8948,12 +6700,11 @@ func (c *CoursesCourseWorkMaterialsListCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "classroom.courses.courseWorkMaterials.list" call.
-// Exactly one of *ListCourseWorkMaterialResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListCourseWorkMaterialResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCourseWorkMaterialResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CoursesCourseWorkMaterialsListCall) Do(opts ...googleapi.CallOption) (*ListCourseWorkMaterialResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8984,76 +6735,6 @@ func (c *CoursesCourseWorkMaterialsListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of course work material that the requester is permitted to view. Course students may only view `PUBLISHED` course work material. Course teachers and domain administrators may view all course work material. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWorkMaterials",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.courseWorkMaterials.list",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "courseWorkMaterialStates": {
-	//       "description": "Restriction on the work status to return. Only course work material that matches is returned. If unspecified, items with a work status of `PUBLISHED` is returned.",
-	//       "enum": [
-	//         "COURSEWORK_MATERIAL_STATE_UNSPECIFIED",
-	//         "PUBLISHED",
-	//         "DRAFT",
-	//         "DELETED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "No state specified. This is never returned.",
-	//         "Status for course work material that has been published. This is the default state.",
-	//         "Status for a course work material that is not yet published. Course work material in this state is visible only to course teachers and domain administrators.",
-	//         "Status for course work material that was published but is now deleted. Course work material in this state is visible only to course teachers and domain administrators. Course work material in this state is deleted after some time."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "materialDriveId": {
-	//       "description": "Optional filtering for course work material with at least one Drive material whose ID matches the provided string. If `material_link` is also specified, course work material must have materials matching both filters.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "materialLink": {
-	//       "description": "Optional filtering for course work material with at least one link material whose URL partially matches the provided string.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional sort ordering for results. A comma-separated list of fields with an optional sort direction keyword. Supported field is `updateTime`. Supported direction keywords are `asc` and `desc`. If not specified, `updateTime desc` is the default behavior. Examples: `updateTime asc`, `updateTime`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWorkMaterials",
-	//   "response": {
-	//     "$ref": "ListCourseWorkMaterialResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials",
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -9061,7 +6742,7 @@ func (c *CoursesCourseWorkMaterialsListCall) Do(opts ...googleapi.CallOption) (*
 // The provided context supersedes any context provided to the Context method.
 func (c *CoursesCourseWorkMaterialsListCall) Pages(ctx context.Context, f func(*ListCourseWorkMaterialResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -9077,8 +6758,6 @@ func (c *CoursesCourseWorkMaterialsListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
-// method id "classroom.courses.courseWorkMaterials.patch":
-
 type CoursesCourseWorkMaterialsPatchCall struct {
 	s                  *Service
 	courseId           string
@@ -9089,16 +6768,15 @@ type CoursesCourseWorkMaterialsPatchCall struct {
 	header_            http.Header
 }
 
-// Patch: Updates one or more fields of a course work material. This
-// method returns the following error codes: * `PERMISSION_DENIED` if
-// the requesting developer project for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. *
-// `FAILED_PRECONDITION` if the requested course work material has
-// already been deleted. * `NOT_FOUND` if the requested course or course
-// work material does not exist
+// Patch: Updates one or more fields of a course work material. This method
+// returns the following error codes: * `PERMISSION_DENIED` if the requesting
+// developer project for access errors. * `INVALID_ARGUMENT` if the request is
+// malformed. * `FAILED_PRECONDITION` if the requested course work material has
+// already been deleted. * `NOT_FOUND` if the requested course or course work
+// material does not exist
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the course work material.
 func (r *CoursesCourseWorkMaterialsService) Patch(courseId string, id string, courseworkmaterial *CourseWorkMaterial) *CoursesCourseWorkMaterialsPatchCall {
 	c := &CoursesCourseWorkMaterialsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9108,39 +6786,36 @@ func (r *CoursesCourseWorkMaterialsService) Patch(courseId string, id string, co
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Mask that
-// identifies which fields on the course work material to update. This
-// field is required to do an update. The update fails if invalid fields
-// are specified. If a field supports empty values, it can be cleared by
-// specifying it in the update mask and not in the course work material
-// object. If a field that does not support empty values is included in
-// the update mask and not set in the course work material object, an
-// `INVALID_ARGUMENT` error is returned. The following fields may be
-// specified by teachers: * `title` * `description` * `state` *
-// `scheduled_time` * `topic_id`
+// UpdateMask sets the optional parameter "updateMask": Mask that identifies
+// which fields on the course work material to update. This field is required
+// to do an update. The update fails if invalid fields are specified. If a
+// field supports empty values, it can be cleared by specifying it in the
+// update mask and not in the course work material object. If a field that does
+// not support empty values is included in the update mask and not set in the
+// course work material object, an `INVALID_ARGUMENT` error is returned. The
+// following fields may be specified by teachers: * `title` * `description` *
+// `state` * `scheduled_time` * `topic_id`
 func (c *CoursesCourseWorkMaterialsPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkMaterialsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesCourseWorkMaterialsPatchCall) Fields(s ...googleapi.Field) *CoursesCourseWorkMaterialsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesCourseWorkMaterialsPatchCall) Context(ctx context.Context) *CoursesCourseWorkMaterialsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesCourseWorkMaterialsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9149,18 +6824,12 @@ func (c *CoursesCourseWorkMaterialsPatchCall) Header() http.Header {
 }
 
 func (c *CoursesCourseWorkMaterialsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.courseworkmaterial)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWorkMaterials/{id}")
@@ -9178,12 +6847,11 @@ func (c *CoursesCourseWorkMaterialsPatchCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "classroom.courses.courseWorkMaterials.patch" call.
-// Exactly one of *CourseWorkMaterial or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *CourseWorkMaterial.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CourseWorkMaterial.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CoursesCourseWorkMaterialsPatchCall) Do(opts ...googleapi.CallOption) (*CourseWorkMaterial, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9214,50 +6882,7 @@ func (c *CoursesCourseWorkMaterialsPatchCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates one or more fields of a course work material. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `FAILED_PRECONDITION` if the requested course work material has already been deleted. * `NOT_FOUND` if the requested course or course work material does not exist",
-	//   "flatPath": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "httpMethod": "PATCH",
-	//   "id": "classroom.courses.courseWorkMaterials.patch",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the course work material.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the course work material to update. This field is required to do an update. The update fails if invalid fields are specified. If a field supports empty values, it can be cleared by specifying it in the update mask and not in the course work material object. If a field that does not support empty values is included in the update mask and not set in the course work material object, an `INVALID_ARGUMENT` error is returned. The following fields may be specified by teachers: * `title` * `description` * `state` * `scheduled_time` * `topic_id`",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "request": {
-	//     "$ref": "CourseWorkMaterial"
-	//   },
-	//   "response": {
-	//     "$ref": "CourseWorkMaterial"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.students.create":
 
 type CoursesStudentsCreateCall struct {
 	s          *Service
@@ -9268,24 +6893,21 @@ type CoursesStudentsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Adds a user as a student of a course. Domain administrators
-// are permitted to directly add
-// (https://developers.google.com/classroom/guides/manage-users) users
-// within their domain as students to courses within their domain.
-// Students are permitted to add themselves to a course using an
-// enrollment code. This method returns the following error codes: *
-// `PERMISSION_DENIED` if the requesting user is not permitted to create
-// students in this course or for access errors. * `NOT_FOUND` if the
-// requested course ID does not exist. * `FAILED_PRECONDITION` if the
-// requested user's account is disabled, for the following request
-// errors: * CourseMemberLimitReached * CourseNotModifiable *
-// UserGroupsMembershipLimitReached * InactiveCourseOwner *
-// `ALREADY_EXISTS` if the user is already a student or teacher in the
-// course.
+// Create: Adds a user as a student of a course. Domain administrators are
+// permitted to directly add
+// (https://developers.google.com/classroom/guides/manage-users) users within
+// their domain as students to courses within their domain. Students are
+// permitted to add themselves to a course using an enrollment code. This
+// method returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user is not permitted to create students in this course or for
+// access errors. * `NOT_FOUND` if the requested course ID does not exist. *
+// `FAILED_PRECONDITION` if the requested user's account is disabled, for the
+// following request errors: * CourseMemberLimitReached * CourseNotModifiable *
+// UserGroupsMembershipLimitReached * InactiveCourseOwner * `ALREADY_EXISTS` if
+// the user is already a student or teacher in the course.
 //
 //   - courseId: Identifier of the course to create the student in. This
-//     identifier can be either the Classroom-assigned identifier or an
-//     alias.
+//     identifier can be either the Classroom-assigned identifier or an alias.
 func (r *CoursesStudentsService) Create(courseId string, student *Student) *CoursesStudentsCreateCall {
 	c := &CoursesStudentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9293,34 +6915,31 @@ func (r *CoursesStudentsService) Create(courseId string, student *Student) *Cour
 	return c
 }
 
-// EnrollmentCode sets the optional parameter "enrollmentCode":
-// Enrollment code of the course to create the student in. This code is
-// required if userId corresponds to the requesting user; it may be
-// omitted if the requesting user has administrative permissions to
-// create students for any user.
+// EnrollmentCode sets the optional parameter "enrollmentCode": Enrollment code
+// of the course to create the student in. This code is required if userId
+// corresponds to the requesting user; it may be omitted if the requesting user
+// has administrative permissions to create students for any user.
 func (c *CoursesStudentsCreateCall) EnrollmentCode(enrollmentCode string) *CoursesStudentsCreateCall {
 	c.urlParams_.Set("enrollmentCode", enrollmentCode)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesStudentsCreateCall) Fields(s ...googleapi.Field) *CoursesStudentsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesStudentsCreateCall) Context(ctx context.Context) *CoursesStudentsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesStudentsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9329,18 +6948,12 @@ func (c *CoursesStudentsCreateCall) Header() http.Header {
 }
 
 func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.student)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/students")
@@ -9357,12 +6970,10 @@ func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "classroom.courses.students.create" call.
-// Exactly one of *Student or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Student.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Student.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesStudentsCreateCall) Do(opts ...googleapi.CallOption) (*Student, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9393,44 +7004,7 @@ func (c *CoursesStudentsCreateCall) Do(opts ...googleapi.CallOption) (*Student, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Adds a user as a student of a course. Domain administrators are permitted to [directly add](https://developers.google.com/classroom/guides/manage-users) users within their domain as students to courses within their domain. Students are permitted to add themselves to a course using an enrollment code. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create students in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * UserGroupsMembershipLimitReached * InactiveCourseOwner * `ALREADY_EXISTS` if the user is already a student or teacher in the course.",
-	//   "flatPath": "v1/courses/{courseId}/students",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.students.create",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course to create the student in. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "enrollmentCode": {
-	//       "description": "Enrollment code of the course to create the student in. This code is required if userId corresponds to the requesting user; it may be omitted if the requesting user has administrative permissions to create students for any user.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/students",
-	//   "request": {
-	//     "$ref": "Student"
-	//   },
-	//   "response": {
-	//     "$ref": "Student"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.profile.emails",
-	//     "https://www.googleapis.com/auth/classroom.profile.photos",
-	//     "https://www.googleapis.com/auth/classroom.rosters"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.students.delete":
 
 type CoursesStudentsDeleteCall struct {
 	s          *Service
@@ -9441,18 +7015,16 @@ type CoursesStudentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a student of a course. This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to delete students of this course or for access
-// errors. * `NOT_FOUND` if no student of this course has the requested
-// ID or if the course does not exist.
+// Delete: Deletes a student of a course. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not permitted
+// to delete students of this course or for access errors. * `NOT_FOUND` if no
+// student of this course has the requested ID or if the course does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
-//   - userId: Identifier of the student to delete. The identifier can be
-//     one of the following: * the numeric identifier for the user * the
-//     email address of the user * the string literal "me", indicating
-//     the requesting user.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
+//   - userId: Identifier of the student to delete. The identifier can be one of
+//     the following: * the numeric identifier for the user * the email address
+//     of the user * the string literal "me", indicating the requesting user.
 func (r *CoursesStudentsService) Delete(courseId string, userId string) *CoursesStudentsDeleteCall {
 	c := &CoursesStudentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9461,23 +7033,21 @@ func (r *CoursesStudentsService) Delete(courseId string, userId string) *Courses
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesStudentsDeleteCall) Fields(s ...googleapi.Field) *CoursesStudentsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesStudentsDeleteCall) Context(ctx context.Context) *CoursesStudentsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesStudentsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9486,12 +7056,7 @@ func (c *CoursesStudentsDeleteCall) Header() http.Header {
 }
 
 func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -9510,12 +7075,10 @@ func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "classroom.courses.students.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesStudentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9546,41 +7109,7 @@ func (c *CoursesStudentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete students of this course or for access errors. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/students/{userId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.courses.students.delete",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "description": "Identifier of the student to delete. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/students/{userId}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.rosters"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.students.get":
 
 type CoursesStudentsGetCall struct {
 	s            *Service
@@ -9592,18 +7121,16 @@ type CoursesStudentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a student of a course. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting user is not
-// permitted to view students of this course or for access errors. *
-// `NOT_FOUND` if no student of this course has the requested ID or if
-// the course does not exist.
+// Get: Returns a student of a course. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view
+// students of this course or for access errors. * `NOT_FOUND` if no student of
+// this course has the requested ID or if the course does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
-//   - userId: Identifier of the student to return. The identifier can be
-//     one of the following: * the numeric identifier for the user * the
-//     email address of the user * the string literal "me", indicating
-//     the requesting user.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
+//   - userId: Identifier of the student to return. The identifier can be one of
+//     the following: * the numeric identifier for the user * the email address
+//     of the user * the string literal "me", indicating the requesting user.
 func (r *CoursesStudentsService) Get(courseId string, userId string) *CoursesStudentsGetCall {
 	c := &CoursesStudentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9612,33 +7139,29 @@ func (r *CoursesStudentsService) Get(courseId string, userId string) *CoursesStu
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesStudentsGetCall) Fields(s ...googleapi.Field) *CoursesStudentsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesStudentsGetCall) IfNoneMatch(entityTag string) *CoursesStudentsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesStudentsGetCall) Context(ctx context.Context) *CoursesStudentsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesStudentsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9647,12 +7170,7 @@ func (c *CoursesStudentsGetCall) Header() http.Header {
 }
 
 func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9674,12 +7192,10 @@ func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.students.get" call.
-// Exactly one of *Student or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Student.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Student.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesStudentsGetCall) Do(opts ...googleapi.CallOption) (*Student, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9710,44 +7226,7 @@ func (c *CoursesStudentsGetCall) Do(opts ...googleapi.CallOption) (*Student, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view students of this course or for access errors. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/students/{userId}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.students.get",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "description": "Identifier of the student to return. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/students/{userId}",
-	//   "response": {
-	//     "$ref": "Student"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.profile.emails",
-	//     "https://www.googleapis.com/auth/classroom.profile.photos",
-	//     "https://www.googleapis.com/auth/classroom.rosters",
-	//     "https://www.googleapis.com/auth/classroom.rosters.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.students.list":
 
 type CoursesStudentsListCall struct {
 	s            *Service
@@ -9760,62 +7239,58 @@ type CoursesStudentsListCall struct {
 
 // List: Returns a list of students of this course that the requester is
 // permitted to view. This method returns the following error codes: *
-// `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for
-// access errors.
+// `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for access
+// errors.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesStudentsService) List(courseId string) *CoursesStudentsListCall {
 	c := &CoursesStudentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. The default is 30 if unspecified or `0`. The server
-// may return fewer than the specified number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. The default is 30 if unspecified or `0`. The server may return fewer
+// than the specified number of results.
 func (c *CoursesStudentsListCall) PageSize(pageSize int64) *CoursesStudentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *CoursesStudentsListCall) PageToken(pageToken string) *CoursesStudentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesStudentsListCall) Fields(s ...googleapi.Field) *CoursesStudentsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesStudentsListCall) IfNoneMatch(entityTag string) *CoursesStudentsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesStudentsListCall) Context(ctx context.Context) *CoursesStudentsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesStudentsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9824,12 +7299,7 @@ func (c *CoursesStudentsListCall) Header() http.Header {
 }
 
 func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9850,12 +7320,11 @@ func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "classroom.courses.students.list" call.
-// Exactly one of *ListStudentsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListStudentsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListStudentsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CoursesStudentsListCall) Do(opts ...googleapi.CallOption) (*ListStudentsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9886,45 +7355,6 @@ func (c *CoursesStudentsListCall) Do(opts ...googleapi.CallOption) (*ListStudent
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of students of this course that the requester is permitted to view. This method returns the following error codes: * `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for access errors.",
-	//   "flatPath": "v1/courses/{courseId}/students",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.students.list",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. The default is 30 if unspecified or `0`. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/students",
-	//   "response": {
-	//     "$ref": "ListStudentsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.profile.emails",
-	//     "https://www.googleapis.com/auth/classroom.profile.photos",
-	//     "https://www.googleapis.com/auth/classroom.rosters",
-	//     "https://www.googleapis.com/auth/classroom.rosters.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -9932,7 +7362,7 @@ func (c *CoursesStudentsListCall) Do(opts ...googleapi.CallOption) (*ListStudent
 // The provided context supersedes any context provided to the Context method.
 func (c *CoursesStudentsListCall) Pages(ctx context.Context, f func(*ListStudentsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -9948,8 +7378,6 @@ func (c *CoursesStudentsListCall) Pages(ctx context.Context, f func(*ListStudent
 	}
 }
 
-// method id "classroom.courses.teachers.create":
-
 type CoursesTeachersCreateCall struct {
 	s          *Service
 	courseId   string
@@ -9959,23 +7387,21 @@ type CoursesTeachersCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a teacher of a course. Domain administrators are
-// permitted to directly add
-// (https://developers.google.com/classroom/guides/manage-users) users
-// within their domain as teachers to courses within their domain.
-// Non-admin users should send an Invitation instead. This method
-// returns the following error codes: * `PERMISSION_DENIED` if the
-// requesting user is not permitted to create teachers in this course or
-// for access errors. * `NOT_FOUND` if the requested course ID does not
-// exist. * `FAILED_PRECONDITION` if the requested user's account is
-// disabled, for the following request errors: *
-// CourseMemberLimitReached * CourseNotModifiable *
-// CourseTeacherLimitReached * UserGroupsMembershipLimitReached *
-// InactiveCourseOwner * `ALREADY_EXISTS` if the user is already a
-// teacher or student in the course.
+// Create: Creates a teacher of a course. Domain administrators are permitted
+// to directly add
+// (https://developers.google.com/classroom/guides/manage-users) users within
+// their domain as teachers to courses within their domain. Non-admin users
+// should send an Invitation instead. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to
+// create teachers in this course or for access errors. * `NOT_FOUND` if the
+// requested course ID does not exist. * `FAILED_PRECONDITION` if the requested
+// user's account is disabled, for the following request errors: *
+// CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached *
+// UserGroupsMembershipLimitReached * InactiveCourseOwner * `ALREADY_EXISTS` if
+// the user is already a teacher or student in the course.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesTeachersService) Create(courseId string, teacher *Teacher) *CoursesTeachersCreateCall {
 	c := &CoursesTeachersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9984,23 +7410,21 @@ func (r *CoursesTeachersService) Create(courseId string, teacher *Teacher) *Cour
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesTeachersCreateCall) Fields(s ...googleapi.Field) *CoursesTeachersCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesTeachersCreateCall) Context(ctx context.Context) *CoursesTeachersCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesTeachersCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10009,18 +7433,12 @@ func (c *CoursesTeachersCreateCall) Header() http.Header {
 }
 
 func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.teacher)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/teachers")
@@ -10037,12 +7455,10 @@ func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "classroom.courses.teachers.create" call.
-// Exactly one of *Teacher or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Teacher.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Teacher.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesTeachersCreateCall) Do(opts ...googleapi.CallOption) (*Teacher, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10073,39 +7489,7 @@ func (c *CoursesTeachersCreateCall) Do(opts ...googleapi.CallOption) (*Teacher, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a teacher of a course. Domain administrators are permitted to [directly add](https://developers.google.com/classroom/guides/manage-users) users within their domain as teachers to courses within their domain. Non-admin users should send an Invitation instead. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached * UserGroupsMembershipLimitReached * InactiveCourseOwner * `ALREADY_EXISTS` if the user is already a teacher or student in the course.",
-	//   "flatPath": "v1/courses/{courseId}/teachers",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.teachers.create",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/teachers",
-	//   "request": {
-	//     "$ref": "Teacher"
-	//   },
-	//   "response": {
-	//     "$ref": "Teacher"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.profile.emails",
-	//     "https://www.googleapis.com/auth/classroom.profile.photos",
-	//     "https://www.googleapis.com/auth/classroom.rosters"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.teachers.delete":
 
 type CoursesTeachersDeleteCall struct {
 	s          *Service
@@ -10116,22 +7500,20 @@ type CoursesTeachersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Removes the specified teacher from the specified course. This
-// method returns the following error codes: * `PERMISSION_DENIED` if
-// the requesting user is not permitted to delete teachers of this
-// course or for access errors. * `NOT_FOUND` if no teacher of this
-// course has the requested ID or if the course does not exist. *
-// `FAILED_PRECONDITION` if the requested ID belongs to the primary
-// teacher of this course. * `FAILED_PRECONDITION` if the requested ID
-// belongs to the owner of the course Drive folder. *
+// Delete: Removes the specified teacher from the specified course. This method
+// returns the following error codes: * `PERMISSION_DENIED` if the requesting
+// user is not permitted to delete teachers of this course or for access
+// errors. * `NOT_FOUND` if no teacher of this course has the requested ID or
+// if the course does not exist. * `FAILED_PRECONDITION` if the requested ID
+// belongs to the primary teacher of this course. * `FAILED_PRECONDITION` if
+// the requested ID belongs to the owner of the course Drive folder. *
 // `FAILED_PRECONDITION` if the course no longer has an active owner.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
-//   - userId: Identifier of the teacher to delete. The identifier can be
-//     one of the following: * the numeric identifier for the user * the
-//     email address of the user * the string literal "me", indicating
-//     the requesting user.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
+//   - userId: Identifier of the teacher to delete. The identifier can be one of
+//     the following: * the numeric identifier for the user * the email address
+//     of the user * the string literal "me", indicating the requesting user.
 func (r *CoursesTeachersService) Delete(courseId string, userId string) *CoursesTeachersDeleteCall {
 	c := &CoursesTeachersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10140,23 +7522,21 @@ func (r *CoursesTeachersService) Delete(courseId string, userId string) *Courses
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesTeachersDeleteCall) Fields(s ...googleapi.Field) *CoursesTeachersDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesTeachersDeleteCall) Context(ctx context.Context) *CoursesTeachersDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesTeachersDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10165,12 +7545,7 @@ func (c *CoursesTeachersDeleteCall) Header() http.Header {
 }
 
 func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -10189,12 +7564,10 @@ func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "classroom.courses.teachers.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesTeachersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10225,41 +7598,7 @@ func (c *CoursesTeachersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Removes the specified teacher from the specified course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete teachers of this course or for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist. * `FAILED_PRECONDITION` if the requested ID belongs to the primary teacher of this course. * `FAILED_PRECONDITION` if the requested ID belongs to the owner of the course Drive folder. * `FAILED_PRECONDITION` if the course no longer has an active owner.",
-	//   "flatPath": "v1/courses/{courseId}/teachers/{userId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.courses.teachers.delete",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "description": "Identifier of the teacher to delete. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/teachers/{userId}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.rosters"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.teachers.get":
 
 type CoursesTeachersGetCall struct {
 	s            *Service
@@ -10271,18 +7610,16 @@ type CoursesTeachersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a teacher of a course. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting user is not
-// permitted to view teachers of this course or for access errors. *
-// `NOT_FOUND` if no teacher of this course has the requested ID or if
-// the course does not exist.
+// Get: Returns a teacher of a course. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view
+// teachers of this course or for access errors. * `NOT_FOUND` if no teacher of
+// this course has the requested ID or if the course does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
-//   - userId: Identifier of the teacher to return. The identifier can be
-//     one of the following: * the numeric identifier for the user * the
-//     email address of the user * the string literal "me", indicating
-//     the requesting user.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
+//   - userId: Identifier of the teacher to return. The identifier can be one of
+//     the following: * the numeric identifier for the user * the email address
+//     of the user * the string literal "me", indicating the requesting user.
 func (r *CoursesTeachersService) Get(courseId string, userId string) *CoursesTeachersGetCall {
 	c := &CoursesTeachersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10291,33 +7628,29 @@ func (r *CoursesTeachersService) Get(courseId string, userId string) *CoursesTea
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesTeachersGetCall) Fields(s ...googleapi.Field) *CoursesTeachersGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesTeachersGetCall) IfNoneMatch(entityTag string) *CoursesTeachersGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesTeachersGetCall) Context(ctx context.Context) *CoursesTeachersGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesTeachersGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10326,12 +7659,7 @@ func (c *CoursesTeachersGetCall) Header() http.Header {
 }
 
 func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10353,12 +7681,10 @@ func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.teachers.get" call.
-// Exactly one of *Teacher or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Teacher.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Teacher.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesTeachersGetCall) Do(opts ...googleapi.CallOption) (*Teacher, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10389,44 +7715,7 @@ func (c *CoursesTeachersGetCall) Do(opts ...googleapi.CallOption) (*Teacher, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view teachers of this course or for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/teachers/{userId}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.teachers.get",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "description": "Identifier of the teacher to return. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/teachers/{userId}",
-	//   "response": {
-	//     "$ref": "Teacher"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.profile.emails",
-	//     "https://www.googleapis.com/auth/classroom.profile.photos",
-	//     "https://www.googleapis.com/auth/classroom.rosters",
-	//     "https://www.googleapis.com/auth/classroom.rosters.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.teachers.list":
 
 type CoursesTeachersListCall struct {
 	s            *Service
@@ -10439,62 +7728,58 @@ type CoursesTeachersListCall struct {
 
 // List: Returns a list of teachers of this course that the requester is
 // permitted to view. This method returns the following error codes: *
-// `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for
-// access errors.
+// `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for access
+// errors.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesTeachersService) List(courseId string) *CoursesTeachersListCall {
 	c := &CoursesTeachersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. The default is 30 if unspecified or `0`. The server
-// may return fewer than the specified number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. The default is 30 if unspecified or `0`. The server may return fewer
+// than the specified number of results.
 func (c *CoursesTeachersListCall) PageSize(pageSize int64) *CoursesTeachersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *CoursesTeachersListCall) PageToken(pageToken string) *CoursesTeachersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesTeachersListCall) Fields(s ...googleapi.Field) *CoursesTeachersListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesTeachersListCall) IfNoneMatch(entityTag string) *CoursesTeachersListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesTeachersListCall) Context(ctx context.Context) *CoursesTeachersListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesTeachersListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10503,12 +7788,7 @@ func (c *CoursesTeachersListCall) Header() http.Header {
 }
 
 func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10529,12 +7809,11 @@ func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "classroom.courses.teachers.list" call.
-// Exactly one of *ListTeachersResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListTeachersResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTeachersResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CoursesTeachersListCall) Do(opts ...googleapi.CallOption) (*ListTeachersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10565,45 +7844,6 @@ func (c *CoursesTeachersListCall) Do(opts ...googleapi.CallOption) (*ListTeacher
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of teachers of this course that the requester is permitted to view. This method returns the following error codes: * `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for access errors.",
-	//   "flatPath": "v1/courses/{courseId}/teachers",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.teachers.list",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. The default is 30 if unspecified or `0`. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/teachers",
-	//   "response": {
-	//     "$ref": "ListTeachersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.profile.emails",
-	//     "https://www.googleapis.com/auth/classroom.profile.photos",
-	//     "https://www.googleapis.com/auth/classroom.rosters",
-	//     "https://www.googleapis.com/auth/classroom.rosters.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -10611,7 +7851,7 @@ func (c *CoursesTeachersListCall) Do(opts ...googleapi.CallOption) (*ListTeacher
 // The provided context supersedes any context provided to the Context method.
 func (c *CoursesTeachersListCall) Pages(ctx context.Context, f func(*ListTeachersResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -10627,8 +7867,6 @@ func (c *CoursesTeachersListCall) Pages(ctx context.Context, f func(*ListTeacher
 	}
 }
 
-// method id "classroom.courses.topics.create":
-
 type CoursesTopicsCreateCall struct {
 	s          *Service
 	courseId   string
@@ -10638,14 +7876,14 @@ type CoursesTopicsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a topic. This method returns the following error
-// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to access the requested course, create a topic in the requested
-// course, or for access errors. * `INVALID_ARGUMENT` if the request is
-// malformed. * `NOT_FOUND` if the requested course does not exist.
+// Create: Creates a topic. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user is not permitted to access the
+// requested course, create a topic in the requested course, or for access
+// errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
+// the requested course does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesTopicsService) Create(courseId string, topic *Topic) *CoursesTopicsCreateCall {
 	c := &CoursesTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10654,23 +7892,21 @@ func (r *CoursesTopicsService) Create(courseId string, topic *Topic) *CoursesTop
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesTopicsCreateCall) Fields(s ...googleapi.Field) *CoursesTopicsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesTopicsCreateCall) Context(ctx context.Context) *CoursesTopicsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesTopicsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10679,18 +7915,12 @@ func (c *CoursesTopicsCreateCall) Header() http.Header {
 }
 
 func (c *CoursesTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.topic)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/topics")
@@ -10707,12 +7937,10 @@ func (c *CoursesTopicsCreateCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "classroom.courses.topics.create" call.
-// Exactly one of *Topic or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Topic.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Topic.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesTopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10743,37 +7971,7 @@ func (c *CoursesTopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a topic. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, create a topic in the requested course, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/topics",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.topics.create",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/topics",
-	//   "request": {
-	//     "$ref": "Topic"
-	//   },
-	//   "response": {
-	//     "$ref": "Topic"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.topics"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.topics.delete":
 
 type CoursesTopicsDeleteCall struct {
 	s          *Service
@@ -10784,15 +7982,14 @@ type CoursesTopicsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a topic. This method returns the following error
-// codes: * `PERMISSION_DENIED` if the requesting user is not allowed to
-// delete the requested topic or for access errors. *
-// `FAILED_PRECONDITION` if the requested topic has already been
-// deleted. * `NOT_FOUND` if no course or topic exists with the
-// requested ID.
+// Delete: Deletes a topic. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user is not allowed to delete the
+// requested topic or for access errors. * `FAILED_PRECONDITION` if the
+// requested topic has already been deleted. * `NOT_FOUND` if no course or
+// topic exists with the requested ID.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the topic to delete.
 func (r *CoursesTopicsService) Delete(courseId string, id string) *CoursesTopicsDeleteCall {
 	c := &CoursesTopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10802,23 +7999,21 @@ func (r *CoursesTopicsService) Delete(courseId string, id string) *CoursesTopics
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesTopicsDeleteCall) Fields(s ...googleapi.Field) *CoursesTopicsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesTopicsDeleteCall) Context(ctx context.Context) *CoursesTopicsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesTopicsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10827,12 +8022,7 @@ func (c *CoursesTopicsDeleteCall) Header() http.Header {
 }
 
 func (c *CoursesTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -10851,12 +8041,10 @@ func (c *CoursesTopicsDeleteCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "classroom.courses.topics.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesTopicsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10887,41 +8075,7 @@ func (c *CoursesTopicsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a topic. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not allowed to delete the requested topic or for access errors. * `FAILED_PRECONDITION` if the requested topic has already been deleted. * `NOT_FOUND` if no course or topic exists with the requested ID.",
-	//   "flatPath": "v1/courses/{courseId}/topics/{id}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.courses.topics.delete",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the topic to delete.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/topics/{id}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.topics"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.topics.get":
 
 type CoursesTopicsGetCall struct {
 	s            *Service
@@ -10933,11 +8087,11 @@ type CoursesTopicsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a topic. This method returns the following error codes:
-// * `PERMISSION_DENIED` if the requesting user is not permitted to
-// access the requested course or topic, or for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
-// requested course or topic does not exist.
+// Get: Returns a topic. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user is not permitted to access the
+// requested course or topic, or for access errors. * `INVALID_ARGUMENT` if the
+// request is malformed. * `NOT_FOUND` if the requested course or topic does
+// not exist.
 //
 // - courseId: Identifier of the course.
 // - id: Identifier of the topic.
@@ -10949,33 +8103,29 @@ func (r *CoursesTopicsService) Get(courseId string, id string) *CoursesTopicsGet
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesTopicsGetCall) Fields(s ...googleapi.Field) *CoursesTopicsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesTopicsGetCall) IfNoneMatch(entityTag string) *CoursesTopicsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesTopicsGetCall) Context(ctx context.Context) *CoursesTopicsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesTopicsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10984,12 +8134,7 @@ func (c *CoursesTopicsGetCall) Header() http.Header {
 }
 
 func (c *CoursesTopicsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11011,12 +8156,10 @@ func (c *CoursesTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.topics.get" call.
-// Exactly one of *Topic or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Topic.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Topic.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesTopicsGetCall) Do(opts ...googleapi.CallOption) (*Topic, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11047,42 +8190,7 @@ func (c *CoursesTopicsGetCall) Do(opts ...googleapi.CallOption) (*Topic, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a topic. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or topic, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course or topic does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/topics/{id}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.topics.get",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the topic.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/topics/{id}",
-	//   "response": {
-	//     "$ref": "Topic"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.topics",
-	//     "https://www.googleapis.com/auth/classroom.topics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.courses.topics.list":
 
 type CoursesTopicsListCall struct {
 	s            *Service
@@ -11093,67 +8201,61 @@ type CoursesTopicsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns the list of topics that the requester is permitted to
-// view. This method returns the following error codes: *
-// `PERMISSION_DENIED` if the requesting user is not permitted to access
-// the requested course or for access errors. * `INVALID_ARGUMENT` if
-// the request is malformed. * `NOT_FOUND` if the requested course does
-// not exist.
+// List: Returns the list of topics that the requester is permitted to view.
+// This method returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user is not permitted to access the requested course or for
+// access errors. * `INVALID_ARGUMENT` if the request is malformed. *
+// `NOT_FOUND` if the requested course does not exist.
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 func (r *CoursesTopicsService) List(courseId string) *CoursesTopicsListCall {
 	c := &CoursesTopicsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. Zero or unspecified indicates that the server may
-// assign a maximum. The server may return fewer than the specified
-// number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. Zero or unspecified indicates that the server may assign a maximum.
+// The server may return fewer than the specified number of results.
 func (c *CoursesTopicsListCall) PageSize(pageSize int64) *CoursesTopicsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *CoursesTopicsListCall) PageToken(pageToken string) *CoursesTopicsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesTopicsListCall) Fields(s ...googleapi.Field) *CoursesTopicsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CoursesTopicsListCall) IfNoneMatch(entityTag string) *CoursesTopicsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesTopicsListCall) Context(ctx context.Context) *CoursesTopicsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesTopicsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11162,12 +8264,7 @@ func (c *CoursesTopicsListCall) Header() http.Header {
 }
 
 func (c *CoursesTopicsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11188,12 +8285,11 @@ func (c *CoursesTopicsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.topics.list" call.
-// Exactly one of *ListTopicResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListTopicResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTopicResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CoursesTopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11224,43 +8320,6 @@ func (c *CoursesTopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicResp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the list of topics that the requester is permitted to view. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/topics",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.topics.list",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/topics",
-	//   "response": {
-	//     "$ref": "ListTopicResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.topics",
-	//     "https://www.googleapis.com/auth/classroom.topics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -11268,7 +8327,7 @@ func (c *CoursesTopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicResp
 // The provided context supersedes any context provided to the Context method.
 func (c *CoursesTopicsListCall) Pages(ctx context.Context, f func(*ListTopicResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -11284,8 +8343,6 @@ func (c *CoursesTopicsListCall) Pages(ctx context.Context, f func(*ListTopicResp
 	}
 }
 
-// method id "classroom.courses.topics.patch":
-
 type CoursesTopicsPatchCall struct {
 	s          *Service
 	courseId   string
@@ -11297,13 +8354,13 @@ type CoursesTopicsPatchCall struct {
 }
 
 // Patch: Updates one or more fields of a topic. This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting
-// developer project did not create the corresponding topic or for
-// access errors. * `INVALID_ARGUMENT` if the request is malformed. *
-// `NOT_FOUND` if the requested course or topic does not exist
+// following error codes: * `PERMISSION_DENIED` if the requesting developer
+// project did not create the corresponding topic or for access errors. *
+// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course or topic does not exist
 //
-//   - courseId: Identifier of the course. This identifier can be either
-//     the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either the
+//     Classroom-assigned identifier or an alias.
 //   - id: Identifier of the topic.
 func (r *CoursesTopicsService) Patch(courseId string, id string, topic *Topic) *CoursesTopicsPatchCall {
 	c := &CoursesTopicsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11313,37 +8370,34 @@ func (r *CoursesTopicsService) Patch(courseId string, id string, topic *Topic) *
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Mask that
-// identifies which fields on the topic to update. This field is
-// required to do an update. The update fails if invalid fields are
-// specified. If a field supports empty values, it can be cleared by
-// specifying it in the update mask and not in the Topic object. If a
-// field that does not support empty values is included in the update
-// mask and not set in the Topic object, an `INVALID_ARGUMENT` error is
-// returned. The following fields may be specified: * `name`
+// UpdateMask sets the optional parameter "updateMask": Mask that identifies
+// which fields on the topic to update. This field is required to do an update.
+// The update fails if invalid fields are specified. If a field supports empty
+// values, it can be cleared by specifying it in the update mask and not in the
+// Topic object. If a field that does not support empty values is included in
+// the update mask and not set in the Topic object, an `INVALID_ARGUMENT` error
+// is returned. The following fields may be specified: * `name`
 func (c *CoursesTopicsPatchCall) UpdateMask(updateMask string) *CoursesTopicsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CoursesTopicsPatchCall) Fields(s ...googleapi.Field) *CoursesTopicsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CoursesTopicsPatchCall) Context(ctx context.Context) *CoursesTopicsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CoursesTopicsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11352,18 +8406,12 @@ func (c *CoursesTopicsPatchCall) Header() http.Header {
 }
 
 func (c *CoursesTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.topic)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/topics/{id}")
@@ -11381,12 +8429,10 @@ func (c *CoursesTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.courses.topics.patch" call.
-// Exactly one of *Topic or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Topic.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Topic.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CoursesTopicsPatchCall) Do(opts ...googleapi.CallOption) (*Topic, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11417,50 +8463,7 @@ func (c *CoursesTopicsPatchCall) Do(opts ...googleapi.CallOption) (*Topic, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates one or more fields of a topic. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding topic or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course or topic does not exist",
-	//   "flatPath": "v1/courses/{courseId}/topics/{id}",
-	//   "httpMethod": "PATCH",
-	//   "id": "classroom.courses.topics.patch",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the topic.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the topic to update. This field is required to do an update. The update fails if invalid fields are specified. If a field supports empty values, it can be cleared by specifying it in the update mask and not in the Topic object. If a field that does not support empty values is included in the update mask and not set in the Topic object, an `INVALID_ARGUMENT` error is returned. The following fields may be specified: * `name`",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/topics/{id}",
-	//   "request": {
-	//     "$ref": "Topic"
-	//   },
-	//   "response": {
-	//     "$ref": "Topic"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.topics"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.invitations.accept":
 
 type InvitationsAcceptCall struct {
 	s          *Service
@@ -11470,15 +8473,15 @@ type InvitationsAcceptCall struct {
 	header_    http.Header
 }
 
-// Accept: Accepts an invitation, removing it and adding the invited
-// user to the teachers or students (as appropriate) of the specified
-// course. Only the invited user may accept an invitation. This method
-// returns the following error codes: * `PERMISSION_DENIED` if the
-// requesting user is not permitted to accept the requested invitation
-// or for access errors. * `FAILED_PRECONDITION` for the following
-// request errors: * CourseMemberLimitReached * CourseNotModifiable *
-// CourseTeacherLimitReached * UserGroupsMembershipLimitReached *
-// `NOT_FOUND` if no invitation exists with the requested ID.
+// Accept: Accepts an invitation, removing it and adding the invited user to
+// the teachers or students (as appropriate) of the specified course. Only the
+// invited user may accept an invitation. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not permitted
+// to accept the requested invitation or for access errors. *
+// `FAILED_PRECONDITION` for the following request errors: *
+// CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached *
+// UserGroupsMembershipLimitReached * `NOT_FOUND` if no invitation exists with
+// the requested ID.
 //
 // - id: Identifier of the invitation to accept.
 func (r *InvitationsService) Accept(id string) *InvitationsAcceptCall {
@@ -11488,23 +8491,21 @@ func (r *InvitationsService) Accept(id string) *InvitationsAcceptCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *InvitationsAcceptCall) Fields(s ...googleapi.Field) *InvitationsAcceptCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *InvitationsAcceptCall) Context(ctx context.Context) *InvitationsAcceptCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *InvitationsAcceptCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11513,12 +8514,7 @@ func (c *InvitationsAcceptCall) Header() http.Header {
 }
 
 func (c *InvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -11536,12 +8532,10 @@ func (c *InvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.invitations.accept" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *InvitationsAcceptCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11572,34 +8566,7 @@ func (c *InvitationsAcceptCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Accepts an invitation, removing it and adding the invited user to the teachers or students (as appropriate) of the specified course. Only the invited user may accept an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to accept the requested invitation or for access errors. * `FAILED_PRECONDITION` for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached * UserGroupsMembershipLimitReached * `NOT_FOUND` if no invitation exists with the requested ID.",
-	//   "flatPath": "v1/invitations/{id}:accept",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.invitations.accept",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "Identifier of the invitation to accept.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/invitations/{id}:accept",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.rosters"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.invitations.create":
 
 type InvitationsCreateCall struct {
 	s          *Service
@@ -11609,16 +8576,15 @@ type InvitationsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates an invitation. Only one invitation for a user and
-// course may exist at a time. Delete and re-create an invitation to
-// make changes. This method returns the following error codes: *
-// `PERMISSION_DENIED` if the requesting user is not permitted to create
-// invitations for this course or for access errors. * `NOT_FOUND` if
-// the course or the user does not exist. * `FAILED_PRECONDITION`: * if
-// the requested user's account is disabled. * if the user already has
-// this role or a role with greater permissions. * for the following
-// request errors: * IneligibleOwner * `ALREADY_EXISTS` if an invitation
-// for the specified user and course already exists.
+// Create: Creates an invitation. Only one invitation for a user and course may
+// exist at a time. Delete and re-create an invitation to make changes. This
+// method returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user is not permitted to create invitations for this course or
+// for access errors. * `NOT_FOUND` if the course or the user does not exist. *
+// `FAILED_PRECONDITION`: * if the requested user's account is disabled. * if
+// the user already has this role or a role with greater permissions. * for the
+// following request errors: * IneligibleOwner * `ALREADY_EXISTS` if an
+// invitation for the specified user and course already exists.
 func (r *InvitationsService) Create(invitation *Invitation) *InvitationsCreateCall {
 	c := &InvitationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.invitation = invitation
@@ -11626,23 +8592,21 @@ func (r *InvitationsService) Create(invitation *Invitation) *InvitationsCreateCa
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *InvitationsCreateCall) Fields(s ...googleapi.Field) *InvitationsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *InvitationsCreateCall) Context(ctx context.Context) *InvitationsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *InvitationsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11651,18 +8615,12 @@ func (c *InvitationsCreateCall) Header() http.Header {
 }
 
 func (c *InvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invitation)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/invitations")
@@ -11676,12 +8634,10 @@ func (c *InvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.invitations.create" call.
-// Exactly one of *Invitation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Invitation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Invitation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *InvitationsCreateCall) Do(opts ...googleapi.CallOption) (*Invitation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11712,28 +8668,7 @@ func (c *InvitationsCreateCall) Do(opts ...googleapi.CallOption) (*Invitation, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an invitation. Only one invitation for a user and course may exist at a time. Delete and re-create an invitation to make changes. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create invitations for this course or for access errors. * `NOT_FOUND` if the course or the user does not exist. * `FAILED_PRECONDITION`: * if the requested user's account is disabled. * if the user already has this role or a role with greater permissions. * for the following request errors: * IneligibleOwner * `ALREADY_EXISTS` if an invitation for the specified user and course already exists.",
-	//   "flatPath": "v1/invitations",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.invitations.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/invitations",
-	//   "request": {
-	//     "$ref": "Invitation"
-	//   },
-	//   "response": {
-	//     "$ref": "Invitation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.rosters"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.invitations.delete":
 
 type InvitationsDeleteCall struct {
 	s          *Service
@@ -11743,10 +8678,10 @@ type InvitationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an invitation. This method returns the following
-// error codes: * `PERMISSION_DENIED` if the requesting user is not
-// permitted to delete the requested invitation or for access errors. *
-// `NOT_FOUND` if no invitation exists with the requested ID.
+// Delete: Deletes an invitation. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to
+// delete the requested invitation or for access errors. * `NOT_FOUND` if no
+// invitation exists with the requested ID.
 //
 // - id: Identifier of the invitation to delete.
 func (r *InvitationsService) Delete(id string) *InvitationsDeleteCall {
@@ -11756,23 +8691,21 @@ func (r *InvitationsService) Delete(id string) *InvitationsDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *InvitationsDeleteCall) Fields(s ...googleapi.Field) *InvitationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *InvitationsDeleteCall) Context(ctx context.Context) *InvitationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *InvitationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11781,12 +8714,7 @@ func (c *InvitationsDeleteCall) Header() http.Header {
 }
 
 func (c *InvitationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -11804,12 +8732,10 @@ func (c *InvitationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.invitations.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *InvitationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11840,34 +8766,7 @@ func (c *InvitationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested invitation or for access errors. * `NOT_FOUND` if no invitation exists with the requested ID.",
-	//   "flatPath": "v1/invitations/{id}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.invitations.delete",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "Identifier of the invitation to delete.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/invitations/{id}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.rosters"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.invitations.get":
 
 type InvitationsGetCall struct {
 	s            *Service
@@ -11878,10 +8777,10 @@ type InvitationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns an invitation. This method returns the following error
-// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to view the requested invitation or for access errors. * `NOT_FOUND`
-// if no invitation exists with the requested ID.
+// Get: Returns an invitation. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting user is not permitted to view the
+// requested invitation or for access errors. * `NOT_FOUND` if no invitation
+// exists with the requested ID.
 //
 // - id: Identifier of the invitation to return.
 func (r *InvitationsService) Get(id string) *InvitationsGetCall {
@@ -11891,33 +8790,29 @@ func (r *InvitationsService) Get(id string) *InvitationsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *InvitationsGetCall) Fields(s ...googleapi.Field) *InvitationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *InvitationsGetCall) IfNoneMatch(entityTag string) *InvitationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *InvitationsGetCall) Context(ctx context.Context) *InvitationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *InvitationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11926,12 +8821,7 @@ func (c *InvitationsGetCall) Header() http.Header {
 }
 
 func (c *InvitationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11952,12 +8842,10 @@ func (c *InvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.invitations.get" call.
-// Exactly one of *Invitation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Invitation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Invitation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *InvitationsGetCall) Do(opts ...googleapi.CallOption) (*Invitation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11988,35 +8876,7 @@ func (c *InvitationsGetCall) Do(opts ...googleapi.CallOption) (*Invitation, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view the requested invitation or for access errors. * `NOT_FOUND` if no invitation exists with the requested ID.",
-	//   "flatPath": "v1/invitations/{id}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.invitations.get",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "Identifier of the invitation to return.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/invitations/{id}",
-	//   "response": {
-	//     "$ref": "Invitation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.rosters",
-	//     "https://www.googleapis.com/auth/classroom.rosters.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.invitations.list":
 
 type InvitationsListCall struct {
 	s            *Service
@@ -12026,11 +8886,11 @@ type InvitationsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of invitations that the requesting user is
-// permitted to view, restricted to those that match the list request.
-// *Note:* At least one of `user_id` or `course_id` must be supplied.
-// Both fields can be supplied. This method returns the following error
-// codes: * `PERMISSION_DENIED` for access errors.
+// List: Returns a list of invitations that the requesting user is permitted to
+// view, restricted to those that match the list request. *Note:* At least one
+// of `user_id` or `course_id` must be supplied. Both fields can be supplied.
+// This method returns the following error codes: * `PERMISSION_DENIED` for
+// access errors.
 func (r *InvitationsService) List() *InvitationsListCall {
 	c := &InvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -12043,61 +8903,56 @@ func (c *InvitationsListCall) CourseId(courseId string) *InvitationsListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. The default is 500 if unspecified or `0`. The server
-// may return fewer than the specified number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. The default is 500 if unspecified or `0`. The server may return
+// fewer than the specified number of results.
 func (c *InvitationsListCall) PageSize(pageSize int64) *InvitationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *InvitationsListCall) PageToken(pageToken string) *InvitationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// UserId sets the optional parameter "userId": Restricts returned
-// invitations to those for a specific user. The identifier can be one
-// of the following: * the numeric identifier for the user * the email
-// address of the user * the string literal "me", indicating the
-// requesting user
+// UserId sets the optional parameter "userId": Restricts returned invitations
+// to those for a specific user. The identifier can be one of the following: *
+// the numeric identifier for the user * the email address of the user * the
+// string literal "me", indicating the requesting user
 func (c *InvitationsListCall) UserId(userId string) *InvitationsListCall {
 	c.urlParams_.Set("userId", userId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *InvitationsListCall) Fields(s ...googleapi.Field) *InvitationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *InvitationsListCall) IfNoneMatch(entityTag string) *InvitationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *InvitationsListCall) Context(ctx context.Context) *InvitationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *InvitationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12106,12 +8961,7 @@ func (c *InvitationsListCall) Header() http.Header {
 }
 
 func (c *InvitationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -12129,12 +8979,11 @@ func (c *InvitationsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.invitations.list" call.
-// Exactly one of *ListInvitationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListInvitationsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *InvitationsListCall) Do(opts ...googleapi.CallOption) (*ListInvitationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12165,45 +9014,6 @@ func (c *InvitationsListCall) Do(opts ...googleapi.CallOption) (*ListInvitations
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of invitations that the requesting user is permitted to view, restricted to those that match the list request. *Note:* At least one of `user_id` or `course_id` must be supplied. Both fields can be supplied. This method returns the following error codes: * `PERMISSION_DENIED` for access errors.",
-	//   "flatPath": "v1/invitations",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.invitations.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Restricts returned invitations to those for a course with the specified identifier.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. The default is 500 if unspecified or `0`. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "description": "Restricts returned invitations to those for a specific user. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/invitations",
-	//   "response": {
-	//     "$ref": "ListInvitationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.rosters",
-	//     "https://www.googleapis.com/auth/classroom.rosters.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -12211,7 +9021,7 @@ func (c *InvitationsListCall) Do(opts ...googleapi.CallOption) (*ListInvitations
 // The provided context supersedes any context provided to the Context method.
 func (c *InvitationsListCall) Pages(ctx context.Context, f func(*ListInvitationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -12227,8 +9037,6 @@ func (c *InvitationsListCall) Pages(ctx context.Context, f func(*ListInvitations
 	}
 }
 
-// method id "classroom.registrations.create":
-
 type RegistrationsCreateCall struct {
 	s            *Service
 	registration *Registration
@@ -12239,28 +9047,26 @@ type RegistrationsCreateCall struct {
 
 // Create: Creates a `Registration`, causing Classroom to start sending
 // notifications from the provided `feed` to the destination provided in
-// `cloudPubSubTopic`. Returns the created `Registration`. Currently,
-// this will be the same as the argument, but with server-assigned
-// fields such as `expiry_time` and `id` filled in. Note that any value
-// specified for the `expiry_time` or `id` fields will be ignored. While
-// Classroom may validate the `cloudPubSubTopic` and return errors on a
-// best effort basis, it is the caller's responsibility to ensure that
-// it exists and that Classroom has permission to publish to it. This
-// method may return the following error codes: * `PERMISSION_DENIED`
-// if: * the authenticated user does not have permission to receive
-// notifications from the requested field; or * the current user has not
-// granted access to the current Cloud project with the appropriate
-// scope for the requested feed. Note that domain-wide delegation of
-// authority is not currently supported for this purpose. If the request
-// has the appropriate scope, but no grant exists, a Request Errors is
-// returned. * another access error is encountered. * `INVALID_ARGUMENT`
-// if: * no `cloudPubsubTopic` is specified, or the specified
-// `cloudPubsubTopic` is not valid; or * no `feed` is specified, or the
-// specified `feed` is not valid. * `NOT_FOUND` if: * the specified
-// `feed` cannot be located, or the requesting user does not have
-// permission to determine whether or not it exists; or * the specified
-// `cloudPubsubTopic` cannot be located, or Classroom has not been
-// granted permission to publish to it.
+// `cloudPubSubTopic`. Returns the created `Registration`. Currently, this will
+// be the same as the argument, but with server-assigned fields such as
+// `expiry_time` and `id` filled in. Note that any value specified for the
+// `expiry_time` or `id` fields will be ignored. While Classroom may validate
+// the `cloudPubSubTopic` and return errors on a best effort basis, it is the
+// caller's responsibility to ensure that it exists and that Classroom has
+// permission to publish to it. This method may return the following error
+// codes: * `PERMISSION_DENIED` if: * the authenticated user does not have
+// permission to receive notifications from the requested field; or * the
+// current user has not granted access to the current Cloud project with the
+// appropriate scope for the requested feed. Note that domain-wide delegation
+// of authority is not currently supported for this purpose. If the request has
+// the appropriate scope, but no grant exists, a Request Errors is returned. *
+// another access error is encountered. * `INVALID_ARGUMENT` if: * no
+// `cloudPubsubTopic` is specified, or the specified `cloudPubsubTopic` is not
+// valid; or * no `feed` is specified, or the specified `feed` is not valid. *
+// `NOT_FOUND` if: * the specified `feed` cannot be located, or the requesting
+// user does not have permission to determine whether or not it exists; or *
+// the specified `cloudPubsubTopic` cannot be located, or Classroom has not
+// been granted permission to publish to it.
 func (r *RegistrationsService) Create(registration *Registration) *RegistrationsCreateCall {
 	c := &RegistrationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -12268,23 +9074,21 @@ func (r *RegistrationsService) Create(registration *Registration) *Registrations
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *RegistrationsCreateCall) Fields(s ...googleapi.Field) *RegistrationsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *RegistrationsCreateCall) Context(ctx context.Context) *RegistrationsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *RegistrationsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12293,18 +9097,12 @@ func (c *RegistrationsCreateCall) Header() http.Header {
 }
 
 func (c *RegistrationsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.registration)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/registrations")
@@ -12318,12 +9116,10 @@ func (c *RegistrationsCreateCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "classroom.registrations.create" call.
-// Exactly one of *Registration or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Registration.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Registration.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *RegistrationsCreateCall) Do(opts ...googleapi.CallOption) (*Registration, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12354,28 +9150,7 @@ func (c *RegistrationsCreateCall) Do(opts ...googleapi.CallOption) (*Registratio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a `Registration`, causing Classroom to start sending notifications from the provided `feed` to the destination provided in `cloudPubSubTopic`. Returns the created `Registration`. Currently, this will be the same as the argument, but with server-assigned fields such as `expiry_time` and `id` filled in. Note that any value specified for the `expiry_time` or `id` fields will be ignored. While Classroom may validate the `cloudPubSubTopic` and return errors on a best effort basis, it is the caller's responsibility to ensure that it exists and that Classroom has permission to publish to it. This method may return the following error codes: * `PERMISSION_DENIED` if: * the authenticated user does not have permission to receive notifications from the requested field; or * the current user has not granted access to the current Cloud project with the appropriate scope for the requested feed. Note that domain-wide delegation of authority is not currently supported for this purpose. If the request has the appropriate scope, but no grant exists, a Request Errors is returned. * another access error is encountered. * `INVALID_ARGUMENT` if: * no `cloudPubsubTopic` is specified, or the specified `cloudPubsubTopic` is not valid; or * no `feed` is specified, or the specified `feed` is not valid. * `NOT_FOUND` if: * the specified `feed` cannot be located, or the requesting user does not have permission to determine whether or not it exists; or * the specified `cloudPubsubTopic` cannot be located, or Classroom has not been granted permission to publish to it.",
-	//   "flatPath": "v1/registrations",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.registrations.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/registrations",
-	//   "request": {
-	//     "$ref": "Registration"
-	//   },
-	//   "response": {
-	//     "$ref": "Registration"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.push-notifications"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.registrations.delete":
 
 type RegistrationsDeleteCall struct {
 	s              *Service
@@ -12388,8 +9163,7 @@ type RegistrationsDeleteCall struct {
 // Delete: Deletes a `Registration`, causing Classroom to stop sending
 // notifications for that `Registration`.
 //
-//   - registrationId: The `registration_id` of the `Registration` to be
-//     deleted.
+// - registrationId: The `registration_id` of the `Registration` to be deleted.
 func (r *RegistrationsService) Delete(registrationId string) *RegistrationsDeleteCall {
 	c := &RegistrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registrationId = registrationId
@@ -12397,23 +9171,21 @@ func (r *RegistrationsService) Delete(registrationId string) *RegistrationsDelet
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *RegistrationsDeleteCall) Fields(s ...googleapi.Field) *RegistrationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *RegistrationsDeleteCall) Context(ctx context.Context) *RegistrationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *RegistrationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12422,12 +9194,7 @@ func (c *RegistrationsDeleteCall) Header() http.Header {
 }
 
 func (c *RegistrationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -12445,12 +9212,10 @@ func (c *RegistrationsDeleteCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "classroom.registrations.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *RegistrationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12481,34 +9246,7 @@ func (c *RegistrationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a `Registration`, causing Classroom to stop sending notifications for that `Registration`.",
-	//   "flatPath": "v1/registrations/{registrationId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.registrations.delete",
-	//   "parameterOrder": [
-	//     "registrationId"
-	//   ],
-	//   "parameters": {
-	//     "registrationId": {
-	//       "description": "The `registration_id` of the `Registration` to be deleted.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/registrations/{registrationId}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.push-notifications"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.userProfiles.get":
 
 type UserProfilesGetCall struct {
 	s            *Service
@@ -12519,15 +9257,14 @@ type UserProfilesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a user profile. This method returns the following error
-// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to access this user profile, if no profile exists with the requested
-// ID, or for access errors.
+// Get: Returns a user profile. This method returns the following error codes:
+// * `PERMISSION_DENIED` if the requesting user is not permitted to access this
+// user profile, if no profile exists with the requested ID, or for access
+// errors.
 //
-//   - userId: Identifier of the profile to return. The identifier can be
-//     one of the following: * the numeric identifier for the user * the
-//     email address of the user * the string literal "me", indicating
-//     the requesting user.
+//   - userId: Identifier of the profile to return. The identifier can be one of
+//     the following: * the numeric identifier for the user * the email address
+//     of the user * the string literal "me", indicating the requesting user.
 func (r *UserProfilesService) Get(userId string) *UserProfilesGetCall {
 	c := &UserProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12535,33 +9272,29 @@ func (r *UserProfilesService) Get(userId string) *UserProfilesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UserProfilesGetCall) Fields(s ...googleapi.Field) *UserProfilesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *UserProfilesGetCall) IfNoneMatch(entityTag string) *UserProfilesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UserProfilesGetCall) Context(ctx context.Context) *UserProfilesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UserProfilesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12570,12 +9303,7 @@ func (c *UserProfilesGetCall) Header() http.Header {
 }
 
 func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -12596,12 +9324,10 @@ func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "classroom.userProfiles.get" call.
-// Exactly one of *UserProfile or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *UserProfile.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserProfile.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *UserProfilesGetCall) Do(opts ...googleapi.CallOption) (*UserProfile, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12632,37 +9358,7 @@ func (c *UserProfilesGetCall) Do(opts ...googleapi.CallOption) (*UserProfile, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a user profile. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access this user profile, if no profile exists with the requested ID, or for access errors.",
-	//   "flatPath": "v1/userProfiles/{userId}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.userProfiles.get",
-	//   "parameterOrder": [
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "userId": {
-	//       "description": "Identifier of the profile to return. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/userProfiles/{userId}",
-	//   "response": {
-	//     "$ref": "UserProfile"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.profile.emails",
-	//     "https://www.googleapis.com/auth/classroom.profile.photos",
-	//     "https://www.googleapis.com/auth/classroom.rosters",
-	//     "https://www.googleapis.com/auth/classroom.rosters.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.userProfiles.guardianInvitations.create":
 
 type UserProfilesGuardianInvitationsCreateCall struct {
 	s                  *Service
@@ -12673,31 +9369,29 @@ type UserProfilesGuardianInvitationsCreateCall struct {
 	header_            http.Header
 }
 
-// Create: Creates a guardian invitation, and sends an email to the
-// guardian asking them to confirm that they are the student's guardian.
-// Once the guardian accepts the invitation, their `state` will change
-// to `COMPLETED` and they will start receiving guardian notifications.
-// A `Guardian` resource will also be created to represent the active
-// guardian. The request object must have the `student_id` and
-// `invited_email_address` fields set. Failing to set these fields, or
-// setting any other fields in the request, will result in an error.
-// This method returns the following error codes: * `PERMISSION_DENIED`
-// if the current user does not have permission to manage guardians, if
-// the guardian in question has already rejected too many requests for
-// that student, if guardians are not enabled for the domain in
-// question, or for other access errors. * `RESOURCE_EXHAUSTED` if the
-// student or guardian has exceeded the guardian link limit. *
-// `INVALID_ARGUMENT` if the guardian email address is not valid (for
-// example, if it is too long), or if the format of the student ID
-// provided cannot be recognized (it is not an email address, nor a
-// `user_id` from this API). This error will also be returned if
-// read-only fields are set, or if the `state` field is set to to a
-// value other than `PENDING`. * `NOT_FOUND` if the student ID provided
-// is a valid student ID, but Classroom has no record of that student. *
-// `ALREADY_EXISTS` if there is already a pending guardian invitation
-// for the student and `invited_email_address` provided, or if the
-// provided `invited_email_address` matches the Google account of an
-// existing `Guardian` for this user.
+// Create: Creates a guardian invitation, and sends an email to the guardian
+// asking them to confirm that they are the student's guardian. Once the
+// guardian accepts the invitation, their `state` will change to `COMPLETED`
+// and they will start receiving guardian notifications. A `Guardian` resource
+// will also be created to represent the active guardian. The request object
+// must have the `student_id` and `invited_email_address` fields set. Failing
+// to set these fields, or setting any other fields in the request, will result
+// in an error. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the current user does not have permission to manage
+// guardians, if the guardian in question has already rejected too many
+// requests for that student, if guardians are not enabled for the domain in
+// question, or for other access errors. * `RESOURCE_EXHAUSTED` if the student
+// or guardian has exceeded the guardian link limit. * `INVALID_ARGUMENT` if
+// the guardian email address is not valid (for example, if it is too long), or
+// if the format of the student ID provided cannot be recognized (it is not an
+// email address, nor a `user_id` from this API). This error will also be
+// returned if read-only fields are set, or if the `state` field is set to to a
+// value other than `PENDING`. * `NOT_FOUND` if the student ID provided is a
+// valid student ID, but Classroom has no record of that student. *
+// `ALREADY_EXISTS` if there is already a pending guardian invitation for the
+// student and `invited_email_address` provided, or if the provided
+// `invited_email_address` matches the Google account of an existing `Guardian`
+// for this user.
 //
 // - studentId: ID of the student (in standard format).
 func (r *UserProfilesGuardianInvitationsService) Create(studentId string, guardianinvitation *GuardianInvitation) *UserProfilesGuardianInvitationsCreateCall {
@@ -12708,23 +9402,21 @@ func (r *UserProfilesGuardianInvitationsService) Create(studentId string, guardi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UserProfilesGuardianInvitationsCreateCall) Fields(s ...googleapi.Field) *UserProfilesGuardianInvitationsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UserProfilesGuardianInvitationsCreateCall) Context(ctx context.Context) *UserProfilesGuardianInvitationsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UserProfilesGuardianInvitationsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12733,18 +9425,12 @@ func (c *UserProfilesGuardianInvitationsCreateCall) Header() http.Header {
 }
 
 func (c *UserProfilesGuardianInvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.guardianinvitation)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/userProfiles/{studentId}/guardianInvitations")
@@ -12761,12 +9447,11 @@ func (c *UserProfilesGuardianInvitationsCreateCall) doRequest(alt string) (*http
 }
 
 // Do executes the "classroom.userProfiles.guardianInvitations.create" call.
-// Exactly one of *GuardianInvitation or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GuardianInvitation.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GuardianInvitation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *UserProfilesGuardianInvitationsCreateCall) Do(opts ...googleapi.CallOption) (*GuardianInvitation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12797,37 +9482,7 @@ func (c *UserProfilesGuardianInvitationsCreateCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a guardian invitation, and sends an email to the guardian asking them to confirm that they are the student's guardian. Once the guardian accepts the invitation, their `state` will change to `COMPLETED` and they will start receiving guardian notifications. A `Guardian` resource will also be created to represent the active guardian. The request object must have the `student_id` and `invited_email_address` fields set. Failing to set these fields, or setting any other fields in the request, will result in an error. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if the guardian in question has already rejected too many requests for that student, if guardians are not enabled for the domain in question, or for other access errors. * `RESOURCE_EXHAUSTED` if the student or guardian has exceeded the guardian link limit. * `INVALID_ARGUMENT` if the guardian email address is not valid (for example, if it is too long), or if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API). This error will also be returned if read-only fields are set, or if the `state` field is set to to a value other than `PENDING`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student. * `ALREADY_EXISTS` if there is already a pending guardian invitation for the student and `invited_email_address` provided, or if the provided `invited_email_address` matches the Google account of an existing `Guardian` for this user.",
-	//   "flatPath": "v1/userProfiles/{studentId}/guardianInvitations",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.userProfiles.guardianInvitations.create",
-	//   "parameterOrder": [
-	//     "studentId"
-	//   ],
-	//   "parameters": {
-	//     "studentId": {
-	//       "description": "ID of the student (in standard format)",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/userProfiles/{studentId}/guardianInvitations",
-	//   "request": {
-	//     "$ref": "GuardianInvitation"
-	//   },
-	//   "response": {
-	//     "$ref": "GuardianInvitation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.students"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.userProfiles.guardianInvitations.get":
 
 type UserProfilesGuardianInvitationsGetCall struct {
 	s            *Service
@@ -12840,19 +9495,17 @@ type UserProfilesGuardianInvitationsGetCall struct {
 }
 
 // Get: Returns a specific guardian invitation. This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to view guardian invitations for the student
-// identified by the `student_id`, if guardians are not enabled for the
-// domain in question, or for other access errors. * `INVALID_ARGUMENT`
-// if a `student_id` is specified, but its format cannot be recognized
-// (it is not an email address, nor a `student_id` from the API, nor the
-// literal string `me`). * `NOT_FOUND` if Classroom cannot find any
-// record of the given student or `invitation_id`. May also be returned
-// if the student exists, but the requesting user does not have access
-// to see that student.
+// following error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to view guardian invitations for the student identified by the
+// `student_id`, if guardians are not enabled for the domain in question, or
+// for other access errors. * `INVALID_ARGUMENT` if a `student_id` is
+// specified, but its format cannot be recognized (it is not an email address,
+// nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND`
+// if Classroom cannot find any record of the given student or `invitation_id`.
+// May also be returned if the student exists, but the requesting user does not
+// have access to see that student.
 //
-//   - invitationId: The `id` field of the `GuardianInvitation` being
-//     requested.
+//   - invitationId: The `id` field of the `GuardianInvitation` being requested.
 //   - studentId: The ID of the student whose guardian invitation is being
 //     requested.
 func (r *UserProfilesGuardianInvitationsService) Get(studentId string, invitationId string) *UserProfilesGuardianInvitationsGetCall {
@@ -12863,33 +9516,29 @@ func (r *UserProfilesGuardianInvitationsService) Get(studentId string, invitatio
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UserProfilesGuardianInvitationsGetCall) Fields(s ...googleapi.Field) *UserProfilesGuardianInvitationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *UserProfilesGuardianInvitationsGetCall) IfNoneMatch(entityTag string) *UserProfilesGuardianInvitationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UserProfilesGuardianInvitationsGetCall) Context(ctx context.Context) *UserProfilesGuardianInvitationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UserProfilesGuardianInvitationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12898,12 +9547,7 @@ func (c *UserProfilesGuardianInvitationsGetCall) Header() http.Header {
 }
 
 func (c *UserProfilesGuardianInvitationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -12925,12 +9569,11 @@ func (c *UserProfilesGuardianInvitationsGetCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "classroom.userProfiles.guardianInvitations.get" call.
-// Exactly one of *GuardianInvitation or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GuardianInvitation.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GuardianInvitation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *UserProfilesGuardianInvitationsGetCall) Do(opts ...googleapi.CallOption) (*GuardianInvitation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12961,42 +9604,7 @@ func (c *UserProfilesGuardianInvitationsGetCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a specific guardian invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian invitations for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `invitation_id`. May also be returned if the student exists, but the requesting user does not have access to see that student.",
-	//   "flatPath": "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.userProfiles.guardianInvitations.get",
-	//   "parameterOrder": [
-	//     "studentId",
-	//     "invitationId"
-	//   ],
-	//   "parameters": {
-	//     "invitationId": {
-	//       "description": "The `id` field of the `GuardianInvitation` being requested.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "studentId": {
-	//       "description": "The ID of the student whose guardian invitation is being requested.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}",
-	//   "response": {
-	//     "$ref": "GuardianInvitation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.students",
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.userProfiles.guardianInvitations.list":
 
 type UserProfilesGuardianInvitationsListCall struct {
 	s            *Service
@@ -13007,62 +9615,59 @@ type UserProfilesGuardianInvitationsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of guardian invitations that the requesting user
-// is permitted to view, filtered by the parameters provided. This
-// method returns the following error codes: * `PERMISSION_DENIED` if a
-// `student_id` is specified, and the requesting user is not permitted
-// to view guardian invitations for that student, if "-" is specified
-// as the `student_id` and the user is not a domain administrator, if
-// guardians are not enabled for the domain in question, or for other
-// access errors. * `INVALID_ARGUMENT` if a `student_id` is specified,
-// but its format cannot be recognized (it is not an email address, nor
-// a `student_id` from the API, nor the literal string `me`). May also
-// be returned if an invalid `page_token` or `state` is provided. *
-// `NOT_FOUND` if a `student_id` is specified, and its format can be
-// recognized, but Classroom has no record of that student.
+// List: Returns a list of guardian invitations that the requesting user is
+// permitted to view, filtered by the parameters provided. This method returns
+// the following error codes: * `PERMISSION_DENIED` if a `student_id` is
+// specified, and the requesting user is not permitted to view guardian
+// invitations for that student, if "-" is specified as the `student_id` and
+// the user is not a domain administrator, if guardians are not enabled for the
+// domain in question, or for other access errors. * `INVALID_ARGUMENT` if a
+// `student_id` is specified, but its format cannot be recognized (it is not an
+// email address, nor a `student_id` from the API, nor the literal string
+// `me`). May also be returned if an invalid `page_token` or `state` is
+// provided. * `NOT_FOUND` if a `student_id` is specified, and its format can
+// be recognized, but Classroom has no record of that student.
 //
-//   - studentId: The ID of the student whose guardian invitations are to
-//     be returned. The identifier can be one of the following: * the
-//     numeric identifier for the user * the email address of the user *
-//     the string literal "me", indicating the requesting user * the
-//     string literal "-", indicating that results should be returned
-//     for all students that the requesting user is permitted to view
-//     guardian invitations.
+//   - studentId: The ID of the student whose guardian invitations are to be
+//     returned. The identifier can be one of the following: * the numeric
+//     identifier for the user * the email address of the user * the string
+//     literal "me", indicating the requesting user * the string literal "-",
+//     indicating that results should be returned for all students that the
+//     requesting user is permitted to view guardian invitations.
 func (r *UserProfilesGuardianInvitationsService) List(studentId string) *UserProfilesGuardianInvitationsListCall {
 	c := &UserProfilesGuardianInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
 	return c
 }
 
-// InvitedEmailAddress sets the optional parameter
-// "invitedEmailAddress": If specified, only results with the specified
-// `invited_email_address` are returned.
+// InvitedEmailAddress sets the optional parameter "invitedEmailAddress": If
+// specified, only results with the specified `invited_email_address` are
+// returned.
 func (c *UserProfilesGuardianInvitationsListCall) InvitedEmailAddress(invitedEmailAddress string) *UserProfilesGuardianInvitationsListCall {
 	c.urlParams_.Set("invitedEmailAddress", invitedEmailAddress)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. Zero or unspecified indicates that the server may
-// assign a maximum. The server may return fewer than the specified
-// number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. Zero or unspecified indicates that the server may assign a maximum.
+// The server may return fewer than the specified number of results.
 func (c *UserProfilesGuardianInvitationsListCall) PageSize(pageSize int64) *UserProfilesGuardianInvitationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *UserProfilesGuardianInvitationsListCall) PageToken(pageToken string) *UserProfilesGuardianInvitationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// States sets the optional parameter "states": If specified, only
-// results with the specified `state` values are returned. Otherwise,
-// results with a `state` of `PENDING` are returned.
+// States sets the optional parameter "states": If specified, only results with
+// the specified `state` values are returned. Otherwise, results with a `state`
+// of `PENDING` are returned.
 //
 // Possible values:
 //
@@ -13077,33 +9682,29 @@ func (c *UserProfilesGuardianInvitationsListCall) States(states ...string) *User
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UserProfilesGuardianInvitationsListCall) Fields(s ...googleapi.Field) *UserProfilesGuardianInvitationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *UserProfilesGuardianInvitationsListCall) IfNoneMatch(entityTag string) *UserProfilesGuardianInvitationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UserProfilesGuardianInvitationsListCall) Context(ctx context.Context) *UserProfilesGuardianInvitationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UserProfilesGuardianInvitationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13112,12 +9713,7 @@ func (c *UserProfilesGuardianInvitationsListCall) Header() http.Header {
 }
 
 func (c *UserProfilesGuardianInvitationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -13138,12 +9734,11 @@ func (c *UserProfilesGuardianInvitationsListCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "classroom.userProfiles.guardianInvitations.list" call.
-// Exactly one of *ListGuardianInvitationsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListGuardianInvitationsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGuardianInvitationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *UserProfilesGuardianInvitationsListCall) Do(opts ...googleapi.CallOption) (*ListGuardianInvitationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13174,64 +9769,6 @@ func (c *UserProfilesGuardianInvitationsListCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of guardian invitations that the requesting user is permitted to view, filtered by the parameters provided. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian invitations for that student, if `\"-\"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` or `state` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.",
-	//   "flatPath": "v1/userProfiles/{studentId}/guardianInvitations",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.userProfiles.guardianInvitations.list",
-	//   "parameterOrder": [
-	//     "studentId"
-	//   ],
-	//   "parameters": {
-	//     "invitedEmailAddress": {
-	//       "description": "If specified, only results with the specified `invited_email_address` are returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "states": {
-	//       "description": "If specified, only results with the specified `state` values are returned. Otherwise, results with a `state` of `PENDING` are returned.",
-	//       "enum": [
-	//         "GUARDIAN_INVITATION_STATE_UNSPECIFIED",
-	//         "PENDING",
-	//         "COMPLETE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Should never be returned.",
-	//         "The invitation is active and awaiting a response.",
-	//         "The invitation is no longer active. It may have been accepted, declined, withdrawn or it may have expired."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "studentId": {
-	//       "description": "The ID of the student whose guardian invitations are to be returned. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user * the string literal `\"-\"`, indicating that results should be returned for all students that the requesting user is permitted to view guardian invitations.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/userProfiles/{studentId}/guardianInvitations",
-	//   "response": {
-	//     "$ref": "ListGuardianInvitationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.students",
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -13239,7 +9776,7 @@ func (c *UserProfilesGuardianInvitationsListCall) Do(opts ...googleapi.CallOptio
 // The provided context supersedes any context provided to the Context method.
 func (c *UserProfilesGuardianInvitationsListCall) Pages(ctx context.Context, f func(*ListGuardianInvitationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -13255,8 +9792,6 @@ func (c *UserProfilesGuardianInvitationsListCall) Pages(ctx context.Context, f f
 	}
 }
 
-// method id "classroom.userProfiles.guardianInvitations.patch":
-
 type UserProfilesGuardianInvitationsPatchCall struct {
 	s                  *Service
 	studentId          string
@@ -13268,23 +9803,20 @@ type UserProfilesGuardianInvitationsPatchCall struct {
 }
 
 // Patch: Modifies a guardian invitation. Currently, the only valid
-// modification is to change the `state` from `PENDING` to `COMPLETE`.
-// This has the effect of withdrawing the invitation. This method
-// returns the following error codes: * `PERMISSION_DENIED` if the
-// current user does not have permission to manage guardians, if
-// guardians are not enabled for the domain in question or for other
-// access errors. * `FAILED_PRECONDITION` if the guardian link is not in
-// the `PENDING` state. * `INVALID_ARGUMENT` if the format of the
-// student ID provided cannot be recognized (it is not an email address,
-// nor a `user_id` from this API), or if the passed `GuardianInvitation`
-// has a `state` other than `COMPLETE`, or if it modifies fields other
-// than `state`. * `NOT_FOUND` if the student ID provided is a valid
-// student ID, but Classroom has no record of that student, or if the
-// `id` field does not refer to a guardian invitation known to
-// Classroom.
+// modification is to change the `state` from `PENDING` to `COMPLETE`. This has
+// the effect of withdrawing the invitation. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the current user does not have
+// permission to manage guardians, if guardians are not enabled for the domain
+// in question or for other access errors. * `FAILED_PRECONDITION` if the
+// guardian link is not in the `PENDING` state. * `INVALID_ARGUMENT` if the
+// format of the student ID provided cannot be recognized (it is not an email
+// address, nor a `user_id` from this API), or if the passed
+// `GuardianInvitation` has a `state` other than `COMPLETE`, or if it modifies
+// fields other than `state`. * `NOT_FOUND` if the student ID provided is a
+// valid student ID, but Classroom has no record of that student, or if the
+// `id` field does not refer to a guardian invitation known to Classroom.
 //
-//   - invitationId: The `id` field of the `GuardianInvitation` to be
-//     modified.
+//   - invitationId: The `id` field of the `GuardianInvitation` to be modified.
 //   - studentId: The ID of the student whose guardian invitation is to be
 //     modified.
 func (r *UserProfilesGuardianInvitationsService) Patch(studentId string, invitationId string, guardianinvitation *GuardianInvitation) *UserProfilesGuardianInvitationsPatchCall {
@@ -13295,34 +9827,32 @@ func (r *UserProfilesGuardianInvitationsService) Patch(studentId string, invitat
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Mask that
-// identifies which fields on the course to update. This field is
-// required to do an update. The update fails if invalid fields are
-// specified. The following fields are valid: * `state` When set in a
-// query parameter, this field should be specified as `updateMask=,,...`
+// UpdateMask sets the optional parameter "updateMask": Mask that identifies
+// which fields on the course to update. This field is required to do an
+// update. The update fails if invalid fields are specified. The following
+// fields are valid: * `state` When set in a query parameter, this field should
+// be specified as `updateMask=,,...`
 func (c *UserProfilesGuardianInvitationsPatchCall) UpdateMask(updateMask string) *UserProfilesGuardianInvitationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UserProfilesGuardianInvitationsPatchCall) Fields(s ...googleapi.Field) *UserProfilesGuardianInvitationsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UserProfilesGuardianInvitationsPatchCall) Context(ctx context.Context) *UserProfilesGuardianInvitationsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UserProfilesGuardianInvitationsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13331,18 +9861,12 @@ func (c *UserProfilesGuardianInvitationsPatchCall) Header() http.Header {
 }
 
 func (c *UserProfilesGuardianInvitationsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.guardianinvitation)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}")
@@ -13360,12 +9884,11 @@ func (c *UserProfilesGuardianInvitationsPatchCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "classroom.userProfiles.guardianInvitations.patch" call.
-// Exactly one of *GuardianInvitation or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GuardianInvitation.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GuardianInvitation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *UserProfilesGuardianInvitationsPatchCall) Do(opts ...googleapi.CallOption) (*GuardianInvitation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13396,50 +9919,7 @@ func (c *UserProfilesGuardianInvitationsPatchCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modifies a guardian invitation. Currently, the only valid modification is to change the `state` from `PENDING` to `COMPLETE`. This has the effect of withdrawing the invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if guardians are not enabled for the domain in question or for other access errors. * `FAILED_PRECONDITION` if the guardian link is not in the `PENDING` state. * `INVALID_ARGUMENT` if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API), or if the passed `GuardianInvitation` has a `state` other than `COMPLETE`, or if it modifies fields other than `state`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student, or if the `id` field does not refer to a guardian invitation known to Classroom.",
-	//   "flatPath": "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "classroom.userProfiles.guardianInvitations.patch",
-	//   "parameterOrder": [
-	//     "studentId",
-	//     "invitationId"
-	//   ],
-	//   "parameters": {
-	//     "invitationId": {
-	//       "description": "The `id` field of the `GuardianInvitation` to be modified.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "studentId": {
-	//       "description": "The ID of the student whose guardian invitation is to be modified.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the course to update. This field is required to do an update. The update fails if invalid fields are specified. The following fields are valid: * `state` When set in a query parameter, this field should be specified as `updateMask=,,...`",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/userProfiles/{studentId}/guardianInvitations/{invitationId}",
-	//   "request": {
-	//     "$ref": "GuardianInvitation"
-	//   },
-	//   "response": {
-	//     "$ref": "GuardianInvitation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.students"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.userProfiles.guardians.delete":
 
 type UserProfilesGuardiansDeleteCall struct {
 	s          *Service
@@ -13450,25 +9930,23 @@ type UserProfilesGuardiansDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a guardian. The guardian will no longer receive
-// guardian notifications and the guardian will no longer be accessible
-// via the API. This method returns the following error codes: *
-// `PERMISSION_DENIED` if no user that matches the provided `student_id`
-// is visible to the requesting user, if the requesting user is not
-// permitted to manage guardians for the student identified by the
-// `student_id`, if guardians are not enabled for the domain in
-// question, or for other access errors. * `INVALID_ARGUMENT` if a
-// `student_id` is specified, but its format cannot be recognized (it is
-// not an email address, nor a `student_id` from the API). * `NOT_FOUND`
-// if the requesting user is permitted to modify guardians for the
-// requested `student_id`, but no `Guardian` record exists for that
-// student with the provided `guardian_id`.
+// Delete: Deletes a guardian. The guardian will no longer receive guardian
+// notifications and the guardian will no longer be accessible via the API.
+// This method returns the following error codes: * `PERMISSION_DENIED` if no
+// user that matches the provided `student_id` is visible to the requesting
+// user, if the requesting user is not permitted to manage guardians for the
+// student identified by the `student_id`, if guardians are not enabled for the
+// domain in question, or for other access errors. * `INVALID_ARGUMENT` if a
+// `student_id` is specified, but its format cannot be recognized (it is not an
+// email address, nor a `student_id` from the API). * `NOT_FOUND` if the
+// requesting user is permitted to modify guardians for the requested
+// `student_id`, but no `Guardian` record exists for that student with the
+// provided `guardian_id`.
 //
 //   - guardianId: The `id` field from a `Guardian`.
 //   - studentId: The student whose guardian is to be deleted. One of the
-//     following: * the numeric identifier for the user * the email
-//     address of the user * the string literal "me", indicating the
-//     requesting user.
+//     following: * the numeric identifier for the user * the email address of
+//     the user * the string literal "me", indicating the requesting user.
 func (r *UserProfilesGuardiansService) Delete(studentId string, guardianId string) *UserProfilesGuardiansDeleteCall {
 	c := &UserProfilesGuardiansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13477,23 +9955,21 @@ func (r *UserProfilesGuardiansService) Delete(studentId string, guardianId strin
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UserProfilesGuardiansDeleteCall) Fields(s ...googleapi.Field) *UserProfilesGuardiansDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UserProfilesGuardiansDeleteCall) Context(ctx context.Context) *UserProfilesGuardiansDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UserProfilesGuardiansDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13502,12 +9978,7 @@ func (c *UserProfilesGuardiansDeleteCall) Header() http.Header {
 }
 
 func (c *UserProfilesGuardiansDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -13526,12 +9997,10 @@ func (c *UserProfilesGuardiansDeleteCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "classroom.userProfiles.guardians.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *UserProfilesGuardiansDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13562,41 +10031,7 @@ func (c *UserProfilesGuardiansDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a guardian. The guardian will no longer receive guardian notifications and the guardian will no longer be accessible via the API. This method returns the following error codes: * `PERMISSION_DENIED` if no user that matches the provided `student_id` is visible to the requesting user, if the requesting user is not permitted to manage guardians for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API). * `NOT_FOUND` if the requesting user is permitted to modify guardians for the requested `student_id`, but no `Guardian` record exists for that student with the provided `guardian_id`.",
-	//   "flatPath": "v1/userProfiles/{studentId}/guardians/{guardianId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.userProfiles.guardians.delete",
-	//   "parameterOrder": [
-	//     "studentId",
-	//     "guardianId"
-	//   ],
-	//   "parameters": {
-	//     "guardianId": {
-	//       "description": "The `id` field from a `Guardian`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "studentId": {
-	//       "description": "The student whose guardian is to be deleted. One of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/userProfiles/{studentId}/guardians/{guardianId}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.students"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.userProfiles.guardians.get":
 
 type UserProfilesGuardiansGetCall struct {
 	s            *Service
@@ -13608,24 +10043,22 @@ type UserProfilesGuardiansGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a specific guardian. This method returns the following
-// error codes: * `PERMISSION_DENIED` if no user that matches the
-// provided `student_id` is visible to the requesting user, if the
-// requesting user is not permitted to view guardian information for the
-// student identified by the `student_id`, if guardians are not enabled
-// for the domain in question, or for other access errors. *
-// `INVALID_ARGUMENT` if a `student_id` is specified, but its format
-// cannot be recognized (it is not an email address, nor a `student_id`
-// from the API, nor the literal string `me`). * `NOT_FOUND` if the
-// requesting user is permitted to view guardians for the requested
-// `student_id`, but no `Guardian` record exists for that student that
-// matches the provided `guardian_id`.
+// Get: Returns a specific guardian. This method returns the following error
+// codes: * `PERMISSION_DENIED` if no user that matches the provided
+// `student_id` is visible to the requesting user, if the requesting user is
+// not permitted to view guardian information for the student identified by the
+// `student_id`, if guardians are not enabled for the domain in question, or
+// for other access errors. * `INVALID_ARGUMENT` if a `student_id` is
+// specified, but its format cannot be recognized (it is not an email address,
+// nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND`
+// if the requesting user is permitted to view guardians for the requested
+// `student_id`, but no `Guardian` record exists for that student that matches
+// the provided `guardian_id`.
 //
 //   - guardianId: The `id` field from a `Guardian`.
-//   - studentId: The student whose guardian is being requested. One of
-//     the following: * the numeric identifier for the user * the email
-//     address of the user * the string literal "me", indicating the
-//     requesting user.
+//   - studentId: The student whose guardian is being requested. One of the
+//     following: * the numeric identifier for the user * the email address of
+//     the user * the string literal "me", indicating the requesting user.
 func (r *UserProfilesGuardiansService) Get(studentId string, guardianId string) *UserProfilesGuardiansGetCall {
 	c := &UserProfilesGuardiansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13634,33 +10067,29 @@ func (r *UserProfilesGuardiansService) Get(studentId string, guardianId string) 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UserProfilesGuardiansGetCall) Fields(s ...googleapi.Field) *UserProfilesGuardiansGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *UserProfilesGuardiansGetCall) IfNoneMatch(entityTag string) *UserProfilesGuardiansGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UserProfilesGuardiansGetCall) Context(ctx context.Context) *UserProfilesGuardiansGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UserProfilesGuardiansGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13669,12 +10098,7 @@ func (c *UserProfilesGuardiansGetCall) Header() http.Header {
 }
 
 func (c *UserProfilesGuardiansGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -13696,12 +10120,10 @@ func (c *UserProfilesGuardiansGetCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "classroom.userProfiles.guardians.get" call.
-// Exactly one of *Guardian or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Guardian.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Guardian.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *UserProfilesGuardiansGetCall) Do(opts ...googleapi.CallOption) (*Guardian, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13732,43 +10154,7 @@ func (c *UserProfilesGuardiansGetCall) Do(opts ...googleapi.CallOption) (*Guardi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a specific guardian. This method returns the following error codes: * `PERMISSION_DENIED` if no user that matches the provided `student_id` is visible to the requesting user, if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if the requesting user is permitted to view guardians for the requested `student_id`, but no `Guardian` record exists for that student that matches the provided `guardian_id`.",
-	//   "flatPath": "v1/userProfiles/{studentId}/guardians/{guardianId}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.userProfiles.guardians.get",
-	//   "parameterOrder": [
-	//     "studentId",
-	//     "guardianId"
-	//   ],
-	//   "parameters": {
-	//     "guardianId": {
-	//       "description": "The `id` field from a `Guardian`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "studentId": {
-	//       "description": "The student whose guardian is being requested. One of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/userProfiles/{studentId}/guardians/{guardianId}",
-	//   "response": {
-	//     "$ref": "Guardian"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.me.readonly",
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.students",
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "classroom.userProfiles.guardians.list":
 
 type UserProfilesGuardiansListCall struct {
 	s            *Service
@@ -13779,91 +10165,84 @@ type UserProfilesGuardiansListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of guardians that the requesting user is
-// permitted to view, restricted to those that match the request. To
-// list guardians for any student that the requesting user may view
-// guardians for, use the literal character `-` for the student ID. This
-// method returns the following error codes: * `PERMISSION_DENIED` if a
-// `student_id` is specified, and the requesting user is not permitted
-// to view guardian information for that student, if "-" is specified
-// as the `student_id` and the user is not a domain administrator, if
-// guardians are not enabled for the domain in question, if the
-// `invited_email_address` filter is set by a user who is not a domain
-// administrator, or for other access errors. * `INVALID_ARGUMENT` if a
-// `student_id` is specified, but its format cannot be recognized (it is
-// not an email address, nor a `student_id` from the API, nor the
-// literal string `me`). May also be returned if an invalid `page_token`
-// is provided. * `NOT_FOUND` if a `student_id` is specified, and its
-// format can be recognized, but Classroom has no record of that
-// student.
+// List: Returns a list of guardians that the requesting user is permitted to
+// view, restricted to those that match the request. To list guardians for any
+// student that the requesting user may view guardians for, use the literal
+// character `-` for the student ID. This method returns the following error
+// codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the
+// requesting user is not permitted to view guardian information for that
+// student, if "-" is specified as the `student_id` and the user is not a
+// domain administrator, if guardians are not enabled for the domain in
+// question, if the `invited_email_address` filter is set by a user who is not
+// a domain administrator, or for other access errors. * `INVALID_ARGUMENT` if
+// a `student_id` is specified, but its format cannot be recognized (it is not
+// an email address, nor a `student_id` from the API, nor the literal string
+// `me`). May also be returned if an invalid `page_token` is provided. *
+// `NOT_FOUND` if a `student_id` is specified, and its format can be
+// recognized, but Classroom has no record of that student.
 //
-//   - studentId: Filter results by the student who the guardian is linked
-//     to. The identifier can be one of the following: * the numeric
-//     identifier for the user * the email address of the user * the
-//     string literal "me", indicating the requesting user * the string
-//     literal "-", indicating that results should be returned for all
-//     students that the requesting user has access to view.
+//   - studentId: Filter results by the student who the guardian is linked to.
+//     The identifier can be one of the following: * the numeric identifier for
+//     the user * the email address of the user * the string literal "me",
+//     indicating the requesting user * the string literal "-", indicating that
+//     results should be returned for all students that the requesting user has
+//     access to view.
 func (r *UserProfilesGuardiansService) List(studentId string) *UserProfilesGuardiansListCall {
 	c := &UserProfilesGuardiansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
 	return c
 }
 
-// InvitedEmailAddress sets the optional parameter
-// "invitedEmailAddress": Filter results by the email address that the
-// original invitation was sent to, resulting in this guardian link.
-// This filter can only be used by domain administrators.
+// InvitedEmailAddress sets the optional parameter "invitedEmailAddress":
+// Filter results by the email address that the original invitation was sent
+// to, resulting in this guardian link. This filter can only be used by domain
+// administrators.
 func (c *UserProfilesGuardiansListCall) InvitedEmailAddress(invitedEmailAddress string) *UserProfilesGuardiansListCall {
 	c.urlParams_.Set("invitedEmailAddress", invitedEmailAddress)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. Zero or unspecified indicates that the server may
-// assign a maximum. The server may return fewer than the specified
-// number of results.
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. Zero or unspecified indicates that the server may assign a maximum.
+// The server may return fewer than the specified number of results.
 func (c *UserProfilesGuardiansListCall) PageSize(pageSize int64) *UserProfilesGuardiansListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": nextPageToken
-// value returned from a previous list call, indicating that the
-// subsequent page of results should be returned. The list request must
-// be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
 func (c *UserProfilesGuardiansListCall) PageToken(pageToken string) *UserProfilesGuardiansListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UserProfilesGuardiansListCall) Fields(s ...googleapi.Field) *UserProfilesGuardiansListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *UserProfilesGuardiansListCall) IfNoneMatch(entityTag string) *UserProfilesGuardiansListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UserProfilesGuardiansListCall) Context(ctx context.Context) *UserProfilesGuardiansListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UserProfilesGuardiansListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13872,12 +10251,7 @@ func (c *UserProfilesGuardiansListCall) Header() http.Header {
 }
 
 func (c *UserProfilesGuardiansListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -13898,12 +10272,11 @@ func (c *UserProfilesGuardiansListCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "classroom.userProfiles.guardians.list" call.
-// Exactly one of *ListGuardiansResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListGuardiansResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGuardiansResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *UserProfilesGuardiansListCall) Do(opts ...googleapi.CallOption) (*ListGuardiansResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13934,49 +10307,6 @@ func (c *UserProfilesGuardiansListCall) Do(opts ...googleapi.CallOption) (*ListG
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of guardians that the requesting user is permitted to view, restricted to those that match the request. To list guardians for any student that the requesting user may view guardians for, use the literal character `-` for the student ID. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian information for that student, if `\"-\"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, if the `invited_email_address` filter is set by a user who is not a domain administrator, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.",
-	//   "flatPath": "v1/userProfiles/{studentId}/guardians",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.userProfiles.guardians.list",
-	//   "parameterOrder": [
-	//     "studentId"
-	//   ],
-	//   "parameters": {
-	//     "invitedEmailAddress": {
-	//       "description": "Filter results by the email address that the original invitation was sent to, resulting in this guardian link. This filter can only be used by domain administrators.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "studentId": {
-	//       "description": "Filter results by the student who the guardian is linked to. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user * the string literal `\"-\"`, indicating that results should be returned for all students that the requesting user has access to view.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/userProfiles/{studentId}/guardians",
-	//   "response": {
-	//     "$ref": "ListGuardiansResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.me.readonly",
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.students",
-	//     "https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -13984,7 +10314,7 @@ func (c *UserProfilesGuardiansListCall) Do(opts ...googleapi.CallOption) (*ListG
 // The provided context supersedes any context provided to the Context method.
 func (c *UserProfilesGuardiansListCall) Pages(ctx context.Context, f func(*ListGuardiansResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

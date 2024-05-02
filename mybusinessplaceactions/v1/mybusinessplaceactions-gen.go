@@ -176,234 +176,185 @@ type PlaceActionTypeMetadataService struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
 // ListPlaceActionLinksResponse: Response message for
 // PlaceActions.ListPlaceActionLinks.
 type ListPlaceActionLinksResponse struct {
-	// NextPageToken: If there are more place action links than the
-	// requested page size, then this field is populated with a token to
-	// fetch the next page of results.
+	// NextPageToken: If there are more place action links than the requested page
+	// size, then this field is populated with a token to fetch the next page of
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// PlaceActionLinks: The returned list of place action links.
 	PlaceActionLinks []*PlaceActionLink `json:"placeActionLinks,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListPlaceActionLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPlaceActionLinksResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPlaceActionTypeMetadataResponse: Response message for
 // PlaceActions.ListPlaceActionTypeMetadata.
 type ListPlaceActionTypeMetadataResponse struct {
-	// NextPageToken: If the number of action types exceeded the requested
-	// page size, this field will be populated with a token to fetch the
-	// next page on a subsequent call to `placeActionTypeMetadata.list`. If
-	// there are no more results, this field will not be present in the
-	// response.
+	// NextPageToken: If the number of action types exceeded the requested page
+	// size, this field will be populated with a token to fetch the next page on a
+	// subsequent call to `placeActionTypeMetadata.list`. If there are no more
+	// results, this field will not be present in the response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// PlaceActionTypeMetadata: A collection of metadata for the available
-	// place action types.
+	// PlaceActionTypeMetadata: A collection of metadata for the available place
+	// action types.
 	PlaceActionTypeMetadata []*PlaceActionTypeMetadata `json:"placeActionTypeMetadata,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListPlaceActionTypeMetadataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPlaceActionTypeMetadataResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PlaceActionLink: Represents a place action link and its attributes.
 type PlaceActionLink struct {
-	// CreateTime: Output only. The time when the place action link was
-	// created.
+	// CreateTime: Output only. The time when the place action link was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// IsEditable: Output only. Indicates whether this link can be edited by
-	// the client.
+	// IsEditable: Output only. Indicates whether this link can be edited by the
+	// client.
 	IsEditable bool `json:"isEditable,omitempty"`
-
-	// IsPreferred: Optional. Whether this link is preferred by the
-	// merchant. Only one link can be marked as preferred per place action
-	// type at a location. If a future request marks a different link as
-	// preferred for the same place action type, then the current preferred
-	// link (if any exists) will lose its preference.
+	// IsPreferred: Optional. Whether this link is preferred by the merchant. Only
+	// one link can be marked as preferred per place action type at a location. If
+	// a future request marks a different link as preferred for the same place
+	// action type, then the current preferred link (if any exists) will lose its
+	// preference.
 	IsPreferred bool `json:"isPreferred,omitempty"`
-
 	// Name: Optional. The resource name, in the format
-	// `locations/{location_id}/placeActionLinks/{place_action_link_id}`.
-	// The name field will only be considered in UpdatePlaceActionLink and
-	// DeletePlaceActionLink requests for updating and deleting links
-	// respectively. However, it will be ignored in CreatePlaceActionLink
-	// request, where `place_action_link_id` will be assigned by the server
-	// on successful creation of a new link and returned as part of the
-	// response.
+	// `locations/{location_id}/placeActionLinks/{place_action_link_id}`. The name
+	// field will only be considered in UpdatePlaceActionLink and
+	// DeletePlaceActionLink requests for updating and deleting links respectively.
+	// However, it will be ignored in CreatePlaceActionLink request, where
+	// `place_action_link_id` will be assigned by the server on successful creation
+	// of a new link and returned as part of the response.
 	Name string `json:"name,omitempty"`
-
-	// PlaceActionType: Required. The type of place action that can be
-	// performed using this link.
+	// PlaceActionType: Required. The type of place action that can be performed
+	// using this link.
 	//
 	// Possible values:
 	//   "PLACE_ACTION_TYPE_UNSPECIFIED" - Not specified.
 	//   "APPOINTMENT" - The action type is booking an appointment.
-	//   "ONLINE_APPOINTMENT" - The action type is booking an online
-	// appointment.
-	//   "DINING_RESERVATION" - The action type is making a dining
-	// reservation.
-	//   "FOOD_ORDERING" - The action type is ordering food for delivery
-	// and/or takeout.
+	//   "ONLINE_APPOINTMENT" - The action type is booking an online appointment.
+	//   "DINING_RESERVATION" - The action type is making a dining reservation.
+	//   "FOOD_ORDERING" - The action type is ordering food for delivery and/or
+	// takeout.
 	//   "FOOD_DELIVERY" - The action type is ordering food for delivery.
 	//   "FOOD_TAKEOUT" - The action type is ordering food for takeout.
-	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery
-	// and/or pickup.
+	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery and/or
+	// pickup.
 	PlaceActionType string `json:"placeActionType,omitempty"`
-
 	// ProviderType: Output only. Specifies the provider type.
 	//
 	// Possible values:
 	//   "PROVIDER_TYPE_UNSPECIFIED" - Not specified.
-	//   "MERCHANT" - A 1P provider such as a merchant, or an agency on
-	// behalf of a merchant.
+	//   "MERCHANT" - A 1P provider such as a merchant, or an agency on behalf of a
+	// merchant.
 	//   "AGGREGATOR_3P" - A 3P aggregator, such as a `Reserve with Google`
 	// partner.
 	ProviderType string `json:"providerType,omitempty"`
-
 	// UpdateTime: Output only. The time when the place action link was last
 	// modified.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// Uri: Required. The link uri. The same uri can be reused for different
-	// action types across different locations. However, only one place
-	// action link is allowed for each unique combination of (uri, place
-	// action type, location).
+	// Uri: Required. The link uri. The same uri can be reused for different action
+	// types across different locations. However, only one place action link is
+	// allowed for each unique combination of (uri, place action type, location).
 	Uri string `json:"uri,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PlaceActionLink) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaceActionLink
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PlaceActionTypeMetadata: Metadata for supported place action types.
 type PlaceActionTypeMetadata struct {
-	// DisplayName: The localized display name for the attribute, if
-	// available; otherwise, the English display name.
+	// DisplayName: The localized display name for the attribute, if available;
+	// otherwise, the English display name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// PlaceActionType: The place action type.
 	//
 	// Possible values:
 	//   "PLACE_ACTION_TYPE_UNSPECIFIED" - Not specified.
 	//   "APPOINTMENT" - The action type is booking an appointment.
-	//   "ONLINE_APPOINTMENT" - The action type is booking an online
-	// appointment.
-	//   "DINING_RESERVATION" - The action type is making a dining
-	// reservation.
-	//   "FOOD_ORDERING" - The action type is ordering food for delivery
-	// and/or takeout.
+	//   "ONLINE_APPOINTMENT" - The action type is booking an online appointment.
+	//   "DINING_RESERVATION" - The action type is making a dining reservation.
+	//   "FOOD_ORDERING" - The action type is ordering food for delivery and/or
+	// takeout.
 	//   "FOOD_DELIVERY" - The action type is ordering food for delivery.
 	//   "FOOD_TAKEOUT" - The action type is ordering food for takeout.
-	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery
-	// and/or pickup.
+	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery and/or
+	// pickup.
 	PlaceActionType string `json:"placeActionType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PlaceActionTypeMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaceActionTypeMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "mybusinessplaceactions.locations.placeActionLinks.create":
 
 type LocationsPlaceActionLinksCreateCall struct {
 	s               *Service
@@ -414,14 +365,13 @@ type LocationsPlaceActionLinksCreateCall struct {
 	header_         http.Header
 }
 
-// Create: Creates a place action link associated with the specified
-// location, and returns it. The request is considered duplicate if the
-// `parent`, `place_action_link.uri` and
-// `place_action_link.place_action_type` are the same as a previous
-// request.
+// Create: Creates a place action link associated with the specified location,
+// and returns it. The request is considered duplicate if the `parent`,
+// `place_action_link.uri` and `place_action_link.place_action_type` are the
+// same as a previous request.
 //
-//   - parent: The resource name of the location where to create this
-//     place action link. `locations/{location_id}`.
+//   - parent: The resource name of the location where to create this place
+//     action link. `locations/{location_id}`.
 func (r *LocationsPlaceActionLinksService) Create(parent string, placeactionlink *PlaceActionLink) *LocationsPlaceActionLinksCreateCall {
 	c := &LocationsPlaceActionLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -430,23 +380,21 @@ func (r *LocationsPlaceActionLinksService) Create(parent string, placeactionlink
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsPlaceActionLinksCreateCall) Fields(s ...googleapi.Field) *LocationsPlaceActionLinksCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsPlaceActionLinksCreateCall) Context(ctx context.Context) *LocationsPlaceActionLinksCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsPlaceActionLinksCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -455,18 +403,12 @@ func (c *LocationsPlaceActionLinksCreateCall) Header() http.Header {
 }
 
 func (c *LocationsPlaceActionLinksCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.placeactionlink)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/placeActionLinks")
@@ -483,12 +425,11 @@ func (c *LocationsPlaceActionLinksCreateCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "mybusinessplaceactions.locations.placeActionLinks.create" call.
-// Exactly one of *PlaceActionLink or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *PlaceActionLink.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PlaceActionLink.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *LocationsPlaceActionLinksCreateCall) Do(opts ...googleapi.CallOption) (*PlaceActionLink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -519,35 +460,7 @@ func (c *LocationsPlaceActionLinksCreateCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a place action link associated with the specified location, and returns it. The request is considered duplicate if the `parent`, `place_action_link.uri` and `place_action_link.place_action_type` are the same as a previous request.",
-	//   "flatPath": "v1/locations/{locationsId}/placeActionLinks",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessplaceactions.locations.placeActionLinks.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the location where to create this place action link. `locations/{location_id}`.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/placeActionLinks",
-	//   "request": {
-	//     "$ref": "PlaceActionLink"
-	//   },
-	//   "response": {
-	//     "$ref": "PlaceActionLink"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessplaceactions.locations.placeActionLinks.delete":
 
 type LocationsPlaceActionLinksDeleteCall struct {
 	s          *Service
@@ -568,23 +481,21 @@ func (r *LocationsPlaceActionLinksService) Delete(name string) *LocationsPlaceAc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsPlaceActionLinksDeleteCall) Fields(s ...googleapi.Field) *LocationsPlaceActionLinksDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsPlaceActionLinksDeleteCall) Context(ctx context.Context) *LocationsPlaceActionLinksDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsPlaceActionLinksDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -593,12 +504,7 @@ func (c *LocationsPlaceActionLinksDeleteCall) Header() http.Header {
 }
 
 func (c *LocationsPlaceActionLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -616,12 +522,10 @@ func (c *LocationsPlaceActionLinksDeleteCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "mybusinessplaceactions.locations.placeActionLinks.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *LocationsPlaceActionLinksDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -652,32 +556,7 @@ func (c *LocationsPlaceActionLinksDeleteCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a place action link from the specified location.",
-	//   "flatPath": "v1/locations/{locationsId}/placeActionLinks/{placeActionLinksId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "mybusinessplaceactions.locations.placeActionLinks.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the place action link to remove from the location.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/placeActionLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessplaceactions.locations.placeActionLinks.get":
 
 type LocationsPlaceActionLinksGetCall struct {
 	s            *Service
@@ -698,33 +577,29 @@ func (r *LocationsPlaceActionLinksService) Get(name string) *LocationsPlaceActio
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsPlaceActionLinksGetCall) Fields(s ...googleapi.Field) *LocationsPlaceActionLinksGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *LocationsPlaceActionLinksGetCall) IfNoneMatch(entityTag string) *LocationsPlaceActionLinksGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsPlaceActionLinksGetCall) Context(ctx context.Context) *LocationsPlaceActionLinksGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsPlaceActionLinksGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -733,12 +608,7 @@ func (c *LocationsPlaceActionLinksGetCall) Header() http.Header {
 }
 
 func (c *LocationsPlaceActionLinksGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -759,12 +629,11 @@ func (c *LocationsPlaceActionLinksGetCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "mybusinessplaceactions.locations.placeActionLinks.get" call.
-// Exactly one of *PlaceActionLink or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *PlaceActionLink.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PlaceActionLink.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *LocationsPlaceActionLinksGetCall) Do(opts ...googleapi.CallOption) (*PlaceActionLink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -795,32 +664,7 @@ func (c *LocationsPlaceActionLinksGetCall) Do(opts ...googleapi.CallOption) (*Pl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the specified place action link.",
-	//   "flatPath": "v1/locations/{locationsId}/placeActionLinks/{placeActionLinksId}",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessplaceactions.locations.placeActionLinks.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the place action link to fetch.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/placeActionLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "PlaceActionLink"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessplaceactions.locations.placeActionLinks.list":
 
 type LocationsPlaceActionLinksListCall struct {
 	s            *Service
@@ -833,65 +677,61 @@ type LocationsPlaceActionLinksListCall struct {
 
 // List: Lists the place action links for the specified location.
 //
-//   - parent: The name of the location whose place action links will be
-//     listed. `locations/{location_id}`.
+//   - parent: The name of the location whose place action links will be listed.
+//     `locations/{location_id}`.
 func (r *LocationsPlaceActionLinksService) List(parent string) *LocationsPlaceActionLinksListCall {
 	c := &LocationsPlaceActionLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter constraining
-// the place action links to return. The response includes entries that
-// match the filter. We support only the following filter: 1.
-// place_action_type=XYZ where XYZ is a valid PlaceActionType.
+// Filter sets the optional parameter "filter": A filter constraining the place
+// action links to return. The response includes entries that match the filter.
+// We support only the following filter: 1. place_action_type=XYZ where XYZ is
+// a valid PlaceActionType.
 func (c *LocationsPlaceActionLinksListCall) Filter(filter string) *LocationsPlaceActionLinksListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": How many place
-// action links to return per page. Default of 10. The minimum is 1.
+// PageSize sets the optional parameter "pageSize": How many place action links
+// to return per page. Default of 10. The minimum is 1.
 func (c *LocationsPlaceActionLinksListCall) PageSize(pageSize int64) *LocationsPlaceActionLinksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": If specified,
-// returns the next page of place action links.
+// PageToken sets the optional parameter "pageToken": If specified, returns the
+// next page of place action links.
 func (c *LocationsPlaceActionLinksListCall) PageToken(pageToken string) *LocationsPlaceActionLinksListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsPlaceActionLinksListCall) Fields(s ...googleapi.Field) *LocationsPlaceActionLinksListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *LocationsPlaceActionLinksListCall) IfNoneMatch(entityTag string) *LocationsPlaceActionLinksListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsPlaceActionLinksListCall) Context(ctx context.Context) *LocationsPlaceActionLinksListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsPlaceActionLinksListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -900,12 +740,7 @@ func (c *LocationsPlaceActionLinksListCall) Header() http.Header {
 }
 
 func (c *LocationsPlaceActionLinksListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -926,12 +761,11 @@ func (c *LocationsPlaceActionLinksListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "mybusinessplaceactions.locations.placeActionLinks.list" call.
-// Exactly one of *ListPlaceActionLinksResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListPlaceActionLinksResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPlaceActionLinksResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *LocationsPlaceActionLinksListCall) Do(opts ...googleapi.CallOption) (*ListPlaceActionLinksResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -962,45 +796,6 @@ func (c *LocationsPlaceActionLinksListCall) Do(opts ...googleapi.CallOption) (*L
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the place action links for the specified location.",
-	//   "flatPath": "v1/locations/{locationsId}/placeActionLinks",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessplaceactions.locations.placeActionLinks.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. A filter constraining the place action links to return. The response includes entries that match the filter. We support only the following filter: 1. place_action_type=XYZ where XYZ is a valid PlaceActionType.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. How many place action links to return per page. Default of 10. The minimum is 1.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. If specified, returns the next page of place action links.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the location whose place action links will be listed. `locations/{location_id}`.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/placeActionLinks",
-	//   "response": {
-	//     "$ref": "ListPlaceActionLinksResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1008,7 +803,7 @@ func (c *LocationsPlaceActionLinksListCall) Do(opts ...googleapi.CallOption) (*L
 // The provided context supersedes any context provided to the Context method.
 func (c *LocationsPlaceActionLinksListCall) Pages(ctx context.Context, f func(*ListPlaceActionLinksResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1024,8 +819,6 @@ func (c *LocationsPlaceActionLinksListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
-// method id "mybusinessplaceactions.locations.placeActionLinks.patch":
-
 type LocationsPlaceActionLinksPatchCall struct {
 	s               *Service
 	name            string
@@ -1038,13 +831,12 @@ type LocationsPlaceActionLinksPatchCall struct {
 // Patch: Updates the specified place action link and returns it.
 //
 //   - name: Optional. The resource name, in the format
-//     `locations/{location_id}/placeActionLinks/{place_action_link_id}`.
-//     The name field will only be considered in UpdatePlaceActionLink and
+//     `locations/{location_id}/placeActionLinks/{place_action_link_id}`. The
+//     name field will only be considered in UpdatePlaceActionLink and
 //     DeletePlaceActionLink requests for updating and deleting links
 //     respectively. However, it will be ignored in CreatePlaceActionLink
-//     request, where `place_action_link_id` will be assigned by the
-//     server on successful creation of a new link and returned as part of
-//     the response.
+//     request, where `place_action_link_id` will be assigned by the server on
+//     successful creation of a new link and returned as part of the response.
 func (r *LocationsPlaceActionLinksService) Patch(name string, placeactionlink *PlaceActionLink) *LocationsPlaceActionLinksPatchCall {
 	c := &LocationsPlaceActionLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1052,34 +844,32 @@ func (r *LocationsPlaceActionLinksService) Patch(name string, placeactionlink *P
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// specific fields to update. The only editable fields are `uri`,
-// `place_action_type` and `is_preferred`. If the updated link already
-// exists at the same location with the same `place_action_type` and
-// `uri`, fails with an `ALREADY_EXISTS` error.
+// UpdateMask sets the optional parameter "updateMask": Required. The specific
+// fields to update. The only editable fields are `uri`, `place_action_type`
+// and `is_preferred`. If the updated link already exists at the same location
+// with the same `place_action_type` and `uri`, fails with an `ALREADY_EXISTS`
+// error.
 func (c *LocationsPlaceActionLinksPatchCall) UpdateMask(updateMask string) *LocationsPlaceActionLinksPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsPlaceActionLinksPatchCall) Fields(s ...googleapi.Field) *LocationsPlaceActionLinksPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsPlaceActionLinksPatchCall) Context(ctx context.Context) *LocationsPlaceActionLinksPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsPlaceActionLinksPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1088,18 +878,12 @@ func (c *LocationsPlaceActionLinksPatchCall) Header() http.Header {
 }
 
 func (c *LocationsPlaceActionLinksPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.placeactionlink)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -1116,12 +900,11 @@ func (c *LocationsPlaceActionLinksPatchCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "mybusinessplaceactions.locations.placeActionLinks.patch" call.
-// Exactly one of *PlaceActionLink or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *PlaceActionLink.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PlaceActionLink.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *LocationsPlaceActionLinksPatchCall) Do(opts ...googleapi.CallOption) (*PlaceActionLink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1152,41 +935,7 @@ func (c *LocationsPlaceActionLinksPatchCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the specified place action link and returns it.",
-	//   "flatPath": "v1/locations/{locationsId}/placeActionLinks/{placeActionLinksId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "mybusinessplaceactions.locations.placeActionLinks.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Optional. The resource name, in the format `locations/{location_id}/placeActionLinks/{place_action_link_id}`. The name field will only be considered in UpdatePlaceActionLink and DeletePlaceActionLink requests for updating and deleting links respectively. However, it will be ignored in CreatePlaceActionLink request, where `place_action_link_id` will be assigned by the server on successful creation of a new link and returned as part of the response.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/placeActionLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The specific fields to update. The only editable fields are `uri`, `place_action_type` and `is_preferred`. If the updated link already exists at the same location with the same `place_action_type` and `uri`, fails with an `ALREADY_EXISTS` error.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "PlaceActionLink"
-	//   },
-	//   "response": {
-	//     "$ref": "PlaceActionLink"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessplaceactions.placeActionTypeMetadata.list":
 
 type PlaceActionTypeMetadataListCall struct {
 	s            *Service
@@ -1196,78 +945,73 @@ type PlaceActionTypeMetadataListCall struct {
 	header_      http.Header
 }
 
-// List: Returns the list of available place action types for a location
-// or country.
+// List: Returns the list of available place action types for a location or
+// country.
 func (r *PlaceActionTypeMetadataService) List() *PlaceActionTypeMetadataListCall {
 	c := &PlaceActionTypeMetadataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter constraining
-// the place action types to return metadata for. The response includes
-// entries that match the filter. We support only the following filters:
-// 1. location=XYZ where XYZ is a string indicating the resource name of
-// a location, in the format `locations/{location_id}`. 2.
-// region_code=XYZ where XYZ is a Unicode CLDR region code to find
-// available action types. If no filter is provided, all place action
-// types are returned.
+// Filter sets the optional parameter "filter": A filter constraining the place
+// action types to return metadata for. The response includes entries that
+// match the filter. We support only the following filters: 1. location=XYZ
+// where XYZ is a string indicating the resource name of a location, in the
+// format `locations/{location_id}`. 2. region_code=XYZ where XYZ is a Unicode
+// CLDR region code to find available action types. If no filter is provided,
+// all place action types are returned.
 func (c *PlaceActionTypeMetadataListCall) Filter(filter string) *PlaceActionTypeMetadataListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": The IETF
-// BCP-47 code of language to get display names in. If this language is
-// not available, they will be provided in English.
+// LanguageCode sets the optional parameter "languageCode": The IETF BCP-47
+// code of language to get display names in. If this language is not available,
+// they will be provided in English.
 func (c *PlaceActionTypeMetadataListCall) LanguageCode(languageCode string) *PlaceActionTypeMetadataListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": How many action
-// types to include per page. Default is 10, minimum is 1.
+// PageSize sets the optional parameter "pageSize": How many action types to
+// include per page. Default is 10, minimum is 1.
 func (c *PlaceActionTypeMetadataListCall) PageSize(pageSize int64) *PlaceActionTypeMetadataListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": If specified, the
-// next page of place action type metadata is retrieved. The `pageToken`
-// is returned when a call to `placeActionTypeMetadata.list` returns
-// more results than can fit into the requested page size.
+// PageToken sets the optional parameter "pageToken": If specified, the next
+// page of place action type metadata is retrieved. The `pageToken` is returned
+// when a call to `placeActionTypeMetadata.list` returns more results than can
+// fit into the requested page size.
 func (c *PlaceActionTypeMetadataListCall) PageToken(pageToken string) *PlaceActionTypeMetadataListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PlaceActionTypeMetadataListCall) Fields(s ...googleapi.Field) *PlaceActionTypeMetadataListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PlaceActionTypeMetadataListCall) IfNoneMatch(entityTag string) *PlaceActionTypeMetadataListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PlaceActionTypeMetadataListCall) Context(ctx context.Context) *PlaceActionTypeMetadataListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PlaceActionTypeMetadataListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1276,12 +1020,7 @@ func (c *PlaceActionTypeMetadataListCall) Header() http.Header {
 }
 
 func (c *PlaceActionTypeMetadataListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1299,13 +1038,11 @@ func (c *PlaceActionTypeMetadataListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "mybusinessplaceactions.placeActionTypeMetadata.list" call.
-// Exactly one of *ListPlaceActionTypeMetadataResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListPlaceActionTypeMetadataResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPlaceActionTypeMetadataResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PlaceActionTypeMetadataListCall) Do(opts ...googleapi.CallOption) (*ListPlaceActionTypeMetadataResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1336,41 +1073,6 @@ func (c *PlaceActionTypeMetadataListCall) Do(opts ...googleapi.CallOption) (*Lis
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the list of available place action types for a location or country.",
-	//   "flatPath": "v1/placeActionTypeMetadata",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessplaceactions.placeActionTypeMetadata.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. A filter constraining the place action types to return metadata for. The response includes entries that match the filter. We support only the following filters: 1. location=XYZ where XYZ is a string indicating the resource name of a location, in the format `locations/{location_id}`. 2. region_code=XYZ where XYZ is a Unicode CLDR region code to find available action types. If no filter is provided, all place action types are returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "languageCode": {
-	//       "description": "Optional. The IETF BCP-47 code of language to get display names in. If this language is not available, they will be provided in English.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. How many action types to include per page. Default is 10, minimum is 1.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. If specified, the next page of place action type metadata is retrieved. The `pageToken` is returned when a call to `placeActionTypeMetadata.list` returns more results than can fit into the requested page size.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/placeActionTypeMetadata",
-	//   "response": {
-	//     "$ref": "ListPlaceActionTypeMetadataResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1378,7 +1080,7 @@ func (c *PlaceActionTypeMetadataListCall) Do(opts ...googleapi.CallOption) (*Lis
 // The provided context supersedes any context provided to the Context method.
 func (c *PlaceActionTypeMetadataListCall) Pages(ctx context.Context, f func(*ListPlaceActionTypeMetadataResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

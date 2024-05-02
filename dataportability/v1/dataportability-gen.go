@@ -104,8 +104,7 @@ const (
 	// conversations with across Google services.
 	DataportabilityBusinessmessagingConversationsScope = "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations"
 
-	// Move a copy of the information you entered into online forms in
-	// Chrome.
+	// Move a copy of the information you entered into online forms in Chrome.
 	DataportabilityChromeAutofillScope = "https://www.googleapis.com/auth/dataportability.chrome.autofill"
 
 	// Move a copy of pages you bookmarked in Chrome.
@@ -132,8 +131,7 @@ const (
 	// Move a copy of links to your liked documents, saved by Discover.
 	DataportabilityDiscoverLikesScope = "https://www.googleapis.com/auth/dataportability.discover.likes"
 
-	// Move a copy of content you marked as not interested, saved by
-	// Discover.
+	// Move a copy of content you marked as not interested, saved by Discover.
 	DataportabilityDiscoverNotInterestedScope = "https://www.googleapis.com/auth/dataportability.discover.not_interested"
 
 	// Move a copy of the places you labeled on Maps.
@@ -148,8 +146,8 @@ const (
 	// Move a copy of your electric vehicle profile on Maps.
 	DataportabilityMapsEvProfileScope = "https://www.googleapis.com/auth/dataportability.maps.ev_profile"
 
-	// Move a copy of the corrections you made to places or map information
-	// on Maps.
+	// Move a copy of the corrections you made to places or map information on
+	// Maps.
 	DataportabilityMapsFactualContributionsScope = "https://www.googleapis.com/auth/dataportability.maps.factual_contributions"
 
 	// Move a copy of your updates to places on Maps.
@@ -202,8 +200,8 @@ const (
 	// Move a copy of your Google Play Store app installations.
 	DataportabilityPlayInstallsScope = "https://www.googleapis.com/auth/dataportability.play.installs"
 
-	// Move a copy of your Google Play Store downloads, including books,
-	// games, and apps.
+	// Move a copy of your Google Play Store downloads, including books, games, and
+	// apps.
 	DataportabilityPlayLibraryScope = "https://www.googleapis.com/auth/dataportability.play.library"
 
 	// Move a copy of information about your Google Play Store Points.
@@ -224,23 +222,23 @@ const (
 	// Move a copy of your Google Play Store user settings and preferences.
 	DataportabilityPlayUsersettingsScope = "https://www.googleapis.com/auth/dataportability.play.usersettings"
 
-	// Move a copy of your saved links, images, places, and collections from
-	// your use of Google services.
+	// Move a copy of your saved links, images, places, and collections from your
+	// use of Google services.
 	DataportabilitySavedCollectionsScope = "https://www.googleapis.com/auth/dataportability.saved.collections"
 
 	// Move a copy of your media reviews on Google Search.
 	DataportabilitySearchUgcMediaReviewsAndStarsScope = "https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars"
 
-	// Move a copy of your self-reported video streaming provider
-	// preferences from Google Search and Google TV.
+	// Move a copy of your self-reported video streaming provider preferences from
+	// Google Search and Google TV.
 	DataportabilitySearchUgcMediaStreamingVideoProvidersScope = "https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers"
 
-	// Move a copy of your indicated thumbs up and thumbs down on media in
-	// Google Search and Google TV.
+	// Move a copy of your indicated thumbs up and thumbs down on media in Google
+	// Search and Google TV.
 	DataportabilitySearchUgcMediaThumbsScope = "https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs"
 
-	// Move a copy of information about the movies and TV shows you marked
-	// as watched on Google Search and Google TV.
+	// Move a copy of information about the movies and TV shows you marked as
+	// watched on Google Search and Google TV.
 	DataportabilitySearchUgcMediaWatchedScope = "https://www.googleapis.com/auth/dataportability.search_ugc.media.watched"
 
 	// Move a copy of your notification settings on the Google Search app.
@@ -252,8 +250,8 @@ const (
 	// Move a copy of your shipping information on Shopping.
 	DataportabilityShoppingAddressesScope = "https://www.googleapis.com/auth/dataportability.shopping.addresses"
 
-	// Move a copy of reviews you wrote about products or online stores on
-	// Google Search.
+	// Move a copy of reviews you wrote about products or online stores on Google
+	// Search.
 	DataportabilityShoppingReviewsScope = "https://www.googleapis.com/auth/dataportability.shopping.reviews"
 
 	// Move a copy of the images and videos you uploaded to Street View.
@@ -268,8 +266,8 @@ const (
 	// Move a copy of your YouTube messages in live chat.
 	DataportabilityYoutubeLiveChatScope = "https://www.googleapis.com/auth/dataportability.youtube.live_chat"
 
-	// Move a copy of your uploaded YouTube music tracks and your YouTube
-	// music library.
+	// Move a copy of your uploaded YouTube music tracks and your YouTube music
+	// library.
 	DataportabilityYoutubeMusicScope = "https://www.googleapis.com/auth/dataportability.youtube.music"
 
 	// Move a copy of your YouTube playables saved game progress files.
@@ -281,8 +279,7 @@ const (
 	// Move a copy of your YouTube private playlists.
 	DataportabilityYoutubePrivatePlaylistsScope = "https://www.googleapis.com/auth/dataportability.youtube.private_playlists"
 
-	// Move a copy of your private YouTube videos and information about
-	// them.
+	// Move a copy of your private YouTube videos and information about them.
 	DataportabilityYoutubePrivateVideosScope = "https://www.googleapis.com/auth/dataportability.youtube.private_videos"
 
 	// Move a copy of your public YouTube playlists.
@@ -294,15 +291,13 @@ const (
 	// Move a copy of your YouTube shopping wishlists, and wishlist items.
 	DataportabilityYoutubeShoppingScope = "https://www.googleapis.com/auth/dataportability.youtube.shopping"
 
-	// Move a copy of your YouTube channel subscriptions, even if they're
-	// private.
+	// Move a copy of your YouTube channel subscriptions, even if they're private.
 	DataportabilityYoutubeSubscriptionsScope = "https://www.googleapis.com/auth/dataportability.youtube.subscriptions"
 
 	// Move a copy of your unlisted YouTube playlists.
 	DataportabilityYoutubeUnlistedPlaylistsScope = "https://www.googleapis.com/auth/dataportability.youtube.unlisted_playlists"
 
-	// Move a copy of your unlisted YouTube videos and information about
-	// them.
+	// Move a copy of your unlisted YouTube videos and information about them.
 	DataportabilityYoutubeUnlistedVideosScope = "https://www.googleapis.com/auth/dataportability.youtube.unlisted_videos"
 )
 
@@ -456,89 +451,69 @@ type PortabilityArchiveService struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// InitiatePortabilityArchiveRequest: Request to kick off an Archive
-// job.
+// InitiatePortabilityArchiveRequest: Request to kick off an Archive job.
 type InitiatePortabilityArchiveRequest struct {
-	// Resources: The resources from which you're exporting data. These
-	// values have a 1:1 correspondence with the OAuth scopes.
+	// Resources: The resources from which you're exporting data. These values have
+	// a 1:1 correspondence with the OAuth scopes.
 	Resources []string `json:"resources,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Resources") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Resources") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Resources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *InitiatePortabilityArchiveRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InitiatePortabilityArchiveRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// InitiatePortabilityArchiveResponse: Response from initiating an
-// Archive job.
+// InitiatePortabilityArchiveResponse: Response from initiating an Archive job.
 type InitiatePortabilityArchiveResponse struct {
-	// ArchiveJobId: The archive job ID that is initiated in the API. This
-	// can be used to get the state of the job.
+	// ArchiveJobId: The archive job ID that is initiated in the API. This can be
+	// used to get the state of the job.
 	ArchiveJobId string `json:"archiveJobId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ArchiveJobId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ArchiveJobId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ArchiveJobId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *InitiatePortabilityArchiveResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InitiatePortabilityArchiveResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PortabilityArchiveState: Resource that contains the state of an
-// Archive job.
+// PortabilityArchiveState: Resource that contains the state of an Archive job.
 type PortabilityArchiveState struct {
-	// Name: The resource name of ArchiveJob's PortabilityArchiveState
-	// singleton. The format is:
-	// archiveJobs/{archive_job}/portabilityArchiveState. archive_job is the
-	// job ID provided in the request.
+	// Name: The resource name of ArchiveJob's PortabilityArchiveState singleton.
+	// The format is: archiveJobs/{archive_job}/portabilityArchiveState.
+	// archive_job is the job ID provided in the request.
 	Name string `json:"name,omitempty"`
-
 	// State: Resource that represents the state of the Archive job.
 	//
 	// Possible values:
@@ -548,36 +523,28 @@ type PortabilityArchiveState struct {
 	//   "FAILED" - The job failed.
 	//   "CANCELLED" - The job is cancelled.
 	State string `json:"state,omitempty"`
-
-	// Urls: If the state is complete, this method returns the signed URLs
-	// of the objects in the Cloud Storage bucket.
+	// Urls: If the state is complete, this method returns the signed URLs of the
+	// objects in the Cloud Storage bucket.
 	Urls []string `json:"urls,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PortabilityArchiveState) MarshalJSON() ([]byte, error) {
 	type NoMethod PortabilityArchiveState
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetAuthorizationRequest: Request to reset exhausted OAuth scopes.
@@ -592,38 +559,29 @@ type RetryPortabilityArchiveRequest struct {
 // RetryPortabilityArchiveResponse: Response from retrying a Portability
 // Archive.
 type RetryPortabilityArchiveResponse struct {
-	// ArchiveJobId: The archive job ID that is initiated by the retry
-	// endpoint. This can be used to get the state of the new job.
+	// ArchiveJobId: The archive job ID that is initiated by the retry endpoint.
+	// This can be used to get the state of the new job.
 	ArchiveJobId string `json:"archiveJobId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ArchiveJobId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ArchiveJobId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ArchiveJobId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RetryPortabilityArchiveResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetryPortabilityArchiveResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "dataportability.archiveJobs.getPortabilityArchiveState":
 
 type ArchiveJobsGetPortabilityArchiveStateCall struct {
 	s            *Service
@@ -634,13 +592,13 @@ type ArchiveJobsGetPortabilityArchiveStateCall struct {
 	header_      http.Header
 }
 
-// GetPortabilityArchiveState: Retrieves the state of an Archive job for
-// the Portability API.
+// GetPortabilityArchiveState: Retrieves the state of an Archive job for the
+// Portability API.
 //
-//   - name: The archive job ID that is returned when you request the
-//     state of the job. The format is:
-//     archiveJobs/{archive_job}/portabilityArchiveState. archive_job is
-//     the job ID returned by the InitiatePortabilityArchiveResponse.
+//   - name: The archive job ID that is returned when you request the state of
+//     the job. The format is: archiveJobs/{archive_job}/portabilityArchiveState.
+//     archive_job is the job ID returned by the
+//     InitiatePortabilityArchiveResponse.
 func (r *ArchiveJobsService) GetPortabilityArchiveState(name string) *ArchiveJobsGetPortabilityArchiveStateCall {
 	c := &ArchiveJobsGetPortabilityArchiveStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -648,33 +606,29 @@ func (r *ArchiveJobsService) GetPortabilityArchiveState(name string) *ArchiveJob
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ArchiveJobsGetPortabilityArchiveStateCall) Fields(s ...googleapi.Field) *ArchiveJobsGetPortabilityArchiveStateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ArchiveJobsGetPortabilityArchiveStateCall) IfNoneMatch(entityTag string) *ArchiveJobsGetPortabilityArchiveStateCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ArchiveJobsGetPortabilityArchiveStateCall) Context(ctx context.Context) *ArchiveJobsGetPortabilityArchiveStateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ArchiveJobsGetPortabilityArchiveStateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -683,12 +637,7 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Header() http.Header {
 }
 
 func (c *ArchiveJobsGetPortabilityArchiveStateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -709,12 +658,11 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) doRequest(alt string) (*http
 }
 
 // Do executes the "dataportability.archiveJobs.getPortabilityArchiveState" call.
-// Exactly one of *PortabilityArchiveState or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *PortabilityArchiveState.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOption) (*PortabilityArchiveState, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -745,97 +693,7 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves the state of an Archive job for the Portability API.",
-	//   "flatPath": "v1/archiveJobs/{archiveJobsId}/portabilityArchiveState",
-	//   "httpMethod": "GET",
-	//   "id": "dataportability.archiveJobs.getPortabilityArchiveState",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The archive job ID that is returned when you request the state of the job. The format is: archiveJobs/{archive_job}/portabilityArchiveState. archive_job is the job ID returned by the InitiatePortabilityArchiveResponse.",
-	//       "location": "path",
-	//       "pattern": "^archiveJobs/[^/]+/portabilityArchiveState$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "PortabilityArchiveState"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.dictionary",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.extensions",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
-	//     "https://www.googleapis.com/auth/dataportability.discover.follows",
-	//     "https://www.googleapis.com/auth/dataportability.discover.likes",
-	//     "https://www.googleapis.com/auth/dataportability.discover.not_interested",
-	//     "https://www.googleapis.com/auth/dataportability.maps.aliased_places",
-	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
-	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
-	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
-	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
-	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
-	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
-	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
-	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.myadcenter",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.play",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
-	//     "https://www.googleapis.com/auth/dataportability.mymaps.maps",
-	//     "https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations",
-	//     "https://www.googleapis.com/auth/dataportability.play.devices",
-	//     "https://www.googleapis.com/auth/dataportability.play.grouping",
-	//     "https://www.googleapis.com/auth/dataportability.play.installs",
-	//     "https://www.googleapis.com/auth/dataportability.play.library",
-	//     "https://www.googleapis.com/auth/dataportability.play.playpoints",
-	//     "https://www.googleapis.com/auth/dataportability.play.promotions",
-	//     "https://www.googleapis.com/auth/dataportability.play.purchases",
-	//     "https://www.googleapis.com/auth/dataportability.play.redemptions",
-	//     "https://www.googleapis.com/auth/dataportability.play.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.play.usersettings",
-	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.watched",
-	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.settings",
-	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
-	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
-	//     "https://www.googleapis.com/auth/dataportability.streetview.imagery",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.music",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.playable",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.posts",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.private_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.private_videos",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.public_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.public_videos",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.shopping",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.unlisted_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.unlisted_videos"
-	//   ]
-	// }
-
 }
-
-// method id "dataportability.archiveJobs.retry":
 
 type ArchiveJobsRetryCall struct {
 	s                              *Service
@@ -849,8 +707,8 @@ type ArchiveJobsRetryCall struct {
 // Retry: Retries a failed Portability Archive job.
 //
 //   - name: The Archive job ID you're retrying. This is returned by the
-//     InitiatePortabilityArchiveResponse. Retrying is only executed if
-//     the initial job failed.
+//     InitiatePortabilityArchiveResponse. Retrying is only executed if the
+//     initial job failed.
 func (r *ArchiveJobsService) Retry(name string, retryportabilityarchiverequest *RetryPortabilityArchiveRequest) *ArchiveJobsRetryCall {
 	c := &ArchiveJobsRetryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -859,23 +717,21 @@ func (r *ArchiveJobsService) Retry(name string, retryportabilityarchiverequest *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ArchiveJobsRetryCall) Fields(s ...googleapi.Field) *ArchiveJobsRetryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ArchiveJobsRetryCall) Context(ctx context.Context) *ArchiveJobsRetryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ArchiveJobsRetryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -884,18 +740,12 @@ func (c *ArchiveJobsRetryCall) Header() http.Header {
 }
 
 func (c *ArchiveJobsRetryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.retryportabilityarchiverequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:retry")
@@ -912,12 +762,11 @@ func (c *ArchiveJobsRetryCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "dataportability.archiveJobs.retry" call.
-// Exactly one of *RetryPortabilityArchiveResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *RetryPortabilityArchiveResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *RetryPortabilityArchiveResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabilityArchiveResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -948,100 +797,7 @@ func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabili
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retries a failed Portability Archive job.",
-	//   "flatPath": "v1/archiveJobs/{archiveJobsId}:retry",
-	//   "httpMethod": "POST",
-	//   "id": "dataportability.archiveJobs.retry",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The Archive job ID you're retrying. This is returned by the InitiatePortabilityArchiveResponse. Retrying is only executed if the initial job failed.",
-	//       "location": "path",
-	//       "pattern": "^archiveJobs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:retry",
-	//   "request": {
-	//     "$ref": "RetryPortabilityArchiveRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RetryPortabilityArchiveResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.dictionary",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.extensions",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
-	//     "https://www.googleapis.com/auth/dataportability.discover.follows",
-	//     "https://www.googleapis.com/auth/dataportability.discover.likes",
-	//     "https://www.googleapis.com/auth/dataportability.discover.not_interested",
-	//     "https://www.googleapis.com/auth/dataportability.maps.aliased_places",
-	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
-	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
-	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
-	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
-	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
-	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
-	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
-	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.myadcenter",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.play",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
-	//     "https://www.googleapis.com/auth/dataportability.mymaps.maps",
-	//     "https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations",
-	//     "https://www.googleapis.com/auth/dataportability.play.devices",
-	//     "https://www.googleapis.com/auth/dataportability.play.grouping",
-	//     "https://www.googleapis.com/auth/dataportability.play.installs",
-	//     "https://www.googleapis.com/auth/dataportability.play.library",
-	//     "https://www.googleapis.com/auth/dataportability.play.playpoints",
-	//     "https://www.googleapis.com/auth/dataportability.play.promotions",
-	//     "https://www.googleapis.com/auth/dataportability.play.purchases",
-	//     "https://www.googleapis.com/auth/dataportability.play.redemptions",
-	//     "https://www.googleapis.com/auth/dataportability.play.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.play.usersettings",
-	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.watched",
-	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.settings",
-	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
-	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
-	//     "https://www.googleapis.com/auth/dataportability.streetview.imagery",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.music",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.playable",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.posts",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.private_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.private_videos",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.public_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.public_videos",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.shopping",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.unlisted_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.unlisted_videos"
-	//   ]
-	// }
-
 }
-
-// method id "dataportability.authorization.reset":
 
 type AuthorizationResetCall struct {
 	s                         *Service
@@ -1051,12 +807,11 @@ type AuthorizationResetCall struct {
 	header_                   http.Header
 }
 
-// Reset: Revokes OAuth tokens and resets exhausted scopes for a
-// user/project pair. This method allows you to initiate a request after
-// a new consent is granted. This method also indicates that previous
-// archives can be garbage collected. You should call this method when
-// all jobs are complete and all archives are downloaded. Do not call it
-// only when you start a new job.
+// Reset: Revokes OAuth tokens and resets exhausted scopes for a user/project
+// pair. This method allows you to initiate a request after a new consent is
+// granted. This method also indicates that previous archives can be garbage
+// collected. You should call this method when all jobs are complete and all
+// archives are downloaded. Do not call it only when you start a new job.
 func (r *AuthorizationService) Reset(resetauthorizationrequest *ResetAuthorizationRequest) *AuthorizationResetCall {
 	c := &AuthorizationResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resetauthorizationrequest = resetauthorizationrequest
@@ -1064,23 +819,21 @@ func (r *AuthorizationService) Reset(resetauthorizationrequest *ResetAuthorizati
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AuthorizationResetCall) Fields(s ...googleapi.Field) *AuthorizationResetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AuthorizationResetCall) Context(ctx context.Context) *AuthorizationResetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AuthorizationResetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1089,18 +842,12 @@ func (c *AuthorizationResetCall) Header() http.Header {
 }
 
 func (c *AuthorizationResetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resetauthorizationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/authorization:reset")
@@ -1114,12 +861,10 @@ func (c *AuthorizationResetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "dataportability.authorization.reset" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1150,90 +895,7 @@ func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Revokes OAuth tokens and resets exhausted scopes for a user/project pair. This method allows you to initiate a request after a new consent is granted. This method also indicates that previous archives can be garbage collected. You should call this method when all jobs are complete and all archives are downloaded. Do not call it only when you start a new job.",
-	//   "flatPath": "v1/authorization:reset",
-	//   "httpMethod": "POST",
-	//   "id": "dataportability.authorization.reset",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/authorization:reset",
-	//   "request": {
-	//     "$ref": "ResetAuthorizationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.dictionary",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.extensions",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
-	//     "https://www.googleapis.com/auth/dataportability.discover.follows",
-	//     "https://www.googleapis.com/auth/dataportability.discover.likes",
-	//     "https://www.googleapis.com/auth/dataportability.discover.not_interested",
-	//     "https://www.googleapis.com/auth/dataportability.maps.aliased_places",
-	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
-	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
-	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
-	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
-	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
-	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
-	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
-	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.myadcenter",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.play",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
-	//     "https://www.googleapis.com/auth/dataportability.mymaps.maps",
-	//     "https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations",
-	//     "https://www.googleapis.com/auth/dataportability.play.devices",
-	//     "https://www.googleapis.com/auth/dataportability.play.grouping",
-	//     "https://www.googleapis.com/auth/dataportability.play.installs",
-	//     "https://www.googleapis.com/auth/dataportability.play.library",
-	//     "https://www.googleapis.com/auth/dataportability.play.playpoints",
-	//     "https://www.googleapis.com/auth/dataportability.play.promotions",
-	//     "https://www.googleapis.com/auth/dataportability.play.purchases",
-	//     "https://www.googleapis.com/auth/dataportability.play.redemptions",
-	//     "https://www.googleapis.com/auth/dataportability.play.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.play.usersettings",
-	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.watched",
-	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.settings",
-	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
-	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
-	//     "https://www.googleapis.com/auth/dataportability.streetview.imagery",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.music",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.playable",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.posts",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.private_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.private_videos",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.public_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.public_videos",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.shopping",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.unlisted_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.unlisted_videos"
-	//   ]
-	// }
-
 }
-
-// method id "dataportability.portabilityArchive.initiate":
 
 type PortabilityArchiveInitiateCall struct {
 	s                                 *Service
@@ -1251,23 +913,21 @@ func (r *PortabilityArchiveService) Initiate(initiateportabilityarchiverequest *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PortabilityArchiveInitiateCall) Fields(s ...googleapi.Field) *PortabilityArchiveInitiateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PortabilityArchiveInitiateCall) Context(ctx context.Context) *PortabilityArchiveInitiateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PortabilityArchiveInitiateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1276,18 +936,12 @@ func (c *PortabilityArchiveInitiateCall) Header() http.Header {
 }
 
 func (c *PortabilityArchiveInitiateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.initiateportabilityarchiverequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/portabilityArchive:initiate")
@@ -1301,13 +955,11 @@ func (c *PortabilityArchiveInitiateCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "dataportability.portabilityArchive.initiate" call.
-// Exactly one of *InitiatePortabilityArchiveResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *InitiatePortabilityArchiveResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *InitiatePortabilityArchiveResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*InitiatePortabilityArchiveResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1338,85 +990,4 @@ func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*Init
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Initiates a new Archive job for the Portability API.",
-	//   "flatPath": "v1/portabilityArchive:initiate",
-	//   "httpMethod": "POST",
-	//   "id": "dataportability.portabilityArchive.initiate",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/portabilityArchive:initiate",
-	//   "request": {
-	//     "$ref": "InitiatePortabilityArchiveRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "InitiatePortabilityArchiveResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.dictionary",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.extensions",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
-	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
-	//     "https://www.googleapis.com/auth/dataportability.discover.follows",
-	//     "https://www.googleapis.com/auth/dataportability.discover.likes",
-	//     "https://www.googleapis.com/auth/dataportability.discover.not_interested",
-	//     "https://www.googleapis.com/auth/dataportability.maps.aliased_places",
-	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
-	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
-	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
-	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
-	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
-	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
-	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
-	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.myadcenter",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.play",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
-	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
-	//     "https://www.googleapis.com/auth/dataportability.mymaps.maps",
-	//     "https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations",
-	//     "https://www.googleapis.com/auth/dataportability.play.devices",
-	//     "https://www.googleapis.com/auth/dataportability.play.grouping",
-	//     "https://www.googleapis.com/auth/dataportability.play.installs",
-	//     "https://www.googleapis.com/auth/dataportability.play.library",
-	//     "https://www.googleapis.com/auth/dataportability.play.playpoints",
-	//     "https://www.googleapis.com/auth/dataportability.play.promotions",
-	//     "https://www.googleapis.com/auth/dataportability.play.purchases",
-	//     "https://www.googleapis.com/auth/dataportability.play.redemptions",
-	//     "https://www.googleapis.com/auth/dataportability.play.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.play.usersettings",
-	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs",
-	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.watched",
-	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.settings",
-	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
-	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
-	//     "https://www.googleapis.com/auth/dataportability.streetview.imagery",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.music",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.playable",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.posts",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.private_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.private_videos",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.public_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.public_videos",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.shopping",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.subscriptions",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.unlisted_playlists",
-	//     "https://www.googleapis.com/auth/dataportability.youtube.unlisted_videos"
-	//   ]
-	// }
-
 }

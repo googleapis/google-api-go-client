@@ -163,40 +163,31 @@ type LocationsVerificationsService struct {
 	s *Service
 }
 
-// AddressVerificationData: Display data for verifications through
-// postcard.
+// AddressVerificationData: Display data for verifications through postcard.
 type AddressVerificationData struct {
 	// Address: Address that a postcard can be sent to.
 	Address *PostalAddress `json:"address,omitempty"`
-
 	// Business: Merchant's business name.
 	Business string `json:"business,omitempty"`
-
-	// ExpectedDeliveryDaysRegion: Expected number of days it takes to
-	// deliver a postcard to the address's region.
+	// ExpectedDeliveryDaysRegion: Expected number of days it takes to deliver a
+	// postcard to the address's region.
 	ExpectedDeliveryDaysRegion int64 `json:"expectedDeliveryDaysRegion,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Address") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Address") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AddressVerificationData) MarshalJSON() ([]byte, error) {
 	type NoMethod AddressVerificationData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CompleteVerificationRequest: Request message for
@@ -205,28 +196,22 @@ type CompleteVerificationRequest struct {
 	// Pin: Required. PIN code received by the merchant to complete the
 	// verification.
 	Pin string `json:"pin,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Pin") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Pin") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Pin") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Pin") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CompleteVerificationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CompleteVerificationRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CompleteVerificationResponse: Response message for
@@ -235,147 +220,115 @@ type CompleteVerificationResponse struct {
 	// Verification: The completed verification.
 	Verification *Verification `json:"verification,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Verification") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Verification") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Verification") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CompleteVerificationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CompleteVerificationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ComplyWithGuidelines: Indicates that the location fails to comply
-// with our guidelines
-// (https://support.google.com/business/answer/3038177).
+// ComplyWithGuidelines: Indicates that the location fails to comply with our
+// guidelines (https://support.google.com/business/answer/3038177).
 type ComplyWithGuidelines struct {
-	// RecommendationReason: The reason why the location is being
-	// recommended to comply with guidelines.
+	// RecommendationReason: The reason why the location is being recommended to
+	// comply with guidelines.
 	//
 	// Possible values:
 	//   "RECOMMENDATION_REASON_UNSPECIFIED" - Not specified.
-	//   "BUSINESS_LOCATION_SUSPENDED" - The business location is suspended.
-	// To fix this issue, consult the [Help Center
+	//   "BUSINESS_LOCATION_SUSPENDED" - The business location is suspended. To fix
+	// this issue, consult the [Help Center
 	// article](https://support.google.com/business/answer/4569145).
-	//   "BUSINESS_LOCATION_DISABLED" - The business location is disabled.
-	// To fix this issue, consult the [Help Center
+	//   "BUSINESS_LOCATION_DISABLED" - The business location is disabled. To fix
+	// this issue, consult the [Help Center
 	// article](https://support.google.com/business/answer/9334246).
 	RecommendationReason string `json:"recommendationReason,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "RecommendationReason") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "RecommendationReason") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RecommendationReason") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "RecommendationReason") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ComplyWithGuidelines) MarshalJSON() ([]byte, error) {
 	type NoMethod ComplyWithGuidelines
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // EmailVerificationData: Display data for verifications through email.
 type EmailVerificationData struct {
-	// Domain: Domain name in the email address. e.g. "gmail.com" in
-	// foo@gmail.com
+	// Domain: Domain name in the email address. e.g. "gmail.com" in foo@gmail.com
 	Domain string `json:"domain,omitempty"`
-
-	// IsUserNameEditable: Whether client is allowed to provide a different
-	// user name.
+	// IsUserNameEditable: Whether client is allowed to provide a different user
+	// name.
 	IsUserNameEditable bool `json:"isUserNameEditable,omitempty"`
-
 	// User: User name in the email address. e.g. "foo" in foo@gmail.com
 	User string `json:"user,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Domain") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Domain") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EmailVerificationData) MarshalJSON() ([]byte, error) {
 	type NoMethod EmailVerificationData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchVerificationOptionsRequest: Request message for
 // Verifications.FetchVerificationOptions.
 type FetchVerificationOptionsRequest struct {
-	// Context: Optional. Extra context information for the verification of
-	// service businesses. Can only be applied to the locations whose
-	// business type is CUSTOMER_LOCATION_ONLY. Specifying an accurate
-	// address could enable more options. INVALID_ARGUMENT will be thrown if
-	// it is set for other business types of locations.
+	// Context: Optional. Extra context information for the verification of service
+	// businesses. Can only be applied to the locations whose business type is
+	// CUSTOMER_LOCATION_ONLY. Specifying an accurate address could enable more
+	// options. INVALID_ARGUMENT will be thrown if it is set for other business
+	// types of locations.
 	Context *ServiceBusinessContext `json:"context,omitempty"`
-
-	// LanguageCode: Required. The BCP 47 language code representing the
-	// language that is to be used for the verification process. Available
-	// options vary by language.
+	// LanguageCode: Required. The BCP 47 language code representing the language
+	// that is to be used for the verification process. Available options vary by
+	// language.
 	LanguageCode string `json:"languageCode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Context") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Context") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Context") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Context") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FetchVerificationOptionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchVerificationOptionsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchVerificationOptionsResponse: Response message for
@@ -384,262 +337,210 @@ type FetchVerificationOptionsResponse struct {
 	// Options: The available verification options.
 	Options []*VerificationOption `json:"options,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Options") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Options") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Options") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FetchVerificationOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchVerificationOptionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVerificationsResponse: Response message for
 // Verifications.ListVerifications.
 type ListVerificationsResponse struct {
-	// NextPageToken: If the number of verifications exceeded the requested
-	// page size, this field will be populated with a token to fetch the
-	// next page of verification on a subsequent call. If there are no more
-	// attributes, this field will not be present in the response.
+	// NextPageToken: If the number of verifications exceeded the requested page
+	// size, this field will be populated with a token to fetch the next page of
+	// verification on a subsequent call. If there are no more attributes, this
+	// field will not be present in the response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Verifications: List of the verifications.
 	Verifications []*Verification `json:"verifications,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListVerificationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVerificationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PostalAddress: Represents a postal address, e.g. for postal delivery
-// or payments addresses. Given a postal address, a postal service can
-// deliver items to a premise, P.O. Box or similar. It is not intended
-// to model geographical locations (roads, towns, mountains). In typical
-// usage an address would be created via user input or from importing
-// existing data, depending on the type of process. Advice on address
-// input / editing: - Use an internationalization-ready address widget
-// such as https://github.com/google/libaddressinput) - Users should not
-// be presented with UI elements for input or editing of fields outside
-// countries where that field is used. For more guidance on how to use
-// this schema, please see:
+// PostalAddress: Represents a postal address, e.g. for postal delivery or
+// payments addresses. Given a postal address, a postal service can deliver
+// items to a premise, P.O. Box or similar. It is not intended to model
+// geographical locations (roads, towns, mountains). In typical usage an
+// address would be created via user input or from importing existing data,
+// depending on the type of process. Advice on address input / editing: - Use
+// an internationalization-ready address widget such as
+// https://github.com/google/libaddressinput) - Users should not be presented
+// with UI elements for input or editing of fields outside countries where that
+// field is used. For more guidance on how to use this schema, please see:
 // https://support.google.com/business/answer/6397478
 type PostalAddress struct {
-	// AddressLines: Unstructured address lines describing the lower levels
-	// of an address. Because values in address_lines do not have type
-	// information and may sometimes contain multiple values in a single
-	// field (e.g. "Austin, TX"), it is important that the line order is
-	// clear. The order of address lines should be "envelope order" for the
-	// country/region of the address. In places where this can vary (e.g.
-	// Japan), address_language is used to make it explicit (e.g. "ja" for
-	// large-to-small ordering and "ja-Latn" or "en" for small-to-large).
-	// This way, the most specific line of an address can be selected based
-	// on the language. The minimum permitted structural representation of
-	// an address consists of a region_code with all remaining information
-	// placed in the address_lines. It would be possible to format such an
-	// address very approximately without geocoding, but no semantic
-	// reasoning could be made about any of the address components until it
-	// was at least partially resolved. Creating an address only containing
-	// a region_code and address_lines, and then geocoding is the
-	// recommended way to handle completely unstructured addresses (as
-	// opposed to guessing which parts of the address should be localities
-	// or administrative areas).
+	// AddressLines: Unstructured address lines describing the lower levels of an
+	// address. Because values in address_lines do not have type information and
+	// may sometimes contain multiple values in a single field (e.g. "Austin, TX"),
+	// it is important that the line order is clear. The order of address lines
+	// should be "envelope order" for the country/region of the address. In places
+	// where this can vary (e.g. Japan), address_language is used to make it
+	// explicit (e.g. "ja" for large-to-small ordering and "ja-Latn" or "en" for
+	// small-to-large). This way, the most specific line of an address can be
+	// selected based on the language. The minimum permitted structural
+	// representation of an address consists of a region_code with all remaining
+	// information placed in the address_lines. It would be possible to format such
+	// an address very approximately without geocoding, but no semantic reasoning
+	// could be made about any of the address components until it was at least
+	// partially resolved. Creating an address only containing a region_code and
+	// address_lines, and then geocoding is the recommended way to handle
+	// completely unstructured addresses (as opposed to guessing which parts of the
+	// address should be localities or administrative areas).
 	AddressLines []string `json:"addressLines,omitempty"`
-
-	// AdministrativeArea: Optional. Highest administrative subdivision
-	// which is used for postal addresses of a country or region. For
-	// example, this can be a state, a province, an oblast, or a prefecture.
-	// Specifically, for Spain this is the province and not the autonomous
-	// community (e.g. "Barcelona" and not "Catalonia"). Many countries
-	// don't use an administrative area in postal addresses. E.g. in
-	// Switzerland this should be left unpopulated.
+	// AdministrativeArea: Optional. Highest administrative subdivision which is
+	// used for postal addresses of a country or region. For example, this can be a
+	// state, a province, an oblast, or a prefecture. Specifically, for Spain this
+	// is the province and not the autonomous community (e.g. "Barcelona" and not
+	// "Catalonia"). Many countries don't use an administrative area in postal
+	// addresses. E.g. in Switzerland this should be left unpopulated.
 	AdministrativeArea string `json:"administrativeArea,omitempty"`
-
-	// LanguageCode: Optional. BCP-47 language code of the contents of this
-	// address (if known). This is often the UI language of the input form
-	// or is expected to match one of the languages used in the address'
-	// country/region, or their transliterated equivalents. This can affect
-	// formatting in certain countries, but is not critical to the
-	// correctness of the data and will never affect any validation or other
-	// non-formatting related operations. If this value is not known, it
-	// should be omitted (rather than specifying a possibly incorrect
+	// LanguageCode: Optional. BCP-47 language code of the contents of this address
+	// (if known). This is often the UI language of the input form or is expected
+	// to match one of the languages used in the address' country/region, or their
+	// transliterated equivalents. This can affect formatting in certain countries,
+	// but is not critical to the correctness of the data and will never affect any
+	// validation or other non-formatting related operations. If this value is not
+	// known, it should be omitted (rather than specifying a possibly incorrect
 	// default). Examples: "zh-Hant", "ja", "ja-Latn", "en".
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// Locality: Optional. Generally refers to the city/town portion of the
-	// address. Examples: US city, IT comune, UK post town. In regions of
-	// the world where localities are not well defined or do not fit into
-	// this structure well, leave locality empty and use address_lines.
+	// address. Examples: US city, IT comune, UK post town. In regions of the world
+	// where localities are not well defined or do not fit into this structure
+	// well, leave locality empty and use address_lines.
 	Locality string `json:"locality,omitempty"`
-
 	// Organization: Optional. The name of the organization at the address.
 	Organization string `json:"organization,omitempty"`
-
-	// PostalCode: Optional. Postal code of the address. Not all countries
-	// use or require postal codes to be present, but where they are used,
-	// they may trigger additional validation with other parts of the
-	// address (e.g. state/zip validation in the U.S.A.).
+	// PostalCode: Optional. Postal code of the address. Not all countries use or
+	// require postal codes to be present, but where they are used, they may
+	// trigger additional validation with other parts of the address (e.g.
+	// state/zip validation in the U.S.A.).
 	PostalCode string `json:"postalCode,omitempty"`
-
-	// Recipients: Optional. The recipient at the address. This field may,
-	// under certain circumstances, contain multiline information. For
-	// example, it might contain "care of" information.
+	// Recipients: Optional. The recipient at the address. This field may, under
+	// certain circumstances, contain multiline information. For example, it might
+	// contain "care of" information.
 	Recipients []string `json:"recipients,omitempty"`
-
-	// RegionCode: Required. CLDR region code of the country/region of the
-	// address. This is never inferred and it is up to the user to ensure
-	// the value is correct. See https://cldr.unicode.org/ and
+	// RegionCode: Required. CLDR region code of the country/region of the address.
+	// This is never inferred and it is up to the user to ensure the value is
+	// correct. See https://cldr.unicode.org/ and
 	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
-
-	// Revision: The schema revision of the `PostalAddress`. This must be
-	// set to 0, which is the latest revision. All new revisions **must** be
-	// backward compatible with old revisions.
+	// Revision: The schema revision of the `PostalAddress`. This must be set to 0,
+	// which is the latest revision. All new revisions **must** be backward
+	// compatible with old revisions.
 	Revision int64 `json:"revision,omitempty"`
-
-	// SortingCode: Optional. Additional, country-specific, sorting code.
-	// This is not used in most regions. Where it is used, the value is
-	// either a string like "CEDEX", optionally followed by a number (e.g.
-	// "CEDEX 7"), or just a number alone, representing the "sector code"
-	// (Jamaica), "delivery area indicator" (Malawi) or "post office
-	// indicator" (e.g. Côte d'Ivoire).
+	// SortingCode: Optional. Additional, country-specific, sorting code. This is
+	// not used in most regions. Where it is used, the value is either a string
+	// like "CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a
+	// number alone, representing the "sector code" (Jamaica), "delivery area
+	// indicator" (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
 	SortingCode string `json:"sortingCode,omitempty"`
-
-	// Sublocality: Optional. Sublocality of the address. For example, this
-	// can be neighborhoods, boroughs, districts.
+	// Sublocality: Optional. Sublocality of the address. For example, this can be
+	// neighborhoods, boroughs, districts.
 	Sublocality string `json:"sublocality,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AddressLines") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddressLines") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AddressLines") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod PostalAddress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ResolveOwnershipConflict: Indicates that the location duplicates
-// another location that is in good standing.
+// ResolveOwnershipConflict: Indicates that the location duplicates another
+// location that is in good standing.
 type ResolveOwnershipConflict struct {
 }
 
-// ServiceBusinessContext: Additional data for service business
-// verification.
+// ServiceBusinessContext: Additional data for service business verification.
 type ServiceBusinessContext struct {
-	// Address: The verification address of the location. It is used to
-	// either enable more verification options or send a postcard.
+	// Address: The verification address of the location. It is used to either
+	// enable more verification options or send a postcard.
 	Address *PostalAddress `json:"address,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Address") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Address") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ServiceBusinessContext) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceBusinessContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Verification: A verification represents a verification attempt on a
 // location.
 type Verification struct {
-	// Announcement: Optional. Response announcement set only if the method
-	// is VETTED_PARTNER.
+	// Announcement: Optional. Response announcement set only if the method is
+	// VETTED_PARTNER.
 	Announcement string `json:"announcement,omitempty"`
-
 	// CreateTime: The timestamp when the verification is requested.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Method: The method of the verification.
 	//
 	// Possible values:
-	//   "VERIFICATION_METHOD_UNSPECIFIED" - Default value, will result in
-	// errors.
-	//   "ADDRESS" - Send a postcard with a verification PIN to a specific
-	// mailing address. The PIN is used to complete verification with
-	// Google.
+	//   "VERIFICATION_METHOD_UNSPECIFIED" - Default value, will result in errors.
+	//   "ADDRESS" - Send a postcard with a verification PIN to a specific mailing
+	// address. The PIN is used to complete verification with Google.
 	//   "EMAIL" - Send an email with a verification PIN to a specific email
 	// address. The PIN is used to complete verification with Google.
-	//   "PHONE_CALL" - Make a phone call with a verification PIN to a
-	// specific phone number. The PIN is used to complete verification with
-	// Google.
-	//   "SMS" - Send an SMS with a verification PIN to a specific phone
-	// number. The PIN is used to complete verification with Google.
-	//   "AUTO" - Verify the location without additional user action. This
-	// option may not be available for all locations.
-	//   "VETTED_PARTNER" - This option may not be available for all
-	// locations.
+	//   "PHONE_CALL" - Make a phone call with a verification PIN to a specific
+	// phone number. The PIN is used to complete verification with Google.
+	//   "SMS" - Send an SMS with a verification PIN to a specific phone number.
+	// The PIN is used to complete verification with Google.
+	//   "AUTO" - Verify the location without additional user action. This option
+	// may not be available for all locations.
+	//   "VETTED_PARTNER" - This option may not be available for all locations.
 	Method string `json:"method,omitempty"`
-
 	// Name: Resource name of the verification.
 	Name string `json:"name,omitempty"`
-
 	// State: The state of the verification.
 	//
 	// Possible values:
@@ -648,89 +549,69 @@ type Verification struct {
 	//   "COMPLETED" - The verification is completed.
 	//   "FAILED" - The verification is failed.
 	State string `json:"state,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Announcement") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Announcement") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Announcement") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Verification) MarshalJSON() ([]byte, error) {
 	type NoMethod Verification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// VerificationOption: The verification option represents how to verify
-// the location (indicated by verification method) and where the
-// verification will be sent to (indicated by display data).
+// VerificationOption: The verification option represents how to verify the
+// location (indicated by verification method) and where the verification will
+// be sent to (indicated by display data).
 type VerificationOption struct {
 	// AddressData: Set only if the method is MAIL.
 	AddressData *AddressVerificationData `json:"addressData,omitempty"`
-
 	// Announcement: Set only if the method is VETTED_PARTNER.
 	Announcement string `json:"announcement,omitempty"`
-
 	// EmailData: Set only if the method is EMAIL.
 	EmailData *EmailVerificationData `json:"emailData,omitempty"`
-
-	// PhoneNumber: Set only if the method is PHONE_CALL or SMS. Phone
-	// number that the PIN will be sent to.
+	// PhoneNumber: Set only if the method is PHONE_CALL or SMS. Phone number that
+	// the PIN will be sent to.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
-
 	// VerificationMethod: Method to verify the location.
 	//
 	// Possible values:
-	//   "VERIFICATION_METHOD_UNSPECIFIED" - Default value, will result in
-	// errors.
-	//   "ADDRESS" - Send a postcard with a verification PIN to a specific
-	// mailing address. The PIN is used to complete verification with
-	// Google.
+	//   "VERIFICATION_METHOD_UNSPECIFIED" - Default value, will result in errors.
+	//   "ADDRESS" - Send a postcard with a verification PIN to a specific mailing
+	// address. The PIN is used to complete verification with Google.
 	//   "EMAIL" - Send an email with a verification PIN to a specific email
 	// address. The PIN is used to complete verification with Google.
-	//   "PHONE_CALL" - Make a phone call with a verification PIN to a
-	// specific phone number. The PIN is used to complete verification with
-	// Google.
-	//   "SMS" - Send an SMS with a verification PIN to a specific phone
-	// number. The PIN is used to complete verification with Google.
-	//   "AUTO" - Verify the location without additional user action. This
-	// option may not be available for all locations.
-	//   "VETTED_PARTNER" - This option may not be available for all
-	// locations.
+	//   "PHONE_CALL" - Make a phone call with a verification PIN to a specific
+	// phone number. The PIN is used to complete verification with Google.
+	//   "SMS" - Send an SMS with a verification PIN to a specific phone number.
+	// The PIN is used to complete verification with Google.
+	//   "AUTO" - Verify the location without additional user action. This option
+	// may not be available for all locations.
+	//   "VETTED_PARTNER" - This option may not be available for all locations.
 	VerificationMethod string `json:"verificationMethod,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AddressData") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddressData") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AddressData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VerificationOption) MarshalJSON() ([]byte, error) {
 	type NoMethod VerificationOption
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // VerificationToken: Token generated by a vetted partner
@@ -738,250 +619,191 @@ func (s *VerificationOption) MarshalJSON() ([]byte, error) {
 type VerificationToken struct {
 	// TokenString: The token string.
 	TokenString string `json:"tokenString,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "TokenString") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TokenString") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "TokenString") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VerificationToken) MarshalJSON() ([]byte, error) {
 	type NoMethod VerificationToken
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Verify: Indicates that the location requires verification. Contains
 // information about the current verification actions performed on the
 // location.
 type Verify struct {
-	// HasPendingVerification: Indicates whether a verification process has
-	// already started, and can be completed by the location.
+	// HasPendingVerification: Indicates whether a verification process has already
+	// started, and can be completed by the location.
 	HasPendingVerification bool `json:"hasPendingVerification,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "HasPendingVerification") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "HasPendingVerification") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HasPendingVerification")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "HasPendingVerification") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Verify) MarshalJSON() ([]byte, error) {
 	type NoMethod Verify
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// VerifyLocationRequest: Request message for
-// Verifications.VerifyLocation.
+// VerifyLocationRequest: Request message for Verifications.VerifyLocation.
 type VerifyLocationRequest struct {
-	// Context: Optional. Extra context information for the verification of
-	// service businesses. It is only required for the locations whose
-	// business type is CUSTOMER_LOCATION_ONLY. For ADDRESS verification,
-	// the address will be used to send out postcard. For other methods, it
-	// should be the same as the one that is passed to
-	// GetVerificationOptions. INVALID_ARGUMENT will be thrown if it is set
-	// for other types of business locations.
+	// Context: Optional. Extra context information for the verification of service
+	// businesses. It is only required for the locations whose business type is
+	// CUSTOMER_LOCATION_ONLY. For ADDRESS verification, the address will be used
+	// to send out postcard. For other methods, it should be the same as the one
+	// that is passed to GetVerificationOptions. INVALID_ARGUMENT will be thrown if
+	// it is set for other types of business locations.
 	Context *ServiceBusinessContext `json:"context,omitempty"`
-
-	// EmailAddress: Optional. The input for EMAIL method. Email address
-	// where the PIN should be sent to. An email address is accepted only if
-	// it is one of the addresses provided by FetchVerificationOptions. If
-	// the EmailVerificationData has is_user_name_editable set to true, the
-	// client may specify a different user name (local-part) but must match
-	// the domain name.
+	// EmailAddress: Optional. The input for EMAIL method. Email address where the
+	// PIN should be sent to. An email address is accepted only if it is one of the
+	// addresses provided by FetchVerificationOptions. If the EmailVerificationData
+	// has is_user_name_editable set to true, the client may specify a different
+	// user name (local-part) but must match the domain name.
 	EmailAddress string `json:"emailAddress,omitempty"`
-
-	// LanguageCode: Optional. The BCP 47 language code representing the
-	// language that is to be used for the verification process.
+	// LanguageCode: Optional. The BCP 47 language code representing the language
+	// that is to be used for the verification process.
 	LanguageCode string `json:"languageCode,omitempty"`
-
-	// MailerContact: Optional. The input for ADDRESS method. Contact name
-	// the mail should be sent to.
+	// MailerContact: Optional. The input for ADDRESS method. Contact name the mail
+	// should be sent to.
 	MailerContact string `json:"mailerContact,omitempty"`
-
 	// Method: Required. Verification method.
 	//
 	// Possible values:
-	//   "VERIFICATION_METHOD_UNSPECIFIED" - Default value, will result in
-	// errors.
-	//   "ADDRESS" - Send a postcard with a verification PIN to a specific
-	// mailing address. The PIN is used to complete verification with
-	// Google.
+	//   "VERIFICATION_METHOD_UNSPECIFIED" - Default value, will result in errors.
+	//   "ADDRESS" - Send a postcard with a verification PIN to a specific mailing
+	// address. The PIN is used to complete verification with Google.
 	//   "EMAIL" - Send an email with a verification PIN to a specific email
 	// address. The PIN is used to complete verification with Google.
-	//   "PHONE_CALL" - Make a phone call with a verification PIN to a
-	// specific phone number. The PIN is used to complete verification with
-	// Google.
-	//   "SMS" - Send an SMS with a verification PIN to a specific phone
-	// number. The PIN is used to complete verification with Google.
-	//   "AUTO" - Verify the location without additional user action. This
-	// option may not be available for all locations.
-	//   "VETTED_PARTNER" - This option may not be available for all
-	// locations.
+	//   "PHONE_CALL" - Make a phone call with a verification PIN to a specific
+	// phone number. The PIN is used to complete verification with Google.
+	//   "SMS" - Send an SMS with a verification PIN to a specific phone number.
+	// The PIN is used to complete verification with Google.
+	//   "AUTO" - Verify the location without additional user action. This option
+	// may not be available for all locations.
+	//   "VETTED_PARTNER" - This option may not be available for all locations.
 	Method string `json:"method,omitempty"`
-
-	// PhoneNumber: Optional. The input for PHONE_CALL/SMS method The phone
-	// number that should be called or be sent SMS to. It must be one of the
-	// phone numbers in the eligible options.
+	// PhoneNumber: Optional. The input for PHONE_CALL/SMS method The phone number
+	// that should be called or be sent SMS to. It must be one of the phone numbers
+	// in the eligible options.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
-
-	// Token: Optional. The input for VETTED_PARTNER method available to
-	// select partners. (https://support.google.com/business/answer/7674102)
-	// The input is not needed for a vetted account. Token that is
-	// associated to the location. Token that is associated to the location.
+	// Token: Optional. The input for VETTED_PARTNER method available to select
+	// partners. (https://support.google.com/business/answer/7674102) The input is
+	// not needed for a vetted account. Token that is associated to the location.
+	// Token that is associated to the location.
 	Token *VerificationToken `json:"token,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Context") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Context") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Context") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Context") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VerifyLocationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyLocationRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// VerifyLocationResponse: Response message for
-// Verifications.VerifyLocation.
+// VerifyLocationResponse: Response message for Verifications.VerifyLocation.
 type VerifyLocationResponse struct {
 	// Verification: The created verification request.
 	Verification *Verification `json:"verification,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Verification") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Verification") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Verification") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VerifyLocationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyLocationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // VoiceOfMerchantState: Response message for
 // VoiceOfMerchant.GetVoiceOfMerchantState.
 type VoiceOfMerchantState struct {
-	// ComplyWithGuidelines: The location fails to comply with our
-	// guidelines (https://support.google.com/business/answer/3038177) and
-	// requires additional steps for reinstatement. To fix this issue,
-	// consult the Help Center Article
+	// ComplyWithGuidelines: The location fails to comply with our guidelines
+	// (https://support.google.com/business/answer/3038177) and requires additional
+	// steps for reinstatement. To fix this issue, consult the Help Center Article
 	// (https://support.google.com/business/answer/4569145).
 	ComplyWithGuidelines *ComplyWithGuidelines `json:"complyWithGuidelines,omitempty"`
-
-	// HasBusinessAuthority: Indicates whether the location has the
-	// authority (ownership) over the business on Google. If true, another
-	// location cannot take over and become the dominant listing on Maps.
-	// However, edits will not become live unless Voice of Merchant is
-	// gained (i.e. has_voice_of_merchant is true).
+	// HasBusinessAuthority: Indicates whether the location has the authority
+	// (ownership) over the business on Google. If true, another location cannot
+	// take over and become the dominant listing on Maps. However, edits will not
+	// become live unless Voice of Merchant is gained (i.e. has_voice_of_merchant
+	// is true).
 	HasBusinessAuthority bool `json:"hasBusinessAuthority,omitempty"`
-
-	// HasVoiceOfMerchant: Indicates whether the location is in good
-	// standing and has control over the business on Google. Any edits made
-	// to the location will propagate to Maps after passing the review
-	// phase.
+	// HasVoiceOfMerchant: Indicates whether the location is in good standing and
+	// has control over the business on Google. Any edits made to the location will
+	// propagate to Maps after passing the review phase.
 	HasVoiceOfMerchant bool `json:"hasVoiceOfMerchant,omitempty"`
-
-	// ResolveOwnershipConflict: This location duplicates another location
-	// that is in good standing. If you have access to the location in good
-	// standing, use that location's id to perform operations. Otherwise,
-	// request access from the current owner.
+	// ResolveOwnershipConflict: This location duplicates another location that is
+	// in good standing. If you have access to the location in good standing, use
+	// that location's id to perform operations. Otherwise, request access from the
+	// current owner.
 	ResolveOwnershipConflict *ResolveOwnershipConflict `json:"resolveOwnershipConflict,omitempty"`
-
 	// Verify: Start or continue the verification process.
 	Verify *Verify `json:"verify,omitempty"`
-
-	// WaitForVoiceOfMerchant: Wait to gain Voice of Merchant. The location
-	// is under review for quality purposes.
+	// WaitForVoiceOfMerchant: Wait to gain Voice of Merchant. The location is
+	// under review for quality purposes.
 	WaitForVoiceOfMerchant *WaitForVoiceOfMerchant `json:"waitForVoiceOfMerchant,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ComplyWithGuidelines") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ComplyWithGuidelines") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ComplyWithGuidelines") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ComplyWithGuidelines") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VoiceOfMerchantState) MarshalJSON() ([]byte, error) {
 	type NoMethod VoiceOfMerchantState
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// WaitForVoiceOfMerchant: Indicates that the location will gain voice
-// of merchant after passing review.
+// WaitForVoiceOfMerchant: Indicates that the location will gain voice of
+// merchant after passing review.
 type WaitForVoiceOfMerchant struct {
 }
-
-// method id "mybusinessverifications.locations.fetchVerificationOptions":
 
 type LocationsFetchVerificationOptionsCall struct {
 	s                               *Service
@@ -992,8 +814,8 @@ type LocationsFetchVerificationOptionsCall struct {
 	header_                         http.Header
 }
 
-// FetchVerificationOptions: Reports all eligible verification options
-// for a location in a specific language.
+// FetchVerificationOptions: Reports all eligible verification options for a
+// location in a specific language.
 //
 // - location: The location to verify.
 func (r *LocationsService) FetchVerificationOptions(location string, fetchverificationoptionsrequest *FetchVerificationOptionsRequest) *LocationsFetchVerificationOptionsCall {
@@ -1004,23 +826,21 @@ func (r *LocationsService) FetchVerificationOptions(location string, fetchverifi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsFetchVerificationOptionsCall) Fields(s ...googleapi.Field) *LocationsFetchVerificationOptionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsFetchVerificationOptionsCall) Context(ctx context.Context) *LocationsFetchVerificationOptionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsFetchVerificationOptionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1029,18 +849,12 @@ func (c *LocationsFetchVerificationOptionsCall) Header() http.Header {
 }
 
 func (c *LocationsFetchVerificationOptionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.fetchverificationoptionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+location}:fetchVerificationOptions")
@@ -1057,12 +871,11 @@ func (c *LocationsFetchVerificationOptionsCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "mybusinessverifications.locations.fetchVerificationOptions" call.
-// Exactly one of *FetchVerificationOptionsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *FetchVerificationOptionsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchVerificationOptionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *LocationsFetchVerificationOptionsCall) Do(opts ...googleapi.CallOption) (*FetchVerificationOptionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1093,35 +906,7 @@ func (c *LocationsFetchVerificationOptionsCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Reports all eligible verification options for a location in a specific language.",
-	//   "flatPath": "v1/locations/{locationsId}:fetchVerificationOptions",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessverifications.locations.fetchVerificationOptions",
-	//   "parameterOrder": [
-	//     "location"
-	//   ],
-	//   "parameters": {
-	//     "location": {
-	//       "description": "Required. The location to verify.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+location}:fetchVerificationOptions",
-	//   "request": {
-	//     "$ref": "FetchVerificationOptionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "FetchVerificationOptionsResponse"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessverifications.locations.getVoiceOfMerchantState":
 
 type LocationsGetVoiceOfMerchantStateCall struct {
 	s            *Service
@@ -1142,33 +927,29 @@ func (r *LocationsService) GetVoiceOfMerchantState(name string) *LocationsGetVoi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsGetVoiceOfMerchantStateCall) Fields(s ...googleapi.Field) *LocationsGetVoiceOfMerchantStateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *LocationsGetVoiceOfMerchantStateCall) IfNoneMatch(entityTag string) *LocationsGetVoiceOfMerchantStateCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsGetVoiceOfMerchantStateCall) Context(ctx context.Context) *LocationsGetVoiceOfMerchantStateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsGetVoiceOfMerchantStateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1177,12 +958,7 @@ func (c *LocationsGetVoiceOfMerchantStateCall) Header() http.Header {
 }
 
 func (c *LocationsGetVoiceOfMerchantStateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1203,12 +979,11 @@ func (c *LocationsGetVoiceOfMerchantStateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "mybusinessverifications.locations.getVoiceOfMerchantState" call.
-// Exactly one of *VoiceOfMerchantState or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *VoiceOfMerchantState.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *VoiceOfMerchantState.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *LocationsGetVoiceOfMerchantStateCall) Do(opts ...googleapi.CallOption) (*VoiceOfMerchantState, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1239,32 +1014,7 @@ func (c *LocationsGetVoiceOfMerchantStateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the VoiceOfMerchant state.",
-	//   "flatPath": "v1/locations/{locationsId}/VoiceOfMerchantState",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessverifications.locations.getVoiceOfMerchantState",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the location.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/VoiceOfMerchantState",
-	//   "response": {
-	//     "$ref": "VoiceOfMerchantState"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessverifications.locations.verify":
 
 type LocationsVerifyCall struct {
 	s                     *Service
@@ -1286,23 +1036,21 @@ func (r *LocationsService) Verify(name string, verifylocationrequest *VerifyLoca
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsVerifyCall) Fields(s ...googleapi.Field) *LocationsVerifyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsVerifyCall) Context(ctx context.Context) *LocationsVerifyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsVerifyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1311,18 +1059,12 @@ func (c *LocationsVerifyCall) Header() http.Header {
 }
 
 func (c *LocationsVerifyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.verifylocationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:verify")
@@ -1339,12 +1081,11 @@ func (c *LocationsVerifyCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "mybusinessverifications.locations.verify" call.
-// Exactly one of *VerifyLocationResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *VerifyLocationResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *VerifyLocationResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *LocationsVerifyCall) Do(opts ...googleapi.CallOption) (*VerifyLocationResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1375,35 +1116,7 @@ func (c *LocationsVerifyCall) Do(opts ...googleapi.CallOption) (*VerifyLocationR
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts the verification process for a location.",
-	//   "flatPath": "v1/locations/{locationsId}:verify",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessverifications.locations.verify",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the location to verify.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:verify",
-	//   "request": {
-	//     "$ref": "VerifyLocationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "VerifyLocationResponse"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessverifications.locations.verifications.complete":
 
 type LocationsVerificationsCompleteCall struct {
 	s                           *Service
@@ -1414,9 +1127,9 @@ type LocationsVerificationsCompleteCall struct {
 	header_                     http.Header
 }
 
-// Complete: Completes a `PENDING` verification. It is only necessary
-// for non `AUTO` verification methods. `AUTO` verification request is
-// instantly `VERIFIED` upon creation.
+// Complete: Completes a `PENDING` verification. It is only necessary for non
+// `AUTO` verification methods. `AUTO` verification request is instantly
+// `VERIFIED` upon creation.
 //
 // - name: Resource name of the verification to complete.
 func (r *LocationsVerificationsService) Complete(name string, completeverificationrequest *CompleteVerificationRequest) *LocationsVerificationsCompleteCall {
@@ -1427,23 +1140,21 @@ func (r *LocationsVerificationsService) Complete(name string, completeverificati
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsVerificationsCompleteCall) Fields(s ...googleapi.Field) *LocationsVerificationsCompleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsVerificationsCompleteCall) Context(ctx context.Context) *LocationsVerificationsCompleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsVerificationsCompleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1452,18 +1163,12 @@ func (c *LocationsVerificationsCompleteCall) Header() http.Header {
 }
 
 func (c *LocationsVerificationsCompleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.completeverificationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:complete")
@@ -1480,12 +1185,11 @@ func (c *LocationsVerificationsCompleteCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "mybusinessverifications.locations.verifications.complete" call.
-// Exactly one of *CompleteVerificationResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *CompleteVerificationResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CompleteVerificationResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *LocationsVerificationsCompleteCall) Do(opts ...googleapi.CallOption) (*CompleteVerificationResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1516,35 +1220,7 @@ func (c *LocationsVerificationsCompleteCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Completes a `PENDING` verification. It is only necessary for non `AUTO` verification methods. `AUTO` verification request is instantly `VERIFIED` upon creation.",
-	//   "flatPath": "v1/locations/{locationsId}/verifications/{verificationsId}:complete",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessverifications.locations.verifications.complete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the verification to complete.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/verifications/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:complete",
-	//   "request": {
-	//     "$ref": "CompleteVerificationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "CompleteVerificationResponse"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessverifications.locations.verifications.list":
 
 type LocationsVerificationsListCall struct {
 	s            *Service
@@ -1557,57 +1233,53 @@ type LocationsVerificationsListCall struct {
 
 // List: List verifications of a location, ordered by create time.
 //
-//   - parent: Resource name of the location that verification requests
-//     belong to.
+//   - parent: Resource name of the location that verification requests belong
+//     to.
 func (r *LocationsVerificationsService) List(parent string) *LocationsVerificationsListCall {
 	c := &LocationsVerificationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": How many
-// verification to include per page. Minimum is 1, and the default and
-// maximum page size is 100.
+// PageSize sets the optional parameter "pageSize": How many verification to
+// include per page. Minimum is 1, and the default and maximum page size is
+// 100.
 func (c *LocationsVerificationsListCall) PageSize(pageSize int64) *LocationsVerificationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": If specified,
-// returns the next page of verifications.
+// PageToken sets the optional parameter "pageToken": If specified, returns the
+// next page of verifications.
 func (c *LocationsVerificationsListCall) PageToken(pageToken string) *LocationsVerificationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsVerificationsListCall) Fields(s ...googleapi.Field) *LocationsVerificationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *LocationsVerificationsListCall) IfNoneMatch(entityTag string) *LocationsVerificationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsVerificationsListCall) Context(ctx context.Context) *LocationsVerificationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsVerificationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1616,12 +1288,7 @@ func (c *LocationsVerificationsListCall) Header() http.Header {
 }
 
 func (c *LocationsVerificationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1642,12 +1309,11 @@ func (c *LocationsVerificationsListCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "mybusinessverifications.locations.verifications.list" call.
-// Exactly one of *ListVerificationsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListVerificationsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListVerificationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *LocationsVerificationsListCall) Do(opts ...googleapi.CallOption) (*ListVerificationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1678,40 +1344,6 @@ func (c *LocationsVerificationsListCall) Do(opts ...googleapi.CallOption) (*List
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List verifications of a location, ordered by create time.",
-	//   "flatPath": "v1/locations/{locationsId}/verifications",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessverifications.locations.verifications.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "How many verification to include per page. Minimum is 1, and the default and maximum page size is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "If specified, returns the next page of verifications.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Resource name of the location that verification requests belong to.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/verifications",
-	//   "response": {
-	//     "$ref": "ListVerificationsResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1719,7 +1351,7 @@ func (c *LocationsVerificationsListCall) Do(opts ...googleapi.CallOption) (*List
 // The provided context supersedes any context provided to the Context method.
 func (c *LocationsVerificationsListCall) Pages(ctx context.Context, f func(*ListVerificationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

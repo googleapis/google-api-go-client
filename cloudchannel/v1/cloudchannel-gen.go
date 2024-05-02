@@ -342,358 +342,275 @@ type ProductsSkusService struct {
 // GoogleCloudChannelV1ActivateEntitlementRequest: Request message for
 // CloudChannelService.ActivateEntitlement.
 type GoogleCloudChannelV1ActivateEntitlementRequest struct {
-	// RequestId: Optional. You can specify an optional unique request ID,
-	// and if you need to retry your request, the server will know to ignore
-	// the request if it's complete. For example, you make an initial
-	// request and the request times out. If you make the request again with
-	// the same request ID, the server can check if it received the original
-	// operation with the same request ID. If it did, it will ignore the
-	// second request. The request ID must be a valid UUID
-	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
-	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
+	// RequestId: Optional. You can specify an optional unique request ID, and if
+	// you need to retry your request, the server will know to ignore the request
+	// if it's complete. For example, you make an initial request and the request
+	// times out. If you make the request again with the same request ID, the
+	// server can check if it received the original operation with the same request
+	// ID. If it did, it will ignore the second request. The request ID must be a
+	// valid UUID (https://tools.ietf.org/html/rfc4122) with the exception that
+	// zero UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequestId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ActivateEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ActivateEntitlementRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1AdminUser: Information needed to create an Admin
-// User for Google Workspace.
+// GoogleCloudChannelV1AdminUser: Information needed to create an Admin User
+// for Google Workspace.
 type GoogleCloudChannelV1AdminUser struct {
 	// Email: Primary email of the admin user.
 	Email string `json:"email,omitempty"`
-
 	// FamilyName: Family name of the admin user.
 	FamilyName string `json:"familyName,omitempty"`
-
 	// GivenName: Given name of the admin user.
 	GivenName string `json:"givenName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Email") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Email") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1AdminUser) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1AdminUser
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1AssociationInfo: Association links that an
-// entitlement has to other entitlements.
+// GoogleCloudChannelV1AssociationInfo: Association links that an entitlement
+// has to other entitlements.
 type GoogleCloudChannelV1AssociationInfo struct {
 	// BaseEntitlement: The name of the base entitlement, for which this
 	// entitlement is an add-on.
 	BaseEntitlement string `json:"baseEntitlement,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BaseEntitlement") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BaseEntitlement") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BaseEntitlement") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1AssociationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1AssociationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1BillableSku: Represents the Billable SKU
-// information.
+// GoogleCloudChannelV1BillableSku: Represents the Billable SKU information.
 type GoogleCloudChannelV1BillableSku struct {
-	// Service: Resource name of Service which contains Repricing SKU.
-	// Format: services/{service}. Example: "services/B7D9-FDCB-15D8".
+	// Service: Resource name of Service which contains Repricing SKU. Format:
+	// services/{service}. Example: "services/B7D9-FDCB-15D8".
 	Service string `json:"service,omitempty"`
-
 	// ServiceDisplayName: Unique human readable name for the Service.
 	ServiceDisplayName string `json:"serviceDisplayName,omitempty"`
-
-	// Sku: Resource name of Billable SKU. Format: billableSkus/{sku}.
-	// Example: billableSkus/6E1B-6634-470F".
+	// Sku: Resource name of Billable SKU. Format: billableSkus/{sku}. Example:
+	// billableSkus/6E1B-6634-470F".
 	Sku string `json:"sku,omitempty"`
-
 	// SkuDisplayName: Unique human readable name for the SKU.
 	SkuDisplayName string `json:"skuDisplayName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Service") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Service") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Service") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1BillableSku) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1BillableSku
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1BillingAccount: Represents a billing account.
 type GoogleCloudChannelV1BillingAccount struct {
-	// CreateTime: Output only. The time when this billing account was
-	// created.
+	// CreateTime: Output only. The time when this billing account was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// CurrencyCode: Output only. The 3-letter currency code defined in ISO
-	// 4217.
+	// CurrencyCode: Output only. The 3-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// DisplayName: Display name of the billing account.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Output only. Resource name of the billing account. Format:
 	// accounts/{account_id}/billingAccounts/{billing_account_id}.
 	Name string `json:"name,omitempty"`
-
 	// RegionCode: Output only. The CLDR region code.
 	RegionCode string `json:"regionCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1BillingAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1BillingAccount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1BillingAccountPurchaseInfo: Represents a billing
-// account that can be used to make a purchase.
+// GoogleCloudChannelV1BillingAccountPurchaseInfo: Represents a billing account
+// that can be used to make a purchase.
 type GoogleCloudChannelV1BillingAccountPurchaseInfo struct {
 	// BillingAccount: The billing account resource.
 	BillingAccount *GoogleCloudChannelV1BillingAccount `json:"billingAccount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingAccount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1BillingAccountPurchaseInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1BillingAccountPurchaseInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1CancelEntitlementRequest: Request message for
 // CloudChannelService.CancelEntitlement.
 type GoogleCloudChannelV1CancelEntitlementRequest struct {
-	// RequestId: Optional. You can specify an optional unique request ID,
-	// and if you need to retry your request, the server will know to ignore
-	// the request if it's complete. For example, you make an initial
-	// request and the request times out. If you make the request again with
-	// the same request ID, the server can check if it received the original
-	// operation with the same request ID. If it did, it will ignore the
-	// second request. The request ID must be a valid UUID
-	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
-	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
+	// RequestId: Optional. You can specify an optional unique request ID, and if
+	// you need to retry your request, the server will know to ignore the request
+	// if it's complete. For example, you make an initial request and the request
+	// times out. If you make the request again with the same request ID, the
+	// server can check if it received the original operation with the same request
+	// ID. If it did, it will ignore the second request. The request ID must be a
+	// valid UUID (https://tools.ietf.org/html/rfc4122) with the exception that
+	// zero UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequestId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1CancelEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1CancelEntitlementRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ChangeOfferRequest: Request message for
 // CloudChannelService.ChangeOffer.
 type GoogleCloudChannelV1ChangeOfferRequest struct {
-	// BillingAccount: Optional. The billing account resource name that is
-	// used to pay for this entitlement when setting up billing on a trial
-	// subscription. This field is only relevant for multi-currency
-	// accounts. It should be left empty for single currency accounts.
+	// BillingAccount: Optional. The billing account resource name that is used to
+	// pay for this entitlement when setting up billing on a trial subscription.
+	// This field is only relevant for multi-currency accounts. It should be left
+	// empty for single currency accounts.
 	BillingAccount string `json:"billingAccount,omitempty"`
-
-	// Offer: Required. New Offer. Format:
-	// accounts/{account_id}/offers/{offer_id}.
+	// Offer: Required. New Offer. Format: accounts/{account_id}/offers/{offer_id}.
 	Offer string `json:"offer,omitempty"`
-
-	// Parameters: Optional. Parameters needed to purchase the Offer. To
-	// view the available Parameters refer to the
-	// Offer.parameter_definitions from the desired offer.
+	// Parameters: Optional. Parameters needed to purchase the Offer. To view the
+	// available Parameters refer to the Offer.parameter_definitions from the
+	// desired offer.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
-
-	// PurchaseOrderId: Optional. Purchase order id provided by the
-	// reseller.
+	// PurchaseOrderId: Optional. Purchase order id provided by the reseller.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
-
-	// RequestId: Optional. You can specify an optional unique request ID,
-	// and if you need to retry your request, the server will know to ignore
-	// the request if it's complete. For example, you make an initial
-	// request and the request times out. If you make the request again with
-	// the same request ID, the server can check if it received the original
-	// operation with the same request ID. If it did, it will ignore the
-	// second request. The request ID must be a valid UUID
-	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
-	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
+	// RequestId: Optional. You can specify an optional unique request ID, and if
+	// you need to retry your request, the server will know to ignore the request
+	// if it's complete. For example, you make an initial request and the request
+	// times out. If you make the request again with the same request ID, the
+	// server can check if it received the original operation with the same request
+	// ID. If it did, it will ignore the second request. The request ID must be a
+	// valid UUID (https://tools.ietf.org/html/rfc4122) with the exception that
+	// zero UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingAccount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ChangeOfferRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ChangeOfferRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ChangeParametersRequest: Request message for
 // CloudChannelService.ChangeParametersRequest.
 type GoogleCloudChannelV1ChangeParametersRequest struct {
-	// Parameters: Required. Entitlement parameters to update. You can only
-	// change editable parameters. To view the available Parameters for a
-	// request, refer to the Offer.parameter_definitions from the desired
-	// offer.
+	// Parameters: Required. Entitlement parameters to update. You can only change
+	// editable parameters. To view the available Parameters for a request, refer
+	// to the Offer.parameter_definitions from the desired offer.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
-
-	// PurchaseOrderId: Optional. Purchase order ID provided by the
-	// reseller.
+	// PurchaseOrderId: Optional. Purchase order ID provided by the reseller.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
-
-	// RequestId: Optional. You can specify an optional unique request ID,
-	// and if you need to retry your request, the server will know to ignore
-	// the request if it's complete. For example, you make an initial
-	// request and the request times out. If you make the request again with
-	// the same request ID, the server can check if it received the original
-	// operation with the same request ID. If it did, it will ignore the
-	// second request. The request ID must be a valid UUID
-	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
-	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
+	// RequestId: Optional. You can specify an optional unique request ID, and if
+	// you need to retry your request, the server will know to ignore the request
+	// if it's complete. For example, you make an initial request and the request
+	// times out. If you make the request again with the same request ID, the
+	// server can check if it received the original operation with the same request
+	// ID. If it did, it will ignore the second request. The request ID must be a
+	// valid UUID (https://tools.ietf.org/html/rfc4122) with the exception that
+	// zero UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Parameters") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Parameters") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Parameters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ChangeParametersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ChangeParametersRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ChangeRenewalSettingsRequest: Request message for
@@ -701,58 +618,45 @@ func (s *GoogleCloudChannelV1ChangeParametersRequest) MarshalJSON() ([]byte, err
 type GoogleCloudChannelV1ChangeRenewalSettingsRequest struct {
 	// RenewalSettings: Required. New renewal settings.
 	RenewalSettings *GoogleCloudChannelV1RenewalSettings `json:"renewalSettings,omitempty"`
-
-	// RequestId: Optional. You can specify an optional unique request ID,
-	// and if you need to retry your request, the server will know to ignore
-	// the request if it's complete. For example, you make an initial
-	// request and the request times out. If you make the request again with
-	// the same request ID, the server can check if it received the original
-	// operation with the same request ID. If it did, it will ignore the
-	// second request. The request ID must be a valid UUID
-	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
-	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
+	// RequestId: Optional. You can specify an optional unique request ID, and if
+	// you need to retry your request, the server will know to ignore the request
+	// if it's complete. For example, you make an initial request and the request
+	// times out. If you make the request again with the same request ID, the
+	// server can check if it received the original operation with the same request
+	// ID. If it did, it will ignore the second request. The request ID must be a
+	// valid UUID (https://tools.ietf.org/html/rfc4122) with the exception that
+	// zero UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "RenewalSettings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RenewalSettings") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "RenewalSettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ChangeRenewalSettingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ChangeRenewalSettingsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ChannelPartnerLink: Entity representing a link
-// between distributors and their indirect resellers in an n-tier resale
-// channel.
+// GoogleCloudChannelV1ChannelPartnerLink: Entity representing a link between
+// distributors and their indirect resellers in an n-tier resale channel.
 type GoogleCloudChannelV1ChannelPartnerLink struct {
-	// ChannelPartnerCloudIdentityInfo: Output only. Cloud Identity info of
-	// the channel partner (IR).
+	// ChannelPartnerCloudIdentityInfo: Output only. Cloud Identity info of the
+	// channel partner (IR).
 	ChannelPartnerCloudIdentityInfo *GoogleCloudChannelV1CloudIdentityInfo `json:"channelPartnerCloudIdentityInfo,omitempty"`
-
-	// CreateTime: Output only. Timestamp of when the channel partner link
-	// is created.
+	// CreateTime: Output only. Timestamp of when the channel partner link is
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// InviteLinkUri: Output only. URI of the web page where partner accepts
-	// the link invitation.
+	// InviteLinkUri: Output only. URI of the web page where partner accepts the
+	// link invitation.
 	InviteLinkUri string `json:"inviteLinkUri,omitempty"`
-
 	// LinkState: Required. State of the channel partner link.
 	//
 	// Possible values:
@@ -760,291 +664,222 @@ type GoogleCloudChannelV1ChannelPartnerLink struct {
 	//   "INVITED" - An invitation has been sent to the reseller to create a
 	// channel partner link.
 	//   "ACTIVE" - Status when the reseller is active.
-	//   "REVOKED" - Status when the reseller has been revoked by the
-	// distributor.
+	//   "REVOKED" - Status when the reseller has been revoked by the distributor.
 	//   "SUSPENDED" - Status when the reseller is suspended by Google or
 	// distributor.
 	LinkState string `json:"linkState,omitempty"`
-
-	// Name: Output only. Resource name for the channel partner link, in the
-	// format accounts/{account_id}/channelPartnerLinks/{id}.
+	// Name: Output only. Resource name for the channel partner link, in the format
+	// accounts/{account_id}/channelPartnerLinks/{id}.
 	Name string `json:"name,omitempty"`
-
 	// PublicId: Output only. Public identifier that a customer must use to
-	// generate a transfer token to move to this distributor-reseller
-	// combination.
+	// generate a transfer token to move to this distributor-reseller combination.
 	PublicId string `json:"publicId,omitempty"`
-
-	// ResellerCloudIdentityId: Required. Cloud Identity ID of the linked
-	// reseller.
+	// ResellerCloudIdentityId: Required. Cloud Identity ID of the linked reseller.
 	ResellerCloudIdentityId string `json:"resellerCloudIdentityId,omitempty"`
-
-	// UpdateTime: Output only. Timestamp of when the channel partner link
-	// is updated.
+	// UpdateTime: Output only. Timestamp of when the channel partner link is
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g.
 	// "ChannelPartnerCloudIdentityInfo") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "ChannelPartnerCloudIdentityInfo") to include in API requests with
-	// the JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ChannelPartnerCloudIdentityInfo")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ChannelPartnerLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ChannelPartnerLink
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ChannelPartnerRepricingConfig: Configuration for
-// how a distributor will rebill a channel partner (also known as a
+// GoogleCloudChannelV1ChannelPartnerRepricingConfig: Configuration for how a
+// distributor will rebill a channel partner (also known as a
 // distributor-authorized reseller).
 type GoogleCloudChannelV1ChannelPartnerRepricingConfig struct {
-	// Name: Output only. Resource name of the
-	// ChannelPartnerRepricingConfig. Format:
-	// accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/channel
-	// PartnerRepricingConfigs/{id}.
+	// Name: Output only. Resource name of the ChannelPartnerRepricingConfig.
+	// Format:
+	// accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/channelPartner
+	// RepricingConfigs/{id}.
 	Name string `json:"name,omitempty"`
-
-	// RepricingConfig: Required. The configuration for bill modifications
-	// made by a reseller before sending it to ChannelPartner.
+	// RepricingConfig: Required. The configuration for bill modifications made by
+	// a reseller before sending it to ChannelPartner.
 	RepricingConfig *GoogleCloudChannelV1RepricingConfig `json:"repricingConfig,omitempty"`
-
-	// UpdateTime: Output only. Timestamp of an update to the repricing
-	// rule. If `update_time` is after
-	// RepricingConfig.effective_invoice_month then it indicates this was
-	// set mid-month.
+	// UpdateTime: Output only. Timestamp of an update to the repricing rule. If
+	// `update_time` is after RepricingConfig.effective_invoice_month then it
+	// indicates this was set mid-month.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ChannelPartnerRepricingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ChannelPartnerRepricingConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest: Request
-// message for CloudChannelService.CheckCloudIdentityAccountsExist.
+// GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest: Request message
+// for CloudChannelService.CheckCloudIdentityAccountsExist.
 type GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest struct {
-	// Domain: Required. Domain to fetch for Cloud Identity account
-	// customers, including domained and domainless.
+	// Domain: Required. Domain to fetch for Cloud Identity account customers,
+	// including domained and domainless.
 	Domain string `json:"domain,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Domain") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Domain") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse: Response
 // message for CloudChannelService.CheckCloudIdentityAccountsExist.
 type GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse struct {
-	// CloudIdentityAccounts: The Cloud Identity accounts associated with
-	// the domain.
+	// CloudIdentityAccounts: The Cloud Identity accounts associated with the
+	// domain.
 	CloudIdentityAccounts []*GoogleCloudChannelV1CloudIdentityCustomerAccount `json:"cloudIdentityAccounts,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CloudIdentityAccounts") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CloudIdentityAccounts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "CloudIdentityAccounts") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1CloudIdentityCustomerAccount: Entity representing
-// a Cloud Identity account that may be associated with a Channel
-// Services API partner.
+// GoogleCloudChannelV1CloudIdentityCustomerAccount: Entity representing a
+// Cloud Identity account that may be associated with a Channel Services API
+// partner.
 type GoogleCloudChannelV1CloudIdentityCustomerAccount struct {
-	// CustomerCloudIdentityId: If existing = true, the Cloud Identity ID of
-	// the customer.
+	// CustomerCloudIdentityId: If existing = true, the Cloud Identity ID of the
+	// customer.
 	CustomerCloudIdentityId string `json:"customerCloudIdentityId,omitempty"`
-
-	// CustomerName: If owned = true, the name of the customer that owns the
-	// Cloud Identity account. Customer_name uses the format:
+	// CustomerName: If owned = true, the name of the customer that owns the Cloud
+	// Identity account. Customer_name uses the format:
 	// accounts/{account_id}/customers/{customer_id}
 	CustomerName string `json:"customerName,omitempty"`
-
-	// Existing: Returns true if a Cloud Identity account exists for a
-	// specific domain.
+	// Existing: Returns true if a Cloud Identity account exists for a specific
+	// domain.
 	Existing bool `json:"existing,omitempty"`
-
-	// Owned: Returns true if the Cloud Identity account is associated with
-	// a customer of the Channel Services partner.
+	// Owned: Returns true if the Cloud Identity account is associated with a
+	// customer of the Channel Services partner.
 	Owned bool `json:"owned,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CustomerCloudIdentityId") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CustomerCloudIdentityId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomerCloudIdentityId")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CustomerCloudIdentityId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1CloudIdentityCustomerAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1CloudIdentityCustomerAccount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1CloudIdentityInfo: Cloud Identity information for
-// the Cloud Channel Customer.
+// GoogleCloudChannelV1CloudIdentityInfo: Cloud Identity information for the
+// Cloud Channel Customer.
 type GoogleCloudChannelV1CloudIdentityInfo struct {
-	// AdminConsoleUri: Output only. URI of Customer's Admin console
-	// dashboard.
+	// AdminConsoleUri: Output only. URI of Customer's Admin console dashboard.
 	AdminConsoleUri string `json:"adminConsoleUri,omitempty"`
-
 	// AlternateEmail: The alternate email.
 	AlternateEmail string `json:"alternateEmail,omitempty"`
-
-	// CustomerType: CustomerType indicates verification type needed for
-	// using services.
+	// CustomerType: CustomerType indicates verification type needed for using
+	// services.
 	//
 	// Possible values:
 	//   "CUSTOMER_TYPE_UNSPECIFIED" - Not used.
-	//   "DOMAIN" - Domain-owning customer which needs domain verification
-	// to use services.
-	//   "TEAM" - Team customer which needs email verification to use
+	//   "DOMAIN" - Domain-owning customer which needs domain verification to use
 	// services.
+	//   "TEAM" - Team customer which needs email verification to use services.
 	CustomerType string `json:"customerType,omitempty"`
-
 	// EduData: Edu information about the customer.
 	EduData *GoogleCloudChannelV1EduData `json:"eduData,omitempty"`
-
-	// IsDomainVerified: Output only. Whether the domain is verified. This
-	// field is not returned for a Customer's cloud_identity_info resource.
-	// Partners can use the domains.get() method of the Workspace SDK's
-	// Directory API, or listen to the PRIMARY_DOMAIN_VERIFIED Pub/Sub event
-	// in to track domain verification of their resolve Workspace customers.
+	// IsDomainVerified: Output only. Whether the domain is verified. This field is
+	// not returned for a Customer's cloud_identity_info resource. Partners can use
+	// the domains.get() method of the Workspace SDK's Directory API, or listen to
+	// the PRIMARY_DOMAIN_VERIFIED Pub/Sub event in to track domain verification of
+	// their resolve Workspace customers.
 	IsDomainVerified bool `json:"isDomainVerified,omitempty"`
-
 	// LanguageCode: Language code.
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// PhoneNumber: Phone number associated with the Cloud Identity.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
-
 	// PrimaryDomain: Output only. The primary domain name.
 	PrimaryDomain string `json:"primaryDomain,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AdminConsoleUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdminConsoleUri") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdminConsoleUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1CloudIdentityInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1CloudIdentityInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1Column: The definition of a report column.
-// Specifies the data properties in the corresponding position of the
-// report rows.
+// GoogleCloudChannelV1Column: The definition of a report column. Specifies the
+// data properties in the corresponding position of the report rows.
 type GoogleCloudChannelV1Column struct {
-	// ColumnId: The unique name of the column (for example,
-	// customer_domain, channel_partner, customer_cost). You can use column
-	// IDs in RunReportJobRequest.filter. To see all reports and their
-	// columns, call CloudChannelReportsService.ListReports.
+	// ColumnId: The unique name of the column (for example, customer_domain,
+	// channel_partner, customer_cost). You can use column IDs in
+	// RunReportJobRequest.filter. To see all reports and their columns, call
+	// CloudChannelReportsService.ListReports.
 	ColumnId string `json:"columnId,omitempty"`
-
 	// DataType: The type of the values for this column.
 	//
 	// Possible values:
@@ -1054,34 +889,26 @@ type GoogleCloudChannelV1Column struct {
 	//   "DECIMAL" - ReportValues for this column will use decimal_value.
 	//   "MONEY" - ReportValues for this column will use money_value.
 	//   "DATE" - ReportValues for this column will use date_value.
-	//   "DATE_TIME" - ReportValues for this column will use
-	// date_time_value.
+	//   "DATE_TIME" - ReportValues for this column will use date_time_value.
 	DataType string `json:"dataType,omitempty"`
-
 	// DisplayName: The column's display name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ColumnId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ColumnId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ColumnId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Column) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Column
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1CommitmentSettings: Commitment settings for
@@ -1089,164 +916,125 @@ func (s *GoogleCloudChannelV1Column) MarshalJSON() ([]byte, error) {
 type GoogleCloudChannelV1CommitmentSettings struct {
 	// EndTime: Output only. Commitment end timestamp.
 	EndTime string `json:"endTime,omitempty"`
-
 	// RenewalSettings: Optional. Renewal settings applicable for a
 	// commitment-based Offer.
 	RenewalSettings *GoogleCloudChannelV1RenewalSettings `json:"renewalSettings,omitempty"`
-
 	// StartTime: Output only. Commitment start timestamp.
 	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1CommitmentSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1CommitmentSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ConditionalOverride: Specifies the override to
 // conditionally apply.
 type GoogleCloudChannelV1ConditionalOverride struct {
-	// Adjustment: Required. Information about the applied override's
-	// adjustment.
+	// Adjustment: Required. Information about the applied override's adjustment.
 	Adjustment *GoogleCloudChannelV1RepricingAdjustment `json:"adjustment,omitempty"`
-
 	// RebillingBasis: Required. The RebillingBasis to use for the applied
 	// override. Shows the relative cost based on your repricing costs.
 	//
 	// Possible values:
 	//   "REBILLING_BASIS_UNSPECIFIED" - Not used.
 	//   "COST_AT_LIST" - Use the list cost, also known as the MSRP.
-	//   "DIRECT_CUSTOMER_COST" - Pass through all discounts except the
-	// Reseller Program Discount. If this is the default cost base and no
-	// adjustments are specified, the output cost will be exactly what the
-	// customer would see if they viewed the bill in the Google Cloud
-	// Console.
+	//   "DIRECT_CUSTOMER_COST" - Pass through all discounts except the Reseller
+	// Program Discount. If this is the default cost base and no adjustments are
+	// specified, the output cost will be exactly what the customer would see if
+	// they viewed the bill in the Google Cloud Console.
 	RebillingBasis string `json:"rebillingBasis,omitempty"`
-
-	// RepricingCondition: Required. Specifies the condition which, if met,
-	// will apply the override.
+	// RepricingCondition: Required. Specifies the condition which, if met, will
+	// apply the override.
 	RepricingCondition *GoogleCloudChannelV1RepricingCondition `json:"repricingCondition,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Adjustment") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Adjustment") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Adjustment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ConditionalOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ConditionalOverride
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1Constraints: Represents the constraints for
-// buying the Offer.
+// GoogleCloudChannelV1Constraints: Represents the constraints for buying the
+// Offer.
 type GoogleCloudChannelV1Constraints struct {
-	// CustomerConstraints: Represents constraints required to purchase the
-	// Offer for a customer.
+	// CustomerConstraints: Represents constraints required to purchase the Offer
+	// for a customer.
 	CustomerConstraints *GoogleCloudChannelV1CustomerConstraints `json:"customerConstraints,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CustomerConstraints")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CustomerConstraints") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomerConstraints") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CustomerConstraints") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Constraints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Constraints
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ContactInfo: Contact information for a customer
-// account.
+// GoogleCloudChannelV1ContactInfo: Contact information for a customer account.
 type GoogleCloudChannelV1ContactInfo struct {
-	// DisplayName: Output only. The customer account contact's display
-	// name, formatted as a combination of the customer's first and last
-	// name.
+	// DisplayName: Output only. The customer account contact's display name,
+	// formatted as a combination of the customer's first and last name.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Email: The customer account's contact email. Required for
-	// entitlements that create admin.google.com accounts, and serves as the
-	// customer's username for those accounts. Use this email to invite Team
-	// customers.
+	// Email: The customer account's contact email. Required for entitlements that
+	// create admin.google.com accounts, and serves as the customer's username for
+	// those accounts. Use this email to invite Team customers.
 	Email string `json:"email,omitempty"`
-
-	// FirstName: The customer account contact's first name. Optional for
-	// Team customers.
+	// FirstName: The customer account contact's first name. Optional for Team
+	// customers.
 	FirstName string `json:"firstName,omitempty"`
-
 	// LastName: The customer account contact's last name. Optional for Team
 	// customers.
 	LastName string `json:"lastName,omitempty"`
-
 	// Phone: The customer account's contact phone number.
 	Phone string `json:"phone,omitempty"`
-
 	// Title: Optional. The customer account contact's job title.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ContactInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ContactInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1CreateEntitlementRequest: Request message for
@@ -1254,147 +1042,112 @@ func (s *GoogleCloudChannelV1ContactInfo) MarshalJSON() ([]byte, error) {
 type GoogleCloudChannelV1CreateEntitlementRequest struct {
 	// Entitlement: Required. The entitlement to create.
 	Entitlement *GoogleCloudChannelV1Entitlement `json:"entitlement,omitempty"`
-
-	// RequestId: Optional. You can specify an optional unique request ID,
-	// and if you need to retry your request, the server will know to ignore
-	// the request if it's complete. For example, you make an initial
-	// request and the request times out. If you make the request again with
-	// the same request ID, the server can check if it received the original
-	// operation with the same request ID. If it did, it will ignore the
-	// second request. The request ID must be a valid UUID
-	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
-	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
+	// RequestId: Optional. You can specify an optional unique request ID, and if
+	// you need to retry your request, the server will know to ignore the request
+	// if it's complete. For example, you make an initial request and the request
+	// times out. If you make the request again with the same request ID, the
+	// server can check if it received the original operation with the same request
+	// ID. If it did, it will ignore the second request. The request ID must be a
+	// valid UUID (https://tools.ietf.org/html/rfc4122) with the exception that
+	// zero UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Entitlement") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entitlement") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entitlement") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1CreateEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1CreateEntitlementRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1Customer: Entity representing a customer of a
-// reseller or distributor.
+// GoogleCloudChannelV1Customer: Entity representing a customer of a reseller
+// or distributor.
 type GoogleCloudChannelV1Customer struct {
-	// AlternateEmail: Secondary contact email. You need to provide an
-	// alternate email to create different domains if a primary contact
-	// email already exists. Users will receive a notification with
-	// credentials when you create an admin.google.com account. Secondary
-	// emails are also recovery email addresses. Alternate emails are
-	// optional when you create Team customers.
+	// AlternateEmail: Secondary contact email. You need to provide an alternate
+	// email to create different domains if a primary contact email already exists.
+	// Users will receive a notification with credentials when you create an
+	// admin.google.com account. Secondary emails are also recovery email
+	// addresses. Alternate emails are optional when you create Team customers.
 	AlternateEmail string `json:"alternateEmail,omitempty"`
-
-	// ChannelPartnerId: Cloud Identity ID of the customer's channel
-	// partner. Populated only if a channel partner exists for this
-	// customer.
+	// ChannelPartnerId: Cloud Identity ID of the customer's channel partner.
+	// Populated only if a channel partner exists for this customer.
 	ChannelPartnerId string `json:"channelPartnerId,omitempty"`
-
 	// CloudIdentityId: Output only. The customer's Cloud Identity ID if the
 	// customer has a Cloud Identity resource.
 	CloudIdentityId string `json:"cloudIdentityId,omitempty"`
-
-	// CloudIdentityInfo: Output only. Cloud Identity information for the
-	// customer. Populated only if a Cloud Identity account exists for this
-	// customer.
+	// CloudIdentityInfo: Output only. Cloud Identity information for the customer.
+	// Populated only if a Cloud Identity account exists for this customer.
 	CloudIdentityInfo *GoogleCloudChannelV1CloudIdentityInfo `json:"cloudIdentityInfo,omitempty"`
-
-	// CorrelationId: Optional. External CRM ID for the customer. Populated
-	// only if a CRM ID exists for this customer.
+	// CorrelationId: Optional. External CRM ID for the customer. Populated only if
+	// a CRM ID exists for this customer.
 	CorrelationId string `json:"correlationId,omitempty"`
-
 	// CreateTime: Output only. Time when the customer was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Domain: Required. The customer's primary domain. Must match the
-	// primary contact email's domain.
+	// Domain: Required. The customer's primary domain. Must match the primary
+	// contact email's domain.
 	Domain string `json:"domain,omitempty"`
-
 	// LanguageCode: Optional. The BCP-47 language code, such as "en-US" or
 	// "sr-Latn". For more information, see
 	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// Name: Output only. Resource name of the customer. Format:
 	// accounts/{account_id}/customers/{customer_id}
 	Name string `json:"name,omitempty"`
-
-	// OrgDisplayName: Required. Name of the organization that the customer
-	// entity represents.
+	// OrgDisplayName: Required. Name of the organization that the customer entity
+	// represents.
 	OrgDisplayName string `json:"orgDisplayName,omitempty"`
-
-	// OrgPostalAddress: Required. The organization address for the
-	// customer. To enforce US laws and embargoes, we require a region,
-	// postal code, and address lines. You must provide valid addresses for
-	// every customer. To set the customer's language, use the
-	// Customer-level language code.
+	// OrgPostalAddress: Required. The organization address for the customer. To
+	// enforce US laws and embargoes, we require a region, postal code, and address
+	// lines. You must provide valid addresses for every customer. To set the
+	// customer's language, use the Customer-level language code.
 	OrgPostalAddress *GoogleTypePostalAddress `json:"orgPostalAddress,omitempty"`
-
 	// PrimaryContactInfo: Primary contact info.
 	PrimaryContactInfo *GoogleCloudChannelV1ContactInfo `json:"primaryContactInfo,omitempty"`
-
 	// UpdateTime: Output only. Time when the customer was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AlternateEmail") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternateEmail") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AlternateEmail") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Customer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Customer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1CustomerConstraints: Represents constraints
-// required to purchase the Offer for a customer.
+// GoogleCloudChannelV1CustomerConstraints: Represents constraints required to
+// purchase the Offer for a customer.
 type GoogleCloudChannelV1CustomerConstraints struct {
 	// AllowedCustomerTypes: Allowed Customer Type.
 	//
 	// Possible values:
 	//   "CUSTOMER_TYPE_UNSPECIFIED" - Not used.
-	//   "DOMAIN" - Domain-owning customer which needs domain verification
-	// to use services.
-	//   "TEAM" - Team customer which needs email verification to use
+	//   "DOMAIN" - Domain-owning customer which needs domain verification to use
 	// services.
+	//   "TEAM" - Team customer which needs email verification to use services.
 	AllowedCustomerTypes []string `json:"allowedCustomerTypes,omitempty"`
-
 	// AllowedRegions: Allowed geographical regions of the customer.
 	AllowedRegions []string `json:"allowedRegions,omitempty"`
-
 	// PromotionalOrderTypes: Allowed Promotional Order Type. Present for
 	// Promotional offers.
 	//
@@ -1403,33 +1156,25 @@ type GoogleCloudChannelV1CustomerConstraints struct {
 	//   "NEW_UPGRADE" - Order used for new customers, trial conversions and
 	// upgrades.
 	//   "TRANSFER" - All orders for transferring an existing customer.
-	//   "PROMOTION_SWITCH" - Orders for modifying an existing customer's
-	// promotion on the same SKU.
+	//   "PROMOTION_SWITCH" - Orders for modifying an existing customer's promotion
+	// on the same SKU.
 	PromotionalOrderTypes []string `json:"promotionalOrderTypes,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AllowedCustomerTypes") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AllowedCustomerTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowedCustomerTypes") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AllowedCustomerTypes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1CustomerConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1CustomerConstraints
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1CustomerEvent: Represents Pub/Sub message content
@@ -1438,7 +1183,6 @@ type GoogleCloudChannelV1CustomerEvent struct {
 	// Customer: Resource name of the customer. Format:
 	// accounts/{account_id}/customers/{customer_id}
 	Customer string `json:"customer,omitempty"`
-
 	// EventType: Type of event which happened on the customer.
 	//
 	// Possible values:
@@ -1447,125 +1191,97 @@ type GoogleCloudChannelV1CustomerEvent struct {
 	//   "PRIMARY_DOMAIN_VERIFIED" - Primary domain of the customer has been
 	// verified.
 	EventType string `json:"eventType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Customer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Customer") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Customer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1CustomerEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1CustomerEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1CustomerRepricingConfig: Configuration for how a
 // reseller will reprice a Customer.
 type GoogleCloudChannelV1CustomerRepricingConfig struct {
-	// Name: Output only. Resource name of the CustomerRepricingConfig.
-	// Format:
-	// accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs
-	// /{id}.
+	// Name: Output only. Resource name of the CustomerRepricingConfig. Format:
+	// accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs/{id}.
 	Name string `json:"name,omitempty"`
-
-	// RepricingConfig: Required. The configuration for bill modifications
-	// made by a reseller before sending it to customers.
+	// RepricingConfig: Required. The configuration for bill modifications made by
+	// a reseller before sending it to customers.
 	RepricingConfig *GoogleCloudChannelV1RepricingConfig `json:"repricingConfig,omitempty"`
-
-	// UpdateTime: Output only. Timestamp of an update to the repricing
-	// rule. If `update_time` is after
-	// RepricingConfig.effective_invoice_month then it indicates this was
-	// set mid-month.
+	// UpdateTime: Output only. Timestamp of an update to the repricing rule. If
+	// `update_time` is after RepricingConfig.effective_invoice_month then it
+	// indicates this was set mid-month.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1CustomerRepricingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1CustomerRepricingConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1DateRange: A representation of usage or invoice
-// date ranges.
+// GoogleCloudChannelV1DateRange: A representation of usage or invoice date
+// ranges.
 type GoogleCloudChannelV1DateRange struct {
-	// InvoiceEndDate: The latest invoice date (inclusive). If this value is
-	// not the last day of a month, this will move it forward to the last
-	// day of the given month.
+	// InvoiceEndDate: The latest invoice date (inclusive). If this value is not
+	// the last day of a month, this will move it forward to the last day of the
+	// given month.
 	InvoiceEndDate *GoogleTypeDate `json:"invoiceEndDate,omitempty"`
-
-	// InvoiceStartDate: The earliest invoice date (inclusive). If this
-	// value is not the first day of a month, this will move it back to the
-	// first day of the given month.
+	// InvoiceStartDate: The earliest invoice date (inclusive). If this value is
+	// not the first day of a month, this will move it back to the first day of the
+	// given month.
 	InvoiceStartDate *GoogleTypeDate `json:"invoiceStartDate,omitempty"`
-
-	// UsageEndDateTime: The latest usage date time (exclusive). If you use
-	// time groupings (daily, weekly, etc), each group uses midnight to
-	// midnight (Pacific time). The usage end date is rounded down to
-	// include all usage from the specified date. We recommend that clients
-	// pass `usage_start_date_time` in Pacific time.
+	// UsageEndDateTime: The latest usage date time (exclusive). If you use time
+	// groupings (daily, weekly, etc), each group uses midnight to midnight
+	// (Pacific time). The usage end date is rounded down to include all usage from
+	// the specified date. We recommend that clients pass `usage_start_date_time`
+	// in Pacific time.
 	UsageEndDateTime *GoogleTypeDateTime `json:"usageEndDateTime,omitempty"`
-
-	// UsageStartDateTime: The earliest usage date time (inclusive). If you
-	// use time groupings (daily, weekly, etc), each group uses midnight to
-	// midnight (Pacific time). The usage start date is rounded down to
-	// include all usage from the specified date. We recommend that clients
-	// pass `usage_start_date_time` in Pacific time.
+	// UsageStartDateTime: The earliest usage date time (inclusive). If you use
+	// time groupings (daily, weekly, etc), each group uses midnight to midnight
+	// (Pacific time). The usage start date is rounded down to include all usage
+	// from the specified date. We recommend that clients pass
+	// `usage_start_date_time` in Pacific time.
 	UsageStartDateTime *GoogleTypeDateTime `json:"usageStartDateTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InvoiceEndDate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InvoiceEndDate") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "InvoiceEndDate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1DateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1DateRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1EduData: Required Edu Attributes
@@ -1582,7 +1298,6 @@ type GoogleCloudChannelV1EduData struct {
 	//   "SIZE_5001_10000" - 5,001 - 10,000
 	//   "SIZE_10001_OR_MORE" - 10,001 +
 	InstituteSize string `json:"instituteSize,omitempty"`
-
 	// InstituteType: Designated institute type of customer.
 	//
 	// Possible values:
@@ -1590,77 +1305,58 @@ type GoogleCloudChannelV1EduData struct {
 	//   "K12" - Elementary/Secondary Schools & Districts
 	//   "UNIVERSITY" - Higher Education Universities & Colleges
 	InstituteType string `json:"instituteType,omitempty"`
-
 	// Website: Web address for the edu customer's institution.
 	Website string `json:"website,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InstituteSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InstituteSize") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InstituteSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1EduData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1EduData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1Entitlement: An entitlement is a representation
-// of a customer's ability to use a service.
+// GoogleCloudChannelV1Entitlement: An entitlement is a representation of a
+// customer's ability to use a service.
 type GoogleCloudChannelV1Entitlement struct {
 	// AssociationInfo: Association information to other entitlements.
 	AssociationInfo *GoogleCloudChannelV1AssociationInfo `json:"associationInfo,omitempty"`
-
-	// BillingAccount: Optional. The billing account resource name that is
-	// used to pay for this entitlement.
+	// BillingAccount: Optional. The billing account resource name that is used to
+	// pay for this entitlement.
 	BillingAccount string `json:"billingAccount,omitempty"`
-
 	// CommitmentSettings: Commitment settings for a commitment-based Offer.
 	// Required for commitment based offers.
 	CommitmentSettings *GoogleCloudChannelV1CommitmentSettings `json:"commitmentSettings,omitempty"`
-
-	// CreateTime: Output only. The time at which the entitlement is
-	// created.
+	// CreateTime: Output only. The time at which the entitlement is created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Name: Output only. Resource name of an entitlement in the form:
-	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlemen
-	// t_id}.
+	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}.
 	Name string `json:"name,omitempty"`
-
-	// Offer: Required. The offer resource name for which the entitlement is
-	// to be created. Takes the form:
-	// accounts/{account_id}/offers/{offer_id}.
+	// Offer: Required. The offer resource name for which the entitlement is to be
+	// created. Takes the form: accounts/{account_id}/offers/{offer_id}.
 	Offer string `json:"offer,omitempty"`
-
-	// Parameters: Extended entitlement parameters. When creating an
-	// entitlement, valid parameter names and values are defined in the
-	// Offer.parameter_definitions. For Google Workspace, the following
-	// Parameters may be accepted as input: - max_units: The maximum
-	// assignable units for a flexible offer OR - num_units: The total
-	// commitment for commitment-based offers The response may additionally
-	// include the following output-only Parameters: - assigned_units: The
-	// number of licenses assigned to users. For Google Cloud billing
-	// subaccounts, the following Parameter may be accepted as input: -
-	// display_name: The display name of the billing subaccount.
+	// Parameters: Extended entitlement parameters. When creating an entitlement,
+	// valid parameter names and values are defined in the
+	// Offer.parameter_definitions. For Google Workspace, the following Parameters
+	// may be accepted as input: - max_units: The maximum assignable units for a
+	// flexible offer OR - num_units: The total commitment for commitment-based
+	// offers The response may additionally include the following output-only
+	// Parameters: - assigned_units: The number of licenses assigned to users. For
+	// Google Cloud billing subaccounts, the following Parameter may be accepted as
+	// input: - display_name: The display name of the billing subaccount.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
-
 	// ProvisionedService: Output only. Service provisioning details for the
 	// entitlement.
 	ProvisionedService *GoogleCloudChannelV1ProvisionedService `json:"provisionedService,omitempty"`
-
 	// ProvisioningState: Output only. Current provisioning state of the
 	// entitlement.
 	//
@@ -1669,65 +1365,51 @@ type GoogleCloudChannelV1Entitlement struct {
 	//   "ACTIVE" - The entitlement is currently active.
 	//   "SUSPENDED" - The entitlement is currently suspended.
 	ProvisioningState string `json:"provisioningState,omitempty"`
-
-	// PurchaseOrderId: Optional. This purchase order (PO) information is
-	// for resellers to use for their company tracking usage. If a
-	// purchaseOrderId value is given, it appears in the API responses and
-	// shows up in the invoice. The property accepts up to 80 plain text
-	// characters. This is only supported for Google Workspace entitlements.
+	// PurchaseOrderId: Optional. This purchase order (PO) information is for
+	// resellers to use for their company tracking usage. If a purchaseOrderId
+	// value is given, it appears in the API responses and shows up in the invoice.
+	// The property accepts up to 80 plain text characters. This is only supported
+	// for Google Workspace entitlements.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
-
-	// SuspensionReasons: Output only. Enumerable of all current suspension
-	// reasons for an entitlement.
+	// SuspensionReasons: Output only. Enumerable of all current suspension reasons
+	// for an entitlement.
 	//
 	// Possible values:
 	//   "SUSPENSION_REASON_UNSPECIFIED" - Not used.
-	//   "RESELLER_INITIATED" - Entitlement was manually suspended by the
-	// Reseller.
+	//   "RESELLER_INITIATED" - Entitlement was manually suspended by the Reseller.
 	//   "TRIAL_ENDED" - Trial ended.
 	//   "RENEWAL_WITH_TYPE_CANCEL" - Entitlement renewal was canceled.
-	//   "PENDING_TOS_ACCEPTANCE" - Entitlement was automatically suspended
-	// on creation for pending ToS acceptance on customer.
+	//   "PENDING_TOS_ACCEPTANCE" - Entitlement was automatically suspended on
+	// creation for pending ToS acceptance on customer.
 	//   "OTHER" - Other reasons (internal reasons, abuse, etc.).
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
-
 	// TrialSettings: Output only. Settings for trial offers.
 	TrialSettings *GoogleCloudChannelV1TrialSettings `json:"trialSettings,omitempty"`
-
-	// UpdateTime: Output only. The time at which the entitlement is
-	// updated.
+	// UpdateTime: Output only. The time at which the entitlement is updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AssociationInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AssociationInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AssociationInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Entitlement) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Entitlement
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1EntitlementChange: Change event entry for
-// Entitlement order history
+// GoogleCloudChannelV1EntitlementChange: Change event entry for Entitlement
+// order history
 type GoogleCloudChannelV1EntitlementChange struct {
 	// ActivationReason: The Entitlement's activation reason
 	//
@@ -1735,451 +1417,350 @@ type GoogleCloudChannelV1EntitlementChange struct {
 	//   "ACTIVATION_REASON_UNSPECIFIED" - Not used.
 	//   "RESELLER_REVOKED_SUSPENSION" - Reseller reactivated a suspended
 	// Entitlement.
-	//   "CUSTOMER_ACCEPTED_PENDING_TOS" - Customer accepted pending terms
-	// of service.
-	//   "RENEWAL_SETTINGS_CHANGED" - Reseller updated the renewal settings
-	// on an entitlement that was suspended due to cancellation, and this
-	// update reactivated the entitlement.
-	//   "OTHER_ACTIVATION_REASON" - Other reasons (Activated temporarily
-	// for cancellation, added a payment plan to a trial entitlement, etc.)
+	//   "CUSTOMER_ACCEPTED_PENDING_TOS" - Customer accepted pending terms of
+	// service.
+	//   "RENEWAL_SETTINGS_CHANGED" - Reseller updated the renewal settings on an
+	// entitlement that was suspended due to cancellation, and this update
+	// reactivated the entitlement.
+	//   "OTHER_ACTIVATION_REASON" - Other reasons (Activated temporarily for
+	// cancellation, added a payment plan to a trial entitlement, etc.)
 	ActivationReason string `json:"activationReason,omitempty"`
-
 	// CancellationReason: Cancellation reason for the Entitlement.
 	//
 	// Possible values:
 	//   "CANCELLATION_REASON_UNSPECIFIED" - Not used.
-	//   "SERVICE_TERMINATED" - Reseller triggered a cancellation of the
-	// service.
-	//   "RELATIONSHIP_ENDED" - Relationship between the reseller and
-	// customer has ended due to a transfer.
-	//   "PARTIAL_TRANSFER" - Entitlement transferred away from reseller
-	// while still keeping other entitlement(s) with the reseller.
+	//   "SERVICE_TERMINATED" - Reseller triggered a cancellation of the service.
+	//   "RELATIONSHIP_ENDED" - Relationship between the reseller and customer has
+	// ended due to a transfer.
+	//   "PARTIAL_TRANSFER" - Entitlement transferred away from reseller while
+	// still keeping other entitlement(s) with the reseller.
 	CancellationReason string `json:"cancellationReason,omitempty"`
-
 	// ChangeType: The change action type.
 	//
 	// Possible values:
 	//   "CHANGE_TYPE_UNSPECIFIED" - Not used.
 	//   "CREATED" - New Entitlement was created.
-	//   "PRICE_PLAN_SWITCHED" - Price plan associated with an Entitlement
-	// was changed.
+	//   "PRICE_PLAN_SWITCHED" - Price plan associated with an Entitlement was
+	// changed.
 	//   "COMMITMENT_CHANGED" - Number of seats committed for a commitment
 	// Entitlement was changed.
 	//   "RENEWED" - An annual Entitlement was renewed.
 	//   "SUSPENDED" - Entitlement was suspended.
 	//   "ACTIVATED" - Entitlement was activated.
 	//   "CANCELLED" - Entitlement was cancelled.
-	//   "SKU_CHANGED" - Entitlement was upgraded or downgraded for ex. from
-	// Google Workspace Business Standard to Google Workspace Business Plus.
-	//   "RENEWAL_SETTING_CHANGED" - The settings for renewal of an
-	// Entitlement have changed.
-	//   "PAID_SUBSCRIPTION_STARTED" - Use for Google Workspace
-	// subscription. Either a trial was converted to a paid subscription or
-	// a new subscription with no trial is created.
-	//   "LICENSE_CAP_CHANGED" - License cap was changed for the
-	// entitlement.
-	//   "SUSPENSION_DETAILS_CHANGED" - The suspension details have changed
-	// (but it is still suspended).
+	//   "SKU_CHANGED" - Entitlement was upgraded or downgraded for ex. from Google
+	// Workspace Business Standard to Google Workspace Business Plus.
+	//   "RENEWAL_SETTING_CHANGED" - The settings for renewal of an Entitlement
+	// have changed.
+	//   "PAID_SUBSCRIPTION_STARTED" - Use for Google Workspace subscription.
+	// Either a trial was converted to a paid subscription or a new subscription
+	// with no trial is created.
+	//   "LICENSE_CAP_CHANGED" - License cap was changed for the entitlement.
+	//   "SUSPENSION_DETAILS_CHANGED" - The suspension details have changed (but it
+	// is still suspended).
 	//   "TRIAL_END_DATE_EXTENDED" - The trial end date was extended.
 	//   "TRIAL_STARTED" - Entitlement started trial.
 	ChangeType string `json:"changeType,omitempty"`
-
 	// CreateTime: The submitted time of the change.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Entitlement: Required. Resource name of an entitlement in the form:
-	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlemen
-	// t_id}
+	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}
 	Entitlement string `json:"entitlement,omitempty"`
-
-	// Offer: Required. Resource name of the Offer at the time of change.
-	// Takes the form: accounts/{account_id}/offers/{offer_id}.
+	// Offer: Required. Resource name of the Offer at the time of change. Takes the
+	// form: accounts/{account_id}/offers/{offer_id}.
 	Offer string `json:"offer,omitempty"`
-
-	// Operator: Human-readable identifier that shows what operator made a
-	// change. When the operator_type is RESELLER, this is the user's email
-	// address. For all other operator types, this is empty.
+	// Operator: Human-readable identifier that shows what operator made a change.
+	// When the operator_type is RESELLER, this is the user's email address. For
+	// all other operator types, this is empty.
 	Operator string `json:"operator,omitempty"`
-
 	// OperatorType: Operator type responsible for the change.
 	//
 	// Possible values:
 	//   "OPERATOR_TYPE_UNSPECIFIED" - Not used.
-	//   "CUSTOMER_SERVICE_REPRESENTATIVE" - Customer service
-	// representative.
+	//   "CUSTOMER_SERVICE_REPRESENTATIVE" - Customer service representative.
 	//   "SYSTEM" - System auto job.
 	//   "CUSTOMER" - Customer user.
 	//   "RESELLER" - Reseller user.
 	OperatorType string `json:"operatorType,omitempty"`
-
-	// OtherChangeReason: e.g. purchase_number change reason, entered by
-	// CRS.
+	// OtherChangeReason: e.g. purchase_number change reason, entered by CRS.
 	OtherChangeReason string `json:"otherChangeReason,omitempty"`
-
 	// Parameters: Extended parameters, such as: purchase_order_number,
-	// gcp_details; internal_correlation_id, long_running_operation_id,
-	// order_id; etc.
+	// gcp_details; internal_correlation_id, long_running_operation_id, order_id;
+	// etc.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
-
 	// ProvisionedService: Service provisioned for an Entitlement.
 	ProvisionedService *GoogleCloudChannelV1ProvisionedService `json:"provisionedService,omitempty"`
-
 	// SuspensionReason: Suspension reason for the Entitlement.
 	//
 	// Possible values:
 	//   "SUSPENSION_REASON_UNSPECIFIED" - Not used.
-	//   "RESELLER_INITIATED" - Entitlement was manually suspended by the
-	// Reseller.
+	//   "RESELLER_INITIATED" - Entitlement was manually suspended by the Reseller.
 	//   "TRIAL_ENDED" - Trial ended.
 	//   "RENEWAL_WITH_TYPE_CANCEL" - Entitlement renewal was canceled.
-	//   "PENDING_TOS_ACCEPTANCE" - Entitlement was automatically suspended
-	// on creation for pending ToS acceptance on customer.
+	//   "PENDING_TOS_ACCEPTANCE" - Entitlement was automatically suspended on
+	// creation for pending ToS acceptance on customer.
 	//   "OTHER" - Other reasons (internal reasons, abuse, etc.).
 	SuspensionReason string `json:"suspensionReason,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ActivationReason") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActivationReason") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ActivationReason") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1EntitlementChange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1EntitlementChange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1EntitlementEvent: Represents Pub/Sub message
-// content describing entitlement update.
+// GoogleCloudChannelV1EntitlementEvent: Represents Pub/Sub message content
+// describing entitlement update.
 type GoogleCloudChannelV1EntitlementEvent struct {
 	// Entitlement: Resource name of an entitlement of the form:
-	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlemen
-	// t_id}
+	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}
 	Entitlement string `json:"entitlement,omitempty"`
-
 	// EventType: Type of event which happened on the entitlement.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Not used.
 	//   "CREATED" - A new entitlement was created.
-	//   "PRICE_PLAN_SWITCHED" - The offer type associated with an
-	// entitlement was changed. This is not triggered if an entitlement
-	// converts from a commit offer to a flexible offer as part of a
-	// renewal.
-	//   "COMMITMENT_CHANGED" - Annual commitment for a commit plan was
-	// changed.
+	//   "PRICE_PLAN_SWITCHED" - The offer type associated with an entitlement was
+	// changed. This is not triggered if an entitlement converts from a commit
+	// offer to a flexible offer as part of a renewal.
+	//   "COMMITMENT_CHANGED" - Annual commitment for a commit plan was changed.
 	//   "RENEWED" - An annual entitlement was renewed.
 	//   "SUSPENDED" - Entitlement was suspended.
 	//   "ACTIVATED" - Entitlement was unsuspended.
 	//   "CANCELLED" - Entitlement was cancelled.
-	//   "SKU_CHANGED" - Entitlement was upgraded or downgraded (e.g. from
-	// Google Workspace Business Standard to Google Workspace Business
-	// Plus).
-	//   "RENEWAL_SETTING_CHANGED" - The renewal settings of an entitlement
-	// has changed.
-	//   "PAID_SERVICE_STARTED" - Paid service has started on trial
-	// entitlement.
-	//   "LICENSE_ASSIGNMENT_CHANGED" - License was assigned to or revoked
-	// from a user.
-	//   "LICENSE_CAP_CHANGED" - License cap was changed for the
-	// entitlement.
+	//   "SKU_CHANGED" - Entitlement was upgraded or downgraded (e.g. from Google
+	// Workspace Business Standard to Google Workspace Business Plus).
+	//   "RENEWAL_SETTING_CHANGED" - The renewal settings of an entitlement has
+	// changed.
+	//   "PAID_SERVICE_STARTED" - Paid service has started on trial entitlement.
+	//   "LICENSE_ASSIGNMENT_CHANGED" - License was assigned to or revoked from a
+	// user.
+	//   "LICENSE_CAP_CHANGED" - License cap was changed for the entitlement.
 	EventType string `json:"eventType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Entitlement") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entitlement") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entitlement") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1EntitlementEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1EntitlementEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1FetchReportResultsRequest: Request message for
 // CloudChannelReportsService.FetchReportResults.
 type GoogleCloudChannelV1FetchReportResultsRequest struct {
-	// PageSize: Optional. Requested page size of the report. The server may
-	// return fewer results than requested. If you don't specify a page
-	// size, the server uses a sensible default (may change over time). The
-	// maximum value is 30,000; the server will change larger values to
-	// 30,000.
+	// PageSize: Optional. Requested page size of the report. The server may return
+	// fewer results than requested. If you don't specify a page size, the server
+	// uses a sensible default (may change over time). The maximum value is 30,000;
+	// the server will change larger values to 30,000.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: Optional. A token that specifies a page of results beyond
-	// the first page. Obtained through
-	// FetchReportResultsResponse.next_page_token of the previous
-	// CloudChannelReportsService.FetchReportResults call.
+	// PageToken: Optional. A token that specifies a page of results beyond the
+	// first page. Obtained through FetchReportResultsResponse.next_page_token of
+	// the previous CloudChannelReportsService.FetchReportResults call.
 	PageToken string `json:"pageToken,omitempty"`
-
-	// PartitionKeys: Optional. List of keys specifying which report
-	// partitions to return. If empty, returns all partitions.
+	// PartitionKeys: Optional. List of keys specifying which report partitions to
+	// return. If empty, returns all partitions.
 	PartitionKeys []string `json:"partitionKeys,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PageSize") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PageSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1FetchReportResultsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1FetchReportResultsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1FetchReportResultsResponse: Response message for
 // CloudChannelReportsService.FetchReportResults. Contains a tabular
 // representation of the report results.
 type GoogleCloudChannelV1FetchReportResultsResponse struct {
-	// NextPageToken: Pass this token to
-	// FetchReportResultsRequest.page_token to retrieve the next page of
-	// results.
+	// NextPageToken: Pass this token to FetchReportResultsRequest.page_token to
+	// retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ReportMetadata: The metadata for the report results (display name,
-	// columns, row count, and date ranges).
+	// ReportMetadata: The metadata for the report results (display name, columns,
+	// row count, and date ranges).
 	ReportMetadata *GoogleCloudChannelV1ReportResultsMetadata `json:"reportMetadata,omitempty"`
-
 	// Rows: The report's lists of values. Each row follows the settings and
 	// ordering of the columns from `report_metadata`.
 	Rows []*GoogleCloudChannelV1Row `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1FetchReportResultsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1FetchReportResultsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ImportCustomerRequest: Request message for
 // CloudChannelService.ImportCustomer
 type GoogleCloudChannelV1ImportCustomerRequest struct {
-	// AuthToken: Optional. The super admin of the resold customer generates
-	// this token to authorize a reseller to access their Cloud Identity and
-	// purchase entitlements on their behalf. You can omit this token after
-	// authorization. See https://support.google.com/a/answer/7643790 for
-	// more details.
+	// AuthToken: Optional. The super admin of the resold customer generates this
+	// token to authorize a reseller to access their Cloud Identity and purchase
+	// entitlements on their behalf. You can omit this token after authorization.
+	// See https://support.google.com/a/answer/7643790 for more details.
 	AuthToken string `json:"authToken,omitempty"`
-
-	// ChannelPartnerId: Optional. Cloud Identity ID of a channel partner
-	// who will be the direct reseller for the customer's order. This field
-	// is required for 2-tier transfer scenarios and can be provided via the
-	// request Parent binding as well.
+	// ChannelPartnerId: Optional. Cloud Identity ID of a channel partner who will
+	// be the direct reseller for the customer's order. This field is required for
+	// 2-tier transfer scenarios and can be provided via the request Parent binding
+	// as well.
 	ChannelPartnerId string `json:"channelPartnerId,omitempty"`
-
 	// CloudIdentityId: Required. Customer's Cloud Identity ID
 	CloudIdentityId string `json:"cloudIdentityId,omitempty"`
-
-	// Customer: Optional. Specifies the customer that will receive imported
-	// Cloud Identity information. Format:
-	// accounts/{account_id}/customers/{customer_id}
+	// Customer: Optional. Specifies the customer that will receive imported Cloud
+	// Identity information. Format: accounts/{account_id}/customers/{customer_id}
 	Customer string `json:"customer,omitempty"`
-
 	// Domain: Required. Customer domain.
 	Domain string `json:"domain,omitempty"`
-
-	// OverwriteIfExists: Required. Choose to overwrite an existing customer
-	// if found. This must be set to true if there is an existing customer
-	// with a conflicting region code or domain.
+	// OverwriteIfExists: Required. Choose to overwrite an existing customer if
+	// found. This must be set to true if there is an existing customer with a
+	// conflicting region code or domain.
 	OverwriteIfExists bool `json:"overwriteIfExists,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AuthToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuthToken") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AuthToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ImportCustomerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ImportCustomerRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ListChannelPartnerLinksResponse: Response message
-// for CloudChannelService.ListChannelPartnerLinks.
+// GoogleCloudChannelV1ListChannelPartnerLinksResponse: Response message for
+// CloudChannelService.ListChannelPartnerLinks.
 type GoogleCloudChannelV1ListChannelPartnerLinksResponse struct {
 	// ChannelPartnerLinks: The Channel partner links for a reseller.
 	ChannelPartnerLinks []*GoogleCloudChannelV1ChannelPartnerLink `json:"channelPartnerLinks,omitempty"`
-
 	// NextPageToken: A token to retrieve the next page of results. Pass to
 	// ListChannelPartnerLinksRequest.page_token to obtain that page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ChannelPartnerLinks")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ChannelPartnerLinks") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChannelPartnerLinks") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ChannelPartnerLinks") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListChannelPartnerLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListChannelPartnerLinksResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse:
-// Response message for
-// CloudChannelService.ListChannelPartnerRepricingConfigs.
+// GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse: Response
+// message for CloudChannelService.ListChannelPartnerRepricingConfigs.
 type GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse struct {
-	// ChannelPartnerRepricingConfigs: The repricing configs for this
-	// channel partner.
+	// ChannelPartnerRepricingConfigs: The repricing configs for this channel
+	// partner.
 	ChannelPartnerRepricingConfigs []*GoogleCloudChannelV1ChannelPartnerRepricingConfig `json:"channelPartnerRepricingConfigs,omitempty"`
-
 	// NextPageToken: A token to retrieve the next page of results. Pass to
-	// ListChannelPartnerRepricingConfigsRequest.page_token to obtain that
-	// page.
+	// ListChannelPartnerRepricingConfigsRequest.page_token to obtain that page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g.
 	// "ChannelPartnerRepricingConfigs") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "ChannelPartnerRepricingConfigs") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ChannelPartnerRepricingConfigs")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ListCustomerRepricingConfigsResponse: Response
-// message for CloudChannelService.ListCustomerRepricingConfigs.
+// GoogleCloudChannelV1ListCustomerRepricingConfigsResponse: Response message
+// for CloudChannelService.ListCustomerRepricingConfigs.
 type GoogleCloudChannelV1ListCustomerRepricingConfigsResponse struct {
-	// CustomerRepricingConfigs: The repricing configs for this channel
-	// partner.
+	// CustomerRepricingConfigs: The repricing configs for this channel partner.
 	CustomerRepricingConfigs []*GoogleCloudChannelV1CustomerRepricingConfig `json:"customerRepricingConfigs,omitempty"`
-
 	// NextPageToken: A token to retrieve the next page of results. Pass to
 	// ListCustomerRepricingConfigsRequest.page_token to obtain that page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CustomerRepricingConfigs") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CustomerRepricingConfigs")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomerRepricingConfigs")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CustomerRepricingConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListCustomerRepricingConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListCustomerRepricingConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ListCustomersResponse: Response message for
@@ -2187,73 +1768,56 @@ func (s *GoogleCloudChannelV1ListCustomerRepricingConfigsResponse) MarshalJSON()
 type GoogleCloudChannelV1ListCustomersResponse struct {
 	// Customers: The customers belonging to a reseller or distributor.
 	Customers []*GoogleCloudChannelV1Customer `json:"customers,omitempty"`
-
 	// NextPageToken: A token to retrieve the next page of results. Pass to
 	// ListCustomersRequest.page_token to obtain that page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Customers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Customers") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Customers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListCustomersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListCustomersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ListEntitlementChangesResponse: Response message
-// for CloudChannelService.ListEntitlementChanges
+// GoogleCloudChannelV1ListEntitlementChangesResponse: Response message for
+// CloudChannelService.ListEntitlementChanges
 type GoogleCloudChannelV1ListEntitlementChangesResponse struct {
 	// EntitlementChanges: The list of entitlement changes.
 	EntitlementChanges []*GoogleCloudChannelV1EntitlementChange `json:"entitlementChanges,omitempty"`
-
 	// NextPageToken: A token to list the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "EntitlementChanges")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EntitlementChanges") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EntitlementChanges") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EntitlementChanges") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListEntitlementChangesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListEntitlementChangesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ListEntitlementsResponse: Response message for
@@ -2261,144 +1825,110 @@ func (s *GoogleCloudChannelV1ListEntitlementChangesResponse) MarshalJSON() ([]by
 type GoogleCloudChannelV1ListEntitlementsResponse struct {
 	// Entitlements: The reseller customer's entitlements.
 	Entitlements []*GoogleCloudChannelV1Entitlement `json:"entitlements,omitempty"`
-
 	// NextPageToken: A token to list the next page of results. Pass to
 	// ListEntitlementsRequest.page_token to obtain that page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Entitlements") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entitlements") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entitlements") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListEntitlementsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListEntitlementsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ListOffersResponse: Response message for
-// ListOffers.
+// GoogleCloudChannelV1ListOffersResponse: Response message for ListOffers.
 type GoogleCloudChannelV1ListOffersResponse struct {
 	// NextPageToken: A token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Offers: The list of Offers requested.
 	Offers []*GoogleCloudChannelV1Offer `json:"offers,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListOffersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListOffersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ListProductsResponse: Response message for
-// ListProducts.
+// GoogleCloudChannelV1ListProductsResponse: Response message for ListProducts.
 type GoogleCloudChannelV1ListProductsResponse struct {
 	// NextPageToken: A token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Products: List of Products requested.
 	Products []*GoogleCloudChannelV1Product `json:"products,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListProductsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ListPurchasableOffersResponse: Response message
-// for ListPurchasableOffers.
+// GoogleCloudChannelV1ListPurchasableOffersResponse: Response message for
+// ListPurchasableOffers.
 type GoogleCloudChannelV1ListPurchasableOffersResponse struct {
 	// NextPageToken: A token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// PurchasableOffers: The list of Offers requested.
 	PurchasableOffers []*GoogleCloudChannelV1PurchasableOffer `json:"purchasableOffers,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListPurchasableOffersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListPurchasableOffersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ListPurchasableSkusResponse: Response message for
@@ -2406,110 +1936,85 @@ func (s *GoogleCloudChannelV1ListPurchasableOffersResponse) MarshalJSON() ([]byt
 type GoogleCloudChannelV1ListPurchasableSkusResponse struct {
 	// NextPageToken: A token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// PurchasableSkus: The list of SKUs requested.
 	PurchasableSkus []*GoogleCloudChannelV1PurchasableSku `json:"purchasableSkus,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListPurchasableSkusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListPurchasableSkusResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ListReportsResponse: Response message for
 // CloudChannelReportsService.ListReports.
 type GoogleCloudChannelV1ListReportsResponse struct {
-	// NextPageToken: Pass this token to
-	// FetchReportResultsRequest.page_token to retrieve the next page of
-	// results.
+	// NextPageToken: Pass this token to FetchReportResultsRequest.page_token to
+	// retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Reports: The reports available to the partner.
 	Reports []*GoogleCloudChannelV1Report `json:"reports,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListReportsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ListSkuGroupBillableSkusResponse: Response
-// message for ListSkuGroupBillableSkus.
+// GoogleCloudChannelV1ListSkuGroupBillableSkusResponse: Response message for
+// ListSkuGroupBillableSkus.
 type GoogleCloudChannelV1ListSkuGroupBillableSkusResponse struct {
 	// BillableSkus: The list of billable SKUs in the requested SKU group.
 	BillableSkus []*GoogleCloudChannelV1BillableSku `json:"billableSkus,omitempty"`
-
 	// NextPageToken: A token to retrieve the next page of results. Pass to
 	// ListSkuGroupBillableSkus.page_token to obtain that page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "BillableSkus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillableSkus") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BillableSkus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListSkuGroupBillableSkusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListSkuGroupBillableSkusResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ListSkuGroupsResponse: Response message for
@@ -2518,444 +2023,342 @@ type GoogleCloudChannelV1ListSkuGroupsResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. Pass to
 	// ListSkuGroups.page_token to obtain that page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// SkuGroups: The list of SKU groups requested.
 	SkuGroups []*GoogleCloudChannelV1SkuGroup `json:"skuGroups,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListSkuGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListSkuGroupsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ListSkusResponse: Response message for ListSkus.
 type GoogleCloudChannelV1ListSkusResponse struct {
 	// NextPageToken: A token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Skus: The list of SKUs requested.
 	Skus []*GoogleCloudChannelV1Sku `json:"skus,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListSkusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListSkusResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ListSubscribersResponse: Response Message for
 // ListSubscribers.
 type GoogleCloudChannelV1ListSubscribersResponse struct {
-	// NextPageToken: A token that can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServiceAccounts: List of service accounts which have subscriber
-	// access to the topic.
+	// ServiceAccounts: List of service accounts which have subscriber access to
+	// the topic.
 	ServiceAccounts []string `json:"serviceAccounts,omitempty"`
-
 	// Topic: Name of the topic registered with the reseller.
 	Topic string `json:"topic,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListSubscribersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListSubscribersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ListTransferableOffersRequest: Request message
-// for CloudChannelService.ListTransferableOffers
+// GoogleCloudChannelV1ListTransferableOffersRequest: Request message for
+// CloudChannelService.ListTransferableOffers
 type GoogleCloudChannelV1ListTransferableOffersRequest struct {
-	// BillingAccount: Optional. The Billing Account to look up Offers for.
-	// Format: accounts/{account_id}/billingAccounts/{billing_account_id}.
-	// This field is only relevant for multi-currency accounts. It should be
-	// left empty for single currency accounts.
+	// BillingAccount: Optional. The Billing Account to look up Offers for. Format:
+	// accounts/{account_id}/billingAccounts/{billing_account_id}. This field is
+	// only relevant for multi-currency accounts. It should be left empty for
+	// single currency accounts.
 	BillingAccount string `json:"billingAccount,omitempty"`
-
 	// CloudIdentityId: Customer's Cloud Identity ID
 	CloudIdentityId string `json:"cloudIdentityId,omitempty"`
-
-	// CustomerName: A reseller should create a customer and use the
-	// resource name of that customer here.
+	// CustomerName: A reseller should create a customer and use the resource name
+	// of that customer here.
 	CustomerName string `json:"customerName,omitempty"`
-
-	// LanguageCode: Optional. The BCP-47 language code. For example,
-	// "en-US". The response will localize in the corresponding language
-	// code, if specified. The default value is "en-US".
+	// LanguageCode: Optional. The BCP-47 language code. For example, "en-US". The
+	// response will localize in the corresponding language code, if specified. The
+	// default value is "en-US".
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// PageSize: Requested page size. Server might return fewer results than
-	// requested. If unspecified, returns at most 100 offers. The maximum
-	// value is 1000; the server will coerce values above 1000.
+	// requested. If unspecified, returns at most 100 offers. The maximum value is
+	// 1000; the server will coerce values above 1000.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: A token for a page of results other than the first page.
-	// Obtained using ListTransferableOffersResponse.next_page_token of the
-	// previous CloudChannelService.ListTransferableOffers call.
+	// PageToken: A token for a page of results other than the first page. Obtained
+	// using ListTransferableOffersResponse.next_page_token of the previous
+	// CloudChannelService.ListTransferableOffers call.
 	PageToken string `json:"pageToken,omitempty"`
-
 	// Sku: Required. The SKU to look up Offers for.
 	Sku string `json:"sku,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingAccount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListTransferableOffersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListTransferableOffersRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ListTransferableOffersResponse: Response message
-// for CloudChannelService.ListTransferableOffers.
+// GoogleCloudChannelV1ListTransferableOffersResponse: Response message for
+// CloudChannelService.ListTransferableOffers.
 type GoogleCloudChannelV1ListTransferableOffersResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. Pass to
 	// ListTransferableOffersRequest.page_token to obtain that page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TransferableOffers: Information about Offers for a customer that can
-	// be used for transfer.
+	// TransferableOffers: Information about Offers for a customer that can be used
+	// for transfer.
 	TransferableOffers []*GoogleCloudChannelV1TransferableOffer `json:"transferableOffers,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListTransferableOffersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListTransferableOffersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ListTransferableSkusRequest: Request message for
 // CloudChannelService.ListTransferableSkus
 type GoogleCloudChannelV1ListTransferableSkusRequest struct {
-	// AuthToken: Optional. The super admin of the resold customer generates
-	// this token to authorize a reseller to access their Cloud Identity and
-	// purchase entitlements on their behalf. You can omit this token after
-	// authorization. See https://support.google.com/a/answer/7643790 for
-	// more details.
+	// AuthToken: Optional. The super admin of the resold customer generates this
+	// token to authorize a reseller to access their Cloud Identity and purchase
+	// entitlements on their behalf. You can omit this token after authorization.
+	// See https://support.google.com/a/answer/7643790 for more details.
 	AuthToken string `json:"authToken,omitempty"`
-
 	// CloudIdentityId: Customer's Cloud Identity ID
 	CloudIdentityId string `json:"cloudIdentityId,omitempty"`
-
 	// CustomerName: A reseller is required to create a customer and use the
-	// resource name of the created customer here. Customer_name uses the
-	// format: accounts/{account_id}/customers/{customer_id}
+	// resource name of the created customer here. Customer_name uses the format:
+	// accounts/{account_id}/customers/{customer_id}
 	CustomerName string `json:"customerName,omitempty"`
-
-	// LanguageCode: The BCP-47 language code. For example, "en-US". The
-	// response will localize in the corresponding language code, if
-	// specified. The default value is "en-US". Optional.
+	// LanguageCode: The BCP-47 language code. For example, "en-US". The response
+	// will localize in the corresponding language code, if specified. The default
+	// value is "en-US". Optional.
 	LanguageCode string `json:"languageCode,omitempty"`
-
-	// PageSize: The requested page size. Server might return fewer results
-	// than requested. If unspecified, returns at most 100 SKUs. The maximum
-	// value is 1000; the server will coerce values above 1000. Optional.
+	// PageSize: The requested page size. Server might return fewer results than
+	// requested. If unspecified, returns at most 100 SKUs. The maximum value is
+	// 1000; the server will coerce values above 1000. Optional.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: A token for a page of results other than the first page.
-	// Obtained using ListTransferableSkusResponse.next_page_token of the
-	// previous CloudChannelService.ListTransferableSkus call. Optional.
+	// PageToken: A token for a page of results other than the first page. Obtained
+	// using ListTransferableSkusResponse.next_page_token of the previous
+	// CloudChannelService.ListTransferableSkus call. Optional.
 	PageToken string `json:"pageToken,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AuthToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuthToken") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AuthToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListTransferableSkusRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListTransferableSkusRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ListTransferableSkusResponse: Response message
-// for CloudChannelService.ListTransferableSkus.
+// GoogleCloudChannelV1ListTransferableSkusResponse: Response message for
+// CloudChannelService.ListTransferableSkus.
 type GoogleCloudChannelV1ListTransferableSkusResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. Pass to
 	// ListTransferableSkusRequest.page_token to obtain that page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TransferableSkus: Information about existing SKUs for a customer that
-	// needs a transfer.
+	// TransferableSkus: Information about existing SKUs for a customer that needs
+	// a transfer.
 	TransferableSkus []*GoogleCloudChannelV1TransferableSku `json:"transferableSkus,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ListTransferableSkusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListTransferableSkusResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1MarketingInfo: Represents the marketing
-// information for a Product, SKU or Offer.
+// GoogleCloudChannelV1MarketingInfo: Represents the marketing information for
+// a Product, SKU or Offer.
 type GoogleCloudChannelV1MarketingInfo struct {
 	// DefaultLogo: Default logo.
 	DefaultLogo *GoogleCloudChannelV1Media `json:"defaultLogo,omitempty"`
-
-	// Description: Human readable description. Description can contain
-	// HTML.
+	// Description: Human readable description. Description can contain HTML.
 	Description string `json:"description,omitempty"`
-
 	// DisplayName: Human readable name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DefaultLogo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DefaultLogo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultLogo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1MarketingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1MarketingInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1Media: Represents media information.
 type GoogleCloudChannelV1Media struct {
 	// Content: URL of the media.
 	Content string `json:"content,omitempty"`
-
 	// Title: Title of the media.
 	Title string `json:"title,omitempty"`
-
 	// Type: Type of the media.
 	//
 	// Possible values:
 	//   "MEDIA_TYPE_UNSPECIFIED" - Not used.
 	//   "MEDIA_TYPE_IMAGE" - Type of image.
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Content") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Content") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Media) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Media
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1Offer: Represents an offer made to resellers for
-// purchase. An offer is associated with a Sku, has a plan for payment,
-// a price, and defines the constraints for buying.
+// purchase. An offer is associated with a Sku, has a plan for payment, a
+// price, and defines the constraints for buying.
 type GoogleCloudChannelV1Offer struct {
 	// Constraints: Constraints on transacting the Offer.
 	Constraints *GoogleCloudChannelV1Constraints `json:"constraints,omitempty"`
-
-	// DealCode: The deal code of the offer to get a special promotion or
-	// discount.
+	// DealCode: The deal code of the offer to get a special promotion or discount.
 	DealCode string `json:"dealCode,omitempty"`
-
 	// EndTime: Output only. End of the Offer validity time.
 	EndTime string `json:"endTime,omitempty"`
-
 	// MarketingInfo: Marketing information for the Offer.
 	MarketingInfo *GoogleCloudChannelV1MarketingInfo `json:"marketingInfo,omitempty"`
-
 	// Name: Resource Name of the Offer. Format:
 	// accounts/{account_id}/offers/{offer_id}
 	Name string `json:"name,omitempty"`
-
-	// ParameterDefinitions: Parameters required to use current Offer to
-	// purchase.
+	// ParameterDefinitions: Parameters required to use current Offer to purchase.
 	ParameterDefinitions []*GoogleCloudChannelV1ParameterDefinition `json:"parameterDefinitions,omitempty"`
-
 	// Plan: Describes the payment plan for the Offer.
 	Plan *GoogleCloudChannelV1Plan `json:"plan,omitempty"`
-
 	// PriceByResources: Price for each monetizable resource type.
 	PriceByResources []*GoogleCloudChannelV1PriceByResource `json:"priceByResources,omitempty"`
-
 	// Sku: SKU the offer is associated with.
 	Sku *GoogleCloudChannelV1Sku `json:"sku,omitempty"`
-
 	// StartTime: Start of the Offer validity time.
 	StartTime string `json:"startTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Constraints") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Constraints") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Constraints") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Offer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Offer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1OperationMetadata: Provides contextual
-// information about a google.longrunning.Operation.
+// GoogleCloudChannelV1OperationMetadata: Provides contextual information about
+// a google.longrunning.Operation.
 type GoogleCloudChannelV1OperationMetadata struct {
 	// OperationType: The RPC that initiated this Long Running Operation.
 	//
@@ -2975,105 +2378,81 @@ type GoogleCloudChannelV1OperationMetadata struct {
 	// CancelEntitlement.
 	//   "TRANSFER_ENTITLEMENTS" - Long Running Operation was triggered by
 	// TransferEntitlements.
-	//   "TRANSFER_ENTITLEMENTS_TO_GOOGLE" - Long Running Operation was
-	// triggered by TransferEntitlementsToGoogle.
-	//   "CHANGE_OFFER" - Long Running Operation was triggered by
-	// ChangeOffer.
+	//   "TRANSFER_ENTITLEMENTS_TO_GOOGLE" - Long Running Operation was triggered
+	// by TransferEntitlementsToGoogle.
+	//   "CHANGE_OFFER" - Long Running Operation was triggered by ChangeOffer.
 	//   "CHANGE_PARAMETERS" - Long Running Operation was triggered by
 	// ChangeParameters.
-	//   "PROVISION_CLOUD_IDENTITY" - Long Running Operation was triggered
-	// by ProvisionCloudIdentity.
+	//   "PROVISION_CLOUD_IDENTITY" - Long Running Operation was triggered by
+	// ProvisionCloudIdentity.
 	OperationType string `json:"operationType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OperationType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OperationType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "OperationType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1OperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1Parameter: Definition for extended entitlement
 // parameters.
 type GoogleCloudChannelV1Parameter struct {
-	// Editable: Output only. Specifies whether this parameter is allowed to
-	// be changed. For example, for a Google Workspace Business Starter
-	// entitlement in commitment plan, num_units is editable when
-	// entitlement is active.
+	// Editable: Output only. Specifies whether this parameter is allowed to be
+	// changed. For example, for a Google Workspace Business Starter entitlement in
+	// commitment plan, num_units is editable when entitlement is active.
 	Editable bool `json:"editable,omitempty"`
-
 	// Name: Name of the parameter.
 	Name string `json:"name,omitempty"`
-
 	// Value: Value of the parameter.
 	Value *GoogleCloudChannelV1Value `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Editable") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Editable") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Editable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Parameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Parameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ParameterDefinition: Parameter's definition.
-// Specifies what parameter is required to use the current Offer to
-// purchase.
+// GoogleCloudChannelV1ParameterDefinition: Parameter's definition. Specifies
+// what parameter is required to use the current Offer to purchase.
 type GoogleCloudChannelV1ParameterDefinition struct {
-	// AllowedValues: If not empty, parameter values must be drawn from this
-	// list. For example, [us-west1, us-west2, ...] Applicable to STRING
-	// parameter type.
+	// AllowedValues: If not empty, parameter values must be drawn from this list.
+	// For example, [us-west1, us-west2, ...] Applicable to STRING parameter type.
 	AllowedValues []*GoogleCloudChannelV1Value `json:"allowedValues,omitempty"`
-
-	// MaxValue: Maximum value of the parameter, if applicable. Inclusive.
-	// For example, maximum seats when purchasing Google Workspace Business
-	// Standard. Applicable to INT64 and DOUBLE parameter types.
-	MaxValue *GoogleCloudChannelV1Value `json:"maxValue,omitempty"`
-
-	// MinValue: Minimal value of the parameter, if applicable. Inclusive.
-	// For example, minimal commitment when purchasing Anthos is 0.01.
+	// MaxValue: Maximum value of the parameter, if applicable. Inclusive. For
+	// example, maximum seats when purchasing Google Workspace Business Standard.
 	// Applicable to INT64 and DOUBLE parameter types.
+	MaxValue *GoogleCloudChannelV1Value `json:"maxValue,omitempty"`
+	// MinValue: Minimal value of the parameter, if applicable. Inclusive. For
+	// example, minimal commitment when purchasing Anthos is 0.01. Applicable to
+	// INT64 and DOUBLE parameter types.
 	MinValue *GoogleCloudChannelV1Value `json:"minValue,omitempty"`
-
 	// Name: Name of the parameter.
 	Name string `json:"name,omitempty"`
-
-	// Optional: If set to true, parameter is optional to purchase this
-	// Offer.
+	// Optional: If set to true, parameter is optional to purchase this Offer.
 	Optional bool `json:"optional,omitempty"`
-
-	// ParameterType: Data type of the parameter. Minimal value, Maximum
-	// value and allowed values will use specified data type here.
+	// ParameterType: Data type of the parameter. Minimal value, Maximum value and
+	// allowed values will use specified data type here.
 	//
 	// Possible values:
 	//   "PARAMETER_TYPE_UNSPECIFIED" - Not used.
@@ -3082,65 +2461,52 @@ type GoogleCloudChannelV1ParameterDefinition struct {
 	//   "DOUBLE" - Double type.
 	//   "BOOLEAN" - Boolean type.
 	ParameterType string `json:"parameterType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AllowedValues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowedValues") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AllowedValues") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ParameterDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ParameterDefinition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1PercentageAdjustment: An adjustment that applies
-// a flat markup or markdown to an entire bill.
+// GoogleCloudChannelV1PercentageAdjustment: An adjustment that applies a flat
+// markup or markdown to an entire bill.
 type GoogleCloudChannelV1PercentageAdjustment struct {
-	// Percentage: The percentage of the bill to adjust. For example: Mark
-	// down by 1% => "-1.00" Mark up by 1% => "1.00" Pass-Through => "0.00"
+	// Percentage: The percentage of the bill to adjust. For example: Mark down by
+	// 1% => "-1.00" Mark up by 1% => "1.00" Pass-Through => "0.00"
 	Percentage *GoogleTypeDecimal `json:"percentage,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Percentage") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Percentage") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Percentage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1PercentageAdjustment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1PercentageAdjustment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1Period: Represents period in days/months/years.
 type GoogleCloudChannelV1Period struct {
 	// Duration: Total duration of Period Type defined.
 	Duration int64 `json:"duration,omitempty"`
-
 	// PeriodType: Period Type.
 	//
 	// Possible values:
@@ -3149,41 +2515,33 @@ type GoogleCloudChannelV1Period struct {
 	//   "MONTH" - Month.
 	//   "YEAR" - Year.
 	PeriodType string `json:"periodType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Duration") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Duration") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Duration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Period) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Period
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1Plan: The payment plan for the Offer. Describes
-// how to make a payment.
+// GoogleCloudChannelV1Plan: The payment plan for the Offer. Describes how to
+// make a payment.
 type GoogleCloudChannelV1Plan struct {
 	// BillingAccount: Reseller Billing account to charge after an offer
 	// transaction. Only present for Google Cloud offers.
 	BillingAccount string `json:"billingAccount,omitempty"`
-
-	// PaymentCycle: Describes how frequently the reseller will be billed,
-	// such as once per month.
+	// PaymentCycle: Describes how frequently the reseller will be billed, such as
+	// once per month.
 	PaymentCycle *GoogleCloudChannelV1Period `json:"paymentCycle,omitempty"`
-
 	// PaymentPlan: Describes how a reseller will be billed.
 	//
 	// Possible values:
@@ -3194,85 +2552,65 @@ type GoogleCloudChannelV1Plan struct {
 	//   "TRIAL" - Trial.
 	//   "OFFLINE" - Price and ordering not available through API.
 	PaymentPlan string `json:"paymentPlan,omitempty"`
-
 	// PaymentType: Specifies when the payment needs to happen.
 	//
 	// Possible values:
 	//   "PAYMENT_TYPE_UNSPECIFIED" - Not used.
-	//   "PREPAY" - Prepay. Amount has to be paid before service is
-	// rendered.
-	//   "POSTPAY" - Postpay. Reseller is charged at the end of the Payment
-	// cycle.
+	//   "PREPAY" - Prepay. Amount has to be paid before service is rendered.
+	//   "POSTPAY" - Postpay. Reseller is charged at the end of the Payment cycle.
 	PaymentType string `json:"paymentType,omitempty"`
-
-	// TrialPeriod: Present for Offers with a trial period. For trial-only
-	// Offers, a paid service needs to start before the trial period ends
-	// for continued service. For Regular Offers with a trial period, the
-	// regular pricing goes into effect when trial period ends, or if paid
-	// service is started before the end of the trial period.
+	// TrialPeriod: Present for Offers with a trial period. For trial-only Offers,
+	// a paid service needs to start before the trial period ends for continued
+	// service. For Regular Offers with a trial period, the regular pricing goes
+	// into effect when trial period ends, or if paid service is started before the
+	// end of the trial period.
 	TrialPeriod *GoogleCloudChannelV1Period `json:"trialPeriod,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingAccount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Plan) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Plan
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1Price: Represents the price of the Offer.
 type GoogleCloudChannelV1Price struct {
 	// BasePrice: Base price.
 	BasePrice *GoogleTypeMoney `json:"basePrice,omitempty"`
-
-	// Discount: Discount percentage, represented as decimal. For example, a
-	// 20% discount will be represent as 0.2.
+	// Discount: Discount percentage, represented as decimal. For example, a 20%
+	// discount will be represent as 0.2.
 	Discount float64 `json:"discount,omitempty"`
-
 	// EffectivePrice: Effective Price after applying the discounts.
 	EffectivePrice *GoogleTypeMoney `json:"effectivePrice,omitempty"`
-
-	// ExternalPriceUri: Link to external price list, such as link to Google
-	// Voice rate card.
+	// ExternalPriceUri: Link to external price list, such as link to Google Voice
+	// rate card.
 	ExternalPriceUri string `json:"externalPriceUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasePrice") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasePrice") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasePrice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Price) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Price
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudChannelV1Price) UnmarshalJSON(data []byte) error {
@@ -3289,15 +2627,12 @@ func (s *GoogleCloudChannelV1Price) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudChannelV1PriceByResource: Represents price by resource
-// type.
+// GoogleCloudChannelV1PriceByResource: Represents price by resource type.
 type GoogleCloudChannelV1PriceByResource struct {
 	// Price: Price of the Offer. Present if there are no price phases.
 	Price *GoogleCloudChannelV1Price `json:"price,omitempty"`
-
 	// PricePhases: Specifies the price by time range.
 	PricePhases []*GoogleCloudChannelV1PricePhase `json:"pricePhases,omitempty"`
-
 	// ResourceType: Resource Type. Example: SEAT
 	//
 	// Possible values:
@@ -3307,47 +2642,39 @@ type GoogleCloudChannelV1PriceByResource struct {
 	//   "GB" - GB (used for storage SKUs).
 	//   "LICENSED_USER" - Active licensed users(for Voice SKUs).
 	//   "MINUTES" - Voice usage.
-	//   "IAAS_USAGE" - For IaaS SKUs like Google Cloud, monetization is
-	// based on usage accrued on your billing account irrespective of the
-	// type of monetizable resource. This enum represents an aggregated
-	// resource/container for all usage SKUs on a billing account.
-	// Currently, only applicable to Google Cloud.
+	//   "IAAS_USAGE" - For IaaS SKUs like Google Cloud, monetization is based on
+	// usage accrued on your billing account irrespective of the type of
+	// monetizable resource. This enum represents an aggregated resource/container
+	// for all usage SKUs on a billing account. Currently, only applicable to
+	// Google Cloud.
 	//   "SUBSCRIPTION" - For Google Cloud subscriptions like Anthos or SAP.
 	ResourceType string `json:"resourceType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Price") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Price") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Price") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1PriceByResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1PriceByResource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1PricePhase: Specifies the price by the duration
-// of months. For example, a 20% discount for the first six months, then
-// a 10% discount starting on the seventh month.
+// GoogleCloudChannelV1PricePhase: Specifies the price by the duration of
+// months. For example, a 20% discount for the first six months, then a 10%
+// discount starting on the seventh month.
 type GoogleCloudChannelV1PricePhase struct {
 	// FirstPeriod: Defines first period for the phase.
 	FirstPeriod int64 `json:"firstPeriod,omitempty"`
-
 	// LastPeriod: Defines first period for the phase.
 	LastPeriod int64 `json:"lastPeriod,omitempty"`
-
 	// PeriodType: Defines the phase period type.
 	//
 	// Possible values:
@@ -3356,309 +2683,239 @@ type GoogleCloudChannelV1PricePhase struct {
 	//   "MONTH" - Month.
 	//   "YEAR" - Year.
 	PeriodType string `json:"periodType,omitempty"`
-
 	// Price: Price of the phase. Present if there are no price tiers.
 	Price *GoogleCloudChannelV1Price `json:"price,omitempty"`
-
 	// PriceTiers: Price by the resource tiers.
 	PriceTiers []*GoogleCloudChannelV1PriceTier `json:"priceTiers,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FirstPeriod") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FirstPeriod") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FirstPeriod") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1PricePhase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1PricePhase
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1PriceTier: Defines price at resource tier level.
-// For example, an offer with following definition : * Tier 1: Provide
-// 25% discount for all seats between 1 and 25. * Tier 2: Provide 10%
-// discount for all seats between 26 and 100. * Tier 3: Provide flat 15%
-// discount for all seats above 100. Each of these tiers is represented
-// as a PriceTier.
+// GoogleCloudChannelV1PriceTier: Defines price at resource tier level. For
+// example, an offer with following definition : * Tier 1: Provide 25% discount
+// for all seats between 1 and 25. * Tier 2: Provide 10% discount for all seats
+// between 26 and 100. * Tier 3: Provide flat 15% discount for all seats above
+// 100. Each of these tiers is represented as a PriceTier.
 type GoogleCloudChannelV1PriceTier struct {
 	// FirstResource: First resource for which the tier price applies.
 	FirstResource int64 `json:"firstResource,omitempty"`
-
 	// LastResource: Last resource for which the tier price applies.
 	LastResource int64 `json:"lastResource,omitempty"`
-
 	// Price: Price of the tier.
 	Price *GoogleCloudChannelV1Price `json:"price,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FirstResource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FirstResource") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FirstResource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1PriceTier) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1PriceTier
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1Product: A Product is the entity a customer uses
-// when placing an order. For example, Google Workspace, Google Voice,
-// etc.
+// GoogleCloudChannelV1Product: A Product is the entity a customer uses when
+// placing an order. For example, Google Workspace, Google Voice, etc.
 type GoogleCloudChannelV1Product struct {
 	// MarketingInfo: Marketing information for the product.
 	MarketingInfo *GoogleCloudChannelV1MarketingInfo `json:"marketingInfo,omitempty"`
-
 	// Name: Resource Name of the Product. Format: products/{product_id}
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MarketingInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MarketingInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MarketingInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Product) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Product
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ProvisionCloudIdentityRequest: Request message
-// for CloudChannelService.ProvisionCloudIdentity
+// GoogleCloudChannelV1ProvisionCloudIdentityRequest: Request message for
+// CloudChannelService.ProvisionCloudIdentity
 type GoogleCloudChannelV1ProvisionCloudIdentityRequest struct {
 	// CloudIdentityInfo: CloudIdentity-specific customer information.
 	CloudIdentityInfo *GoogleCloudChannelV1CloudIdentityInfo `json:"cloudIdentityInfo,omitempty"`
-
 	// User: Admin user information.
 	User *GoogleCloudChannelV1AdminUser `json:"user,omitempty"`
-
-	// ValidateOnly: Validate the request and preview the review, but do not
-	// post it.
+	// ValidateOnly: Validate the request and preview the review, but do not post
+	// it.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CloudIdentityInfo")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CloudIdentityInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CloudIdentityInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CloudIdentityInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ProvisionCloudIdentityRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ProvisionCloudIdentityRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ProvisionedService: Service provisioned for an
 // entitlement.
 type GoogleCloudChannelV1ProvisionedService struct {
-	// ProductId: Output only. The product pertaining to the provisioning
-	// resource as specified in the Offer.
-	ProductId string `json:"productId,omitempty"`
-
-	// ProvisioningId: Output only. Provisioning ID of the entitlement. For
-	// Google Workspace, this is the underlying Subscription ID. For Google
-	// Cloud, this is the Billing Account ID of the billing subaccount.
-	ProvisioningId string `json:"provisioningId,omitempty"`
-
-	// SkuId: Output only. The SKU pertaining to the provisioning resource
+	// ProductId: Output only. The product pertaining to the provisioning resource
 	// as specified in the Offer.
+	ProductId string `json:"productId,omitempty"`
+	// ProvisioningId: Output only. Provisioning ID of the entitlement. For Google
+	// Workspace, this is the underlying Subscription ID. For Google Cloud, this is
+	// the Billing Account ID of the billing subaccount.
+	ProvisioningId string `json:"provisioningId,omitempty"`
+	// SkuId: Output only. The SKU pertaining to the provisioning resource as
+	// specified in the Offer.
 	SkuId string `json:"skuId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ProductId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ProductId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ProductId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ProvisionedService) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ProvisionedService
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1PurchasableOffer: Offer that you can purchase for
-// a customer. This is used in the ListPurchasableOffer API response.
+// GoogleCloudChannelV1PurchasableOffer: Offer that you can purchase for a
+// customer. This is used in the ListPurchasableOffer API response.
 type GoogleCloudChannelV1PurchasableOffer struct {
 	// Offer: Offer.
 	Offer *GoogleCloudChannelV1Offer `json:"offer,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Offer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Offer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Offer") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1PurchasableOffer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1PurchasableOffer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1PurchasableSku: SKU that you can purchase. This
-// is used in ListPurchasableSku API response.
+// GoogleCloudChannelV1PurchasableSku: SKU that you can purchase. This is used
+// in ListPurchasableSku API response.
 type GoogleCloudChannelV1PurchasableSku struct {
 	// Sku: SKU
 	Sku *GoogleCloudChannelV1Sku `json:"sku,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Sku") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Sku") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Sku") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Sku") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1PurchasableSku) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1PurchasableSku
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1QueryEligibleBillingAccountsResponse: Response
-// message for QueryEligibleBillingAccounts.
+// GoogleCloudChannelV1QueryEligibleBillingAccountsResponse: Response message
+// for QueryEligibleBillingAccounts.
 type GoogleCloudChannelV1QueryEligibleBillingAccountsResponse struct {
-	// SkuPurchaseGroups: List of SKU purchase groups where each group
-	// represents a set of SKUs that must be purchased using the same
-	// billing account. Each SKU from
-	// [QueryEligibleBillingAccountsRequest.skus] will appear in exactly one
+	// SkuPurchaseGroups: List of SKU purchase groups where each group represents a
+	// set of SKUs that must be purchased using the same billing account. Each SKU
+	// from [QueryEligibleBillingAccountsRequest.skus] will appear in exactly one
 	// SKU group.
 	SkuPurchaseGroups []*GoogleCloudChannelV1SkuPurchaseGroup `json:"skuPurchaseGroups,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "SkuPurchaseGroups")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "SkuPurchaseGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SkuPurchaseGroups") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "SkuPurchaseGroups") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1QueryEligibleBillingAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1QueryEligibleBillingAccountsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1RegisterSubscriberRequest: Request Message for
 // RegisterSubscriber.
 type GoogleCloudChannelV1RegisterSubscriberRequest struct {
-	// ServiceAccount: Required. Service account that provides subscriber
-	// access to the registered topic.
+	// ServiceAccount: Required. Service account that provides subscriber access to
+	// the registered topic.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ServiceAccount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1RegisterSubscriberRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1RegisterSubscriberRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1RegisterSubscriberResponse: Response Message for
@@ -3667,43 +2924,33 @@ type GoogleCloudChannelV1RegisterSubscriberResponse struct {
 	// Topic: Name of the topic the subscriber will listen to.
 	Topic string `json:"topic,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Topic") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Topic") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Topic") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1RegisterSubscriberResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1RegisterSubscriberResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1RenewalSettings: Renewal settings for renewable
-// Offers.
+// GoogleCloudChannelV1RenewalSettings: Renewal settings for renewable Offers.
 type GoogleCloudChannelV1RenewalSettings struct {
 	// EnableRenewal: If false, the plan will be completed at the end date.
 	EnableRenewal bool `json:"enableRenewal,omitempty"`
-
-	// PaymentCycle: Describes how frequently the reseller will be billed,
-	// such as once per month.
+	// PaymentCycle: Describes how frequently the reseller will be billed, such as
+	// once per month.
 	PaymentCycle *GoogleCloudChannelV1Period `json:"paymentCycle,omitempty"`
-
 	// PaymentPlan: Describes how a reseller will be billed.
 	//
 	// Possible values:
@@ -3714,165 +2961,129 @@ type GoogleCloudChannelV1RenewalSettings struct {
 	//   "TRIAL" - Trial.
 	//   "OFFLINE" - Price and ordering not available through API.
 	PaymentPlan string `json:"paymentPlan,omitempty"`
-
-	// ResizeUnitCount: If true and enable_renewal = true, the unit (for
-	// example seats or licenses) will be set to the number of active units
-	// at renewal time.
+	// ResizeUnitCount: If true and enable_renewal = true, the unit (for example
+	// seats or licenses) will be set to the number of active units at renewal
+	// time.
 	ResizeUnitCount bool `json:"resizeUnitCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EnableRenewal") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EnableRenewal") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EnableRenewal") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1RenewalSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1RenewalSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1Report: The ID and description of a report that
-// was used to generate report data. For example, "Google Cloud Daily
-// Spend", "Google Workspace License Activity", etc.
+// GoogleCloudChannelV1Report: The ID and description of a report that was used
+// to generate report data. For example, "Google Cloud Daily Spend", "Google
+// Workspace License Activity", etc.
 type GoogleCloudChannelV1Report struct {
-	// Columns: The list of columns included in the report. This defines the
-	// schema of the report results.
+	// Columns: The list of columns included in the report. This defines the schema
+	// of the report results.
 	Columns []*GoogleCloudChannelV1Column `json:"columns,omitempty"`
-
-	// Description: A description of other aspects of the report, such as
-	// the products it supports.
+	// Description: A description of other aspects of the report, such as the
+	// products it supports.
 	Description string `json:"description,omitempty"`
-
 	// DisplayName: A human-readable name for this report.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Name: Required. The report's resource name. Specifies the account and
-	// report used to generate report data. The report_id identifier is a
-	// UID (for example, `613bf59q`). Name uses the format:
+	// Name: Required. The report's resource name. Specifies the account and report
+	// used to generate report data. The report_id identifier is a UID (for
+	// example, `613bf59q`). Name uses the format:
 	// accounts/{account_id}/reports/{report_id}
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Columns") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Columns") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Columns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Report) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Report
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ReportJob: The result of a RunReportJob
-// operation. Contains the name to use in
-// FetchReportResultsRequest.report_job and the status of the operation.
+// GoogleCloudChannelV1ReportJob: The result of a RunReportJob operation.
+// Contains the name to use in FetchReportResultsRequest.report_job and the
+// status of the operation.
 type GoogleCloudChannelV1ReportJob struct {
-	// Name: Required. The resource name of a report job. Name uses the
-	// format: `accounts/{account_id}/reportJobs/{report_job_id}`
+	// Name: Required. The resource name of a report job. Name uses the format:
+	// `accounts/{account_id}/reportJobs/{report_job_id}`
 	Name string `json:"name,omitempty"`
-
 	// ReportStatus: The current status of report generation.
 	ReportStatus *GoogleCloudChannelV1ReportStatus `json:"reportStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ReportJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ReportJob
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ReportResultsMetadata: The features describing
-// the data. Returned by CloudChannelReportsService.RunReportJob and
+// GoogleCloudChannelV1ReportResultsMetadata: The features describing the data.
+// Returned by CloudChannelReportsService.RunReportJob and
 // CloudChannelReportsService.FetchReportResults.
 type GoogleCloudChannelV1ReportResultsMetadata struct {
 	// DateRange: The date range of reported usage.
 	DateRange *GoogleCloudChannelV1DateRange `json:"dateRange,omitempty"`
-
-	// PrecedingDateRange: The usage dates immediately preceding
-	// `date_range` with the same duration. Use this to calculate trending
-	// usage and costs. This is only populated if you request trending data.
-	// For example, if `date_range` is July 1-15, `preceding_date_range`
-	// will be June 16-30.
+	// PrecedingDateRange: The usage dates immediately preceding `date_range` with
+	// the same duration. Use this to calculate trending usage and costs. This is
+	// only populated if you request trending data. For example, if `date_range` is
+	// July 1-15, `preceding_date_range` will be June 16-30.
 	PrecedingDateRange *GoogleCloudChannelV1DateRange `json:"precedingDateRange,omitempty"`
-
 	// Report: Details of the completed report.
 	Report *GoogleCloudChannelV1Report `json:"report,omitempty"`
-
 	// RowCount: The total number of rows of data in the final report.
 	RowCount int64 `json:"rowCount,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DateRange") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DateRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ReportResultsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ReportResultsMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1ReportStatus: Status of a report generation
-// process.
+// GoogleCloudChannelV1ReportStatus: Status of a report generation process.
 type GoogleCloudChannelV1ReportStatus struct {
 	// EndTime: The report generation's completion time.
 	EndTime string `json:"endTime,omitempty"`
-
 	// StartTime: The report generation's start time.
 	StartTime string `json:"startTime,omitempty"`
-
 	// State: The current state of the report generation process.
 	//
 	// Possible values:
@@ -3882,610 +3093,481 @@ type GoogleCloudChannelV1ReportStatus struct {
 	//   "AVAILABLE" - Report data is available for access.
 	//   "FAILED" - Report failed.
 	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ReportStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ReportStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1ReportValue: A single report value.
 type GoogleCloudChannelV1ReportValue struct {
-	// DateTimeValue: A value of type `google.type.DateTime` (year, month,
-	// day, hour, minute, second, and UTC offset or timezone.)
+	// DateTimeValue: A value of type `google.type.DateTime` (year, month, day,
+	// hour, minute, second, and UTC offset or timezone.)
 	DateTimeValue *GoogleTypeDateTime `json:"dateTimeValue,omitempty"`
-
 	// DateValue: A value of type `google.type.Date` (year, month, day).
 	DateValue *GoogleTypeDate `json:"dateValue,omitempty"`
-
 	// DecimalValue: A value of type `google.type.Decimal`, representing
 	// non-integer numeric values.
 	DecimalValue *GoogleTypeDecimal `json:"decimalValue,omitempty"`
-
 	// IntValue: A value of type `int`.
 	IntValue int64 `json:"intValue,omitempty,string"`
-
-	// MoneyValue: A value of type `google.type.Money` (currency code, whole
-	// units, decimal units).
+	// MoneyValue: A value of type `google.type.Money` (currency code, whole units,
+	// decimal units).
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
-
 	// StringValue: A value of type `string`.
 	StringValue string `json:"stringValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DateTimeValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DateTimeValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DateTimeValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1ReportValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ReportValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1RepricingAdjustment: A type that represents the
-// various adjustments you can apply to a bill.
+// GoogleCloudChannelV1RepricingAdjustment: A type that represents the various
+// adjustments you can apply to a bill.
 type GoogleCloudChannelV1RepricingAdjustment struct {
 	// PercentageAdjustment: Flat markup or markdown on an entire bill.
 	PercentageAdjustment *GoogleCloudChannelV1PercentageAdjustment `json:"percentageAdjustment,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "PercentageAdjustment") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "PercentageAdjustment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PercentageAdjustment") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PercentageAdjustment") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1RepricingAdjustment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1RepricingAdjustment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1RepricingCondition: Represents the various
-// repricing conditions you can use for a conditional override.
+// GoogleCloudChannelV1RepricingCondition: Represents the various repricing
+// conditions you can use for a conditional override.
 type GoogleCloudChannelV1RepricingCondition struct {
 	// SkuGroupCondition: SKU Group condition for override.
 	SkuGroupCondition *GoogleCloudChannelV1SkuGroupCondition `json:"skuGroupCondition,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SkuGroupCondition")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "SkuGroupCondition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SkuGroupCondition") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "SkuGroupCondition") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1RepricingCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1RepricingCondition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1RepricingConfig: Configuration for repricing a
-// Google bill over a period of time.
+// GoogleCloudChannelV1RepricingConfig: Configuration for repricing a Google
+// bill over a period of time.
 type GoogleCloudChannelV1RepricingConfig struct {
 	// Adjustment: Required. Information about the adjustment.
 	Adjustment *GoogleCloudChannelV1RepricingAdjustment `json:"adjustment,omitempty"`
-
 	// ChannelPartnerGranularity: Applies the repricing configuration at the
-	// channel partner level. Only ChannelPartnerRepricingConfig supports
-	// this value. Deprecated: This is no longer supported. Use
+	// channel partner level. Only ChannelPartnerRepricingConfig supports this
+	// value. Deprecated: This is no longer supported. Use
 	// RepricingConfig.entitlement_granularity instead.
 	ChannelPartnerGranularity *GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity `json:"channelPartnerGranularity,omitempty"`
-
 	// ConditionalOverrides: The conditional overrides to apply for this
-	// configuration. If you list multiple overrides, only the first valid
-	// override is used. If you don't list any overrides, the API uses the
-	// normal adjustment and rebilling basis.
+	// configuration. If you list multiple overrides, only the first valid override
+	// is used. If you don't list any overrides, the API uses the normal adjustment
+	// and rebilling basis.
 	ConditionalOverrides []*GoogleCloudChannelV1ConditionalOverride `json:"conditionalOverrides,omitempty"`
-
 	// EffectiveInvoiceMonth: Required. The YearMonth when these adjustments
-	// activate. The Day field needs to be "0" since we only accept
-	// YearMonth repricing boundaries.
+	// activate. The Day field needs to be "0" since we only accept YearMonth
+	// repricing boundaries.
 	EffectiveInvoiceMonth *GoogleTypeDate `json:"effectiveInvoiceMonth,omitempty"`
-
 	// EntitlementGranularity: Applies the repricing configuration at the
 	// entitlement level. Note: If a ChannelPartnerRepricingConfig using
-	// RepricingConfig.EntitlementGranularity becomes effective, then no
-	// existing or future RepricingConfig.ChannelPartnerGranularity will
-	// apply to the RepricingConfig.EntitlementGranularity.entitlement. This
-	// is the recommended value for both CustomerRepricingConfig and
-	// ChannelPartnerRepricingConfig.
+	// RepricingConfig.EntitlementGranularity becomes effective, then no existing
+	// or future RepricingConfig.ChannelPartnerGranularity will apply to the
+	// RepricingConfig.EntitlementGranularity.entitlement. This is the recommended
+	// value for both CustomerRepricingConfig and ChannelPartnerRepricingConfig.
 	EntitlementGranularity *GoogleCloudChannelV1RepricingConfigEntitlementGranularity `json:"entitlementGranularity,omitempty"`
-
-	// RebillingBasis: Required. The RebillingBasis to use for this bill.
-	// Specifies the relative cost based on repricing costs you will apply.
+	// RebillingBasis: Required. The RebillingBasis to use for this bill. Specifies
+	// the relative cost based on repricing costs you will apply.
 	//
 	// Possible values:
 	//   "REBILLING_BASIS_UNSPECIFIED" - Not used.
 	//   "COST_AT_LIST" - Use the list cost, also known as the MSRP.
-	//   "DIRECT_CUSTOMER_COST" - Pass through all discounts except the
-	// Reseller Program Discount. If this is the default cost base and no
-	// adjustments are specified, the output cost will be exactly what the
-	// customer would see if they viewed the bill in the Google Cloud
-	// Console.
+	//   "DIRECT_CUSTOMER_COST" - Pass through all discounts except the Reseller
+	// Program Discount. If this is the default cost base and no adjustments are
+	// specified, the output cost will be exactly what the customer would see if
+	// they viewed the bill in the Google Cloud Console.
 	RebillingBasis string `json:"rebillingBasis,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Adjustment") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Adjustment") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Adjustment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1RepricingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1RepricingConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity: Applies
-// the repricing configuration at the channel partner level. The channel
-// partner value is derived from the resource name. Takes an empty json
-// object. Deprecated: This is no longer supported. Use
+// GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity: Applies the
+// repricing configuration at the channel partner level. The channel partner
+// value is derived from the resource name. Takes an empty json object.
+// Deprecated: This is no longer supported. Use
 // RepricingConfig.EntitlementGranularity instead.
 type GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity struct {
 }
 
-// GoogleCloudChannelV1RepricingConfigEntitlementGranularity: Applies
-// the repricing configuration at the entitlement level.
+// GoogleCloudChannelV1RepricingConfigEntitlementGranularity: Applies the
+// repricing configuration at the entitlement level.
 type GoogleCloudChannelV1RepricingConfigEntitlementGranularity struct {
 	// Entitlement: Resource name of the entitlement. Format:
-	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlemen
-	// t_id}
+	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}
 	Entitlement string `json:"entitlement,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Entitlement") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entitlement") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entitlement") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1RepricingConfigEntitlementGranularity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1RepricingConfigEntitlementGranularity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1Row: A row of report values.
 type GoogleCloudChannelV1Row struct {
-	// PartitionKey: The key for the partition this row belongs to. This
-	// field is empty if the report is not partitioned.
+	// PartitionKey: The key for the partition this row belongs to. This field is
+	// empty if the report is not partitioned.
 	PartitionKey string `json:"partitionKey,omitempty"`
-
 	// Values: The list of values in the row.
 	Values []*GoogleCloudChannelV1ReportValue `json:"values,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PartitionKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PartitionKey") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PartitionKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Row) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Row
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1RunReportJobRequest: Request message for
 // CloudChannelReportsService.RunReportJob.
 type GoogleCloudChannelV1RunReportJobRequest struct {
-	// DateRange: Optional. The range of usage or invoice dates to include
-	// in the result.
+	// DateRange: Optional. The range of usage or invoice dates to include in the
+	// result.
 	DateRange *GoogleCloudChannelV1DateRange `json:"dateRange,omitempty"`
-
-	// Filter: Optional. A structured string that defines conditions on
-	// dimension columns to restrict the report output. Filters support
-	// logical operators (AND, OR, NOT) and conditional operators (=, !=, <,
-	// >, <=, and >=) using `column_id` as keys. For example:
+	// Filter: Optional. A structured string that defines conditions on dimension
+	// columns to restrict the report output. Filters support logical operators
+	// (AND, OR, NOT) and conditional operators (=, !=, <, >, <=, and >=) using
+	// `column_id` as keys. For example:
 	// `(customer:"accounts/C123abc/customers/S456def" OR
-	// customer:"accounts/C123abc/customers/S789ghi") AND
-	// invoice_start_date.year >= 2022`
+	// customer:"accounts/C123abc/customers/S789ghi") AND invoice_start_date.year
+	// >= 2022`
 	Filter string `json:"filter,omitempty"`
-
 	// LanguageCode: Optional. The BCP-47 language code, such as "en-US". If
-	// specified, the response is localized to the corresponding language
-	// code if the original data sources support it. Default is "en-US".
+	// specified, the response is localized to the corresponding language code if
+	// the original data sources support it. Default is "en-US".
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DateRange") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DateRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1RunReportJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1RunReportJobRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1RunReportJobResponse: Response message for
 // CloudChannelReportsService.RunReportJob.
 type GoogleCloudChannelV1RunReportJobResponse struct {
-	// ReportJob: Pass `report_job.name` to
-	// FetchReportResultsRequest.report_job to retrieve the report's
-	// results.
+	// ReportJob: Pass `report_job.name` to FetchReportResultsRequest.report_job to
+	// retrieve the report's results.
 	ReportJob *GoogleCloudChannelV1ReportJob `json:"reportJob,omitempty"`
-
 	// ReportMetadata: The metadata for the report's results (display name,
-	// columns, row count, and date range). If you view this before the
-	// operation finishes, you may see incomplete data.
+	// columns, row count, and date range). If you view this before the operation
+	// finishes, you may see incomplete data.
 	ReportMetadata *GoogleCloudChannelV1ReportResultsMetadata `json:"reportMetadata,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ReportJob") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReportJob") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ReportJob") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1RunReportJobResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1RunReportJobResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1Sku: Represents a product's purchasable Stock
-// Keeping Unit (SKU). SKUs represent the different variations of the
-// product. For example, Google Workspace Business Standard and Google
-// Workspace Business Plus are Google Workspace product SKUs.
+// GoogleCloudChannelV1Sku: Represents a product's purchasable Stock Keeping
+// Unit (SKU). SKUs represent the different variations of the product. For
+// example, Google Workspace Business Standard and Google Workspace Business
+// Plus are Google Workspace product SKUs.
 type GoogleCloudChannelV1Sku struct {
 	// MarketingInfo: Marketing information for the SKU.
 	MarketingInfo *GoogleCloudChannelV1MarketingInfo `json:"marketingInfo,omitempty"`
-
-	// Name: Resource Name of the SKU. Format:
-	// products/{product_id}/skus/{sku_id}
+	// Name: Resource Name of the SKU. Format: products/{product_id}/skus/{sku_id}
 	Name string `json:"name,omitempty"`
-
 	// Product: Product the SKU is associated with.
 	Product *GoogleCloudChannelV1Product `json:"product,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MarketingInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MarketingInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MarketingInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Sku) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Sku
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1SkuGroup: Represents the SKU group information.
 type GoogleCloudChannelV1SkuGroup struct {
 	// DisplayName: Unique human readable identifier for the SKU group.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Resource name of SKU group. Format:
 	// accounts/{account}/skuGroups/{sku_group}. Example:
 	// "accounts/C01234/skuGroups/3d50fd57-3157-4577-a5a9-a219b8490041".
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1SkuGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1SkuGroup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1SkuGroupCondition: A condition that applies the
-// override if a line item SKU is found in the SKU group.
+// GoogleCloudChannelV1SkuGroupCondition: A condition that applies the override
+// if a line item SKU is found in the SKU group.
 type GoogleCloudChannelV1SkuGroupCondition struct {
-	// SkuGroup: Specifies a SKU group
-	// (https://cloud.google.com/skus/sku-groups). Resource name of SKU
-	// group. Format: accounts/{account}/skuGroups/{sku_group}. Example:
+	// SkuGroup: Specifies a SKU group (https://cloud.google.com/skus/sku-groups).
+	// Resource name of SKU group. Format:
+	// accounts/{account}/skuGroups/{sku_group}. Example:
 	// "accounts/C01234/skuGroups/3d50fd57-3157-4577-a5a9-a219b8490041".
 	SkuGroup string `json:"skuGroup,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SkuGroup") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SkuGroup") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SkuGroup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1SkuGroupCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1SkuGroupCondition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1SkuPurchaseGroup: Represents a set of SKUs that
-// must be purchased using the same billing account.
+// GoogleCloudChannelV1SkuPurchaseGroup: Represents a set of SKUs that must be
+// purchased using the same billing account.
 type GoogleCloudChannelV1SkuPurchaseGroup struct {
-	// BillingAccountPurchaseInfos: List of billing accounts that are
-	// eligible to purhcase these SKUs.
+	// BillingAccountPurchaseInfos: List of billing accounts that are eligible to
+	// purhcase these SKUs.
 	BillingAccountPurchaseInfos []*GoogleCloudChannelV1BillingAccountPurchaseInfo `json:"billingAccountPurchaseInfos,omitempty"`
-
 	// Skus: Resource names of the SKUs included in this group. Format:
 	// products/{product_id}/skus/{sku_id}.
 	Skus []string `json:"skus,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "BillingAccountPurchaseInfos") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "BillingAccountPurchaseInfos") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "BillingAccountPurchaseInfos") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BillingAccountPurchaseInfos") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1SkuPurchaseGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1SkuPurchaseGroup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1StartPaidServiceRequest: Request message for
 // CloudChannelService.StartPaidService.
 type GoogleCloudChannelV1StartPaidServiceRequest struct {
-	// RequestId: Optional. You can specify an optional unique request ID,
-	// and if you need to retry your request, the server will know to ignore
-	// the request if it's complete. For example, you make an initial
-	// request and the request times out. If you make the request again with
-	// the same request ID, the server can check if it received the original
-	// operation with the same request ID. If it did, it will ignore the
-	// second request. The request ID must be a valid UUID
-	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
-	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
+	// RequestId: Optional. You can specify an optional unique request ID, and if
+	// you need to retry your request, the server will know to ignore the request
+	// if it's complete. For example, you make an initial request and the request
+	// times out. If you make the request again with the same request ID, the
+	// server can check if it received the original operation with the same request
+	// ID. If it did, it will ignore the second request. The request ID must be a
+	// valid UUID (https://tools.ietf.org/html/rfc4122) with the exception that
+	// zero UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequestId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1StartPaidServiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1StartPaidServiceRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1SubscriberEvent: Represents information which
-// resellers will get as part of notification from Pub/Sub.
+// GoogleCloudChannelV1SubscriberEvent: Represents information which resellers
+// will get as part of notification from Pub/Sub.
 type GoogleCloudChannelV1SubscriberEvent struct {
-	// CustomerEvent: Customer event sent as part of Pub/Sub event to
-	// partners.
+	// CustomerEvent: Customer event sent as part of Pub/Sub event to partners.
 	CustomerEvent *GoogleCloudChannelV1CustomerEvent `json:"customerEvent,omitempty"`
-
 	// EntitlementEvent: Entitlement event sent as part of Pub/Sub event to
 	// partners.
 	EntitlementEvent *GoogleCloudChannelV1EntitlementEvent `json:"entitlementEvent,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CustomerEvent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomerEvent") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CustomerEvent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1SubscriberEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1SubscriberEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1SuspendEntitlementRequest: Request message for
 // CloudChannelService.SuspendEntitlement.
 type GoogleCloudChannelV1SuspendEntitlementRequest struct {
-	// RequestId: Optional. You can specify an optional unique request ID,
-	// and if you need to retry your request, the server will know to ignore
-	// the request if it's complete. For example, you make an initial
-	// request and the request times out. If you make the request again with
-	// the same request ID, the server can check if it received the original
-	// operation with the same request ID. If it did, it will ignore the
-	// second request. The request ID must be a valid UUID
-	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
-	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
+	// RequestId: Optional. You can specify an optional unique request ID, and if
+	// you need to retry your request, the server will know to ignore the request
+	// if it's complete. For example, you make an initial request and the request
+	// times out. If you make the request again with the same request ID, the
+	// server can check if it received the original operation with the same request
+	// ID. If it did, it will ignore the second request. The request ID must be a
+	// valid UUID (https://tools.ietf.org/html/rfc4122) with the exception that
+	// zero UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequestId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1SuspendEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1SuspendEntitlementRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1TransferEligibility: Specifies transfer
-// eligibility of a SKU.
+// GoogleCloudChannelV1TransferEligibility: Specifies transfer eligibility of a
+// SKU.
 type GoogleCloudChannelV1TransferEligibility struct {
-	// Description: Localized description if reseller is not eligible to
-	// transfer the SKU.
+	// Description: Localized description if reseller is not eligible to transfer
+	// the SKU.
 	Description string `json:"description,omitempty"`
-
 	// IneligibilityReason: Specified the reason for ineligibility.
 	//
 	// Possible values:
@@ -4494,396 +3576,309 @@ type GoogleCloudChannelV1TransferEligibility struct {
 	// transferring the SKU.
 	//   "SKU_NOT_ELIGIBLE" - Reseller not eligible to sell the SKU.
 	//   "SKU_SUSPENDED" - SKU subscription is suspended
-	//   "CHANNEL_PARTNER_NOT_AUTHORIZED_FOR_SKU" - The reseller is not
-	// authorized to transact on this Product. See
+	//   "CHANNEL_PARTNER_NOT_AUTHORIZED_FOR_SKU" - The reseller is not authorized
+	// to transact on this Product. See
 	// https://support.google.com/channelservices/answer/9759265
 	IneligibilityReason string `json:"ineligibilityReason,omitempty"`
-
 	// IsEligible: Whether reseller is eligible to transfer the SKU.
 	IsEligible bool `json:"isEligible,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1TransferEligibility) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1TransferEligibility
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1TransferEntitlementsRequest: Request message for
 // CloudChannelService.TransferEntitlements.
 type GoogleCloudChannelV1TransferEntitlementsRequest struct {
-	// AuthToken: The super admin of the resold customer generates this
-	// token to authorize a reseller to access their Cloud Identity and
-	// purchase entitlements on their behalf. You can omit this token after
-	// authorization. See https://support.google.com/a/answer/7643790 for
-	// more details.
+	// AuthToken: The super admin of the resold customer generates this token to
+	// authorize a reseller to access their Cloud Identity and purchase
+	// entitlements on their behalf. You can omit this token after authorization.
+	// See https://support.google.com/a/answer/7643790 for more details.
 	AuthToken string `json:"authToken,omitempty"`
-
 	// Entitlements: Required. The new entitlements to create or transfer.
 	Entitlements []*GoogleCloudChannelV1Entitlement `json:"entitlements,omitempty"`
-
-	// RequestId: Optional. You can specify an optional unique request ID,
-	// and if you need to retry your request, the server will know to ignore
-	// the request if it's complete. For example, you make an initial
-	// request and the request times out. If you make the request again with
-	// the same request ID, the server can check if it received the original
-	// operation with the same request ID. If it did, it will ignore the
-	// second request. The request ID must be a valid UUID
-	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
-	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
+	// RequestId: Optional. You can specify an optional unique request ID, and if
+	// you need to retry your request, the server will know to ignore the request
+	// if it's complete. For example, you make an initial request and the request
+	// times out. If you make the request again with the same request ID, the
+	// server can check if it received the original operation with the same request
+	// ID. If it did, it will ignore the second request. The request ID must be a
+	// valid UUID (https://tools.ietf.org/html/rfc4122) with the exception that
+	// zero UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AuthToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuthToken") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AuthToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1TransferEntitlementsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1TransferEntitlementsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1TransferEntitlementsResponse: Response message
-// for CloudChannelService.TransferEntitlements. This is put in the
-// response field of google.longrunning.Operation.
+// GoogleCloudChannelV1TransferEntitlementsResponse: Response message for
+// CloudChannelService.TransferEntitlements. This is put in the response field
+// of google.longrunning.Operation.
 type GoogleCloudChannelV1TransferEntitlementsResponse struct {
 	// Entitlements: The transferred entitlements.
 	Entitlements []*GoogleCloudChannelV1Entitlement `json:"entitlements,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Entitlements") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entitlements") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entitlements") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1TransferEntitlementsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1TransferEntitlementsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1TransferEntitlementsToGoogleRequest: Request
-// message for CloudChannelService.TransferEntitlementsToGoogle.
+// GoogleCloudChannelV1TransferEntitlementsToGoogleRequest: Request message for
+// CloudChannelService.TransferEntitlementsToGoogle.
 type GoogleCloudChannelV1TransferEntitlementsToGoogleRequest struct {
 	// Entitlements: Required. The entitlements to transfer to Google.
 	Entitlements []*GoogleCloudChannelV1Entitlement `json:"entitlements,omitempty"`
-
-	// RequestId: Optional. You can specify an optional unique request ID,
-	// and if you need to retry your request, the server will know to ignore
-	// the request if it's complete. For example, you make an initial
-	// request and the request times out. If you make the request again with
-	// the same request ID, the server can check if it received the original
-	// operation with the same request ID. If it did, it will ignore the
-	// second request. The request ID must be a valid UUID
-	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
-	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
+	// RequestId: Optional. You can specify an optional unique request ID, and if
+	// you need to retry your request, the server will know to ignore the request
+	// if it's complete. For example, you make an initial request and the request
+	// times out. If you make the request again with the same request ID, the
+	// server can check if it received the original operation with the same request
+	// ID. If it did, it will ignore the second request. The request ID must be a
+	// valid UUID (https://tools.ietf.org/html/rfc4122) with the exception that
+	// zero UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Entitlements") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entitlements") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entitlements") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1TransferEntitlementsToGoogleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1TransferEntitlementsToGoogleRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1TransferableOffer: TransferableOffer represents
-// an Offer that can be used in Transfer. Read-only.
+// GoogleCloudChannelV1TransferableOffer: TransferableOffer represents an Offer
+// that can be used in Transfer. Read-only.
 type GoogleCloudChannelV1TransferableOffer struct {
-	// Offer: Offer with parameter constraints updated to allow the
-	// Transfer.
+	// Offer: Offer with parameter constraints updated to allow the Transfer.
 	Offer *GoogleCloudChannelV1Offer `json:"offer,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Offer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Offer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Offer") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1TransferableOffer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1TransferableOffer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1TransferableSku: TransferableSku represents
-// information a reseller needs to view existing provisioned services
-// for a customer that they do not own. Read-only.
+// GoogleCloudChannelV1TransferableSku: TransferableSku represents information
+// a reseller needs to view existing provisioned services for a customer that
+// they do not own. Read-only.
 type GoogleCloudChannelV1TransferableSku struct {
-	// LegacySku: Optional. The customer to transfer has an entitlement with
-	// the populated legacy SKU.
+	// LegacySku: Optional. The customer to transfer has an entitlement with the
+	// populated legacy SKU.
 	LegacySku *GoogleCloudChannelV1Sku `json:"legacySku,omitempty"`
-
-	// Sku: The SKU pertaining to the provisioning resource as specified in
-	// the Offer.
+	// Sku: The SKU pertaining to the provisioning resource as specified in the
+	// Offer.
 	Sku *GoogleCloudChannelV1Sku `json:"sku,omitempty"`
-
 	// TransferEligibility: Describes the transfer eligibility of a SKU.
 	TransferEligibility *GoogleCloudChannelV1TransferEligibility `json:"transferEligibility,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LegacySku") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LegacySku") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LegacySku") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1TransferableSku) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1TransferableSku
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1TrialSettings: Settings for trial offers.
 type GoogleCloudChannelV1TrialSettings struct {
-	// EndTime: Date when the trial ends. The value is in milliseconds using
-	// the UNIX Epoch format. See an example Epoch converter
+	// EndTime: Date when the trial ends. The value is in milliseconds using the
+	// UNIX Epoch format. See an example Epoch converter
 	// (https://www.epochconverter.com).
 	EndTime string `json:"endTime,omitempty"`
-
-	// Trial: Determines if the entitlement is in a trial or not: * `true` -
-	// The entitlement is in trial. * `false` - The entitlement is not in
-	// trial.
+	// Trial: Determines if the entitlement is in a trial or not: * `true` - The
+	// entitlement is in trial. * `false` - The entitlement is not in trial.
 	Trial bool `json:"trial,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1TrialSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1TrialSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1UnregisterSubscriberRequest: Request Message for
 // UnregisterSubscriber.
 type GoogleCloudChannelV1UnregisterSubscriberRequest struct {
-	// ServiceAccount: Required. Service account to unregister from
-	// subscriber access to the topic.
+	// ServiceAccount: Required. Service account to unregister from subscriber
+	// access to the topic.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ServiceAccount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1UnregisterSubscriberRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1UnregisterSubscriberRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1UnregisterSubscriberResponse: Response Message
-// for UnregisterSubscriber.
+// GoogleCloudChannelV1UnregisterSubscriberResponse: Response Message for
+// UnregisterSubscriber.
 type GoogleCloudChannelV1UnregisterSubscriberResponse struct {
-	// Topic: Name of the topic the service account subscriber access was
-	// removed from.
+	// Topic: Name of the topic the service account subscriber access was removed
+	// from.
 	Topic string `json:"topic,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Topic") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Topic") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Topic") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1UnregisterSubscriberResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1UnregisterSubscriberResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1UpdateChannelPartnerLinkRequest: Request message
-// for CloudChannelService.UpdateChannelPartnerLink
+// GoogleCloudChannelV1UpdateChannelPartnerLinkRequest: Request message for
+// CloudChannelService.UpdateChannelPartnerLink
 type GoogleCloudChannelV1UpdateChannelPartnerLinkRequest struct {
-	// ChannelPartnerLink: Required. The channel partner link to update.
-	// Only channel_partner_link.link_state is allowed for updates.
+	// ChannelPartnerLink: Required. The channel partner link to update. Only
+	// channel_partner_link.link_state is allowed for updates.
 	ChannelPartnerLink *GoogleCloudChannelV1ChannelPartnerLink `json:"channelPartnerLink,omitempty"`
-
-	// UpdateMask: Required. The update mask that applies to the resource.
-	// The only allowable value for an update mask is
-	// channel_partner_link.link_state.
+	// UpdateMask: Required. The update mask that applies to the resource. The only
+	// allowable value for an update mask is channel_partner_link.link_state.
 	UpdateMask string `json:"updateMask,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ChannelPartnerLink")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ChannelPartnerLink") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChannelPartnerLink") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ChannelPartnerLink") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1UpdateChannelPartnerLinkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1UpdateChannelPartnerLinkRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1Value: Data type and value of a parameter.
 type GoogleCloudChannelV1Value struct {
 	// BoolValue: Represents a boolean value.
 	BoolValue bool `json:"boolValue,omitempty"`
-
 	// DoubleValue: Represents a double value.
 	DoubleValue float64 `json:"doubleValue,omitempty"`
-
 	// Int64Value: Represents an int64 value.
 	Int64Value int64 `json:"int64Value,omitempty,string"`
-
 	// ProtoValue: Represents an 'Any' proto value.
 	ProtoValue googleapi.RawMessage `json:"protoValue,omitempty"`
-
 	// StringValue: Represents a string value.
 	StringValue string `json:"stringValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BoolValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1Value) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Value
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudChannelV1Value) UnmarshalJSON(data []byte) error {
@@ -4906,85 +3901,69 @@ type GoogleCloudChannelV1alpha1AssociationInfo struct {
 	// BaseEntitlement: The name of the base entitlement, for which this
 	// entitlement is an add-on.
 	BaseEntitlement string `json:"baseEntitlement,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BaseEntitlement") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BaseEntitlement") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BaseEntitlement") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1AssociationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1AssociationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1ChannelPartnerEvent: Represents Pub/Sub
-// messages about updates to a Channel Partner. You can retrieve updated
-// values through the ChannelPartnerLinks API.
+// GoogleCloudChannelV1alpha1ChannelPartnerEvent: Represents Pub/Sub messages
+// about updates to a Channel Partner. You can retrieve updated values through
+// the ChannelPartnerLinks API.
 type GoogleCloudChannelV1alpha1ChannelPartnerEvent struct {
-	// ChannelPartner: Resource name for the Channel Partner Link.
-	// Channel_partner uses the format:
+	// ChannelPartner: Resource name for the Channel Partner Link. Channel_partner
+	// uses the format:
 	// accounts/{account_id}/channelPartnerLinks/{channel_partner_id}
 	ChannelPartner string `json:"channelPartner,omitempty"`
-
 	// EventType: Type of event performed on the Channel Partner.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value. Does not display if there are
-	// no errors.
+	//   "TYPE_UNSPECIFIED" - Default value. Does not display if there are no
+	// errors.
 	//   "LINK_STATE_CHANGED" - The Channel Partner link state changed.
-	//   "PARTNER_ADVANTAGE_INFO_CHANGED" - The Channel Partner's Partner
-	// Advantage information changed. This can entail the Channel Partner's
-	// authorization to sell a product in a particular region.
+	//   "PARTNER_ADVANTAGE_INFO_CHANGED" - The Channel Partner's Partner Advantage
+	// information changed. This can entail the Channel Partner's authorization to
+	// sell a product in a particular region.
 	EventType string `json:"eventType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ChannelPartner") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChannelPartner") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ChannelPartner") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1ChannelPartnerEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1ChannelPartnerEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1alpha1Column: The definition of a report column.
-// Specifies the data properties in the corresponding position of the
-// report rows.
+// Specifies the data properties in the corresponding position of the report
+// rows.
 type GoogleCloudChannelV1alpha1Column struct {
-	// ColumnId: The unique name of the column (for example,
-	// customer_domain, channel_partner, customer_cost). You can use column
-	// IDs in RunReportJobRequest.filter. To see all reports and their
-	// columns, call CloudChannelReportsService.ListReports.
+	// ColumnId: The unique name of the column (for example, customer_domain,
+	// channel_partner, customer_cost). You can use column IDs in
+	// RunReportJobRequest.filter. To see all reports and their columns, call
+	// CloudChannelReportsService.ListReports.
 	ColumnId string `json:"columnId,omitempty"`
-
 	// DataType: The type of the values for this column.
 	//
 	// Possible values:
@@ -4994,34 +3973,26 @@ type GoogleCloudChannelV1alpha1Column struct {
 	//   "DECIMAL" - ReportValues for this column will use decimal_value.
 	//   "MONEY" - ReportValues for this column will use money_value.
 	//   "DATE" - ReportValues for this column will use date_value.
-	//   "DATE_TIME" - ReportValues for this column will use
-	// date_time_value.
+	//   "DATE_TIME" - ReportValues for this column will use date_time_value.
 	DataType string `json:"dataType,omitempty"`
-
 	// DisplayName: The column's display name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ColumnId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ColumnId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ColumnId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1Column) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1Column
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1alpha1CommitmentSettings: Commitment settings for
@@ -5029,44 +4000,35 @@ func (s *GoogleCloudChannelV1alpha1Column) MarshalJSON() ([]byte, error) {
 type GoogleCloudChannelV1alpha1CommitmentSettings struct {
 	// EndTime: Output only. Commitment end timestamp.
 	EndTime string `json:"endTime,omitempty"`
-
 	// RenewalSettings: Optional. Renewal settings applicable for a
 	// commitment-based Offer.
 	RenewalSettings *GoogleCloudChannelV1alpha1RenewalSettings `json:"renewalSettings,omitempty"`
-
 	// StartTime: Output only. Commitment start timestamp.
 	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1CommitmentSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1CommitmentSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1CustomerEvent: Represents Pub/Sub message
-// content describing customer update.
+// GoogleCloudChannelV1alpha1CustomerEvent: Represents Pub/Sub message content
+// describing customer update.
 type GoogleCloudChannelV1alpha1CustomerEvent struct {
 	// Customer: Resource name of the customer. Format:
 	// accounts/{account_id}/customers/{customer_id}
 	Customer string `json:"customer,omitempty"`
-
 	// EventType: Type of event which happened on the customer.
 	//
 	// Possible values:
@@ -5075,151 +4037,117 @@ type GoogleCloudChannelV1alpha1CustomerEvent struct {
 	//   "PRIMARY_DOMAIN_VERIFIED" - Primary domain of the customer has been
 	// verified.
 	EventType string `json:"eventType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Customer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Customer") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Customer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1CustomerEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1CustomerEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1DateRange: A representation of usage or
-// invoice date ranges.
+// GoogleCloudChannelV1alpha1DateRange: A representation of usage or invoice
+// date ranges.
 type GoogleCloudChannelV1alpha1DateRange struct {
-	// InvoiceEndDate: The latest invoice date (inclusive). If this value is
-	// not the last day of a month, this will move it forward to the last
-	// day of the given month.
+	// InvoiceEndDate: The latest invoice date (inclusive). If this value is not
+	// the last day of a month, this will move it forward to the last day of the
+	// given month.
 	InvoiceEndDate *GoogleTypeDate `json:"invoiceEndDate,omitempty"`
-
-	// InvoiceStartDate: The earliest invoice date (inclusive). If this
-	// value is not the first day of a month, this will move it back to the
-	// first day of the given month.
+	// InvoiceStartDate: The earliest invoice date (inclusive). If this value is
+	// not the first day of a month, this will move it back to the first day of the
+	// given month.
 	InvoiceStartDate *GoogleTypeDate `json:"invoiceStartDate,omitempty"`
-
-	// UsageEndDateTime: The latest usage date time (exclusive). If you use
-	// time groupings (daily, weekly, etc), each group uses midnight to
-	// midnight (Pacific time). The usage end date is rounded down to
-	// include all usage from the specified date. We recommend that clients
-	// pass `usage_start_date_time` in Pacific time.
+	// UsageEndDateTime: The latest usage date time (exclusive). If you use time
+	// groupings (daily, weekly, etc), each group uses midnight to midnight
+	// (Pacific time). The usage end date is rounded down to include all usage from
+	// the specified date. We recommend that clients pass `usage_start_date_time`
+	// in Pacific time.
 	UsageEndDateTime *GoogleTypeDateTime `json:"usageEndDateTime,omitempty"`
-
-	// UsageStartDateTime: The earliest usage date time (inclusive). If you
-	// use time groupings (daily, weekly, etc), each group uses midnight to
-	// midnight (Pacific time). The usage start date is rounded down to
-	// include all usage from the specified date. We recommend that clients
-	// pass `usage_start_date_time` in Pacific time.
+	// UsageStartDateTime: The earliest usage date time (inclusive). If you use
+	// time groupings (daily, weekly, etc), each group uses midnight to midnight
+	// (Pacific time). The usage start date is rounded down to include all usage
+	// from the specified date. We recommend that clients pass
+	// `usage_start_date_time` in Pacific time.
 	UsageStartDateTime *GoogleTypeDateTime `json:"usageStartDateTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InvoiceEndDate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InvoiceEndDate") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "InvoiceEndDate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1DateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1DateRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1Entitlement: An entitlement is a
-// representation of a customer's ability to use a service.
+// GoogleCloudChannelV1alpha1Entitlement: An entitlement is a representation of
+// a customer's ability to use a service.
 type GoogleCloudChannelV1alpha1Entitlement struct {
-	// AssignedUnits: The current number of users that are assigned a
-	// license for the product defined in provisioned_service.skuId.
-	// Read-only. Deprecated: Use `parameters` instead.
+	// AssignedUnits: The current number of users that are assigned a license for
+	// the product defined in provisioned_service.skuId. Read-only. Deprecated: Use
+	// `parameters` instead.
 	AssignedUnits int64 `json:"assignedUnits,omitempty"`
-
 	// AssociationInfo: Association information to other entitlements.
 	AssociationInfo *GoogleCloudChannelV1alpha1AssociationInfo `json:"associationInfo,omitempty"`
-
-	// BillingAccount: Optional. The billing account resource name that is
-	// used to pay for this entitlement.
+	// BillingAccount: Optional. The billing account resource name that is used to
+	// pay for this entitlement.
 	BillingAccount string `json:"billingAccount,omitempty"`
-
-	// ChannelPartnerId: Cloud Identity ID of a channel partner who will be
-	// the direct reseller for the customer's order. This field is generally
-	// used in 2-tier ordering, where the order is placed by a top-level
-	// distributor on behalf of their channel partner or reseller. Required
-	// for distributors. Deprecated: `channel_partner_id` has been moved to
-	// the Customer.
+	// ChannelPartnerId: Cloud Identity ID of a channel partner who will be the
+	// direct reseller for the customer's order. This field is generally used in
+	// 2-tier ordering, where the order is placed by a top-level distributor on
+	// behalf of their channel partner or reseller. Required for distributors.
+	// Deprecated: `channel_partner_id` has been moved to the Customer.
 	ChannelPartnerId string `json:"channelPartnerId,omitempty"`
-
 	// CommitmentSettings: Commitment settings for a commitment-based Offer.
 	// Required for commitment based offers.
 	CommitmentSettings *GoogleCloudChannelV1alpha1CommitmentSettings `json:"commitmentSettings,omitempty"`
-
-	// CreateTime: Output only. The time at which the entitlement is
-	// created.
+	// CreateTime: Output only. The time at which the entitlement is created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// MaxUnits: Maximum number of units for a non commitment-based Offer,
-	// such as Flexible, Trial or Free entitlements. For commitment-based
-	// entitlements, this is a read-only field, which only the internal
-	// support team can update. Deprecated: Use `parameters` instead.
+	// MaxUnits: Maximum number of units for a non commitment-based Offer, such as
+	// Flexible, Trial or Free entitlements. For commitment-based entitlements,
+	// this is a read-only field, which only the internal support team can update.
+	// Deprecated: Use `parameters` instead.
 	MaxUnits int64 `json:"maxUnits,omitempty"`
-
 	// Name: Output only. Resource name of an entitlement in the form:
-	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlemen
-	// t_id}.
+	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}.
 	Name string `json:"name,omitempty"`
-
-	// NumUnits: Number of units for a commitment-based Offer. For example,
-	// for seat-based Offers, this would be the number of seats; for
-	// license-based Offers, this would be the number of licenses. Required
-	// for creating commitment-based Offers. Deprecated: Use `parameters`
-	// instead.
+	// NumUnits: Number of units for a commitment-based Offer. For example, for
+	// seat-based Offers, this would be the number of seats; for license-based
+	// Offers, this would be the number of licenses. Required for creating
+	// commitment-based Offers. Deprecated: Use `parameters` instead.
 	NumUnits int64 `json:"numUnits,omitempty"`
-
-	// Offer: Required. The offer resource name for which the entitlement is
-	// to be created. Takes the form:
-	// accounts/{account_id}/offers/{offer_id}.
+	// Offer: Required. The offer resource name for which the entitlement is to be
+	// created. Takes the form: accounts/{account_id}/offers/{offer_id}.
 	Offer string `json:"offer,omitempty"`
-
-	// Parameters: Extended entitlement parameters. When creating an
-	// entitlement, valid parameter names and values are defined in the
-	// Offer.parameter_definitions. For Google Workspace, the following
-	// Parameters may be accepted as input: - max_units: The maximum
-	// assignable units for a flexible offer OR - num_units: The total
-	// commitment for commitment-based offers The response may additionally
-	// include the following output-only Parameters: - assigned_units: The
-	// number of licenses assigned to users. For Google Cloud billing
-	// subaccounts, the following Parameter may be accepted as input: -
-	// display_name: The display name of the billing subaccount.
+	// Parameters: Extended entitlement parameters. When creating an entitlement,
+	// valid parameter names and values are defined in the
+	// Offer.parameter_definitions. For Google Workspace, the following Parameters
+	// may be accepted as input: - max_units: The maximum assignable units for a
+	// flexible offer OR - num_units: The total commitment for commitment-based
+	// offers The response may additionally include the following output-only
+	// Parameters: - assigned_units: The number of licenses assigned to users. For
+	// Google Cloud billing subaccounts, the following Parameter may be accepted as
+	// input: - display_name: The display name of the billing subaccount.
 	Parameters []*GoogleCloudChannelV1alpha1Parameter `json:"parameters,omitempty"`
-
 	// ProvisionedService: Output only. Service provisioning details for the
 	// entitlement.
 	ProvisionedService *GoogleCloudChannelV1alpha1ProvisionedService `json:"provisionedService,omitempty"`
-
 	// ProvisioningState: Output only. Current provisioning state of the
 	// entitlement.
 	//
@@ -5227,131 +4155,104 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 	//   "PROVISIONING_STATE_UNSPECIFIED" - Not used.
 	//   "ACTIVE" - The entitlement is currently active.
 	//   "CANCELED" - The entitlement was canceled. After an entitlement is
-	// `CANCELED`, its status will not change. Deprecated: Canceled
-	// entitlements will no longer be visible.
-	//   "COMPLETE" - The entitlement reached end of term and was not
-	// renewed. After an entitlement is `COMPLETE`, its status will not
-	// change. Deprecated: This is represented as
-	// ProvisioningState=SUSPENDED and suspensionReason in (TRIAL_ENDED,
-	// RENEWAL_WITH_TYPE_CANCEL)
-	//   "PENDING" - The entitlement is pending. Deprecated: This is
-	// represented as ProvisioningState=SUSPENDED and
-	// suspensionReason=PENDING_TOS_ACCEPTANCE
+	// `CANCELED`, its status will not change. Deprecated: Canceled entitlements
+	// will no longer be visible.
+	//   "COMPLETE" - The entitlement reached end of term and was not renewed.
+	// After an entitlement is `COMPLETE`, its status will not change. Deprecated:
+	// This is represented as ProvisioningState=SUSPENDED and suspensionReason in
+	// (TRIAL_ENDED, RENEWAL_WITH_TYPE_CANCEL)
+	//   "PENDING" - The entitlement is pending. Deprecated: This is represented as
+	// ProvisioningState=SUSPENDED and suspensionReason=PENDING_TOS_ACCEPTANCE
 	//   "SUSPENDED" - The entitlement is currently suspended.
 	ProvisioningState string `json:"provisioningState,omitempty"`
-
-	// PurchaseOrderId: Optional. This purchase order (PO) information is
-	// for resellers to use for their company tracking usage. If a
-	// purchaseOrderId value is given, it appears in the API responses and
-	// shows up in the invoice. The property accepts up to 80 plain text
-	// characters. This is only supported for Google Workspace entitlements.
+	// PurchaseOrderId: Optional. This purchase order (PO) information is for
+	// resellers to use for their company tracking usage. If a purchaseOrderId
+	// value is given, it appears in the API responses and shows up in the invoice.
+	// The property accepts up to 80 plain text characters. This is only supported
+	// for Google Workspace entitlements.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
-
-	// SuspensionReasons: Output only. Enumerable of all current suspension
-	// reasons for an entitlement.
+	// SuspensionReasons: Output only. Enumerable of all current suspension reasons
+	// for an entitlement.
 	//
 	// Possible values:
 	//   "SUSPENSION_REASON_UNSPECIFIED" - Not used.
-	//   "RESELLER_INITIATED" - Entitlement was manually suspended by the
-	// Reseller.
+	//   "RESELLER_INITIATED" - Entitlement was manually suspended by the Reseller.
 	//   "TRIAL_ENDED" - Trial ended.
 	//   "RENEWAL_WITH_TYPE_CANCEL" - Entitlement renewal was canceled.
-	//   "PENDING_TOS_ACCEPTANCE" - Entitlement was automatically suspended
-	// on creation for pending ToS acceptance on customer.
+	//   "PENDING_TOS_ACCEPTANCE" - Entitlement was automatically suspended on
+	// creation for pending ToS acceptance on customer.
 	//   "OTHER" - Other reasons (internal reasons, abuse, etc.).
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
-
 	// TrialSettings: Output only. Settings for trial offers.
 	TrialSettings *GoogleCloudChannelV1alpha1TrialSettings `json:"trialSettings,omitempty"`
-
-	// UpdateTime: Output only. The time at which the entitlement is
-	// updated.
+	// UpdateTime: Output only. The time at which the entitlement is updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AssignedUnits") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AssignedUnits") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AssignedUnits") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1Entitlement) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1Entitlement
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1EntitlementEvent: Represents Pub/Sub
-// message content describing entitlement update.
+// GoogleCloudChannelV1alpha1EntitlementEvent: Represents Pub/Sub message
+// content describing entitlement update.
 type GoogleCloudChannelV1alpha1EntitlementEvent struct {
 	// Entitlement: Resource name of an entitlement of the form:
-	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlemen
-	// t_id}
+	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}
 	Entitlement string `json:"entitlement,omitempty"`
-
 	// EventType: Type of event which happened on the entitlement.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Not used.
 	//   "CREATED" - A new entitlement was created.
-	//   "PRICE_PLAN_SWITCHED" - The offer type associated with an
-	// entitlement was changed. This is not triggered if an entitlement
-	// converts from a commit offer to a flexible offer as part of a
-	// renewal.
-	//   "COMMITMENT_CHANGED" - Annual commitment for a commit plan was
-	// changed.
+	//   "PRICE_PLAN_SWITCHED" - The offer type associated with an entitlement was
+	// changed. This is not triggered if an entitlement converts from a commit
+	// offer to a flexible offer as part of a renewal.
+	//   "COMMITMENT_CHANGED" - Annual commitment for a commit plan was changed.
 	//   "RENEWED" - An annual entitlement was renewed.
 	//   "SUSPENDED" - Entitlement was suspended.
 	//   "ACTIVATED" - Entitlement was unsuspended.
 	//   "CANCELLED" - Entitlement was cancelled.
-	//   "SKU_CHANGED" - Entitlement was upgraded or downgraded (e.g. from
-	// Google Workspace Business Standard to Google Workspace Business
-	// Plus).
-	//   "RENEWAL_SETTING_CHANGED" - The renewal settings of an entitlement
-	// has changed.
-	//   "PAID_SERVICE_STARTED" - Paid service has started on trial
-	// entitlement.
-	//   "LICENSE_ASSIGNMENT_CHANGED" - License was assigned to or revoked
-	// from a user.
-	//   "LICENSE_CAP_CHANGED" - License cap was changed for the
-	// entitlement.
+	//   "SKU_CHANGED" - Entitlement was upgraded or downgraded (e.g. from Google
+	// Workspace Business Standard to Google Workspace Business Plus).
+	//   "RENEWAL_SETTING_CHANGED" - The renewal settings of an entitlement has
+	// changed.
+	//   "PAID_SERVICE_STARTED" - Paid service has started on trial entitlement.
+	//   "LICENSE_ASSIGNMENT_CHANGED" - License was assigned to or revoked from a
+	// user.
+	//   "LICENSE_CAP_CHANGED" - License cap was changed for the entitlement.
 	EventType string `json:"eventType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Entitlement") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entitlement") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entitlement") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1EntitlementEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1EntitlementEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1OperationMetadata: Provides contextual
-// information about a google.longrunning.Operation.
+// GoogleCloudChannelV1alpha1OperationMetadata: Provides contextual information
+// about a google.longrunning.Operation.
 type GoogleCloudChannelV1alpha1OperationMetadata struct {
 	// OperationType: The RPC that initiated this Long Running Operation.
 	//
@@ -5375,83 +4276,65 @@ type GoogleCloudChannelV1alpha1OperationMetadata struct {
 	// CancelEntitlement.
 	//   "TRANSFER_ENTITLEMENTS" - Long Running Operation was triggered by
 	// TransferEntitlements.
-	//   "TRANSFER_ENTITLEMENTS_TO_GOOGLE" - Long Running Operation was
-	// triggered by TransferEntitlementsToGoogle.
-	//   "CHANGE_OFFER" - Long Running Operation was triggered by
-	// ChangeOffer.
+	//   "TRANSFER_ENTITLEMENTS_TO_GOOGLE" - Long Running Operation was triggered
+	// by TransferEntitlementsToGoogle.
+	//   "CHANGE_OFFER" - Long Running Operation was triggered by ChangeOffer.
 	//   "CHANGE_PARAMETERS" - Long Running Operation was triggered by
 	// ChangeParameters.
-	//   "PROVISION_CLOUD_IDENTITY" - Long Running Operation was triggered
-	// by ProvisionCloudIdentity.
+	//   "PROVISION_CLOUD_IDENTITY" - Long Running Operation was triggered by
+	// ProvisionCloudIdentity.
 	OperationType string `json:"operationType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OperationType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OperationType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "OperationType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1OperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1Parameter: Definition for extended
-// entitlement parameters.
+// GoogleCloudChannelV1alpha1Parameter: Definition for extended entitlement
+// parameters.
 type GoogleCloudChannelV1alpha1Parameter struct {
-	// Editable: Output only. Specifies whether this parameter is allowed to
-	// be changed. For example, for a Google Workspace Business Starter
-	// entitlement in commitment plan, num_units is editable when
-	// entitlement is active.
+	// Editable: Output only. Specifies whether this parameter is allowed to be
+	// changed. For example, for a Google Workspace Business Starter entitlement in
+	// commitment plan, num_units is editable when entitlement is active.
 	Editable bool `json:"editable,omitempty"`
-
 	// Name: Name of the parameter.
 	Name string `json:"name,omitempty"`
-
 	// Value: Value of the parameter.
 	Value *GoogleCloudChannelV1alpha1Value `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Editable") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Editable") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Editable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1Parameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1Parameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1Period: Represents period in
-// days/months/years.
+// GoogleCloudChannelV1alpha1Period: Represents period in days/months/years.
 type GoogleCloudChannelV1alpha1Period struct {
 	// Duration: Total duration of Period Type defined.
 	Duration int64 `json:"duration,omitempty"`
-
 	// PeriodType: Period Type.
 	//
 	// Possible values:
@@ -5460,93 +4343,75 @@ type GoogleCloudChannelV1alpha1Period struct {
 	//   "MONTH" - Month.
 	//   "YEAR" - Year.
 	PeriodType string `json:"periodType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Duration") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Duration") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Duration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1Period) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1Period
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1ProvisionedService: Service provisioned for
-// an entitlement.
+// GoogleCloudChannelV1alpha1ProvisionedService: Service provisioned for an
+// entitlement.
 type GoogleCloudChannelV1alpha1ProvisionedService struct {
-	// ProductId: Output only. The product pertaining to the provisioning
-	// resource as specified in the Offer.
-	ProductId string `json:"productId,omitempty"`
-
-	// ProvisioningId: Output only. Provisioning ID of the entitlement. For
-	// Google Workspace, this is the underlying Subscription ID. For Google
-	// Cloud, this is the Billing Account ID of the billing subaccount.
-	ProvisioningId string `json:"provisioningId,omitempty"`
-
-	// SkuId: Output only. The SKU pertaining to the provisioning resource
+	// ProductId: Output only. The product pertaining to the provisioning resource
 	// as specified in the Offer.
+	ProductId string `json:"productId,omitempty"`
+	// ProvisioningId: Output only. Provisioning ID of the entitlement. For Google
+	// Workspace, this is the underlying Subscription ID. For Google Cloud, this is
+	// the Billing Account ID of the billing subaccount.
+	ProvisioningId string `json:"provisioningId,omitempty"`
+	// SkuId: Output only. The SKU pertaining to the provisioning resource as
+	// specified in the Offer.
 	SkuId string `json:"skuId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ProductId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ProductId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ProductId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1ProvisionedService) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1ProvisionedService
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1RenewalSettings: Renewal settings for
-// renewable Offers.
+// GoogleCloudChannelV1alpha1RenewalSettings: Renewal settings for renewable
+// Offers.
 type GoogleCloudChannelV1alpha1RenewalSettings struct {
-	// DisableCommitment: If true, disables commitment-based offer on
-	// renewal and switches to flexible or pay as you go. Deprecated: Use
-	// `payment_plan` instead.
+	// DisableCommitment: If true, disables commitment-based offer on renewal and
+	// switches to flexible or pay as you go. Deprecated: Use `payment_plan`
+	// instead.
 	DisableCommitment bool `json:"disableCommitment,omitempty"`
-
 	// EnableRenewal: If false, the plan will be completed at the end date.
 	EnableRenewal bool `json:"enableRenewal,omitempty"`
-
-	// PaymentCycle: Describes how frequently the reseller will be billed,
-	// such as once per month.
+	// PaymentCycle: Describes how frequently the reseller will be billed, such as
+	// once per month.
 	PaymentCycle *GoogleCloudChannelV1alpha1Period `json:"paymentCycle,omitempty"`
-
-	// PaymentOption: Set if enable_renewal=true. Deprecated: Use
-	// `payment_cycle` instead.
+	// PaymentOption: Set if enable_renewal=true. Deprecated: Use `payment_cycle`
+	// instead.
 	//
 	// Possible values:
 	//   "PAYMENT_OPTION_UNSPECIFIED" - Not used.
 	//   "ANNUAL" - Paid in yearly installments.
 	//   "MONTHLY" - Paid in monthly installments.
 	PaymentOption string `json:"paymentOption,omitempty"`
-
 	// PaymentPlan: Describes how a reseller will be billed.
 	//
 	// Possible values:
@@ -5557,161 +4422,125 @@ type GoogleCloudChannelV1alpha1RenewalSettings struct {
 	//   "TRIAL" - Trial.
 	//   "OFFLINE" - Price and ordering not available through API.
 	PaymentPlan string `json:"paymentPlan,omitempty"`
-
-	// ResizeUnitCount: If true and enable_renewal = true, the unit (for
-	// example seats or licenses) will be set to the number of active units
-	// at renewal time.
+	// ResizeUnitCount: If true and enable_renewal = true, the unit (for example
+	// seats or licenses) will be set to the number of active units at renewal
+	// time.
 	ResizeUnitCount bool `json:"resizeUnitCount,omitempty"`
-
 	// ScheduledRenewalOffer: Output only. The offer resource name that the
 	// entitlement will renew on at the end date. Takes the form:
 	// accounts/{account_id}/offers/{offer_id}.
 	ScheduledRenewalOffer string `json:"scheduledRenewalOffer,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DisableCommitment")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DisableCommitment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisableCommitment") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DisableCommitment") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1RenewalSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1RenewalSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1Report: The ID and description of a report
-// that was used to generate report data. For example, "Google Cloud
-// Daily Spend", "Google Workspace License Activity", etc.
+// GoogleCloudChannelV1alpha1Report: The ID and description of a report that
+// was used to generate report data. For example, "Google Cloud Daily Spend",
+// "Google Workspace License Activity", etc.
 type GoogleCloudChannelV1alpha1Report struct {
-	// Columns: The list of columns included in the report. This defines the
-	// schema of the report results.
+	// Columns: The list of columns included in the report. This defines the schema
+	// of the report results.
 	Columns []*GoogleCloudChannelV1alpha1Column `json:"columns,omitempty"`
-
-	// Description: A description of other aspects of the report, such as
-	// the products it supports.
+	// Description: A description of other aspects of the report, such as the
+	// products it supports.
 	Description string `json:"description,omitempty"`
-
 	// DisplayName: A human-readable name for this report.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Name: Required. The report's resource name. Specifies the account and
-	// report used to generate report data. The report_id identifier is a
-	// UID (for example, `613bf59q`). Name uses the format:
+	// Name: Required. The report's resource name. Specifies the account and report
+	// used to generate report data. The report_id identifier is a UID (for
+	// example, `613bf59q`). Name uses the format:
 	// accounts/{account_id}/reports/{report_id}
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Columns") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Columns") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Columns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1Report) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1Report
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1ReportJob: The result of a RunReportJob
-// operation. Contains the name to use in
-// FetchReportResultsRequest.report_job and the status of the operation.
+// GoogleCloudChannelV1alpha1ReportJob: The result of a RunReportJob operation.
+// Contains the name to use in FetchReportResultsRequest.report_job and the
+// status of the operation.
 type GoogleCloudChannelV1alpha1ReportJob struct {
-	// Name: Required. The resource name of a report job. Name uses the
-	// format: `accounts/{account_id}/reportJobs/{report_job_id}`
+	// Name: Required. The resource name of a report job. Name uses the format:
+	// `accounts/{account_id}/reportJobs/{report_job_id}`
 	Name string `json:"name,omitempty"`
-
 	// ReportStatus: The current status of report generation.
 	ReportStatus *GoogleCloudChannelV1alpha1ReportStatus `json:"reportStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1ReportJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1ReportJob
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1ReportResultsMetadata: The features
-// describing the data. Returned by
-// CloudChannelReportsService.RunReportJob and
+// GoogleCloudChannelV1alpha1ReportResultsMetadata: The features describing the
+// data. Returned by CloudChannelReportsService.RunReportJob and
 // CloudChannelReportsService.FetchReportResults.
 type GoogleCloudChannelV1alpha1ReportResultsMetadata struct {
 	// DateRange: The date range of reported usage.
 	DateRange *GoogleCloudChannelV1alpha1DateRange `json:"dateRange,omitempty"`
-
-	// PrecedingDateRange: The usage dates immediately preceding
-	// `date_range` with the same duration. Use this to calculate trending
-	// usage and costs. This is only populated if you request trending data.
-	// For example, if `date_range` is July 1-15, `preceding_date_range`
-	// will be June 16-30.
+	// PrecedingDateRange: The usage dates immediately preceding `date_range` with
+	// the same duration. Use this to calculate trending usage and costs. This is
+	// only populated if you request trending data. For example, if `date_range` is
+	// July 1-15, `preceding_date_range` will be June 16-30.
 	PrecedingDateRange *GoogleCloudChannelV1alpha1DateRange `json:"precedingDateRange,omitempty"`
-
 	// Report: Details of the completed report.
 	Report *GoogleCloudChannelV1alpha1Report `json:"report,omitempty"`
-
 	// RowCount: The total number of rows of data in the final report.
 	RowCount int64 `json:"rowCount,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DateRange") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DateRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1ReportResultsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1ReportResultsMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1alpha1ReportStatus: Status of a report generation
@@ -5719,10 +4548,8 @@ func (s *GoogleCloudChannelV1alpha1ReportResultsMetadata) MarshalJSON() ([]byte,
 type GoogleCloudChannelV1alpha1ReportStatus struct {
 	// EndTime: The report generation's completion time.
 	EndTime string `json:"endTime,omitempty"`
-
 	// StartTime: The report generation's start time.
 	StartTime string `json:"startTime,omitempty"`
-
 	// State: The current state of the report generation process.
 	//
 	// Possible values:
@@ -5732,208 +4559,160 @@ type GoogleCloudChannelV1alpha1ReportStatus struct {
 	//   "AVAILABLE" - Report data is available for access.
 	//   "FAILED" - Report failed.
 	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1ReportStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1ReportStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1alpha1RunReportJobResponse: Response message for
 // CloudChannelReportsService.RunReportJob.
 type GoogleCloudChannelV1alpha1RunReportJobResponse struct {
-	// ReportJob: Pass `report_job.name` to
-	// FetchReportResultsRequest.report_job to retrieve the report's
-	// results.
+	// ReportJob: Pass `report_job.name` to FetchReportResultsRequest.report_job to
+	// retrieve the report's results.
 	ReportJob *GoogleCloudChannelV1alpha1ReportJob `json:"reportJob,omitempty"`
-
 	// ReportMetadata: The metadata for the report's results (display name,
-	// columns, row count, and date range). If you view this before the
-	// operation finishes, you may see incomplete data.
+	// columns, row count, and date range). If you view this before the operation
+	// finishes, you may see incomplete data.
 	ReportMetadata *GoogleCloudChannelV1alpha1ReportResultsMetadata `json:"reportMetadata,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ReportJob") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReportJob") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ReportJob") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1RunReportJobResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1RunReportJobResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1SubscriberEvent: Represents information
-// which resellers will get as part of notification from Pub/Sub.
+// GoogleCloudChannelV1alpha1SubscriberEvent: Represents information which
+// resellers will get as part of notification from Pub/Sub.
 type GoogleCloudChannelV1alpha1SubscriberEvent struct {
-	// ChannelPartnerEvent: Channel Partner event sent as part of Pub/Sub
-	// event to partners.
-	ChannelPartnerEvent *GoogleCloudChannelV1alpha1ChannelPartnerEvent `json:"channelPartnerEvent,omitempty"`
-
-	// CustomerEvent: Customer event sent as part of Pub/Sub event to
+	// ChannelPartnerEvent: Channel Partner event sent as part of Pub/Sub event to
 	// partners.
+	ChannelPartnerEvent *GoogleCloudChannelV1alpha1ChannelPartnerEvent `json:"channelPartnerEvent,omitempty"`
+	// CustomerEvent: Customer event sent as part of Pub/Sub event to partners.
 	CustomerEvent *GoogleCloudChannelV1alpha1CustomerEvent `json:"customerEvent,omitempty"`
-
 	// EntitlementEvent: Entitlement event sent as part of Pub/Sub event to
 	// partners.
 	EntitlementEvent *GoogleCloudChannelV1alpha1EntitlementEvent `json:"entitlementEvent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ChannelPartnerEvent")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ChannelPartnerEvent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChannelPartnerEvent") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ChannelPartnerEvent") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1SubscriberEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1SubscriberEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1alpha1TransferEntitlementsResponse: Response
-// message for CloudChannelService.TransferEntitlements. This is put in
-// the response field of google.longrunning.Operation.
+// GoogleCloudChannelV1alpha1TransferEntitlementsResponse: Response message for
+// CloudChannelService.TransferEntitlements. This is put in the response field
+// of google.longrunning.Operation.
 type GoogleCloudChannelV1alpha1TransferEntitlementsResponse struct {
 	// Entitlements: The transferred entitlements.
 	Entitlements []*GoogleCloudChannelV1alpha1Entitlement `json:"entitlements,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Entitlements") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entitlements") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entitlements") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1TransferEntitlementsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1TransferEntitlementsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1alpha1TrialSettings: Settings for trial offers.
 type GoogleCloudChannelV1alpha1TrialSettings struct {
-	// EndTime: Date when the trial ends. The value is in milliseconds using
-	// the UNIX Epoch format. See an example Epoch converter
+	// EndTime: Date when the trial ends. The value is in milliseconds using the
+	// UNIX Epoch format. See an example Epoch converter
 	// (https://www.epochconverter.com).
 	EndTime string `json:"endTime,omitempty"`
-
-	// Trial: Determines if the entitlement is in a trial or not: * `true` -
-	// The entitlement is in trial. * `false` - The entitlement is not in
-	// trial.
+	// Trial: Determines if the entitlement is in a trial or not: * `true` - The
+	// entitlement is in trial. * `false` - The entitlement is not in trial.
 	Trial bool `json:"trial,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1TrialSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1TrialSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudChannelV1alpha1Value: Data type and value of a parameter.
 type GoogleCloudChannelV1alpha1Value struct {
 	// BoolValue: Represents a boolean value.
 	BoolValue bool `json:"boolValue,omitempty"`
-
 	// DoubleValue: Represents a double value.
 	DoubleValue float64 `json:"doubleValue,omitempty"`
-
 	// Int64Value: Represents an int64 value.
 	Int64Value int64 `json:"int64Value,omitempty,string"`
-
 	// ProtoValue: Represents an 'Any' proto value.
 	ProtoValue googleapi.RawMessage `json:"protoValue,omitempty"`
-
 	// StringValue: Represents a string value.
 	StringValue string `json:"stringValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BoolValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudChannelV1alpha1Value) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1Value
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudChannelV1alpha1Value) UnmarshalJSON(data []byte) error {
@@ -5960,548 +4739,437 @@ type GoogleLongrunningCancelOperationRequest struct {
 type GoogleLongrunningListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Operations: A list of operations that matches the specified filter in
-	// the request.
+	// Operations: A list of operations that matches the specified filter in the
+	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
 // operation that is the result of a network API call.
 type GoogleLongrunningOperation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If `true`, the operation is completed, and either `error`
-	// or `response` is available.
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
-
 	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should be a resource name ending with
-	// `operations/{unique_id}`.
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal, successful response of the operation. If the
-	// original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleRpcStatus: The `Status` type defines a logical error model that
-// is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// GoogleRpcStatus: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs and RPC
+// APIs. It is used by gRPC (https://github.com/grpc). Each `Status` message
+// contains three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it in the
+// API Design Guide (https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeDate: Represents a whole or partial calendar date, such as
-// a birthday. The time of day and time zone are either specified
-// elsewhere or are insignificant. The date is relative to the Gregorian
-// Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values. * A month and day, with a
-// zero year (for example, an anniversary). * A year on its own, with a
-// zero month and a zero day. * A year and month, with a zero day (for
-// example, a credit card expiration date). Related types: *
-// google.type.TimeOfDay * google.type.DateTime *
+// GoogleTypeDate: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified elsewhere or
+// are insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
 // google.protobuf.Timestamp
 type GoogleTypeDate struct {
-	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 to specify a year by itself or a year and month where the
-	// day isn't significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
 	Day int64 `json:"day,omitempty"`
-
-	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
-	// without a month and day.
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
 	Month int64 `json:"month,omitempty"`
-
-	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
-	// date without a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
 	Year int64 `json:"year,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Day") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Day") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeDateTime: Represents civil time (or occasionally physical
-// time). This type can represent a civil time in one of a few possible
-// ways: * When utc_offset is set and time_zone is unset: a civil time
-// on a calendar day with a particular offset from UTC. * When time_zone
-// is set and utc_offset is unset: a civil time on a calendar day in a
-// particular time zone. * When neither time_zone nor utc_offset is set:
-// a civil time on a calendar day in local time. The date is relative to
-// the Proleptic Gregorian Calendar. If year, month, or day are 0, the
-// DateTime is considered not to have a specific year, month, or day
-// respectively. This type may also be used to represent a physical time
-// if all the date and time fields are set and either case of the
-// `time_offset` oneof is set. Consider using `Timestamp` message for
-// physical time instead. If your use case also would like to store the
-// user's timezone, that can be done in another field. This type is more
-// flexible than some applications may want. Make sure to document and
-// validate your application's limitations.
+// GoogleTypeDateTime: Represents civil time (or occasionally physical time).
+// This type can represent a civil time in one of a few possible ways: * When
+// utc_offset is set and time_zone is unset: a civil time on a calendar day
+// with a particular offset from UTC. * When time_zone is set and utc_offset is
+// unset: a civil time on a calendar day in a particular time zone. * When
+// neither time_zone nor utc_offset is set: a civil time on a calendar day in
+// local time. The date is relative to the Proleptic Gregorian Calendar. If
+// year, month, or day are 0, the DateTime is considered not to have a specific
+// year, month, or day respectively. This type may also be used to represent a
+// physical time if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for physical
+// time instead. If your use case also would like to store the user's timezone,
+// that can be done in another field. This type is more flexible than some
+// applications may want. Make sure to document and validate your application's
+// limitations.
 type GoogleTypeDateTime struct {
-	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the
-	// year and month, or 0 if specifying a datetime without a day.
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 if specifying a datetime without a day.
 	Day int64 `json:"day,omitempty"`
-
-	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to
-	// 23, defaults to 0 (midnight). An API may choose to allow the value
-	// "24:00:00" for scenarios like business closing time.
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to 23,
+	// defaults to 0 (midnight). An API may choose to allow the value "24:00:00"
+	// for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-
-	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59,
-	// defaults to 0.
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59, defaults to
+	// 0.
 	Minutes int64 `json:"minutes,omitempty"`
-
-	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if
-	// specifying a datetime without a month.
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if specifying a
+	// datetime without a month.
 	Month int64 `json:"month,omitempty"`
-
-	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0
-	// to 999,999,999, defaults to 0.
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0 to
+	// 999,999,999, defaults to 0.
 	Nanos int64 `json:"nanos,omitempty"`
-
-	// Seconds: Optional. Seconds of minutes of the time. Must normally be
-	// from 0 to 59, defaults to 0. An API may allow the value 60 if it
-	// allows leap-seconds.
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be from 0
+	// to 59, defaults to 0. An API may allow the value 60 if it allows
+	// leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
-
 	// TimeZone: Time zone.
 	TimeZone *GoogleTypeTimeZone `json:"timeZone,omitempty"`
-
-	// UtcOffset: UTC offset. Must be whole seconds, between -18 hours and
-	// +18 hours. For example, a UTC offset of -4:00 would be represented as
-	// { seconds: -14400 }.
+	// UtcOffset: UTC offset. Must be whole seconds, between -18 hours and +18
+	// hours. For example, a UTC offset of -4:00 would be represented as { seconds:
+	// -14400 }.
 	UtcOffset string `json:"utcOffset,omitempty"`
-
-	// Year: Optional. Year of date. Must be from 1 to 9999, or 0 if
-	// specifying a datetime without a year.
+	// Year: Optional. Year of date. Must be from 1 to 9999, or 0 if specifying a
+	// datetime without a year.
 	Year int64 `json:"year,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Day") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Day") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDateTime
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeDecimal: A representation of a decimal value, such as 2.5.
-// Clients may convert values into language-native decimal formats, such
-// as Java's BigDecimal or Python's decimal.Decimal. [BigDecimal]:
+// GoogleTypeDecimal: A representation of a decimal value, such as 2.5. Clients
+// may convert values into language-native decimal formats, such as Java's
+// BigDecimal or Python's decimal.Decimal. [BigDecimal]:
 // https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigDecimal.html
 // [decimal.Decimal]: https://docs.python.org/3/library/decimal.html
 type GoogleTypeDecimal struct {
-	// Value: The decimal value, as a string. The string representation
-	// consists of an optional sign, `+` (`U+002B`) or `-` (`U+002D`),
-	// followed by a sequence of zero or more decimal digits ("the
-	// integer"), optionally followed by a fraction, optionally followed by
-	// an exponent. An empty string **should** be interpreted as `0`. The
-	// fraction consists of a decimal point followed by zero or more decimal
-	// digits. The string must contain at least one digit in either the
-	// integer or the fraction. The number formed by the sign, the integer
-	// and the fraction is referred to as the significand. The exponent
-	// consists of the character `e` (`U+0065`) or `E` (`U+0045`) followed
-	// by one or more decimal digits. Services **should** normalize decimal
-	// values before storing them by: - Removing an explicitly-provided `+`
-	// sign (`+2.5` -> `2.5`). - Replacing a zero-length integer value with
-	// `0` (`.5` -> `0.5`). - Coercing the exponent character to upper-case,
-	// with explicit sign (`2.5e8` -> `2.5E+8`). - Removing an
-	// explicitly-provided zero exponent (`2.5E0` -> `2.5`). Services
-	// **may** perform additional normalization based on its own needs and
-	// the internal decimal implementation selected, such as shifting the
-	// decimal point and exponent value together (example: `2.5E-1` <->
-	// `0.25`). Additionally, services **may** preserve trailing zeroes in
-	// the fraction to indicate increased precision, but are not required to
-	// do so. Note that only the `.` character is supported to divide the
-	// integer and the fraction; `,` **should not** be supported regardless
-	// of locale. Additionally, thousand separators **should not** be
-	// supported. If a service does support them, values **must** be
-	// normalized. The ENBF grammar is: DecimalString = '' | [Sign]
-	// Significand [Exponent]; Sign = '+' | '-'; Significand = Digits '.' |
-	// [Digits] '.' Digits; Exponent = ('e' | 'E') [Sign] Digits; Digits = {
-	// '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' }; Services
-	// **should** clearly document the range of supported values, the
-	// maximum supported precision (total number of digits), and, if
-	// applicable, the scale (number of digits after the decimal point), as
-	// well as how it behaves when receiving out-of-bounds values. Services
-	// **may** choose to accept values passed as input even when the value
-	// has a higher precision or scale than the service supports, and
-	// **should** round the value to fit the supported scale. Alternatively,
-	// the service **may** error with `400 Bad Request` (`INVALID_ARGUMENT`
-	// in gRPC) if precision would be lost. Services **should** error with
-	// `400 Bad Request` (`INVALID_ARGUMENT` in gRPC) if the service
+	// Value: The decimal value, as a string. The string representation consists of
+	// an optional sign, `+` (`U+002B`) or `-` (`U+002D`), followed by a sequence
+	// of zero or more decimal digits ("the integer"), optionally followed by a
+	// fraction, optionally followed by an exponent. An empty string **should** be
+	// interpreted as `0`. The fraction consists of a decimal point followed by
+	// zero or more decimal digits. The string must contain at least one digit in
+	// either the integer or the fraction. The number formed by the sign, the
+	// integer and the fraction is referred to as the significand. The exponent
+	// consists of the character `e` (`U+0065`) or `E` (`U+0045`) followed by one
+	// or more decimal digits. Services **should** normalize decimal values before
+	// storing them by: - Removing an explicitly-provided `+` sign (`+2.5` ->
+	// `2.5`). - Replacing a zero-length integer value with `0` (`.5` -> `0.5`). -
+	// Coercing the exponent character to upper-case, with explicit sign (`2.5e8`
+	// -> `2.5E+8`). - Removing an explicitly-provided zero exponent (`2.5E0` ->
+	// `2.5`). Services **may** perform additional normalization based on its own
+	// needs and the internal decimal implementation selected, such as shifting the
+	// decimal point and exponent value together (example: `2.5E-1` <-> `0.25`).
+	// Additionally, services **may** preserve trailing zeroes in the fraction to
+	// indicate increased precision, but are not required to do so. Note that only
+	// the `.` character is supported to divide the integer and the fraction; `,`
+	// **should not** be supported regardless of locale. Additionally, thousand
+	// separators **should not** be supported. If a service does support them,
+	// values **must** be normalized. The ENBF grammar is: DecimalString = '' |
+	// [Sign] Significand [Exponent]; Sign = '+' | '-'; Significand = Digits '.' |
+	// [Digits] '.' Digits; Exponent = ('e' | 'E') [Sign] Digits; Digits = { '0' |
+	// '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' }; Services **should**
+	// clearly document the range of supported values, the maximum supported
+	// precision (total number of digits), and, if applicable, the scale (number of
+	// digits after the decimal point), as well as how it behaves when receiving
+	// out-of-bounds values. Services **may** choose to accept values passed as
+	// input even when the value has a higher precision or scale than the service
+	// supports, and **should** round the value to fit the supported scale.
+	// Alternatively, the service **may** error with `400 Bad Request`
+	// (`INVALID_ARGUMENT` in gRPC) if precision would be lost. Services **should**
+	// error with `400 Bad Request` (`INVALID_ARGUMENT` in gRPC) if the service
 	// receives a value outside of the supported range.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeDecimal) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDecimal
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeMoney: Represents an amount of money with its currency
-// type.
+// GoogleTypeMoney: Represents an amount of money with its currency type.
 type GoogleTypeMoney struct {
 	// CurrencyCode: The three-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// Nanos: Number of nano (10^-9) units of the amount. The value must be
-	// between -999,999,999 and +999,999,999 inclusive. If `units` is
-	// positive, `nanos` must be positive or zero. If `units` is zero,
-	// `nanos` can be positive, zero, or negative. If `units` is negative,
-	// `nanos` must be negative or zero. For example $-1.75 is represented
-	// as `units`=-1 and `nanos`=-750,000,000.
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be between
+	// -999,999,999 and +999,999,999 inclusive. If `units` is positive, `nanos`
+	// must be positive or zero. If `units` is zero, `nanos` can be positive, zero,
+	// or negative. If `units` is negative, `nanos` must be negative or zero. For
+	// example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
 	Nanos int64 `json:"nanos,omitempty"`
-
-	// Units: The whole units of the amount. For example if `currencyCode`
-	// is "USD", then 1 unit is one US dollar.
+	// Units: The whole units of the amount. For example if `currencyCode` is
+	// "USD", then 1 unit is one US dollar.
 	Units int64 `json:"units,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypePostalAddress: Represents a postal address, e.g. for postal
-// delivery or payments addresses. Given a postal address, a postal
-// service can deliver items to a premise, P.O. Box or similar. It is
-// not intended to model geographical locations (roads, towns,
-// mountains). In typical usage an address would be created via user
-// input or from importing existing data, depending on the type of
-// process. Advice on address input / editing: - Use an
-// internationalization-ready address widget such as
-// https://github.com/google/libaddressinput) - Users should not be
-// presented with UI elements for input or editing of fields outside
-// countries where that field is used. For more guidance on how to use
-// this schema, please see:
+// delivery or payments addresses. Given a postal address, a postal service can
+// deliver items to a premise, P.O. Box or similar. It is not intended to model
+// geographical locations (roads, towns, mountains). In typical usage an
+// address would be created via user input or from importing existing data,
+// depending on the type of process. Advice on address input / editing: - Use
+// an internationalization-ready address widget such as
+// https://github.com/google/libaddressinput) - Users should not be presented
+// with UI elements for input or editing of fields outside countries where that
+// field is used. For more guidance on how to use this schema, please see:
 // https://support.google.com/business/answer/6397478
 type GoogleTypePostalAddress struct {
-	// AddressLines: Unstructured address lines describing the lower levels
-	// of an address. Because values in address_lines do not have type
-	// information and may sometimes contain multiple values in a single
-	// field (e.g. "Austin, TX"), it is important that the line order is
-	// clear. The order of address lines should be "envelope order" for the
-	// country/region of the address. In places where this can vary (e.g.
-	// Japan), address_language is used to make it explicit (e.g. "ja" for
-	// large-to-small ordering and "ja-Latn" or "en" for small-to-large).
-	// This way, the most specific line of an address can be selected based
-	// on the language. The minimum permitted structural representation of
-	// an address consists of a region_code with all remaining information
-	// placed in the address_lines. It would be possible to format such an
-	// address very approximately without geocoding, but no semantic
-	// reasoning could be made about any of the address components until it
-	// was at least partially resolved. Creating an address only containing
-	// a region_code and address_lines, and then geocoding is the
-	// recommended way to handle completely unstructured addresses (as
-	// opposed to guessing which parts of the address should be localities
-	// or administrative areas).
+	// AddressLines: Unstructured address lines describing the lower levels of an
+	// address. Because values in address_lines do not have type information and
+	// may sometimes contain multiple values in a single field (e.g. "Austin, TX"),
+	// it is important that the line order is clear. The order of address lines
+	// should be "envelope order" for the country/region of the address. In places
+	// where this can vary (e.g. Japan), address_language is used to make it
+	// explicit (e.g. "ja" for large-to-small ordering and "ja-Latn" or "en" for
+	// small-to-large). This way, the most specific line of an address can be
+	// selected based on the language. The minimum permitted structural
+	// representation of an address consists of a region_code with all remaining
+	// information placed in the address_lines. It would be possible to format such
+	// an address very approximately without geocoding, but no semantic reasoning
+	// could be made about any of the address components until it was at least
+	// partially resolved. Creating an address only containing a region_code and
+	// address_lines, and then geocoding is the recommended way to handle
+	// completely unstructured addresses (as opposed to guessing which parts of the
+	// address should be localities or administrative areas).
 	AddressLines []string `json:"addressLines,omitempty"`
-
-	// AdministrativeArea: Optional. Highest administrative subdivision
-	// which is used for postal addresses of a country or region. For
-	// example, this can be a state, a province, an oblast, or a prefecture.
-	// Specifically, for Spain this is the province and not the autonomous
-	// community (e.g. "Barcelona" and not "Catalonia"). Many countries
-	// don't use an administrative area in postal addresses. E.g. in
-	// Switzerland this should be left unpopulated.
+	// AdministrativeArea: Optional. Highest administrative subdivision which is
+	// used for postal addresses of a country or region. For example, this can be a
+	// state, a province, an oblast, or a prefecture. Specifically, for Spain this
+	// is the province and not the autonomous community (e.g. "Barcelona" and not
+	// "Catalonia"). Many countries don't use an administrative area in postal
+	// addresses. E.g. in Switzerland this should be left unpopulated.
 	AdministrativeArea string `json:"administrativeArea,omitempty"`
-
-	// LanguageCode: Optional. BCP-47 language code of the contents of this
-	// address (if known). This is often the UI language of the input form
-	// or is expected to match one of the languages used in the address'
-	// country/region, or their transliterated equivalents. This can affect
-	// formatting in certain countries, but is not critical to the
-	// correctness of the data and will never affect any validation or other
-	// non-formatting related operations. If this value is not known, it
-	// should be omitted (rather than specifying a possibly incorrect
+	// LanguageCode: Optional. BCP-47 language code of the contents of this address
+	// (if known). This is often the UI language of the input form or is expected
+	// to match one of the languages used in the address' country/region, or their
+	// transliterated equivalents. This can affect formatting in certain countries,
+	// but is not critical to the correctness of the data and will never affect any
+	// validation or other non-formatting related operations. If this value is not
+	// known, it should be omitted (rather than specifying a possibly incorrect
 	// default). Examples: "zh-Hant", "ja", "ja-Latn", "en".
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// Locality: Optional. Generally refers to the city/town portion of the
-	// address. Examples: US city, IT comune, UK post town. In regions of
-	// the world where localities are not well defined or do not fit into
-	// this structure well, leave locality empty and use address_lines.
+	// address. Examples: US city, IT comune, UK post town. In regions of the world
+	// where localities are not well defined or do not fit into this structure
+	// well, leave locality empty and use address_lines.
 	Locality string `json:"locality,omitempty"`
-
 	// Organization: Optional. The name of the organization at the address.
 	Organization string `json:"organization,omitempty"`
-
-	// PostalCode: Optional. Postal code of the address. Not all countries
-	// use or require postal codes to be present, but where they are used,
-	// they may trigger additional validation with other parts of the
-	// address (e.g. state/zip validation in the U.S.A.).
+	// PostalCode: Optional. Postal code of the address. Not all countries use or
+	// require postal codes to be present, but where they are used, they may
+	// trigger additional validation with other parts of the address (e.g.
+	// state/zip validation in the U.S.A.).
 	PostalCode string `json:"postalCode,omitempty"`
-
-	// Recipients: Optional. The recipient at the address. This field may,
-	// under certain circumstances, contain multiline information. For
-	// example, it might contain "care of" information.
+	// Recipients: Optional. The recipient at the address. This field may, under
+	// certain circumstances, contain multiline information. For example, it might
+	// contain "care of" information.
 	Recipients []string `json:"recipients,omitempty"`
-
-	// RegionCode: Required. CLDR region code of the country/region of the
-	// address. This is never inferred and it is up to the user to ensure
-	// the value is correct. See https://cldr.unicode.org/ and
+	// RegionCode: Required. CLDR region code of the country/region of the address.
+	// This is never inferred and it is up to the user to ensure the value is
+	// correct. See https://cldr.unicode.org/ and
 	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
-
-	// Revision: The schema revision of the `PostalAddress`. This must be
-	// set to 0, which is the latest revision. All new revisions **must** be
-	// backward compatible with old revisions.
+	// Revision: The schema revision of the `PostalAddress`. This must be set to 0,
+	// which is the latest revision. All new revisions **must** be backward
+	// compatible with old revisions.
 	Revision int64 `json:"revision,omitempty"`
-
-	// SortingCode: Optional. Additional, country-specific, sorting code.
-	// This is not used in most regions. Where it is used, the value is
-	// either a string like "CEDEX", optionally followed by a number (e.g.
-	// "CEDEX 7"), or just a number alone, representing the "sector code"
-	// (Jamaica), "delivery area indicator" (Malawi) or "post office
-	// indicator" (e.g. Côte d'Ivoire).
+	// SortingCode: Optional. Additional, country-specific, sorting code. This is
+	// not used in most regions. Where it is used, the value is either a string
+	// like "CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a
+	// number alone, representing the "sector code" (Jamaica), "delivery area
+	// indicator" (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
 	SortingCode string `json:"sortingCode,omitempty"`
-
-	// Sublocality: Optional. Sublocality of the address. For example, this
-	// can be neighborhoods, boroughs, districts.
+	// Sublocality: Optional. Sublocality of the address. For example, this can be
+	// neighborhoods, boroughs, districts.
 	Sublocality string `json:"sublocality,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AddressLines") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddressLines") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AddressLines") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypePostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypePostalAddress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone
-// Database (https://www.iana.org/time-zones).
+// GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone Database
+// (https://www.iana.org/time-zones).
 type GoogleTypeTimeZone struct {
 	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
 	Id string `json:"id,omitempty"`
-
-	// Version: Optional. IANA Time Zone Database version number, e.g.
-	// "2019a".
+	// Version: Optional. IANA Time Zone Database version number, e.g. "2019a".
 	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeZone
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "cloudchannel.accounts.checkCloudIdentityAccountsExist":
 
 type AccountsCheckCloudIdentityAccountsExistCall struct {
 	s                                                          *Service
@@ -6512,20 +5180,18 @@ type AccountsCheckCloudIdentityAccountsExistCall struct {
 	header_                                                    http.Header
 }
 
-// CheckCloudIdentityAccountsExist: Confirms the existence of Cloud
-// Identity accounts based on the domain and if the Cloud Identity
-// accounts are owned by the reseller. Possible error codes: *
-// PERMISSION_DENIED: The reseller account making the request is
-// different from the reseller account in the API request. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * INVALID_VALUE: Invalid domain value in the request. Return value: A
-// list of CloudIdentityCustomerAccount resources for the domain (may be
-// empty) Note: in the v1alpha1 version of the API, a NOT_FOUND error
-// returns if no CloudIdentityCustomerAccount resources match the
-// domain.
+// CheckCloudIdentityAccountsExist: Confirms the existence of Cloud Identity
+// accounts based on the domain and if the Cloud Identity accounts are owned by
+// the reseller. Possible error codes: * PERMISSION_DENIED: The reseller
+// account making the request is different from the reseller account in the API
+// request. * INVALID_ARGUMENT: Required request parameters are missing or
+// invalid. * INVALID_VALUE: Invalid domain value in the request. Return value:
+// A list of CloudIdentityCustomerAccount resources for the domain (may be
+// empty) Note: in the v1alpha1 version of the API, a NOT_FOUND error returns
+// if no CloudIdentityCustomerAccount resources match the domain.
 //
-//   - parent: The reseller account's resource name. Parent uses the
-//     format: accounts/{account_id}.
+//   - parent: The reseller account's resource name. Parent uses the format:
+//     accounts/{account_id}.
 func (r *AccountsService) CheckCloudIdentityAccountsExist(parent string, googlecloudchannelv1checkcloudidentityaccountsexistrequest *GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest) *AccountsCheckCloudIdentityAccountsExistCall {
 	c := &AccountsCheckCloudIdentityAccountsExistCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6534,23 +5200,21 @@ func (r *AccountsService) CheckCloudIdentityAccountsExist(parent string, googlec
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCheckCloudIdentityAccountsExistCall) Fields(s ...googleapi.Field) *AccountsCheckCloudIdentityAccountsExistCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCheckCloudIdentityAccountsExistCall) Context(ctx context.Context) *AccountsCheckCloudIdentityAccountsExistCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCheckCloudIdentityAccountsExistCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6559,18 +5223,12 @@ func (c *AccountsCheckCloudIdentityAccountsExistCall) Header() http.Header {
 }
 
 func (c *AccountsCheckCloudIdentityAccountsExistCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1checkcloudidentityaccountsexistrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:checkCloudIdentityAccountsExist")
@@ -6587,15 +5245,11 @@ func (c *AccountsCheckCloudIdentityAccountsExistCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "cloudchannel.accounts.checkCloudIdentityAccountsExist" call.
-// Exactly one of
-// *GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse.ServerRes
-// ponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsCheckCloudIdentityAccountsExistCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6626,38 +5280,7 @@ func (c *AccountsCheckCloudIdentityAccountsExistCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Confirms the existence of Cloud Identity accounts based on the domain and if the Cloud Identity accounts are owned by the reseller. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * INVALID_VALUE: Invalid domain value in the request. Return value: A list of CloudIdentityCustomerAccount resources for the domain (may be empty) Note: in the v1alpha1 version of the API, a NOT_FOUND error returns if no CloudIdentityCustomerAccount resources match the domain.",
-	//   "flatPath": "v1/accounts/{accountsId}:checkCloudIdentityAccountsExist",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.checkCloudIdentityAccountsExist",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The reseller account's resource name. Parent uses the format: accounts/{account_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:checkCloudIdentityAccountsExist",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.listSubscribers":
 
 type AccountsListSubscribersCall struct {
 	s            *Service
@@ -6668,17 +5291,16 @@ type AccountsListSubscribersCall struct {
 	header_      http.Header
 }
 
-// ListSubscribers: Lists service accounts with subscriber privileges on
-// the Cloud Pub/Sub topic created for this Channel Services account.
-// Possible error codes: * PERMISSION_DENIED: The reseller account
-// making the request and the provided reseller account are different,
-// or the impersonated user is not a super admin. * INVALID_ARGUMENT:
-// Required request parameters are missing or invalid. * NOT_FOUND: The
-// topic resource doesn't exist. * INTERNAL: Any non-user error related
-// to a technical issue in the backend. Contact Cloud Channel support. *
-// UNKNOWN: Any non-user error related to a technical issue in the
-// backend. Contact Cloud Channel support. Return value: A list of
-// service email addresses.
+// ListSubscribers: Lists service accounts with subscriber privileges on the
+// Cloud Pub/Sub topic created for this Channel Services account. Possible
+// error codes: * PERMISSION_DENIED: The reseller account making the request
+// and the provided reseller account are different, or the impersonated user is
+// not a super admin. * INVALID_ARGUMENT: Required request parameters are
+// missing or invalid. * NOT_FOUND: The topic resource doesn't exist. *
+// INTERNAL: Any non-user error related to a technical issue in the backend.
+// Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a
+// technical issue in the backend. Contact Cloud Channel support. Return value:
+// A list of service email addresses.
 //
 // - account: Resource name of the account.
 func (r *AccountsService) ListSubscribers(account string) *AccountsListSubscribersCall {
@@ -6687,53 +5309,48 @@ func (r *AccountsService) ListSubscribers(account string) *AccountsListSubscribe
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of service accounts to return. The service may return fewer than this
-// value. If unspecified, returns at most 100 service accounts. The
-// maximum value is 1000; the server will coerce values above 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// service accounts to return. The service may return fewer than this value. If
+// unspecified, returns at most 100 service accounts. The maximum value is
+// 1000; the server will coerce values above 1000.
 func (c *AccountsListSubscribersCall) PageSize(pageSize int64) *AccountsListSubscribersCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListSubscribers` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListSubscribers` must match the call that provided the
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSubscribers` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListSubscribers` must match the call that provided the page token.
 func (c *AccountsListSubscribersCall) PageToken(pageToken string) *AccountsListSubscribersCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsListSubscribersCall) Fields(s ...googleapi.Field) *AccountsListSubscribersCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsListSubscribersCall) IfNoneMatch(entityTag string) *AccountsListSubscribersCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsListSubscribersCall) Context(ctx context.Context) *AccountsListSubscribersCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsListSubscribersCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6742,12 +5359,7 @@ func (c *AccountsListSubscribersCall) Header() http.Header {
 }
 
 func (c *AccountsListSubscribersCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6768,14 +5380,11 @@ func (c *AccountsListSubscribersCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "cloudchannel.accounts.listSubscribers" call.
-// Exactly one of *GoogleCloudChannelV1ListSubscribersResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListSubscribersResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListSubscribersResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsListSubscribersCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListSubscribersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6806,43 +5415,6 @@ func (c *AccountsListSubscribersCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists service accounts with subscriber privileges on the Cloud Pub/Sub topic created for this Channel Services account. Possible error codes: * PERMISSION_DENIED: The reseller account making the request and the provided reseller account are different, or the impersonated user is not a super admin. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The topic resource doesn't exist. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: A list of service email addresses.",
-	//   "flatPath": "v1/accounts/{accountsId}:listSubscribers",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.listSubscribers",
-	//   "parameterOrder": [
-	//     "account"
-	//   ],
-	//   "parameters": {
-	//     "account": {
-	//       "description": "Required. Resource name of the account.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of service accounts to return. The service may return fewer than this value. If unspecified, returns at most 100 service accounts. The maximum value is 1000; the server will coerce values above 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListSubscribers` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSubscribers` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+account}:listSubscribers",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListSubscribersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6850,7 +5422,7 @@ func (c *AccountsListSubscribersCall) Do(opts ...googleapi.CallOption) (*GoogleC
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsListSubscribersCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListSubscribersResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6866,8 +5438,6 @@ func (c *AccountsListSubscribersCall) Pages(ctx context.Context, f func(*GoogleC
 	}
 }
 
-// method id "cloudchannel.accounts.listTransferableOffers":
-
 type AccountsListTransferableOffersCall struct {
 	s                                                 *Service
 	parent                                            string
@@ -6877,20 +5447,18 @@ type AccountsListTransferableOffersCall struct {
 	header_                                           http.Header
 }
 
-// ListTransferableOffers: List TransferableOffers of a customer based
-// on Cloud Identity ID or Customer Name in the request. Use this method
-// when a reseller gets the entitlement information of an unowned
-// customer. The reseller should provide the customer's Cloud Identity
-// ID or Customer Name. Possible error codes: * PERMISSION_DENIED: * The
-// customer doesn't belong to the reseller and has no auth token. * The
-// customer provided incorrect reseller information when generating auth
-// token. * The reseller account making the request is different from
-// the reseller account in the query. * The reseller is not authorized
-// to transact on this Product. See
+// ListTransferableOffers: List TransferableOffers of a customer based on Cloud
+// Identity ID or Customer Name in the request. Use this method when a reseller
+// gets the entitlement information of an unowned customer. The reseller should
+// provide the customer's Cloud Identity ID or Customer Name. Possible error
+// codes: * PERMISSION_DENIED: * The customer doesn't belong to the reseller
+// and has no auth token. * The customer provided incorrect reseller
+// information when generating auth token. * The reseller account making the
+// request is different from the reseller account in the query. * The reseller
+// is not authorized to transact on this Product. See
 // https://support.google.com/channelservices/answer/9759265 *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// Return value: List of TransferableOffer for the given customer and
-// SKU.
+// INVALID_ARGUMENT: Required request parameters are missing or invalid. Return
+// value: List of TransferableOffer for the given customer and SKU.
 //
 // - parent: The resource name of the reseller's account.
 func (r *AccountsService) ListTransferableOffers(parent string, googlecloudchannelv1listtransferableoffersrequest *GoogleCloudChannelV1ListTransferableOffersRequest) *AccountsListTransferableOffersCall {
@@ -6901,23 +5469,21 @@ func (r *AccountsService) ListTransferableOffers(parent string, googlecloudchann
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsListTransferableOffersCall) Fields(s ...googleapi.Field) *AccountsListTransferableOffersCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsListTransferableOffersCall) Context(ctx context.Context) *AccountsListTransferableOffersCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsListTransferableOffersCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6926,18 +5492,12 @@ func (c *AccountsListTransferableOffersCall) Header() http.Header {
 }
 
 func (c *AccountsListTransferableOffersCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1listtransferableoffersrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:listTransferableOffers")
@@ -6954,14 +5514,11 @@ func (c *AccountsListTransferableOffersCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "cloudchannel.accounts.listTransferableOffers" call.
-// Exactly one of *GoogleCloudChannelV1ListTransferableOffersResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListTransferableOffersResponse.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListTransferableOffersResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsListTransferableOffersCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListTransferableOffersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6992,35 +5549,6 @@ func (c *AccountsListTransferableOffersCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List TransferableOffers of a customer based on Cloud Identity ID or Customer Name in the request. Use this method when a reseller gets the entitlement information of an unowned customer. The reseller should provide the customer's Cloud Identity ID or Customer Name. Possible error codes: * PERMISSION_DENIED: * The customer doesn't belong to the reseller and has no auth token. * The customer provided incorrect reseller information when generating auth token. * The reseller account making the request is different from the reseller account in the query. * The reseller is not authorized to transact on this Product. See https://support.google.com/channelservices/answer/9759265 * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: List of TransferableOffer for the given customer and SKU.",
-	//   "flatPath": "v1/accounts/{accountsId}:listTransferableOffers",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.listTransferableOffers",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the reseller's account.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:listTransferableOffers",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ListTransferableOffersRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListTransferableOffersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7028,7 +5556,7 @@ func (c *AccountsListTransferableOffersCall) Do(opts ...googleapi.CallOption) (*
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsListTransferableOffersCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListTransferableOffersResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googlecloudchannelv1listtransferableoffersrequest.PageToken = pt }(c.googlecloudchannelv1listtransferableoffersrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googlecloudchannelv1listtransferableoffersrequest.PageToken = pt }(c.googlecloudchannelv1listtransferableoffersrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7044,8 +5572,6 @@ func (c *AccountsListTransferableOffersCall) Pages(ctx context.Context, f func(*
 	}
 }
 
-// method id "cloudchannel.accounts.listTransferableSkus":
-
 type AccountsListTransferableSkusCall struct {
 	s                                               *Service
 	parent                                          string
@@ -7055,19 +5581,18 @@ type AccountsListTransferableSkusCall struct {
 	header_                                         http.Header
 }
 
-// ListTransferableSkus: List TransferableSkus of a customer based on
-// the Cloud Identity ID or Customer Name in the request. Use this
-// method to list the entitlements information of an unowned customer.
-// You should provide the customer's Cloud Identity ID or Customer Name.
-// Possible error codes: * PERMISSION_DENIED: * The customer doesn't
-// belong to the reseller and has no auth token. * The supplied auth
-// token is invalid. * The reseller account making the request is
-// different from the reseller account in the query. * INVALID_ARGUMENT:
-// Required request parameters are missing or invalid. Return value: A
-// list of the customer's TransferableSku.
+// ListTransferableSkus: List TransferableSkus of a customer based on the Cloud
+// Identity ID or Customer Name in the request. Use this method to list the
+// entitlements information of an unowned customer. You should provide the
+// customer's Cloud Identity ID or Customer Name. Possible error codes: *
+// PERMISSION_DENIED: * The customer doesn't belong to the reseller and has no
+// auth token. * The supplied auth token is invalid. * The reseller account
+// making the request is different from the reseller account in the query. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid. Return
+// value: A list of the customer's TransferableSku.
 //
-//   - parent: The reseller account's resource name. Parent uses the
-//     format: accounts/{account_id}.
+//   - parent: The reseller account's resource name. Parent uses the format:
+//     accounts/{account_id}.
 func (r *AccountsService) ListTransferableSkus(parent string, googlecloudchannelv1listtransferableskusrequest *GoogleCloudChannelV1ListTransferableSkusRequest) *AccountsListTransferableSkusCall {
 	c := &AccountsListTransferableSkusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7076,23 +5601,21 @@ func (r *AccountsService) ListTransferableSkus(parent string, googlecloudchannel
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsListTransferableSkusCall) Fields(s ...googleapi.Field) *AccountsListTransferableSkusCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsListTransferableSkusCall) Context(ctx context.Context) *AccountsListTransferableSkusCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsListTransferableSkusCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7101,18 +5624,12 @@ func (c *AccountsListTransferableSkusCall) Header() http.Header {
 }
 
 func (c *AccountsListTransferableSkusCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1listtransferableskusrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:listTransferableSkus")
@@ -7129,14 +5646,11 @@ func (c *AccountsListTransferableSkusCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "cloudchannel.accounts.listTransferableSkus" call.
-// Exactly one of *GoogleCloudChannelV1ListTransferableSkusResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListTransferableSkusResponse.ServerResponse.Heade
-// r or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListTransferableSkusResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsListTransferableSkusCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListTransferableSkusResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7167,35 +5681,6 @@ func (c *AccountsListTransferableSkusCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List TransferableSkus of a customer based on the Cloud Identity ID or Customer Name in the request. Use this method to list the entitlements information of an unowned customer. You should provide the customer's Cloud Identity ID or Customer Name. Possible error codes: * PERMISSION_DENIED: * The customer doesn't belong to the reseller and has no auth token. * The supplied auth token is invalid. * The reseller account making the request is different from the reseller account in the query. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: A list of the customer's TransferableSku.",
-	//   "flatPath": "v1/accounts/{accountsId}:listTransferableSkus",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.listTransferableSkus",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The reseller account's resource name. Parent uses the format: accounts/{account_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:listTransferableSkus",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ListTransferableSkusRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListTransferableSkusResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7203,7 +5688,7 @@ func (c *AccountsListTransferableSkusCall) Do(opts ...googleapi.CallOption) (*Go
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsListTransferableSkusCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListTransferableSkusResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googlecloudchannelv1listtransferableskusrequest.PageToken = pt }(c.googlecloudchannelv1listtransferableskusrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googlecloudchannelv1listtransferableskusrequest.PageToken = pt }(c.googlecloudchannelv1listtransferableskusrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7219,8 +5704,6 @@ func (c *AccountsListTransferableSkusCall) Pages(ctx context.Context, f func(*Go
 	}
 }
 
-// method id "cloudchannel.accounts.register":
-
 type AccountsRegisterCall struct {
 	s                                             *Service
 	account                                       string
@@ -7230,17 +5713,16 @@ type AccountsRegisterCall struct {
 	header_                                       http.Header
 }
 
-// Register: Registers a service account with subscriber privileges on
-// the Cloud Pub/Sub topic for this Channel Services account. After you
-// create a subscriber, you get the events through SubscriberEvent
-// Possible error codes: * PERMISSION_DENIED: The reseller account
-// making the request and the provided reseller account are different,
-// or the impersonated user is not a super admin. * INVALID_ARGUMENT:
-// Required request parameters are missing or invalid. * INTERNAL: Any
-// non-user error related to a technical issue in the backend. Contact
-// Cloud Channel support. * UNKNOWN: Any non-user error related to a
-// technical issue in the backend. Contact Cloud Channel support. Return
-// value: The topic name with the registered service email address.
+// Register: Registers a service account with subscriber privileges on the
+// Cloud Pub/Sub topic for this Channel Services account. After you create a
+// subscriber, you get the events through SubscriberEvent Possible error codes:
+// * PERMISSION_DENIED: The reseller account making the request and the
+// provided reseller account are different, or the impersonated user is not a
+// super admin. * INVALID_ARGUMENT: Required request parameters are missing or
+// invalid. * INTERNAL: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel support.
+// Return value: The topic name with the registered service email address.
 //
 // - account: Resource name of the account.
 func (r *AccountsService) Register(account string, googlecloudchannelv1registersubscriberrequest *GoogleCloudChannelV1RegisterSubscriberRequest) *AccountsRegisterCall {
@@ -7251,23 +5733,21 @@ func (r *AccountsService) Register(account string, googlecloudchannelv1registers
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsRegisterCall) Fields(s ...googleapi.Field) *AccountsRegisterCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsRegisterCall) Context(ctx context.Context) *AccountsRegisterCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsRegisterCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7276,18 +5756,12 @@ func (c *AccountsRegisterCall) Header() http.Header {
 }
 
 func (c *AccountsRegisterCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1registersubscriberrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+account}:register")
@@ -7304,14 +5778,11 @@ func (c *AccountsRegisterCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudchannel.accounts.register" call.
-// Exactly one of *GoogleCloudChannelV1RegisterSubscriberResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1RegisterSubscriberResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1RegisterSubscriberResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsRegisterCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1RegisterSubscriberResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7342,38 +5813,7 @@ func (c *AccountsRegisterCall) Do(opts ...googleapi.CallOption) (*GoogleCloudCha
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Registers a service account with subscriber privileges on the Cloud Pub/Sub topic for this Channel Services account. After you create a subscriber, you get the events through SubscriberEvent Possible error codes: * PERMISSION_DENIED: The reseller account making the request and the provided reseller account are different, or the impersonated user is not a super admin. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The topic name with the registered service email address.",
-	//   "flatPath": "v1/accounts/{accountsId}:register",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.register",
-	//   "parameterOrder": [
-	//     "account"
-	//   ],
-	//   "parameters": {
-	//     "account": {
-	//       "description": "Required. Resource name of the account.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+account}:register",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1RegisterSubscriberRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1RegisterSubscriberResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.unregister":
 
 type AccountsUnregisterCall struct {
 	s                                               *Service
@@ -7384,21 +5824,19 @@ type AccountsUnregisterCall struct {
 	header_                                         http.Header
 }
 
-// Unregister: Unregisters a service account with subscriber privileges
-// on the Cloud Pub/Sub topic created for this Channel Services account.
-// If there are no service accounts left with subscriber privileges,
-// this deletes the topic. You can call ListSubscribers to check for
-// these accounts. Possible error codes: * PERMISSION_DENIED: The
-// reseller account making the request and the provided reseller account
-// are different, or the impersonated user is not a super admin. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: The topic resource doesn't exist. * INTERNAL: Any
-// non-user error related to a technical issue in the backend. Contact
-// Cloud Channel support. * UNKNOWN: Any non-user error related to a
-// technical issue in the backend. Contact Cloud Channel support. Return
-// value: The topic name that unregistered the service email address.
-// Returns a success response if the service email address wasn't
-// registered with the topic.
+// Unregister: Unregisters a service account with subscriber privileges on the
+// Cloud Pub/Sub topic created for this Channel Services account. If there are
+// no service accounts left with subscriber privileges, this deletes the topic.
+// You can call ListSubscribers to check for these accounts. Possible error
+// codes: * PERMISSION_DENIED: The reseller account making the request and the
+// provided reseller account are different, or the impersonated user is not a
+// super admin. * INVALID_ARGUMENT: Required request parameters are missing or
+// invalid. * NOT_FOUND: The topic resource doesn't exist. * INTERNAL: Any
+// non-user error related to a technical issue in the backend. Contact Cloud
+// Channel support. * UNKNOWN: Any non-user error related to a technical issue
+// in the backend. Contact Cloud Channel support. Return value: The topic name
+// that unregistered the service email address. Returns a success response if
+// the service email address wasn't registered with the topic.
 //
 // - account: Resource name of the account.
 func (r *AccountsService) Unregister(account string, googlecloudchannelv1unregistersubscriberrequest *GoogleCloudChannelV1UnregisterSubscriberRequest) *AccountsUnregisterCall {
@@ -7409,23 +5847,21 @@ func (r *AccountsService) Unregister(account string, googlecloudchannelv1unregis
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsUnregisterCall) Fields(s ...googleapi.Field) *AccountsUnregisterCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsUnregisterCall) Context(ctx context.Context) *AccountsUnregisterCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsUnregisterCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7434,18 +5870,12 @@ func (c *AccountsUnregisterCall) Header() http.Header {
 }
 
 func (c *AccountsUnregisterCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1unregistersubscriberrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+account}:unregister")
@@ -7462,14 +5892,11 @@ func (c *AccountsUnregisterCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudchannel.accounts.unregister" call.
-// Exactly one of *GoogleCloudChannelV1UnregisterSubscriberResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1UnregisterSubscriberResponse.ServerResponse.Heade
-// r or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1UnregisterSubscriberResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsUnregisterCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1UnregisterSubscriberResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7500,38 +5927,7 @@ func (c *AccountsUnregisterCall) Do(opts ...googleapi.CallOption) (*GoogleCloudC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Unregisters a service account with subscriber privileges on the Cloud Pub/Sub topic created for this Channel Services account. If there are no service accounts left with subscriber privileges, this deletes the topic. You can call ListSubscribers to check for these accounts. Possible error codes: * PERMISSION_DENIED: The reseller account making the request and the provided reseller account are different, or the impersonated user is not a super admin. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The topic resource doesn't exist. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The topic name that unregistered the service email address. Returns a success response if the service email address wasn't registered with the topic.",
-	//   "flatPath": "v1/accounts/{accountsId}:unregister",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.unregister",
-	//   "parameterOrder": [
-	//     "account"
-	//   ],
-	//   "parameters": {
-	//     "account": {
-	//       "description": "Required. Resource name of the account.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+account}:unregister",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1UnregisterSubscriberRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1UnregisterSubscriberResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.create":
 
 type AccountsChannelPartnerLinksCreateCall struct {
 	s                                      *Service
@@ -7544,23 +5940,21 @@ type AccountsChannelPartnerLinksCreateCall struct {
 
 // Create: Initiates a channel partner link between a distributor and a
 // reseller, or between resellers in an n-tier reseller channel. Invited
-// partners need to follow the invite_link_uri provided in the response
-// to accept. After accepting the invitation, a link is set up between
-// the two parties. You must be a distributor to call this method.
-// Possible error codes: * PERMISSION_DENIED: The reseller account
-// making the request is different from the reseller account in the API
-// request. * INVALID_ARGUMENT: Required request parameters are missing
-// or invalid. * ALREADY_EXISTS: The ChannelPartnerLink sent in the
-// request already exists. * NOT_FOUND: No Cloud Identity customer
-// exists for provided domain. * INTERNAL: Any non-user error related to
-// a technical issue in the backend. Contact Cloud Channel support. *
-// UNKNOWN: Any non-user error related to a technical issue in the
-// backend. Contact Cloud Channel support. Return value: The new
-// ChannelPartnerLink resource.
+// partners need to follow the invite_link_uri provided in the response to
+// accept. After accepting the invitation, a link is set up between the two
+// parties. You must be a distributor to call this method. Possible error
+// codes: * PERMISSION_DENIED: The reseller account making the request is
+// different from the reseller account in the API request. * INVALID_ARGUMENT:
+// Required request parameters are missing or invalid. * ALREADY_EXISTS: The
+// ChannelPartnerLink sent in the request already exists. * NOT_FOUND: No Cloud
+// Identity customer exists for provided domain. * INTERNAL: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel support.
+// * UNKNOWN: Any non-user error related to a technical issue in the backend.
+// Contact Cloud Channel support. Return value: The new ChannelPartnerLink
+// resource.
 //
-//   - parent: Create a channel partner link for the provided reseller
-//     account's resource name. Parent uses the format:
-//     accounts/{account_id}.
+//   - parent: Create a channel partner link for the provided reseller account's
+//     resource name. Parent uses the format: accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksService) Create(parent string, googlecloudchannelv1channelpartnerlink *GoogleCloudChannelV1ChannelPartnerLink) *AccountsChannelPartnerLinksCreateCall {
 	c := &AccountsChannelPartnerLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7569,23 +5963,21 @@ func (r *AccountsChannelPartnerLinksService) Create(parent string, googlecloudch
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksCreateCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksCreateCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7594,18 +5986,12 @@ func (c *AccountsChannelPartnerLinksCreateCall) Header() http.Header {
 }
 
 func (c *AccountsChannelPartnerLinksCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1channelpartnerlink)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/channelPartnerLinks")
@@ -7622,13 +6008,11 @@ func (c *AccountsChannelPartnerLinksCreateCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.create" call.
-// Exactly one of *GoogleCloudChannelV1ChannelPartnerLink or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudChannelV1ChannelPartnerLink.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ChannelPartnerLink.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ChannelPartnerLink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7659,38 +6043,7 @@ func (c *AccountsChannelPartnerLinksCreateCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Initiates a channel partner link between a distributor and a reseller, or between resellers in an n-tier reseller channel. Invited partners need to follow the invite_link_uri provided in the response to accept. After accepting the invitation, a link is set up between the two parties. You must be a distributor to call this method. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * ALREADY_EXISTS: The ChannelPartnerLink sent in the request already exists. * NOT_FOUND: No Cloud Identity customer exists for provided domain. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The new ChannelPartnerLink resource.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Create a channel partner link for the provided reseller account's resource name. Parent uses the format: accounts/{account_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/channelPartnerLinks",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ChannelPartnerLink"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ChannelPartnerLink"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.get":
 
 type AccountsChannelPartnerLinksGetCall struct {
 	s            *Service
@@ -7702,18 +6055,16 @@ type AccountsChannelPartnerLinksGetCall struct {
 }
 
 // Get: Returns the requested ChannelPartnerLink resource. You must be a
-// distributor to call this method. Possible error codes: *
-// PERMISSION_DENIED: The reseller account making the request is
-// different from the reseller account in the API request. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: ChannelPartnerLink resource not found because of an
-// invalid channel partner link name. Return value: The
+// distributor to call this method. Possible error codes: * PERMISSION_DENIED:
+// The reseller account making the request is different from the reseller
+// account in the API request. * INVALID_ARGUMENT: Required request parameters
+// are missing or invalid. * NOT_FOUND: ChannelPartnerLink resource not found
+// because of an invalid channel partner link name. Return value: The
 // ChannelPartnerLink resource.
 //
-//   - name: The resource name of the channel partner link to retrieve.
-//     Name uses the format:
-//     accounts/{account_id}/channelPartnerLinks/{id} where {id} is the
-//     Cloud Identity ID of the partner.
+//   - name: The resource name of the channel partner link to retrieve. Name uses
+//     the format: accounts/{account_id}/channelPartnerLinks/{id} where {id} is
+//     the Cloud Identity ID of the partner.
 func (r *AccountsChannelPartnerLinksService) Get(name string) *AccountsChannelPartnerLinksGetCall {
 	c := &AccountsChannelPartnerLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7725,9 +6076,9 @@ func (r *AccountsChannelPartnerLinksService) Get(name string) *AccountsChannelPa
 //
 // Possible values:
 //
-//	"UNSPECIFIED" - The default / unset value. The API will default to
+//	"UNSPECIFIED" - The default / unset value. The API will default to the
 //
-// the BASIC view.
+// BASIC view.
 //
 //	"BASIC" - Includes all fields except the
 //
@@ -7740,33 +6091,29 @@ func (c *AccountsChannelPartnerLinksGetCall) View(view string) *AccountsChannelP
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksGetCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsChannelPartnerLinksGetCall) IfNoneMatch(entityTag string) *AccountsChannelPartnerLinksGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksGetCall) Context(ctx context.Context) *AccountsChannelPartnerLinksGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7775,12 +6122,7 @@ func (c *AccountsChannelPartnerLinksGetCall) Header() http.Header {
 }
 
 func (c *AccountsChannelPartnerLinksGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7801,13 +6143,11 @@ func (c *AccountsChannelPartnerLinksGetCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.get" call.
-// Exactly one of *GoogleCloudChannelV1ChannelPartnerLink or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudChannelV1ChannelPartnerLink.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ChannelPartnerLink.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ChannelPartnerLink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7838,50 +6178,7 @@ func (c *AccountsChannelPartnerLinksGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the requested ChannelPartnerLink resource. You must be a distributor to call this method. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: ChannelPartnerLink resource not found because of an invalid channel partner link name. Return value: The ChannelPartnerLink resource.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the channel partner link to retrieve. Name uses the format: accounts/{account_id}/channelPartnerLinks/{id} where {id} is the Cloud Identity ID of the partner.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "Optional. The level of granularity the ChannelPartnerLink will display.",
-	//       "enum": [
-	//         "UNSPECIFIED",
-	//         "BASIC",
-	//         "FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the BASIC view.",
-	//         "Includes all fields except the ChannelPartnerLink.channel_partner_cloud_identity_info.",
-	//         "Includes all fields."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ChannelPartnerLink"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.list":
 
 type AccountsChannelPartnerLinksListCall struct {
 	s            *Service
@@ -7892,34 +6189,32 @@ type AccountsChannelPartnerLinksListCall struct {
 	header_      http.Header
 }
 
-// List: List ChannelPartnerLinks belonging to a distributor. You must
-// be a distributor to call this method. Possible error codes: *
-// PERMISSION_DENIED: The reseller account making the request is
-// different from the reseller account in the API request. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// Return value: The list of the distributor account's
+// List: List ChannelPartnerLinks belonging to a distributor. You must be a
+// distributor to call this method. Possible error codes: * PERMISSION_DENIED:
+// The reseller account making the request is different from the reseller
+// account in the API request. * INVALID_ARGUMENT: Required request parameters
+// are missing or invalid. Return value: The list of the distributor account's
 // ChannelPartnerLink resources.
 //
-//   - parent: The resource name of the reseller account for listing
-//     channel partner links. Parent uses the format:
-//     accounts/{account_id}.
+//   - parent: The resource name of the reseller account for listing channel
+//     partner links. Parent uses the format: accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksService) List(parent string) *AccountsChannelPartnerLinksListCall {
 	c := &AccountsChannelPartnerLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified,
-// server will pick a default size (25). The maximum value is 200; the
-// server will coerce values above 200.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// might return fewer results than requested. If unspecified, server will pick
+// a default size (25). The maximum value is 200; the server will coerce values
+// above 200.
 func (c *AccountsChannelPartnerLinksListCall) PageSize(pageSize int64) *AccountsChannelPartnerLinksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token for a page
-// of results other than the first page. Obtained using
+// PageToken sets the optional parameter "pageToken": A token for a page of
+// results other than the first page. Obtained using
 // ListChannelPartnerLinksResponse.next_page_token of the previous
 // CloudChannelService.ListChannelPartnerLinks call.
 func (c *AccountsChannelPartnerLinksListCall) PageToken(pageToken string) *AccountsChannelPartnerLinksListCall {
@@ -7932,9 +6227,9 @@ func (c *AccountsChannelPartnerLinksListCall) PageToken(pageToken string) *Accou
 //
 // Possible values:
 //
-//	"UNSPECIFIED" - The default / unset value. The API will default to
+//	"UNSPECIFIED" - The default / unset value. The API will default to the
 //
-// the BASIC view.
+// BASIC view.
 //
 //	"BASIC" - Includes all fields except the
 //
@@ -7947,33 +6242,29 @@ func (c *AccountsChannelPartnerLinksListCall) View(view string) *AccountsChannel
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksListCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsChannelPartnerLinksListCall) IfNoneMatch(entityTag string) *AccountsChannelPartnerLinksListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksListCall) Context(ctx context.Context) *AccountsChannelPartnerLinksListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7982,12 +6273,7 @@ func (c *AccountsChannelPartnerLinksListCall) Header() http.Header {
 }
 
 func (c *AccountsChannelPartnerLinksListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8008,14 +6294,11 @@ func (c *AccountsChannelPartnerLinksListCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.list" call.
-// Exactly one of *GoogleCloudChannelV1ListChannelPartnerLinksResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudChannelV1ListChannelPartnerLinksResponse.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListChannelPartnerLinksResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListChannelPartnerLinksResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8046,58 +6329,6 @@ func (c *AccountsChannelPartnerLinksListCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List ChannelPartnerLinks belonging to a distributor. You must be a distributor to call this method. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: The list of the distributor account's ChannelPartnerLink resources.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, server will pick a default size (25). The maximum value is 200; the server will coerce values above 200.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token for a page of results other than the first page. Obtained using ListChannelPartnerLinksResponse.next_page_token of the previous CloudChannelService.ListChannelPartnerLinks call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the reseller account for listing channel partner links. Parent uses the format: accounts/{account_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "Optional. The level of granularity the ChannelPartnerLink will display.",
-	//       "enum": [
-	//         "UNSPECIFIED",
-	//         "BASIC",
-	//         "FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the BASIC view.",
-	//         "Includes all fields except the ChannelPartnerLink.channel_partner_cloud_identity_info.",
-	//         "Includes all fields."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/channelPartnerLinks",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListChannelPartnerLinksResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -8105,7 +6336,7 @@ func (c *AccountsChannelPartnerLinksListCall) Do(opts ...googleapi.CallOption) (
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsChannelPartnerLinksListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListChannelPartnerLinksResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -8121,8 +6352,6 @@ func (c *AccountsChannelPartnerLinksListCall) Pages(ctx context.Context, f func(
 	}
 }
 
-// method id "cloudchannel.accounts.channelPartnerLinks.patch":
-
 type AccountsChannelPartnerLinksPatchCall struct {
 	s                                                   *Service
 	name                                                string
@@ -8132,24 +6361,22 @@ type AccountsChannelPartnerLinksPatchCall struct {
 	header_                                             http.Header
 }
 
-// Patch: Updates a channel partner link. Distributors call this method
-// to change a link's status. For example, to suspend a partner link.
-// You must be a distributor to call this method. Possible error codes:
-// * PERMISSION_DENIED: The reseller account making the request is
-// different from the reseller account in the API request. *
-// INVALID_ARGUMENT: * Required request parameters are missing or
-// invalid. * Link state cannot change from invited to active or
-// suspended. * Cannot send reseller_cloud_identity_id, invite_url, or
-// name in update mask. * NOT_FOUND: ChannelPartnerLink resource not
-// found. * INTERNAL: Any non-user error related to a technical issue in
-// the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user
-// error related to a technical issue in the backend. Contact Cloud
-// Channel support. Return value: The updated ChannelPartnerLink
-// resource.
+// Patch: Updates a channel partner link. Distributors call this method to
+// change a link's status. For example, to suspend a partner link. You must be
+// a distributor to call this method. Possible error codes: *
+// PERMISSION_DENIED: The reseller account making the request is different from
+// the reseller account in the API request. * INVALID_ARGUMENT: * Required
+// request parameters are missing or invalid. * Link state cannot change from
+// invited to active or suspended. * Cannot send reseller_cloud_identity_id,
+// invite_url, or name in update mask. * NOT_FOUND: ChannelPartnerLink resource
+// not found. * INTERNAL: Any non-user error related to a technical issue in
+// the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel support.
+// Return value: The updated ChannelPartnerLink resource.
 //
-//   - name: The resource name of the channel partner link to cancel. Name
-//     uses the format: accounts/{account_id}/channelPartnerLinks/{id}
-//     where {id} is the Cloud Identity ID of the partner.
+//   - name: The resource name of the channel partner link to cancel. Name uses
+//     the format: accounts/{account_id}/channelPartnerLinks/{id} where {id} is
+//     the Cloud Identity ID of the partner.
 func (r *AccountsChannelPartnerLinksService) Patch(name string, googlecloudchannelv1updatechannelpartnerlinkrequest *GoogleCloudChannelV1UpdateChannelPartnerLinkRequest) *AccountsChannelPartnerLinksPatchCall {
 	c := &AccountsChannelPartnerLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8158,23 +6385,21 @@ func (r *AccountsChannelPartnerLinksService) Patch(name string, googlecloudchann
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksPatchCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksPatchCall) Context(ctx context.Context) *AccountsChannelPartnerLinksPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8183,18 +6408,12 @@ func (c *AccountsChannelPartnerLinksPatchCall) Header() http.Header {
 }
 
 func (c *AccountsChannelPartnerLinksPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1updatechannelpartnerlinkrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -8211,13 +6430,11 @@ func (c *AccountsChannelPartnerLinksPatchCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.patch" call.
-// Exactly one of *GoogleCloudChannelV1ChannelPartnerLink or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudChannelV1ChannelPartnerLink.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ChannelPartnerLink.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ChannelPartnerLink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8248,38 +6465,7 @@ func (c *AccountsChannelPartnerLinksPatchCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a channel partner link. Distributors call this method to change a link's status. For example, to suspend a partner link. You must be a distributor to call this method. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: * Required request parameters are missing or invalid. * Link state cannot change from invited to active or suspended. * Cannot send reseller_cloud_identity_id, invite_url, or name in update mask. * NOT_FOUND: ChannelPartnerLink resource not found. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The updated ChannelPartnerLink resource.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the channel partner link to cancel. Name uses the format: accounts/{account_id}/channelPartnerLinks/{id} where {id} is the Cloud Identity ID of the partner.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1UpdateChannelPartnerLinkRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ChannelPartnerLink"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.create":
 
 type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall struct {
 	s                                                 *Service
@@ -8290,36 +6476,34 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall struct 
 	header_                                           http.Header
 }
 
-// Create: Creates a ChannelPartnerRepricingConfig. Call this method to
-// set modifications for a specific ChannelPartner's bill. You can only
-// create configs if the RepricingConfig.effective_invoice_month is a
-// future month. If needed, you can create a config for the current
-// month, with some restrictions. When creating a config for a future
-// month, make sure there are no existing configs for that
-// RepricingConfig.effective_invoice_month. The following restrictions
-// are for creating configs in the current month. * This functionality
-// is reserved for recovering from an erroneous config, and should not
-// be used for regular business cases. * The new config will not modify
-// exports used with other configs. Changes to the config may be
-// immediate, but may take up to 24 hours. * There is a limit of ten
-// configs for any ChannelPartner or
+// Create: Creates a ChannelPartnerRepricingConfig. Call this method to set
+// modifications for a specific ChannelPartner's bill. You can only create
+// configs if the RepricingConfig.effective_invoice_month is a future month. If
+// needed, you can create a config for the current month, with some
+// restrictions. When creating a config for a future month, make sure there are
+// no existing configs for that RepricingConfig.effective_invoice_month. The
+// following restrictions are for creating configs in the current month. * This
+// functionality is reserved for recovering from an erroneous config, and
+// should not be used for regular business cases. * The new config will not
+// modify exports used with other configs. Changes to the config may be
+// immediate, but may take up to 24 hours. * There is a limit of ten configs
+// for any ChannelPartner or
 // RepricingConfig.EntitlementGranularity.entitlement, for any
 // RepricingConfig.effective_invoice_month. * The contained
-// ChannelPartnerRepricingConfig.repricing_config value must be
-// different from the value used in the current config for a
-// ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the
-// account making the request and the account being queried are
-// different. * INVALID_ARGUMENT: Missing or invalid required parameters
-// in the request. Also displays if the updated config is for the
-// current month or past months. * NOT_FOUND: The
-// ChannelPartnerRepricingConfig specified does not exist or is not
-// associated with the given account. * INTERNAL: Any non-user error
-// related to technical issues in the backend. In this case, contact
-// Cloud Channel support. Return Value: If successful, the updated
-// ChannelPartnerRepricingConfig resource, otherwise returns an error.
+// ChannelPartnerRepricingConfig.repricing_config value must be different from
+// the value used in the current config for a ChannelPartner. Possible Error
+// Codes: * PERMISSION_DENIED: If the account making the request and the
+// account being queried are different. * INVALID_ARGUMENT: Missing or invalid
+// required parameters in the request. Also displays if the updated config is
+// for the current month or past months. * NOT_FOUND: The
+// ChannelPartnerRepricingConfig specified does not exist or is not associated
+// with the given account. * INTERNAL: Any non-user error related to technical
+// issues in the backend. In this case, contact Cloud Channel support. Return
+// Value: If successful, the updated ChannelPartnerRepricingConfig resource,
+// otherwise returns an error.
 //
-//   - parent: The resource name of the ChannelPartner that will receive
-//     the repricing config. Parent uses the format:
+//   - parent: The resource name of the ChannelPartner that will receive the
+//     repricing config. Parent uses the format:
 //     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
 func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Create(parent string, googlecloudchannelv1channelpartnerrepricingconfig *GoogleCloudChannelV1ChannelPartnerRepricingConfig) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall {
 	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8329,23 +6513,21 @@ func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Creat
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) Context(ctx context.Context) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8354,18 +6536,12 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) He
 }
 
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1channelpartnerrepricingconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/channelPartnerRepricingConfigs")
@@ -8382,14 +6558,11 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) do
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.create" call.
-// Exactly one of *GoogleCloudChannelV1ChannelPartnerRepricingConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ChannelPartnerRepricingConfig.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ChannelPartnerRepricingConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ChannelPartnerRepricingConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8420,38 +6593,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) Do
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a ChannelPartnerRepricingConfig. Call this method to set modifications for a specific ChannelPartner's bill. You can only create configs if the RepricingConfig.effective_invoice_month is a future month. If needed, you can create a config for the current month, with some restrictions. When creating a config for a future month, make sure there are no existing configs for that RepricingConfig.effective_invoice_month. The following restrictions are for creating configs in the current month. * This functionality is reserved for recovering from an erroneous config, and should not be used for regular business cases. * The new config will not modify exports used with other configs. Changes to the config may be immediate, but may take up to 24 hours. * There is a limit of ten configs for any ChannelPartner or RepricingConfig.EntitlementGranularity.entitlement, for any RepricingConfig.effective_invoice_month. * The contained ChannelPartnerRepricingConfig.repricing_config value must be different from the value used in the current config for a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The ChannelPartnerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated ChannelPartnerRepricingConfig resource, otherwise returns an error.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the ChannelPartner that will receive the repricing config. Parent uses the format: accounts/{account_id}/channelPartnerLinks/{channel_partner_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/channelPartnerRepricingConfigs",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ChannelPartnerRepricingConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ChannelPartnerRepricingConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.delete":
 
 type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall struct {
 	s          *Service
@@ -8461,18 +6603,17 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall struct 
 	header_    http.Header
 }
 
-// Delete: Deletes the given ChannelPartnerRepricingConfig permanently.
-// You can only delete configs if their
-// RepricingConfig.effective_invoice_month is set to a date after the
-// current month. Possible error codes: * PERMISSION_DENIED: The account
-// making the request does not own this customer. * INVALID_ARGUMENT:
-// Required request parameters are missing or invalid. *
-// FAILED_PRECONDITION: The ChannelPartnerRepricingConfig is active or
-// in the past. * NOT_FOUND: No ChannelPartnerRepricingConfig found for
-// the name in the request.
+// Delete: Deletes the given ChannelPartnerRepricingConfig permanently. You can
+// only delete configs if their RepricingConfig.effective_invoice_month is set
+// to a date after the current month. Possible error codes: *
+// PERMISSION_DENIED: The account making the request does not own this
+// customer. * INVALID_ARGUMENT: Required request parameters are missing or
+// invalid. * FAILED_PRECONDITION: The ChannelPartnerRepricingConfig is active
+// or in the past. * NOT_FOUND: No ChannelPartnerRepricingConfig found for the
+// name in the request.
 //
-//   - name: The resource name of the channel partner repricing config
-//     rule to delete.
+//   - name: The resource name of the channel partner repricing config rule to
+//     delete.
 func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Delete(name string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall {
 	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8480,23 +6621,21 @@ func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Delet
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) Context(ctx context.Context) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8505,12 +6644,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) He
 }
 
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8528,12 +6662,11 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) do
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8564,35 +6697,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) Do
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the given ChannelPartnerRepricingConfig permanently. You can only delete configs if their RepricingConfig.effective_invoice_month is set to a date after the current month. Possible error codes: * PERMISSION_DENIED: The account making the request does not own this customer. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * FAILED_PRECONDITION: The ChannelPartnerRepricingConfig is active or in the past. * NOT_FOUND: No ChannelPartnerRepricingConfig found for the name in the request.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs/{channelPartnerRepricingConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the channel partner repricing config rule to delete.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/channelPartnerRepricingConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.get":
 
 type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall struct {
 	s            *Service
@@ -8603,19 +6708,17 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets information about how a Distributor modifies their bill
-// before sending it to a ChannelPartner. Possible Error Codes: *
-// PERMISSION_DENIED: If the account making the request and the account
-// being queried are different. * NOT_FOUND: The
-// ChannelPartnerRepricingConfig was not found. * INTERNAL: Any non-user
-// error related to technical issues in the backend. In this case,
-// contact Cloud Channel support. Return Value: If successful, the
+// Get: Gets information about how a Distributor modifies their bill before
+// sending it to a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED:
+// If the account making the request and the account being queried are
+// different. * NOT_FOUND: The ChannelPartnerRepricingConfig was not found. *
+// INTERNAL: Any non-user error related to technical issues in the backend. In
+// this case, contact Cloud Channel support. Return Value: If successful, the
 // ChannelPartnerRepricingConfig resource, otherwise returns an error.
 //
-//   - name: The resource name of the ChannelPartnerRepricingConfig
-//     Format:
-//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/chann
-//     elPartnerRepricingConfigs/{id}.
+//   - name: The resource name of the ChannelPartnerRepricingConfig Format:
+//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/channelPartn
+//     erRepricingConfigs/{id}.
 func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Get(name string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall {
 	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8623,33 +6726,29 @@ func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Get(n
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) IfNoneMatch(entityTag string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) Context(ctx context.Context) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8658,12 +6757,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) Heade
 }
 
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8684,14 +6778,11 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) doReq
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.get" call.
-// Exactly one of *GoogleCloudChannelV1ChannelPartnerRepricingConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ChannelPartnerRepricingConfig.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ChannelPartnerRepricingConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ChannelPartnerRepricingConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8722,35 +6813,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) Do(op
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets information about how a Distributor modifies their bill before sending it to a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The ChannelPartnerRepricingConfig was not found. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the ChannelPartnerRepricingConfig resource, otherwise returns an error.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs/{channelPartnerRepricingConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the ChannelPartnerRepricingConfig Format: accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/channelPartnerRepricingConfigs/{id}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/channelPartnerRepricingConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ChannelPartnerRepricingConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.list":
 
 type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall struct {
 	s            *Service
@@ -8761,25 +6824,23 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about how a Reseller modifies their bill
-// before sending it to a ChannelPartner. Possible Error Codes: *
-// PERMISSION_DENIED: If the account making the request and the account
-// being queried are different. * NOT_FOUND: The
-// ChannelPartnerRepricingConfig specified does not exist or is not
-// associated with the given account. * INTERNAL: Any non-user error
-// related to technical issues in the backend. In this case, contact
+// List: Lists information about how a Reseller modifies their bill before
+// sending it to a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED:
+// If the account making the request and the account being queried are
+// different. * NOT_FOUND: The ChannelPartnerRepricingConfig specified does not
+// exist or is not associated with the given account. * INTERNAL: Any non-user
+// error related to technical issues in the backend. In this case, contact
 // Cloud Channel support. Return Value: If successful, the
-// ChannelPartnerRepricingConfig resources. The data for each resource
-// is displayed in the ascending order of: * Channel Partner ID *
+// ChannelPartnerRepricingConfig resources. The data for each resource is
+// displayed in the ascending order of: * Channel Partner ID *
 // RepricingConfig.effective_invoice_month *
-// ChannelPartnerRepricingConfig.update_time If unsuccessful, returns an
-// error.
+// ChannelPartnerRepricingConfig.update_time If unsuccessful, returns an error.
 //
-//   - parent: The resource name of the account's ChannelPartnerLink.
-//     Parent uses the format:
-//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
-//     Supports accounts/{account_id}/channelPartnerLinks/- to retrieve
-//     configs for all channel partners.
+//   - parent: The resource name of the account's ChannelPartnerLink. Parent uses
+//     the format:
+//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}. Supports
+//     accounts/{account_id}/channelPartnerLinks/- to retrieve configs for all
+//     channel partners.
 func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) List(parent string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
 	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8788,63 +6849,58 @@ func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) List(
 
 // Filter sets the optional parameter "filter": A filter for
 // [CloudChannelService.ListChannelPartnerRepricingConfigs] results
-// (channel_partner_link only). You can use this filter when you support
-// a BatchGet-like query. To use the filter, you must set
+// (channel_partner_link only). You can use this filter when you support a
+// BatchGet-like query. To use the filter, you must set
 // `parent=accounts/{account_id}/channelPartnerLinks/-`. Example:
-// `channel_partner_link = accounts/account_id/channelPartnerLinks/c1`
-// OR `channel_partner_link =
-// accounts/account_id/channelPartnerLinks/c2`.
+// `channel_partner_link = accounts/account_id/channelPartnerLinks/c1` OR
+// `channel_partner_link = accounts/account_id/channelPartnerLinks/c2`.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Filter(filter string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of repricing configs to return. The service may return fewer than
-// this value. If unspecified, returns a maximum of 50 rules. The
-// maximum value is 100; values above 100 will be coerced to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// repricing configs to return. The service may return fewer than this value.
+// If unspecified, returns a maximum of 50 rules. The maximum value is 100;
+// values above 100 will be coerced to 100.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) PageSize(pageSize int64) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results beyond the first page. Obtained through
-// ListChannelPartnerRepricingConfigsResponse.next_page_token of the
-// previous CloudChannelService.ListChannelPartnerRepricingConfigs call.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results beyond the first page. Obtained through
+// ListChannelPartnerRepricingConfigsResponse.next_page_token of the previous
+// CloudChannelService.ListChannelPartnerRepricingConfigs call.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) PageToken(pageToken string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) IfNoneMatch(entityTag string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Context(ctx context.Context) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8853,12 +6909,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Head
 }
 
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8879,15 +6930,11 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) doRe
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.list" call.
-// Exactly one of
-// *GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse.Server
-// Response.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8918,48 +6965,6 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Do(o
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists information about how a Reseller modifies their bill before sending it to a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The ChannelPartnerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the ChannelPartnerRepricingConfig resources. The data for each resource is displayed in the ascending order of: * Channel Partner ID * RepricingConfig.effective_invoice_month * ChannelPartnerRepricingConfig.update_time If unsuccessful, returns an error.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. A filter for [CloudChannelService.ListChannelPartnerRepricingConfigs] results (channel_partner_link only). You can use this filter when you support a BatchGet-like query. To use the filter, you must set `parent=accounts/{account_id}/channelPartnerLinks/-`. Example: `channel_partner_link = accounts/account_id/channelPartnerLinks/c1` OR `channel_partner_link = accounts/account_id/channelPartnerLinks/c2`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of repricing configs to return. The service may return fewer than this value. If unspecified, returns a maximum of 50 rules. The maximum value is 100; values above 100 will be coerced to 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results beyond the first page. Obtained through ListChannelPartnerRepricingConfigsResponse.next_page_token of the previous CloudChannelService.ListChannelPartnerRepricingConfigs call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the account's ChannelPartnerLink. Parent uses the format: accounts/{account_id}/channelPartnerLinks/{channel_partner_id}. Supports accounts/{account_id}/channelPartnerLinks/- to retrieve configs for all channel partners.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/channelPartnerRepricingConfigs",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -8967,7 +6972,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Do(o
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListChannelPartnerRepricingConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -8983,8 +6988,6 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Page
 	}
 }
 
-// method id "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.patch":
-
 type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall struct {
 	s                                                 *Service
 	name                                              string
@@ -8994,29 +6997,27 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall struct {
 	header_                                           http.Header
 }
 
-// Patch: Updates a ChannelPartnerRepricingConfig. Call this method to
-// set modifications for a specific ChannelPartner's bill. This method
-// overwrites the existing CustomerRepricingConfig. You can only update
-// configs if the RepricingConfig.effective_invoice_month is a future
-// month. To make changes to configs for the current month, use
-// CreateChannelPartnerRepricingConfig, taking note of its restrictions.
-// You cannot update the RepricingConfig.effective_invoice_month. When
-// updating a config in the future: * This config must already exist.
-// Possible Error Codes: * PERMISSION_DENIED: If the account making the
-// request and the account being queried are different. *
-// INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request. Also displays if the updated config is for the current month
-// or past months. * NOT_FOUND: The ChannelPartnerRepricingConfig
-// specified does not exist or is not associated with the given account.
-// * INTERNAL: Any non-user error related to technical issues in the
-// backend. In this case, contact Cloud Channel support. Return Value:
-// If successful, the updated ChannelPartnerRepricingConfig resource,
-// otherwise returns an error.
+// Patch: Updates a ChannelPartnerRepricingConfig. Call this method to set
+// modifications for a specific ChannelPartner's bill. This method overwrites
+// the existing CustomerRepricingConfig. You can only update configs if the
+// RepricingConfig.effective_invoice_month is a future month. To make changes
+// to configs for the current month, use CreateChannelPartnerRepricingConfig,
+// taking note of its restrictions. You cannot update the
+// RepricingConfig.effective_invoice_month. When updating a config in the
+// future: * This config must already exist. Possible Error Codes: *
+// PERMISSION_DENIED: If the account making the request and the account being
+// queried are different. * INVALID_ARGUMENT: Missing or invalid required
+// parameters in the request. Also displays if the updated config is for the
+// current month or past months. * NOT_FOUND: The ChannelPartnerRepricingConfig
+// specified does not exist or is not associated with the given account. *
+// INTERNAL: Any non-user error related to technical issues in the backend. In
+// this case, contact Cloud Channel support. Return Value: If successful, the
+// updated ChannelPartnerRepricingConfig resource, otherwise returns an error.
 //
-//   - name: Output only. Resource name of the
-//     ChannelPartnerRepricingConfig. Format:
-//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/chann
-//     elPartnerRepricingConfigs/{id}.
+//   - name: Output only. Resource name of the ChannelPartnerRepricingConfig.
+//     Format:
+//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/channelPartn
+//     erRepricingConfigs/{id}.
 func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Patch(name string, googlecloudchannelv1channelpartnerrepricingconfig *GoogleCloudChannelV1ChannelPartnerRepricingConfig) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall {
 	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9025,23 +7026,21 @@ func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Patch
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) Context(ctx context.Context) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9050,18 +7049,12 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) Hea
 }
 
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1channelpartnerrepricingconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -9078,14 +7071,11 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) doR
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.patch" call.
-// Exactly one of *GoogleCloudChannelV1ChannelPartnerRepricingConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ChannelPartnerRepricingConfig.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ChannelPartnerRepricingConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ChannelPartnerRepricingConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9116,38 +7106,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) Do(
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a ChannelPartnerRepricingConfig. Call this method to set modifications for a specific ChannelPartner's bill. This method overwrites the existing CustomerRepricingConfig. You can only update configs if the RepricingConfig.effective_invoice_month is a future month. To make changes to configs for the current month, use CreateChannelPartnerRepricingConfig, taking note of its restrictions. You cannot update the RepricingConfig.effective_invoice_month. When updating a config in the future: * This config must already exist. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The ChannelPartnerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated ChannelPartnerRepricingConfig resource, otherwise returns an error.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs/{channelPartnerRepricingConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of the ChannelPartnerRepricingConfig. Format: accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/channelPartnerRepricingConfigs/{id}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/channelPartnerRepricingConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ChannelPartnerRepricingConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ChannelPartnerRepricingConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.customers.create":
 
 type AccountsChannelPartnerLinksCustomersCreateCall struct {
 	s                            *Service
@@ -9158,18 +7117,17 @@ type AccountsChannelPartnerLinksCustomersCreateCall struct {
 	header_                      http.Header
 }
 
-// Create: Creates a new Customer resource under the reseller or
-// distributor account. Possible error codes: * PERMISSION_DENIED: * The
-// reseller account making the request is different from the reseller
-// account in the API request. * You are not authorized to create a
-// customer. See
+// Create: Creates a new Customer resource under the reseller or distributor
+// account. Possible error codes: * PERMISSION_DENIED: * The reseller account
+// making the request is different from the reseller account in the API
+// request. * You are not authorized to create a customer. See
 // https://support.google.com/channelservices/answer/9759265 *
-// INVALID_ARGUMENT: * Required request parameters are missing or
-// invalid. * Domain field value doesn't match the primary email domain.
-// Return value: The newly created Customer resource.
+// INVALID_ARGUMENT: * Required request parameters are missing or invalid. *
+// Domain field value doesn't match the primary email domain. Return value: The
+// newly created Customer resource.
 //
-//   - parent: The resource name of reseller account in which to create
-//     the customer. Parent uses the format: accounts/{account_id}.
+//   - parent: The resource name of reseller account in which to create the
+//     customer. Parent uses the format: accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) Create(parent string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsChannelPartnerLinksCustomersCreateCall {
 	c := &AccountsChannelPartnerLinksCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9178,23 +7136,21 @@ func (r *AccountsChannelPartnerLinksCustomersService) Create(parent string, goog
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksCustomersCreateCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCustomersCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksCustomersCreateCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCustomersCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksCustomersCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9203,18 +7159,12 @@ func (c *AccountsChannelPartnerLinksCustomersCreateCall) Header() http.Header {
 }
 
 func (c *AccountsChannelPartnerLinksCustomersCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1customer)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customers")
@@ -9231,12 +7181,11 @@ func (c *AccountsChannelPartnerLinksCustomersCreateCall) doRequest(alt string) (
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.create" call.
-// Exactly one of *GoogleCloudChannelV1Customer or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksCustomersCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9267,38 +7216,7 @@ func (c *AccountsChannelPartnerLinksCustomersCreateCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new Customer resource under the reseller or distributor account. Possible error codes: * PERMISSION_DENIED: * The reseller account making the request is different from the reseller account in the API request. * You are not authorized to create a customer. See https://support.google.com/channelservices/answer/9759265 * INVALID_ARGUMENT: * Required request parameters are missing or invalid. * Domain field value doesn't match the primary email domain. Return value: The newly created Customer resource.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.customers.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of reseller account in which to create the customer. Parent uses the format: accounts/{account_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/customers",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.customers.delete":
 
 type AccountsChannelPartnerLinksCustomersDeleteCall struct {
 	s          *Service
@@ -9308,12 +7226,11 @@ type AccountsChannelPartnerLinksCustomersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the given Customer permanently. Possible error codes:
-// * PERMISSION_DENIED: The account making the request does not own this
-// customer. * INVALID_ARGUMENT: Required request parameters are missing
-// or invalid. * FAILED_PRECONDITION: The customer has existing
-// entitlements. * NOT_FOUND: No Customer resource found for the name in
-// the request.
+// Delete: Deletes the given Customer permanently. Possible error codes: *
+// PERMISSION_DENIED: The account making the request does not own this
+// customer. * INVALID_ARGUMENT: Required request parameters are missing or
+// invalid. * FAILED_PRECONDITION: The customer has existing entitlements. *
+// NOT_FOUND: No Customer resource found for the name in the request.
 //
 // - name: The resource name of the customer to delete.
 func (r *AccountsChannelPartnerLinksCustomersService) Delete(name string) *AccountsChannelPartnerLinksCustomersDeleteCall {
@@ -9323,23 +7240,21 @@ func (r *AccountsChannelPartnerLinksCustomersService) Delete(name string) *Accou
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCustomersDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCustomersDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9348,12 +7263,7 @@ func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsChannelPartnerLinksCustomersDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -9371,12 +7281,11 @@ func (c *AccountsChannelPartnerLinksCustomersDeleteCall) doRequest(alt string) (
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9407,35 +7316,7 @@ func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the given Customer permanently. Possible error codes: * PERMISSION_DENIED: The account making the request does not own this customer. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * FAILED_PRECONDITION: The customer has existing entitlements. * NOT_FOUND: No Customer resource found for the name in the request.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.customers.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the customer to delete.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.customers.get":
 
 type AccountsChannelPartnerLinksCustomersGetCall struct {
 	s            *Service
@@ -9447,14 +7328,14 @@ type AccountsChannelPartnerLinksCustomersGetCall struct {
 }
 
 // Get: Returns the requested Customer resource. Possible error codes: *
-// PERMISSION_DENIED: The reseller account making the request is
-// different from the reseller account in the API request. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: The customer resource doesn't exist. Usually the result
-// of an invalid name parameter. Return value: The Customer resource.
+// PERMISSION_DENIED: The reseller account making the request is different from
+// the reseller account in the API request. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid. * NOT_FOUND: The customer
+// resource doesn't exist. Usually the result of an invalid name parameter.
+// Return value: The Customer resource.
 //
-//   - name: The resource name of the customer to retrieve. Name uses the
-//     format: accounts/{account_id}/customers/{customer_id}.
+//   - name: The resource name of the customer to retrieve. Name uses the format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) Get(name string) *AccountsChannelPartnerLinksCustomersGetCall {
 	c := &AccountsChannelPartnerLinksCustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9462,33 +7343,29 @@ func (r *AccountsChannelPartnerLinksCustomersService) Get(name string) *Accounts
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksCustomersGetCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCustomersGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsChannelPartnerLinksCustomersGetCall) IfNoneMatch(entityTag string) *AccountsChannelPartnerLinksCustomersGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksCustomersGetCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCustomersGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksCustomersGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9497,12 +7374,7 @@ func (c *AccountsChannelPartnerLinksCustomersGetCall) Header() http.Header {
 }
 
 func (c *AccountsChannelPartnerLinksCustomersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9523,12 +7395,11 @@ func (c *AccountsChannelPartnerLinksCustomersGetCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.get" call.
-// Exactly one of *GoogleCloudChannelV1Customer or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksCustomersGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9559,35 +7430,7 @@ func (c *AccountsChannelPartnerLinksCustomersGetCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the requested Customer resource. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer resource doesn't exist. Usually the result of an invalid name parameter. Return value: The Customer resource.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.customers.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the customer to retrieve. Name uses the format: accounts/{account_id}/customers/{customer_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.customers.import":
 
 type AccountsChannelPartnerLinksCustomersImportCall struct {
 	s                                         *Service
@@ -9598,22 +7441,20 @@ type AccountsChannelPartnerLinksCustomersImportCall struct {
 	header_                                   http.Header
 }
 
-// Import: Imports a Customer from the Cloud Identity associated with
-// the provided Cloud Identity ID or domain before a
-// TransferEntitlements call. If a linked Customer already exists and
-// overwrite_if_exists is true, it will update that Customer's data.
-// Possible error codes: * PERMISSION_DENIED: * The reseller account
-// making the request is different from the reseller account in the API
-// request. * You are not authorized to import the customer. See
-// https://support.google.com/channelservices/answer/9759265 *
-// NOT_FOUND: Cloud Identity doesn't exist or was deleted. *
-// INVALID_ARGUMENT: Required parameters are missing, or the auth_token
-// is expired or invalid. * ALREADY_EXISTS: A customer already exists
-// and has conflicting critical fields. Requires an overwrite. Return
-// value: The Customer.
+// Import: Imports a Customer from the Cloud Identity associated with the
+// provided Cloud Identity ID or domain before a TransferEntitlements call. If
+// a linked Customer already exists and overwrite_if_exists is true, it will
+// update that Customer's data. Possible error codes: * PERMISSION_DENIED: *
+// The reseller account making the request is different from the reseller
+// account in the API request. * You are not authorized to import the customer.
+// See https://support.google.com/channelservices/answer/9759265 * NOT_FOUND:
+// Cloud Identity doesn't exist or was deleted. * INVALID_ARGUMENT: Required
+// parameters are missing, or the auth_token is expired or invalid. *
+// ALREADY_EXISTS: A customer already exists and has conflicting critical
+// fields. Requires an overwrite. Return value: The Customer.
 //
-//   - parent: The resource name of the reseller's account. Parent takes
-//     the format: accounts/{account_id} or
+//   - parent: The resource name of the reseller's account. Parent takes the
+//     format: accounts/{account_id} or
 //     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) Import(parent string, googlecloudchannelv1importcustomerrequest *GoogleCloudChannelV1ImportCustomerRequest) *AccountsChannelPartnerLinksCustomersImportCall {
 	c := &AccountsChannelPartnerLinksCustomersImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9623,23 +7464,21 @@ func (r *AccountsChannelPartnerLinksCustomersService) Import(parent string, goog
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksCustomersImportCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCustomersImportCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksCustomersImportCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCustomersImportCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksCustomersImportCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9648,18 +7487,12 @@ func (c *AccountsChannelPartnerLinksCustomersImportCall) Header() http.Header {
 }
 
 func (c *AccountsChannelPartnerLinksCustomersImportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1importcustomerrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customers:import")
@@ -9676,12 +7509,11 @@ func (c *AccountsChannelPartnerLinksCustomersImportCall) doRequest(alt string) (
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.import" call.
-// Exactly one of *GoogleCloudChannelV1Customer or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksCustomersImportCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9712,38 +7544,7 @@ func (c *AccountsChannelPartnerLinksCustomersImportCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Imports a Customer from the Cloud Identity associated with the provided Cloud Identity ID or domain before a TransferEntitlements call. If a linked Customer already exists and overwrite_if_exists is true, it will update that Customer's data. Possible error codes: * PERMISSION_DENIED: * The reseller account making the request is different from the reseller account in the API request. * You are not authorized to import the customer. See https://support.google.com/channelservices/answer/9759265 * NOT_FOUND: Cloud Identity doesn't exist or was deleted. * INVALID_ARGUMENT: Required parameters are missing, or the auth_token is expired or invalid. * ALREADY_EXISTS: A customer already exists and has conflicting critical fields. Requires an overwrite. Return value: The Customer.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers:import",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.customers.import",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the reseller's account. Parent takes the format: accounts/{account_id} or accounts/{account_id}/channelPartnerLinks/{channel_partner_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/customers:import",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ImportCustomerRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.channelPartnerLinks.customers.list":
 
 type AccountsChannelPartnerLinksCustomersListCall struct {
 	s            *Service
@@ -9755,13 +7556,13 @@ type AccountsChannelPartnerLinksCustomersListCall struct {
 }
 
 // List: List Customers. Possible error codes: * PERMISSION_DENIED: The
-// reseller account making the request is different from the reseller
-// account in the API request. * INVALID_ARGUMENT: Required request
-// parameters are missing or invalid. Return value: List of Customers,
-// or an empty list if there are no customers.
+// reseller account making the request is different from the reseller account
+// in the API request. * INVALID_ARGUMENT: Required request parameters are
+// missing or invalid. Return value: List of Customers, or an empty list if
+// there are no customers.
 //
-//   - parent: The resource name of the reseller account to list customers
-//     from. Parent uses the format: accounts/{account_id}.
+//   - parent: The resource name of the reseller account to list customers from.
+//     Parent uses the format: accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) List(parent string) *AccountsChannelPartnerLinksCustomersListCall {
 	c := &AccountsChannelPartnerLinksCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9777,18 +7578,17 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) Filter(filter string) *Ac
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of customers to return. The service may return fewer than this value.
-// If unspecified, returns at most 10 customers. The maximum value is
-// 50.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// customers to return. The service may return fewer than this value. If
+// unspecified, returns at most 10 customers. The maximum value is 50.
 func (c *AccountsChannelPartnerLinksCustomersListCall) PageSize(pageSize int64) *AccountsChannelPartnerLinksCustomersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results other than the first page. Obtained
-// through ListCustomersResponse.next_page_token of the previous
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results other than the first page. Obtained through
+// ListCustomersResponse.next_page_token of the previous
 // CloudChannelService.ListCustomers call.
 func (c *AccountsChannelPartnerLinksCustomersListCall) PageToken(pageToken string) *AccountsChannelPartnerLinksCustomersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -9796,33 +7596,29 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) PageToken(pageToken strin
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksCustomersListCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCustomersListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsChannelPartnerLinksCustomersListCall) IfNoneMatch(entityTag string) *AccountsChannelPartnerLinksCustomersListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksCustomersListCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCustomersListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksCustomersListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9831,12 +7627,7 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) Header() http.Header {
 }
 
 func (c *AccountsChannelPartnerLinksCustomersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9857,14 +7648,11 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) doRequest(alt string) (*h
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.list" call.
-// Exactly one of *GoogleCloudChannelV1ListCustomersResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListCustomersResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListCustomersResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksCustomersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListCustomersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9895,48 +7683,6 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List Customers. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: List of Customers, or an empty list if there are no customers.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.customers.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filters applied to the [CloudChannelService.ListCustomers] results. See https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers for more information.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results other than the first page. Obtained through ListCustomersResponse.next_page_token of the previous CloudChannelService.ListCustomers call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the reseller account to list customers from. Parent uses the format: accounts/{account_id}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/customers",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListCustomersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -9944,7 +7690,7 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) Do(opts ...googleapi.Call
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsChannelPartnerLinksCustomersListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListCustomersResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -9960,8 +7706,6 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) Pages(ctx context.Context
 	}
 }
 
-// method id "cloudchannel.accounts.channelPartnerLinks.customers.patch":
-
 type AccountsChannelPartnerLinksCustomersPatchCall struct {
 	s                            *Service
 	name                         string
@@ -9972,11 +7716,11 @@ type AccountsChannelPartnerLinksCustomersPatchCall struct {
 }
 
 // Patch: Updates an existing Customer resource for the reseller or
-// distributor. Possible error codes: * PERMISSION_DENIED: The reseller
-// account making the request is different from the reseller account in
-// the API request. * INVALID_ARGUMENT: Required request parameters are
-// missing or invalid. * NOT_FOUND: No Customer resource found for the
-// name in the request. Return value: The updated Customer resource.
+// distributor. Possible error codes: * PERMISSION_DENIED: The reseller account
+// making the request is different from the reseller account in the API
+// request. * INVALID_ARGUMENT: Required request parameters are missing or
+// invalid. * NOT_FOUND: No Customer resource found for the name in the
+// request. Return value: The updated Customer resource.
 //
 //   - name: Output only. Resource name of the customer. Format:
 //     accounts/{account_id}/customers/{customer_id}.
@@ -9987,31 +7731,29 @@ func (r *AccountsChannelPartnerLinksCustomersService) Patch(name string, googlec
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// that applies to the resource.
+// UpdateMask sets the optional parameter "updateMask": The update mask that
+// applies to the resource.
 func (c *AccountsChannelPartnerLinksCustomersPatchCall) UpdateMask(updateMask string) *AccountsChannelPartnerLinksCustomersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsChannelPartnerLinksCustomersPatchCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCustomersPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsChannelPartnerLinksCustomersPatchCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCustomersPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsChannelPartnerLinksCustomersPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10020,18 +7762,12 @@ func (c *AccountsChannelPartnerLinksCustomersPatchCall) Header() http.Header {
 }
 
 func (c *AccountsChannelPartnerLinksCustomersPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1customer)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -10048,12 +7784,11 @@ func (c *AccountsChannelPartnerLinksCustomersPatchCall) doRequest(alt string) (*
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.patch" call.
-// Exactly one of *GoogleCloudChannelV1Customer or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsChannelPartnerLinksCustomersPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10084,44 +7819,7 @@ func (c *AccountsChannelPartnerLinksCustomersPatchCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing Customer resource for the reseller or distributor. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: No Customer resource found for the name in the request. Return value: The updated Customer resource.",
-	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudchannel.accounts.channelPartnerLinks.customers.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of the customer. Format: accounts/{account_id}/customers/{customer_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The update mask that applies to the resource. Optional.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.create":
 
 type AccountsCustomersCreateCall struct {
 	s                            *Service
@@ -10132,18 +7830,17 @@ type AccountsCustomersCreateCall struct {
 	header_                      http.Header
 }
 
-// Create: Creates a new Customer resource under the reseller or
-// distributor account. Possible error codes: * PERMISSION_DENIED: * The
-// reseller account making the request is different from the reseller
-// account in the API request. * You are not authorized to create a
-// customer. See
+// Create: Creates a new Customer resource under the reseller or distributor
+// account. Possible error codes: * PERMISSION_DENIED: * The reseller account
+// making the request is different from the reseller account in the API
+// request. * You are not authorized to create a customer. See
 // https://support.google.com/channelservices/answer/9759265 *
-// INVALID_ARGUMENT: * Required request parameters are missing or
-// invalid. * Domain field value doesn't match the primary email domain.
-// Return value: The newly created Customer resource.
+// INVALID_ARGUMENT: * Required request parameters are missing or invalid. *
+// Domain field value doesn't match the primary email domain. Return value: The
+// newly created Customer resource.
 //
-//   - parent: The resource name of reseller account in which to create
-//     the customer. Parent uses the format: accounts/{account_id}.
+//   - parent: The resource name of reseller account in which to create the
+//     customer. Parent uses the format: accounts/{account_id}.
 func (r *AccountsCustomersService) Create(parent string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsCustomersCreateCall {
 	c := &AccountsCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10152,23 +7849,21 @@ func (r *AccountsCustomersService) Create(parent string, googlecloudchannelv1cus
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersCreateCall) Fields(s ...googleapi.Field) *AccountsCustomersCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersCreateCall) Context(ctx context.Context) *AccountsCustomersCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10177,18 +7872,12 @@ func (c *AccountsCustomersCreateCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1customer)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customers")
@@ -10205,12 +7894,11 @@ func (c *AccountsCustomersCreateCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "cloudchannel.accounts.customers.create" call.
-// Exactly one of *GoogleCloudChannelV1Customer or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10241,38 +7929,7 @@ func (c *AccountsCustomersCreateCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new Customer resource under the reseller or distributor account. Possible error codes: * PERMISSION_DENIED: * The reseller account making the request is different from the reseller account in the API request. * You are not authorized to create a customer. See https://support.google.com/channelservices/answer/9759265 * INVALID_ARGUMENT: * Required request parameters are missing or invalid. * Domain field value doesn't match the primary email domain. Return value: The newly created Customer resource.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of reseller account in which to create the customer. Parent uses the format: accounts/{account_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/customers",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.delete":
 
 type AccountsCustomersDeleteCall struct {
 	s          *Service
@@ -10282,12 +7939,11 @@ type AccountsCustomersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the given Customer permanently. Possible error codes:
-// * PERMISSION_DENIED: The account making the request does not own this
-// customer. * INVALID_ARGUMENT: Required request parameters are missing
-// or invalid. * FAILED_PRECONDITION: The customer has existing
-// entitlements. * NOT_FOUND: No Customer resource found for the name in
-// the request.
+// Delete: Deletes the given Customer permanently. Possible error codes: *
+// PERMISSION_DENIED: The account making the request does not own this
+// customer. * INVALID_ARGUMENT: Required request parameters are missing or
+// invalid. * FAILED_PRECONDITION: The customer has existing entitlements. *
+// NOT_FOUND: No Customer resource found for the name in the request.
 //
 // - name: The resource name of the customer to delete.
 func (r *AccountsCustomersService) Delete(name string) *AccountsCustomersDeleteCall {
@@ -10297,23 +7953,21 @@ func (r *AccountsCustomersService) Delete(name string) *AccountsCustomersDeleteC
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersDeleteCall) Fields(s ...googleapi.Field) *AccountsCustomersDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersDeleteCall) Context(ctx context.Context) *AccountsCustomersDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10322,12 +7976,7 @@ func (c *AccountsCustomersDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -10345,12 +7994,11 @@ func (c *AccountsCustomersDeleteCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "cloudchannel.accounts.customers.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsCustomersDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10381,35 +8029,7 @@ func (c *AccountsCustomersDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleP
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the given Customer permanently. Possible error codes: * PERMISSION_DENIED: The account making the request does not own this customer. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * FAILED_PRECONDITION: The customer has existing entitlements. * NOT_FOUND: No Customer resource found for the name in the request.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "cloudchannel.accounts.customers.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the customer to delete.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.get":
 
 type AccountsCustomersGetCall struct {
 	s            *Service
@@ -10421,14 +8041,14 @@ type AccountsCustomersGetCall struct {
 }
 
 // Get: Returns the requested Customer resource. Possible error codes: *
-// PERMISSION_DENIED: The reseller account making the request is
-// different from the reseller account in the API request. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: The customer resource doesn't exist. Usually the result
-// of an invalid name parameter. Return value: The Customer resource.
+// PERMISSION_DENIED: The reseller account making the request is different from
+// the reseller account in the API request. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid. * NOT_FOUND: The customer
+// resource doesn't exist. Usually the result of an invalid name parameter.
+// Return value: The Customer resource.
 //
-//   - name: The resource name of the customer to retrieve. Name uses the
-//     format: accounts/{account_id}/customers/{customer_id}.
+//   - name: The resource name of the customer to retrieve. Name uses the format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) Get(name string) *AccountsCustomersGetCall {
 	c := &AccountsCustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10436,33 +8056,29 @@ func (r *AccountsCustomersService) Get(name string) *AccountsCustomersGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersGetCall) Fields(s ...googleapi.Field) *AccountsCustomersGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsCustomersGetCall) IfNoneMatch(entityTag string) *AccountsCustomersGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersGetCall) Context(ctx context.Context) *AccountsCustomersGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10471,12 +8087,7 @@ func (c *AccountsCustomersGetCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10497,12 +8108,11 @@ func (c *AccountsCustomersGetCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "cloudchannel.accounts.customers.get" call.
-// Exactly one of *GoogleCloudChannelV1Customer or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10533,35 +8143,7 @@ func (c *AccountsCustomersGetCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the requested Customer resource. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer resource doesn't exist. Usually the result of an invalid name parameter. Return value: The Customer resource.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.customers.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the customer to retrieve. Name uses the format: accounts/{account_id}/customers/{customer_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.import":
 
 type AccountsCustomersImportCall struct {
 	s                                         *Service
@@ -10572,22 +8154,20 @@ type AccountsCustomersImportCall struct {
 	header_                                   http.Header
 }
 
-// Import: Imports a Customer from the Cloud Identity associated with
-// the provided Cloud Identity ID or domain before a
-// TransferEntitlements call. If a linked Customer already exists and
-// overwrite_if_exists is true, it will update that Customer's data.
-// Possible error codes: * PERMISSION_DENIED: * The reseller account
-// making the request is different from the reseller account in the API
-// request. * You are not authorized to import the customer. See
-// https://support.google.com/channelservices/answer/9759265 *
-// NOT_FOUND: Cloud Identity doesn't exist or was deleted. *
-// INVALID_ARGUMENT: Required parameters are missing, or the auth_token
-// is expired or invalid. * ALREADY_EXISTS: A customer already exists
-// and has conflicting critical fields. Requires an overwrite. Return
-// value: The Customer.
+// Import: Imports a Customer from the Cloud Identity associated with the
+// provided Cloud Identity ID or domain before a TransferEntitlements call. If
+// a linked Customer already exists and overwrite_if_exists is true, it will
+// update that Customer's data. Possible error codes: * PERMISSION_DENIED: *
+// The reseller account making the request is different from the reseller
+// account in the API request. * You are not authorized to import the customer.
+// See https://support.google.com/channelservices/answer/9759265 * NOT_FOUND:
+// Cloud Identity doesn't exist or was deleted. * INVALID_ARGUMENT: Required
+// parameters are missing, or the auth_token is expired or invalid. *
+// ALREADY_EXISTS: A customer already exists and has conflicting critical
+// fields. Requires an overwrite. Return value: The Customer.
 //
-//   - parent: The resource name of the reseller's account. Parent takes
-//     the format: accounts/{account_id} or
+//   - parent: The resource name of the reseller's account. Parent takes the
+//     format: accounts/{account_id} or
 //     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
 func (r *AccountsCustomersService) Import(parent string, googlecloudchannelv1importcustomerrequest *GoogleCloudChannelV1ImportCustomerRequest) *AccountsCustomersImportCall {
 	c := &AccountsCustomersImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10597,23 +8177,21 @@ func (r *AccountsCustomersService) Import(parent string, googlecloudchannelv1imp
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersImportCall) Fields(s ...googleapi.Field) *AccountsCustomersImportCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersImportCall) Context(ctx context.Context) *AccountsCustomersImportCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersImportCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10622,18 +8200,12 @@ func (c *AccountsCustomersImportCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersImportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1importcustomerrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customers:import")
@@ -10650,12 +8222,11 @@ func (c *AccountsCustomersImportCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "cloudchannel.accounts.customers.import" call.
-// Exactly one of *GoogleCloudChannelV1Customer or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersImportCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10686,38 +8257,7 @@ func (c *AccountsCustomersImportCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Imports a Customer from the Cloud Identity associated with the provided Cloud Identity ID or domain before a TransferEntitlements call. If a linked Customer already exists and overwrite_if_exists is true, it will update that Customer's data. Possible error codes: * PERMISSION_DENIED: * The reseller account making the request is different from the reseller account in the API request. * You are not authorized to import the customer. See https://support.google.com/channelservices/answer/9759265 * NOT_FOUND: Cloud Identity doesn't exist or was deleted. * INVALID_ARGUMENT: Required parameters are missing, or the auth_token is expired or invalid. * ALREADY_EXISTS: A customer already exists and has conflicting critical fields. Requires an overwrite. Return value: The Customer.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers:import",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.import",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the reseller's account. Parent takes the format: accounts/{account_id} or accounts/{account_id}/channelPartnerLinks/{channel_partner_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/customers:import",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ImportCustomerRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.list":
 
 type AccountsCustomersListCall struct {
 	s            *Service
@@ -10729,13 +8269,13 @@ type AccountsCustomersListCall struct {
 }
 
 // List: List Customers. Possible error codes: * PERMISSION_DENIED: The
-// reseller account making the request is different from the reseller
-// account in the API request. * INVALID_ARGUMENT: Required request
-// parameters are missing or invalid. Return value: List of Customers,
-// or an empty list if there are no customers.
+// reseller account making the request is different from the reseller account
+// in the API request. * INVALID_ARGUMENT: Required request parameters are
+// missing or invalid. Return value: List of Customers, or an empty list if
+// there are no customers.
 //
-//   - parent: The resource name of the reseller account to list customers
-//     from. Parent uses the format: accounts/{account_id}.
+//   - parent: The resource name of the reseller account to list customers from.
+//     Parent uses the format: accounts/{account_id}.
 func (r *AccountsCustomersService) List(parent string) *AccountsCustomersListCall {
 	c := &AccountsCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10751,18 +8291,17 @@ func (c *AccountsCustomersListCall) Filter(filter string) *AccountsCustomersList
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of customers to return. The service may return fewer than this value.
-// If unspecified, returns at most 10 customers. The maximum value is
-// 50.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// customers to return. The service may return fewer than this value. If
+// unspecified, returns at most 10 customers. The maximum value is 50.
 func (c *AccountsCustomersListCall) PageSize(pageSize int64) *AccountsCustomersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results other than the first page. Obtained
-// through ListCustomersResponse.next_page_token of the previous
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results other than the first page. Obtained through
+// ListCustomersResponse.next_page_token of the previous
 // CloudChannelService.ListCustomers call.
 func (c *AccountsCustomersListCall) PageToken(pageToken string) *AccountsCustomersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -10770,33 +8309,29 @@ func (c *AccountsCustomersListCall) PageToken(pageToken string) *AccountsCustome
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersListCall) Fields(s ...googleapi.Field) *AccountsCustomersListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsCustomersListCall) IfNoneMatch(entityTag string) *AccountsCustomersListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersListCall) Context(ctx context.Context) *AccountsCustomersListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10805,12 +8340,7 @@ func (c *AccountsCustomersListCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10831,14 +8361,11 @@ func (c *AccountsCustomersListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "cloudchannel.accounts.customers.list" call.
-// Exactly one of *GoogleCloudChannelV1ListCustomersResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListCustomersResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListCustomersResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListCustomersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10869,48 +8396,6 @@ func (c *AccountsCustomersListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List Customers. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: List of Customers, or an empty list if there are no customers.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.customers.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filters applied to the [CloudChannelService.ListCustomers] results. See https://cloud.google.com/channel/docs/concepts/google-cloud/filter-customers for more information.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results other than the first page. Obtained through ListCustomersResponse.next_page_token of the previous CloudChannelService.ListCustomers call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the reseller account to list customers from. Parent uses the format: accounts/{account_id}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/customers",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListCustomersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -10918,7 +8403,7 @@ func (c *AccountsCustomersListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsCustomersListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListCustomersResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -10934,8 +8419,6 @@ func (c *AccountsCustomersListCall) Pages(ctx context.Context, f func(*GoogleClo
 	}
 }
 
-// method id "cloudchannel.accounts.customers.listPurchasableOffers":
-
 type AccountsCustomersListPurchasableOffersCall struct {
 	s            *Service
 	customer     string
@@ -10945,16 +8428,15 @@ type AccountsCustomersListPurchasableOffersCall struct {
 	header_      http.Header
 }
 
-// ListPurchasableOffers: Lists the following: * Offers that you can
-// purchase for a customer. * Offers that you can change for an
-// entitlement. Possible error codes: * PERMISSION_DENIED: * The
-// customer doesn't belong to the reseller * The reseller is not
-// authorized to transact on this Product. See
+// ListPurchasableOffers: Lists the following: * Offers that you can purchase
+// for a customer. * Offers that you can change for an entitlement. Possible
+// error codes: * PERMISSION_DENIED: * The customer doesn't belong to the
+// reseller * The reseller is not authorized to transact on this Product. See
 // https://support.google.com/channelservices/answer/9759265 *
 // INVALID_ARGUMENT: Required request parameters are missing or invalid.
 //
-//   - customer: The resource name of the customer to list Offers for.
-//     Format: accounts/{account_id}/customers/{customer_id}.
+//   - customer: The resource name of the customer to list Offers for. Format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) ListPurchasableOffers(customer string) *AccountsCustomersListPurchasableOffersCall {
 	c := &AccountsCustomersListPurchasableOffersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -10963,11 +8445,11 @@ func (r *AccountsCustomersService) ListPurchasableOffers(customer string) *Accou
 
 // ChangeOfferPurchaseBillingAccount sets the optional parameter
 // "changeOfferPurchase.billingAccount": Resource name of the new target
-// Billing Account. Provide this Billing Account when setting up billing
-// for a trial subscription. Format:
-// accounts/{account_id}/billingAccounts/{billing_account_id}. This
-// field is only relevant for multi-currency accounts. It should be left
-// empty for single currency accounts.
+// Billing Account. Provide this Billing Account when setting up billing for a
+// trial subscription. Format:
+// accounts/{account_id}/billingAccounts/{billing_account_id}. This field is
+// only relevant for multi-currency accounts. It should be left empty for
+// single currency accounts.
 func (c *AccountsCustomersListPurchasableOffersCall) ChangeOfferPurchaseBillingAccount(changeOfferPurchaseBillingAccount string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("changeOfferPurchase.billingAccount", changeOfferPurchaseBillingAccount)
 	return c
@@ -10976,25 +8458,24 @@ func (c *AccountsCustomersListPurchasableOffersCall) ChangeOfferPurchaseBillingA
 // ChangeOfferPurchaseEntitlement sets the optional parameter
 // "changeOfferPurchase.entitlement": Required. Resource name of the
 // entitlement. Format:
-// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlemen
-// t_id}
+// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}
 func (c *AccountsCustomersListPurchasableOffersCall) ChangeOfferPurchaseEntitlement(changeOfferPurchaseEntitlement string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("changeOfferPurchase.entitlement", changeOfferPurchaseEntitlement)
 	return c
 }
 
 // ChangeOfferPurchaseNewSku sets the optional parameter
-// "changeOfferPurchase.newSku": Resource name of the new target SKU.
-// Provide this SKU when upgrading or downgrading an entitlement.
-// Format: products/{product_id}/skus/{sku_id}
+// "changeOfferPurchase.newSku": Resource name of the new target SKU. Provide
+// this SKU when upgrading or downgrading an entitlement. Format:
+// products/{product_id}/skus/{sku_id}
 func (c *AccountsCustomersListPurchasableOffersCall) ChangeOfferPurchaseNewSku(changeOfferPurchaseNewSku string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("changeOfferPurchase.newSku", changeOfferPurchaseNewSku)
 	return c
 }
 
 // CreateEntitlementPurchaseBillingAccount sets the optional parameter
-// "createEntitlementPurchase.billingAccount": Billing account that the
-// result should be restricted to. Format:
+// "createEntitlementPurchase.billingAccount": Billing account that the result
+// should be restricted to. Format:
 // accounts/{account_id}/billingAccounts/{billing_account_id}.
 func (c *AccountsCustomersListPurchasableOffersCall) CreateEntitlementPurchaseBillingAccount(createEntitlementPurchaseBillingAccount string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("createEntitlementPurchase.billingAccount", createEntitlementPurchaseBillingAccount)
@@ -11002,66 +8483,61 @@ func (c *AccountsCustomersListPurchasableOffersCall) CreateEntitlementPurchaseBi
 }
 
 // CreateEntitlementPurchaseSku sets the optional parameter
-// "createEntitlementPurchase.sku": Required. SKU that the result should
-// be restricted to. Format: products/{product_id}/skus/{sku_id}.
+// "createEntitlementPurchase.sku": Required. SKU that the result should be
+// restricted to. Format: products/{product_id}/skus/{sku_id}.
 func (c *AccountsCustomersListPurchasableOffersCall) CreateEntitlementPurchaseSku(createEntitlementPurchaseSku string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("createEntitlementPurchase.sku", createEntitlementPurchaseSku)
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code. For example, "en-US". The response will localize in
-// the corresponding language code, if specified. The default value is
-// "en-US".
+// LanguageCode sets the optional parameter "languageCode": The BCP-47 language
+// code. For example, "en-US". The response will localize in the corresponding
+// language code, if specified. The default value is "en-US".
 func (c *AccountsCustomersListPurchasableOffersCall) LanguageCode(languageCode string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified,
-// returns at most 100 Offers. The maximum value is 1000; the server
-// will coerce values above 1000.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// might return fewer results than requested. If unspecified, returns at most
+// 100 Offers. The maximum value is 1000; the server will coerce values above
+// 1000.
 func (c *AccountsCustomersListPurchasableOffersCall) PageSize(pageSize int64) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token for a page
-// of results other than the first page.
+// PageToken sets the optional parameter "pageToken": A token for a page of
+// results other than the first page.
 func (c *AccountsCustomersListPurchasableOffersCall) PageToken(pageToken string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersListPurchasableOffersCall) Fields(s ...googleapi.Field) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsCustomersListPurchasableOffersCall) IfNoneMatch(entityTag string) *AccountsCustomersListPurchasableOffersCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersListPurchasableOffersCall) Context(ctx context.Context) *AccountsCustomersListPurchasableOffersCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersListPurchasableOffersCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11070,12 +8546,7 @@ func (c *AccountsCustomersListPurchasableOffersCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersListPurchasableOffersCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11096,14 +8567,11 @@ func (c *AccountsCustomersListPurchasableOffersCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "cloudchannel.accounts.customers.listPurchasableOffers" call.
-// Exactly one of *GoogleCloudChannelV1ListPurchasableOffersResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListPurchasableOffersResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListPurchasableOffersResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersListPurchasableOffersCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListPurchasableOffersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11134,73 +8602,6 @@ func (c *AccountsCustomersListPurchasableOffersCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the following: * Offers that you can purchase for a customer. * Offers that you can change for an entitlement. Possible error codes: * PERMISSION_DENIED: * The customer doesn't belong to the reseller * The reseller is not authorized to transact on this Product. See https://support.google.com/channelservices/answer/9759265 * INVALID_ARGUMENT: Required request parameters are missing or invalid.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:listPurchasableOffers",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.customers.listPurchasableOffers",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "changeOfferPurchase.billingAccount": {
-	//       "description": "Optional. Resource name of the new target Billing Account. Provide this Billing Account when setting up billing for a trial subscription. Format: accounts/{account_id}/billingAccounts/{billing_account_id}. This field is only relevant for multi-currency accounts. It should be left empty for single currency accounts.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "changeOfferPurchase.entitlement": {
-	//       "description": "Required. Resource name of the entitlement. Format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "changeOfferPurchase.newSku": {
-	//       "description": "Optional. Resource name of the new target SKU. Provide this SKU when upgrading or downgrading an entitlement. Format: products/{product_id}/skus/{sku_id}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "createEntitlementPurchase.billingAccount": {
-	//       "description": "Optional. Billing account that the result should be restricted to. Format: accounts/{account_id}/billingAccounts/{billing_account_id}.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "createEntitlementPurchase.sku": {
-	//       "description": "Required. SKU that the result should be restricted to. Format: products/{product_id}/skus/{sku_id}.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "customer": {
-	//       "description": "Required. The resource name of the customer to list Offers for. Format: accounts/{account_id}/customers/{customer_id}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code. For example, \"en-US\". The response will localize in the corresponding language code, if specified. The default value is \"en-US\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, returns at most 100 Offers. The maximum value is 1000; the server will coerce values above 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token for a page of results other than the first page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}:listPurchasableOffers",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListPurchasableOffersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -11208,7 +8609,7 @@ func (c *AccountsCustomersListPurchasableOffersCall) Do(opts ...googleapi.CallOp
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsCustomersListPurchasableOffersCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListPurchasableOffersResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -11224,8 +8625,6 @@ func (c *AccountsCustomersListPurchasableOffersCall) Pages(ctx context.Context, 
 	}
 }
 
-// method id "cloudchannel.accounts.customers.listPurchasableSkus":
-
 type AccountsCustomersListPurchasableSkusCall struct {
 	s            *Service
 	customer     string
@@ -11235,14 +8634,14 @@ type AccountsCustomersListPurchasableSkusCall struct {
 	header_      http.Header
 }
 
-// ListPurchasableSkus: Lists the following: * SKUs that you can
-// purchase for a customer * SKUs that you can upgrade or downgrade for
-// an entitlement. Possible error codes: * PERMISSION_DENIED: The
-// customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required
-// request parameters are missing or invalid.
+// ListPurchasableSkus: Lists the following: * SKUs that you can purchase for a
+// customer * SKUs that you can upgrade or downgrade for an entitlement.
+// Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to
+// the reseller. * INVALID_ARGUMENT: Required request parameters are missing or
+// invalid.
 //
-//   - customer: The resource name of the customer to list SKUs for.
-//     Format: accounts/{account_id}/customers/{customer_id}.
+//   - customer: The resource name of the customer to list SKUs for. Format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) ListPurchasableSkus(customer string) *AccountsCustomersListPurchasableSkusCall {
 	c := &AccountsCustomersListPurchasableSkusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -11250,8 +8649,7 @@ func (r *AccountsCustomersService) ListPurchasableSkus(customer string) *Account
 }
 
 // ChangeOfferPurchaseChangeType sets the optional parameter
-// "changeOfferPurchase.changeType": Required. Change Type for the
-// entitlement.
+// "changeOfferPurchase.changeType": Required. Change Type for the entitlement.
 //
 // Possible values:
 //
@@ -11266,75 +8664,69 @@ func (c *AccountsCustomersListPurchasableSkusCall) ChangeOfferPurchaseChangeType
 // ChangeOfferPurchaseEntitlement sets the optional parameter
 // "changeOfferPurchase.entitlement": Required. Resource name of the
 // entitlement. Format:
-// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlemen
-// t_id}
+// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}
 func (c *AccountsCustomersListPurchasableSkusCall) ChangeOfferPurchaseEntitlement(changeOfferPurchaseEntitlement string) *AccountsCustomersListPurchasableSkusCall {
 	c.urlParams_.Set("changeOfferPurchase.entitlement", changeOfferPurchaseEntitlement)
 	return c
 }
 
 // CreateEntitlementPurchaseProduct sets the optional parameter
-// "createEntitlementPurchase.product": Required. List SKUs belonging to
-// this Product. Format: products/{product_id}. Supports products/- to
-// retrieve SKUs for all products.
+// "createEntitlementPurchase.product": Required. List SKUs belonging to this
+// Product. Format: products/{product_id}. Supports products/- to retrieve SKUs
+// for all products.
 func (c *AccountsCustomersListPurchasableSkusCall) CreateEntitlementPurchaseProduct(createEntitlementPurchaseProduct string) *AccountsCustomersListPurchasableSkusCall {
 	c.urlParams_.Set("createEntitlementPurchase.product", createEntitlementPurchaseProduct)
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code. For example, "en-US". The response will localize in
-// the corresponding language code, if specified. The default value is
-// "en-US".
+// LanguageCode sets the optional parameter "languageCode": The BCP-47 language
+// code. For example, "en-US". The response will localize in the corresponding
+// language code, if specified. The default value is "en-US".
 func (c *AccountsCustomersListPurchasableSkusCall) LanguageCode(languageCode string) *AccountsCustomersListPurchasableSkusCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified,
-// returns at most 100 SKUs. The maximum value is 1000; the server will
-// coerce values above 1000.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// might return fewer results than requested. If unspecified, returns at most
+// 100 SKUs. The maximum value is 1000; the server will coerce values above
+// 1000.
 func (c *AccountsCustomersListPurchasableSkusCall) PageSize(pageSize int64) *AccountsCustomersListPurchasableSkusCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token for a page
-// of results other than the first page.
+// PageToken sets the optional parameter "pageToken": A token for a page of
+// results other than the first page.
 func (c *AccountsCustomersListPurchasableSkusCall) PageToken(pageToken string) *AccountsCustomersListPurchasableSkusCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersListPurchasableSkusCall) Fields(s ...googleapi.Field) *AccountsCustomersListPurchasableSkusCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsCustomersListPurchasableSkusCall) IfNoneMatch(entityTag string) *AccountsCustomersListPurchasableSkusCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersListPurchasableSkusCall) Context(ctx context.Context) *AccountsCustomersListPurchasableSkusCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersListPurchasableSkusCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11343,12 +8735,7 @@ func (c *AccountsCustomersListPurchasableSkusCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersListPurchasableSkusCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11369,16 +8756,11 @@ func (c *AccountsCustomersListPurchasableSkusCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "cloudchannel.accounts.customers.listPurchasableSkus" call.
-// Exactly one of *GoogleCloudChannelV1ListPurchasableSkusResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListPurchasableSkusResponse.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListPurchasableSkusResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersListPurchasableSkusCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListPurchasableSkusResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11409,73 +8791,6 @@ func (c *AccountsCustomersListPurchasableSkusCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the following: * SKUs that you can purchase for a customer * SKUs that you can upgrade or downgrade for an entitlement. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:listPurchasableSkus",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.customers.listPurchasableSkus",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "changeOfferPurchase.changeType": {
-	//       "description": "Required. Change Type for the entitlement.",
-	//       "enum": [
-	//         "CHANGE_TYPE_UNSPECIFIED",
-	//         "UPGRADE",
-	//         "DOWNGRADE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Not used.",
-	//         "SKU is an upgrade on the current entitlement.",
-	//         "SKU is a downgrade on the current entitlement."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "changeOfferPurchase.entitlement": {
-	//       "description": "Required. Resource name of the entitlement. Format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "createEntitlementPurchase.product": {
-	//       "description": "Required. List SKUs belonging to this Product. Format: products/{product_id}. Supports products/- to retrieve SKUs for all products.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "customer": {
-	//       "description": "Required. The resource name of the customer to list SKUs for. Format: accounts/{account_id}/customers/{customer_id}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code. For example, \"en-US\". The response will localize in the corresponding language code, if specified. The default value is \"en-US\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, returns at most 100 SKUs. The maximum value is 1000; the server will coerce values above 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token for a page of results other than the first page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}:listPurchasableSkus",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListPurchasableSkusResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -11483,7 +8798,7 @@ func (c *AccountsCustomersListPurchasableSkusCall) Do(opts ...googleapi.CallOpti
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsCustomersListPurchasableSkusCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListPurchasableSkusResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -11499,8 +8814,6 @@ func (c *AccountsCustomersListPurchasableSkusCall) Pages(ctx context.Context, f 
 	}
 }
 
-// method id "cloudchannel.accounts.customers.patch":
-
 type AccountsCustomersPatchCall struct {
 	s                            *Service
 	name                         string
@@ -11511,11 +8824,11 @@ type AccountsCustomersPatchCall struct {
 }
 
 // Patch: Updates an existing Customer resource for the reseller or
-// distributor. Possible error codes: * PERMISSION_DENIED: The reseller
-// account making the request is different from the reseller account in
-// the API request. * INVALID_ARGUMENT: Required request parameters are
-// missing or invalid. * NOT_FOUND: No Customer resource found for the
-// name in the request. Return value: The updated Customer resource.
+// distributor. Possible error codes: * PERMISSION_DENIED: The reseller account
+// making the request is different from the reseller account in the API
+// request. * INVALID_ARGUMENT: Required request parameters are missing or
+// invalid. * NOT_FOUND: No Customer resource found for the name in the
+// request. Return value: The updated Customer resource.
 //
 //   - name: Output only. Resource name of the customer. Format:
 //     accounts/{account_id}/customers/{customer_id}.
@@ -11526,31 +8839,29 @@ func (r *AccountsCustomersService) Patch(name string, googlecloudchannelv1custom
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// that applies to the resource.
+// UpdateMask sets the optional parameter "updateMask": The update mask that
+// applies to the resource.
 func (c *AccountsCustomersPatchCall) UpdateMask(updateMask string) *AccountsCustomersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersPatchCall) Fields(s ...googleapi.Field) *AccountsCustomersPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersPatchCall) Context(ctx context.Context) *AccountsCustomersPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11559,18 +8870,12 @@ func (c *AccountsCustomersPatchCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1customer)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -11587,12 +8892,11 @@ func (c *AccountsCustomersPatchCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "cloudchannel.accounts.customers.patch" call.
-// Exactly one of *GoogleCloudChannelV1Customer or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11623,44 +8927,7 @@ func (c *AccountsCustomersPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing Customer resource for the reseller or distributor. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: No Customer resource found for the name in the request. Return value: The updated Customer resource.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudchannel.accounts.customers.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of the customer. Format: accounts/{account_id}/customers/{customer_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The update mask that applies to the resource. Optional.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.provisionCloudIdentity":
 
 type AccountsCustomersProvisionCloudIdentityCall struct {
 	s                                                 *Service
@@ -11671,22 +8938,20 @@ type AccountsCustomersProvisionCloudIdentityCall struct {
 	header_                                           http.Header
 }
 
-// ProvisionCloudIdentity: Creates a Cloud Identity for the given
-// customer using the customer's information, or the information
-// provided here. Possible error codes: * PERMISSION_DENIED: * The
-// customer doesn't belong to the reseller. * You are not authorized to
-// provision cloud identity id. See
+// ProvisionCloudIdentity: Creates a Cloud Identity for the given customer
+// using the customer's information, or the information provided here. Possible
+// error codes: * PERMISSION_DENIED: * The customer doesn't belong to the
+// reseller. * You are not authorized to provision cloud identity id. See
 // https://support.google.com/channelservices/answer/9759265 *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: The customer was not found. * ALREADY_EXISTS: The
-// customer's primary email already exists. Retry after changing the
-// customer's primary contact email. * INTERNAL: Any non-user error
-// related to a technical issue in the backend. Contact Cloud Channel
-// support. * UNKNOWN: Any non-user error related to a technical issue
-// in the backend. Contact Cloud Channel support. Return value: The ID
-// of a long-running operation. To get the results of the operation,
-// call the GetOperation method of CloudChannelOperationsService. The
-// Operation metadata contains an instance of OperationMetadata.
+// INVALID_ARGUMENT: Required request parameters are missing or invalid. *
+// NOT_FOUND: The customer was not found. * ALREADY_EXISTS: The customer's
+// primary email already exists. Retry after changing the customer's primary
+// contact email. * INTERNAL: Any non-user error related to a technical issue
+// in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel support.
+// Return value: The ID of a long-running operation. To get the results of the
+// operation, call the GetOperation method of CloudChannelOperationsService.
+// The Operation metadata contains an instance of OperationMetadata.
 //
 //   - customer: Resource name of the customer. Format:
 //     accounts/{account_id}/customers/{customer_id}.
@@ -11698,23 +8963,21 @@ func (r *AccountsCustomersService) ProvisionCloudIdentity(customer string, googl
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersProvisionCloudIdentityCall) Fields(s ...googleapi.Field) *AccountsCustomersProvisionCloudIdentityCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersProvisionCloudIdentityCall) Context(ctx context.Context) *AccountsCustomersProvisionCloudIdentityCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersProvisionCloudIdentityCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11723,18 +8986,12 @@ func (c *AccountsCustomersProvisionCloudIdentityCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersProvisionCloudIdentityCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1provisioncloudidentityrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}:provisionCloudIdentity")
@@ -11751,12 +9008,11 @@ func (c *AccountsCustomersProvisionCloudIdentityCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "cloudchannel.accounts.customers.provisionCloudIdentity" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersProvisionCloudIdentityCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11787,38 +9043,7 @@ func (c *AccountsCustomersProvisionCloudIdentityCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a Cloud Identity for the given customer using the customer's information, or the information provided here. Possible error codes: * PERMISSION_DENIED: * The customer doesn't belong to the reseller. * You are not authorized to provision cloud identity id. See https://support.google.com/channelservices/answer/9759265 * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer was not found. * ALREADY_EXISTS: The customer's primary email already exists. Retry after changing the customer's primary contact email. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata contains an instance of OperationMetadata.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:provisionCloudIdentity",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.provisionCloudIdentity",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "Required. Resource name of the customer. Format: accounts/{account_id}/customers/{customer_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}:provisionCloudIdentity",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ProvisionCloudIdentityRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.queryEligibleBillingAccounts":
 
 type AccountsCustomersQueryEligibleBillingAccountsCall struct {
 	s            *Service
@@ -11829,59 +9054,54 @@ type AccountsCustomersQueryEligibleBillingAccountsCall struct {
 	header_      http.Header
 }
 
-// QueryEligibleBillingAccounts: Lists the billing accounts that are
-// eligible to purchase particular SKUs for a given customer. Possible
-// error codes: * PERMISSION_DENIED: The customer doesn't belong to the
-// reseller. * INVALID_ARGUMENT: Required request parameters are missing
-// or invalid. Return value: Based on the provided list of SKUs, returns
-// a list of SKU groups that must be purchased using the same billing
-// account and the billing accounts eligible to purchase each SKU group.
+// QueryEligibleBillingAccounts: Lists the billing accounts that are eligible
+// to purchase particular SKUs for a given customer. Possible error codes: *
+// PERMISSION_DENIED: The customer doesn't belong to the reseller. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid. Return
+// value: Based on the provided list of SKUs, returns a list of SKU groups that
+// must be purchased using the same billing account and the billing accounts
+// eligible to purchase each SKU group.
 //
-//   - customer: The resource name of the customer to list eligible
-//     billing accounts for. Format:
-//     accounts/{account_id}/customers/{customer_id}.
+//   - customer: The resource name of the customer to list eligible billing
+//     accounts for. Format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) QueryEligibleBillingAccounts(customer string) *AccountsCustomersQueryEligibleBillingAccountsCall {
 	c := &AccountsCustomersQueryEligibleBillingAccountsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
 	return c
 }
 
-// Skus sets the optional parameter "skus": Required. List of SKUs to
-// list eligible billing accounts for. At least one SKU is required.
-// Format: products/{product_id}/skus/{sku_id}.
+// Skus sets the optional parameter "skus": Required. List of SKUs to list
+// eligible billing accounts for. At least one SKU is required. Format:
+// products/{product_id}/skus/{sku_id}.
 func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Skus(skus ...string) *AccountsCustomersQueryEligibleBillingAccountsCall {
 	c.urlParams_.SetMulti("skus", append([]string{}, skus...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Fields(s ...googleapi.Field) *AccountsCustomersQueryEligibleBillingAccountsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsCustomersQueryEligibleBillingAccountsCall) IfNoneMatch(entityTag string) *AccountsCustomersQueryEligibleBillingAccountsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Context(ctx context.Context) *AccountsCustomersQueryEligibleBillingAccountsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11890,12 +9110,7 @@ func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Header() http.Header
 }
 
 func (c *AccountsCustomersQueryEligibleBillingAccountsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11916,15 +9131,11 @@ func (c *AccountsCustomersQueryEligibleBillingAccountsCall) doRequest(alt string
 }
 
 // Do executes the "cloudchannel.accounts.customers.queryEligibleBillingAccounts" call.
-// Exactly one of
-// *GoogleCloudChannelV1QueryEligibleBillingAccountsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1QueryEligibleBillingAccountsResponse.ServerRespon
-// se.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1QueryEligibleBillingAccountsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1QueryEligibleBillingAccountsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11955,41 +9166,7 @@ func (c *AccountsCustomersQueryEligibleBillingAccountsCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the billing accounts that are eligible to purchase particular SKUs for a given customer. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: Based on the provided list of SKUs, returns a list of SKU groups that must be purchased using the same billing account and the billing accounts eligible to purchase each SKU group.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:queryEligibleBillingAccounts",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.customers.queryEligibleBillingAccounts",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "Required. The resource name of the customer to list eligible billing accounts for. Format: accounts/{account_id}/customers/{customer_id}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "skus": {
-	//       "description": "Required. List of SKUs to list eligible billing accounts for. At least one SKU is required. Format: products/{product_id}/skus/{sku_id}.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}:queryEligibleBillingAccounts",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1QueryEligibleBillingAccountsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.transferEntitlements":
 
 type AccountsCustomersTransferEntitlementsCall struct {
 	s                                               *Service
@@ -12000,31 +9177,28 @@ type AccountsCustomersTransferEntitlementsCall struct {
 	header_                                         http.Header
 }
 
-// TransferEntitlements: Transfers customer entitlements to new
-// reseller. Possible error codes: * PERMISSION_DENIED: * The customer
-// doesn't belong to the reseller. * The reseller is not authorized to
-// transact on this Product. See
-// https://support.google.com/channelservices/answer/9759265 *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: The customer or offer resource was not found. *
-// ALREADY_EXISTS: The SKU was already transferred for the customer. *
-// CONDITION_NOT_MET or FAILED_PRECONDITION: * The SKU requires domain
-// verification to transfer, but the domain is not verified. * An Add-On
-// SKU (example, Vault or Drive) is missing the pre-requisite SKU
-// (example, G Suite Basic). * (Developer accounts only) Reseller and
-// resold domain must meet the following naming requirements: * Domain
-// names must start with goog-test. * Domain names must include the
-// reseller domain. * Specify all transferring entitlements. * INTERNAL:
-// Any non-user error related to a technical issue in the backend.
-// Contact Cloud Channel support. * UNKNOWN: Any non-user error related
-// to a technical issue in the backend. Contact Cloud Channel support.
-// Return value: The ID of a long-running operation. To get the results
-// of the operation, call the GetOperation method of
-// CloudChannelOperationsService. The Operation metadata will contain an
-// instance of OperationMetadata.
+// TransferEntitlements: Transfers customer entitlements to new reseller.
+// Possible error codes: * PERMISSION_DENIED: * The customer doesn't belong to
+// the reseller. * The reseller is not authorized to transact on this Product.
+// See https://support.google.com/channelservices/answer/9759265 *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid. *
+// NOT_FOUND: The customer or offer resource was not found. * ALREADY_EXISTS:
+// The SKU was already transferred for the customer. * CONDITION_NOT_MET or
+// FAILED_PRECONDITION: * The SKU requires domain verification to transfer, but
+// the domain is not verified. * An Add-On SKU (example, Vault or Drive) is
+// missing the pre-requisite SKU (example, G Suite Basic). * (Developer
+// accounts only) Reseller and resold domain must meet the following naming
+// requirements: * Domain names must start with goog-test. * Domain names must
+// include the reseller domain. * Specify all transferring entitlements. *
+// INTERNAL: Any non-user error related to a technical issue in the backend.
+// Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a
+// technical issue in the backend. Contact Cloud Channel support. Return value:
+// The ID of a long-running operation. To get the results of the operation,
+// call the GetOperation method of CloudChannelOperationsService. The Operation
+// metadata will contain an instance of OperationMetadata.
 //
-//   - parent: The resource name of the reseller's customer account that
-//     will receive transferred entitlements. Parent uses the format:
+//   - parent: The resource name of the reseller's customer account that will
+//     receive transferred entitlements. Parent uses the format:
 //     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) TransferEntitlements(parent string, googlecloudchannelv1transferentitlementsrequest *GoogleCloudChannelV1TransferEntitlementsRequest) *AccountsCustomersTransferEntitlementsCall {
 	c := &AccountsCustomersTransferEntitlementsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12034,23 +9208,21 @@ func (r *AccountsCustomersService) TransferEntitlements(parent string, googleclo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersTransferEntitlementsCall) Fields(s ...googleapi.Field) *AccountsCustomersTransferEntitlementsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersTransferEntitlementsCall) Context(ctx context.Context) *AccountsCustomersTransferEntitlementsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersTransferEntitlementsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12059,18 +9231,12 @@ func (c *AccountsCustomersTransferEntitlementsCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersTransferEntitlementsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1transferentitlementsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:transferEntitlements")
@@ -12087,12 +9253,11 @@ func (c *AccountsCustomersTransferEntitlementsCall) doRequest(alt string) (*http
 }
 
 // Do executes the "cloudchannel.accounts.customers.transferEntitlements" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersTransferEntitlementsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12123,38 +9288,7 @@ func (c *AccountsCustomersTransferEntitlementsCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Transfers customer entitlements to new reseller. Possible error codes: * PERMISSION_DENIED: * The customer doesn't belong to the reseller. * The reseller is not authorized to transact on this Product. See https://support.google.com/channelservices/answer/9759265 * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer or offer resource was not found. * ALREADY_EXISTS: The SKU was already transferred for the customer. * CONDITION_NOT_MET or FAILED_PRECONDITION: * The SKU requires domain verification to transfer, but the domain is not verified. * An Add-On SKU (example, Vault or Drive) is missing the pre-requisite SKU (example, G Suite Basic). * (Developer accounts only) Reseller and resold domain must meet the following naming requirements: * Domain names must start with goog-test. * Domain names must include the reseller domain. * Specify all transferring entitlements. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:transferEntitlements",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.transferEntitlements",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the reseller's customer account that will receive transferred entitlements. Parent uses the format: accounts/{account_id}/customers/{customer_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:transferEntitlements",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1TransferEntitlementsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.transferEntitlementsToGoogle":
 
 type AccountsCustomersTransferEntitlementsToGoogleCall struct {
 	s                                                       *Service
@@ -12165,29 +9299,27 @@ type AccountsCustomersTransferEntitlementsToGoogleCall struct {
 	header_                                                 http.Header
 }
 
-// TransferEntitlementsToGoogle: Transfers customer entitlements from
-// their current reseller to Google. Possible error codes: *
-// PERMISSION_DENIED: The customer doesn't belong to the reseller. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: The customer or offer resource was not found. *
-// ALREADY_EXISTS: The SKU was already transferred for the customer. *
-// CONDITION_NOT_MET or FAILED_PRECONDITION: * The SKU requires domain
-// verification to transfer, but the domain is not verified. * An Add-On
-// SKU (example, Vault or Drive) is missing the pre-requisite SKU
-// (example, G Suite Basic). * (Developer accounts only) Reseller and
-// resold domain must meet the following naming requirements: * Domain
-// names must start with goog-test. * Domain names must include the
-// reseller domain. * INTERNAL: Any non-user error related to a
-// technical issue in the backend. Contact Cloud Channel support. *
-// UNKNOWN: Any non-user error related to a technical issue in the
-// backend. Contact Cloud Channel support. Return value: The ID of a
-// long-running operation. To get the results of the operation, call the
-// GetOperation method of CloudChannelOperationsService. The response
-// will contain google.protobuf.Empty on success. The Operation metadata
-// will contain an instance of OperationMetadata.
+// TransferEntitlementsToGoogle: Transfers customer entitlements from their
+// current reseller to Google. Possible error codes: * PERMISSION_DENIED: The
+// customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid. * NOT_FOUND: The customer or
+// offer resource was not found. * ALREADY_EXISTS: The SKU was already
+// transferred for the customer. * CONDITION_NOT_MET or FAILED_PRECONDITION: *
+// The SKU requires domain verification to transfer, but the domain is not
+// verified. * An Add-On SKU (example, Vault or Drive) is missing the
+// pre-requisite SKU (example, G Suite Basic). * (Developer accounts only)
+// Reseller and resold domain must meet the following naming requirements: *
+// Domain names must start with goog-test. * Domain names must include the
+// reseller domain. * INTERNAL: Any non-user error related to a technical issue
+// in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel support.
+// Return value: The ID of a long-running operation. To get the results of the
+// operation, call the GetOperation method of CloudChannelOperationsService.
+// The response will contain google.protobuf.Empty on success. The Operation
+// metadata will contain an instance of OperationMetadata.
 //
-//   - parent: The resource name of the reseller's customer account where
-//     the entitlements transfer from. Parent uses the format:
+//   - parent: The resource name of the reseller's customer account where the
+//     entitlements transfer from. Parent uses the format:
 //     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) TransferEntitlementsToGoogle(parent string, googlecloudchannelv1transferentitlementstogooglerequest *GoogleCloudChannelV1TransferEntitlementsToGoogleRequest) *AccountsCustomersTransferEntitlementsToGoogleCall {
 	c := &AccountsCustomersTransferEntitlementsToGoogleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12197,23 +9329,21 @@ func (r *AccountsCustomersService) TransferEntitlementsToGoogle(parent string, g
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Fields(s ...googleapi.Field) *AccountsCustomersTransferEntitlementsToGoogleCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Context(ctx context.Context) *AccountsCustomersTransferEntitlementsToGoogleCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12222,18 +9352,12 @@ func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Header() http.Header
 }
 
 func (c *AccountsCustomersTransferEntitlementsToGoogleCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1transferentitlementstogooglerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:transferEntitlementsToGoogle")
@@ -12250,12 +9374,11 @@ func (c *AccountsCustomersTransferEntitlementsToGoogleCall) doRequest(alt string
 }
 
 // Do executes the "cloudchannel.accounts.customers.transferEntitlementsToGoogle" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12286,38 +9409,7 @@ func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Transfers customer entitlements from their current reseller to Google. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer or offer resource was not found. * ALREADY_EXISTS: The SKU was already transferred for the customer. * CONDITION_NOT_MET or FAILED_PRECONDITION: * The SKU requires domain verification to transfer, but the domain is not verified. * An Add-On SKU (example, Vault or Drive) is missing the pre-requisite SKU (example, G Suite Basic). * (Developer accounts only) Reseller and resold domain must meet the following naming requirements: * Domain names must start with goog-test. * Domain names must include the reseller domain. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The response will contain google.protobuf.Empty on success. The Operation metadata will contain an instance of OperationMetadata.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:transferEntitlementsToGoogle",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.transferEntitlementsToGoogle",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the reseller's customer account where the entitlements transfer from. Parent uses the format: accounts/{account_id}/customers/{customer_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:transferEntitlementsToGoogle",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1TransferEntitlementsToGoogleRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.customerRepricingConfigs.create":
 
 type AccountsCustomersCustomerRepricingConfigsCreateCall struct {
 	s                                           *Service
@@ -12329,34 +9421,32 @@ type AccountsCustomersCustomerRepricingConfigsCreateCall struct {
 }
 
 // Create: Creates a CustomerRepricingConfig. Call this method to set
-// modifications for a specific customer's bill. You can only create
-// configs if the RepricingConfig.effective_invoice_month is a future
-// month. If needed, you can create a config for the current month, with
-// some restrictions. When creating a config for a future month, make
-// sure there are no existing configs for that
-// RepricingConfig.effective_invoice_month. The following restrictions
-// are for creating configs in the current month. * This functionality
-// is reserved for recovering from an erroneous config, and should not
-// be used for regular business cases. * The new config will not modify
-// exports used with other configs. Changes to the config may be
-// immediate, but may take up to 24 hours. * There is a limit of ten
-// configs for any RepricingConfig.EntitlementGranularity.entitlement,
-// for any RepricingConfig.effective_invoice_month. * The contained
-// CustomerRepricingConfig.repricing_config value must be different from
-// the value used in the current config for a
-// RepricingConfig.EntitlementGranularity.entitlement. Possible Error
-// Codes: * PERMISSION_DENIED: If the account making the request and the
-// account being queried are different. * INVALID_ARGUMENT: Missing or
-// invalid required parameters in the request. Also displays if the
-// updated config is for the current month or past months. * NOT_FOUND:
-// The CustomerRepricingConfig specified does not exist or is not
-// associated with the given account. * INTERNAL: Any non-user error
-// related to technical issues in the backend. In this case, contact
-// Cloud Channel support. Return Value: If successful, the updated
-// CustomerRepricingConfig resource, otherwise returns an error.
+// modifications for a specific customer's bill. You can only create configs if
+// the RepricingConfig.effective_invoice_month is a future month. If needed,
+// you can create a config for the current month, with some restrictions. When
+// creating a config for a future month, make sure there are no existing
+// configs for that RepricingConfig.effective_invoice_month. The following
+// restrictions are for creating configs in the current month. * This
+// functionality is reserved for recovering from an erroneous config, and
+// should not be used for regular business cases. * The new config will not
+// modify exports used with other configs. Changes to the config may be
+// immediate, but may take up to 24 hours. * There is a limit of ten configs
+// for any RepricingConfig.EntitlementGranularity.entitlement, for any
+// RepricingConfig.effective_invoice_month. * The contained
+// CustomerRepricingConfig.repricing_config value must be different from the
+// value used in the current config for a
+// RepricingConfig.EntitlementGranularity.entitlement. Possible Error Codes: *
+// PERMISSION_DENIED: If the account making the request and the account being
+// queried are different. * INVALID_ARGUMENT: Missing or invalid required
+// parameters in the request. Also displays if the updated config is for the
+// current month or past months. * NOT_FOUND: The CustomerRepricingConfig
+// specified does not exist or is not associated with the given account. *
+// INTERNAL: Any non-user error related to technical issues in the backend. In
+// this case, contact Cloud Channel support. Return Value: If successful, the
+// updated CustomerRepricingConfig resource, otherwise returns an error.
 //
-//   - parent: The resource name of the customer that will receive this
-//     repricing config. Parent uses the format:
+//   - parent: The resource name of the customer that will receive this repricing
+//     config. Parent uses the format:
 //     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersCustomerRepricingConfigsService) Create(parent string, googlecloudchannelv1customerrepricingconfig *GoogleCloudChannelV1CustomerRepricingConfig) *AccountsCustomersCustomerRepricingConfigsCreateCall {
 	c := &AccountsCustomersCustomerRepricingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12366,23 +9456,21 @@ func (r *AccountsCustomersCustomerRepricingConfigsService) Create(parent string,
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) Fields(s ...googleapi.Field) *AccountsCustomersCustomerRepricingConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) Context(ctx context.Context) *AccountsCustomersCustomerRepricingConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12391,18 +9479,12 @@ func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) Header() http.Head
 }
 
 func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1customerrepricingconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customerRepricingConfigs")
@@ -12419,14 +9501,11 @@ func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) doRequest(alt stri
 }
 
 // Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.create" call.
-// Exactly one of *GoogleCloudChannelV1CustomerRepricingConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1CustomerRepricingConfig.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1CustomerRepricingConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1CustomerRepricingConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12457,38 +9536,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) Do(opts ...googlea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a CustomerRepricingConfig. Call this method to set modifications for a specific customer's bill. You can only create configs if the RepricingConfig.effective_invoice_month is a future month. If needed, you can create a config for the current month, with some restrictions. When creating a config for a future month, make sure there are no existing configs for that RepricingConfig.effective_invoice_month. The following restrictions are for creating configs in the current month. * This functionality is reserved for recovering from an erroneous config, and should not be used for regular business cases. * The new config will not modify exports used with other configs. Changes to the config may be immediate, but may take up to 24 hours. * There is a limit of ten configs for any RepricingConfig.EntitlementGranularity.entitlement, for any RepricingConfig.effective_invoice_month. * The contained CustomerRepricingConfig.repricing_config value must be different from the value used in the current config for a RepricingConfig.EntitlementGranularity.entitlement. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The CustomerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated CustomerRepricingConfig resource, otherwise returns an error.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the customer that will receive this repricing config. Parent uses the format: accounts/{account_id}/customers/{customer_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/customerRepricingConfigs",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1CustomerRepricingConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1CustomerRepricingConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.customerRepricingConfigs.delete":
 
 type AccountsCustomersCustomerRepricingConfigsDeleteCall struct {
 	s          *Service
@@ -12498,20 +9546,18 @@ type AccountsCustomersCustomerRepricingConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the given CustomerRepricingConfig permanently. You
-// can only delete configs if their
-// RepricingConfig.effective_invoice_month is set to a date after the
-// current month. Possible error codes: * PERMISSION_DENIED: The account
-// making the request does not own this customer. * INVALID_ARGUMENT:
-// Required request parameters are missing or invalid. *
-// FAILED_PRECONDITION: The CustomerRepricingConfig is active or in the
-// past. * NOT_FOUND: No CustomerRepricingConfig found for the name in
-// the request.
+// Delete: Deletes the given CustomerRepricingConfig permanently. You can only
+// delete configs if their RepricingConfig.effective_invoice_month is set to a
+// date after the current month. Possible error codes: * PERMISSION_DENIED: The
+// account making the request does not own this customer. * INVALID_ARGUMENT:
+// Required request parameters are missing or invalid. * FAILED_PRECONDITION:
+// The CustomerRepricingConfig is active or in the past. * NOT_FOUND: No
+// CustomerRepricingConfig found for the name in the request.
 //
-//   - name: The resource name of the customer repricing config rule to
-//     delete. Format:
-//     accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
-//     gs/{id}.
+//   - name: The resource name of the customer repricing config rule to delete.
+//     Format:
+//     accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs/{id}
+//     .
 func (r *AccountsCustomersCustomerRepricingConfigsService) Delete(name string) *AccountsCustomersCustomerRepricingConfigsDeleteCall {
 	c := &AccountsCustomersCustomerRepricingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12519,23 +9565,21 @@ func (r *AccountsCustomersCustomerRepricingConfigsService) Delete(name string) *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) Fields(s ...googleapi.Field) *AccountsCustomersCustomerRepricingConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) Context(ctx context.Context) *AccountsCustomersCustomerRepricingConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12544,12 +9588,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) Header() http.Head
 }
 
 func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -12567,12 +9606,11 @@ func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) doRequest(alt stri
 }
 
 // Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12603,35 +9641,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) Do(opts ...googlea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the given CustomerRepricingConfig permanently. You can only delete configs if their RepricingConfig.effective_invoice_month is set to a date after the current month. Possible error codes: * PERMISSION_DENIED: The account making the request does not own this customer. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * FAILED_PRECONDITION: The CustomerRepricingConfig is active or in the past. * NOT_FOUND: No CustomerRepricingConfig found for the name in the request.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs/{customerRepricingConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the customer repricing config rule to delete. Format: accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs/{id}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/customerRepricingConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.customerRepricingConfigs.get":
 
 type AccountsCustomersCustomerRepricingConfigsGetCall struct {
 	s            *Service
@@ -12643,17 +9653,16 @@ type AccountsCustomersCustomerRepricingConfigsGetCall struct {
 }
 
 // Get: Gets information about how a Reseller modifies their bill before
-// sending it to a Customer. Possible Error Codes: * PERMISSION_DENIED:
-// If the account making the request and the account being queried are
-// different. * NOT_FOUND: The CustomerRepricingConfig was not found. *
-// INTERNAL: Any non-user error related to technical issues in the
-// backend. In this case, contact Cloud Channel support. Return Value:
-// If successful, the CustomerRepricingConfig resource, otherwise
-// returns an error.
+// sending it to a Customer. Possible Error Codes: * PERMISSION_DENIED: If the
+// account making the request and the account being queried are different. *
+// NOT_FOUND: The CustomerRepricingConfig was not found. * INTERNAL: Any
+// non-user error related to technical issues in the backend. In this case,
+// contact Cloud Channel support. Return Value: If successful, the
+// CustomerRepricingConfig resource, otherwise returns an error.
 //
 //   - name: The resource name of the CustomerRepricingConfig. Format:
-//     accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
-//     gs/{id}.
+//     accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs/{id}
+//     .
 func (r *AccountsCustomersCustomerRepricingConfigsService) Get(name string) *AccountsCustomersCustomerRepricingConfigsGetCall {
 	c := &AccountsCustomersCustomerRepricingConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12661,33 +9670,29 @@ func (r *AccountsCustomersCustomerRepricingConfigsService) Get(name string) *Acc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersCustomerRepricingConfigsGetCall) Fields(s ...googleapi.Field) *AccountsCustomersCustomerRepricingConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsCustomersCustomerRepricingConfigsGetCall) IfNoneMatch(entityTag string) *AccountsCustomersCustomerRepricingConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersCustomerRepricingConfigsGetCall) Context(ctx context.Context) *AccountsCustomersCustomerRepricingConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersCustomerRepricingConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12696,12 +9701,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsGetCall) Header() http.Header 
 }
 
 func (c *AccountsCustomersCustomerRepricingConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -12722,14 +9722,11 @@ func (c *AccountsCustomersCustomerRepricingConfigsGetCall) doRequest(alt string)
 }
 
 // Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.get" call.
-// Exactly one of *GoogleCloudChannelV1CustomerRepricingConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1CustomerRepricingConfig.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1CustomerRepricingConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersCustomerRepricingConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1CustomerRepricingConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12760,35 +9757,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsGetCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets information about how a Reseller modifies their bill before sending it to a Customer. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The CustomerRepricingConfig was not found. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the CustomerRepricingConfig resource, otherwise returns an error.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs/{customerRepricingConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the CustomerRepricingConfig. Format: accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs/{id}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/customerRepricingConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1CustomerRepricingConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.customerRepricingConfigs.list":
 
 type AccountsCustomersCustomerRepricingConfigsListCall struct {
 	s            *Service
@@ -12799,24 +9768,21 @@ type AccountsCustomersCustomerRepricingConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about how a Reseller modifies their bill
-// before sending it to a Customer. Possible Error Codes: *
-// PERMISSION_DENIED: If the account making the request and the account
-// being queried are different. * NOT_FOUND: The CustomerRepricingConfig
-// specified does not exist or is not associated with the given account.
-// * INTERNAL: Any non-user error related to technical issues in the
-// backend. In this case, contact Cloud Channel support. Return Value:
-// If successful, the CustomerRepricingConfig resources. The data for
-// each resource is displayed in the ascending order of: * Customer ID *
-// RepricingConfig.EntitlementGranularity.entitlement *
+// List: Lists information about how a Reseller modifies their bill before
+// sending it to a Customer. Possible Error Codes: * PERMISSION_DENIED: If the
+// account making the request and the account being queried are different. *
+// NOT_FOUND: The CustomerRepricingConfig specified does not exist or is not
+// associated with the given account. * INTERNAL: Any non-user error related to
+// technical issues in the backend. In this case, contact Cloud Channel
+// support. Return Value: If successful, the CustomerRepricingConfig resources.
+// The data for each resource is displayed in the ascending order of: *
+// Customer ID * RepricingConfig.EntitlementGranularity.entitlement *
 // RepricingConfig.effective_invoice_month *
-// CustomerRepricingConfig.update_time If unsuccessful, returns an
-// error.
+// CustomerRepricingConfig.update_time If unsuccessful, returns an error.
 //
 //   - parent: The resource name of the customer. Parent uses the format:
 //     accounts/{account_id}/customers/{customer_id}. Supports
-//     accounts/{account_id}/customers/- to retrieve configs for all
-//     customers.
+//     accounts/{account_id}/customers/- to retrieve configs for all customers.
 func (r *AccountsCustomersCustomerRepricingConfigsService) List(parent string) *AccountsCustomersCustomerRepricingConfigsListCall {
 	c := &AccountsCustomersCustomerRepricingConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12824,28 +9790,27 @@ func (r *AccountsCustomersCustomerRepricingConfigsService) List(parent string) *
 }
 
 // Filter sets the optional parameter "filter": A filter for
-// [CloudChannelService.ListCustomerRepricingConfigs] results (customer
-// only). You can use this filter when you support a BatchGet-like
-// query. To use the filter, you must set
-// `parent=accounts/{account_id}/customers/-`. Example: customer =
-// accounts/account_id/customers/c1 OR customer =
+// [CloudChannelService.ListCustomerRepricingConfigs] results (customer only).
+// You can use this filter when you support a BatchGet-like query. To use the
+// filter, you must set `parent=accounts/{account_id}/customers/-`. Example:
+// customer = accounts/account_id/customers/c1 OR customer =
 // accounts/account_id/customers/c2.
 func (c *AccountsCustomersCustomerRepricingConfigsListCall) Filter(filter string) *AccountsCustomersCustomerRepricingConfigsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of repricing configs to return. The service may return fewer than
-// this value. If unspecified, returns a maximum of 50 rules. The
-// maximum value is 100; values above 100 will be coerced to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// repricing configs to return. The service may return fewer than this value.
+// If unspecified, returns a maximum of 50 rules. The maximum value is 100;
+// values above 100 will be coerced to 100.
 func (c *AccountsCustomersCustomerRepricingConfigsListCall) PageSize(pageSize int64) *AccountsCustomersCustomerRepricingConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results beyond the first page. Obtained through
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results beyond the first page. Obtained through
 // ListCustomerRepricingConfigsResponse.next_page_token of the previous
 // CloudChannelService.ListCustomerRepricingConfigs call.
 func (c *AccountsCustomersCustomerRepricingConfigsListCall) PageToken(pageToken string) *AccountsCustomersCustomerRepricingConfigsListCall {
@@ -12854,33 +9819,29 @@ func (c *AccountsCustomersCustomerRepricingConfigsListCall) PageToken(pageToken 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersCustomerRepricingConfigsListCall) Fields(s ...googleapi.Field) *AccountsCustomersCustomerRepricingConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsCustomersCustomerRepricingConfigsListCall) IfNoneMatch(entityTag string) *AccountsCustomersCustomerRepricingConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersCustomerRepricingConfigsListCall) Context(ctx context.Context) *AccountsCustomersCustomerRepricingConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersCustomerRepricingConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12889,12 +9850,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsListCall) Header() http.Header
 }
 
 func (c *AccountsCustomersCustomerRepricingConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -12915,15 +9871,11 @@ func (c *AccountsCustomersCustomerRepricingConfigsListCall) doRequest(alt string
 }
 
 // Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.list" call.
-// Exactly one of
-// *GoogleCloudChannelV1ListCustomerRepricingConfigsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListCustomerRepricingConfigsResponse.ServerRespon
-// se.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListCustomerRepricingConfigsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsCustomersCustomerRepricingConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListCustomerRepricingConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12954,48 +9906,6 @@ func (c *AccountsCustomersCustomerRepricingConfigsListCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists information about how a Reseller modifies their bill before sending it to a Customer. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The CustomerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the CustomerRepricingConfig resources. The data for each resource is displayed in the ascending order of: * Customer ID * RepricingConfig.EntitlementGranularity.entitlement * RepricingConfig.effective_invoice_month * CustomerRepricingConfig.update_time If unsuccessful, returns an error.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. A filter for [CloudChannelService.ListCustomerRepricingConfigs] results (customer only). You can use this filter when you support a BatchGet-like query. To use the filter, you must set `parent=accounts/{account_id}/customers/-`. Example: customer = accounts/account_id/customers/c1 OR customer = accounts/account_id/customers/c2.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of repricing configs to return. The service may return fewer than this value. If unspecified, returns a maximum of 50 rules. The maximum value is 100; values above 100 will be coerced to 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results beyond the first page. Obtained through ListCustomerRepricingConfigsResponse.next_page_token of the previous CloudChannelService.ListCustomerRepricingConfigs call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the customer. Parent uses the format: accounts/{account_id}/customers/{customer_id}. Supports accounts/{account_id}/customers/- to retrieve configs for all customers.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/customerRepricingConfigs",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListCustomerRepricingConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -13003,7 +9913,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsListCall) Do(opts ...googleapi
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsCustomersCustomerRepricingConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListCustomerRepricingConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -13019,8 +9929,6 @@ func (c *AccountsCustomersCustomerRepricingConfigsListCall) Pages(ctx context.Co
 	}
 }
 
-// method id "cloudchannel.accounts.customers.customerRepricingConfigs.patch":
-
 type AccountsCustomersCustomerRepricingConfigsPatchCall struct {
 	s                                           *Service
 	name                                        string
@@ -13031,28 +9939,25 @@ type AccountsCustomersCustomerRepricingConfigsPatchCall struct {
 }
 
 // Patch: Updates a CustomerRepricingConfig. Call this method to set
-// modifications for a specific customer's bill. This method overwrites
-// the existing CustomerRepricingConfig. You can only update configs if
-// the RepricingConfig.effective_invoice_month is a future month. To
-// make changes to configs for the current month, use
-// CreateCustomerRepricingConfig, taking note of its restrictions. You
-// cannot update the RepricingConfig.effective_invoice_month. When
-// updating a config in the future: * This config must already exist.
-// Possible Error Codes: * PERMISSION_DENIED: If the account making the
-// request and the account being queried are different. *
-// INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request. Also displays if the updated config is for the current month
-// or past months. * NOT_FOUND: The CustomerRepricingConfig specified
-// does not exist or is not associated with the given account. *
-// INTERNAL: Any non-user error related to technical issues in the
-// backend. In this case, contact Cloud Channel support. Return Value:
-// If successful, the updated CustomerRepricingConfig resource,
-// otherwise returns an error.
+// modifications for a specific customer's bill. This method overwrites the
+// existing CustomerRepricingConfig. You can only update configs if the
+// RepricingConfig.effective_invoice_month is a future month. To make changes
+// to configs for the current month, use CreateCustomerRepricingConfig, taking
+// note of its restrictions. You cannot update the
+// RepricingConfig.effective_invoice_month. When updating a config in the
+// future: * This config must already exist. Possible Error Codes: *
+// PERMISSION_DENIED: If the account making the request and the account being
+// queried are different. * INVALID_ARGUMENT: Missing or invalid required
+// parameters in the request. Also displays if the updated config is for the
+// current month or past months. * NOT_FOUND: The CustomerRepricingConfig
+// specified does not exist or is not associated with the given account. *
+// INTERNAL: Any non-user error related to technical issues in the backend. In
+// this case, contact Cloud Channel support. Return Value: If successful, the
+// updated CustomerRepricingConfig resource, otherwise returns an error.
 //
-//   - name: Output only. Resource name of the CustomerRepricingConfig.
-//     Format:
-//     accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
-//     gs/{id}.
+//   - name: Output only. Resource name of the CustomerRepricingConfig. Format:
+//     accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs/{id}
+//     .
 func (r *AccountsCustomersCustomerRepricingConfigsService) Patch(name string, googlecloudchannelv1customerrepricingconfig *GoogleCloudChannelV1CustomerRepricingConfig) *AccountsCustomersCustomerRepricingConfigsPatchCall {
 	c := &AccountsCustomersCustomerRepricingConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13061,23 +9966,21 @@ func (r *AccountsCustomersCustomerRepricingConfigsService) Patch(name string, go
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) Fields(s ...googleapi.Field) *AccountsCustomersCustomerRepricingConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) Context(ctx context.Context) *AccountsCustomersCustomerRepricingConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13086,18 +9989,12 @@ func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) Header() http.Heade
 }
 
 func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1customerrepricingconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -13114,14 +10011,11 @@ func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) doRequest(alt strin
 }
 
 // Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.patch" call.
-// Exactly one of *GoogleCloudChannelV1CustomerRepricingConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1CustomerRepricingConfig.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1CustomerRepricingConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1CustomerRepricingConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13152,38 +10046,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a CustomerRepricingConfig. Call this method to set modifications for a specific customer's bill. This method overwrites the existing CustomerRepricingConfig. You can only update configs if the RepricingConfig.effective_invoice_month is a future month. To make changes to configs for the current month, use CreateCustomerRepricingConfig, taking note of its restrictions. You cannot update the RepricingConfig.effective_invoice_month. When updating a config in the future: * This config must already exist. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Also displays if the updated config is for the current month or past months. * NOT_FOUND: The CustomerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated CustomerRepricingConfig resource, otherwise returns an error.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs/{customerRepricingConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of the CustomerRepricingConfig. Format: accounts/{account_id}/customers/{customer_id}/customerRepricingConfigs/{id}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/customerRepricingConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1CustomerRepricingConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1CustomerRepricingConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.entitlements.activate":
 
 type AccountsCustomersEntitlementsActivateCall struct {
 	s                                              *Service
@@ -13195,28 +10058,25 @@ type AccountsCustomersEntitlementsActivateCall struct {
 }
 
 // Activate: Activates a previously suspended entitlement. Entitlements
-// suspended for pending ToS acceptance can't be activated using this
-// method. An entitlement activation is a long-running operation and it
-// updates the state of the customer entitlement. Possible error codes:
-// * PERMISSION_DENIED: The reseller account making the request is
-// different from the reseller account in the API request. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: Entitlement resource not found. *
-// SUSPENSION_NOT_RESELLER_INITIATED: Can only activate
-// reseller-initiated suspensions and entitlements that have accepted
-// the TOS. * NOT_SUSPENDED: Can only activate suspended entitlements
-// not in an ACTIVE state. * INTERNAL: Any non-user error related to a
-// technical issue in the backend. Contact Cloud Channel support. *
-// UNKNOWN: Any non-user error related to a technical issue in the
-// backend. Contact Cloud Channel support. Return value: The ID of a
-// long-running operation. To get the results of the operation, call the
-// GetOperation method of CloudChannelOperationsService. The Operation
-// metadata will contain an instance of OperationMetadata.
+// suspended for pending ToS acceptance can't be activated using this method.
+// An entitlement activation is a long-running operation and it updates the
+// state of the customer entitlement. Possible error codes: *
+// PERMISSION_DENIED: The reseller account making the request is different from
+// the reseller account in the API request. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid. * NOT_FOUND: Entitlement resource
+// not found. * SUSPENSION_NOT_RESELLER_INITIATED: Can only activate
+// reseller-initiated suspensions and entitlements that have accepted the TOS.
+// * NOT_SUSPENDED: Can only activate suspended entitlements not in an ACTIVE
+// state. * INTERNAL: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel support.
+// Return value: The ID of a long-running operation. To get the results of the
+// operation, call the GetOperation method of CloudChannelOperationsService.
+// The Operation metadata will contain an instance of OperationMetadata.
 //
-//   - name: The resource name of the entitlement to activate. Name uses
-//     the format:
-//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//     ent_id}.
+//   - name: The resource name of the entitlement to activate. Name uses the
+//     format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}.
 func (r *AccountsCustomersEntitlementsService) Activate(name string, googlecloudchannelv1activateentitlementrequest *GoogleCloudChannelV1ActivateEntitlementRequest) *AccountsCustomersEntitlementsActivateCall {
 	c := &AccountsCustomersEntitlementsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13225,23 +10085,21 @@ func (r *AccountsCustomersEntitlementsService) Activate(name string, googlecloud
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsActivateCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsActivateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsActivateCall) Context(ctx context.Context) *AccountsCustomersEntitlementsActivateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsActivateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13250,18 +10108,12 @@ func (c *AccountsCustomersEntitlementsActivateCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersEntitlementsActivateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1activateentitlementrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:activate")
@@ -13278,12 +10130,11 @@ func (c *AccountsCustomersEntitlementsActivateCall) doRequest(alt string) (*http
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.activate" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsActivateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13314,38 +10165,7 @@ func (c *AccountsCustomersEntitlementsActivateCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Activates a previously suspended entitlement. Entitlements suspended for pending ToS acceptance can't be activated using this method. An entitlement activation is a long-running operation and it updates the state of the customer entitlement. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Entitlement resource not found. * SUSPENSION_NOT_RESELLER_INITIATED: Can only activate reseller-initiated suspensions and entitlements that have accepted the TOS. * NOT_SUSPENDED: Can only activate suspended entitlements not in an ACTIVE state. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:activate",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.entitlements.activate",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the entitlement to activate. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:activate",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ActivateEntitlementRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.entitlements.cancel":
 
 type AccountsCustomersEntitlementsCancelCall struct {
 	s                                            *Service
@@ -13358,27 +10178,24 @@ type AccountsCustomersEntitlementsCancelCall struct {
 
 // Cancel: Cancels a previously fulfilled entitlement. An entitlement
 // cancellation is a long-running operation. Possible error codes: *
-// PERMISSION_DENIED: The reseller account making the request is
-// different from the reseller account in the API request. *
-// FAILED_PRECONDITION: There are Google Cloud projects linked to the
-// Google Cloud entitlement's Cloud Billing subaccount. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: Entitlement resource not found. *
-// DELETION_TYPE_NOT_ALLOWED: Cancel is only allowed for Google
-// Workspace add-ons, or entitlements for Google Cloud's development
-// platform. * INTERNAL: Any non-user error related to a technical issue
-// in the backend. Contact Cloud Channel support. * UNKNOWN: Any
-// non-user error related to a technical issue in the backend. Contact
-// Cloud Channel support. Return value: The ID of a long-running
-// operation. To get the results of the operation, call the GetOperation
-// method of CloudChannelOperationsService. The response will contain
-// google.protobuf.Empty on success. The Operation metadata will contain
-// an instance of OperationMetadata.
+// PERMISSION_DENIED: The reseller account making the request is different from
+// the reseller account in the API request. * FAILED_PRECONDITION: There are
+// Google Cloud projects linked to the Google Cloud entitlement's Cloud Billing
+// subaccount. * INVALID_ARGUMENT: Required request parameters are missing or
+// invalid. * NOT_FOUND: Entitlement resource not found. *
+// DELETION_TYPE_NOT_ALLOWED: Cancel is only allowed for Google Workspace
+// add-ons, or entitlements for Google Cloud's development platform. *
+// INTERNAL: Any non-user error related to a technical issue in the backend.
+// Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a
+// technical issue in the backend. Contact Cloud Channel support. Return value:
+// The ID of a long-running operation. To get the results of the operation,
+// call the GetOperation method of CloudChannelOperationsService. The response
+// will contain google.protobuf.Empty on success. The Operation metadata will
+// contain an instance of OperationMetadata.
 //
 //   - name: The resource name of the entitlement to cancel. Name uses the
 //     format:
-//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//     ent_id}.
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}.
 func (r *AccountsCustomersEntitlementsService) Cancel(name string, googlecloudchannelv1cancelentitlementrequest *GoogleCloudChannelV1CancelEntitlementRequest) *AccountsCustomersEntitlementsCancelCall {
 	c := &AccountsCustomersEntitlementsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13387,23 +10204,21 @@ func (r *AccountsCustomersEntitlementsService) Cancel(name string, googlecloudch
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsCancelCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsCancelCall) Context(ctx context.Context) *AccountsCustomersEntitlementsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13412,18 +10227,12 @@ func (c *AccountsCustomersEntitlementsCancelCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersEntitlementsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1cancelentitlementrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
@@ -13440,12 +10249,11 @@ func (c *AccountsCustomersEntitlementsCancelCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.cancel" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13476,38 +10284,7 @@ func (c *AccountsCustomersEntitlementsCancelCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Cancels a previously fulfilled entitlement. An entitlement cancellation is a long-running operation. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * FAILED_PRECONDITION: There are Google Cloud projects linked to the Google Cloud entitlement's Cloud Billing subaccount. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Entitlement resource not found. * DELETION_TYPE_NOT_ALLOWED: Cancel is only allowed for Google Workspace add-ons, or entitlements for Google Cloud's development platform. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The response will contain google.protobuf.Empty on success. The Operation metadata will contain an instance of OperationMetadata.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:cancel",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.entitlements.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the entitlement to cancel. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:cancel",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1CancelEntitlementRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.entitlements.changeOffer":
 
 type AccountsCustomersEntitlementsChangeOfferCall struct {
 	s                                      *Service
@@ -13518,24 +10295,22 @@ type AccountsCustomersEntitlementsChangeOfferCall struct {
 	header_                                http.Header
 }
 
-// ChangeOffer: Updates the Offer for an existing customer entitlement.
-// An entitlement update is a long-running operation and it updates the
+// ChangeOffer: Updates the Offer for an existing customer entitlement. An
+// entitlement update is a long-running operation and it updates the
 // entitlement as a result of fulfillment. Possible error codes: *
 // PERMISSION_DENIED: The customer doesn't belong to the reseller. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: Offer or Entitlement resource not found. * INTERNAL: Any
-// non-user error related to a technical issue in the backend. Contact
-// Cloud Channel support. * UNKNOWN: Any non-user error related to a
-// technical issue in the backend. Contact Cloud Channel support. Return
-// value: The ID of a long-running operation. To get the results of the
-// operation, call the GetOperation method of
-// CloudChannelOperationsService. The Operation metadata will contain an
-// instance of OperationMetadata.
+// INVALID_ARGUMENT: Required request parameters are missing or invalid. *
+// NOT_FOUND: Offer or Entitlement resource not found. * INTERNAL: Any non-user
+// error related to a technical issue in the backend. Contact Cloud Channel
+// support. * UNKNOWN: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. Return value: The ID of a
+// long-running operation. To get the results of the operation, call the
+// GetOperation method of CloudChannelOperationsService. The Operation metadata
+// will contain an instance of OperationMetadata.
 //
 //   - name: The resource name of the entitlement to update. Name uses the
 //     format:
-//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//     ent_id}.
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeOffer(name string, googlecloudchannelv1changeofferrequest *GoogleCloudChannelV1ChangeOfferRequest) *AccountsCustomersEntitlementsChangeOfferCall {
 	c := &AccountsCustomersEntitlementsChangeOfferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13544,23 +10319,21 @@ func (r *AccountsCustomersEntitlementsService) ChangeOffer(name string, googlecl
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsChangeOfferCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsChangeOfferCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsChangeOfferCall) Context(ctx context.Context) *AccountsCustomersEntitlementsChangeOfferCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsChangeOfferCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13569,18 +10342,12 @@ func (c *AccountsCustomersEntitlementsChangeOfferCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersEntitlementsChangeOfferCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1changeofferrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:changeOffer")
@@ -13597,12 +10364,11 @@ func (c *AccountsCustomersEntitlementsChangeOfferCall) doRequest(alt string) (*h
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.changeOffer" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsChangeOfferCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13633,38 +10399,7 @@ func (c *AccountsCustomersEntitlementsChangeOfferCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the Offer for an existing customer entitlement. An entitlement update is a long-running operation and it updates the entitlement as a result of fulfillment. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Offer or Entitlement resource not found. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:changeOffer",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.entitlements.changeOffer",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the entitlement to update. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:changeOffer",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ChangeOfferRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.entitlements.changeParameters":
 
 type AccountsCustomersEntitlementsChangeParametersCall struct {
 	s                                           *Service
@@ -13675,25 +10410,22 @@ type AccountsCustomersEntitlementsChangeParametersCall struct {
 	header_                                     http.Header
 }
 
-// ChangeParameters: Change parameters of the entitlement. An
-// entitlement update is a long-running operation and it updates the
-// entitlement as a result of fulfillment. Possible error codes: *
-// PERMISSION_DENIED: The customer doesn't belong to the reseller. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// For example, the number of seats being changed is greater than the
-// allowed number of max seats, or decreasing seats for a commitment
-// based plan. * NOT_FOUND: Entitlement resource not found. * INTERNAL:
-// Any non-user error related to a technical issue in the backend.
-// Contact Cloud Channel support. * UNKNOWN: Any non-user error related
-// to a technical issue in the backend. Contact Cloud Channel support.
-// Return value: The ID of a long-running operation. To get the results
-// of the operation, call the GetOperation method of
-// CloudChannelOperationsService. The Operation metadata will contain an
-// instance of OperationMetadata.
+// ChangeParameters: Change parameters of the entitlement. An entitlement
+// update is a long-running operation and it updates the entitlement as a
+// result of fulfillment. Possible error codes: * PERMISSION_DENIED: The
+// customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid. For example, the number of seats
+// being changed is greater than the allowed number of max seats, or decreasing
+// seats for a commitment based plan. * NOT_FOUND: Entitlement resource not
+// found. * INTERNAL: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel support.
+// Return value: The ID of a long-running operation. To get the results of the
+// operation, call the GetOperation method of CloudChannelOperationsService.
+// The Operation metadata will contain an instance of OperationMetadata.
 //
 //   - name: The name of the entitlement to update. Name uses the format:
-//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//     ent_id}.
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeParameters(name string, googlecloudchannelv1changeparametersrequest *GoogleCloudChannelV1ChangeParametersRequest) *AccountsCustomersEntitlementsChangeParametersCall {
 	c := &AccountsCustomersEntitlementsChangeParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13702,23 +10434,21 @@ func (r *AccountsCustomersEntitlementsService) ChangeParameters(name string, goo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsChangeParametersCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsChangeParametersCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsChangeParametersCall) Context(ctx context.Context) *AccountsCustomersEntitlementsChangeParametersCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsChangeParametersCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13727,18 +10457,12 @@ func (c *AccountsCustomersEntitlementsChangeParametersCall) Header() http.Header
 }
 
 func (c *AccountsCustomersEntitlementsChangeParametersCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1changeparametersrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:changeParameters")
@@ -13755,12 +10479,11 @@ func (c *AccountsCustomersEntitlementsChangeParametersCall) doRequest(alt string
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.changeParameters" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsChangeParametersCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13791,38 +10514,7 @@ func (c *AccountsCustomersEntitlementsChangeParametersCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Change parameters of the entitlement. An entitlement update is a long-running operation and it updates the entitlement as a result of fulfillment. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. For example, the number of seats being changed is greater than the allowed number of max seats, or decreasing seats for a commitment based plan. * NOT_FOUND: Entitlement resource not found. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:changeParameters",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.entitlements.changeParameters",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the entitlement to update. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:changeParameters",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ChangeParametersRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.entitlements.changeRenewalSettings":
 
 type AccountsCustomersEntitlementsChangeRenewalSettingsCall struct {
 	s                                                *Service
@@ -13833,25 +10525,23 @@ type AccountsCustomersEntitlementsChangeRenewalSettingsCall struct {
 	header_                                          http.Header
 }
 
-// ChangeRenewalSettings: Updates the renewal settings for an existing
-// customer entitlement. An entitlement update is a long-running
-// operation and it updates the entitlement as a result of fulfillment.
-// Possible error codes: * PERMISSION_DENIED: The customer doesn't
-// belong to the reseller. * INVALID_ARGUMENT: Required request
-// parameters are missing or invalid. * NOT_FOUND: Entitlement resource
-// not found. * NOT_COMMITMENT_PLAN: Renewal Settings are only
-// applicable for a commitment plan. Can't enable or disable renewals
-// for non-commitment plans. * INTERNAL: Any non-user error related to a
-// technical issue in the backend. Contact Cloud Channel support. *
-// UNKNOWN: Any non-user error related to a technical issue in the
-// backend. Contact Cloud Channel support. Return value: The ID of a
-// long-running operation. To get the results of the operation, call the
-// GetOperation method of CloudChannelOperationsService. The Operation
-// metadata will contain an instance of OperationMetadata.
+// ChangeRenewalSettings: Updates the renewal settings for an existing customer
+// entitlement. An entitlement update is a long-running operation and it
+// updates the entitlement as a result of fulfillment. Possible error codes: *
+// PERMISSION_DENIED: The customer doesn't belong to the reseller. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid. *
+// NOT_FOUND: Entitlement resource not found. * NOT_COMMITMENT_PLAN: Renewal
+// Settings are only applicable for a commitment plan. Can't enable or disable
+// renewals for non-commitment plans. * INTERNAL: Any non-user error related to
+// a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN:
+// Any non-user error related to a technical issue in the backend. Contact
+// Cloud Channel support. Return value: The ID of a long-running operation. To
+// get the results of the operation, call the GetOperation method of
+// CloudChannelOperationsService. The Operation metadata will contain an
+// instance of OperationMetadata.
 //
 //   - name: The name of the entitlement to update. Name uses the format:
-//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//     ent_id}.
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeRenewalSettings(name string, googlecloudchannelv1changerenewalsettingsrequest *GoogleCloudChannelV1ChangeRenewalSettingsRequest) *AccountsCustomersEntitlementsChangeRenewalSettingsCall {
 	c := &AccountsCustomersEntitlementsChangeRenewalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13860,23 +10550,21 @@ func (r *AccountsCustomersEntitlementsService) ChangeRenewalSettings(name string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsChangeRenewalSettingsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) Context(ctx context.Context) *AccountsCustomersEntitlementsChangeRenewalSettingsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13885,18 +10573,12 @@ func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) Header() http.H
 }
 
 func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1changerenewalsettingsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:changeRenewalSettings")
@@ -13913,12 +10595,11 @@ func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) doRequest(alt s
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.changeRenewalSettings" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13949,38 +10630,7 @@ func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) Do(opts ...goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the renewal settings for an existing customer entitlement. An entitlement update is a long-running operation and it updates the entitlement as a result of fulfillment. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Entitlement resource not found. * NOT_COMMITMENT_PLAN: Renewal Settings are only applicable for a commitment plan. Can't enable or disable renewals for non-commitment plans. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:changeRenewalSettings",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.entitlements.changeRenewalSettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the entitlement to update. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:changeRenewalSettings",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1ChangeRenewalSettingsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.entitlements.create":
 
 type AccountsCustomersEntitlementsCreateCall struct {
 	s                                            *Service
@@ -13991,35 +10641,32 @@ type AccountsCustomersEntitlementsCreateCall struct {
 	header_                                      http.Header
 }
 
-// Create: Creates an entitlement for a customer. Possible error codes:
-// * PERMISSION_DENIED: * The customer doesn't belong to the reseller. *
-// The reseller is not authorized to transact on this Product. See
+// Create: Creates an entitlement for a customer. Possible error codes: *
+// PERMISSION_DENIED: * The customer doesn't belong to the reseller. * The
+// reseller is not authorized to transact on this Product. See
 // https://support.google.com/channelservices/answer/9759265 *
-// INVALID_ARGUMENT: * Required request parameters are missing or
-// invalid. * There is already a customer entitlement for a SKU from the
-// same product family. * INVALID_VALUE: Make sure the OfferId is valid.
-// If it is, contact Google Channel support for further troubleshooting.
-// * NOT_FOUND: The customer or offer resource was not found. *
-// ALREADY_EXISTS: * The SKU was already purchased for the customer. *
-// The customer's primary email already exists. Retry after changing the
-// customer's primary contact email. * CONDITION_NOT_MET or
-// FAILED_PRECONDITION: * The domain required for purchasing a SKU has
-// not been verified. * A pre-requisite SKU required to purchase an
-// Add-On SKU is missing. For example, Google Workspace Business Starter
-// is required to purchase Vault or Drive. * (Developer accounts only)
-// Reseller and resold domain must meet the following naming
-// requirements: * Domain names must start with goog-test. * Domain
-// names must include the reseller domain. * INTERNAL: Any non-user
-// error related to a technical issue in the backend. Contact Cloud
-// Channel support. * UNKNOWN: Any non-user error related to a technical
-// issue in the backend. Contact Cloud Channel support. Return value:
-// The ID of a long-running operation. To get the results of the
-// operation, call the GetOperation method of
-// CloudChannelOperationsService. The Operation metadata will contain an
-// instance of OperationMetadata.
+// INVALID_ARGUMENT: * Required request parameters are missing or invalid. *
+// There is already a customer entitlement for a SKU from the same product
+// family. * INVALID_VALUE: Make sure the OfferId is valid. If it is, contact
+// Google Channel support for further troubleshooting. * NOT_FOUND: The
+// customer or offer resource was not found. * ALREADY_EXISTS: * The SKU was
+// already purchased for the customer. * The customer's primary email already
+// exists. Retry after changing the customer's primary contact email. *
+// CONDITION_NOT_MET or FAILED_PRECONDITION: * The domain required for
+// purchasing a SKU has not been verified. * A pre-requisite SKU required to
+// purchase an Add-On SKU is missing. For example, Google Workspace Business
+// Starter is required to purchase Vault or Drive. * (Developer accounts only)
+// Reseller and resold domain must meet the following naming requirements: *
+// Domain names must start with goog-test. * Domain names must include the
+// reseller domain. * INTERNAL: Any non-user error related to a technical issue
+// in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel support.
+// Return value: The ID of a long-running operation. To get the results of the
+// operation, call the GetOperation method of CloudChannelOperationsService.
+// The Operation metadata will contain an instance of OperationMetadata.
 //
-//   - parent: The resource name of the reseller's customer account in
-//     which to create the entitlement. Parent uses the format:
+//   - parent: The resource name of the reseller's customer account in which to
+//     create the entitlement. Parent uses the format:
 //     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersEntitlementsService) Create(parent string, googlecloudchannelv1createentitlementrequest *GoogleCloudChannelV1CreateEntitlementRequest) *AccountsCustomersEntitlementsCreateCall {
 	c := &AccountsCustomersEntitlementsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14029,23 +10676,21 @@ func (r *AccountsCustomersEntitlementsService) Create(parent string, googlecloud
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsCreateCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsCreateCall) Context(ctx context.Context) *AccountsCustomersEntitlementsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14054,18 +10699,12 @@ func (c *AccountsCustomersEntitlementsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersEntitlementsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1createentitlementrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entitlements")
@@ -14082,12 +10721,11 @@ func (c *AccountsCustomersEntitlementsCreateCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.create" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -14118,38 +10756,7 @@ func (c *AccountsCustomersEntitlementsCreateCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an entitlement for a customer. Possible error codes: * PERMISSION_DENIED: * The customer doesn't belong to the reseller. * The reseller is not authorized to transact on this Product. See https://support.google.com/channelservices/answer/9759265 * INVALID_ARGUMENT: * Required request parameters are missing or invalid. * There is already a customer entitlement for a SKU from the same product family. * INVALID_VALUE: Make sure the OfferId is valid. If it is, contact Google Channel support for further troubleshooting. * NOT_FOUND: The customer or offer resource was not found. * ALREADY_EXISTS: * The SKU was already purchased for the customer. * The customer's primary email already exists. Retry after changing the customer's primary contact email. * CONDITION_NOT_MET or FAILED_PRECONDITION: * The domain required for purchasing a SKU has not been verified. * A pre-requisite SKU required to purchase an Add-On SKU is missing. For example, Google Workspace Business Starter is required to purchase Vault or Drive. * (Developer accounts only) Reseller and resold domain must meet the following naming requirements: * Domain names must start with goog-test. * Domain names must include the reseller domain. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.entitlements.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the reseller's customer account in which to create the entitlement. Parent uses the format: accounts/{account_id}/customers/{customer_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/entitlements",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1CreateEntitlementRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.entitlements.get":
 
 type AccountsCustomersEntitlementsGetCall struct {
 	s            *Service
@@ -14160,16 +10767,15 @@ type AccountsCustomersEntitlementsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns the requested Entitlement resource. Possible error
-// codes: * PERMISSION_DENIED: The customer doesn't belong to the
-// reseller. * INVALID_ARGUMENT: Required request parameters are missing
-// or invalid. * NOT_FOUND: The customer entitlement was not found.
-// Return value: The requested Entitlement resource.
+// Get: Returns the requested Entitlement resource. Possible error codes: *
+// PERMISSION_DENIED: The customer doesn't belong to the reseller. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid. *
+// NOT_FOUND: The customer entitlement was not found. Return value: The
+// requested Entitlement resource.
 //
-//   - name: The resource name of the entitlement to retrieve. Name uses
-//     the format:
-//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//     ent_id}.
+//   - name: The resource name of the entitlement to retrieve. Name uses the
+//     format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}.
 func (r *AccountsCustomersEntitlementsService) Get(name string) *AccountsCustomersEntitlementsGetCall {
 	c := &AccountsCustomersEntitlementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14177,33 +10783,29 @@ func (r *AccountsCustomersEntitlementsService) Get(name string) *AccountsCustome
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsGetCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsCustomersEntitlementsGetCall) IfNoneMatch(entityTag string) *AccountsCustomersEntitlementsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsGetCall) Context(ctx context.Context) *AccountsCustomersEntitlementsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14212,12 +10814,7 @@ func (c *AccountsCustomersEntitlementsGetCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersEntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -14238,12 +10835,11 @@ func (c *AccountsCustomersEntitlementsGetCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.get" call.
-// Exactly one of *GoogleCloudChannelV1Entitlement or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudChannelV1Entitlement.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1Entitlement.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Entitlement, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -14274,35 +10870,7 @@ func (c *AccountsCustomersEntitlementsGetCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the requested Entitlement resource. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer entitlement was not found. Return value: The requested Entitlement resource.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.customers.entitlements.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the entitlement to retrieve. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1Entitlement"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.entitlements.list":
 
 type AccountsCustomersEntitlementsListCall struct {
 	s            *Service
@@ -14313,13 +10881,13 @@ type AccountsCustomersEntitlementsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Entitlements belonging to a customer. Possible error
-// codes: * PERMISSION_DENIED: The customer doesn't belong to the
-// reseller. * INVALID_ARGUMENT: Required request parameters are missing
-// or invalid. Return value: A list of the customer's Entitlements.
+// List: Lists Entitlements belonging to a customer. Possible error codes: *
+// PERMISSION_DENIED: The customer doesn't belong to the reseller. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid. Return
+// value: A list of the customer's Entitlements.
 //
-//   - parent: The resource name of the reseller's customer account to
-//     list entitlements for. Parent uses the format:
+//   - parent: The resource name of the reseller's customer account to list
+//     entitlements for. Parent uses the format:
 //     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersEntitlementsService) List(parent string) *AccountsCustomersEntitlementsListCall {
 	c := &AccountsCustomersEntitlementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14327,17 +10895,17 @@ func (r *AccountsCustomersEntitlementsService) List(parent string) *AccountsCust
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified,
-// return at most 50 entitlements. The maximum value is 100; the server
-// will coerce values above 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// might return fewer results than requested. If unspecified, return at most 50
+// entitlements. The maximum value is 100; the server will coerce values above
+// 100.
 func (c *AccountsCustomersEntitlementsListCall) PageSize(pageSize int64) *AccountsCustomersEntitlementsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token for a page
-// of results other than the first page. Obtained using
+// PageToken sets the optional parameter "pageToken": A token for a page of
+// results other than the first page. Obtained using
 // ListEntitlementsResponse.next_page_token of the previous
 // CloudChannelService.ListEntitlements call.
 func (c *AccountsCustomersEntitlementsListCall) PageToken(pageToken string) *AccountsCustomersEntitlementsListCall {
@@ -14346,33 +10914,29 @@ func (c *AccountsCustomersEntitlementsListCall) PageToken(pageToken string) *Acc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsListCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsCustomersEntitlementsListCall) IfNoneMatch(entityTag string) *AccountsCustomersEntitlementsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsListCall) Context(ctx context.Context) *AccountsCustomersEntitlementsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14381,12 +10945,7 @@ func (c *AccountsCustomersEntitlementsListCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersEntitlementsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -14407,14 +10966,11 @@ func (c *AccountsCustomersEntitlementsListCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.list" call.
-// Exactly one of *GoogleCloudChannelV1ListEntitlementsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListEntitlementsResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListEntitlementsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListEntitlementsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -14445,43 +11001,6 @@ func (c *AccountsCustomersEntitlementsListCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists Entitlements belonging to a customer. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: A list of the customer's Entitlements.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.customers.entitlements.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, return at most 50 entitlements. The maximum value is 100; the server will coerce values above 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token for a page of results other than the first page. Obtained using ListEntitlementsResponse.next_page_token of the previous CloudChannelService.ListEntitlements call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the reseller's customer account to list entitlements for. Parent uses the format: accounts/{account_id}/customers/{customer_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/entitlements",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListEntitlementsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -14489,7 +11008,7 @@ func (c *AccountsCustomersEntitlementsListCall) Do(opts ...googleapi.CallOption)
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsCustomersEntitlementsListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListEntitlementsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -14505,8 +11024,6 @@ func (c *AccountsCustomersEntitlementsListCall) Pages(ctx context.Context, f fun
 	}
 }
 
-// method id "cloudchannel.accounts.customers.entitlements.listEntitlementChanges":
-
 type AccountsCustomersEntitlementsListEntitlementChangesCall struct {
 	s            *Service
 	parent       string
@@ -14516,84 +11033,77 @@ type AccountsCustomersEntitlementsListEntitlementChangesCall struct {
 	header_      http.Header
 }
 
-// ListEntitlementChanges: List entitlement history. Possible error
-// codes: * PERMISSION_DENIED: The reseller account making the request
-// and the provided reseller account are different. * INVALID_ARGUMENT:
-// Missing or invalid required fields in the request. * NOT_FOUND: The
-// parent resource doesn't exist. Usually the result of an invalid name
-// parameter. * INTERNAL: Any non-user error related to a technical
-// issue in the backend. In this case, contact CloudChannel support. *
-// UNKNOWN: Any non-user error related to a technical issue in the
-// backend. In this case, contact Cloud Channel support. Return value:
-// List of EntitlementChanges.
+// ListEntitlementChanges: List entitlement history. Possible error codes: *
+// PERMISSION_DENIED: The reseller account making the request and the provided
+// reseller account are different. * INVALID_ARGUMENT: Missing or invalid
+// required fields in the request. * NOT_FOUND: The parent resource doesn't
+// exist. Usually the result of an invalid name parameter. * INTERNAL: Any
+// non-user error related to a technical issue in the backend. In this case,
+// contact CloudChannel support. * UNKNOWN: Any non-user error related to a
+// technical issue in the backend. In this case, contact Cloud Channel support.
+// Return value: List of EntitlementChanges.
 //
-//   - parent: The resource name of the entitlement for which to list
-//     entitlement changes. The `-` wildcard may be used to match
-//     entitlements across a customer. Formats: *
-//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//     ent_id} *
-//     accounts/{account_id}/customers/{customer_id}/entitlements/-.
+//   - parent: The resource name of the entitlement for which to list entitlement
+//     changes. The `-` wildcard may be used to match entitlements across a
+//     customer. Formats: *
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}
+//   - accounts/{account_id}/customers/{customer_id}/entitlements/-.
 func (r *AccountsCustomersEntitlementsService) ListEntitlementChanges(parent string) *AccountsCustomersEntitlementsListEntitlementChangesCall {
 	c := &AccountsCustomersEntitlementsListEntitlementChangesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filters applied to the
-// list results.
+// Filter sets the optional parameter "filter": Filters applied to the list
+// results.
 func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Filter(filter string) *AccountsCustomersEntitlementsListEntitlementChangesCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entitlement changes to return. The service may return fewer than
-// this value. If unspecified, returns at most 10 entitlement changes.
-// The maximum value is 50; the server will coerce values above 50.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entitlement changes to return. The service may return fewer than this value.
+// If unspecified, returns at most 10 entitlement changes. The maximum value is
+// 50; the server will coerce values above 50.
 func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) PageSize(pageSize int64) *AccountsCustomersEntitlementsListEntitlementChangesCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous CloudChannelService.ListEntitlementChanges
-// call. Provide this to retrieve the subsequent page. When paginating,
-// all other parameters provided to
-// CloudChannelService.ListEntitlementChanges must match the call that
-// provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous CloudChannelService.ListEntitlementChanges call. Provide
+// this to retrieve the subsequent page. When paginating, all other parameters
+// provided to CloudChannelService.ListEntitlementChanges must match the call
+// that provided the page token.
 func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) PageToken(pageToken string) *AccountsCustomersEntitlementsListEntitlementChangesCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsListEntitlementChangesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) IfNoneMatch(entityTag string) *AccountsCustomersEntitlementsListEntitlementChangesCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Context(ctx context.Context) *AccountsCustomersEntitlementsListEntitlementChangesCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14602,12 +11112,7 @@ func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Header() http.
 }
 
 func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -14628,14 +11133,11 @@ func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) doRequest(alt 
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.listEntitlementChanges" call.
-// Exactly one of *GoogleCloudChannelV1ListEntitlementChangesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListEntitlementChangesResponse.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListEntitlementChangesResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListEntitlementChangesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -14666,48 +11168,6 @@ func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Do(opts ...goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List entitlement history. Possible error codes: * PERMISSION_DENIED: The reseller account making the request and the provided reseller account are different. * INVALID_ARGUMENT: Missing or invalid required fields in the request. * NOT_FOUND: The parent resource doesn't exist. Usually the result of an invalid name parameter. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact CloudChannel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return value: List of EntitlementChanges.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:listEntitlementChanges",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.customers.entitlements.listEntitlementChanges",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filters applied to the list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of entitlement changes to return. The service may return fewer than this value. If unspecified, returns at most 10 entitlement changes. The maximum value is 50; the server will coerce values above 50.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous CloudChannelService.ListEntitlementChanges call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to CloudChannelService.ListEntitlementChanges must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the entitlement for which to list entitlement changes. The `-` wildcard may be used to match entitlements across a customer. Formats: * accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id} * accounts/{account_id}/customers/{customer_id}/entitlements/-",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:listEntitlementChanges",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListEntitlementChangesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -14715,7 +11175,7 @@ func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Do(opts ...goo
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListEntitlementChangesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -14731,8 +11191,6 @@ func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Pages(ctx cont
 	}
 }
 
-// method id "cloudchannel.accounts.customers.entitlements.lookupOffer":
-
 type AccountsCustomersEntitlementsLookupOfferCall struct {
 	s            *Service
 	entitlement  string
@@ -14742,16 +11200,15 @@ type AccountsCustomersEntitlementsLookupOfferCall struct {
 	header_      http.Header
 }
 
-// LookupOffer: Returns the requested Offer resource. Possible error
-// codes: * PERMISSION_DENIED: The entitlement doesn't belong to the
-// reseller. * INVALID_ARGUMENT: Required request parameters are missing
-// or invalid. * NOT_FOUND: Entitlement or offer was not found. Return
-// value: The Offer resource.
+// LookupOffer: Returns the requested Offer resource. Possible error codes: *
+// PERMISSION_DENIED: The entitlement doesn't belong to the reseller. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid. *
+// NOT_FOUND: Entitlement or offer was not found. Return value: The Offer
+// resource.
 //
-//   - entitlement: The resource name of the entitlement to retrieve the
-//     Offer. Entitlement uses the format:
-//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//     ent_id}.
+//   - entitlement: The resource name of the entitlement to retrieve the Offer.
+//     Entitlement uses the format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}.
 func (r *AccountsCustomersEntitlementsService) LookupOffer(entitlement string) *AccountsCustomersEntitlementsLookupOfferCall {
 	c := &AccountsCustomersEntitlementsLookupOfferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entitlement = entitlement
@@ -14759,33 +11216,29 @@ func (r *AccountsCustomersEntitlementsService) LookupOffer(entitlement string) *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsLookupOfferCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsLookupOfferCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsCustomersEntitlementsLookupOfferCall) IfNoneMatch(entityTag string) *AccountsCustomersEntitlementsLookupOfferCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsLookupOfferCall) Context(ctx context.Context) *AccountsCustomersEntitlementsLookupOfferCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsLookupOfferCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14794,12 +11247,7 @@ func (c *AccountsCustomersEntitlementsLookupOfferCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersEntitlementsLookupOfferCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -14820,12 +11268,11 @@ func (c *AccountsCustomersEntitlementsLookupOfferCall) doRequest(alt string) (*h
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.lookupOffer" call.
-// Exactly one of *GoogleCloudChannelV1Offer or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudChannelV1Offer.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleCloudChannelV1Offer.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsLookupOfferCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Offer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -14856,35 +11303,7 @@ func (c *AccountsCustomersEntitlementsLookupOfferCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the requested Offer resource. Possible error codes: * PERMISSION_DENIED: The entitlement doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Entitlement or offer was not found. Return value: The Offer resource.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:lookupOffer",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.customers.entitlements.lookupOffer",
-	//   "parameterOrder": [
-	//     "entitlement"
-	//   ],
-	//   "parameters": {
-	//     "entitlement": {
-	//       "description": "Required. The resource name of the entitlement to retrieve the Offer. Entitlement uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+entitlement}:lookupOffer",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1Offer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.entitlements.startPaidService":
 
 type AccountsCustomersEntitlementsStartPaidServiceCall struct {
 	s                                           *Service
@@ -14895,26 +11314,23 @@ type AccountsCustomersEntitlementsStartPaidServiceCall struct {
 	header_                                     http.Header
 }
 
-// StartPaidService: Starts paid service for a trial entitlement. Starts
-// paid service for a trial entitlement immediately. This method is only
-// applicable if a plan is set up for a trial entitlement but has some
-// trial days remaining. Possible error codes: * PERMISSION_DENIED: The
-// customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required
-// request parameters are missing or invalid. * NOT_FOUND: Entitlement
-// resource not found. * FAILED_PRECONDITION/NOT_IN_TRIAL: This method
-// only works for entitlement on trial plans. * INTERNAL: Any non-user
-// error related to a technical issue in the backend. Contact Cloud
-// Channel support. * UNKNOWN: Any non-user error related to a technical
-// issue in the backend. Contact Cloud Channel support. Return value:
-// The ID of a long-running operation. To get the results of the
-// operation, call the GetOperation method of
-// CloudChannelOperationsService. The Operation metadata will contain an
-// instance of OperationMetadata.
+// StartPaidService: Starts paid service for a trial entitlement. Starts paid
+// service for a trial entitlement immediately. This method is only applicable
+// if a plan is set up for a trial entitlement but has some trial days
+// remaining. Possible error codes: * PERMISSION_DENIED: The customer doesn't
+// belong to the reseller. * INVALID_ARGUMENT: Required request parameters are
+// missing or invalid. * NOT_FOUND: Entitlement resource not found. *
+// FAILED_PRECONDITION/NOT_IN_TRIAL: This method only works for entitlement on
+// trial plans. * INTERNAL: Any non-user error related to a technical issue in
+// the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel support.
+// Return value: The ID of a long-running operation. To get the results of the
+// operation, call the GetOperation method of CloudChannelOperationsService.
+// The Operation metadata will contain an instance of OperationMetadata.
 //
-//   - name: The name of the entitlement to start a paid service for. Name
-//     uses the format:
-//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//     ent_id}.
+//   - name: The name of the entitlement to start a paid service for. Name uses
+//     the format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}.
 func (r *AccountsCustomersEntitlementsService) StartPaidService(name string, googlecloudchannelv1startpaidservicerequest *GoogleCloudChannelV1StartPaidServiceRequest) *AccountsCustomersEntitlementsStartPaidServiceCall {
 	c := &AccountsCustomersEntitlementsStartPaidServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14923,23 +11339,21 @@ func (r *AccountsCustomersEntitlementsService) StartPaidService(name string, goo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsStartPaidServiceCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsStartPaidServiceCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsStartPaidServiceCall) Context(ctx context.Context) *AccountsCustomersEntitlementsStartPaidServiceCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsStartPaidServiceCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14948,18 +11362,12 @@ func (c *AccountsCustomersEntitlementsStartPaidServiceCall) Header() http.Header
 }
 
 func (c *AccountsCustomersEntitlementsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1startpaidservicerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:startPaidService")
@@ -14976,12 +11384,11 @@ func (c *AccountsCustomersEntitlementsStartPaidServiceCall) doRequest(alt string
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.startPaidService" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsStartPaidServiceCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -15012,38 +11419,7 @@ func (c *AccountsCustomersEntitlementsStartPaidServiceCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts paid service for a trial entitlement. Starts paid service for a trial entitlement immediately. This method is only applicable if a plan is set up for a trial entitlement but has some trial days remaining. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Entitlement resource not found. * FAILED_PRECONDITION/NOT_IN_TRIAL: This method only works for entitlement on trial plans. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:startPaidService",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.entitlements.startPaidService",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the entitlement to start a paid service for. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:startPaidService",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1StartPaidServiceRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.customers.entitlements.suspend":
 
 type AccountsCustomersEntitlementsSuspendCall struct {
 	s                                             *Service
@@ -15057,20 +11433,18 @@ type AccountsCustomersEntitlementsSuspendCall struct {
 // Suspend: Suspends a previously fulfilled entitlement. An entitlement
 // suspension is a long-running operation. Possible error codes: *
 // PERMISSION_DENIED: The customer doesn't belong to the reseller. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: Entitlement resource not found. * NOT_ACTIVE:
-// Entitlement is not active. * INTERNAL: Any non-user error related to
-// a technical issue in the backend. Contact Cloud Channel support. *
-// UNKNOWN: Any non-user error related to a technical issue in the
-// backend. Contact Cloud Channel support. Return value: The ID of a
-// long-running operation. To get the results of the operation, call the
-// GetOperation method of CloudChannelOperationsService. The Operation
-// metadata will contain an instance of OperationMetadata.
+// INVALID_ARGUMENT: Required request parameters are missing or invalid. *
+// NOT_FOUND: Entitlement resource not found. * NOT_ACTIVE: Entitlement is not
+// active. * INTERNAL: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel support.
+// Return value: The ID of a long-running operation. To get the results of the
+// operation, call the GetOperation method of CloudChannelOperationsService.
+// The Operation metadata will contain an instance of OperationMetadata.
 //
-//   - name: The resource name of the entitlement to suspend. Name uses
-//     the format:
-//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//     ent_id}.
+//   - name: The resource name of the entitlement to suspend. Name uses the
+//     format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}.
 func (r *AccountsCustomersEntitlementsService) Suspend(name string, googlecloudchannelv1suspendentitlementrequest *GoogleCloudChannelV1SuspendEntitlementRequest) *AccountsCustomersEntitlementsSuspendCall {
 	c := &AccountsCustomersEntitlementsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15079,23 +11453,21 @@ func (r *AccountsCustomersEntitlementsService) Suspend(name string, googlecloudc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomersEntitlementsSuspendCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsSuspendCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCustomersEntitlementsSuspendCall) Context(ctx context.Context) *AccountsCustomersEntitlementsSuspendCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomersEntitlementsSuspendCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -15104,18 +11476,12 @@ func (c *AccountsCustomersEntitlementsSuspendCall) Header() http.Header {
 }
 
 func (c *AccountsCustomersEntitlementsSuspendCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1suspendentitlementrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:suspend")
@@ -15132,12 +11498,11 @@ func (c *AccountsCustomersEntitlementsSuspendCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.suspend" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCustomersEntitlementsSuspendCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -15168,38 +11533,7 @@ func (c *AccountsCustomersEntitlementsSuspendCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Suspends a previously fulfilled entitlement. An entitlement suspension is a long-running operation. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Entitlement resource not found. * NOT_ACTIVE: Entitlement is not active. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
-	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:suspend",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.customers.entitlements.suspend",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the entitlement to suspend. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:suspend",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1SuspendEntitlementRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.offers.list":
 
 type AccountsOffersListCall struct {
 	s            *Service
@@ -15213,8 +11547,8 @@ type AccountsOffersListCall struct {
 // List: Lists the Offers the reseller can sell. Possible error codes: *
 // INVALID_ARGUMENT: Required request parameters are missing or invalid.
 //
-//   - parent: The resource name of the reseller account from which to
-//     list Offers. Parent uses the format: accounts/{account_id}.
+//   - parent: The resource name of the reseller account from which to list
+//     Offers. Parent uses the format: accounts/{account_id}.
 func (r *AccountsOffersService) List(parent string) *AccountsOffersListCall {
 	c := &AccountsOffersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15224,76 +11558,70 @@ func (r *AccountsOffersService) List(parent string) *AccountsOffersListCall {
 // Filter sets the optional parameter "filter": The expression to filter
 // results by name (name of the Offer), sku.name (name of the SKU), or
 // sku.product.name (name of the Product). Example 1:
-// sku.product.name=products/p1 AND sku.name!=products/p1/skus/s1
-// Example 2: name=accounts/a1/offers/o1
+// sku.product.name=products/p1 AND sku.name!=products/p1/skus/s1 Example 2:
+// name=accounts/a1/offers/o1
 func (c *AccountsOffersListCall) Filter(filter string) *AccountsOffersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code. For example, "en-US". The response will localize in
-// the corresponding language code, if specified. The default value is
-// "en-US".
+// LanguageCode sets the optional parameter "languageCode": The BCP-47 language
+// code. For example, "en-US". The response will localize in the corresponding
+// language code, if specified. The default value is "en-US".
 func (c *AccountsOffersListCall) LanguageCode(languageCode string) *AccountsOffersListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified,
-// returns at most 500 Offers. The maximum value is 1000; the server
-// will coerce values above 1000.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// might return fewer results than requested. If unspecified, returns at most
+// 500 Offers. The maximum value is 1000; the server will coerce values above
+// 1000.
 func (c *AccountsOffersListCall) PageSize(pageSize int64) *AccountsOffersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token for a page
-// of results other than the first page.
+// PageToken sets the optional parameter "pageToken": A token for a page of
+// results other than the first page.
 func (c *AccountsOffersListCall) PageToken(pageToken string) *AccountsOffersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ShowFutureOffers sets the optional parameter "showFutureOffers": A
-// boolean flag that determines if a response returns future offers 30
-// days from now. If the show_future_offers is true, the response will
-// only contain offers that are scheduled to be available 30 days from
-// now.
+// ShowFutureOffers sets the optional parameter "showFutureOffers": A boolean
+// flag that determines if a response returns future offers 30 days from now.
+// If the show_future_offers is true, the response will only contain offers
+// that are scheduled to be available 30 days from now.
 func (c *AccountsOffersListCall) ShowFutureOffers(showFutureOffers bool) *AccountsOffersListCall {
 	c.urlParams_.Set("showFutureOffers", fmt.Sprint(showFutureOffers))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsOffersListCall) Fields(s ...googleapi.Field) *AccountsOffersListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsOffersListCall) IfNoneMatch(entityTag string) *AccountsOffersListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsOffersListCall) Context(ctx context.Context) *AccountsOffersListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsOffersListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -15302,12 +11630,7 @@ func (c *AccountsOffersListCall) Header() http.Header {
 }
 
 func (c *AccountsOffersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -15328,13 +11651,11 @@ func (c *AccountsOffersListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudchannel.accounts.offers.list" call.
-// Exactly one of *GoogleCloudChannelV1ListOffersResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudChannelV1ListOffersResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListOffersResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsOffersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListOffersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -15365,58 +11686,6 @@ func (c *AccountsOffersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the Offers the reseller can sell. Possible error codes: * INVALID_ARGUMENT: Required request parameters are missing or invalid.",
-	//   "flatPath": "v1/accounts/{accountsId}/offers",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.offers.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. The expression to filter results by name (name of the Offer), sku.name (name of the SKU), or sku.product.name (name of the Product). Example 1: sku.product.name=products/p1 AND sku.name!=products/p1/skus/s1 Example 2: name=accounts/a1/offers/o1",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code. For example, \"en-US\". The response will localize in the corresponding language code, if specified. The default value is \"en-US\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, returns at most 500 Offers. The maximum value is 1000; the server will coerce values above 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token for a page of results other than the first page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the reseller account from which to list Offers. Parent uses the format: accounts/{account_id}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "showFutureOffers": {
-	//       "description": "Optional. A boolean flag that determines if a response returns future offers 30 days from now. If the show_future_offers is true, the response will only contain offers that are scheduled to be available 30 days from now.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/offers",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListOffersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -15424,7 +11693,7 @@ func (c *AccountsOffersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudC
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsOffersListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListOffersResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -15440,8 +11709,6 @@ func (c *AccountsOffersListCall) Pages(ctx context.Context, f func(*GoogleCloudC
 	}
 }
 
-// method id "cloudchannel.accounts.reportJobs.fetchReportResults":
-
 type AccountsReportJobsFetchReportResultsCall struct {
 	s                                             *Service
 	reportJob                                     string
@@ -15452,14 +11719,14 @@ type AccountsReportJobsFetchReportResultsCall struct {
 }
 
 // FetchReportResults: Retrieves data generated by
-// CloudChannelReportsService.RunReportJob. Deprecated: Please use
-// Export Channel Services data to BigQuery
+// CloudChannelReportsService.RunReportJob. Deprecated: Please use Export
+// Channel Services data to BigQuery
 // (https://cloud.google.com/channel/docs/rebilling/export-data-to-bigquery)
 // instead.
 //
 //   - reportJob: The report job created by
-//     CloudChannelReportsService.RunReportJob. Report_job uses the
-//     format: accounts/{account_id}/reportJobs/{report_job_id}.
+//     CloudChannelReportsService.RunReportJob. Report_job uses the format:
+//     accounts/{account_id}/reportJobs/{report_job_id}.
 func (r *AccountsReportJobsService) FetchReportResults(reportJob string, googlecloudchannelv1fetchreportresultsrequest *GoogleCloudChannelV1FetchReportResultsRequest) *AccountsReportJobsFetchReportResultsCall {
 	c := &AccountsReportJobsFetchReportResultsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.reportJob = reportJob
@@ -15468,23 +11735,21 @@ func (r *AccountsReportJobsService) FetchReportResults(reportJob string, googlec
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsReportJobsFetchReportResultsCall) Fields(s ...googleapi.Field) *AccountsReportJobsFetchReportResultsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsReportJobsFetchReportResultsCall) Context(ctx context.Context) *AccountsReportJobsFetchReportResultsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsReportJobsFetchReportResultsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -15493,18 +11758,12 @@ func (c *AccountsReportJobsFetchReportResultsCall) Header() http.Header {
 }
 
 func (c *AccountsReportJobsFetchReportResultsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1fetchreportresultsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+reportJob}:fetchReportResults")
@@ -15521,14 +11780,11 @@ func (c *AccountsReportJobsFetchReportResultsCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "cloudchannel.accounts.reportJobs.fetchReportResults" call.
-// Exactly one of *GoogleCloudChannelV1FetchReportResultsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1FetchReportResultsResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1FetchReportResultsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsReportJobsFetchReportResultsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1FetchReportResultsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -15559,36 +11815,6 @@ func (c *AccountsReportJobsFetchReportResultsCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Retrieves data generated by CloudChannelReportsService.RunReportJob. Deprecated: Please use [Export Channel Services data to BigQuery](https://cloud.google.com/channel/docs/rebilling/export-data-to-bigquery) instead.",
-	//   "flatPath": "v1/accounts/{accountsId}/reportJobs/{reportJobsId}:fetchReportResults",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.reportJobs.fetchReportResults",
-	//   "parameterOrder": [
-	//     "reportJob"
-	//   ],
-	//   "parameters": {
-	//     "reportJob": {
-	//       "description": "Required. The report job created by CloudChannelReportsService.RunReportJob. Report_job uses the format: accounts/{account_id}/reportJobs/{report_job_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/reportJobs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+reportJob}:fetchReportResults",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1FetchReportResultsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1FetchReportResultsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.reports.usage.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -15596,7 +11822,7 @@ func (c *AccountsReportJobsFetchReportResultsCall) Do(opts ...googleapi.CallOpti
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsReportJobsFetchReportResultsCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1FetchReportResultsResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googlecloudchannelv1fetchreportresultsrequest.PageToken = pt }(c.googlecloudchannelv1fetchreportresultsrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googlecloudchannelv1fetchreportresultsrequest.PageToken = pt }(c.googlecloudchannelv1fetchreportresultsrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -15612,8 +11838,6 @@ func (c *AccountsReportJobsFetchReportResultsCall) Pages(ctx context.Context, f 
 	}
 }
 
-// method id "cloudchannel.accounts.reports.list":
-
 type AccountsReportsListCall struct {
 	s            *Service
 	parent       string
@@ -15623,40 +11847,39 @@ type AccountsReportsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the reports that RunReportJob can run. These reports
-// include an ID, a description, and the list of columns that will be in
-// the result. Deprecated: Please use Export Channel Services data to
-// BigQuery
+// List: Lists the reports that RunReportJob can run. These reports include an
+// ID, a description, and the list of columns that will be in the result.
+// Deprecated: Please use Export Channel Services data to BigQuery
 // (https://cloud.google.com/channel/docs/rebilling/export-data-to-bigquery)
 // instead.
 //
-//   - parent: The resource name of the partner account to list available
-//     reports for. Parent uses the format: accounts/{account_id}.
+//   - parent: The resource name of the partner account to list available reports
+//     for. Parent uses the format: accounts/{account_id}.
 func (r *AccountsReportsService) List(parent string) *AccountsReportsListCall {
 	c := &AccountsReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code, such as "en-US". If specified, the response is
-// localized to the corresponding language code if the original data
-// sources support it. Default is "en-US".
+// LanguageCode sets the optional parameter "languageCode": The BCP-47 language
+// code, such as "en-US". If specified, the response is localized to the
+// corresponding language code if the original data sources support it. Default
+// is "en-US".
 func (c *AccountsReportsListCall) LanguageCode(languageCode string) *AccountsReportsListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size
-// of the report. The server might return fewer results than requested.
-// If unspecified, returns 20 reports. The maximum value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size of the
+// report. The server might return fewer results than requested. If
+// unspecified, returns 20 reports. The maximum value is 100.
 func (c *AccountsReportsListCall) PageSize(pageSize int64) *AccountsReportsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token that
-// specifies a page of results beyond the first page. Obtained through
+// PageToken sets the optional parameter "pageToken": A token that specifies a
+// page of results beyond the first page. Obtained through
 // ListReportsResponse.next_page_token of the previous
 // CloudChannelReportsService.ListReports call.
 func (c *AccountsReportsListCall) PageToken(pageToken string) *AccountsReportsListCall {
@@ -15665,33 +11888,29 @@ func (c *AccountsReportsListCall) PageToken(pageToken string) *AccountsReportsLi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsReportsListCall) Fields(s ...googleapi.Field) *AccountsReportsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsReportsListCall) IfNoneMatch(entityTag string) *AccountsReportsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsReportsListCall) Context(ctx context.Context) *AccountsReportsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsReportsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -15700,12 +11919,7 @@ func (c *AccountsReportsListCall) Header() http.Header {
 }
 
 func (c *AccountsReportsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -15726,13 +11940,11 @@ func (c *AccountsReportsListCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "cloudchannel.accounts.reports.list" call.
-// Exactly one of *GoogleCloudChannelV1ListReportsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudChannelV1ListReportsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListReportsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsReportsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListReportsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -15763,49 +11975,6 @@ func (c *AccountsReportsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Lists the reports that RunReportJob can run. These reports include an ID, a description, and the list of columns that will be in the result. Deprecated: Please use [Export Channel Services data to BigQuery](https://cloud.google.com/channel/docs/rebilling/export-data-to-bigquery) instead.",
-	//   "flatPath": "v1/accounts/{accountsId}/reports",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.reports.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code, such as \"en-US\". If specified, the response is localized to the corresponding language code if the original data sources support it. Default is \"en-US\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size of the report. The server might return fewer results than requested. If unspecified, returns 20 reports. The maximum value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token that specifies a page of results beyond the first page. Obtained through ListReportsResponse.next_page_token of the previous CloudChannelReportsService.ListReports call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the partner account to list available reports for. Parent uses the format: accounts/{account_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/reports",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListReportsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.reports.usage.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -15813,7 +11982,7 @@ func (c *AccountsReportsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsReportsListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListReportsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -15829,8 +11998,6 @@ func (c *AccountsReportsListCall) Pages(ctx context.Context, f func(*GoogleCloud
 	}
 }
 
-// method id "cloudchannel.accounts.reports.run":
-
 type AccountsReportsRunCall struct {
 	s                                       *Service
 	nameid                                  string
@@ -15840,27 +12007,26 @@ type AccountsReportsRunCall struct {
 	header_                                 http.Header
 }
 
-// Run: Begins generation of data for a given report. The report
-// identifier is a UID (for example, `613bf59q`). Possible error codes:
-// * PERMISSION_DENIED: The user doesn't have access to this report. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// * NOT_FOUND: The report identifier was not found. * INTERNAL: Any
-// non-user error related to a technical issue in the backend. Contact
-// Cloud Channel support. * UNKNOWN: Any non-user error related to a
-// technical issue in the backend. Contact Cloud Channel support. Return
-// value: The ID of a long-running operation. To get the results of the
-// operation, call the GetOperation method of
-// CloudChannelOperationsService. The Operation metadata contains an
-// instance of OperationMetadata. To get the results of report
-// generation, call CloudChannelReportsService.FetchReportResults with
-// the RunReportJobResponse.report_job. Deprecated: Please use Export
-// Channel Services data to BigQuery
+// Run: Begins generation of data for a given report. The report identifier is
+// a UID (for example, `613bf59q`). Possible error codes: * PERMISSION_DENIED:
+// The user doesn't have access to this report. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid. * NOT_FOUND: The report
+// identifier was not found. * INTERNAL: Any non-user error related to a
+// technical issue in the backend. Contact Cloud Channel support. * UNKNOWN:
+// Any non-user error related to a technical issue in the backend. Contact
+// Cloud Channel support. Return value: The ID of a long-running operation. To
+// get the results of the operation, call the GetOperation method of
+// CloudChannelOperationsService. The Operation metadata contains an instance
+// of OperationMetadata. To get the results of report generation, call
+// CloudChannelReportsService.FetchReportResults with the
+// RunReportJobResponse.report_job. Deprecated: Please use Export Channel
+// Services data to BigQuery
 // (https://cloud.google.com/channel/docs/rebilling/export-data-to-bigquery)
 // instead.
 //
-//   - name: The report's resource name. Specifies the account and report
-//     used to generate report data. The report_id identifier is a UID
-//     (for example, `613bf59q`). Name uses the format:
+//   - name: The report's resource name. Specifies the account and report used to
+//     generate report data. The report_id identifier is a UID (for example,
+//     `613bf59q`). Name uses the format:
 //     accounts/{account_id}/reports/{report_id}.
 func (r *AccountsReportsService) Run(nameid string, googlecloudchannelv1runreportjobrequest *GoogleCloudChannelV1RunReportJobRequest) *AccountsReportsRunCall {
 	c := &AccountsReportsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15870,23 +12036,21 @@ func (r *AccountsReportsService) Run(nameid string, googlecloudchannelv1runrepor
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsReportsRunCall) Fields(s ...googleapi.Field) *AccountsReportsRunCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsReportsRunCall) Context(ctx context.Context) *AccountsReportsRunCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsReportsRunCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -15895,18 +12059,12 @@ func (c *AccountsReportsRunCall) Header() http.Header {
 }
 
 func (c *AccountsReportsRunCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1runreportjobrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:run")
@@ -15923,12 +12081,11 @@ func (c *AccountsReportsRunCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudchannel.accounts.reports.run" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsReportsRunCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -15959,39 +12116,7 @@ func (c *AccountsReportsRunCall) Do(opts ...googleapi.CallOption) (*GoogleLongru
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Begins generation of data for a given report. The report identifier is a UID (for example, `613bf59q`). Possible error codes: * PERMISSION_DENIED: The user doesn't have access to this report. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The report identifier was not found. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata contains an instance of OperationMetadata. To get the results of report generation, call CloudChannelReportsService.FetchReportResults with the RunReportJobResponse.report_job. Deprecated: Please use [Export Channel Services data to BigQuery](https://cloud.google.com/channel/docs/rebilling/export-data-to-bigquery) instead.",
-	//   "flatPath": "v1/accounts/{accountsId}/reports/{reportsId}:run",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.accounts.reports.run",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The report's resource name. Specifies the account and report used to generate report data. The report_id identifier is a UID (for example, `613bf59q`). Name uses the format: accounts/{account_id}/reports/{report_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/reports/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:run",
-	//   "request": {
-	//     "$ref": "GoogleCloudChannelV1RunReportJobRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.reports.usage.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.accounts.skuGroups.list":
 
 type AccountsSkuGroupsListCall struct {
 	s            *Service
@@ -16002,37 +12127,36 @@ type AccountsSkuGroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Rebilling supported SKU groups the account is
-// authorized to sell. Reference:
-// https://cloud.google.com/skus/sku-groups Possible Error Codes: *
-// PERMISSION_DENIED: If the account making the request and the account
-// being queried are different, or the account doesn't exist. *
-// INTERNAL: Any non-user error related to technical issues in the
-// backend. In this case, contact Cloud Channel support. Return Value:
-// If successful, the SkuGroup resources. The data for each resource is
-// displayed in the alphabetical order of SKU group display name. The
-// data for each resource is displayed in the ascending order of
-// SkuGroup.display_name If unsuccessful, returns an error.
+// List: Lists the Rebilling supported SKU groups the account is authorized to
+// sell. Reference: https://cloud.google.com/skus/sku-groups Possible Error
+// Codes: * PERMISSION_DENIED: If the account making the request and the
+// account being queried are different, or the account doesn't exist. *
+// INTERNAL: Any non-user error related to technical issues in the backend. In
+// this case, contact Cloud Channel support. Return Value: If successful, the
+// SkuGroup resources. The data for each resource is displayed in the
+// alphabetical order of SKU group display name. The data for each resource is
+// displayed in the ascending order of SkuGroup.display_name If unsuccessful,
+// returns an error.
 //
-//   - parent: The resource name of the account from which to list SKU
-//     groups. Parent uses the format: accounts/{account}.
+//   - parent: The resource name of the account from which to list SKU groups.
+//     Parent uses the format: accounts/{account}.
 func (r *AccountsSkuGroupsService) List(parent string) *AccountsSkuGroupsListCall {
 	c := &AccountsSkuGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of SKU groups to return. The service may return fewer than this
-// value. If unspecified, returns a maximum of 1000 SKU groups. The
-// maximum value is 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of SKU
+// groups to return. The service may return fewer than this value. If
+// unspecified, returns a maximum of 1000 SKU groups. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
 func (c *AccountsSkuGroupsListCall) PageSize(pageSize int64) *AccountsSkuGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results beyond the first page. Obtained through
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results beyond the first page. Obtained through
 // ListSkuGroups.next_page_token of the previous
 // CloudChannelService.ListSkuGroups call.
 func (c *AccountsSkuGroupsListCall) PageToken(pageToken string) *AccountsSkuGroupsListCall {
@@ -16041,33 +12165,29 @@ func (c *AccountsSkuGroupsListCall) PageToken(pageToken string) *AccountsSkuGrou
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsSkuGroupsListCall) Fields(s ...googleapi.Field) *AccountsSkuGroupsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsSkuGroupsListCall) IfNoneMatch(entityTag string) *AccountsSkuGroupsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsSkuGroupsListCall) Context(ctx context.Context) *AccountsSkuGroupsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsSkuGroupsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -16076,12 +12196,7 @@ func (c *AccountsSkuGroupsListCall) Header() http.Header {
 }
 
 func (c *AccountsSkuGroupsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -16102,14 +12217,11 @@ func (c *AccountsSkuGroupsListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "cloudchannel.accounts.skuGroups.list" call.
-// Exactly one of *GoogleCloudChannelV1ListSkuGroupsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListSkuGroupsResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListSkuGroupsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsSkuGroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListSkuGroupsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -16140,43 +12252,6 @@ func (c *AccountsSkuGroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the Rebilling supported SKU groups the account is authorized to sell. Reference: https://cloud.google.com/skus/sku-groups Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different, or the account doesn't exist. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the SkuGroup resources. The data for each resource is displayed in the alphabetical order of SKU group display name. The data for each resource is displayed in the ascending order of SkuGroup.display_name If unsuccessful, returns an error.",
-	//   "flatPath": "v1/accounts/{accountsId}/skuGroups",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.skuGroups.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of SKU groups to return. The service may return fewer than this value. If unspecified, returns a maximum of 1000 SKU groups. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results beyond the first page. Obtained through ListSkuGroups.next_page_token of the previous CloudChannelService.ListSkuGroups call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the account from which to list SKU groups. Parent uses the format: accounts/{account}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/skuGroups",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListSkuGroupsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -16184,7 +12259,7 @@ func (c *AccountsSkuGroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsSkuGroupsListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListSkuGroupsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -16200,8 +12275,6 @@ func (c *AccountsSkuGroupsListCall) Pages(ctx context.Context, f func(*GoogleClo
 	}
 }
 
-// method id "cloudchannel.accounts.skuGroups.billableSkus.list":
-
 type AccountsSkuGroupsBillableSkusListCall struct {
 	s            *Service
 	parent       string
@@ -16211,15 +12284,14 @@ type AccountsSkuGroupsBillableSkusListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Billable SKUs in a given SKU group. Possible error
-// codes: PERMISSION_DENIED: If the account making the request and the
-// account being queried for are different, or the account doesn't
-// exist. INVALID_ARGUMENT: Missing or invalid required parameters in
-// the request. INTERNAL: Any non-user error related to technical issue
-// in the backend. In this case, contact cloud channel support. Return
-// Value: If successful, the BillableSku resources. The data for each
-// resource is displayed in the ascending order of: *
-// BillableSku.service_display_name * BillableSku.sku_display_name If
+// List: Lists the Billable SKUs in a given SKU group. Possible error codes:
+// PERMISSION_DENIED: If the account making the request and the account being
+// queried for are different, or the account doesn't exist. INVALID_ARGUMENT:
+// Missing or invalid required parameters in the request. INTERNAL: Any
+// non-user error related to technical issue in the backend. In this case,
+// contact cloud channel support. Return Value: If successful, the BillableSku
+// resources. The data for each resource is displayed in the ascending order
+// of: * BillableSku.service_display_name * BillableSku.sku_display_name If
 // unsuccessful, returns an error.
 //
 //   - parent: Resource name of the SKU group. Format:
@@ -16230,17 +12302,17 @@ func (r *AccountsSkuGroupsBillableSkusService) List(parent string) *AccountsSkuG
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of SKUs to return. The service may return fewer than this value. If
-// unspecified, returns a maximum of 100000 SKUs. The maximum value is
-// 100000; values above 100000 will be coerced to 100000.
+// PageSize sets the optional parameter "pageSize": The maximum number of SKUs
+// to return. The service may return fewer than this value. If unspecified,
+// returns a maximum of 100000 SKUs. The maximum value is 100000; values above
+// 100000 will be coerced to 100000.
 func (c *AccountsSkuGroupsBillableSkusListCall) PageSize(pageSize int64) *AccountsSkuGroupsBillableSkusListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results beyond the first page. Obtained through
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results beyond the first page. Obtained through
 // ListSkuGroupBillableSkus.next_page_token of the previous
 // CloudChannelService.ListSkuGroupBillableSkus call.
 func (c *AccountsSkuGroupsBillableSkusListCall) PageToken(pageToken string) *AccountsSkuGroupsBillableSkusListCall {
@@ -16249,33 +12321,29 @@ func (c *AccountsSkuGroupsBillableSkusListCall) PageToken(pageToken string) *Acc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsSkuGroupsBillableSkusListCall) Fields(s ...googleapi.Field) *AccountsSkuGroupsBillableSkusListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsSkuGroupsBillableSkusListCall) IfNoneMatch(entityTag string) *AccountsSkuGroupsBillableSkusListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsSkuGroupsBillableSkusListCall) Context(ctx context.Context) *AccountsSkuGroupsBillableSkusListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsSkuGroupsBillableSkusListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -16284,12 +12352,7 @@ func (c *AccountsSkuGroupsBillableSkusListCall) Header() http.Header {
 }
 
 func (c *AccountsSkuGroupsBillableSkusListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -16310,14 +12373,11 @@ func (c *AccountsSkuGroupsBillableSkusListCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "cloudchannel.accounts.skuGroups.billableSkus.list" call.
-// Exactly one of *GoogleCloudChannelV1ListSkuGroupBillableSkusResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudChannelV1ListSkuGroupBillableSkusResponse.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListSkuGroupBillableSkusResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsSkuGroupsBillableSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListSkuGroupBillableSkusResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -16348,43 +12408,6 @@ func (c *AccountsSkuGroupsBillableSkusListCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the Billable SKUs in a given SKU group. Possible error codes: PERMISSION_DENIED: If the account making the request and the account being queried for are different, or the account doesn't exist. INVALID_ARGUMENT: Missing or invalid required parameters in the request. INTERNAL: Any non-user error related to technical issue in the backend. In this case, contact cloud channel support. Return Value: If successful, the BillableSku resources. The data for each resource is displayed in the ascending order of: * BillableSku.service_display_name * BillableSku.sku_display_name If unsuccessful, returns an error.",
-	//   "flatPath": "v1/accounts/{accountsId}/skuGroups/{skuGroupsId}/billableSkus",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.accounts.skuGroups.billableSkus.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of SKUs to return. The service may return fewer than this value. If unspecified, returns a maximum of 100000 SKUs. The maximum value is 100000; values above 100000 will be coerced to 100000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results beyond the first page. Obtained through ListSkuGroupBillableSkus.next_page_token of the previous CloudChannelService.ListSkuGroupBillableSkus call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Resource name of the SKU group. Format: accounts/{account}/skuGroups/{sku_group}.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/skuGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/billableSkus",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListSkuGroupBillableSkusResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -16392,7 +12415,7 @@ func (c *AccountsSkuGroupsBillableSkusListCall) Do(opts ...googleapi.CallOption)
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsSkuGroupsBillableSkusListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListSkuGroupBillableSkusResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -16408,8 +12431,6 @@ func (c *AccountsSkuGroupsBillableSkusListCall) Pages(ctx context.Context, f fun
 	}
 }
 
-// method id "cloudchannel.operations.cancel":
-
 type OperationsCancelCall struct {
 	s                                       *Service
 	name                                    string
@@ -16419,15 +12440,14 @@ type OperationsCancelCall struct {
 	header_                                 http.Header
 }
 
-// Cancel: Starts asynchronous cancellation on a long-running operation.
-// The server makes a best effort to cancel the operation, but success
-// is not guaranteed. If the server doesn't support this method, it
-// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
-// Operations.GetOperation or other methods to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation. On successful cancellation, the operation is not
-// deleted; instead, it becomes an operation with an Operation.error
-// value with a google.rpc.Status.code of 1, corresponding to
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -16439,23 +12459,21 @@ func (r *OperationsService) Cancel(name string, googlelongrunningcanceloperation
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OperationsCancelCall) Context(ctx context.Context) *OperationsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OperationsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -16464,18 +12482,12 @@ func (c *OperationsCancelCall) Header() http.Header {
 }
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlelongrunningcanceloperationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
@@ -16492,12 +12504,11 @@ func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudchannel.operations.cancel" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -16528,38 +12539,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-	//   "flatPath": "v1/operations/{operationsId}:cancel",
-	//   "httpMethod": "POST",
-	//   "id": "cloudchannel.operations.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be cancelled.",
-	//       "location": "path",
-	//       "pattern": "^operations/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:cancel",
-	//   "request": {
-	//     "$ref": "GoogleLongrunningCancelOperationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.operations.delete":
 
 type OperationsDeleteCall struct {
 	s          *Service
@@ -16569,10 +12549,10 @@ type OperationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a long-running operation. This method indicates that
-// the client is no longer interested in the operation result. It does
-// not cancel the operation. If the server doesn't support this method,
-// it returns `google.rpc.Code.UNIMPLEMENTED`.
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`.
 //
 // - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
@@ -16582,23 +12562,21 @@ func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OperationsDeleteCall) Fields(s ...googleapi.Field) *OperationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OperationsDeleteCall) Context(ctx context.Context) *OperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OperationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -16607,12 +12585,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 }
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -16630,12 +12603,11 @@ func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudchannel.operations.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -16666,35 +12638,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
-	//   "flatPath": "v1/operations/{operationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "cloudchannel.operations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be deleted.",
-	//       "location": "path",
-	//       "pattern": "^operations/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.operations.get":
 
 type OperationsGetCall struct {
 	s            *Service
@@ -16705,9 +12649,9 @@ type OperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
 //
 // - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
@@ -16717,33 +12661,29 @@ func (r *OperationsService) Get(name string) *OperationsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OperationsGetCall) IfNoneMatch(entityTag string) *OperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -16752,12 +12692,7 @@ func (c *OperationsGetCall) Header() http.Header {
 }
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -16778,12 +12713,11 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudchannel.operations.get" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -16814,35 +12748,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunning
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^operations/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "cloudchannel.operations.list":
 
 type OperationsListCall struct {
 	s            *Service
@@ -16853,9 +12759,8 @@ type OperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
@@ -16864,55 +12769,50 @@ func (r *OperationsService) List(name string) *OperationsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": The standard list filter.
 func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
 func (c *OperationsListCall) PageSize(pageSize int64) *OperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
 func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OperationsListCall) IfNoneMatch(entityTag string) *OperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -16921,12 +12821,7 @@ func (c *OperationsListCall) Header() http.Header {
 }
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -16947,13 +12842,11 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudchannel.operations.list" call.
-// Exactly one of *GoogleLongrunningListOperationsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -16984,48 +12877,6 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
-	//   "flatPath": "v1/operations",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.operations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The standard list filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
-	//       "location": "path",
-	//       "pattern": "^operations$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The standard list page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The standard list page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningListOperationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -17033,7 +12884,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 // The provided context supersedes any context provided to the Context method.
 func (c *OperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -17049,8 +12900,6 @@ func (c *OperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunnin
 	}
 }
 
-// method id "cloudchannel.products.list":
-
 type ProductsListCall struct {
 	s            *Service
 	urlParams_   gensupport.URLParams
@@ -17059,74 +12908,69 @@ type ProductsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Products the reseller is authorized to sell. Possible
-// error codes: * INVALID_ARGUMENT: Required request parameters are
-// missing or invalid.
+// List: Lists the Products the reseller is authorized to sell. Possible error
+// codes: * INVALID_ARGUMENT: Required request parameters are missing or
+// invalid.
 func (r *ProductsService) List() *ProductsListCall {
 	c := &ProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// Account sets the optional parameter "account": Required. The resource
-// name of the reseller account. Format: accounts/{account_id}.
+// Account sets the optional parameter "account": Required. The resource name
+// of the reseller account. Format: accounts/{account_id}.
 func (c *ProductsListCall) Account(account string) *ProductsListCall {
 	c.urlParams_.Set("account", account)
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code. For example, "en-US". The response will localize in
-// the corresponding language code, if specified. The default value is
-// "en-US".
+// LanguageCode sets the optional parameter "languageCode": The BCP-47 language
+// code. For example, "en-US". The response will localize in the corresponding
+// language code, if specified. The default value is "en-US".
 func (c *ProductsListCall) LanguageCode(languageCode string) *ProductsListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified,
-// returns at most 100 Products. The maximum value is 1000; the server
-// will coerce values above 1000.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// might return fewer results than requested. If unspecified, returns at most
+// 100 Products. The maximum value is 1000; the server will coerce values above
+// 1000.
 func (c *ProductsListCall) PageSize(pageSize int64) *ProductsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token for a page
-// of results other than the first page.
+// PageToken sets the optional parameter "pageToken": A token for a page of
+// results other than the first page.
 func (c *ProductsListCall) PageToken(pageToken string) *ProductsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProductsListCall) Fields(s ...googleapi.Field) *ProductsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProductsListCall) IfNoneMatch(entityTag string) *ProductsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProductsListCall) Context(ctx context.Context) *ProductsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProductsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -17135,12 +12979,7 @@ func (c *ProductsListCall) Header() http.Header {
 }
 
 func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -17158,14 +12997,11 @@ func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudchannel.products.list" call.
-// Exactly one of *GoogleCloudChannelV1ListProductsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudChannelV1ListProductsResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListProductsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListProductsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -17196,44 +13032,6 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannel
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the Products the reseller is authorized to sell. Possible error codes: * INVALID_ARGUMENT: Required request parameters are missing or invalid.",
-	//   "flatPath": "v1/products",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.products.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "account": {
-	//       "description": "Required. The resource name of the reseller account. Format: accounts/{account_id}.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code. For example, \"en-US\". The response will localize in the corresponding language code, if specified. The default value is \"en-US\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, returns at most 100 Products. The maximum value is 1000; the server will coerce values above 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token for a page of results other than the first page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/products",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListProductsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -17241,7 +13039,7 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannel
 // The provided context supersedes any context provided to the Context method.
 func (c *ProductsListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListProductsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -17257,8 +13055,6 @@ func (c *ProductsListCall) Pages(ctx context.Context, f func(*GoogleCloudChannel
 	}
 }
 
-// method id "cloudchannel.products.skus.list":
-
 type ProductsSkusListCall struct {
 	s            *Service
 	parent       string
@@ -17268,79 +13064,74 @@ type ProductsSkusListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the SKUs for a product the reseller is authorized to
-// sell. Possible error codes: * INVALID_ARGUMENT: Required request
-// parameters are missing or invalid.
+// List: Lists the SKUs for a product the reseller is authorized to sell.
+// Possible error codes: * INVALID_ARGUMENT: Required request parameters are
+// missing or invalid.
 //
-//   - parent: The resource name of the Product to list SKUs for. Parent
-//     uses the format: products/{product_id}. Supports products/- to
-//     retrieve SKUs for all products.
+//   - parent: The resource name of the Product to list SKUs for. Parent uses the
+//     format: products/{product_id}. Supports products/- to retrieve SKUs for
+//     all products.
 func (r *ProductsSkusService) List(parent string) *ProductsSkusListCall {
 	c := &ProductsSkusListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Account sets the optional parameter "account": Required. Resource
-// name of the reseller. Format: accounts/{account_id}.
+// Account sets the optional parameter "account": Required. Resource name of
+// the reseller. Format: accounts/{account_id}.
 func (c *ProductsSkusListCall) Account(account string) *ProductsSkusListCall {
 	c.urlParams_.Set("account", account)
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code. For example, "en-US". The response will localize in
-// the corresponding language code, if specified. The default value is
-// "en-US".
+// LanguageCode sets the optional parameter "languageCode": The BCP-47 language
+// code. For example, "en-US". The response will localize in the corresponding
+// language code, if specified. The default value is "en-US".
 func (c *ProductsSkusListCall) LanguageCode(languageCode string) *ProductsSkusListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified,
-// returns at most 100 SKUs. The maximum value is 1000; the server will
-// coerce values above 1000.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// might return fewer results than requested. If unspecified, returns at most
+// 100 SKUs. The maximum value is 1000; the server will coerce values above
+// 1000.
 func (c *ProductsSkusListCall) PageSize(pageSize int64) *ProductsSkusListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token for a page
-// of results other than the first page. Optional.
+// PageToken sets the optional parameter "pageToken": A token for a page of
+// results other than the first page. Optional.
 func (c *ProductsSkusListCall) PageToken(pageToken string) *ProductsSkusListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProductsSkusListCall) Fields(s ...googleapi.Field) *ProductsSkusListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProductsSkusListCall) IfNoneMatch(entityTag string) *ProductsSkusListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProductsSkusListCall) Context(ctx context.Context) *ProductsSkusListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProductsSkusListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -17349,12 +13140,7 @@ func (c *ProductsSkusListCall) Header() http.Header {
 }
 
 func (c *ProductsSkusListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -17375,13 +13161,11 @@ func (c *ProductsSkusListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudchannel.products.skus.list" call.
-// Exactly one of *GoogleCloudChannelV1ListSkusResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudChannelV1ListSkusResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudChannelV1ListSkusResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProductsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListSkusResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -17412,53 +13196,6 @@ func (c *ProductsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudCha
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the SKUs for a product the reseller is authorized to sell. Possible error codes: * INVALID_ARGUMENT: Required request parameters are missing or invalid.",
-	//   "flatPath": "v1/products/{productsId}/skus",
-	//   "httpMethod": "GET",
-	//   "id": "cloudchannel.products.skus.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "account": {
-	//       "description": "Required. Resource name of the reseller. Format: accounts/{account_id}.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code. For example, \"en-US\". The response will localize in the corresponding language code, if specified. The default value is \"en-US\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, returns at most 100 SKUs. The maximum value is 1000; the server will coerce values above 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token for a page of results other than the first page. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the Product to list SKUs for. Parent uses the format: products/{product_id}. Supports products/- to retrieve SKUs for all products.",
-	//       "location": "path",
-	//       "pattern": "^products/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/skus",
-	//   "response": {
-	//     "$ref": "GoogleCloudChannelV1ListSkusResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -17466,7 +13203,7 @@ func (c *ProductsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudCha
 // The provided context supersedes any context provided to the Context method.
 func (c *ProductsSkusListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListSkusResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

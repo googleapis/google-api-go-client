@@ -95,8 +95,8 @@ const mtlsBasePath = "https://firebaseappdistribution.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -285,94 +285,73 @@ type ProjectsTestersService struct {
 
 // GoogleFirebaseAppdistroV1Release: A release of a Firebase app.
 type GoogleFirebaseAppdistroV1Release struct {
-	// BinaryDownloadUri: Output only. A signed link (which expires in one
-	// hour) to directly download the app binary (IPA/APK/AAB) file.
+	// BinaryDownloadUri: Output only. A signed link (which expires in one hour) to
+	// directly download the app binary (IPA/APK/AAB) file.
 	BinaryDownloadUri string `json:"binaryDownloadUri,omitempty"`
-
-	// BuildVersion: Output only. Build version of the release. For an
-	// Android release, the build version is the `versionCode`. For an iOS
-	// release, the build version is the `CFBundleVersion`.
+	// BuildVersion: Output only. Build version of the release. For an Android
+	// release, the build version is the `versionCode`. For an iOS release, the
+	// build version is the `CFBundleVersion`.
 	BuildVersion string `json:"buildVersion,omitempty"`
-
 	// CreateTime: Output only. The time the release was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DisplayVersion: Output only. Display version of the release. For an
-	// Android release, the display version is the `versionName`. For an iOS
-	// release, the display version is the `CFBundleShortVersionString`.
+	// DisplayVersion: Output only. Display version of the release. For an Android
+	// release, the display version is the `versionName`. For an iOS release, the
+	// display version is the `CFBundleShortVersionString`.
 	DisplayVersion string `json:"displayVersion,omitempty"`
-
-	// FirebaseConsoleUri: Output only. A link to the Firebase console
-	// displaying a single release.
+	// FirebaseConsoleUri: Output only. A link to the Firebase console displaying a
+	// single release.
 	FirebaseConsoleUri string `json:"firebaseConsoleUri,omitempty"`
-
 	// Name: The name of the release resource. Format:
 	// `projects/{project_number}/apps/{app_id}/releases/{release_id}`
 	Name string `json:"name,omitempty"`
-
 	// ReleaseNotes: Notes of the release.
 	ReleaseNotes *GoogleFirebaseAppdistroV1ReleaseNotes `json:"releaseNotes,omitempty"`
-
-	// TestingUri: Output only. A link to the release in the tester web clip
-	// or Android app that lets testers (which were granted access to the
-	// app) view release notes and install the app onto their devices.
+	// TestingUri: Output only. A link to the release in the tester web clip or
+	// Android app that lets testers (which were granted access to the app) view
+	// release notes and install the app onto their devices.
 	TestingUri string `json:"testingUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BinaryDownloadUri")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BinaryDownloadUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BinaryDownloadUri") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BinaryDownloadUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1Release) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1Release
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1ReleaseNotes: Notes that belong to a
-// release.
+// GoogleFirebaseAppdistroV1ReleaseNotes: Notes that belong to a release.
 type GoogleFirebaseAppdistroV1ReleaseNotes struct {
 	// Text: The text of the release notes.
 	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Text") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1ReleaseNotes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1ReleaseNotes
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1UploadReleaseMetadata: Operation metadata
-// for `UploadRelease`.
+// GoogleFirebaseAppdistroV1UploadReleaseMetadata: Operation metadata for
+// `UploadRelease`.
 type GoogleFirebaseAppdistroV1UploadReleaseMetadata struct {
 }
 
@@ -381,253 +360,195 @@ type GoogleFirebaseAppdistroV1UploadReleaseMetadata struct {
 type GoogleFirebaseAppdistroV1UploadReleaseResponse struct {
 	// Release: Release associated with the uploaded binary.
 	Release *GoogleFirebaseAppdistroV1Release `json:"release,omitempty"`
-
 	// Result: Result of upload release.
 	//
 	// Possible values:
-	//   "UPLOAD_RELEASE_RESULT_UNSPECIFIED" - Upload binary result
-	// unspecified
+	//   "UPLOAD_RELEASE_RESULT_UNSPECIFIED" - Upload binary result unspecified
 	//   "RELEASE_CREATED" - Upload binary resulted in a new release
 	//   "RELEASE_UPDATED" - Upload binary updated an existing release
-	//   "RELEASE_UNMODIFIED" - Upload binary resulted in a no-op. A release
-	// with the exact same binary already exists.
+	//   "RELEASE_UNMODIFIED" - Upload binary resulted in a no-op. A release with
+	// the exact same binary already exists.
 	Result string `json:"result,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Release") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Release") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Release") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Release") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1UploadReleaseResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1UploadReleaseResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaAabCertificate: App bundle test
-// certificate
+// GoogleFirebaseAppdistroV1alphaAabCertificate: App bundle test certificate
 type GoogleFirebaseAppdistroV1alphaAabCertificate struct {
-	// CertificateHashMd5: MD5 hash of the certificate used to resign the
-	// AAB
+	// CertificateHashMd5: MD5 hash of the certificate used to resign the AAB
 	CertificateHashMd5 string `json:"certificateHashMd5,omitempty"`
-
-	// CertificateHashSha1: SHA1 hash of the certificate used to resign the
-	// AAB
+	// CertificateHashSha1: SHA1 hash of the certificate used to resign the AAB
 	CertificateHashSha1 string `json:"certificateHashSha1,omitempty"`
-
-	// CertificateHashSha256: SHA256 hash of the certificate used to resign
-	// the AAB
+	// CertificateHashSha256: SHA256 hash of the certificate used to resign the AAB
 	CertificateHashSha256 string `json:"certificateHashSha256,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CertificateHashMd5")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CertificateHashMd5") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CertificateHashMd5") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CertificateHashMd5") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaAabCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaAabCertificate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaApp struct {
 	// AabCertificate: App bundle test certificate generated for the app.
 	AabCertificate *GoogleFirebaseAppdistroV1alphaAabCertificate `json:"aabCertificate,omitempty"`
-
-	// AabState: App bundle state. Only valid for android apps. The app_view
-	// field in the request must be set to FULL in order for this to be
-	// populated.
+	// AabState: App bundle state. Only valid for android apps. The app_view field
+	// in the request must be set to FULL in order for this to be populated.
 	//
 	// Possible values:
 	//   "AAB_STATE_UNSPECIFIED" - Aab state unspecified
 	//   "ACTIVE" - App can receive app bundle uploads
-	//   "PLAY_ACCOUNT_NOT_LINKED" - Firebase project is not linked to a
-	// Play developer account
-	//   "NO_APP_WITH_GIVEN_BUNDLE_ID_IN_PLAY_ACCOUNT" - There is no app in
-	// linked Play developer account with the same bundle id
+	//   "PLAY_ACCOUNT_NOT_LINKED" - Firebase project is not linked to a Play
+	// developer account
+	//   "NO_APP_WITH_GIVEN_BUNDLE_ID_IN_PLAY_ACCOUNT" - There is no app in linked
+	// Play developer account with the same bundle id
 	//   "APP_NOT_PUBLISHED" - The app in Play developer account is not in a
 	// published state
 	//   "AAB_STATE_UNAVAILABLE" - Play App status is unavailable
 	//   "PLAY_IAS_TERMS_NOT_ACCEPTED" - Play IAS terms not accepted
 	AabState string `json:"aabState,omitempty"`
-
 	// AppId: Firebase gmp app id
 	AppId string `json:"appId,omitempty"`
-
 	// BundleId: Bundle identifier
 	BundleId string `json:"bundleId,omitempty"`
-
-	// ContactEmail: Developer contact email for testers to reach out to
-	// about privacy or support issues.
+	// ContactEmail: Developer contact email for testers to reach out to about
+	// privacy or support issues.
 	ContactEmail string `json:"contactEmail,omitempty"`
-
 	// Platform: iOS or Android
 	Platform string `json:"platform,omitempty"`
-
 	// ProjectNumber: Project number of the Firebase project, for example
 	// 300830567303.
 	ProjectNumber string `json:"projectNumber,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AabCertificate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AabCertificate") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AabCertificate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaApp) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaApp
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaAppCrash: An app crash that occurred
-// during an automated test.
+// GoogleFirebaseAppdistroV1alphaAppCrash: An app crash that occurred during an
+// automated test.
 type GoogleFirebaseAppdistroV1alphaAppCrash struct {
 	// Message: Output only. The message associated with the crash.
 	Message string `json:"message,omitempty"`
-
 	// StackTrace: Output only. The raw stack trace.
 	StackTrace string `json:"stackTrace,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Message") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Message") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaAppCrash) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaAppCrash
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest struct {
 	// ReleaseNotes: The actual release notes body from the user
 	ReleaseNotes *GoogleFirebaseAppdistroV1alphaReleaseNotes `json:"releaseNotes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ReleaseNotes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReleaseNotes") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ReleaseNotes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleFirebaseAppdistroV1alphaDeviceExecution: The results of running
-// an automated test on a particular device.
+// GoogleFirebaseAppdistroV1alphaDeviceExecution: The results of running an
+// automated test on a particular device.
 type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	// AppCrash: Output only. An app crash, if any occurred during the test.
 	AppCrash *GoogleFirebaseAppdistroV1alphaAppCrash `json:"appCrash,omitempty"`
-
-	// CrawlGraphUri: Output only. A URI to an image of the Robo crawl
-	// graph.
+	// CrawlGraphUri: Output only. A URI to an image of the Robo crawl graph.
 	CrawlGraphUri string `json:"crawlGraphUri,omitempty"`
-
 	// Device: Required. The device that the test was run on.
 	Device *GoogleFirebaseAppdistroV1alphaTestDevice `json:"device,omitempty"`
-
 	// FailedReason: Output only. The reason why the test failed.
 	//
 	// Possible values:
 	//   "FAILED_REASON_UNSPECIFIED" - Reason unspecified.
 	//   "CRASHED" - The app crashed during the test.
-	//   "NOT_INSTALLED" - If an app is not installed and thus no test can
-	// be run with the app. This might be caused by trying to run a test on
-	// an unsupported platform.
-	//   "UNABLE_TO_CRAWL" - If the app could not be crawled (possibly
-	// because the app did not start).
-	//   "DEVICE_OUT_OF_MEMORY" - If the device ran out of memory during the
-	// test.
+	//   "NOT_INSTALLED" - If an app is not installed and thus no test can be run
+	// with the app. This might be caused by trying to run a test on an unsupported
+	// platform.
+	//   "UNABLE_TO_CRAWL" - If the app could not be crawled (possibly because the
+	// app did not start).
+	//   "DEVICE_OUT_OF_MEMORY" - If the device ran out of memory during the test.
 	FailedReason string `json:"failedReason,omitempty"`
-
-	// InconclusiveReason: Output only. The reason why the test was
-	// inconclusive.
+	// InconclusiveReason: Output only. The reason why the test was inconclusive.
 	//
 	// Possible values:
 	//   "INCONCLUSIVE_REASON_UNSPECIFIED" - Reason unspecified.
 	//   "QUOTA_EXCEEDED" - Not enough quota remained to run the test.
-	//   "INFRASTRUCTURE_FAILURE" - The outcome of the test could not be
-	// determined because of a failure in the test running infrastructure.
-	//   "SERVICE_NOT_ACTIVATED" - A required cloud service api is not
-	// activated (Google Cloud Testing API or Cloud Tool Results API).
+	//   "INFRASTRUCTURE_FAILURE" - The outcome of the test could not be determined
+	// because of a failure in the test running infrastructure.
+	//   "SERVICE_NOT_ACTIVATED" - A required cloud service api is not activated
+	// (Google Cloud Testing API or Cloud Tool Results API).
 	//   "NO_SIGNATURE" - The app was not signed.
-	//   "NO_LAUNCHER_ACTIVITY" - A main launcher activity could not be
-	// found.
-	//   "FORBIDDEN_PERMISSIONS" - The app declares one or more permissions
-	// that are not allowed.
+	//   "NO_LAUNCHER_ACTIVITY" - A main launcher activity could not be found.
+	//   "FORBIDDEN_PERMISSIONS" - The app declares one or more permissions that
+	// are not allowed.
 	//   "DEVICE_ADMIN_RECEIVER" - Device administrator applications are not
 	// allowed.
 	//   "NO_CODE_APK" - APK contains no code. See also
@@ -635,21 +556,16 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	//   "INVALID_APK_PREVIEW_SDK" - APK is built for a preview SDK which is
 	// unsupported.
 	InconclusiveReason string `json:"inconclusiveReason,omitempty"`
-
-	// ResultsStoragePath: Output only. The path to a directory in Cloud
-	// Storage that will eventually contain the results for this execution.
-	// For example, gs://bucket/Nexus5-18-en-portrait.
+	// ResultsStoragePath: Output only. The path to a directory in Cloud Storage
+	// that will eventually contain the results for this execution. For example,
+	// gs://bucket/Nexus5-18-en-portrait.
 	ResultsStoragePath string `json:"resultsStoragePath,omitempty"`
-
-	// RoboStats: Output only. The statistics collected during the Robo
-	// test.
+	// RoboStats: Output only. The statistics collected during the Robo test.
 	RoboStats *GoogleFirebaseAppdistroV1alphaRoboStats `json:"roboStats,omitempty"`
-
-	// ScreenshotUris: Output only. A list of screenshot image URIs taken
-	// from the Robo crawl. The file names are numbered by the order in
-	// which they were taken.
+	// ScreenshotUris: Output only. A list of screenshot image URIs taken from the
+	// Robo crawl. The file names are numbered by the order in which they were
+	// taken.
 	ScreenshotUris []string `json:"screenshotUris,omitempty"`
-
 	// State: Output only. The state of the test.
 	//
 	// Possible values:
@@ -659,145 +575,113 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	//   "FAILED" - The test has failed.
 	//   "INCONCLUSIVE" - The test was inconclusive.
 	State string `json:"state,omitempty"`
-
 	// VideoUri: Output only. A URI to a video of the test run.
 	VideoUri string `json:"videoUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AppCrash") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppCrash") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AppCrash") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaDeviceExecution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaDeviceExecution
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest struct {
-	// BuildVersion: Optional. Ignored. Used to be build version of the app
-	// release if an instance identifier was provided for the release_id.
+	// BuildVersion: Optional. Ignored. Used to be build version of the app release
+	// if an instance identifier was provided for the release_id.
 	BuildVersion string `json:"buildVersion,omitempty"`
-
-	// DisplayVersion: Optional. Ignored. Used to be display version of the
-	// app release if an instance identifier was provided for the
-	// release_id.
+	// DisplayVersion: Optional. Ignored. Used to be display version of the app
+	// release if an instance identifier was provided for the release_id.
 	DisplayVersion string `json:"displayVersion,omitempty"`
-
-	// Emails: Optional. An email address which should get access to this
-	// release, for example rebeccahe@google.com
+	// Emails: Optional. An email address which should get access to this release,
+	// for example rebeccahe@google.com
 	Emails []string `json:"emails,omitempty"`
-
-	// GroupIds: Optional. A repeated list of group aliases to enable access
-	// to a release for Note: This field is misnamed, but can't be changed
-	// because we need to maintain compatibility with old build tools
+	// GroupIds: Optional. A repeated list of group aliases to enable access to a
+	// release for Note: This field is misnamed, but can't be changed because we
+	// need to maintain compatibility with old build tools
 	GroupIds []string `json:"groupIds,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BuildVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BuildVersion") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BuildVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse:
-// Response object to get the release given a upload hash
+// GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse: Response
+// object to get the release given a upload hash
 type GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse struct {
 	// Release: Release object
 	Release *GoogleFirebaseAppdistroV1alphaRelease `json:"release,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Release") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Release") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Release") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Release") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse: Response
-// containing the UDIDs of tester iOS devices in a project
+// GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse: Response containing
+// the UDIDs of tester iOS devices in a project
 type GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse struct {
 	// TesterUdids: The UDIDs of tester iOS devices in a project
 	TesterUdids []*GoogleFirebaseAppdistroV1alphaTesterUdid `json:"testerUdids,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "TesterUdids") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TesterUdids") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "TesterUdids") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
@@ -827,15 +711,12 @@ type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
 	//   "AAB_NO_APP_WITH_GIVEN_PACKAGE_NAME_IN_ACCOUNT"
 	//   "AAB_UPLOAD_ERROR"
 	ErrorCode string `json:"errorCode,omitempty"`
-
-	// Message: Any additional context for the given upload status (e.g.
-	// error message) Meant to be displayed to the client
+	// Message: Any additional context for the given upload status (e.g. error
+	// message) Meant to be displayed to the client
 	Message string `json:"message,omitempty"`
-
 	// Release: The release that was created from the upload (only set on
 	// "SUCCESS")
 	Release *GoogleFirebaseAppdistroV1alphaRelease `json:"release,omitempty"`
-
 	// Status: The status of the upload
 	//
 	// Possible values:
@@ -846,271 +727,205 @@ type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
 	//   "ERROR"
 	Status string `json:"status,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorCode") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaJwt struct {
 	Token string `json:"token,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Token") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Token") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Token") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaJwt) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaJwt
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse: The response
-// message for `ListReleaseTests`.
+// GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse: The response message
+// for `ListReleaseTests`.
 type GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse struct {
-	// NextPageToken: A short-lived token, which can be sent as `pageToken`
-	// to retrieve the next page. If this field is omitted, there are no
-	// subsequent pages.
+	// NextPageToken: A short-lived token, which can be sent as `pageToken` to
+	// retrieve the next page. If this field is omitted, there are no subsequent
+	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// ReleaseTests: The tests listed.
 	ReleaseTests []*GoogleFirebaseAppdistroV1alphaReleaseTest `json:"releaseTests,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaLoginCredential: Login credential for
 // automated tests
 type GoogleFirebaseAppdistroV1alphaLoginCredential struct {
-	// FieldHints: Optional. Hints to the crawler for identifying input
-	// fields
+	// FieldHints: Optional. Hints to the crawler for identifying input fields
 	FieldHints *GoogleFirebaseAppdistroV1alphaLoginCredentialFieldHints `json:"fieldHints,omitempty"`
-
 	// Google: Optional. Are these credentials for Google?
 	Google bool `json:"google,omitempty"`
-
 	// Password: Optional. Password for automated tests
 	Password string `json:"password,omitempty"`
-
 	// Username: Optional. Username for automated tests
 	Username string `json:"username,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FieldHints") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FieldHints") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FieldHints") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaLoginCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaLoginCredential
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaLoginCredentialFieldHints: Hints to the
 // crawler for identifying input fields
 type GoogleFirebaseAppdistroV1alphaLoginCredentialFieldHints struct {
-	// PasswordResourceName: Required. The Android resource name of the
-	// password UI element. For example, in Java: R.string.foo in xml:
-	// @string/foo Only the "foo" part is needed. Reference doc:
+	// PasswordResourceName: Required. The Android resource name of the password UI
+	// element. For example, in Java: R.string.foo in xml: @string/foo Only the
+	// "foo" part is needed. Reference doc:
 	// https://developer.android.com/guide/topics/resources/accessing-resources.html
 	PasswordResourceName string `json:"passwordResourceName,omitempty"`
-
-	// UsernameResourceName: Required. The Android resource name of the
-	// username UI element. For example, in Java: R.string.foo in xml:
-	// @string/foo Only the "foo" part is needed. Reference doc:
+	// UsernameResourceName: Required. The Android resource name of the username UI
+	// element. For example, in Java: R.string.foo in xml: @string/foo Only the
+	// "foo" part is needed. Reference doc:
 	// https://developer.android.com/guide/topics/resources/accessing-resources.html
 	UsernameResourceName string `json:"usernameResourceName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "PasswordResourceName") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "PasswordResourceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PasswordResourceName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PasswordResourceName") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaLoginCredentialFieldHints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaLoginCredentialFieldHints
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaProvisionAppResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleFirebaseAppdistroV1alphaRelease: Proto defining a release
-// object
+// GoogleFirebaseAppdistroV1alphaRelease: Proto defining a release object
 type GoogleFirebaseAppdistroV1alphaRelease struct {
 	// BuildVersion: Release build version
 	BuildVersion string `json:"buildVersion,omitempty"`
-
 	// DisplayVersion: Release version
 	DisplayVersion string `json:"displayVersion,omitempty"`
-
 	// DistributedAt: Timestamp when the release was created
 	DistributedAt string `json:"distributedAt,omitempty"`
-
 	// Id: Release Id
 	Id string `json:"id,omitempty"`
-
 	// InstanceId: Instance id of the release
 	InstanceId string `json:"instanceId,omitempty"`
-
 	// LastActivityAt: Last activity timestamp
 	LastActivityAt string `json:"lastActivityAt,omitempty"`
-
-	// OpenInvitationCount: Number of testers who have open invitations for
-	// the release
+	// OpenInvitationCount: Number of testers who have open invitations for the
+	// release
 	OpenInvitationCount int64 `json:"openInvitationCount,omitempty"`
-
 	// ReceivedAt: unused.
 	ReceivedAt string `json:"receivedAt,omitempty"`
-
 	// ReleaseNotesSummary: Release notes summary
 	ReleaseNotesSummary string `json:"releaseNotesSummary,omitempty"`
-
 	// TesterCount: Count of testers added to the release
 	TesterCount int64 `json:"testerCount,omitempty"`
-
-	// TesterWithInstallCount: Number of testers who have installed the
-	// release
+	// TesterWithInstallCount: Number of testers who have installed the release
 	TesterWithInstallCount int64 `json:"testerWithInstallCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BuildVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BuildVersion") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BuildVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaRelease) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaRelease
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleFirebaseAppdistroV1alphaReleaseNotes struct {
 	ReleaseNotes string `json:"releaseNotes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ReleaseNotes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReleaseNotes") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ReleaseNotes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaReleaseNotes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaReleaseNotes
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppdistroV1alphaReleaseTest: The results of running an
@@ -1118,233 +933,173 @@ func (s *GoogleFirebaseAppdistroV1alphaReleaseNotes) MarshalJSON() ([]byte, erro
 type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
 	// CreateTime: Output only. Timestamp when the test was run.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// DeviceExecutions: Required. The results of the test on each device.
 	DeviceExecutions []*GoogleFirebaseAppdistroV1alphaDeviceExecution `json:"deviceExecutions,omitempty"`
-
-	// LoginCredential: Optional. Input only. Login credentials for the
-	// test. Input only.
+	// LoginCredential: Optional. Input only. Login credentials for the test. Input
+	// only.
 	LoginCredential *GoogleFirebaseAppdistroV1alphaLoginCredential `json:"loginCredential,omitempty"`
-
 	// Name: The name of the release test resource. Format:
-	// `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{
-	// test_id}`
+	// `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_id
+	// }`
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaReleaseTest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaReleaseTest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaRoboCrawler: Configuration for Robo
-// crawler
+// GoogleFirebaseAppdistroV1alphaRoboCrawler: Configuration for Robo crawler
 type GoogleFirebaseAppdistroV1alphaRoboCrawler struct {
 	// LoginCredential: Optional. Login credential for automated tests
 	LoginCredential *GoogleFirebaseAppdistroV1alphaLoginCredential `json:"loginCredential,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LoginCredential") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LoginCredential") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "LoginCredential") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaRoboCrawler) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaRoboCrawler
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaRoboStats: Statistics collected during
-// a Robo test.
+// GoogleFirebaseAppdistroV1alphaRoboStats: Statistics collected during a Robo
+// test.
 type GoogleFirebaseAppdistroV1alphaRoboStats struct {
-	// ActionsPerformed: Output only. Number of actions that crawler
-	// performed.
+	// ActionsPerformed: Output only. Number of actions that crawler performed.
 	ActionsPerformed int64 `json:"actionsPerformed,omitempty"`
-
 	// CrawlDuration: Output only. Duration of crawl.
 	CrawlDuration string `json:"crawlDuration,omitempty"`
-
-	// DistinctVisitedScreens: Output only. Number of distinct screens
-	// visited.
+	// DistinctVisitedScreens: Output only. Number of distinct screens visited.
 	DistinctVisitedScreens int64 `json:"distinctVisitedScreens,omitempty"`
-
-	// MainActivityCrawlTimedOut: Output only. Whether the main activity
-	// crawl timed out.
+	// MainActivityCrawlTimedOut: Output only. Whether the main activity crawl
+	// timed out.
 	MainActivityCrawlTimedOut bool `json:"mainActivityCrawlTimedOut,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ActionsPerformed") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionsPerformed") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ActionsPerformed") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaRoboStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaRoboStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaTestConfig: Configuration for automated
-// tests
+// GoogleFirebaseAppdistroV1alphaTestConfig: Configuration for automated tests
 type GoogleFirebaseAppdistroV1alphaTestConfig struct {
-	// Name: Identifier. The name of the test configuration resource.
-	// Format: `projects/{project_number}/apps/{app_id}/testConfig`
+	// Name: Identifier. The name of the test configuration resource. Format:
+	// `projects/{project_number}/apps/{app_id}/testConfig`
 	Name string `json:"name,omitempty"`
-
 	// RoboCrawler: Optional. Configuration for Robo crawler
 	RoboCrawler *GoogleFirebaseAppdistroV1alphaRoboCrawler `json:"roboCrawler,omitempty"`
-
 	// TestDevices: Optional. Tests will be run on this list of devices
 	TestDevices []*GoogleFirebaseAppdistroV1alphaTestDevice `json:"testDevices,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaTestConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaTestConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaTestDevice: A device on which automated
-// tests can be run.
+// GoogleFirebaseAppdistroV1alphaTestDevice: A device on which automated tests
+// can be run.
 type GoogleFirebaseAppdistroV1alphaTestDevice struct {
-	// Locale: Optional. The locale of the device (e.g. "en_US" for US
-	// English) during the test.
+	// Locale: Optional. The locale of the device (e.g. "en_US" for US English)
+	// during the test.
 	Locale string `json:"locale,omitempty"`
-
 	// Model: Required. The device model.
 	Model string `json:"model,omitempty"`
-
 	// Orientation: Optional. The orientation of the device during the test.
 	Orientation string `json:"orientation,omitempty"`
-
 	// Version: Required. The version of the device (API level on Android).
 	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Locale") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Locale") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Locale") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaTestDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaTestDevice
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaTesterUdid: The UDIDs of a tester's iOS
-// device
+// GoogleFirebaseAppdistroV1alphaTesterUdid: The UDIDs of a tester's iOS device
 type GoogleFirebaseAppdistroV1alphaTesterUdid struct {
 	// Name: The name of the tester's device
 	Name string `json:"name,omitempty"`
-
 	// Platform: The platform of the tester's device
 	Platform string `json:"platform,omitempty"`
-
 	// Udid: The UDID of the tester's device
 	Udid string `json:"udid,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppdistroV1alphaTesterUdid) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaTesterUdid
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "firebaseappdistribution.apps.get":
 
 type AppsGetCall struct {
 	s              *Service
@@ -1366,15 +1121,15 @@ func (r *AppsService) Get(mobilesdkAppId string) *AppsGetCall {
 	return c
 }
 
-// AppView sets the optional parameter "appView": App view. When unset
-// or set to BASIC, returns an App with everything set except for
-// aab_state. When set to FULL, returns an App with aab_state set.
+// AppView sets the optional parameter "appView": App view. When unset or set
+// to BASIC, returns an App with everything set except for aab_state. When set
+// to FULL, returns an App with aab_state set.
 //
 // Possible values:
 //
-//	"APP_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//	"APP_VIEW_UNSPECIFIED" - The default / unset value. The API will default
 //
-// default to the BASIC view.
+// to the BASIC view.
 //
 //	"BASIC" - Include everything except aab_state.
 //	"FULL" - Include everything.
@@ -1384,33 +1139,29 @@ func (c *AppsGetCall) AppView(appView string) *AppsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsGetCall) Fields(s ...googleapi.Field) *AppsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AppsGetCall) IfNoneMatch(entityTag string) *AppsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsGetCall) Context(ctx context.Context) *AppsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1419,12 +1170,7 @@ func (c *AppsGetCall) Header() http.Header {
 }
 
 func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1445,13 +1191,11 @@ func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "firebaseappdistribution.apps.get" call.
-// Exactly one of *GoogleFirebaseAppdistroV1alphaApp or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleFirebaseAppdistroV1alphaApp.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaApp.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaApp, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1482,49 +1226,7 @@ func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get the app, if it exists",
-	//   "flatPath": "v1alpha/apps/{mobilesdkAppId}",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappdistribution.apps.get",
-	//   "parameterOrder": [
-	//     "mobilesdkAppId"
-	//   ],
-	//   "parameters": {
-	//     "appView": {
-	//       "description": "App view. When unset or set to BASIC, returns an App with everything set except for aab_state. When set to FULL, returns an App with aab_state set.",
-	//       "enum": [
-	//         "APP_VIEW_UNSPECIFIED",
-	//         "BASIC",
-	//         "FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the BASIC view.",
-	//         "Include everything except aab_state.",
-	//         "Include everything."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "mobilesdkAppId": {
-	//       "description": "Unique id for a Firebase app of the format: {version}:{project_number}:{platform}:{hash(bundle_id)} Example: 1:581234567376:android:aa0a3c7b135e90289",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/apps/{mobilesdkAppId}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaApp"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.apps.getJwt":
 
 type AppsGetJwtCall struct {
 	s              *Service
@@ -1547,33 +1249,29 @@ func (r *AppsService) GetJwt(mobilesdkAppId string) *AppsGetJwtCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsGetJwtCall) Fields(s ...googleapi.Field) *AppsGetJwtCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AppsGetJwtCall) IfNoneMatch(entityTag string) *AppsGetJwtCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsGetJwtCall) Context(ctx context.Context) *AppsGetJwtCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsGetJwtCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1582,12 +1280,7 @@ func (c *AppsGetJwtCall) Header() http.Header {
 }
 
 func (c *AppsGetJwtCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1608,13 +1301,11 @@ func (c *AppsGetJwtCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "firebaseappdistribution.apps.getJwt" call.
-// Exactly one of *GoogleFirebaseAppdistroV1alphaJwt or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleFirebaseAppdistroV1alphaJwt.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaJwt.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AppsGetJwtCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaJwt, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1645,34 +1336,7 @@ func (c *AppsGetJwtCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdis
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a JWT token",
-	//   "flatPath": "v1alpha/apps/{mobilesdkAppId}/jwt",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappdistribution.apps.getJwt",
-	//   "parameterOrder": [
-	//     "mobilesdkAppId"
-	//   ],
-	//   "parameters": {
-	//     "mobilesdkAppId": {
-	//       "description": "Unique id for a Firebase app of the format: {version}:{project_number}:{platform}:{hash(bundle_id)} Example: 1:581234567376:android:aa0a3c7b135e90289",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/apps/{mobilesdkAppId}/jwt",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaJwt"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.apps.provisionApp":
 
 type AppsProvisionAppCall struct {
 	s              *Service
@@ -1682,8 +1346,8 @@ type AppsProvisionAppCall struct {
 	header_        http.Header
 }
 
-// ProvisionApp: Provision app distribution for an existing Firebase
-// app, enabling it to subsequently be used by appdistro.
+// ProvisionApp: Provision app distribution for an existing Firebase app,
+// enabling it to subsequently be used by appdistro.
 //
 //   - mobilesdkAppId: Unique id for a Firebase app of the format:
 //     {version}:{project_number}:{platform}:{hash(bundle_id)} Example:
@@ -1695,23 +1359,21 @@ func (r *AppsService) ProvisionApp(mobilesdkAppId string) *AppsProvisionAppCall 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsProvisionAppCall) Fields(s ...googleapi.Field) *AppsProvisionAppCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsProvisionAppCall) Context(ctx context.Context) *AppsProvisionAppCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsProvisionAppCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1720,12 +1382,7 @@ func (c *AppsProvisionAppCall) Header() http.Header {
 }
 
 func (c *AppsProvisionAppCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1743,14 +1400,11 @@ func (c *AppsProvisionAppCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "firebaseappdistribution.apps.provisionApp" call.
-// Exactly one of *GoogleFirebaseAppdistroV1alphaProvisionAppResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppdistroV1alphaProvisionAppResponse.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaProvisionAppResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AppsProvisionAppCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaProvisionAppResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1781,34 +1435,7 @@ func (c *AppsProvisionAppCall) Do(opts ...googleapi.CallOption) (*GoogleFirebase
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Provision app distribution for an existing Firebase app, enabling it to subsequently be used by appdistro.",
-	//   "flatPath": "v1alpha/apps/{mobilesdkAppId}",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappdistribution.apps.provisionApp",
-	//   "parameterOrder": [
-	//     "mobilesdkAppId"
-	//   ],
-	//   "parameters": {
-	//     "mobilesdkAppId": {
-	//       "description": "Unique id for a Firebase app of the format: {version}:{project_number}:{platform}:{hash(bundle_id)} Example: 1:581234567376:android:aa0a3c7b135e90289",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/apps/{mobilesdkAppId}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaProvisionAppResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.apps.release_by_hash.get":
 
 type AppsReleaseByHashGetCall struct {
 	s              *Service
@@ -1834,33 +1461,29 @@ func (r *AppsReleaseByHashService) Get(mobilesdkAppId string, uploadHash string)
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsReleaseByHashGetCall) Fields(s ...googleapi.Field) *AppsReleaseByHashGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AppsReleaseByHashGetCall) IfNoneMatch(entityTag string) *AppsReleaseByHashGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsReleaseByHashGetCall) Context(ctx context.Context) *AppsReleaseByHashGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsReleaseByHashGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1869,12 +1492,7 @@ func (c *AppsReleaseByHashGetCall) Header() http.Header {
 }
 
 func (c *AppsReleaseByHashGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1896,15 +1514,11 @@ func (c *AppsReleaseByHashGetCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "firebaseappdistribution.apps.release_by_hash.get" call.
-// Exactly one of
-// *GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse.ServerResponse.
+// Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AppsReleaseByHashGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1935,41 +1549,7 @@ func (c *AppsReleaseByHashGetCall) Do(opts ...googleapi.CallOption) (*GoogleFire
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "GET Release by binary upload hash",
-	//   "flatPath": "v1alpha/apps/{mobilesdkAppId}/release_by_hash/{uploadHash}",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappdistribution.apps.release_by_hash.get",
-	//   "parameterOrder": [
-	//     "mobilesdkAppId",
-	//     "uploadHash"
-	//   ],
-	//   "parameters": {
-	//     "mobilesdkAppId": {
-	//       "description": "Unique id for a Firebase app of the format: {version}:{project_number}:{platform}:{hash(bundle_id)} Example: 1:581234567376:android:aa0a3c7b135e90289",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "uploadHash": {
-	//       "description": "The hash for the upload",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/apps/{mobilesdkAppId}/release_by_hash/{uploadHash}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaGetReleaseByUploadHashResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.apps.releases.enable_access":
 
 type AppsReleasesEnableAccessCall struct {
 	s                                                          *Service
@@ -1996,23 +1576,21 @@ func (r *AppsReleasesService) EnableAccess(mobilesdkAppId string, releaseId stri
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsReleasesEnableAccessCall) Fields(s ...googleapi.Field) *AppsReleasesEnableAccessCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsReleasesEnableAccessCall) Context(ctx context.Context) *AppsReleasesEnableAccessCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsReleasesEnableAccessCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2021,18 +1599,12 @@ func (c *AppsReleasesEnableAccessCall) Header() http.Header {
 }
 
 func (c *AppsReleasesEnableAccessCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappdistrov1alphaenableaccessonreleaserequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/apps/{mobilesdkAppId}/releases/{releaseId}/enable_access")
@@ -2050,15 +1622,11 @@ func (c *AppsReleasesEnableAccessCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "firebaseappdistribution.apps.releases.enable_access" call.
-// Exactly one of
-// *GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseResponse.ServerRes
-// ponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AppsReleasesEnableAccessCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2089,44 +1657,7 @@ func (c *AppsReleasesEnableAccessCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Enable access on a release for testers.",
-	//   "flatPath": "v1alpha/apps/{mobilesdkAppId}/releases/{releaseId}/enable_access",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappdistribution.apps.releases.enable_access",
-	//   "parameterOrder": [
-	//     "mobilesdkAppId",
-	//     "releaseId"
-	//   ],
-	//   "parameters": {
-	//     "mobilesdkAppId": {
-	//       "description": "Unique id for a Firebase app of the format: {version}:{project_number}:{platform}:{hash(bundle_id)} Example: 1:581234567376:android:aa0a3c7b135e90289",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "releaseId": {
-	//       "description": "Release identifier",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/apps/{mobilesdkAppId}/releases/{releaseId}/enable_access",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaEnableAccessOnReleaseResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.apps.releases.notes.create":
 
 type AppsReleasesNotesCreateCall struct {
 	s                                                       *Service
@@ -2153,23 +1684,21 @@ func (r *AppsReleasesNotesService) Create(mobilesdkAppId string, releaseId strin
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsReleasesNotesCreateCall) Fields(s ...googleapi.Field) *AppsReleasesNotesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsReleasesNotesCreateCall) Context(ctx context.Context) *AppsReleasesNotesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsReleasesNotesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2178,18 +1707,12 @@ func (c *AppsReleasesNotesCreateCall) Header() http.Header {
 }
 
 func (c *AppsReleasesNotesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappdistrov1alphacreatereleasenotesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/apps/{mobilesdkAppId}/releases/{releaseId}/notes")
@@ -2207,15 +1730,11 @@ func (c *AppsReleasesNotesCreateCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "firebaseappdistribution.apps.releases.notes.create" call.
-// Exactly one of
-// *GoogleFirebaseAppdistroV1alphaCreateReleaseNotesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppdistroV1alphaCreateReleaseNotesResponse.ServerRespon
-// se.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaCreateReleaseNotesResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AppsReleasesNotesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaCreateReleaseNotesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2246,44 +1765,7 @@ func (c *AppsReleasesNotesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleF
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create release notes on a release.",
-	//   "flatPath": "v1alpha/apps/{mobilesdkAppId}/releases/{releaseId}/notes",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappdistribution.apps.releases.notes.create",
-	//   "parameterOrder": [
-	//     "mobilesdkAppId",
-	//     "releaseId"
-	//   ],
-	//   "parameters": {
-	//     "mobilesdkAppId": {
-	//       "description": "Unique id for a Firebase app of the format: {version}:{project_number}:{platform}:{hash(bundle_id)} Example: 1:581234567376:android:aa0a3c7b135e90289",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "releaseId": {
-	//       "description": "Release identifier",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/apps/{mobilesdkAppId}/releases/{releaseId}/notes",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaCreateReleaseNotesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.apps.testers.getTesterUdids":
 
 type AppsTestersGetTesterUdidsCall struct {
 	s              *Service
@@ -2305,42 +1787,37 @@ func (r *AppsTestersService) GetTesterUdids(mobilesdkAppId string) *AppsTestersG
 	return c
 }
 
-// Project sets the optional parameter "project": The name of the
-// project, which is the parent of testers Format:
-// `projects/{project_number}`
+// Project sets the optional parameter "project": The name of the project,
+// which is the parent of testers Format: `projects/{project_number}`
 func (c *AppsTestersGetTesterUdidsCall) Project(project string) *AppsTestersGetTesterUdidsCall {
 	c.urlParams_.Set("project", project)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsTestersGetTesterUdidsCall) Fields(s ...googleapi.Field) *AppsTestersGetTesterUdidsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AppsTestersGetTesterUdidsCall) IfNoneMatch(entityTag string) *AppsTestersGetTesterUdidsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsTestersGetTesterUdidsCall) Context(ctx context.Context) *AppsTestersGetTesterUdidsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsTestersGetTesterUdidsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2349,12 +1826,7 @@ func (c *AppsTestersGetTesterUdidsCall) Header() http.Header {
 }
 
 func (c *AppsTestersGetTesterUdidsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2375,14 +1847,11 @@ func (c *AppsTestersGetTesterUdidsCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "firebaseappdistribution.apps.testers.getTesterUdids" call.
-// Exactly one of *GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AppsTestersGetTesterUdidsCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2413,39 +1882,7 @@ func (c *AppsTestersGetTesterUdidsCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get UDIDs of tester iOS devices in a project",
-	//   "flatPath": "v1alpha/apps/{mobilesdkAppId}/testers:getTesterUdids",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappdistribution.apps.testers.getTesterUdids",
-	//   "parameterOrder": [
-	//     "mobilesdkAppId"
-	//   ],
-	//   "parameters": {
-	//     "mobilesdkAppId": {
-	//       "description": "Unique id for a Firebase app of the format: {version}:{project_number}:{platform}:{hash(bundle_id)} Example: 1:581234567376:android:aa0a3c7b135e90289",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "The name of the project, which is the parent of testers Format: `projects/{project_number}`",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/apps/{mobilesdkAppId}/testers:getTesterUdids",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.apps.upload_status.get":
 
 type AppsUploadStatusGetCall struct {
 	s              *Service
@@ -2471,33 +1908,29 @@ func (r *AppsUploadStatusService) Get(mobilesdkAppId string, uploadToken string)
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsUploadStatusGetCall) Fields(s ...googleapi.Field) *AppsUploadStatusGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AppsUploadStatusGetCall) IfNoneMatch(entityTag string) *AppsUploadStatusGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsUploadStatusGetCall) Context(ctx context.Context) *AppsUploadStatusGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsUploadStatusGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2506,12 +1939,7 @@ func (c *AppsUploadStatusGetCall) Header() http.Header {
 }
 
 func (c *AppsUploadStatusGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2533,14 +1961,11 @@ func (c *AppsUploadStatusGetCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "firebaseappdistribution.apps.upload_status.get" call.
-// Exactly one of *GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AppsUploadStatusGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2571,41 +1996,7 @@ func (c *AppsUploadStatusGetCall) Do(opts ...googleapi.CallOption) (*GoogleFireb
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "GET Binary upload status by token",
-	//   "flatPath": "v1alpha/apps/{mobilesdkAppId}/upload_status/{uploadToken}",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappdistribution.apps.upload_status.get",
-	//   "parameterOrder": [
-	//     "mobilesdkAppId",
-	//     "uploadToken"
-	//   ],
-	//   "parameters": {
-	//     "mobilesdkAppId": {
-	//       "description": "Unique id for a Firebase app of the format: {version}:{project_number}:{platform}:{hash(bundle_id)} Example: 1:581234567376:android:aa0a3c7b135e90289",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "uploadToken": {
-	//       "description": "The token for the upload",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/apps/{mobilesdkAppId}/upload_status/{uploadToken}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.projects.apps.getTestConfig":
 
 type ProjectsAppsGetTestConfigCall struct {
 	s            *Service
@@ -2627,33 +2018,29 @@ func (r *ProjectsAppsService) GetTestConfig(name string) *ProjectsAppsGetTestCon
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsGetTestConfigCall) Fields(s ...googleapi.Field) *ProjectsAppsGetTestConfigCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsGetTestConfigCall) IfNoneMatch(entityTag string) *ProjectsAppsGetTestConfigCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsGetTestConfigCall) Context(ctx context.Context) *ProjectsAppsGetTestConfigCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsGetTestConfigCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2662,12 +2049,7 @@ func (c *ProjectsAppsGetTestConfigCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsGetTestConfigCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2688,14 +2070,11 @@ func (c *ProjectsAppsGetTestConfigCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "firebaseappdistribution.projects.apps.getTestConfig" call.
-// Exactly one of *GoogleFirebaseAppdistroV1alphaTestConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppdistroV1alphaTestConfig.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaTestConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsGetTestConfigCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaTestConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2726,35 +2105,7 @@ func (c *ProjectsAppsGetTestConfigCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets configuration for automated tests.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/apps/{appsId}/testConfig",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappdistribution.projects.apps.getTestConfig",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the `TestConfig` resource to retrieve. Format: `projects/{project_number}/apps/{app_id}/testConfig`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/testConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaTestConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.projects.apps.updateTestConfig":
 
 type ProjectsAppsUpdateTestConfigCall struct {
 	s                                        *Service
@@ -2767,8 +2118,8 @@ type ProjectsAppsUpdateTestConfigCall struct {
 
 // UpdateTestConfig: Updates a release.
 //
-//   - name: Identifier. The name of the test configuration resource.
-//     Format: `projects/{project_number}/apps/{app_id}/testConfig`.
+//   - name: Identifier. The name of the test configuration resource. Format:
+//     `projects/{project_number}/apps/{app_id}/testConfig`.
 func (r *ProjectsAppsService) UpdateTestConfig(name string, googlefirebaseappdistrov1alphatestconfig *GoogleFirebaseAppdistroV1alphaTestConfig) *ProjectsAppsUpdateTestConfigCall {
 	c := &ProjectsAppsUpdateTestConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2776,31 +2127,29 @@ func (r *ProjectsAppsService) UpdateTestConfig(name string, googlefirebaseappdis
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
 func (c *ProjectsAppsUpdateTestConfigCall) UpdateMask(updateMask string) *ProjectsAppsUpdateTestConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsUpdateTestConfigCall) Fields(s ...googleapi.Field) *ProjectsAppsUpdateTestConfigCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsUpdateTestConfigCall) Context(ctx context.Context) *ProjectsAppsUpdateTestConfigCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsUpdateTestConfigCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2809,18 +2158,12 @@ func (c *ProjectsAppsUpdateTestConfigCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsUpdateTestConfigCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappdistrov1alphatestconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
@@ -2837,14 +2180,11 @@ func (c *ProjectsAppsUpdateTestConfigCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "firebaseappdistribution.projects.apps.updateTestConfig" call.
-// Exactly one of *GoogleFirebaseAppdistroV1alphaTestConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppdistroV1alphaTestConfig.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaTestConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsUpdateTestConfigCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaTestConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2875,44 +2215,7 @@ func (c *ProjectsAppsUpdateTestConfigCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a release.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/apps/{appsId}/testConfig",
-	//   "httpMethod": "PATCH",
-	//   "id": "firebaseappdistribution.projects.apps.updateTestConfig",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Identifier. The name of the test configuration resource. Format: `projects/{project_number}/apps/{app_id}/testConfig`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/testConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Optional. The list of fields to update.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaTestConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaTestConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.projects.apps.releases.tests.create":
 
 type ProjectsAppsReleasesTestsCreateCall struct {
 	s                                         *Service
@@ -2925,9 +2228,8 @@ type ProjectsAppsReleasesTestsCreateCall struct {
 
 // Create: Run automated test(s) on release.
 //
-//   - parent: The name of the release resource, which is the parent of
-//     the test Format:
-//     `projects/{project_number}/apps/{app_id}/releases/{release_id}`.
+//   - parent: The name of the release resource, which is the parent of the test
+//     Format: `projects/{project_number}/apps/{app_id}/releases/{release_id}`.
 func (r *ProjectsAppsReleasesTestsService) Create(parent string, googlefirebaseappdistrov1alphareleasetest *GoogleFirebaseAppdistroV1alphaReleaseTest) *ProjectsAppsReleasesTestsCreateCall {
 	c := &ProjectsAppsReleasesTestsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2935,34 +2237,31 @@ func (r *ProjectsAppsReleasesTestsService) Create(parent string, googlefirebasea
 	return c
 }
 
-// ReleaseTestId sets the optional parameter "releaseTestId": The ID to
-// use for the test, which will become the final component of the
-// tests's resource name. This value should be 4-63 characters, and
-// valid characters are /a-z-/. If it is not provided one will be
-// automatically generated.
+// ReleaseTestId sets the optional parameter "releaseTestId": The ID to use for
+// the test, which will become the final component of the tests's resource
+// name. This value should be 4-63 characters, and valid characters are /a-z-/.
+// If it is not provided one will be automatically generated.
 func (c *ProjectsAppsReleasesTestsCreateCall) ReleaseTestId(releaseTestId string) *ProjectsAppsReleasesTestsCreateCall {
 	c.urlParams_.Set("releaseTestId", releaseTestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsReleasesTestsCreateCall) Fields(s ...googleapi.Field) *ProjectsAppsReleasesTestsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsReleasesTestsCreateCall) Context(ctx context.Context) *ProjectsAppsReleasesTestsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsReleasesTestsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2971,18 +2270,12 @@ func (c *ProjectsAppsReleasesTestsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsReleasesTestsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappdistrov1alphareleasetest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/tests")
@@ -2999,14 +2292,11 @@ func (c *ProjectsAppsReleasesTestsCreateCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "firebaseappdistribution.projects.apps.releases.tests.create" call.
-// Exactly one of *GoogleFirebaseAppdistroV1alphaReleaseTest or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppdistroV1alphaReleaseTest.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaReleaseTest.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsReleasesTestsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaReleaseTest, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3037,43 +2327,7 @@ func (c *ProjectsAppsReleasesTestsCreateCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Run automated test(s) on release.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/apps/{appsId}/releases/{releasesId}/tests",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappdistribution.projects.apps.releases.tests.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the release resource, which is the parent of the test Format: `projects/{project_number}/apps/{app_id}/releases/{release_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/releases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "releaseTestId": {
-	//       "description": "Optional. The ID to use for the test, which will become the final component of the tests's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. If it is not provided one will be automatically generated.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/tests",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaReleaseTest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaReleaseTest"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.projects.apps.releases.tests.get":
 
 type ProjectsAppsReleasesTestsGetCall struct {
 	s            *Service
@@ -3087,8 +2341,8 @@ type ProjectsAppsReleasesTestsGetCall struct {
 // Get: Get results for automated test run on release.
 //
 //   - name: The name of the release test resource. Format:
-//     `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests
-//     /{test_id}`.
+//     `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_
+//     id}`.
 func (r *ProjectsAppsReleasesTestsService) Get(name string) *ProjectsAppsReleasesTestsGetCall {
 	c := &ProjectsAppsReleasesTestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3096,33 +2350,29 @@ func (r *ProjectsAppsReleasesTestsService) Get(name string) *ProjectsAppsRelease
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsReleasesTestsGetCall) Fields(s ...googleapi.Field) *ProjectsAppsReleasesTestsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsReleasesTestsGetCall) IfNoneMatch(entityTag string) *ProjectsAppsReleasesTestsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsReleasesTestsGetCall) Context(ctx context.Context) *ProjectsAppsReleasesTestsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsReleasesTestsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3131,12 +2381,7 @@ func (c *ProjectsAppsReleasesTestsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsReleasesTestsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3157,14 +2402,11 @@ func (c *ProjectsAppsReleasesTestsGetCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "firebaseappdistribution.projects.apps.releases.tests.get" call.
-// Exactly one of *GoogleFirebaseAppdistroV1alphaReleaseTest or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppdistroV1alphaReleaseTest.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaReleaseTest.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsReleasesTestsGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaReleaseTest, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3195,35 +2437,7 @@ func (c *ProjectsAppsReleasesTestsGetCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get results for automated test run on release.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/apps/{appsId}/releases/{releasesId}/tests/{testsId}",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappdistribution.projects.apps.releases.tests.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the release test resource. Format: `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/releases/[^/]+/tests/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaReleaseTest"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappdistribution.projects.apps.releases.tests.list":
 
 type ProjectsAppsReleasesTestsListCall struct {
 	s            *Service
@@ -3236,58 +2450,53 @@ type ProjectsAppsReleasesTestsListCall struct {
 
 // List: List results for automated tests run on release.
 //
-//   - parent: The name of the release resource, which is the parent of
-//     the tests Format:
-//     `projects/{project_number}/apps/{app_id}/releases/{release_id}`.
+//   - parent: The name of the release resource, which is the parent of the tests
+//     Format: `projects/{project_number}/apps/{app_id}/releases/{release_id}`.
 func (r *ProjectsAppsReleasesTestsService) List(parent string) *ProjectsAppsReleasesTestsListCall {
 	c := &ProjectsAppsReleasesTestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of tests to return. The service may return fewer than this value.
+// PageSize sets the optional parameter "pageSize": The maximum number of tests
+// to return. The service may return fewer than this value.
 func (c *ProjectsAppsReleasesTestsListCall) PageSize(pageSize int64) *ProjectsAppsReleasesTestsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListReleaseTests` call. Provide this to
-// retrieve the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListReleaseTests` call. Provide this to retrieve the
+// subsequent page.
 func (c *ProjectsAppsReleasesTestsListCall) PageToken(pageToken string) *ProjectsAppsReleasesTestsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsReleasesTestsListCall) Fields(s ...googleapi.Field) *ProjectsAppsReleasesTestsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsReleasesTestsListCall) IfNoneMatch(entityTag string) *ProjectsAppsReleasesTestsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsReleasesTestsListCall) Context(ctx context.Context) *ProjectsAppsReleasesTestsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsReleasesTestsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3296,12 +2505,7 @@ func (c *ProjectsAppsReleasesTestsListCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsReleasesTestsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3322,15 +2526,13 @@ func (c *ProjectsAppsReleasesTestsListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "firebaseappdistribution.projects.apps.releases.tests.list" call.
-// Exactly one of
-// *GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsReleasesTestsListCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3361,43 +2563,6 @@ func (c *ProjectsAppsReleasesTestsListCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List results for automated tests run on release.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/apps/{appsId}/releases/{releasesId}/tests",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappdistribution.projects.apps.releases.tests.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of tests to return. The service may return fewer than this value.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListReleaseTests` call. Provide this to retrieve the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the release resource, which is the parent of the tests Format: `projects/{project_number}/apps/{app_id}/releases/{release_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/releases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/tests",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3405,7 +2570,7 @@ func (c *ProjectsAppsReleasesTestsListCall) Do(opts ...googleapi.CallOption) (*G
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsAppsReleasesTestsListCall) Pages(ctx context.Context, f func(*GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3421,8 +2586,6 @@ func (c *ProjectsAppsReleasesTestsListCall) Pages(ctx context.Context, f func(*G
 	}
 }
 
-// method id "firebaseappdistribution.projects.testers.getUdids":
-
 type ProjectsTestersGetUdidsCall struct {
 	s            *Service
 	project      string
@@ -3434,16 +2597,16 @@ type ProjectsTestersGetUdidsCall struct {
 
 // GetUdids: Get UDIDs of tester iOS devices in a project
 //
-//   - project: The name of the project, which is the parent of testers
-//     Format: `projects/{project_number}`.
+//   - project: The name of the project, which is the parent of testers Format:
+//     `projects/{project_number}`.
 func (r *ProjectsTestersService) GetUdids(project string) *ProjectsTestersGetUdidsCall {
 	c := &ProjectsTestersGetUdidsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	return c
 }
 
-// MobilesdkAppId sets the optional parameter "mobilesdkAppId": Unique
-// id for a Firebase app of the format:
+// MobilesdkAppId sets the optional parameter "mobilesdkAppId": Unique id for a
+// Firebase app of the format:
 // {version}:{project_number}:{platform}:{hash(bundle_id)} Example:
 // 1:581234567376:android:aa0a3c7b135e90289
 func (c *ProjectsTestersGetUdidsCall) MobilesdkAppId(mobilesdkAppId string) *ProjectsTestersGetUdidsCall {
@@ -3452,33 +2615,29 @@ func (c *ProjectsTestersGetUdidsCall) MobilesdkAppId(mobilesdkAppId string) *Pro
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTestersGetUdidsCall) Fields(s ...googleapi.Field) *ProjectsTestersGetUdidsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTestersGetUdidsCall) IfNoneMatch(entityTag string) *ProjectsTestersGetUdidsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTestersGetUdidsCall) Context(ctx context.Context) *ProjectsTestersGetUdidsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTestersGetUdidsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3487,12 +2646,7 @@ func (c *ProjectsTestersGetUdidsCall) Header() http.Header {
 }
 
 func (c *ProjectsTestersGetUdidsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3513,14 +2667,11 @@ func (c *ProjectsTestersGetUdidsCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "firebaseappdistribution.projects.testers.getUdids" call.
-// Exactly one of *GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTestersGetUdidsCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3551,35 +2702,4 @@ func (c *ProjectsTestersGetUdidsCall) Do(opts ...googleapi.CallOption) (*GoogleF
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get UDIDs of tester iOS devices in a project",
-	//   "flatPath": "v1alpha/projects/{projectsId}/testers:udids",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappdistribution.projects.testers.getUdids",
-	//   "parameterOrder": [
-	//     "project"
-	//   ],
-	//   "parameters": {
-	//     "mobilesdkAppId": {
-	//       "description": "Unique id for a Firebase app of the format: {version}:{project_number}:{platform}:{hash(bundle_id)} Example: 1:581234567376:android:aa0a3c7b135e90289",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "The name of the project, which is the parent of testers Format: `projects/{project_number}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+project}/testers:udids",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

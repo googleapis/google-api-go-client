@@ -100,12 +100,12 @@ const mtlsBasePath = "https://firebasedatabase.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// View your data across Google Cloud services and see the email address
-	// of your Google Account
+	// View your data across Google Cloud services and see the email address of
+	// your Google Account
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 
 	// View and administer all your Firebase data and settings
@@ -205,73 +205,59 @@ type ProjectsLocationsInstancesService struct {
 	s *Service
 }
 
-// DatabaseInstance: Representation of a Realtime Database instance.
-// Details on interacting with contents of a DatabaseInstance can be
-// found at: https://firebase.google.com/docs/database/rest/start.
+// DatabaseInstance: Representation of a Realtime Database instance. Details on
+// interacting with contents of a DatabaseInstance can be found at:
+// https://firebase.google.com/docs/database/rest/start.
 type DatabaseInstance struct {
-	// DatabaseUrl: Output only. Output Only. The globally unique hostname
-	// of the database.
+	// DatabaseUrl: Output only. Output Only. The globally unique hostname of the
+	// database.
 	DatabaseUrl string `json:"databaseUrl,omitempty"`
-
-	// Name: The fully qualified resource name of the database instance, in
-	// the form:
-	// `projects/{project-number}/locations/{location-id}/instances/{database
-	// -id}`.
+	// Name: The fully qualified resource name of the database instance, in the
+	// form:
+	// `projects/{project-number}/locations/{location-id}/instances/{database-id}`.
 	Name string `json:"name,omitempty"`
-
-	// Project: Output only. The resource name of the project this instance
-	// belongs to. For example: `projects/{project-number}`.
+	// Project: Output only. The resource name of the project this instance belongs
+	// to. For example: `projects/{project-number}`.
 	Project string `json:"project,omitempty"`
-
 	// State: Output only. The database's lifecycle state. Read-only.
 	//
 	// Possible values:
-	//   "LIFECYCLE_STATE_UNSPECIFIED" - Unspecified state, likely the
-	// result of an error on the backend. This is only used for
-	// distinguishing unset values.
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - Unspecified state, likely the result of an
+	// error on the backend. This is only used for distinguishing unset values.
 	//   "ACTIVE" - The normal and active state.
-	//   "DISABLED" - The database is in a disabled state. It can be
-	// re-enabled later.
+	//   "DISABLED" - The database is in a disabled state. It can be re-enabled
+	// later.
 	//   "DELETED" - The database is in a deleted state.
 	State string `json:"state,omitempty"`
-
-	// Type: Immutable. The database instance type. On creation only
-	// USER_DATABASE is allowed, which is also the default when omitted.
+	// Type: Immutable. The database instance type. On creation only USER_DATABASE
+	// is allowed, which is also the default when omitted.
 	//
 	// Possible values:
-	//   "DATABASE_INSTANCE_TYPE_UNSPECIFIED" - Unknown state, likely the
-	// result of an error on the backend. This is only used for
-	// distinguishing unset values.
-	//   "DEFAULT_DATABASE" - The default database that is provisioned when
-	// a project is created.
+	//   "DATABASE_INSTANCE_TYPE_UNSPECIFIED" - Unknown state, likely the result of
+	// an error on the backend. This is only used for distinguishing unset values.
+	//   "DEFAULT_DATABASE" - The default database that is provisioned when a
+	// project is created.
 	//   "USER_DATABASE" - A database that the user created.
 	Type string `json:"type,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DatabaseUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DatabaseUrl") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DatabaseUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DatabaseInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseInstance
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DisableDatabaseInstanceRequest: The request sent to the
@@ -279,46 +265,37 @@ func (s *DatabaseInstance) MarshalJSON() ([]byte, error) {
 type DisableDatabaseInstanceRequest struct {
 }
 
-// ListDatabaseInstancesResponse: The response from the
-// ListDatabaseInstances method.
+// ListDatabaseInstancesResponse: The response from the ListDatabaseInstances
+// method.
 type ListDatabaseInstancesResponse struct {
-	// Instances: List of each DatabaseInstance that is in the parent
-	// Firebase project.
+	// Instances: List of each DatabaseInstance that is in the parent Firebase
+	// project.
 	Instances []*DatabaseInstance `json:"instances,omitempty"`
-
-	// NextPageToken: If the result list is too large to fit in a single
-	// response, then a token is returned. If the string is empty, then this
-	// response is the last page of results. This token can be used in a
-	// subsequent call to `ListDatabaseInstances` to find the next group of
-	// database instances. Page tokens are short-lived and should not be
-	// persisted.
+	// NextPageToken: If the result list is too large to fit in a single response,
+	// then a token is returned. If the string is empty, then this response is the
+	// last page of results. This token can be used in a subsequent call to
+	// `ListDatabaseInstances` to find the next group of database instances. Page
+	// tokens are short-lived and should not be persisted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Instances") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Instances") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Instances") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListDatabaseInstancesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatabaseInstancesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ReenableDatabaseInstanceRequest: The request sent to the
@@ -331,8 +308,6 @@ type ReenableDatabaseInstanceRequest struct {
 type UndeleteDatabaseInstanceRequest struct {
 }
 
-// method id "firebasedatabase.projects.locations.instances.create":
-
 type ProjectsLocationsInstancesCreateCall struct {
 	s                *Service
 	parent           string
@@ -342,16 +317,15 @@ type ProjectsLocationsInstancesCreateCall struct {
 	header_          http.Header
 }
 
-// Create: Requests that a new DatabaseInstance be created. The state of
-// a successfully created DatabaseInstance is ACTIVE. Only available for
-// projects on the Blaze plan. Projects can be upgraded using the Cloud
-// Billing API
+// Create: Requests that a new DatabaseInstance be created. The state of a
+// successfully created DatabaseInstance is ACTIVE. Only available for projects
+// on the Blaze plan. Projects can be upgraded using the Cloud Billing API
 // https://cloud.google.com/billing/reference/rest/v1/projects/updateBillingInfo.
 // Note that it might take a few minutes for billing enablement state to
 // propagate to Firebase systems.
 //
-//   - parent: The parent project for which to create a database instance,
-//     in the form: `projects/{project-number}/locations/{location-id}`.
+//   - parent: The parent project for which to create a database instance, in the
+//     form: `projects/{project-number}/locations/{location-id}`.
 func (r *ProjectsLocationsInstancesService) Create(parent string, databaseinstance *DatabaseInstance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -359,38 +333,36 @@ func (r *ProjectsLocationsInstancesService) Create(parent string, databaseinstan
 	return c
 }
 
-// DatabaseId sets the optional parameter "databaseId": The globally
-// unique identifier of the database instance.
+// DatabaseId sets the optional parameter "databaseId": The globally unique
+// identifier of the database instance.
 func (c *ProjectsLocationsInstancesCreateCall) DatabaseId(databaseId string) *ProjectsLocationsInstancesCreateCall {
 	c.urlParams_.Set("databaseId", databaseId)
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": When set to
-// true, the request will be validated but not submitted.
+// ValidateOnly sets the optional parameter "validateOnly": When set to true,
+// the request will be validated but not submitted.
 func (c *ProjectsLocationsInstancesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsInstancesCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsInstancesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsInstancesCreateCall) Context(ctx context.Context) *ProjectsLocationsInstancesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -399,18 +371,12 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.databaseinstance)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/instances")
@@ -427,12 +393,11 @@ func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "firebasedatabase.projects.locations.instances.create" call.
-// Exactly one of *DatabaseInstance or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DatabaseInstance.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DatabaseInstance.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsInstancesCreateCall) Do(opts ...googleapi.CallOption) (*DatabaseInstance, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -463,49 +428,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Requests that a new DatabaseInstance be created. The state of a successfully created DatabaseInstance is ACTIVE. Only available for projects on the Blaze plan. Projects can be upgraded using the Cloud Billing API https://cloud.google.com/billing/reference/rest/v1/projects/updateBillingInfo. Note that it might take a few minutes for billing enablement state to propagate to Firebase systems.",
-	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/instances",
-	//   "httpMethod": "POST",
-	//   "id": "firebasedatabase.projects.locations.instances.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "databaseId": {
-	//       "description": "The globally unique identifier of the database instance.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent project for which to create a database instance, in the form: `projects/{project-number}/locations/{location-id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "validateOnly": {
-	//       "description": "When set to true, the request will be validated but not submitted.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/instances",
-	//   "request": {
-	//     "$ref": "DatabaseInstance"
-	//   },
-	//   "response": {
-	//     "$ref": "DatabaseInstance"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebasedatabase.projects.locations.instances.delete":
 
 type ProjectsLocationsInstancesDeleteCall struct {
 	s          *Service
@@ -515,16 +438,15 @@ type ProjectsLocationsInstancesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Marks a DatabaseInstance to be deleted. The DatabaseInstance
-// will be set to the DELETED state for 20 days, and will be purged
-// within 30 days. The default database cannot be deleted. IDs for
-// deleted database instances may never be recovered or re-used. The
-// Database may only be deleted if it is already in a DISABLED state.
+// Delete: Marks a DatabaseInstance to be deleted. The DatabaseInstance will be
+// set to the DELETED state for 20 days, and will be purged within 30 days. The
+// default database cannot be deleted. IDs for deleted database instances may
+// never be recovered or re-used. The Database may only be deleted if it is
+// already in a DISABLED state.
 //
-//   - name: The fully qualified resource name of the database instance,
-//     in the form:
-//     `projects/{project-number}/locations/{location-id}/instances/{databa
-//     se-id}`.
+//   - name: The fully qualified resource name of the database instance, in the
+//     form:
+//     `projects/{project-number}/locations/{location-id}/instances/{database-id}`.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -532,23 +454,21 @@ func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocatio
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsInstancesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsInstancesDeleteCall) Context(ctx context.Context) *ProjectsLocationsInstancesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -557,12 +477,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -580,12 +495,11 @@ func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "firebasedatabase.projects.locations.instances.delete" call.
-// Exactly one of *DatabaseInstance or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DatabaseInstance.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DatabaseInstance.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsInstancesDeleteCall) Do(opts ...googleapi.CallOption) (*DatabaseInstance, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -616,36 +530,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Marks a DatabaseInstance to be deleted. The DatabaseInstance will be set to the DELETED state for 20 days, and will be purged within 30 days. The default database cannot be deleted. IDs for deleted database instances may never be recovered or re-used. The Database may only be deleted if it is already in a DISABLED state.",
-	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "firebasedatabase.projects.locations.instances.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The fully qualified resource name of the database instance, in the form: `projects/{project-number}/locations/{location-id}/instances/{database-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "DatabaseInstance"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebasedatabase.projects.locations.instances.disable":
 
 type ProjectsLocationsInstancesDisableCall struct {
 	s                              *Service
@@ -656,15 +541,13 @@ type ProjectsLocationsInstancesDisableCall struct {
 	header_                        http.Header
 }
 
-// Disable: Disables a DatabaseInstance. The database can be re-enabled
-// later using ReenableDatabaseInstance. When a database is disabled,
-// all reads and writes are denied, including view access in the
-// Firebase console.
+// Disable: Disables a DatabaseInstance. The database can be re-enabled later
+// using ReenableDatabaseInstance. When a database is disabled, all reads and
+// writes are denied, including view access in the Firebase console.
 //
-//   - name: The fully qualified resource name of the database instance,
-//     in the form:
-//     `projects/{project-number}/locations/{location-id}/instances/{databa
-//     se-id}`.
+//   - name: The fully qualified resource name of the database instance, in the
+//     form:
+//     `projects/{project-number}/locations/{location-id}/instances/{database-id}`.
 func (r *ProjectsLocationsInstancesService) Disable(name string, disabledatabaseinstancerequest *DisableDatabaseInstanceRequest) *ProjectsLocationsInstancesDisableCall {
 	c := &ProjectsLocationsInstancesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -673,23 +556,21 @@ func (r *ProjectsLocationsInstancesService) Disable(name string, disabledatabase
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsInstancesDisableCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesDisableCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsInstancesDisableCall) Context(ctx context.Context) *ProjectsLocationsInstancesDisableCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsInstancesDisableCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -698,18 +579,12 @@ func (c *ProjectsLocationsInstancesDisableCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsInstancesDisableCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.disabledatabaseinstancerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:disable")
@@ -726,12 +601,11 @@ func (c *ProjectsLocationsInstancesDisableCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "firebasedatabase.projects.locations.instances.disable" call.
-// Exactly one of *DatabaseInstance or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DatabaseInstance.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DatabaseInstance.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsInstancesDisableCall) Do(opts ...googleapi.CallOption) (*DatabaseInstance, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -762,39 +636,7 @@ func (c *ProjectsLocationsInstancesDisableCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Disables a DatabaseInstance. The database can be re-enabled later using ReenableDatabaseInstance. When a database is disabled, all reads and writes are denied, including view access in the Firebase console.",
-	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:disable",
-	//   "httpMethod": "POST",
-	//   "id": "firebasedatabase.projects.locations.instances.disable",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The fully qualified resource name of the database instance, in the form: `projects/{project-number}/locations/{location-id}/instances/{database-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}:disable",
-	//   "request": {
-	//     "$ref": "DisableDatabaseInstanceRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "DatabaseInstance"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebasedatabase.projects.locations.instances.get":
 
 type ProjectsLocationsInstancesGetCall struct {
 	s            *Service
@@ -805,17 +647,16 @@ type ProjectsLocationsInstancesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the DatabaseInstance identified by the specified resource
-// name.
+// Get: Gets the DatabaseInstance identified by the specified resource name.
 //
-//   - name: The fully qualified resource name of the database instance,
-//     in the form:
-//     `projects/{project-number}/locations/{location-id}/instances/{databa
-//     se-id}`. `database-id` is a globally unique identifier across all
-//     parent collections. For convenience, this method allows you to
-//     supply `-` as a wildcard character in place of specific collections
-//     under `projects` and `locations`. The resulting wildcarding form of
-//     the method is: `projects/-/locations/-/instances/{database-id}`.
+//   - name: The fully qualified resource name of the database instance, in the
+//     form:
+//     `projects/{project-number}/locations/{location-id}/instances/{database-id}`
+//     . `database-id` is a globally unique identifier across all parent
+//     collections. For convenience, this method allows you to supply `-` as a
+//     wildcard character in place of specific collections under `projects` and
+//     `locations`. The resulting wildcarding form of the method is:
+//     `projects/-/locations/-/instances/{database-id}`.
 func (r *ProjectsLocationsInstancesService) Get(nameid string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -823,33 +664,29 @@ func (r *ProjectsLocationsInstancesService) Get(nameid string) *ProjectsLocation
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsInstancesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsInstancesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInstancesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsInstancesGetCall) Context(ctx context.Context) *ProjectsLocationsInstancesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -858,12 +695,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -884,12 +716,11 @@ func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "firebasedatabase.projects.locations.instances.get" call.
-// Exactly one of *DatabaseInstance or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DatabaseInstance.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DatabaseInstance.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsInstancesGetCall) Do(opts ...googleapi.CallOption) (*DatabaseInstance, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -920,38 +751,7 @@ func (c *ProjectsLocationsInstancesGetCall) Do(opts ...googleapi.CallOption) (*D
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the DatabaseInstance identified by the specified resource name.",
-	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}",
-	//   "httpMethod": "GET",
-	//   "id": "firebasedatabase.projects.locations.instances.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The fully qualified resource name of the database instance, in the form: `projects/{project-number}/locations/{location-id}/instances/{database-id}`. `database-id` is a globally unique identifier across all parent collections. For convenience, this method allows you to supply `-` as a wildcard character in place of specific collections under `projects` and `locations`. The resulting wildcarding form of the method is: `projects/-/locations/-/instances/{database-id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "DatabaseInstance"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
-	//     "https://www.googleapis.com/auth/firebase",
-	//     "https://www.googleapis.com/auth/firebase.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "firebasedatabase.projects.locations.instances.list":
 
 type ProjectsLocationsInstancesListCall struct {
 	s            *Service
@@ -962,16 +762,16 @@ type ProjectsLocationsInstancesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists each DatabaseInstance associated with the specified
-// parent project. The list items are returned in no particular order,
-// but will be a consistent view of the database instances when
-// additional requests are made with a `pageToken`. The resulting list
-// contains instances in any STATE. The list results may be stale by a
-// few seconds. Use GetDatabaseInstance for consistent reads.
+// List: Lists each DatabaseInstance associated with the specified parent
+// project. The list items are returned in no particular order, but will be a
+// consistent view of the database instances when additional requests are made
+// with a `pageToken`. The resulting list contains instances in any STATE. The
+// list results may be stale by a few seconds. Use GetDatabaseInstance for
+// consistent reads.
 //
-//   - parent: The parent project for which to list database instances, in
-//     the form: `projects/{project-number}/locations/{location-id}` To
-//     list across all locations, use a parent in the form:
+//   - parent: The parent project for which to list database instances, in the
+//     form: `projects/{project-number}/locations/{location-id}` To list across
+//     all locations, use a parent in the form:
 //     `projects/{project-number}/locations/-`.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -979,19 +779,18 @@ func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocatio
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of database instances to return in the response. The server may
-// return fewer than this at its discretion. If no value is specified
-// (or too large a value is specified), then the server will impose its
-// own limit.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// database instances to return in the response. The server may return fewer
+// than this at its discretion. If no value is specified (or too large a value
+// is specified), then the server will impose its own limit.
 func (c *ProjectsLocationsInstancesListCall) PageSize(pageSize int64) *ProjectsLocationsInstancesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token returned
-// from a previous call to `ListDatabaseInstances` indicating where in
-// the set of database instances to resume listing.
+// PageToken sets the optional parameter "pageToken": Token returned from a
+// previous call to `ListDatabaseInstances` indicating where in the set of
+// database instances to resume listing.
 func (c *ProjectsLocationsInstancesListCall) PageToken(pageToken string) *ProjectsLocationsInstancesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1005,33 +804,29 @@ func (c *ProjectsLocationsInstancesListCall) ShowDeleted(showDeleted bool) *Proj
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsInstancesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsInstancesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsInstancesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsInstancesListCall) Context(ctx context.Context) *ProjectsLocationsInstancesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1040,12 +835,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1066,12 +856,11 @@ func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "firebasedatabase.projects.locations.instances.list" call.
-// Exactly one of *ListDatabaseInstancesResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListDatabaseInstancesResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDatabaseInstancesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*ListDatabaseInstancesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1102,51 +891,6 @@ func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists each DatabaseInstance associated with the specified parent project. The list items are returned in no particular order, but will be a consistent view of the database instances when additional requests are made with a `pageToken`. The resulting list contains instances in any STATE. The list results may be stale by a few seconds. Use GetDatabaseInstance for consistent reads.",
-	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/instances",
-	//   "httpMethod": "GET",
-	//   "id": "firebasedatabase.projects.locations.instances.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of database instances to return in the response. The server may return fewer than this at its discretion. If no value is specified (or too large a value is specified), then the server will impose its own limit.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token returned from a previous call to `ListDatabaseInstances` indicating where in the set of database instances to resume listing.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent project for which to list database instances, in the form: `projects/{project-number}/locations/{location-id}` To list across all locations, use a parent in the form: `projects/{project-number}/locations/-`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "showDeleted": {
-	//       "description": "Indicate that DatabaseInstances in the `DELETED` state should also be returned.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/instances",
-	//   "response": {
-	//     "$ref": "ListDatabaseInstancesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
-	//     "https://www.googleapis.com/auth/firebase",
-	//     "https://www.googleapis.com/auth/firebase.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1154,7 +898,7 @@ func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsInstancesListCall) Pages(ctx context.Context, f func(*ListDatabaseInstancesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1170,8 +914,6 @@ func (c *ProjectsLocationsInstancesListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
-// method id "firebasedatabase.projects.locations.instances.reenable":
-
 type ProjectsLocationsInstancesReenableCall struct {
 	s                               *Service
 	name                            string
@@ -1181,14 +923,13 @@ type ProjectsLocationsInstancesReenableCall struct {
 	header_                         http.Header
 }
 
-// Reenable: Enables a DatabaseInstance. The database must have been
-// disabled previously using DisableDatabaseInstance. The state of a
-// successfully reenabled DatabaseInstance is ACTIVE.
+// Reenable: Enables a DatabaseInstance. The database must have been disabled
+// previously using DisableDatabaseInstance. The state of a successfully
+// reenabled DatabaseInstance is ACTIVE.
 //
-//   - name: The fully qualified resource name of the database instance,
-//     in the form:
-//     `projects/{project-number}/locations/{location-id}/instances/{databa
-//     se-id}`.
+//   - name: The fully qualified resource name of the database instance, in the
+//     form:
+//     `projects/{project-number}/locations/{location-id}/instances/{database-id}`.
 func (r *ProjectsLocationsInstancesService) Reenable(name string, reenabledatabaseinstancerequest *ReenableDatabaseInstanceRequest) *ProjectsLocationsInstancesReenableCall {
 	c := &ProjectsLocationsInstancesReenableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1197,23 +938,21 @@ func (r *ProjectsLocationsInstancesService) Reenable(name string, reenabledataba
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsInstancesReenableCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesReenableCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsInstancesReenableCall) Context(ctx context.Context) *ProjectsLocationsInstancesReenableCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsInstancesReenableCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1222,18 +961,12 @@ func (c *ProjectsLocationsInstancesReenableCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsInstancesReenableCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reenabledatabaseinstancerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:reenable")
@@ -1250,12 +983,11 @@ func (c *ProjectsLocationsInstancesReenableCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "firebasedatabase.projects.locations.instances.reenable" call.
-// Exactly one of *DatabaseInstance or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DatabaseInstance.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DatabaseInstance.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsInstancesReenableCall) Do(opts ...googleapi.CallOption) (*DatabaseInstance, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1286,39 +1018,7 @@ func (c *ProjectsLocationsInstancesReenableCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Enables a DatabaseInstance. The database must have been disabled previously using DisableDatabaseInstance. The state of a successfully reenabled DatabaseInstance is ACTIVE.",
-	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:reenable",
-	//   "httpMethod": "POST",
-	//   "id": "firebasedatabase.projects.locations.instances.reenable",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The fully qualified resource name of the database instance, in the form: `projects/{project-number}/locations/{location-id}/instances/{database-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}:reenable",
-	//   "request": {
-	//     "$ref": "ReenableDatabaseInstanceRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "DatabaseInstance"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebasedatabase.projects.locations.instances.undelete":
 
 type ProjectsLocationsInstancesUndeleteCall struct {
 	s                               *Service
@@ -1329,17 +1029,16 @@ type ProjectsLocationsInstancesUndeleteCall struct {
 	header_                         http.Header
 }
 
-// Undelete: Restores a DatabaseInstance that was previously marked to
-// be deleted. After the delete method is used, DatabaseInstances are
-// set to the DELETED state for 20 days, and will be purged within 30
-// days. Databases in the DELETED state can be undeleted without losing
-// any data. This method may only be used on a DatabaseInstance in the
-// DELETED state. Purged DatabaseInstances may not be recovered.
+// Undelete: Restores a DatabaseInstance that was previously marked to be
+// deleted. After the delete method is used, DatabaseInstances are set to the
+// DELETED state for 20 days, and will be purged within 30 days. Databases in
+// the DELETED state can be undeleted without losing any data. This method may
+// only be used on a DatabaseInstance in the DELETED state. Purged
+// DatabaseInstances may not be recovered.
 //
-//   - name: The fully qualified resource name of the database instance,
-//     in the form:
-//     `projects/{project-number}/locations/{location-id}/instances/{databa
-//     se-id}`.
+//   - name: The fully qualified resource name of the database instance, in the
+//     form:
+//     `projects/{project-number}/locations/{location-id}/instances/{database-id}`.
 func (r *ProjectsLocationsInstancesService) Undelete(name string, undeletedatabaseinstancerequest *UndeleteDatabaseInstanceRequest) *ProjectsLocationsInstancesUndeleteCall {
 	c := &ProjectsLocationsInstancesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1348,23 +1047,21 @@ func (r *ProjectsLocationsInstancesService) Undelete(name string, undeletedataba
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsInstancesUndeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesUndeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsInstancesUndeleteCall) Context(ctx context.Context) *ProjectsLocationsInstancesUndeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsInstancesUndeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1373,18 +1070,12 @@ func (c *ProjectsLocationsInstancesUndeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsInstancesUndeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeletedatabaseinstancerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:undelete")
@@ -1401,12 +1092,11 @@ func (c *ProjectsLocationsInstancesUndeleteCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "firebasedatabase.projects.locations.instances.undelete" call.
-// Exactly one of *DatabaseInstance or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DatabaseInstance.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DatabaseInstance.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsInstancesUndeleteCall) Do(opts ...googleapi.CallOption) (*DatabaseInstance, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1437,34 +1127,4 @@ func (c *ProjectsLocationsInstancesUndeleteCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Restores a DatabaseInstance that was previously marked to be deleted. After the delete method is used, DatabaseInstances are set to the DELETED state for 20 days, and will be purged within 30 days. Databases in the DELETED state can be undeleted without losing any data. This method may only be used on a DatabaseInstance in the DELETED state. Purged DatabaseInstances may not be recovered.",
-	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:undelete",
-	//   "httpMethod": "POST",
-	//   "id": "firebasedatabase.projects.locations.instances.undelete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The fully qualified resource name of the database instance, in the form: `projects/{project-number}/locations/{location-id}/instances/{database-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}:undelete",
-	//   "request": {
-	//     "$ref": "UndeleteDatabaseInstanceRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "DatabaseInstance"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }

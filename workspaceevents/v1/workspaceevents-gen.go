@@ -109,8 +109,8 @@ const (
 	// View members in Google Chat conversations.
 	ChatMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.memberships.readonly"
 
-	// View, compose, send, update, and delete messages, and add, view, and
-	// delete reactions to messages.
+	// View, compose, send, update, and delete messages, and add, view, and delete
+	// reactions to messages.
 	ChatMessagesScope = "https://www.googleapis.com/auth/chat.messages"
 
 	// View, add, and delete reactions to messages in Google Chat
@@ -122,15 +122,15 @@ const (
 	// View messages and reactions in Google Chat
 	ChatMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.messages.readonly"
 
-	// Create conversations and spaces and see or edit metadata (including
-	// history settings and access settings) in Google Chat
+	// Create conversations and spaces and see or edit metadata (including history
+	// settings and access settings) in Google Chat
 	ChatSpacesScope = "https://www.googleapis.com/auth/chat.spaces"
 
 	// View chat and spaces in Google Chat
 	ChatSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.spaces.readonly"
 
-	// Create, edit, and see information about your Google Meet conferences
-	// created by the app.
+	// Create, edit, and see information about your Google Meet conferences created
+	// by the app.
 	MeetingsSpaceCreatedScope = "https://www.googleapis.com/auth/meetings.space.created"
 
 	// Read information about any of your Google Meet conferences
@@ -225,180 +225,140 @@ type SubscriptionsService struct {
 // ListSubscriptionsResponse: The response message for
 // SubscriptionsService.ListSubscriptions.
 type ListSubscriptionsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Subscriptions: List of subscriptions.
 	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubscriptionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// NotificationEndpoint: The endpoint where the subscription delivers
-// events.
+// NotificationEndpoint: The endpoint where the subscription delivers events.
 type NotificationEndpoint struct {
-	// PubsubTopic: Immutable. The Cloud Pub/Sub topic that receives events
-	// for the subscription. Format: `projects/{project}/topics/{topic}` You
-	// must create the topic in the same Google Cloud project where you
-	// create this subscription. When the topic receives events, the events
-	// are encoded as Cloud Pub/Sub messages. For details, see the Google
-	// Cloud Pub/Sub Protocol Binding for CloudEvents
+	// PubsubTopic: Immutable. The Cloud Pub/Sub topic that receives events for the
+	// subscription. Format: `projects/{project}/topics/{topic}` You must create
+	// the topic in the same Google Cloud project where you create this
+	// subscription. When the topic receives events, the events are encoded as
+	// Cloud Pub/Sub messages. For details, see the Google Cloud Pub/Sub Protocol
+	// Binding for CloudEvents
 	// (https://github.com/googleapis/google-cloudevents/blob/main/docs/spec/pubsub.md).
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PubsubTopic") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PubsubTopic") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PubsubTopic") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *NotificationEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod NotificationEndpoint
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Operation: This resource represents a long-running operation that is
-// the result of a network API call.
+// Operation: This resource represents a long-running operation that is the
+// result of a network API call.
 type Operation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If `true`, the operation is completed, and either `error`
-	// or `response` is available.
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *Status `json:"error,omitempty"`
-
 	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should be a resource name ending with
-	// `operations/{unique_id}`.
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal, successful response of the operation. If the
-	// original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PayloadOptions: Options about what data to include in the event
-// payload. Only supported for Google Chat events.
+// PayloadOptions: Options about what data to include in the event payload.
+// Only supported for Google Chat events.
 type PayloadOptions struct {
-	// FieldMask: Optional. If `include_resource` is set to `true`, the list
-	// of fields to include in the event payload. Separate fields with a
-	// comma. For example, to include a Google Chat message's sender and
-	// create time, enter `message.sender,message.createTime`. If omitted,
-	// the payload includes all fields for the resource. If you specify a
-	// field that doesn't exist for the resource, the system ignores the
-	// field.
+	// FieldMask: Optional. If `include_resource` is set to `true`, the list of
+	// fields to include in the event payload. Separate fields with a comma. For
+	// example, to include a Google Chat message's sender and create time, enter
+	// `message.sender,message.createTime`. If omitted, the payload includes all
+	// fields for the resource. If you specify a field that doesn't exist for the
+	// resource, the system ignores the field.
 	FieldMask string `json:"fieldMask,omitempty"`
-
-	// IncludeResource: Optional. Whether the event payload includes data
-	// about the resource that changed. For example, for an event where a
-	// Google Chat message was created, whether the payload contains data
-	// about the `Message`
+	// IncludeResource: Optional. Whether the event payload includes data about the
+	// resource that changed. For example, for an event where a Google Chat message
+	// was created, whether the payload contains data about the `Message`
 	// (https://developers.google.com/chat/api/reference/rest/v1/spaces.messages)
-	// resource. If false, the event payload only includes the name of the
-	// changed resource.
+	// resource. If false, the event payload only includes the name of the changed
+	// resource.
 	IncludeResource bool `json:"includeResource,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FieldMask") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FieldMask") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FieldMask") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PayloadOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod PayloadOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ReactivateSubscriptionRequest: The request message for
@@ -406,54 +366,44 @@ func (s *PayloadOptions) MarshalJSON() ([]byte, error) {
 type ReactivateSubscriptionRequest struct {
 }
 
-// Status: The `Status` type defines a logical error model that is
-// suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: Developer Preview
-// (https://developers.google.com/workspace/preview). A subscription to
-// receive events about a Google Workspace resource. To learn more about
-// subscriptions, see the Google Workspace Events API overview
+// (https://developers.google.com/workspace/preview). A subscription to receive
+// events about a Google Workspace resource. To learn more about subscriptions,
+// see the Google Workspace Events API overview
 // (https://developers.google.com/workspace/events).
 type Subscription struct {
 	// Authority: Output only. The user who authorized the creation of the
@@ -462,145 +412,112 @@ type Subscription struct {
 	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users#User.FIELDS.ids)
 	// field from the Directory API.
 	Authority string `json:"authority,omitempty"`
-
 	// CreateTime: Output only. The time when the subscription is created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Etag: Optional. This checksum is computed by the server based on the
-	// value of other fields, and might be sent on update requests to ensure
-	// the client has an up-to-date value before proceeding.
+	// Etag: Optional. This checksum is computed by the server based on the value
+	// of other fields, and might be sent on update requests to ensure the client
+	// has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-
 	// EventTypes: Required. Immutable. Unordered list. Input for creating a
-	// subscription. Otherwise, output only. One or more types of events to
-	// receive about the target resource. Formatted according to the
-	// CloudEvents specification. The supported event types depend on the
-	// target resource of your subscription. For details, see Supported
-	// Google Workspace events
-	// (https://developers.google.com/workspace/events/guides#supported-events).
-	// By default, you also receive events about the lifecycle of your
-	// subscription
+	// subscription. Otherwise, output only. One or more types of events to receive
+	// about the target resource. Formatted according to the CloudEvents
+	// specification. The supported event types depend on the target resource of
+	// your subscription. For details, see Supported Google Workspace events
+	// (https://developers.google.com/workspace/events/guides#supported-events). By
+	// default, you also receive events about the lifecycle of your subscription
 	// (https://developers.google.com/workspace/events/guides/events-lifecycle).
-	// You don't need to specify lifecycle events for this field. If you
-	// specify an event type that doesn't exist for the target resource, the
-	// request returns an HTTP `400 Bad Request` status code.
+	// You don't need to specify lifecycle events for this field. If you specify an
+	// event type that doesn't exist for the target resource, the request returns
+	// an HTTP `400 Bad Request` status code.
 	EventTypes []string `json:"eventTypes,omitempty"`
-
-	// ExpireTime: Non-empty default. The timestamp in UTC when the
-	// subscription expires. Always displayed on output, regardless of what
-	// was used on input.
+	// ExpireTime: Non-empty default. The timestamp in UTC when the subscription
+	// expires. Always displayed on output, regardless of what was used on input.
 	ExpireTime string `json:"expireTime,omitempty"`
-
-	// Name: Optional. Immutable. Identifier. Resource name of the
-	// subscription. Format: `subscriptions/{subscription}`
+	// Name: Optional. Immutable. Identifier. Resource name of the subscription.
+	// Format: `subscriptions/{subscription}`
 	Name string `json:"name,omitempty"`
-
 	// NotificationEndpoint: Required. Immutable. The endpoint where the
 	// subscription delivers events, such as a Pub/Sub topic.
 	NotificationEndpoint *NotificationEndpoint `json:"notificationEndpoint,omitempty"`
-
-	// PayloadOptions: Optional. Options about what data to include in the
-	// event payload. Only supported for Google Chat events.
+	// PayloadOptions: Optional. Options about what data to include in the event
+	// payload. Only supported for Google Chat events.
 	PayloadOptions *PayloadOptions `json:"payloadOptions,omitempty"`
-
-	// Reconciling: Output only. If `true`, the subscription is in the
-	// process of being updated.
+	// Reconciling: Output only. If `true`, the subscription is in the process of
+	// being updated.
 	Reconciling bool `json:"reconciling,omitempty"`
-
-	// State: Output only. The state of the subscription. Determines whether
-	// the subscription can receive events and deliver them to the
-	// notification endpoint.
+	// State: Output only. The state of the subscription. Determines whether the
+	// subscription can receive events and deliver them to the notification
+	// endpoint.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
-	//   "ACTIVE" - The subscription is active and can receive and deliver
-	// events to its notification endpoint.
-	//   "SUSPENDED" - The subscription is unable to receive events due to
-	// an error. To identify the error, see the `suspension_reason` field.
+	//   "ACTIVE" - The subscription is active and can receive and deliver events
+	// to its notification endpoint.
+	//   "SUSPENDED" - The subscription is unable to receive events due to an
+	// error. To identify the error, see the `suspension_reason` field.
 	//   "DELETED" - The subscription is deleted.
 	State string `json:"state,omitempty"`
-
-	// SuspensionReason: Output only. The error that suspended the
-	// subscription. To reactivate the subscription, resolve the error and
-	// call the `ReactivateSubscription` method.
+	// SuspensionReason: Output only. The error that suspended the subscription. To
+	// reactivate the subscription, resolve the error and call the
+	// `ReactivateSubscription` method.
 	//
 	// Possible values:
 	//   "ERROR_TYPE_UNSPECIFIED" - Default value. This value is unused.
-	//   "USER_SCOPE_REVOKED" - The authorizing user has revoked the grant
-	// of one or more OAuth scopes. To learn more about authorization for
-	// Google Workspace, see [Configure the OAuth consent
-	// screen](https://developers.google.com/workspace/guides/configure-oauth
-	// -consent#choose-scopes).
-	//   "RESOURCE_DELETED" - The target resource for the subscription no
-	// longer exists.
-	//   "USER_AUTHORIZATION_FAILURE" - The user that authorized the
-	// creation of the subscription no longer has access to the
-	// subscription's target resource.
-	//   "ENDPOINT_PERMISSION_DENIED" - The Google Workspace application
-	// doesn't have access to deliver events to your subscription's
-	// notification endpoint.
-	//   "ENDPOINT_NOT_FOUND" - The subscription's notification endpoint
-	// doesn't exist, or the endpoint can't be found in the Google Cloud
-	// project where you created the subscription.
-	//   "ENDPOINT_RESOURCE_EXHAUSTED" - The subscription's notification
-	// endpoint failed to receive events due to insufficient quota or
-	// reaching rate limiting.
+	//   "USER_SCOPE_REVOKED" - The authorizing user has revoked the grant of one
+	// or more OAuth scopes. To learn more about authorization for Google
+	// Workspace, see [Configure the OAuth consent
+	// screen](https://developers.google.com/workspace/guides/configure-oauth-consen
+	// t#choose-scopes).
+	//   "RESOURCE_DELETED" - The target resource for the subscription no longer
+	// exists.
+	//   "USER_AUTHORIZATION_FAILURE" - The user that authorized the creation of
+	// the subscription no longer has access to the subscription's target resource.
+	//   "ENDPOINT_PERMISSION_DENIED" - The Google Workspace application doesn't
+	// have access to deliver events to your subscription's notification endpoint.
+	//   "ENDPOINT_NOT_FOUND" - The subscription's notification endpoint doesn't
+	// exist, or the endpoint can't be found in the Google Cloud project where you
+	// created the subscription.
+	//   "ENDPOINT_RESOURCE_EXHAUSTED" - The subscription's notification endpoint
+	// failed to receive events due to insufficient quota or reaching rate
+	// limiting.
 	//   "OTHER" - An unidentified error has occurred.
 	SuspensionReason string `json:"suspensionReason,omitempty"`
-
-	// TargetResource: Required. Immutable. The Google Workspace resource
-	// that's monitored for events, formatted as the full resource name
-	// (https://google.aip.dev/122#full-resource-names). To learn about
-	// target resources and the events that they support, see Supported
-	// Google Workspace events
-	// (https://developers.google.com/workspace/events#supported-events). A
-	// user can only authorize your app to create one subscription for a
-	// given target resource. If your app tries to create another
-	// subscription with the same user credentials, the request returns an
-	// `ALREADY_EXISTS` error.
+	// TargetResource: Required. Immutable. The Google Workspace resource that's
+	// monitored for events, formatted as the full resource name
+	// (https://google.aip.dev/122#full-resource-names). To learn about target
+	// resources and the events that they support, see Supported Google Workspace
+	// events (https://developers.google.com/workspace/events#supported-events). A
+	// user can only authorize your app to create one subscription for a given
+	// target resource. If your app tries to create another subscription with the
+	// same user credentials, the request returns an `ALREADY_EXISTS` error.
 	TargetResource string `json:"targetResource,omitempty"`
-
-	// Ttl: Input only. The time-to-live (TTL) or duration for the
-	// subscription. If unspecified or set to `0`, uses the maximum possible
-	// duration.
+	// Ttl: Input only. The time-to-live (TTL) or duration for the subscription. If
+	// unspecified or set to `0`, uses the maximum possible duration.
 	Ttl string `json:"ttl,omitempty"`
-
-	// Uid: Output only. System-assigned unique identifier for the
-	// subscription.
+	// Uid: Output only. System-assigned unique identifier for the subscription.
 	Uid string `json:"uid,omitempty"`
-
-	// UpdateTime: Output only. The last time that the subscription is
-	// updated.
+	// UpdateTime: Output only. The last time that the subscription is updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Authority") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Authority") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Authority") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "workspaceevents.operations.get":
 
 type OperationsGetCall struct {
 	s            *Service
@@ -611,9 +528,9 @@ type OperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
 //
 // - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
@@ -623,33 +540,29 @@ func (r *OperationsService) Get(name string) *OperationsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OperationsGetCall) IfNoneMatch(entityTag string) *OperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -658,12 +571,7 @@ func (c *OperationsGetCall) Header() http.Header {
 }
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -684,12 +592,10 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "workspaceevents.operations.get" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -720,45 +626,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "workspaceevents.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^operations/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chat.bot",
-	//     "https://www.googleapis.com/auth/chat.memberships",
-	//     "https://www.googleapis.com/auth/chat.memberships.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages.readonly",
-	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
-	//     "https://www.googleapis.com/auth/meetings.space.created",
-	//     "https://www.googleapis.com/auth/meetings.space.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "workspaceevents.subscriptions.create":
 
 type SubscriptionsCreateCall struct {
 	s            *Service
@@ -768,10 +636,9 @@ type SubscriptionsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Developer Preview
-// (https://developers.google.com/workspace/preview): Creates a Google
-// Workspace subscription. To learn how to use this method, see Create a
-// Google Workspace subscription
+// Create: Developer Preview (https://developers.google.com/workspace/preview):
+// Creates a Google Workspace subscription. To learn how to use this method,
+// see Create a Google Workspace subscription
 // (https://developers.google.com/workspace/events/guides/create-subscription).
 func (r *SubscriptionsService) Create(subscription *Subscription) *SubscriptionsCreateCall {
 	c := &SubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -779,32 +646,29 @@ func (r *SubscriptionsService) Create(subscription *Subscription) *Subscriptions
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": If set to
-// `true`, validates and previews the request, but doesn't create the
-// subscription.
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// validates and previews the request, but doesn't create the subscription.
 func (c *SubscriptionsCreateCall) ValidateOnly(validateOnly bool) *SubscriptionsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsCreateCall) Fields(s ...googleapi.Field) *SubscriptionsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsCreateCall) Context(ctx context.Context) *SubscriptionsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -813,18 +677,12 @@ func (c *SubscriptionsCreateCall) Header() http.Header {
 }
 
 func (c *SubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/subscriptions")
@@ -838,12 +696,10 @@ func (c *SubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "workspaceevents.subscriptions.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -874,43 +730,7 @@ func (c *SubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Creates a Google Workspace subscription. To learn how to use this method, see [Create a Google Workspace subscription](https://developers.google.com/workspace/events/guides/create-subscription).",
-	//   "flatPath": "v1/subscriptions",
-	//   "httpMethod": "POST",
-	//   "id": "workspaceevents.subscriptions.create",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "validateOnly": {
-	//       "description": "Optional. If set to `true`, validates and previews the request, but doesn't create the subscription.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v1/subscriptions",
-	//   "request": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chat.memberships",
-	//     "https://www.googleapis.com/auth/chat.memberships.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages.readonly",
-	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
-	//     "https://www.googleapis.com/auth/meetings.space.created",
-	//     "https://www.googleapis.com/auth/meetings.space.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "workspaceevents.subscriptions.delete":
 
 type SubscriptionsDeleteCall struct {
 	s          *Service
@@ -920,10 +740,9 @@ type SubscriptionsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Developer Preview
-// (https://developers.google.com/workspace/preview): Deletes a Google
-// Workspace subscription. To learn how to use this method, see Delete a
-// Google Workspace subscription
+// Delete: Developer Preview (https://developers.google.com/workspace/preview):
+// Deletes a Google Workspace subscription. To learn how to use this method,
+// see Delete a Google Workspace subscription
 // (https://developers.google.com/workspace/events/guides/delete-subscription).
 //
 //   - name: Resource name of the subscription to delete. Format:
@@ -934,48 +753,45 @@ func (r *SubscriptionsService) Delete(name string) *SubscriptionsDeleteCall {
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to
-// `true` and the subscription isn't found, the request succeeds but
-// doesn't delete the subscription.
+// AllowMissing sets the optional parameter "allowMissing": If set to `true`
+// and the subscription isn't found, the request succeeds but doesn't delete
+// the subscription.
 func (c *SubscriptionsDeleteCall) AllowMissing(allowMissing bool) *SubscriptionsDeleteCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // Etag sets the optional parameter "etag": Etag of the subscription. If
-// present, it must match with the server's etag. Otherwise, request
-// fails with the status `ABORTED`.
+// present, it must match with the server's etag. Otherwise, request fails with
+// the status `ABORTED`.
 func (c *SubscriptionsDeleteCall) Etag(etag string) *SubscriptionsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": If set to
-// `true`, validates and previews the request, but doesn't delete the
-// subscription.
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// validates and previews the request, but doesn't delete the subscription.
 func (c *SubscriptionsDeleteCall) ValidateOnly(validateOnly bool) *SubscriptionsDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsDeleteCall) Context(ctx context.Context) *SubscriptionsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -984,12 +800,7 @@ func (c *SubscriptionsDeleteCall) Header() http.Header {
 }
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1007,12 +818,10 @@ func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "workspaceevents.subscriptions.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1043,60 +852,7 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Deletes a Google Workspace subscription. To learn how to use this method, see [Delete a Google Workspace subscription](https://developers.google.com/workspace/events/guides/delete-subscription).",
-	//   "flatPath": "v1/subscriptions/{subscriptionsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "workspaceevents.subscriptions.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "allowMissing": {
-	//       "description": "Optional. If set to `true` and the subscription isn't found, the request succeeds but doesn't delete the subscription.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "etag": {
-	//       "description": "Optional. Etag of the subscription. If present, it must match with the server's etag. Otherwise, request fails with the status `ABORTED`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. Resource name of the subscription to delete. Format: `subscriptions/{subscription}`",
-	//       "location": "path",
-	//       "pattern": "^subscriptions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "validateOnly": {
-	//       "description": "Optional. If set to `true`, validates and previews the request, but doesn't delete the subscription.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chat.bot",
-	//     "https://www.googleapis.com/auth/chat.memberships",
-	//     "https://www.googleapis.com/auth/chat.memberships.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages.readonly",
-	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
-	//     "https://www.googleapis.com/auth/meetings.space.created",
-	//     "https://www.googleapis.com/auth/meetings.space.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "workspaceevents.subscriptions.get":
 
 type SubscriptionsGetCall struct {
 	s            *Service
@@ -1107,10 +863,9 @@ type SubscriptionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Developer Preview
-// (https://developers.google.com/workspace/preview): Gets details about
-// a Google Workspace subscription. To learn how to use this method, see
-// Get details about a Google Workspace subscription
+// Get: Developer Preview (https://developers.google.com/workspace/preview):
+// Gets details about a Google Workspace subscription. To learn how to use this
+// method, see Get details about a Google Workspace subscription
 // (https://developers.google.com/workspace/events/guides/get-subscription).
 //
 //   - name: Resource name of the subscription. Format:
@@ -1122,33 +877,29 @@ func (r *SubscriptionsService) Get(name string) *SubscriptionsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsGetCall) Fields(s ...googleapi.Field) *SubscriptionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SubscriptionsGetCall) IfNoneMatch(entityTag string) *SubscriptionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsGetCall) Context(ctx context.Context) *SubscriptionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1157,12 +908,7 @@ func (c *SubscriptionsGetCall) Header() http.Header {
 }
 
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1183,12 +929,10 @@ func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "workspaceevents.subscriptions.get" call.
-// Exactly one of *Subscription or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscription.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1219,45 +963,7 @@ func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Gets details about a Google Workspace subscription. To learn how to use this method, see [Get details about a Google Workspace subscription](https://developers.google.com/workspace/events/guides/get-subscription).",
-	//   "flatPath": "v1/subscriptions/{subscriptionsId}",
-	//   "httpMethod": "GET",
-	//   "id": "workspaceevents.subscriptions.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the subscription. Format: `subscriptions/{subscription}`",
-	//       "location": "path",
-	//       "pattern": "^subscriptions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chat.bot",
-	//     "https://www.googleapis.com/auth/chat.memberships",
-	//     "https://www.googleapis.com/auth/chat.memberships.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages.readonly",
-	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
-	//     "https://www.googleapis.com/auth/meetings.space.created",
-	//     "https://www.googleapis.com/auth/meetings.space.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "workspaceevents.subscriptions.list":
 
 type SubscriptionsListCall struct {
 	s            *Service
@@ -1267,24 +973,22 @@ type SubscriptionsListCall struct {
 	header_      http.Header
 }
 
-// List: Developer Preview
-// (https://developers.google.com/workspace/preview): Lists Google
-// Workspace subscriptions. To learn how to use this method, see List
-// Google Workspace subscriptions
+// List: Developer Preview (https://developers.google.com/workspace/preview):
+// Lists Google Workspace subscriptions. To learn how to use this method, see
+// List Google Workspace subscriptions
 // (https://developers.google.com/workspace/events/guides/list-subscriptions).
 func (r *SubscriptionsService) List() *SubscriptionsListCall {
 	c := &SubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// Filter sets the optional parameter "filter": Required. A query
-// filter. You can filter subscriptions by event type (`event_types`)
-// and target resource (`target_resource`). You must specify at least
-// one event type in your query. To filter for multiple event types, use
-// the `OR` operator. To filter by both event type and target resource,
-// use the `AND` operator and specify the full resource name, such as
-// `//chat.googleapis.com/spaces/{space}`. For example, the following
-// queries are valid: ```
+// Filter sets the optional parameter "filter": Required. A query filter. You
+// can filter subscriptions by event type (`event_types`) and target resource
+// (`target_resource`). You must specify at least one event type in your query.
+// To filter for multiple event types, use the `OR` operator. To filter by both
+// event type and target resource, use the `AND` operator and specify the full
+// resource name, such as `//chat.googleapis.com/spaces/{space}`. For example,
+// the following queries are valid: ```
 // event_types:"google.workspace.chat.membership.v1.updated" OR
 // event_types:"google.workspace.chat.message.v1.created"
 // event_types:"google.workspace.chat.message.v1.created" AND
@@ -1298,54 +1002,50 @@ func (c *SubscriptionsListCall) Filter(filter string) *SubscriptionsListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of subscriptions to return. The service might return fewer than this
-// value. If unspecified or set to `0`, up to 50 subscriptions are
-// returned. The maximum value is 100. If you specify a value more than
-// 100, the system only returns 100 subscriptions.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// subscriptions to return. The service might return fewer than this value. If
+// unspecified or set to `0`, up to 50 subscriptions are returned. The maximum
+// value is 100. If you specify a value more than 100, the system only returns
+// 100 subscriptions.
 func (c *SubscriptionsListCall) PageSize(pageSize int64) *SubscriptionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous list subscriptions call. Provide this
-// parameter to retrieve the subsequent page. When paginating, the
-// filter value should match the call that provided the page token.
-// Passing a different value might lead to unexpected results.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous list subscriptions call. Provide this parameter to retrieve
+// the subsequent page. When paginating, the filter value should match the call
+// that provided the page token. Passing a different value might lead to
+// unexpected results.
 func (c *SubscriptionsListCall) PageToken(pageToken string) *SubscriptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SubscriptionsListCall) IfNoneMatch(entityTag string) *SubscriptionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsListCall) Context(ctx context.Context) *SubscriptionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1354,12 +1054,7 @@ func (c *SubscriptionsListCall) Header() http.Header {
 }
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1377,12 +1072,11 @@ func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "workspaceevents.subscriptions.list" call.
-// Exactly one of *ListSubscriptionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListSubscriptionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListSubscriptionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSubscriptionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1413,49 +1107,6 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSubscript
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Lists Google Workspace subscriptions. To learn how to use this method, see [List Google Workspace subscriptions](https://developers.google.com/workspace/events/guides/list-subscriptions).",
-	//   "flatPath": "v1/subscriptions",
-	//   "httpMethod": "GET",
-	//   "id": "workspaceevents.subscriptions.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Required. A query filter. You can filter subscriptions by event type (`event_types`) and target resource (`target_resource`). You must specify at least one event type in your query. To filter for multiple event types, use the `OR` operator. To filter by both event type and target resource, use the `AND` operator and specify the full resource name, such as `//chat.googleapis.com/spaces/{space}`. For example, the following queries are valid: ``` event_types:\"google.workspace.chat.membership.v1.updated\" OR event_types:\"google.workspace.chat.message.v1.created\" event_types:\"google.workspace.chat.message.v1.created\" AND target_resource=\"//chat.googleapis.com/spaces/{space}\" ( event_types:\"google.workspace.chat.membership.v1.updated\" OR event_types:\"google.workspace.chat.message.v1.created\" ) AND target_resource=\"//chat.googleapis.com/spaces/{space}\" ``` The server rejects invalid queries with an `INVALID_ARGUMENT` error.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of subscriptions to return. The service might return fewer than this value. If unspecified or set to `0`, up to 50 subscriptions are returned. The maximum value is 100. If you specify a value more than 100, the system only returns 100 subscriptions.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous list subscriptions call. Provide this parameter to retrieve the subsequent page. When paginating, the filter value should match the call that provided the page token. Passing a different value might lead to unexpected results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/subscriptions",
-	//   "response": {
-	//     "$ref": "ListSubscriptionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chat.bot",
-	//     "https://www.googleapis.com/auth/chat.memberships",
-	//     "https://www.googleapis.com/auth/chat.memberships.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages.readonly",
-	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
-	//     "https://www.googleapis.com/auth/meetings.space.created",
-	//     "https://www.googleapis.com/auth/meetings.space.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1463,7 +1114,7 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSubscript
 // The provided context supersedes any context provided to the Context method.
 func (c *SubscriptionsListCall) Pages(ctx context.Context, f func(*ListSubscriptionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1479,8 +1130,6 @@ func (c *SubscriptionsListCall) Pages(ctx context.Context, f func(*ListSubscript
 	}
 }
 
-// method id "workspaceevents.subscriptions.patch":
-
 type SubscriptionsPatchCall struct {
 	s            *Service
 	name         string
@@ -1490,14 +1139,13 @@ type SubscriptionsPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Developer Preview
-// (https://developers.google.com/workspace/preview): Updates or renews
-// a Google Workspace subscription. To learn how to use this method, see
-// Update or renew a Google Workspace subscription
+// Patch: Developer Preview (https://developers.google.com/workspace/preview):
+// Updates or renews a Google Workspace subscription. To learn how to use this
+// method, see Update or renew a Google Workspace subscription
 // (https://developers.google.com/workspace/events/guides/update-subscription).
 //
-//   - name: Optional. Immutable. Identifier. Resource name of the
-//     subscription. Format: `subscriptions/{subscription}`.
+//   - name: Optional. Immutable. Identifier. Resource name of the subscription.
+//     Format: `subscriptions/{subscription}`.
 func (r *SubscriptionsService) Patch(name string, subscription *Subscription) *SubscriptionsPatchCall {
 	c := &SubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1505,44 +1153,40 @@ func (r *SubscriptionsService) Patch(name string, subscription *Subscription) *S
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The field to
-// update. If omitted, updates any fields included in the request. You
-// can update one of the following fields in a subscription: *
-// `expire_time`: The timestamp when the subscription expires. * `ttl`:
-// The time-to-live (TTL) or duration of the subscription. To fully
-// replace the subscription (the equivalent of `PUT`), use `*`. Any
-// omitted fields are updated with empty values.
+// UpdateMask sets the optional parameter "updateMask": The field to update. If
+// omitted, updates any fields included in the request. You can update one of
+// the following fields in a subscription: * `expire_time`: The timestamp when
+// the subscription expires. * `ttl`: The time-to-live (TTL) or duration of the
+// subscription. To fully replace the subscription (the equivalent of `PUT`),
+// use `*`. Any omitted fields are updated with empty values.
 func (c *SubscriptionsPatchCall) UpdateMask(updateMask string) *SubscriptionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": If set to
-// `true`, validates and previews the request, but doesn't update the
-// subscription.
+// ValidateOnly sets the optional parameter "validateOnly": If set to `true`,
+// validates and previews the request, but doesn't update the subscription.
 func (c *SubscriptionsPatchCall) ValidateOnly(validateOnly bool) *SubscriptionsPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsPatchCall) Fields(s ...googleapi.Field) *SubscriptionsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsPatchCall) Context(ctx context.Context) *SubscriptionsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1551,18 +1195,12 @@ func (c *SubscriptionsPatchCall) Header() http.Header {
 }
 
 func (c *SubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -1579,12 +1217,10 @@ func (c *SubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "workspaceevents.subscriptions.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1615,58 +1251,7 @@ func (c *SubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Updates or renews a Google Workspace subscription. To learn how to use this method, see [Update or renew a Google Workspace subscription](https://developers.google.com/workspace/events/guides/update-subscription).",
-	//   "flatPath": "v1/subscriptions/{subscriptionsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "workspaceevents.subscriptions.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Optional. Immutable. Identifier. Resource name of the subscription. Format: `subscriptions/{subscription}`",
-	//       "location": "path",
-	//       "pattern": "^subscriptions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Optional. The field to update. If omitted, updates any fields included in the request. You can update one of the following fields in a subscription: * `expire_time`: The timestamp when the subscription expires. * `ttl`: The time-to-live (TTL) or duration of the subscription. To fully replace the subscription (the equivalent of `PUT`), use `*`. Any omitted fields are updated with empty values.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "validateOnly": {
-	//       "description": "Optional. If set to `true`, validates and previews the request, but doesn't update the subscription.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chat.memberships",
-	//     "https://www.googleapis.com/auth/chat.memberships.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages.readonly",
-	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
-	//     "https://www.googleapis.com/auth/meetings.space.created",
-	//     "https://www.googleapis.com/auth/meetings.space.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "workspaceevents.subscriptions.reactivate":
 
 type SubscriptionsReactivateCall struct {
 	s                             *Service
@@ -1678,11 +1263,11 @@ type SubscriptionsReactivateCall struct {
 }
 
 // Reactivate: Developer Preview
-// (https://developers.google.com/workspace/preview): Reactivates a
-// suspended Google Workspace subscription. This method resets your
-// subscription's `State` field to `ACTIVE`. Before you use this method,
-// you must fix the error that suspended the subscription. To learn how
-// to use this method, see Reactivate a Google Workspace subscription
+// (https://developers.google.com/workspace/preview): Reactivates a suspended
+// Google Workspace subscription. This method resets your subscription's
+// `State` field to `ACTIVE`. Before you use this method, you must fix the
+// error that suspended the subscription. To learn how to use this method, see
+// Reactivate a Google Workspace subscription
 // (https://developers.google.com/workspace/events/guides/reactivate-subscription).
 //
 //   - name: Resource name of the subscription. Format:
@@ -1695,23 +1280,21 @@ func (r *SubscriptionsService) Reactivate(name string, reactivatesubscriptionreq
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsReactivateCall) Fields(s ...googleapi.Field) *SubscriptionsReactivateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsReactivateCall) Context(ctx context.Context) *SubscriptionsReactivateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsReactivateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1720,18 +1303,12 @@ func (c *SubscriptionsReactivateCall) Header() http.Header {
 }
 
 func (c *SubscriptionsReactivateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reactivatesubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:reactivate")
@@ -1748,12 +1325,10 @@ func (c *SubscriptionsReactivateCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "workspaceevents.subscriptions.reactivate" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsReactivateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1784,42 +1359,4 @@ func (c *SubscriptionsReactivateCall) Do(opts ...googleapi.CallOption) (*Operati
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Reactivates a suspended Google Workspace subscription. This method resets your subscription's `State` field to `ACTIVE`. Before you use this method, you must fix the error that suspended the subscription. To learn how to use this method, see [Reactivate a Google Workspace subscription](https://developers.google.com/workspace/events/guides/reactivate-subscription).",
-	//   "flatPath": "v1/subscriptions/{subscriptionsId}:reactivate",
-	//   "httpMethod": "POST",
-	//   "id": "workspaceevents.subscriptions.reactivate",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the subscription. Format: `subscriptions/{subscription}`",
-	//       "location": "path",
-	//       "pattern": "^subscriptions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:reactivate",
-	//   "request": {
-	//     "$ref": "ReactivateSubscriptionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chat.memberships",
-	//     "https://www.googleapis.com/auth/chat.memberships.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions",
-	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
-	//     "https://www.googleapis.com/auth/chat.messages.readonly",
-	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
-	//     "https://www.googleapis.com/auth/meetings.space.created",
-	//     "https://www.googleapis.com/auth/meetings.space.readonly"
-	//   ]
-	// }
-
 }

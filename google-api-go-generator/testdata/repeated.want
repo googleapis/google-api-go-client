@@ -159,8 +159,6 @@ type AccountsReportsService struct {
 	s *Service
 }
 
-// method id "adsense.accounts.reports.generate":
-
 type AccountsReportsGenerateCall struct {
 	s            *Service
 	accountId    string
@@ -170,9 +168,9 @@ type AccountsReportsGenerateCall struct {
 	header_      http.Header
 }
 
-// Generate: Generate an AdSense report based on the report request sent
-// in the query parameters. Returns the result as JSON; to retrieve
-// output in CSV format specify "alt=csv" as a query parameter.
+// Generate: Generate an AdSense report based on the report request sent in the
+// query parameters. Returns the result as JSON; to retrieve output in CSV
+// format specify "alt=csv" as a query parameter.
 //
 // - accountId: Account upon which to report.
 func (r *AccountsReportsService) Generate(ids []int64, currency string, accountId string, dimension []string) *AccountsReportsGenerateCall {
@@ -188,23 +186,23 @@ func (r *AccountsReportsService) Generate(ids []int64, currency string, accountI
 	return c
 }
 
-// Currency sets the optional parameter "currency": Optional currency to
-// use when reporting on monetary metrics. Defaults to the account's
-// currency if not set.
+// Currency sets the optional parameter "currency": Optional currency to use
+// when reporting on monetary metrics. Defaults to the account's currency if
+// not set.
 func (c *AccountsReportsGenerateCall) Currency(currency string) *AccountsReportsGenerateCall {
 	c.urlParams_.Set("currency", currency)
 	return c
 }
 
-// Dimension sets the optional parameter "dimension": Dimensions to base
-// the report on.
+// Dimension sets the optional parameter "dimension": Dimensions to base the
+// report on.
 func (c *AccountsReportsGenerateCall) Dimension(dimension ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("dimension", append([]string{}, dimension...))
 	return c
 }
 
-// Ids sets the optional parameter "ids": Select only user profiles with
-// these IDs.
+// Ids sets the optional parameter "ids": Select only user profiles with these
+// IDs.
 func (c *AccountsReportsGenerateCall) Ids(ids ...int64) *AccountsReportsGenerateCall {
 	var ids_ []string
 	for _, v := range ids {
@@ -215,33 +213,29 @@ func (c *AccountsReportsGenerateCall) Ids(ids ...int64) *AccountsReportsGenerate
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsReportsGenerateCall) Fields(s ...googleapi.Field) *AccountsReportsGenerateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsReportsGenerateCall) IfNoneMatch(entityTag string) *AccountsReportsGenerateCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsReportsGenerateCall) Context(ctx context.Context) *AccountsReportsGenerateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsReportsGenerateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -250,12 +244,7 @@ func (c *AccountsReportsGenerateCall) Header() http.Header {
 }
 
 func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -287,45 +276,4 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Generate an AdSense report based on the report request sent in the query parameters. Returns the result as JSON; to retrieve output in CSV format specify \"alt=csv\" as a query parameter.",
-	//   "httpMethod": "GET",
-	//   "id": "adsense.accounts.reports.generate",
-	//   "parameterOrder": [
-	//     "ids",
-	//     "currency",
-	//     "accountId",
-	//     "dimension"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "Account upon which to report.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "currency": {
-	//       "description": "Optional currency to use when reporting on monetary metrics. Defaults to the account's currency if not set.",
-	//       "location": "query",
-	//       "pattern": "[a-zA-Z]+",
-	//       "type": "string"
-	//     },
-	//     "dimension": {
-	//       "description": "Dimensions to base the report on.",
-	//       "location": "query",
-	//       "pattern": "[a-zA-Z_]+",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "ids": {
-	//       "description": "Select only user profiles with these IDs.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "accounts/{accountId}/reports"
-	// }
-
 }

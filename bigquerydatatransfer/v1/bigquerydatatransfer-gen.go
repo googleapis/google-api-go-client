@@ -100,16 +100,16 @@ const mtlsBasePath = "https://bigquerydatatransfer.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data in Google BigQuery and see the email
-	// address for your Google Account
+	// View and manage your data in Google BigQuery and see the email address for
+	// your Google Account
 	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
 
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// View your data across Google Cloud services and see the email address
-	// of your Google Account
+	// View your data across Google Cloud services and see the email address of
+	// your Google Account
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
@@ -286,50 +286,42 @@ type ProjectsTransferConfigsRunsTransferLogsService struct {
 	s *Service
 }
 
-// CheckValidCredsRequest: A request to determine whether the user has
-// valid credentials. This method is used to limit the number of OAuth
-// popups in the user interface. The user id is inferred from the API
-// call context. If the data source has the Google+ authorization type,
-// this method returns false, as it cannot be determined whether the
-// credentials are already valid merely based on the user id.
+// CheckValidCredsRequest: A request to determine whether the user has valid
+// credentials. This method is used to limit the number of OAuth popups in the
+// user interface. The user id is inferred from the API call context. If the
+// data source has the Google+ authorization type, this method returns false,
+// as it cannot be determined whether the credentials are already valid merely
+// based on the user id.
 type CheckValidCredsRequest struct {
 }
 
-// CheckValidCredsResponse: A response indicating whether the
-// credentials exist and are valid.
+// CheckValidCredsResponse: A response indicating whether the credentials exist
+// and are valid.
 type CheckValidCredsResponse struct {
 	// HasValidCreds: If set to `true`, the credentials exist and are valid.
 	HasValidCreds bool `json:"hasValidCreds,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "HasValidCreds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HasValidCreds") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "HasValidCreds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CheckValidCredsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckValidCredsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DataSource: Defines the properties and custom parameters for a data
-// source.
+// DataSource: Defines the properties and custom parameters for a data source.
 type DataSource struct {
 	// AuthorizationType: Indicates the type of authorization.
 	//
@@ -337,213 +329,163 @@ type DataSource struct {
 	//   "AUTHORIZATION_TYPE_UNSPECIFIED" - Type unspecified.
 	//   "AUTHORIZATION_CODE" - Use OAuth 2 authorization codes that can be
 	// exchanged for a refresh token on the backend.
-	//   "GOOGLE_PLUS_AUTHORIZATION_CODE" - Return an authorization code for
-	// a given Google+ page that can then be exchanged for a refresh token
-	// on the backend.
+	//   "GOOGLE_PLUS_AUTHORIZATION_CODE" - Return an authorization code for a
+	// given Google+ page that can then be exchanged for a refresh token on the
+	// backend.
 	//   "FIRST_PARTY_OAUTH" - Use First Party OAuth.
 	AuthorizationType string `json:"authorizationType,omitempty"`
-
-	// ClientId: Data source client id which should be used to receive
-	// refresh token.
+	// ClientId: Data source client id which should be used to receive refresh
+	// token.
 	ClientId string `json:"clientId,omitempty"`
-
-	// DataRefreshType: Specifies whether the data source supports automatic
-	// data refresh for the past few days, and how it's supported. For some
-	// data sources, data might not be complete until a few days later, so
-	// it's useful to refresh data automatically.
+	// DataRefreshType: Specifies whether the data source supports automatic data
+	// refresh for the past few days, and how it's supported. For some data
+	// sources, data might not be complete until a few days later, so it's useful
+	// to refresh data automatically.
 	//
 	// Possible values:
-	//   "DATA_REFRESH_TYPE_UNSPECIFIED" - The data source won't support
-	// data auto refresh, which is default value.
-	//   "SLIDING_WINDOW" - The data source supports data auto refresh, and
-	// runs will be scheduled for the past few days. Does not allow custom
-	// values to be set for each transfer config.
-	//   "CUSTOM_SLIDING_WINDOW" - The data source supports data auto
-	// refresh, and runs will be scheduled for the past few days. Allows
-	// custom values to be set for each transfer config.
+	//   "DATA_REFRESH_TYPE_UNSPECIFIED" - The data source won't support data auto
+	// refresh, which is default value.
+	//   "SLIDING_WINDOW" - The data source supports data auto refresh, and runs
+	// will be scheduled for the past few days. Does not allow custom values to be
+	// set for each transfer config.
+	//   "CUSTOM_SLIDING_WINDOW" - The data source supports data auto refresh, and
+	// runs will be scheduled for the past few days. Allows custom values to be set
+	// for each transfer config.
 	DataRefreshType string `json:"dataRefreshType,omitempty"`
-
 	// DataSourceId: Data source id.
 	DataSourceId string `json:"dataSourceId,omitempty"`
-
-	// DefaultDataRefreshWindowDays: Default data refresh window on days.
-	// Only meaningful when `data_refresh_type` = `SLIDING_WINDOW`.
+	// DefaultDataRefreshWindowDays: Default data refresh window on days. Only
+	// meaningful when `data_refresh_type` = `SLIDING_WINDOW`.
 	DefaultDataRefreshWindowDays int64 `json:"defaultDataRefreshWindowDays,omitempty"`
-
-	// DefaultSchedule: Default data transfer schedule. Examples of valid
-	// schedules include: `1st,3rd monday of month 15:30`, `every wed,fri of
-	// jan,jun 13:15`, and `first sunday of quarter 00:00`.
+	// DefaultSchedule: Default data transfer schedule. Examples of valid schedules
+	// include: `1st,3rd monday of month 15:30`, `every wed,fri of jan,jun 13:15`,
+	// and `first sunday of quarter 00:00`.
 	DefaultSchedule string `json:"defaultSchedule,omitempty"`
-
 	// Description: User friendly data source description string.
 	Description string `json:"description,omitempty"`
-
 	// DisplayName: User friendly data source name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// HelpUrl: Url for the help document for this data source.
 	HelpUrl string `json:"helpUrl,omitempty"`
-
-	// ManualRunsDisabled: Disables backfilling and manual run scheduling
-	// for the data source.
+	// ManualRunsDisabled: Disables backfilling and manual run scheduling for the
+	// data source.
 	ManualRunsDisabled bool `json:"manualRunsDisabled,omitempty"`
-
-	// MinimumScheduleInterval: The minimum interval for scheduler to
-	// schedule runs.
+	// MinimumScheduleInterval: The minimum interval for scheduler to schedule
+	// runs.
 	MinimumScheduleInterval string `json:"minimumScheduleInterval,omitempty"`
-
 	// Name: Output only. Data source resource name.
 	Name string `json:"name,omitempty"`
-
 	// Parameters: Data source parameters.
 	Parameters []*DataSourceParameter `json:"parameters,omitempty"`
-
-	// Scopes: Api auth scopes for which refresh token needs to be obtained.
-	// These are scopes needed by a data source to prepare data and ingest
-	// them into BigQuery, e.g., https://www.googleapis.com/auth/bigquery
+	// Scopes: Api auth scopes for which refresh token needs to be obtained. These
+	// are scopes needed by a data source to prepare data and ingest them into
+	// BigQuery, e.g., https://www.googleapis.com/auth/bigquery
 	Scopes []string `json:"scopes,omitempty"`
-
-	// SupportsCustomSchedule: Specifies whether the data source supports a
-	// user defined schedule, or operates on the default schedule. When set
-	// to `true`, user can override default schedule.
+	// SupportsCustomSchedule: Specifies whether the data source supports a user
+	// defined schedule, or operates on the default schedule. When set to `true`,
+	// user can override default schedule.
 	SupportsCustomSchedule bool `json:"supportsCustomSchedule,omitempty"`
-
 	// SupportsMultipleTransfers: Deprecated. This field has no effect.
 	SupportsMultipleTransfers bool `json:"supportsMultipleTransfers,omitempty"`
-
 	// TransferType: Deprecated. This field has no effect.
 	//
 	// Possible values:
 	//   "TRANSFER_TYPE_UNSPECIFIED" - Invalid or Unknown transfer type
 	// placeholder.
 	//   "BATCH" - Batch data transfer.
-	//   "STREAMING" - Streaming data transfer. Streaming data source
-	// currently doesn't support multiple transfer configs per project.
+	//   "STREAMING" - Streaming data transfer. Streaming data source currently
+	// doesn't support multiple transfer configs per project.
 	TransferType string `json:"transferType,omitempty"`
-
-	// UpdateDeadlineSeconds: The number of seconds to wait for an update
-	// from the data source before the Data Transfer Service marks the
-	// transfer as FAILED.
+	// UpdateDeadlineSeconds: The number of seconds to wait for an update from the
+	// data source before the Data Transfer Service marks the transfer as FAILED.
 	UpdateDeadlineSeconds int64 `json:"updateDeadlineSeconds,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AuthorizationType")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AuthorizationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuthorizationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AuthorizationType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceParameter: A parameter used to define custom fields in a
-// data source definition.
+// DataSourceParameter: A parameter used to define custom fields in a data
+// source definition.
 type DataSourceParameter struct {
 	// AllowedValues: All possible values for the parameter.
 	AllowedValues []string `json:"allowedValues,omitempty"`
-
-	// Deprecated -- If true, it should not be used in new transfers, and it
-	// should not be visible to users.
+	// Deprecated -- If true, it should not be used in new transfers, and it should
+	// not be visible to users.
 	Deprecated bool `json:"deprecated,omitempty"`
-
 	// Description: Parameter description.
 	Description string `json:"description,omitempty"`
-
 	// DisplayName: Parameter display name in the user interface.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Fields: Deprecated. This field has no effect.
 	Fields []*DataSourceParameter `json:"fields,omitempty"`
-
 	// Immutable: Cannot be changed after initial creation.
 	Immutable bool `json:"immutable,omitempty"`
-
-	// MaxValue: For integer and double values specifies maximum allowed
-	// value.
+	// MaxValue: For integer and double values specifies maximum allowed value.
 	MaxValue float64 `json:"maxValue,omitempty"`
-
-	// MinValue: For integer and double values specifies minimum allowed
-	// value.
+	// MinValue: For integer and double values specifies minimum allowed value.
 	MinValue float64 `json:"minValue,omitempty"`
-
 	// ParamId: Parameter identifier.
 	ParamId string `json:"paramId,omitempty"`
-
 	// Recurse: Deprecated. This field has no effect.
 	Recurse bool `json:"recurse,omitempty"`
-
 	// Repeated: Deprecated. This field has no effect.
 	Repeated bool `json:"repeated,omitempty"`
-
 	// Required: Is parameter required.
 	Required bool `json:"required,omitempty"`
-
 	// Type: Parameter type.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Type unspecified.
 	//   "STRING" - String parameter.
-	//   "INTEGER" - Integer parameter (64-bits). Will be serialized to json
-	// as string.
+	//   "INTEGER" - Integer parameter (64-bits). Will be serialized to json as
+	// string.
 	//   "DOUBLE" - Double precision floating point parameter.
 	//   "BOOLEAN" - Boolean parameter.
 	//   "RECORD" - Deprecated. This field has no effect.
 	//   "PLUS_PAGE" - Page ID for a Google+ Page.
 	//   "LIST" - List of strings parameter.
 	Type string `json:"type,omitempty"`
-
-	// ValidationDescription: Description of the requirements for this
-	// field, in case the user input does not fulfill the regex pattern or
-	// min/max values.
+	// ValidationDescription: Description of the requirements for this field, in
+	// case the user input does not fulfill the regex pattern or min/max values.
 	ValidationDescription string `json:"validationDescription,omitempty"`
-
-	// ValidationHelpUrl: URL to a help document to further explain the
-	// naming requirements.
+	// ValidationHelpUrl: URL to a help document to further explain the naming
+	// requirements.
 	ValidationHelpUrl string `json:"validationHelpUrl,omitempty"`
-
 	// ValidationRegex: Regular expression which can be used for parameter
 	// validation.
 	ValidationRegex string `json:"validationRegex,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AllowedValues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowedValues") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AllowedValues") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DataSourceParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceParameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DataSourceParameter) UnmarshalJSON(data []byte) error {
@@ -562,771 +504,598 @@ func (s *DataSourceParameter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// EmailPreferences: Represents preferences for sending email
-// notifications for transfer run events.
+// EmailPreferences: Represents preferences for sending email notifications for
+// transfer run events.
 type EmailPreferences struct {
-	// EnableFailureEmail: If true, email notifications will be sent on
-	// transfer run failures.
+	// EnableFailureEmail: If true, email notifications will be sent on transfer
+	// run failures.
 	EnableFailureEmail bool `json:"enableFailureEmail,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EnableFailureEmail")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EnableFailureEmail") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EnableFailureEmail") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EnableFailureEmail") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EmailPreferences) MarshalJSON() ([]byte, error) {
 	type NoMethod EmailPreferences
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// EncryptionConfiguration: Represents the encryption configuration for
-// a transfer.
+// EncryptionConfiguration: Represents the encryption configuration for a
+// transfer.
 type EncryptionConfiguration struct {
-	// KmsKeyName: The name of the KMS key used for encrypting BigQuery
-	// data.
+	// KmsKeyName: The name of the KMS key used for encrypting BigQuery data.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EncryptionConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionConfiguration
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// EnrollDataSourcesRequest: A request to enroll a set of data sources
-// so they are visible in the BigQuery UI's `Transfer` tab.
+// EnrollDataSourcesRequest: A request to enroll a set of data sources so they
+// are visible in the BigQuery UI's `Transfer` tab.
 type EnrollDataSourcesRequest struct {
-	// DataSourceIds: Data sources that are enrolled. It is required to
-	// provide at least one data source id.
+	// DataSourceIds: Data sources that are enrolled. It is required to provide at
+	// least one data source id.
 	DataSourceIds []string `json:"dataSourceIds,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DataSourceIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataSourceIds") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataSourceIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EnrollDataSourcesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrollDataSourcesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListDataSourcesResponse: Returns list of supported data sources and
-// their metadata.
+// ListDataSourcesResponse: Returns list of supported data sources and their
+// metadata.
 type ListDataSourcesResponse struct {
-	// DataSources: List of supported data sources and their transfer
-	// settings.
+	// DataSources: List of supported data sources and their transfer settings.
 	DataSources []*DataSource `json:"dataSources,omitempty"`
-
-	// NextPageToken: Output only. The next-pagination token. For
-	// multiple-page list results, this token can be used as the
+	// NextPageToken: Output only. The next-pagination token. For multiple-page
+	// list results, this token can be used as the
 	// `ListDataSourcesRequest.page_token` to request the next page of list
 	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DataSources") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataSources") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataSources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListDataSourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDataSourcesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListLocationsResponse: The response message for
-// Locations.ListLocations.
+// ListLocationsResponse: The response message for Locations.ListLocations.
 type ListLocationsResponse struct {
-	// Locations: A list of locations that matches the specified filter in
-	// the request.
+	// Locations: A list of locations that matches the specified filter in the
+	// request.
 	Locations []*Location `json:"locations,omitempty"`
-
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Locations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Locations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Locations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListTransferConfigsResponse: The returned list of pipelines in the
-// project.
+// ListTransferConfigsResponse: The returned list of pipelines in the project.
 type ListTransferConfigsResponse struct {
-	// NextPageToken: Output only. The next-pagination token. For
-	// multiple-page list results, this token can be used as the
-	// `ListTransferConfigsRequest.page_token` to request the next page of
-	// list results.
+	// NextPageToken: Output only. The next-pagination token. For multiple-page
+	// list results, this token can be used as the
+	// `ListTransferConfigsRequest.page_token` to request the next page of list
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TransferConfigs: Output only. The stored pipeline transfer
-	// configurations.
+	// TransferConfigs: Output only. The stored pipeline transfer configurations.
 	TransferConfigs []*TransferConfig `json:"transferConfigs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTransferConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTransferConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTransferLogsResponse: The returned list transfer run messages.
 type ListTransferLogsResponse struct {
-	// NextPageToken: Output only. The next-pagination token. For
-	// multiple-page list results, this token can be used as the
-	// `GetTransferRunLogRequest.page_token` to request the next page of
-	// list results.
+	// NextPageToken: Output only. The next-pagination token. For multiple-page
+	// list results, this token can be used as the
+	// `GetTransferRunLogRequest.page_token` to request the next page of list
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// TransferMessages: Output only. The stored pipeline transfer messages.
 	TransferMessages []*TransferMessage `json:"transferMessages,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTransferLogsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTransferLogsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListTransferRunsResponse: The returned list of pipelines in the
-// project.
+// ListTransferRunsResponse: The returned list of pipelines in the project.
 type ListTransferRunsResponse struct {
-	// NextPageToken: Output only. The next-pagination token. For
-	// multiple-page list results, this token can be used as the
+	// NextPageToken: Output only. The next-pagination token. For multiple-page
+	// list results, this token can be used as the
 	// `ListTransferRunsRequest.page_token` to request the next page of list
 	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// TransferRuns: Output only. The stored pipeline transfer runs.
 	TransferRuns []*TransferRun `json:"transferRuns,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTransferRunsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTransferRunsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
-	// DisplayName: The friendly name for this location, typically a nearby
-	// city name. For example, "Tokyo".
+	// DisplayName: The friendly name for this location, typically a nearby city
+	// name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Labels: Cross-service attributes for the location. For example
 	// {"cloud.googleapis.com/region": "us-east1"}
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// LocationId: The canonical id for this location. For example:
-	// "us-east1".
+	// LocationId: The canonical id for this location. For example: "us-east1".
 	LocationId string `json:"locationId,omitempty"`
-
-	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given location.
+	// Metadata: Service-specific metadata. For example the available capacity at
+	// the given location.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
 	// Name: Resource name for the location, which may vary between
 	// implementations. For example:
 	// "projects/example-project/locations/us-east1"
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ScheduleOptions: Options customizing the data transfer schedule.
 type ScheduleOptions struct {
-	// DisableAutoScheduling: If true, automatic scheduling of data transfer
-	// runs for this configuration will be disabled. The runs can be started
-	// on ad-hoc basis using StartManualTransferRuns API. When automatic
-	// scheduling is disabled, the TransferConfig.schedule field will be
-	// ignored.
+	// DisableAutoScheduling: If true, automatic scheduling of data transfer runs
+	// for this configuration will be disabled. The runs can be started on ad-hoc
+	// basis using StartManualTransferRuns API. When automatic scheduling is
+	// disabled, the TransferConfig.schedule field will be ignored.
 	DisableAutoScheduling bool `json:"disableAutoScheduling,omitempty"`
-
-	// EndTime: Defines time to stop scheduling transfer runs. A transfer
-	// run cannot be scheduled at or after the end time. The end time can be
-	// changed at any moment. The time when a data transfer can be triggered
-	// manually is not limited by this option.
+	// EndTime: Defines time to stop scheduling transfer runs. A transfer run
+	// cannot be scheduled at or after the end time. The end time can be changed at
+	// any moment. The time when a data transfer can be triggered manually is not
+	// limited by this option.
 	EndTime string `json:"endTime,omitempty"`
-
-	// StartTime: Specifies time to start scheduling transfer runs. The
-	// first run will be scheduled at or after the start time according to a
-	// recurrence pattern defined in the schedule string. The start time can
-	// be changed at any moment. The time when a data transfer can be
-	// triggered manually is not limited by this option.
+	// StartTime: Specifies time to start scheduling transfer runs. The first run
+	// will be scheduled at or after the start time according to a recurrence
+	// pattern defined in the schedule string. The start time can be changed at any
+	// moment. The time when a data transfer can be triggered manually is not
+	// limited by this option.
 	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DisableAutoScheduling") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DisableAutoScheduling") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "DisableAutoScheduling") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScheduleOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ScheduleOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ScheduleTransferRunsRequest: A request to schedule transfer runs for
-// a time range.
+// ScheduleTransferRunsRequest: A request to schedule transfer runs for a time
+// range.
 type ScheduleTransferRunsRequest struct {
-	// EndTime: Required. End time of the range of transfer runs. For
-	// example, "2017-05-30T00:00:00+00:00".
+	// EndTime: Required. End time of the range of transfer runs. For example,
+	// "2017-05-30T00:00:00+00:00".
 	EndTime string `json:"endTime,omitempty"`
-
-	// StartTime: Required. Start time of the range of transfer runs. For
-	// example, "2017-05-25T00:00:00+00:00".
+	// StartTime: Required. Start time of the range of transfer runs. For example,
+	// "2017-05-25T00:00:00+00:00".
 	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScheduleTransferRunsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ScheduleTransferRunsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ScheduleTransferRunsResponse: A response to schedule transfer runs
-// for a time range.
+// ScheduleTransferRunsResponse: A response to schedule transfer runs for a
+// time range.
 type ScheduleTransferRunsResponse struct {
 	// Runs: The transfer runs that were scheduled.
 	Runs []*TransferRun `json:"runs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Runs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Runs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Runs") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Runs") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScheduleTransferRunsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ScheduleTransferRunsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// StartManualTransferRunsRequest: A request to start manual transfer
-// runs.
+// StartManualTransferRunsRequest: A request to start manual transfer runs.
 type StartManualTransferRunsRequest struct {
-	// RequestedRunTime: A run_time timestamp for historical data files or
-	// reports that are scheduled to be transferred by the scheduled
-	// transfer run. requested_run_time must be a past time and cannot
-	// include future time values.
+	// RequestedRunTime: A run_time timestamp for historical data files or reports
+	// that are scheduled to be transferred by the scheduled transfer run.
+	// requested_run_time must be a past time and cannot include future time
+	// values.
 	RequestedRunTime string `json:"requestedRunTime,omitempty"`
-
-	// RequestedTimeRange: A time_range start and end timestamp for
-	// historical data files or reports that are scheduled to be transferred
-	// by the scheduled transfer run. requested_time_range must be a past
-	// time and cannot include future time values.
+	// RequestedTimeRange: A time_range start and end timestamp for historical data
+	// files or reports that are scheduled to be transferred by the scheduled
+	// transfer run. requested_time_range must be a past time and cannot include
+	// future time values.
 	RequestedTimeRange *TimeRange `json:"requestedTimeRange,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "RequestedRunTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequestedRunTime") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "RequestedRunTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StartManualTransferRunsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StartManualTransferRunsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// StartManualTransferRunsResponse: A response to start manual transfer
-// runs.
+// StartManualTransferRunsResponse: A response to start manual transfer runs.
 type StartManualTransferRunsResponse struct {
 	// Runs: The transfer runs that were created.
 	Runs []*TransferRun `json:"runs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Runs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Runs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Runs") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Runs") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StartManualTransferRunsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod StartManualTransferRunsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Status: The `Status` type defines a logical error model that is
-// suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TimeRange: A specification for a time range, this will request
-// transfer runs with run_time between start_time (inclusive) and
-// end_time (exclusive).
+// TimeRange: A specification for a time range, this will request transfer runs
+// with run_time between start_time (inclusive) and end_time (exclusive).
 type TimeRange struct {
 	// EndTime: End time of the range of transfer runs. For example,
-	// "2017-05-30T00:00:00+00:00". The end_time must not be in the
-	// future. Creates transfer runs where run_time is in the range between
-	// start_time (inclusive) and end_time (exclusive).
+	// "2017-05-30T00:00:00+00:00". The end_time must not be in the future.
+	// Creates transfer runs where run_time is in the range between start_time
+	// (inclusive) and end_time (exclusive).
 	EndTime string `json:"endTime,omitempty"`
-
 	// StartTime: Start time of the range of transfer runs. For example,
-	// "2017-05-25T00:00:00+00:00". The start_time must be strictly less
-	// than the end_time. Creates transfer runs where run_time is in the
-	// range between start_time (inclusive) and end_time (exclusive).
+	// "2017-05-25T00:00:00+00:00". The start_time must be strictly less than the
+	// end_time. Creates transfer runs where run_time is in the range between
+	// start_time (inclusive) and end_time (exclusive).
 	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TransferConfig: Represents a data transfer configuration. A transfer
-// configuration contains all metadata needed to perform a data
-// transfer. For example, `destination_dataset_id` specifies where data
-// should be stored. When a new transfer configuration is created, the
-// specified `destination_dataset_id` is created when needed and shared
-// with the appropriate data source service account.
+// configuration contains all metadata needed to perform a data transfer. For
+// example, `destination_dataset_id` specifies where data should be stored.
+// When a new transfer configuration is created, the specified
+// `destination_dataset_id` is created when needed and shared with the
+// appropriate data source service account.
 type TransferConfig struct {
-	// DataRefreshWindowDays: The number of days to look back to
-	// automatically refresh the data. For example, if
-	// `data_refresh_window_days = 10`, then every day BigQuery reingests
-	// data for [today-10, today-1], rather than ingesting data for just
-	// [today-1]. Only valid if the data source supports the feature. Set
-	// the value to 0 to use the default value.
+	// DataRefreshWindowDays: The number of days to look back to automatically
+	// refresh the data. For example, if `data_refresh_window_days = 10`, then
+	// every day BigQuery reingests data for [today-10, today-1], rather than
+	// ingesting data for just [today-1]. Only valid if the data source supports
+	// the feature. Set the value to 0 to use the default value.
 	DataRefreshWindowDays int64 `json:"dataRefreshWindowDays,omitempty"`
-
-	// DataSourceId: Data source ID. This cannot be changed once data
-	// transfer is created. The full list of available data source IDs can
-	// be returned through an API call:
+	// DataSourceId: Data source ID. This cannot be changed once data transfer is
+	// created. The full list of available data source IDs can be returned through
+	// an API call:
 	// https://cloud.google.com/bigquery-transfer/docs/reference/datatransfer/rest/v1/projects.locations.dataSources/list
 	DataSourceId string `json:"dataSourceId,omitempty"`
-
-	// DatasetRegion: Output only. Region in which BigQuery dataset is
-	// located.
+	// DatasetRegion: Output only. Region in which BigQuery dataset is located.
 	DatasetRegion string `json:"datasetRegion,omitempty"`
-
 	// DestinationDatasetId: The BigQuery target dataset id.
 	DestinationDatasetId string `json:"destinationDatasetId,omitempty"`
-
 	// Disabled: Is this config disabled. When set to true, no runs will be
 	// scheduled for this transfer config.
 	Disabled bool `json:"disabled,omitempty"`
-
 	// DisplayName: User specified display name for the data transfer.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// EmailPreferences: Email notifications will be sent according to these
-	// preferences to the email address of the user who owns this transfer
-	// config.
+	// preferences to the email address of the user who owns this transfer config.
 	EmailPreferences *EmailPreferences `json:"emailPreferences,omitempty"`
-
-	// EncryptionConfiguration: The encryption configuration part.
-	// Currently, it is only used for the optional KMS key name. The
-	// BigQuery service account of your project must be granted permissions
-	// to use the key. Read methods will return the key name applied in
-	// effect. Write methods will apply the key if it is present, or
-	// otherwise try to apply project default keys if it is absent.
+	// EncryptionConfiguration: The encryption configuration part. Currently, it is
+	// only used for the optional KMS key name. The BigQuery service account of
+	// your project must be granted permissions to use the key. Read methods will
+	// return the key name applied in effect. Write methods will apply the key if
+	// it is present, or otherwise try to apply project default keys if it is
+	// absent.
 	EncryptionConfiguration *EncryptionConfiguration `json:"encryptionConfiguration,omitempty"`
-
-	// Name: Identifier. The resource name of the transfer config. Transfer
-	// config names have the form either
-	// `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`
-	//  or `projects/{project_id}/transferConfigs/{config_id}`, where
-	// `config_id` is usually a UUID, even though it is not guaranteed or
-	// required. The name is ignored when creating a transfer config.
+	// Name: Identifier. The resource name of the transfer config. Transfer config
+	// names have the form either
+	// `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or
+	// `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is
+	// usually a UUID, even though it is not guaranteed or required. The name is
+	// ignored when creating a transfer config.
 	Name string `json:"name,omitempty"`
-
 	// NextRunTime: Output only. Next time when data transfer will run.
 	NextRunTime string `json:"nextRunTime,omitempty"`
-
-	// NotificationPubsubTopic: Pub/Sub topic where notifications will be
-	// sent after transfer runs associated with this transfer config finish.
-	// The format for specifying a pubsub topic is:
-	// `projects/{project_id}/topics/{topic_id}`
+	// NotificationPubsubTopic: Pub/Sub topic where notifications will be sent
+	// after transfer runs associated with this transfer config finish. The format
+	// for specifying a pubsub topic is: `projects/{project_id}/topics/{topic_id}`
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
-
-	// OwnerInfo: Output only. Information about the user whose credentials
-	// are used to transfer data. Populated only for `transferConfigs.get`
-	// requests. In case the user information is not available, this field
-	// will not be populated.
+	// OwnerInfo: Output only. Information about the user whose credentials are
+	// used to transfer data. Populated only for `transferConfigs.get` requests. In
+	// case the user information is not available, this field will not be
+	// populated.
 	OwnerInfo *UserInfo `json:"ownerInfo,omitempty"`
-
-	// Params: Parameters specific to each data source. For more information
-	// see the bq tab in the 'Setting up a data transfer' section for each
-	// data source. For example the parameters for Cloud Storage transfers
-	// are listed here:
+	// Params: Parameters specific to each data source. For more information see
+	// the bq tab in the 'Setting up a data transfer' section for each data source.
+	// For example the parameters for Cloud Storage transfers are listed here:
 	// https://cloud.google.com/bigquery-transfer/docs/cloud-storage-transfer#bq
 	Params googleapi.RawMessage `json:"params,omitempty"`
-
-	// Schedule: Data transfer schedule. If the data source does not support
-	// a custom schedule, this should be empty. If it is empty, the default
-	// value for the data source will be used. The specified times are in
-	// UTC. Examples of valid format: `1st,3rd monday of month 15:30`,
-	// `every wed,fri of jan,jun 13:15`, and `first sunday of quarter
-	// 00:00`. See more explanation about the format here:
+	// Schedule: Data transfer schedule. If the data source does not support a
+	// custom schedule, this should be empty. If it is empty, the default value for
+	// the data source will be used. The specified times are in UTC. Examples of
+	// valid format: `1st,3rd monday of month 15:30`, `every wed,fri of jan,jun
+	// 13:15`, and `first sunday of quarter 00:00`. See more explanation about the
+	// format here:
 	// https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format
-	// NOTE: The minimum interval time between recurring transfers depends
-	// on the data source; refer to the documentation for your data source.
+	// NOTE: The minimum interval time between recurring transfers depends on the
+	// data source; refer to the documentation for your data source.
 	Schedule string `json:"schedule,omitempty"`
-
 	// ScheduleOptions: Options customizing the data transfer schedule.
 	ScheduleOptions *ScheduleOptions `json:"scheduleOptions,omitempty"`
-
 	// State: Output only. State of the most recently updated transfer run.
 	//
 	// Possible values:
 	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
-	//   "PENDING" - Data transfer is scheduled and is waiting to be picked
-	// up by data transfer backend (2).
+	//   "PENDING" - Data transfer is scheduled and is waiting to be picked up by
+	// data transfer backend (2).
 	//   "RUNNING" - Data transfer is in progress (3).
 	//   "SUCCEEDED" - Data transfer completed successfully (4).
 	//   "FAILED" - Data transfer failed (5).
 	//   "CANCELLED" - Data transfer is cancelled (6).
 	State string `json:"state,omitempty"`
-
-	// UpdateTime: Output only. Data transfer modification time. Ignored by
-	// server on input.
+	// UpdateTime: Output only. Data transfer modification time. Ignored by server
+	// on input.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// UserId: Deprecated. Unique ID of the user on whose behalf transfer is
-	// done.
+	// UserId: Deprecated. Unique ID of the user on whose behalf transfer is done.
 	UserId int64 `json:"userId,omitempty,string"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DataRefreshWindowDays") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DataRefreshWindowDays") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "DataRefreshWindowDays") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TransferConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TransferMessage: Represents a user facing message for a particular
-// data transfer run.
+// TransferMessage: Represents a user facing message for a particular data
+// transfer run.
 type TransferMessage struct {
 	// MessageText: Message text.
 	MessageText string `json:"messageText,omitempty"`
-
 	// MessageTime: Time when message was logged.
 	MessageTime string `json:"messageTime,omitempty"`
-
 	// Severity: Message severity.
 	//
 	// Possible values:
@@ -1335,194 +1104,149 @@ type TransferMessage struct {
 	//   "WARNING" - Warning message.
 	//   "ERROR" - Error message.
 	Severity string `json:"severity,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MessageText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MessageText") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MessageText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TransferMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferMessage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TransferRun: Represents a data transfer run.
 type TransferRun struct {
 	// DataSourceId: Output only. Data source id.
 	DataSourceId string `json:"dataSourceId,omitempty"`
-
 	// DestinationDatasetId: Output only. The BigQuery target dataset id.
 	DestinationDatasetId string `json:"destinationDatasetId,omitempty"`
-
-	// EmailPreferences: Output only. Email notifications will be sent
-	// according to these preferences to the email address of the user who
-	// owns the transfer config this run was derived from.
+	// EmailPreferences: Output only. Email notifications will be sent according to
+	// these preferences to the email address of the user who owns the transfer
+	// config this run was derived from.
 	EmailPreferences *EmailPreferences `json:"emailPreferences,omitempty"`
-
-	// EndTime: Output only. Time when transfer run ended. Parameter ignored
-	// by server for input requests.
+	// EndTime: Output only. Time when transfer run ended. Parameter ignored by
+	// server for input requests.
 	EndTime string `json:"endTime,omitempty"`
-
 	// ErrorStatus: Status of the transfer run.
 	ErrorStatus *Status `json:"errorStatus,omitempty"`
-
-	// Name: Identifier. The resource name of the transfer run. Transfer run
-	// names have the form
-	// `projects/{project_id}/locations/{location}/transferConfigs/{config_id
-	// }/runs/{run_id}`. The name is ignored when creating a transfer run.
+	// Name: Identifier. The resource name of the transfer run. Transfer run names
+	// have the form
+	// `projects/{project_id}/locations/{location}/transferConfigs/{config_id}/runs/
+	// {run_id}`. The name is ignored when creating a transfer run.
 	Name string `json:"name,omitempty"`
-
-	// NotificationPubsubTopic: Output only. Pub/Sub topic where a
-	// notification will be sent after this transfer run finishes. The
-	// format for specifying a pubsub topic is:
-	// `projects/{project_id}/topics/{topic_id}`
+	// NotificationPubsubTopic: Output only. Pub/Sub topic where a notification
+	// will be sent after this transfer run finishes. The format for specifying a
+	// pubsub topic is: `projects/{project_id}/topics/{topic_id}`
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
-
-	// Params: Output only. Parameters specific to each data source. For
-	// more information see the bq tab in the 'Setting up a data transfer'
-	// section for each data source. For example the parameters for Cloud
-	// Storage transfers are listed here:
+	// Params: Output only. Parameters specific to each data source. For more
+	// information see the bq tab in the 'Setting up a data transfer' section for
+	// each data source. For example the parameters for Cloud Storage transfers are
+	// listed here:
 	// https://cloud.google.com/bigquery-transfer/docs/cloud-storage-transfer#bq
 	Params googleapi.RawMessage `json:"params,omitempty"`
-
-	// RunTime: For batch transfer runs, specifies the date and time of the
-	// data should be ingested.
+	// RunTime: For batch transfer runs, specifies the date and time of the data
+	// should be ingested.
 	RunTime string `json:"runTime,omitempty"`
-
-	// Schedule: Output only. Describes the schedule of this transfer run if
-	// it was created as part of a regular schedule. For batch transfer runs
-	// that are scheduled manually, this is empty. NOTE: the system might
-	// choose to delay the schedule depending on the current load, so
-	// `schedule_time` doesn't always match this.
+	// Schedule: Output only. Describes the schedule of this transfer run if it was
+	// created as part of a regular schedule. For batch transfer runs that are
+	// scheduled manually, this is empty. NOTE: the system might choose to delay
+	// the schedule depending on the current load, so `schedule_time` doesn't
+	// always match this.
 	Schedule string `json:"schedule,omitempty"`
-
 	// ScheduleTime: Minimum time after which a transfer run can be started.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
-
 	// StartTime: Output only. Time when transfer run was started. Parameter
 	// ignored by server for input requests.
 	StartTime string `json:"startTime,omitempty"`
-
 	// State: Data transfer run state. Ignored for input requests.
 	//
 	// Possible values:
 	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
-	//   "PENDING" - Data transfer is scheduled and is waiting to be picked
-	// up by data transfer backend (2).
+	//   "PENDING" - Data transfer is scheduled and is waiting to be picked up by
+	// data transfer backend (2).
 	//   "RUNNING" - Data transfer is in progress (3).
 	//   "SUCCEEDED" - Data transfer completed successfully (4).
 	//   "FAILED" - Data transfer failed (5).
 	//   "CANCELLED" - Data transfer is cancelled (6).
 	State string `json:"state,omitempty"`
-
-	// UpdateTime: Output only. Last time the data transfer run state was
-	// updated.
+	// UpdateTime: Output only. Last time the data transfer run state was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// UserId: Deprecated. Unique ID of the user on whose behalf transfer is
-	// done.
+	// UserId: Deprecated. Unique ID of the user on whose behalf transfer is done.
 	UserId int64 `json:"userId,omitempty,string"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataSourceId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataSourceId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TransferRun) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferRun
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UnenrollDataSourcesRequest: A request to unenroll a set of data
-// sources so they are no longer visible in the BigQuery UI's `Transfer`
-// tab.
+// UnenrollDataSourcesRequest: A request to unenroll a set of data sources so
+// they are no longer visible in the BigQuery UI's `Transfer` tab.
 type UnenrollDataSourcesRequest struct {
-	// DataSourceIds: Data sources that are unenrolled. It is required to
-	// provide at least one data source id.
+	// DataSourceIds: Data sources that are unenrolled. It is required to provide
+	// at least one data source id.
 	DataSourceIds []string `json:"dataSourceIds,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DataSourceIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataSourceIds") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataSourceIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UnenrollDataSourcesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UnenrollDataSourcesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // UserInfo: Information about a user.
 type UserInfo struct {
 	// Email: E-mail address of the user.
 	Email string `json:"email,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Email") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Email") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod UserInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "bigquerydatatransfer.projects.enrollDataSources":
 
 type ProjectsEnrollDataSourcesCall struct {
 	s                        *Service
@@ -1533,14 +1257,13 @@ type ProjectsEnrollDataSourcesCall struct {
 	header_                  http.Header
 }
 
-// EnrollDataSources: Enroll data sources in a user project. This allows
-// users to create transfer configurations for these data sources. They
-// will also appear in the ListDataSources RPC and as such, will appear
-// in the BigQuery UI (https://console.cloud.google.com/bigquery), and
-// the documents can be found in the public guide for BigQuery Web UI
+// EnrollDataSources: Enroll data sources in a user project. This allows users
+// to create transfer configurations for these data sources. They will also
+// appear in the ListDataSources RPC and as such, will appear in the BigQuery
+// UI (https://console.cloud.google.com/bigquery), and the documents can be
+// found in the public guide for BigQuery Web UI
 // (https://cloud.google.com/bigquery/bigquery-web-ui) and Data Transfer
-// Service
-// (https://cloud.google.com/bigquery/docs/working-with-transfers).
+// Service (https://cloud.google.com/bigquery/docs/working-with-transfers).
 //
 //   - name: The name of the project resource in the form:
 //     `projects/{project_id}`.
@@ -1552,23 +1275,21 @@ func (r *ProjectsService) EnrollDataSources(name string, enrolldatasourcesreques
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsEnrollDataSourcesCall) Fields(s ...googleapi.Field) *ProjectsEnrollDataSourcesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsEnrollDataSourcesCall) Context(ctx context.Context) *ProjectsEnrollDataSourcesCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsEnrollDataSourcesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1577,18 +1298,12 @@ func (c *ProjectsEnrollDataSourcesCall) Header() http.Header {
 }
 
 func (c *ProjectsEnrollDataSourcesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enrolldatasourcesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:enrollDataSources")
@@ -1605,12 +1320,10 @@ func (c *ProjectsEnrollDataSourcesCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "bigquerydatatransfer.projects.enrollDataSources" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsEnrollDataSourcesCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1641,39 +1354,7 @@ func (c *ProjectsEnrollDataSourcesCall) Do(opts ...googleapi.CallOption) (*Empty
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents can be found in the public guide for [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer Service](https://cloud.google.com/bigquery/docs/working-with-transfers).",
-	//   "flatPath": "v1/projects/{projectsId}:enrollDataSources",
-	//   "httpMethod": "POST",
-	//   "id": "bigquerydatatransfer.projects.enrollDataSources",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the project resource in the form: `projects/{project_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:enrollDataSources",
-	//   "request": {
-	//     "$ref": "EnrollDataSourcesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.dataSources.checkValidCreds":
 
 type ProjectsDataSourcesCheckValidCredsCall struct {
 	s                      *Service
@@ -1684,13 +1365,13 @@ type ProjectsDataSourcesCheckValidCredsCall struct {
 	header_                http.Header
 }
 
-// CheckValidCreds: Returns true if valid credentials exist for the
-// given data source and requesting user.
+// CheckValidCreds: Returns true if valid credentials exist for the given data
+// source and requesting user.
 //
 //   - name: The data source in the form:
 //     `projects/{project_id}/dataSources/{data_source_id}` or
-//     `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
-//     rce_id}`.
+//     `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}
+//     `.
 func (r *ProjectsDataSourcesService) CheckValidCreds(name string, checkvalidcredsrequest *CheckValidCredsRequest) *ProjectsDataSourcesCheckValidCredsCall {
 	c := &ProjectsDataSourcesCheckValidCredsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1699,23 +1380,21 @@ func (r *ProjectsDataSourcesService) CheckValidCreds(name string, checkvalidcred
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDataSourcesCheckValidCredsCall) Fields(s ...googleapi.Field) *ProjectsDataSourcesCheckValidCredsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDataSourcesCheckValidCredsCall) Context(ctx context.Context) *ProjectsDataSourcesCheckValidCredsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDataSourcesCheckValidCredsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1724,18 +1403,12 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Header() http.Header {
 }
 
 func (c *ProjectsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.checkvalidcredsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:checkValidCreds")
@@ -1752,12 +1425,11 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "bigquerydatatransfer.projects.dataSources.checkValidCreds" call.
-// Exactly one of *CheckValidCredsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *CheckValidCredsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.CallOption) (*CheckValidCredsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1788,40 +1460,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns true if valid credentials exist for the given data source and requesting user.",
-	//   "flatPath": "v1/projects/{projectsId}/dataSources/{dataSourcesId}:checkValidCreds",
-	//   "httpMethod": "POST",
-	//   "id": "bigquerydatatransfer.projects.dataSources.checkValidCreds",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The data source in the form: `projects/{project_id}/dataSources/{data_source_id}` or `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/dataSources/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:checkValidCreds",
-	//   "request": {
-	//     "$ref": "CheckValidCredsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "CheckValidCredsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.dataSources.get":
 
 type ProjectsDataSourcesGetCall struct {
 	s            *Service
@@ -1834,10 +1473,10 @@ type ProjectsDataSourcesGetCall struct {
 
 // Get: Retrieves a supported data source and returns its settings.
 //
-//   - name: The field will contain name of the resource requested, for
-//     example: `projects/{project_id}/dataSources/{data_source_id}` or
-//     `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
-//     rce_id}`.
+//   - name: The field will contain name of the resource requested, for example:
+//     `projects/{project_id}/dataSources/{data_source_id}` or
+//     `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}
+//     `.
 func (r *ProjectsDataSourcesService) Get(name string) *ProjectsDataSourcesGetCall {
 	c := &ProjectsDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1845,33 +1484,29 @@ func (r *ProjectsDataSourcesService) Get(name string) *ProjectsDataSourcesGetCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDataSourcesGetCall) Fields(s ...googleapi.Field) *ProjectsDataSourcesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDataSourcesGetCall) IfNoneMatch(entityTag string) *ProjectsDataSourcesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDataSourcesGetCall) Context(ctx context.Context) *ProjectsDataSourcesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDataSourcesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1880,12 +1515,7 @@ func (c *ProjectsDataSourcesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1906,12 +1536,10 @@ func (c *ProjectsDataSourcesGetCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "bigquerydatatransfer.projects.dataSources.get" call.
-// Exactly one of *DataSource or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *DataSource.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DataSource.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSource, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1942,37 +1570,7 @@ func (c *ProjectsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a supported data source and returns its settings.",
-	//   "flatPath": "v1/projects/{projectsId}/dataSources/{dataSourcesId}",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.dataSources.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/dataSources/{data_source_id}` or `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/dataSources/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "DataSource"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.dataSources.list":
 
 type ProjectsDataSourcesListCall struct {
 	s            *Service
@@ -1985,8 +1583,8 @@ type ProjectsDataSourcesListCall struct {
 
 // List: Lists supported data sources and returns their settings.
 //
-//   - parent: The BigQuery project id for which data sources should be
-//     returned. Must be in the form: `projects/{project_id}` or
+//   - parent: The BigQuery project id for which data sources should be returned.
+//     Must be in the form: `projects/{project_id}` or
 //     `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsDataSourcesService) List(parent string) *ProjectsDataSourcesListCall {
 	c := &ProjectsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1994,52 +1592,47 @@ func (r *ProjectsDataSourcesService) List(parent string) *ProjectsDataSourcesLis
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size. The
-// default page size is the maximum value of 1000 results.
+// PageSize sets the optional parameter "pageSize": Page size. The default page
+// size is the maximum value of 1000 results.
 func (c *ProjectsDataSourcesListCall) PageSize(pageSize int64) *ProjectsDataSourcesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page of
-// `ListDataSourcesRequest` list results. For multiple-page results,
-// `ListDataSourcesResponse` outputs a `next_page` token, which can be
-// used as the `page_token` value to request the next page of list
-// results.
+// PageToken sets the optional parameter "pageToken": Pagination token, which
+// can be used to request a specific page of `ListDataSourcesRequest` list
+// results. For multiple-page results, `ListDataSourcesResponse` outputs a
+// `next_page` token, which can be used as the `page_token` value to request
+// the next page of list results.
 func (c *ProjectsDataSourcesListCall) PageToken(pageToken string) *ProjectsDataSourcesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDataSourcesListCall) Fields(s ...googleapi.Field) *ProjectsDataSourcesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDataSourcesListCall) IfNoneMatch(entityTag string) *ProjectsDataSourcesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDataSourcesListCall) Context(ctx context.Context) *ProjectsDataSourcesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDataSourcesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2048,12 +1641,7 @@ func (c *ProjectsDataSourcesListCall) Header() http.Header {
 }
 
 func (c *ProjectsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2074,12 +1662,11 @@ func (c *ProjectsDataSourcesListCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "bigquerydatatransfer.projects.dataSources.list" call.
-// Exactly one of *ListDataSourcesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListDataSourcesResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDataSourcesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2110,45 +1697,6 @@ func (c *ProjectsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists supported data sources and returns their settings.",
-	//   "flatPath": "v1/projects/{projectsId}/dataSources",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.dataSources.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Page size. The default page size is the maximum value of 1000 results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page of `ListDataSourcesRequest` list results. For multiple-page results, `ListDataSourcesResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/dataSources",
-	//   "response": {
-	//     "$ref": "ListDataSourcesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2156,7 +1704,7 @@ func (c *ProjectsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDataSourcesListCall) Pages(ctx context.Context, f func(*ListDataSourcesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2172,8 +1720,6 @@ func (c *ProjectsDataSourcesListCall) Pages(ctx context.Context, f func(*ListDat
 	}
 }
 
-// method id "bigquerydatatransfer.projects.locations.enrollDataSources":
-
 type ProjectsLocationsEnrollDataSourcesCall struct {
 	s                        *Service
 	name                     string
@@ -2183,14 +1729,13 @@ type ProjectsLocationsEnrollDataSourcesCall struct {
 	header_                  http.Header
 }
 
-// EnrollDataSources: Enroll data sources in a user project. This allows
-// users to create transfer configurations for these data sources. They
-// will also appear in the ListDataSources RPC and as such, will appear
-// in the BigQuery UI (https://console.cloud.google.com/bigquery), and
-// the documents can be found in the public guide for BigQuery Web UI
+// EnrollDataSources: Enroll data sources in a user project. This allows users
+// to create transfer configurations for these data sources. They will also
+// appear in the ListDataSources RPC and as such, will appear in the BigQuery
+// UI (https://console.cloud.google.com/bigquery), and the documents can be
+// found in the public guide for BigQuery Web UI
 // (https://cloud.google.com/bigquery/bigquery-web-ui) and Data Transfer
-// Service
-// (https://cloud.google.com/bigquery/docs/working-with-transfers).
+// Service (https://cloud.google.com/bigquery/docs/working-with-transfers).
 //
 //   - name: The name of the project resource in the form:
 //     `projects/{project_id}`.
@@ -2202,23 +1747,21 @@ func (r *ProjectsLocationsService) EnrollDataSources(name string, enrolldatasour
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsEnrollDataSourcesCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnrollDataSourcesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsEnrollDataSourcesCall) Context(ctx context.Context) *ProjectsLocationsEnrollDataSourcesCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsEnrollDataSourcesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2227,18 +1770,12 @@ func (c *ProjectsLocationsEnrollDataSourcesCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsEnrollDataSourcesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enrolldatasourcesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:enrollDataSources")
@@ -2255,12 +1792,10 @@ func (c *ProjectsLocationsEnrollDataSourcesCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.enrollDataSources" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsEnrollDataSourcesCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2291,39 +1826,7 @@ func (c *ProjectsLocationsEnrollDataSourcesCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Enroll data sources in a user project. This allows users to create transfer configurations for these data sources. They will also appear in the ListDataSources RPC and as such, will appear in the [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents can be found in the public guide for [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer Service](https://cloud.google.com/bigquery/docs/working-with-transfers).",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:enrollDataSources",
-	//   "httpMethod": "POST",
-	//   "id": "bigquerydatatransfer.projects.locations.enrollDataSources",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the project resource in the form: `projects/{project_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:enrollDataSources",
-	//   "request": {
-	//     "$ref": "EnrollDataSourcesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
 	s            *Service
@@ -2344,33 +1847,29 @@ func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGetCall) Context(ctx context.Context) *ProjectsLocationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2379,12 +1878,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2405,12 +1899,10 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.get" call.
-// Exactly one of *Location or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Location.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Location.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2441,37 +1933,7 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets information about a location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.locations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name for the location.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Location"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
 	s            *Service
@@ -2482,69 +1944,63 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this
-// service.
+// List: Lists information about the supported locations for this service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to narrow down
-// results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in
-// AIP-160 (https://google.aip.dev/160).
+// Filter sets the optional parameter "filter": A filter to narrow down results
+// to a preferred subset. The filtering language accepts strings like
+// "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service selects a default.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token
-// received from the `next_page_token` field in the response. Send that
-// page token to receive the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token received
+// from the `next_page_token` field in the response. Send that page token to
+// receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsListCall) Context(ctx context.Context) *ProjectsLocationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2553,12 +2009,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2579,12 +2030,11 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.list" call.
-// Exactly one of *ListLocationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListLocationsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListLocationsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2615,50 +2065,6 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists information about the supported locations for this service.",
-	//   "flatPath": "v1/projects/{projectsId}/locations",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.locations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The resource that owns the locations collection, if applicable.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/locations",
-	//   "response": {
-	//     "$ref": "ListLocationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2666,7 +2072,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2682,8 +2088,6 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
-// method id "bigquerydatatransfer.projects.locations.unenrollDataSources":
-
 type ProjectsLocationsUnenrollDataSourcesCall struct {
 	s                          *Service
 	name                       string
@@ -2693,11 +2097,10 @@ type ProjectsLocationsUnenrollDataSourcesCall struct {
 	header_                    http.Header
 }
 
-// UnenrollDataSources: Unenroll data sources in a user project. This
-// allows users to remove transfer configurations for these data
-// sources. They will no longer appear in the ListDataSources RPC and
-// will also no longer appear in the BigQuery UI
-// (https://console.cloud.google.com/bigquery). Data transfers
+// UnenrollDataSources: Unenroll data sources in a user project. This allows
+// users to remove transfer configurations for these data sources. They will no
+// longer appear in the ListDataSources RPC and will also no longer appear in
+// the BigQuery UI (https://console.cloud.google.com/bigquery). Data transfers
 // configurations of unenrolled data sources will not be scheduled.
 //
 //   - name: The name of the project resource in the form:
@@ -2710,23 +2113,21 @@ func (r *ProjectsLocationsService) UnenrollDataSources(name string, unenrolldata
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsUnenrollDataSourcesCall) Fields(s ...googleapi.Field) *ProjectsLocationsUnenrollDataSourcesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsUnenrollDataSourcesCall) Context(ctx context.Context) *ProjectsLocationsUnenrollDataSourcesCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsUnenrollDataSourcesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2735,18 +2136,12 @@ func (c *ProjectsLocationsUnenrollDataSourcesCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsUnenrollDataSourcesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.unenrolldatasourcesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:unenrollDataSources")
@@ -2763,12 +2158,10 @@ func (c *ProjectsLocationsUnenrollDataSourcesCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.unenrollDataSources" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsUnenrollDataSourcesCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2799,39 +2192,7 @@ func (c *ProjectsLocationsUnenrollDataSourcesCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Unenroll data sources in a user project. This allows users to remove transfer configurations for these data sources. They will no longer appear in the ListDataSources RPC and will also no longer appear in the [BigQuery UI](https://console.cloud.google.com/bigquery). Data transfers configurations of unenrolled data sources will not be scheduled.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:unenrollDataSources",
-	//   "httpMethod": "POST",
-	//   "id": "bigquerydatatransfer.projects.locations.unenrollDataSources",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the project resource in the form: `projects/{project_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:unenrollDataSources",
-	//   "request": {
-	//     "$ref": "UnenrollDataSourcesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.dataSources.checkValidCreds":
 
 type ProjectsLocationsDataSourcesCheckValidCredsCall struct {
 	s                      *Service
@@ -2842,13 +2203,13 @@ type ProjectsLocationsDataSourcesCheckValidCredsCall struct {
 	header_                http.Header
 }
 
-// CheckValidCreds: Returns true if valid credentials exist for the
-// given data source and requesting user.
+// CheckValidCreds: Returns true if valid credentials exist for the given data
+// source and requesting user.
 //
 //   - name: The data source in the form:
 //     `projects/{project_id}/dataSources/{data_source_id}` or
-//     `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
-//     rce_id}`.
+//     `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}
+//     `.
 func (r *ProjectsLocationsDataSourcesService) CheckValidCreds(name string, checkvalidcredsrequest *CheckValidCredsRequest) *ProjectsLocationsDataSourcesCheckValidCredsCall {
 	c := &ProjectsLocationsDataSourcesCheckValidCredsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2857,23 +2218,21 @@ func (r *ProjectsLocationsDataSourcesService) CheckValidCreds(name string, check
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataSourcesCheckValidCredsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Context(ctx context.Context) *ProjectsLocationsDataSourcesCheckValidCredsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2882,18 +2241,12 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.checkvalidcredsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:checkValidCreds")
@@ -2910,12 +2263,11 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) doRequest(alt string) 
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.dataSources.checkValidCreds" call.
-// Exactly one of *CheckValidCredsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *CheckValidCredsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.CallOption) (*CheckValidCredsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2946,40 +2298,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns true if valid credentials exist for the given data source and requesting user.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources/{dataSourcesId}:checkValidCreds",
-	//   "httpMethod": "POST",
-	//   "id": "bigquerydatatransfer.projects.locations.dataSources.checkValidCreds",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The data source in the form: `projects/{project_id}/dataSources/{data_source_id}` or `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataSources/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:checkValidCreds",
-	//   "request": {
-	//     "$ref": "CheckValidCredsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "CheckValidCredsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.dataSources.get":
 
 type ProjectsLocationsDataSourcesGetCall struct {
 	s            *Service
@@ -2992,10 +2311,10 @@ type ProjectsLocationsDataSourcesGetCall struct {
 
 // Get: Retrieves a supported data source and returns its settings.
 //
-//   - name: The field will contain name of the resource requested, for
-//     example: `projects/{project_id}/dataSources/{data_source_id}` or
-//     `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
-//     rce_id}`.
+//   - name: The field will contain name of the resource requested, for example:
+//     `projects/{project_id}/dataSources/{data_source_id}` or
+//     `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}
+//     `.
 func (r *ProjectsLocationsDataSourcesService) Get(name string) *ProjectsLocationsDataSourcesGetCall {
 	c := &ProjectsLocationsDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3003,33 +2322,29 @@ func (r *ProjectsLocationsDataSourcesService) Get(name string) *ProjectsLocation
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDataSourcesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataSourcesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsDataSourcesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataSourcesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDataSourcesGetCall) Context(ctx context.Context) *ProjectsLocationsDataSourcesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDataSourcesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3038,12 +2353,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3064,12 +2374,10 @@ func (c *ProjectsLocationsDataSourcesGetCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.dataSources.get" call.
-// Exactly one of *DataSource or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *DataSource.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DataSource.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSource, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3100,37 +2408,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a supported data source and returns its settings.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources/{dataSourcesId}",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.locations.dataSources.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/dataSources/{data_source_id}` or `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataSources/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "DataSource"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.dataSources.list":
 
 type ProjectsLocationsDataSourcesListCall struct {
 	s            *Service
@@ -3143,8 +2421,8 @@ type ProjectsLocationsDataSourcesListCall struct {
 
 // List: Lists supported data sources and returns their settings.
 //
-//   - parent: The BigQuery project id for which data sources should be
-//     returned. Must be in the form: `projects/{project_id}` or
+//   - parent: The BigQuery project id for which data sources should be returned.
+//     Must be in the form: `projects/{project_id}` or
 //     `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsDataSourcesService) List(parent string) *ProjectsLocationsDataSourcesListCall {
 	c := &ProjectsLocationsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3152,52 +2430,47 @@ func (r *ProjectsLocationsDataSourcesService) List(parent string) *ProjectsLocat
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size. The
-// default page size is the maximum value of 1000 results.
+// PageSize sets the optional parameter "pageSize": Page size. The default page
+// size is the maximum value of 1000 results.
 func (c *ProjectsLocationsDataSourcesListCall) PageSize(pageSize int64) *ProjectsLocationsDataSourcesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page of
-// `ListDataSourcesRequest` list results. For multiple-page results,
-// `ListDataSourcesResponse` outputs a `next_page` token, which can be
-// used as the `page_token` value to request the next page of list
-// results.
+// PageToken sets the optional parameter "pageToken": Pagination token, which
+// can be used to request a specific page of `ListDataSourcesRequest` list
+// results. For multiple-page results, `ListDataSourcesResponse` outputs a
+// `next_page` token, which can be used as the `page_token` value to request
+// the next page of list results.
 func (c *ProjectsLocationsDataSourcesListCall) PageToken(pageToken string) *ProjectsLocationsDataSourcesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDataSourcesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataSourcesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsDataSourcesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataSourcesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDataSourcesListCall) Context(ctx context.Context) *ProjectsLocationsDataSourcesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDataSourcesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3206,12 +2479,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3232,12 +2500,11 @@ func (c *ProjectsLocationsDataSourcesListCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.dataSources.list" call.
-// Exactly one of *ListDataSourcesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListDataSourcesResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDataSourcesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3268,45 +2535,6 @@ func (c *ProjectsLocationsDataSourcesListCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists supported data sources and returns their settings.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.locations.dataSources.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Page size. The default page size is the maximum value of 1000 results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page of `ListDataSourcesRequest` list results. For multiple-page results, `ListDataSourcesResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/dataSources",
-	//   "response": {
-	//     "$ref": "ListDataSourcesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3314,7 +2542,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Do(opts ...googleapi.CallOption) 
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDataSourcesListCall) Pages(ctx context.Context, f func(*ListDataSourcesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3330,8 +2558,6 @@ func (c *ProjectsLocationsDataSourcesListCall) Pages(ctx context.Context, f func
 	}
 }
 
-// method id "bigquerydatatransfer.projects.locations.transferConfigs.create":
-
 type ProjectsLocationsTransferConfigsCreateCall struct {
 	s              *Service
 	parent         string
@@ -3343,11 +2569,11 @@ type ProjectsLocationsTransferConfigsCreateCall struct {
 
 // Create: Creates a new data transfer configuration.
 //
-//   - parent: The BigQuery project id where the transfer configuration
-//     should be created. Must be in the format
-//     projects/{project_id}/locations/{location_id} or
-//     projects/{project_id}. If specified location and location of the
-//     destination bigquery dataset do not match - the request will fail.
+//   - parent: The BigQuery project id where the transfer configuration should be
+//     created. Must be in the format
+//     projects/{project_id}/locations/{location_id} or projects/{project_id}. If
+//     specified location and location of the destination bigquery dataset do not
+//     match - the request will fail.
 func (r *ProjectsLocationsTransferConfigsService) Create(parent string, transferconfig *TransferConfig) *ProjectsLocationsTransferConfigsCreateCall {
 	c := &ProjectsLocationsTransferConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3355,70 +2581,65 @@ func (r *ProjectsLocationsTransferConfigsService) Create(parent string, transfer
 	return c
 }
 
-// AuthorizationCode sets the optional parameter "authorizationCode":
-// Optional OAuth2 authorization code to use with this transfer
-// configuration. This is required only if `transferConfig.dataSourceId`
-// is 'youtube_channel' and new credentials are needed, as indicated by
-// `CheckValidCreds`. In order to obtain authorization_code, make a
-// request to the following URL:
+// AuthorizationCode sets the optional parameter "authorizationCode": Optional
+// OAuth2 authorization code to use with this transfer configuration. This is
+// required only if `transferConfig.dataSourceId` is 'youtube_channel' and new
+// credentials are needed, as indicated by `CheckValidCreds`. In order to
+// obtain authorization_code, make a request to the following URL:
 // https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
-// * The client_id is the OAuth client_id of the a data source as
-// returned by ListDataSources method. * data_source_scopes are the
-// scopes returned by ListDataSources method. Note that this should not
-// be set when `service_account_name` is used to create the transfer
-// config.
+// * The client_id is the OAuth client_id of the a data source as returned by
+// ListDataSources method. * data_source_scopes are the scopes returned by
+// ListDataSources method. Note that this should not be set when
+// `service_account_name` is used to create the transfer config.
 func (c *ProjectsLocationsTransferConfigsCreateCall) AuthorizationCode(authorizationCode string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account email. If this field is set, the transfer
-// config will be created with this service account's credentials. It
-// requires that the requesting user calling this API has permissions to
-// act as this service account. Note that not all data sources support
-// service account credentials when creating a transfer config. For the
-// latest list of data sources, read about using service accounts
+// Optional service account email. If this field is set, the transfer config
+// will be created with this service account's credentials. It requires that
+// the requesting user calling this API has permissions to act as this service
+// account. Note that not all data sources support service account credentials
+// when creating a transfer config. For the latest list of data sources, read
+// about using service accounts
 // (https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).
 func (c *ProjectsLocationsTransferConfigsCreateCall) ServiceAccountName(serviceAccountName string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
 }
 
-// VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. This is required only if `transferConfig.dataSourceId`
-// is not 'youtube_channel' and new credentials are needed, as indicated
-// by `CheckValidCreds`. In order to obtain version info, make a request
-// to the following URL:
+// VersionInfo sets the optional parameter "versionInfo": Optional version
+// info. This is required only if `transferConfig.dataSourceId` is not
+// 'youtube_channel' and new credentials are needed, as indicated by
+// `CheckValidCreds`. In order to obtain version info, make a request to the
+// following URL:
 // https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
-// * The client_id is the OAuth client_id of the a data source as
-// returned by ListDataSources method. * data_source_scopes are the
-// scopes returned by ListDataSources method. Note that this should not
-// be set when `service_account_name` is used to create the transfer
-// config.
+// * The client_id is the OAuth client_id of the a data source as returned by
+// ListDataSources method. * data_source_scopes are the scopes returned by
+// ListDataSources method. Note that this should not be set when
+// `service_account_name` is used to create the transfer config.
 func (c *ProjectsLocationsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTransferConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTransferConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTransferConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3427,18 +2648,12 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transferconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/transferConfigs")
@@ -3455,12 +2670,10 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.create" call.
-// Exactly one of *TransferConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TransferConfig.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TransferConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*TransferConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3491,53 +2704,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new data transfer configuration.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The BigQuery project id where the transfer configuration should be created. Must be in the format projects/{project_id}/locations/{location_id} or projects/{project_id}. If specified location and location of the destination bigquery dataset do not match - the request will fail.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "serviceAccountName": {
-	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/transferConfigs",
-	//   "request": {
-	//     "$ref": "TransferConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "TransferConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.transferConfigs.delete":
 
 type ProjectsLocationsTransferConfigsDeleteCall struct {
 	s          *Service
@@ -3547,13 +2714,12 @@ type ProjectsLocationsTransferConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a data transfer configuration, including any
-// associated transfer runs and logs.
+// Delete: Deletes a data transfer configuration, including any associated
+// transfer runs and logs.
 //
-//   - name: The field will contain name of the resource requested, for
-//     example: `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}`.
+//   - name: The field will contain name of the resource requested, for example:
+//     `projects/{project_id}/transferConfigs/{config_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsLocationsTransferConfigsService) Delete(name string) *ProjectsLocationsTransferConfigsDeleteCall {
 	c := &ProjectsLocationsTransferConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3561,23 +2727,21 @@ func (r *ProjectsLocationsTransferConfigsService) Delete(name string) *ProjectsL
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTransferConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTransferConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTransferConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3586,12 +2750,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3609,12 +2768,10 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3645,36 +2802,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a data transfer configuration, including any associated transfer runs and logs.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.transferConfigs.get":
 
 type ProjectsLocationsTransferConfigsGetCall struct {
 	s            *Service
@@ -3687,10 +2815,9 @@ type ProjectsLocationsTransferConfigsGetCall struct {
 
 // Get: Returns information about a data transfer config.
 //
-//   - name: The field will contain name of the resource requested, for
-//     example: `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}`.
+//   - name: The field will contain name of the resource requested, for example:
+//     `projects/{project_id}/transferConfigs/{config_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsLocationsTransferConfigsService) Get(name string) *ProjectsLocationsTransferConfigsGetCall {
 	c := &ProjectsLocationsTransferConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3698,33 +2825,29 @@ func (r *ProjectsLocationsTransferConfigsService) Get(name string) *ProjectsLoca
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTransferConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsTransferConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransferConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTransferConfigsGetCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTransferConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3733,12 +2856,7 @@ func (c *ProjectsLocationsTransferConfigsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3759,12 +2877,10 @@ func (c *ProjectsLocationsTransferConfigsGetCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.get" call.
-// Exactly one of *TransferConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TransferConfig.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TransferConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsTransferConfigsGetCall) Do(opts ...googleapi.CallOption) (*TransferConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3795,37 +2911,7 @@ func (c *ProjectsLocationsTransferConfigsGetCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns information about a data transfer config.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "TransferConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.transferConfigs.list":
 
 type ProjectsLocationsTransferConfigsListCall struct {
 	s            *Service
@@ -3836,11 +2922,11 @@ type ProjectsLocationsTransferConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns information about all transfer configs owned by a
-// project in the specified location.
+// List: Returns information about all transfer configs owned by a project in
+// the specified location.
 //
-//   - parent: The BigQuery project id for which transfer configs should
-//     be returned: `projects/{project_id}` or
+//   - parent: The BigQuery project id for which transfer configs should be
+//     returned: `projects/{project_id}` or
 //     `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsTransferConfigsService) List(parent string) *ProjectsLocationsTransferConfigsListCall {
 	c := &ProjectsLocationsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3848,60 +2934,54 @@ func (r *ProjectsLocationsTransferConfigsService) List(parent string) *ProjectsL
 	return c
 }
 
-// DataSourceIds sets the optional parameter "dataSourceIds": When
-// specified, only configurations of requested data sources are
-// returned.
+// DataSourceIds sets the optional parameter "dataSourceIds": When specified,
+// only configurations of requested data sources are returned.
 func (c *ProjectsLocationsTransferConfigsListCall) DataSourceIds(dataSourceIds ...string) *ProjectsLocationsTransferConfigsListCall {
 	c.urlParams_.SetMulti("dataSourceIds", append([]string{}, dataSourceIds...))
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size. The
-// default page size is the maximum value of 1000 results.
+// PageSize sets the optional parameter "pageSize": Page size. The default page
+// size is the maximum value of 1000 results.
 func (c *ProjectsLocationsTransferConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsTransferConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page of
-// `ListTransfersRequest` list results. For multiple-page results,
-// `ListTransfersResponse` outputs a `next_page` token, which can be
-// used as the `page_token` value to request the next page of list
-// results.
+// PageToken sets the optional parameter "pageToken": Pagination token, which
+// can be used to request a specific page of `ListTransfersRequest` list
+// results. For multiple-page results, `ListTransfersResponse` outputs a
+// `next_page` token, which can be used as the `page_token` value to request
+// the next page of list results.
 func (c *ProjectsLocationsTransferConfigsListCall) PageToken(pageToken string) *ProjectsLocationsTransferConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTransferConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsTransferConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransferConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTransferConfigsListCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTransferConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3910,12 +2990,7 @@ func (c *ProjectsLocationsTransferConfigsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3936,12 +3011,11 @@ func (c *ProjectsLocationsTransferConfigsListCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.list" call.
-// Exactly one of *ListTransferConfigsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListTransferConfigsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListTransferConfigsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsTransferConfigsListCall) Do(opts ...googleapi.CallOption) (*ListTransferConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3972,51 +3046,6 @@ func (c *ProjectsLocationsTransferConfigsListCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns information about all transfer configs owned by a project in the specified location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "dataSourceIds": {
-	//       "description": "When specified, only configurations of requested data sources are returned.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Page size. The default page size is the maximum value of 1000 results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page of `ListTransfersRequest` list results. For multiple-page results, `ListTransfersResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which transfer configs should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/transferConfigs",
-	//   "response": {
-	//     "$ref": "ListTransferConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4024,7 +3053,7 @@ func (c *ProjectsLocationsTransferConfigsListCall) Do(opts ...googleapi.CallOpti
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsTransferConfigsListCall) Pages(ctx context.Context, f func(*ListTransferConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4040,8 +3069,6 @@ func (c *ProjectsLocationsTransferConfigsListCall) Pages(ctx context.Context, f 
 	}
 }
 
-// method id "bigquerydatatransfer.projects.locations.transferConfigs.patch":
-
 type ProjectsLocationsTransferConfigsPatchCall struct {
 	s              *Service
 	name           string
@@ -4051,15 +3078,15 @@ type ProjectsLocationsTransferConfigsPatchCall struct {
 	header_        http.Header
 }
 
-// Patch: Updates a data transfer configuration. All fields must be set,
-// even if they are not updated.
+// Patch: Updates a data transfer configuration. All fields must be set, even
+// if they are not updated.
 //
-//   - name: Identifier. The resource name of the transfer config.
-//     Transfer config names have the form either
-//     `projects/{project_id}/locations/{region}/transferConfigs/{config_id
-//     }` or `projects/{project_id}/transferConfigs/{config_id}`, where
-//     `config_id` is usually a UUID, even though it is not guaranteed or
-//     required. The name is ignored when creating a transfer config.
+//   - name: Identifier. The resource name of the transfer config. Transfer
+//     config names have the form either
+//     `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or
+//     `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is
+//     usually a UUID, even though it is not guaranteed or required. The name is
+//     ignored when creating a transfer config.
 func (r *ProjectsLocationsTransferConfigsService) Patch(name string, transferconfig *TransferConfig) *ProjectsLocationsTransferConfigsPatchCall {
 	c := &ProjectsLocationsTransferConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4067,77 +3094,72 @@ func (r *ProjectsLocationsTransferConfigsService) Patch(name string, transfercon
 	return c
 }
 
-// AuthorizationCode sets the optional parameter "authorizationCode":
-// Optional OAuth2 authorization code to use with this transfer
-// configuration. This is required only if `transferConfig.dataSourceId`
-// is 'youtube_channel' and new credentials are needed, as indicated by
-// `CheckValidCreds`. In order to obtain authorization_code, make a
-// request to the following URL:
+// AuthorizationCode sets the optional parameter "authorizationCode": Optional
+// OAuth2 authorization code to use with this transfer configuration. This is
+// required only if `transferConfig.dataSourceId` is 'youtube_channel' and new
+// credentials are needed, as indicated by `CheckValidCreds`. In order to
+// obtain authorization_code, make a request to the following URL:
 // https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
-// * The client_id is the OAuth client_id of the a data source as
-// returned by ListDataSources method. * data_source_scopes are the
-// scopes returned by ListDataSources method. Note that this should not
-// be set when `service_account_name` is used to update the transfer
-// config.
+// * The client_id is the OAuth client_id of the a data source as returned by
+// ListDataSources method. * data_source_scopes are the scopes returned by
+// ListDataSources method. Note that this should not be set when
+// `service_account_name` is used to update the transfer config.
 func (c *ProjectsLocationsTransferConfigsPatchCall) AuthorizationCode(authorizationCode string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account email. If this field is set, the transfer
-// config will be created with this service account's credentials. It
-// requires that the requesting user calling this API has permissions to
-// act as this service account. Note that not all data sources support
-// service account credentials when creating a transfer config. For the
-// latest list of data sources, read about using service accounts
+// Optional service account email. If this field is set, the transfer config
+// will be created with this service account's credentials. It requires that
+// the requesting user calling this API has permissions to act as this service
+// account. Note that not all data sources support service account credentials
+// when creating a transfer config. For the latest list of data sources, read
+// about using service accounts
 // (https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).
 func (c *ProjectsLocationsTransferConfigsPatchCall) ServiceAccountName(serviceAccountName string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required.
-// Required list of fields to be updated in this request.
+// UpdateMask sets the optional parameter "updateMask": Required. Required list
+// of fields to be updated in this request.
 func (c *ProjectsLocationsTransferConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
-// VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. This is required only if `transferConfig.dataSourceId`
-// is not 'youtube_channel' and new credentials are needed, as indicated
-// by `CheckValidCreds`. In order to obtain version info, make a request
-// to the following URL:
+// VersionInfo sets the optional parameter "versionInfo": Optional version
+// info. This is required only if `transferConfig.dataSourceId` is not
+// 'youtube_channel' and new credentials are needed, as indicated by
+// `CheckValidCreds`. In order to obtain version info, make a request to the
+// following URL:
 // https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
-// * The client_id is the OAuth client_id of the a data source as
-// returned by ListDataSources method. * data_source_scopes are the
-// scopes returned by ListDataSources method. Note that this should not
-// be set when `service_account_name` is used to update the transfer
-// config.
+// * The client_id is the OAuth client_id of the a data source as returned by
+// ListDataSources method. * data_source_scopes are the scopes returned by
+// ListDataSources method. Note that this should not be set when
+// `service_account_name` is used to update the transfer config.
 func (c *ProjectsLocationsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTransferConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTransferConfigsPatchCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTransferConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4146,18 +3168,12 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transferconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -4174,12 +3190,10 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) doRequest(alt string) (*http
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.patch" call.
-// Exactly one of *TransferConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TransferConfig.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TransferConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*TransferConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4210,59 +3224,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a data transfer configuration. All fields must be set, even if they are not updated.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Identifier. The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "serviceAccountName": {
-	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. Required list of fields to be updated in this request.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "TransferConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "TransferConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.transferConfigs.scheduleRuns":
 
 type ProjectsLocationsTransferConfigsScheduleRunsCall struct {
 	s                           *Service
@@ -4273,16 +3235,15 @@ type ProjectsLocationsTransferConfigsScheduleRunsCall struct {
 	header_                     http.Header
 }
 
-// ScheduleRuns: Creates transfer runs for a time range [start_time,
-// end_time]. For each date - or whatever granularity the data source
-// supports - in the range, one transfer run is created. Note that runs
-// are created per UTC time in the time range. DEPRECATED: use
-// StartManualTransferRuns instead.
+// ScheduleRuns: Creates transfer runs for a time range [start_time, end_time].
+// For each date - or whatever granularity the data source supports - in the
+// range, one transfer run is created. Note that runs are created per UTC time
+// in the time range. DEPRECATED: use StartManualTransferRuns instead.
 //
 //   - parent: Transfer configuration name in the form:
 //     `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}`.
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
+//     .
 func (r *ProjectsLocationsTransferConfigsService) ScheduleRuns(parent string, scheduletransferrunsrequest *ScheduleTransferRunsRequest) *ProjectsLocationsTransferConfigsScheduleRunsCall {
 	c := &ProjectsLocationsTransferConfigsScheduleRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4291,23 +3252,21 @@ func (r *ProjectsLocationsTransferConfigsService) ScheduleRuns(parent string, sc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsScheduleRunsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsScheduleRunsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4316,18 +3275,12 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Header() http.Header 
 }
 
 func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scheduletransferrunsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:scheduleRuns")
@@ -4344,12 +3297,11 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) doRequest(alt string)
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.scheduleRuns" call.
-// Exactly one of *ScheduleTransferRunsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ScheduleTransferRunsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ScheduleTransferRunsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.CallOption) (*ScheduleTransferRunsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4380,40 +3332,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}:scheduleRuns",
-	//   "httpMethod": "POST",
-	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.scheduleRuns",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:scheduleRuns",
-	//   "request": {
-	//     "$ref": "ScheduleTransferRunsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ScheduleTransferRunsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.transferConfigs.startManualRuns":
 
 type ProjectsLocationsTransferConfigsStartManualRunsCall struct {
 	s                              *Service
@@ -4425,14 +3344,14 @@ type ProjectsLocationsTransferConfigsStartManualRunsCall struct {
 }
 
 // StartManualRuns: Start manual transfer runs to be executed now with
-// schedule_time equal to current time. The transfer runs can be created
-// for a time range where the run_time is between start_time (inclusive)
-// and end_time (exclusive), or for a specific run_time.
+// schedule_time equal to current time. The transfer runs can be created for a
+// time range where the run_time is between start_time (inclusive) and end_time
+// (exclusive), or for a specific run_time.
 //
 //   - parent: Transfer configuration name in the form:
 //     `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}`.
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
+//     .
 func (r *ProjectsLocationsTransferConfigsService) StartManualRuns(parent string, startmanualtransferrunsrequest *StartManualTransferRunsRequest) *ProjectsLocationsTransferConfigsStartManualRunsCall {
 	c := &ProjectsLocationsTransferConfigsStartManualRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4441,23 +3360,21 @@ func (r *ProjectsLocationsTransferConfigsService) StartManualRuns(parent string,
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsStartManualRunsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsStartManualRunsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4466,18 +3383,12 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Header() http.Head
 }
 
 func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.startmanualtransferrunsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:startManualRuns")
@@ -4494,12 +3405,11 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) doRequest(alt stri
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.startManualRuns" call.
-// Exactly one of *StartManualTransferRunsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *StartManualTransferRunsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *StartManualTransferRunsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Do(opts ...googleapi.CallOption) (*StartManualTransferRunsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4530,39 +3440,7 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Do(opts ...googlea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Start manual transfer runs to be executed now with schedule_time equal to current time. The transfer runs can be created for a time range where the run_time is between start_time (inclusive) and end_time (exclusive), or for a specific run_time.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}:startManualRuns",
-	//   "httpMethod": "POST",
-	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.startManualRuns",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:startManualRuns",
-	//   "request": {
-	//     "$ref": "StartManualTransferRunsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "StartManualTransferRunsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.transferConfigs.runs.delete":
 
 type ProjectsLocationsTransferConfigsRunsDeleteCall struct {
 	s          *Service
@@ -4574,12 +3452,10 @@ type ProjectsLocationsTransferConfigsRunsDeleteCall struct {
 
 // Delete: Deletes the specified transfer run.
 //
-//   - name: The field will contain name of the resource requested, for
-//     example:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
-//     or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}/runs/{run_id}`.
+//   - name: The field will contain name of the resource requested, for example:
+//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
+//     runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsService) Delete(name string) *ProjectsLocationsTransferConfigsRunsDeleteCall {
 	c := &ProjectsLocationsTransferConfigsRunsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4587,23 +3463,21 @@ func (r *ProjectsLocationsTransferConfigsRunsService) Delete(name string) *Proje
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsRunsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsRunsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4612,12 +3486,7 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4635,12 +3504,10 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) doRequest(alt string) (
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.runs.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4671,36 +3538,7 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the specified transfer run.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}/runs/{runsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.runs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.transferConfigs.runs.get":
 
 type ProjectsLocationsTransferConfigsRunsGetCall struct {
 	s            *Service
@@ -4713,12 +3551,10 @@ type ProjectsLocationsTransferConfigsRunsGetCall struct {
 
 // Get: Returns information about the particular transfer run.
 //
-//   - name: The field will contain name of the resource requested, for
-//     example:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
-//     or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}/runs/{run_id}`.
+//   - name: The field will contain name of the resource requested, for example:
+//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
+//     runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsService) Get(name string) *ProjectsLocationsTransferConfigsRunsGetCall {
 	c := &ProjectsLocationsTransferConfigsRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4726,33 +3562,29 @@ func (r *ProjectsLocationsTransferConfigsRunsService) Get(name string) *Projects
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsRunsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransferConfigsRunsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsRunsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4761,12 +3593,7 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4787,12 +3614,10 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.runs.get" call.
-// Exactly one of *TransferRun or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TransferRun.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TransferRun.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) Do(opts ...googleapi.CallOption) (*TransferRun, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4823,37 +3648,7 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns information about the particular transfer run.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}/runs/{runsId}",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.runs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "TransferRun"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.locations.transferConfigs.runs.list":
 
 type ProjectsLocationsTransferConfigsRunsListCall struct {
 	s            *Service
@@ -4866,37 +3661,36 @@ type ProjectsLocationsTransferConfigsRunsListCall struct {
 
 // List: Returns information about running and completed transfer runs.
 //
-//   - parent: Name of transfer configuration for which transfer runs
-//     should be retrieved. Format of transfer configuration resource name
-//     is: `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}`.
+//   - parent: Name of transfer configuration for which transfer runs should be
+//     retrieved. Format of transfer configuration resource name is:
+//     `projects/{project_id}/transferConfigs/{config_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
+//     .
 func (r *ProjectsLocationsTransferConfigsRunsService) List(parent string) *ProjectsLocationsTransferConfigsRunsListCall {
 	c := &ProjectsLocationsTransferConfigsRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size. The
-// default page size is the maximum value of 1000 results.
+// PageSize sets the optional parameter "pageSize": Page size. The default page
+// size is the maximum value of 1000 results.
 func (c *ProjectsLocationsTransferConfigsRunsListCall) PageSize(pageSize int64) *ProjectsLocationsTransferConfigsRunsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page of
-// `ListTransferRunsRequest` list results. For multiple-page results,
-// `ListTransferRunsResponse` outputs a `next_page` token, which can be
-// used as the `page_token` value to request the next page of list
-// results.
+// PageToken sets the optional parameter "pageToken": Pagination token, which
+// can be used to request a specific page of `ListTransferRunsRequest` list
+// results. For multiple-page results, `ListTransferRunsResponse` outputs a
+// `next_page` token, which can be used as the `page_token` value to request
+// the next page of list results.
 func (c *ProjectsLocationsTransferConfigsRunsListCall) PageToken(pageToken string) *ProjectsLocationsTransferConfigsRunsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// RunAttempt sets the optional parameter "runAttempt": Indicates how
-// run attempts are to be pulled.
+// RunAttempt sets the optional parameter "runAttempt": Indicates how run
+// attempts are to be pulled.
 //
 // Possible values:
 //
@@ -4907,15 +3701,15 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) RunAttempt(runAttempt str
 	return c
 }
 
-// States sets the optional parameter "states": When specified, only
-// transfer runs with requested states are returned.
+// States sets the optional parameter "states": When specified, only transfer
+// runs with requested states are returned.
 //
 // Possible values:
 //
 //	"TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
-//	"PENDING" - Data transfer is scheduled and is waiting to be picked
+//	"PENDING" - Data transfer is scheduled and is waiting to be picked up by
 //
-// up by data transfer backend (2).
+// data transfer backend (2).
 //
 //	"RUNNING" - Data transfer is in progress (3).
 //	"SUCCEEDED" - Data transfer completed successfully (4).
@@ -4927,33 +3721,29 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) States(states ...string) 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTransferConfigsRunsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsRunsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsTransferConfigsRunsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransferConfigsRunsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTransferConfigsRunsListCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsRunsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTransferConfigsRunsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4962,12 +3752,7 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4988,12 +3773,11 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) doRequest(alt string) (*h
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.runs.list" call.
-// Exactly one of *ListTransferRunsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListTransferRunsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (*ListTransferRunsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5024,80 +3808,6 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns information about running and completed transfer runs.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}/runs",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.runs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Page size. The default page size is the maximum value of 1000 results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page of `ListTransferRunsRequest` list results. For multiple-page results, `ListTransferRunsResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Name of transfer configuration for which transfer runs should be retrieved. Format of transfer configuration resource name is: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "runAttempt": {
-	//       "description": "Indicates how run attempts are to be pulled.",
-	//       "enum": [
-	//         "RUN_ATTEMPT_UNSPECIFIED",
-	//         "LATEST"
-	//       ],
-	//       "enumDescriptions": [
-	//         "All runs should be returned.",
-	//         "Only latest run per day should be returned."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "states": {
-	//       "description": "When specified, only transfer runs with requested states are returned.",
-	//       "enum": [
-	//         "TRANSFER_STATE_UNSPECIFIED",
-	//         "PENDING",
-	//         "RUNNING",
-	//         "SUCCEEDED",
-	//         "FAILED",
-	//         "CANCELLED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "State placeholder (0).",
-	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend (2).",
-	//         "Data transfer is in progress (3).",
-	//         "Data transfer completed successfully (4).",
-	//         "Data transfer failed (5).",
-	//         "Data transfer is cancelled (6)."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/runs",
-	//   "response": {
-	//     "$ref": "ListTransferRunsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5105,7 +3815,7 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.Call
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsTransferConfigsRunsListCall) Pages(ctx context.Context, f func(*ListTransferRunsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5121,8 +3831,6 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Pages(ctx context.Context
 	}
 }
 
-// method id "bigquerydatatransfer.projects.locations.transferConfigs.runs.transferLogs.list":
-
 type ProjectsLocationsTransferConfigsRunsTransferLogsListCall struct {
 	s            *Service
 	parent       string
@@ -5135,19 +3843,17 @@ type ProjectsLocationsTransferConfigsRunsTransferLogsListCall struct {
 // List: Returns log messages for the transfer run.
 //
 //   - parent: Transfer run name in the form:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
-//     or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}/runs/{run_id}`.
+//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
+//     runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsTransferLogsService) List(parent string) *ProjectsLocationsTransferConfigsRunsTransferLogsListCall {
 	c := &ProjectsLocationsTransferConfigsRunsTransferLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// MessageTypes sets the optional parameter "messageTypes": Message
-// types to return. If not populated - INFO, WARNING and ERROR messages
-// are returned.
+// MessageTypes sets the optional parameter "messageTypes": Message types to
+// return. If not populated - INFO, WARNING and ERROR messages are returned.
 //
 // Possible values:
 //
@@ -5160,52 +3866,47 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) MessageTypes(
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size. The
-// default page size is the maximum value of 1000 results.
+// PageSize sets the optional parameter "pageSize": Page size. The default page
+// size is the maximum value of 1000 results.
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) PageSize(pageSize int64) *ProjectsLocationsTransferConfigsRunsTransferLogsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page of
-// `ListTransferLogsRequest` list results. For multiple-page results,
-// `ListTransferLogsResponse` outputs a `next_page` token, which can be
-// used as the `page_token` value to request the next page of list
-// results.
+// PageToken sets the optional parameter "pageToken": Pagination token, which
+// can be used to request a specific page of `ListTransferLogsRequest` list
+// results. For multiple-page results, `ListTransferLogsResponse` outputs a
+// `next_page` token, which can be used as the `page_token` value to request
+// the next page of list results.
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) PageToken(pageToken string) *ProjectsLocationsTransferConfigsRunsTransferLogsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransferConfigsRunsTransferLogsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransferConfigsRunsTransferLogsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Context(ctx context.Context) *ProjectsLocationsTransferConfigsRunsTransferLogsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5214,12 +3915,7 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Header() http
 }
 
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5240,12 +3936,11 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) doRequest(alt
 }
 
 // Do executes the "bigquerydatatransfer.projects.locations.transferConfigs.runs.transferLogs.list" call.
-// Exactly one of *ListTransferLogsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListTransferLogsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Do(opts ...googleapi.CallOption) (*ListTransferLogsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5276,63 +3971,6 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Do(opts ...go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns log messages for the transfer run.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}/runs/{runsId}/transferLogs",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.runs.transferLogs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "messageTypes": {
-	//       "description": "Message types to return. If not populated - INFO, WARNING and ERROR messages are returned.",
-	//       "enum": [
-	//         "MESSAGE_SEVERITY_UNSPECIFIED",
-	//         "INFO",
-	//         "WARNING",
-	//         "ERROR"
-	//       ],
-	//       "enumDescriptions": [
-	//         "No severity specified.",
-	//         "Informational message.",
-	//         "Warning message.",
-	//         "Error message."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Page size. The default page size is the maximum value of 1000 results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page of `ListTransferLogsRequest` list results. For multiple-page results, `ListTransferLogsResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Transfer run name in the form: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/transferLogs",
-	//   "response": {
-	//     "$ref": "ListTransferLogsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5340,7 +3978,7 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Do(opts ...go
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Pages(ctx context.Context, f func(*ListTransferLogsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5356,8 +3994,6 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Pages(ctx con
 	}
 }
 
-// method id "bigquerydatatransfer.projects.transferConfigs.create":
-
 type ProjectsTransferConfigsCreateCall struct {
 	s              *Service
 	parent         string
@@ -5369,11 +4005,11 @@ type ProjectsTransferConfigsCreateCall struct {
 
 // Create: Creates a new data transfer configuration.
 //
-//   - parent: The BigQuery project id where the transfer configuration
-//     should be created. Must be in the format
-//     projects/{project_id}/locations/{location_id} or
-//     projects/{project_id}. If specified location and location of the
-//     destination bigquery dataset do not match - the request will fail.
+//   - parent: The BigQuery project id where the transfer configuration should be
+//     created. Must be in the format
+//     projects/{project_id}/locations/{location_id} or projects/{project_id}. If
+//     specified location and location of the destination bigquery dataset do not
+//     match - the request will fail.
 func (r *ProjectsTransferConfigsService) Create(parent string, transferconfig *TransferConfig) *ProjectsTransferConfigsCreateCall {
 	c := &ProjectsTransferConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5381,70 +4017,65 @@ func (r *ProjectsTransferConfigsService) Create(parent string, transferconfig *T
 	return c
 }
 
-// AuthorizationCode sets the optional parameter "authorizationCode":
-// Optional OAuth2 authorization code to use with this transfer
-// configuration. This is required only if `transferConfig.dataSourceId`
-// is 'youtube_channel' and new credentials are needed, as indicated by
-// `CheckValidCreds`. In order to obtain authorization_code, make a
-// request to the following URL:
+// AuthorizationCode sets the optional parameter "authorizationCode": Optional
+// OAuth2 authorization code to use with this transfer configuration. This is
+// required only if `transferConfig.dataSourceId` is 'youtube_channel' and new
+// credentials are needed, as indicated by `CheckValidCreds`. In order to
+// obtain authorization_code, make a request to the following URL:
 // https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
-// * The client_id is the OAuth client_id of the a data source as
-// returned by ListDataSources method. * data_source_scopes are the
-// scopes returned by ListDataSources method. Note that this should not
-// be set when `service_account_name` is used to create the transfer
-// config.
+// * The client_id is the OAuth client_id of the a data source as returned by
+// ListDataSources method. * data_source_scopes are the scopes returned by
+// ListDataSources method. Note that this should not be set when
+// `service_account_name` is used to create the transfer config.
 func (c *ProjectsTransferConfigsCreateCall) AuthorizationCode(authorizationCode string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account email. If this field is set, the transfer
-// config will be created with this service account's credentials. It
-// requires that the requesting user calling this API has permissions to
-// act as this service account. Note that not all data sources support
-// service account credentials when creating a transfer config. For the
-// latest list of data sources, read about using service accounts
+// Optional service account email. If this field is set, the transfer config
+// will be created with this service account's credentials. It requires that
+// the requesting user calling this API has permissions to act as this service
+// account. Note that not all data sources support service account credentials
+// when creating a transfer config. For the latest list of data sources, read
+// about using service accounts
 // (https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).
 func (c *ProjectsTransferConfigsCreateCall) ServiceAccountName(serviceAccountName string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
 }
 
-// VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. This is required only if `transferConfig.dataSourceId`
-// is not 'youtube_channel' and new credentials are needed, as indicated
-// by `CheckValidCreds`. In order to obtain version info, make a request
-// to the following URL:
+// VersionInfo sets the optional parameter "versionInfo": Optional version
+// info. This is required only if `transferConfig.dataSourceId` is not
+// 'youtube_channel' and new credentials are needed, as indicated by
+// `CheckValidCreds`. In order to obtain version info, make a request to the
+// following URL:
 // https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
-// * The client_id is the OAuth client_id of the a data source as
-// returned by ListDataSources method. * data_source_scopes are the
-// scopes returned by ListDataSources method. Note that this should not
-// be set when `service_account_name` is used to create the transfer
-// config.
+// * The client_id is the OAuth client_id of the a data source as returned by
+// ListDataSources method. * data_source_scopes are the scopes returned by
+// ListDataSources method. Note that this should not be set when
+// `service_account_name` is used to create the transfer config.
 func (c *ProjectsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTransferConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTransferConfigsCreateCall) Context(ctx context.Context) *ProjectsTransferConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTransferConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5453,18 +4084,12 @@ func (c *ProjectsTransferConfigsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transferconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/transferConfigs")
@@ -5481,12 +4106,10 @@ func (c *ProjectsTransferConfigsCreateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "bigquerydatatransfer.projects.transferConfigs.create" call.
-// Exactly one of *TransferConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TransferConfig.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TransferConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*TransferConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5517,53 +4140,7 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new data transfer configuration.",
-	//   "flatPath": "v1/projects/{projectsId}/transferConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "bigquerydatatransfer.projects.transferConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The BigQuery project id where the transfer configuration should be created. Must be in the format projects/{project_id}/locations/{location_id} or projects/{project_id}. If specified location and location of the destination bigquery dataset do not match - the request will fail.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "serviceAccountName": {
-	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/transferConfigs",
-	//   "request": {
-	//     "$ref": "TransferConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "TransferConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.transferConfigs.delete":
 
 type ProjectsTransferConfigsDeleteCall struct {
 	s          *Service
@@ -5573,13 +4150,12 @@ type ProjectsTransferConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a data transfer configuration, including any
-// associated transfer runs and logs.
+// Delete: Deletes a data transfer configuration, including any associated
+// transfer runs and logs.
 //
-//   - name: The field will contain name of the resource requested, for
-//     example: `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}`.
+//   - name: The field will contain name of the resource requested, for example:
+//     `projects/{project_id}/transferConfigs/{config_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsTransferConfigsService) Delete(name string) *ProjectsTransferConfigsDeleteCall {
 	c := &ProjectsTransferConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5587,23 +4163,21 @@ func (r *ProjectsTransferConfigsService) Delete(name string) *ProjectsTransferCo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTransferConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTransferConfigsDeleteCall) Context(ctx context.Context) *ProjectsTransferConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTransferConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5612,12 +4186,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5635,12 +4204,10 @@ func (c *ProjectsTransferConfigsDeleteCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "bigquerydatatransfer.projects.transferConfigs.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5671,36 +4238,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a data transfer configuration, including any associated transfer runs and logs.",
-	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "bigquerydatatransfer.projects.transferConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.transferConfigs.get":
 
 type ProjectsTransferConfigsGetCall struct {
 	s            *Service
@@ -5713,10 +4251,9 @@ type ProjectsTransferConfigsGetCall struct {
 
 // Get: Returns information about a data transfer config.
 //
-//   - name: The field will contain name of the resource requested, for
-//     example: `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}`.
+//   - name: The field will contain name of the resource requested, for example:
+//     `projects/{project_id}/transferConfigs/{config_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
 func (r *ProjectsTransferConfigsService) Get(name string) *ProjectsTransferConfigsGetCall {
 	c := &ProjectsTransferConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5724,33 +4261,29 @@ func (r *ProjectsTransferConfigsService) Get(name string) *ProjectsTransferConfi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTransferConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTransferConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsTransferConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTransferConfigsGetCall) Context(ctx context.Context) *ProjectsTransferConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTransferConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5759,12 +4292,7 @@ func (c *ProjectsTransferConfigsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5785,12 +4313,10 @@ func (c *ProjectsTransferConfigsGetCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "bigquerydatatransfer.projects.transferConfigs.get" call.
-// Exactly one of *TransferConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TransferConfig.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TransferConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTransferConfigsGetCall) Do(opts ...googleapi.CallOption) (*TransferConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5821,37 +4347,7 @@ func (c *ProjectsTransferConfigsGetCall) Do(opts ...googleapi.CallOption) (*Tran
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns information about a data transfer config.",
-	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.transferConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "TransferConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.transferConfigs.list":
 
 type ProjectsTransferConfigsListCall struct {
 	s            *Service
@@ -5862,11 +4358,11 @@ type ProjectsTransferConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns information about all transfer configs owned by a
-// project in the specified location.
+// List: Returns information about all transfer configs owned by a project in
+// the specified location.
 //
-//   - parent: The BigQuery project id for which transfer configs should
-//     be returned: `projects/{project_id}` or
+//   - parent: The BigQuery project id for which transfer configs should be
+//     returned: `projects/{project_id}` or
 //     `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsTransferConfigsService) List(parent string) *ProjectsTransferConfigsListCall {
 	c := &ProjectsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5874,60 +4370,54 @@ func (r *ProjectsTransferConfigsService) List(parent string) *ProjectsTransferCo
 	return c
 }
 
-// DataSourceIds sets the optional parameter "dataSourceIds": When
-// specified, only configurations of requested data sources are
-// returned.
+// DataSourceIds sets the optional parameter "dataSourceIds": When specified,
+// only configurations of requested data sources are returned.
 func (c *ProjectsTransferConfigsListCall) DataSourceIds(dataSourceIds ...string) *ProjectsTransferConfigsListCall {
 	c.urlParams_.SetMulti("dataSourceIds", append([]string{}, dataSourceIds...))
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size. The
-// default page size is the maximum value of 1000 results.
+// PageSize sets the optional parameter "pageSize": Page size. The default page
+// size is the maximum value of 1000 results.
 func (c *ProjectsTransferConfigsListCall) PageSize(pageSize int64) *ProjectsTransferConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page of
-// `ListTransfersRequest` list results. For multiple-page results,
-// `ListTransfersResponse` outputs a `next_page` token, which can be
-// used as the `page_token` value to request the next page of list
-// results.
+// PageToken sets the optional parameter "pageToken": Pagination token, which
+// can be used to request a specific page of `ListTransfersRequest` list
+// results. For multiple-page results, `ListTransfersResponse` outputs a
+// `next_page` token, which can be used as the `page_token` value to request
+// the next page of list results.
 func (c *ProjectsTransferConfigsListCall) PageToken(pageToken string) *ProjectsTransferConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTransferConfigsListCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTransferConfigsListCall) IfNoneMatch(entityTag string) *ProjectsTransferConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTransferConfigsListCall) Context(ctx context.Context) *ProjectsTransferConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTransferConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5936,12 +4426,7 @@ func (c *ProjectsTransferConfigsListCall) Header() http.Header {
 }
 
 func (c *ProjectsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5962,12 +4447,11 @@ func (c *ProjectsTransferConfigsListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "bigquerydatatransfer.projects.transferConfigs.list" call.
-// Exactly one of *ListTransferConfigsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListTransferConfigsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListTransferConfigsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTransferConfigsListCall) Do(opts ...googleapi.CallOption) (*ListTransferConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5998,51 +4482,6 @@ func (c *ProjectsTransferConfigsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns information about all transfer configs owned by a project in the specified location.",
-	//   "flatPath": "v1/projects/{projectsId}/transferConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.transferConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "dataSourceIds": {
-	//       "description": "When specified, only configurations of requested data sources are returned.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Page size. The default page size is the maximum value of 1000 results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page of `ListTransfersRequest` list results. For multiple-page results, `ListTransfersResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which transfer configs should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/transferConfigs",
-	//   "response": {
-	//     "$ref": "ListTransferConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6050,7 +4489,7 @@ func (c *ProjectsTransferConfigsListCall) Do(opts ...googleapi.CallOption) (*Lis
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsTransferConfigsListCall) Pages(ctx context.Context, f func(*ListTransferConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6066,8 +4505,6 @@ func (c *ProjectsTransferConfigsListCall) Pages(ctx context.Context, f func(*Lis
 	}
 }
 
-// method id "bigquerydatatransfer.projects.transferConfigs.patch":
-
 type ProjectsTransferConfigsPatchCall struct {
 	s              *Service
 	name           string
@@ -6077,15 +4514,15 @@ type ProjectsTransferConfigsPatchCall struct {
 	header_        http.Header
 }
 
-// Patch: Updates a data transfer configuration. All fields must be set,
-// even if they are not updated.
+// Patch: Updates a data transfer configuration. All fields must be set, even
+// if they are not updated.
 //
-//   - name: Identifier. The resource name of the transfer config.
-//     Transfer config names have the form either
-//     `projects/{project_id}/locations/{region}/transferConfigs/{config_id
-//     }` or `projects/{project_id}/transferConfigs/{config_id}`, where
-//     `config_id` is usually a UUID, even though it is not guaranteed or
-//     required. The name is ignored when creating a transfer config.
+//   - name: Identifier. The resource name of the transfer config. Transfer
+//     config names have the form either
+//     `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or
+//     `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is
+//     usually a UUID, even though it is not guaranteed or required. The name is
+//     ignored when creating a transfer config.
 func (r *ProjectsTransferConfigsService) Patch(name string, transferconfig *TransferConfig) *ProjectsTransferConfigsPatchCall {
 	c := &ProjectsTransferConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6093,77 +4530,72 @@ func (r *ProjectsTransferConfigsService) Patch(name string, transferconfig *Tran
 	return c
 }
 
-// AuthorizationCode sets the optional parameter "authorizationCode":
-// Optional OAuth2 authorization code to use with this transfer
-// configuration. This is required only if `transferConfig.dataSourceId`
-// is 'youtube_channel' and new credentials are needed, as indicated by
-// `CheckValidCreds`. In order to obtain authorization_code, make a
-// request to the following URL:
+// AuthorizationCode sets the optional parameter "authorizationCode": Optional
+// OAuth2 authorization code to use with this transfer configuration. This is
+// required only if `transferConfig.dataSourceId` is 'youtube_channel' and new
+// credentials are needed, as indicated by `CheckValidCreds`. In order to
+// obtain authorization_code, make a request to the following URL:
 // https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
-// * The client_id is the OAuth client_id of the a data source as
-// returned by ListDataSources method. * data_source_scopes are the
-// scopes returned by ListDataSources method. Note that this should not
-// be set when `service_account_name` is used to update the transfer
-// config.
+// * The client_id is the OAuth client_id of the a data source as returned by
+// ListDataSources method. * data_source_scopes are the scopes returned by
+// ListDataSources method. Note that this should not be set when
+// `service_account_name` is used to update the transfer config.
 func (c *ProjectsTransferConfigsPatchCall) AuthorizationCode(authorizationCode string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account email. If this field is set, the transfer
-// config will be created with this service account's credentials. It
-// requires that the requesting user calling this API has permissions to
-// act as this service account. Note that not all data sources support
-// service account credentials when creating a transfer config. For the
-// latest list of data sources, read about using service accounts
+// Optional service account email. If this field is set, the transfer config
+// will be created with this service account's credentials. It requires that
+// the requesting user calling this API has permissions to act as this service
+// account. Note that not all data sources support service account credentials
+// when creating a transfer config. For the latest list of data sources, read
+// about using service accounts
 // (https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).
 func (c *ProjectsTransferConfigsPatchCall) ServiceAccountName(serviceAccountName string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required.
-// Required list of fields to be updated in this request.
+// UpdateMask sets the optional parameter "updateMask": Required. Required list
+// of fields to be updated in this request.
 func (c *ProjectsTransferConfigsPatchCall) UpdateMask(updateMask string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
-// VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. This is required only if `transferConfig.dataSourceId`
-// is not 'youtube_channel' and new credentials are needed, as indicated
-// by `CheckValidCreds`. In order to obtain version info, make a request
-// to the following URL:
+// VersionInfo sets the optional parameter "versionInfo": Optional version
+// info. This is required only if `transferConfig.dataSourceId` is not
+// 'youtube_channel' and new credentials are needed, as indicated by
+// `CheckValidCreds`. In order to obtain version info, make a request to the
+// following URL:
 // https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
-// * The client_id is the OAuth client_id of the a data source as
-// returned by ListDataSources method. * data_source_scopes are the
-// scopes returned by ListDataSources method. Note that this should not
-// be set when `service_account_name` is used to update the transfer
-// config.
+// * The client_id is the OAuth client_id of the a data source as returned by
+// ListDataSources method. * data_source_scopes are the scopes returned by
+// ListDataSources method. Note that this should not be set when
+// `service_account_name` is used to update the transfer config.
 func (c *ProjectsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTransferConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTransferConfigsPatchCall) Context(ctx context.Context) *ProjectsTransferConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTransferConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6172,18 +4604,12 @@ func (c *ProjectsTransferConfigsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transferconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -6200,12 +4626,10 @@ func (c *ProjectsTransferConfigsPatchCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "bigquerydatatransfer.projects.transferConfigs.patch" call.
-// Exactly one of *TransferConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TransferConfig.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TransferConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*TransferConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6236,59 +4660,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a data transfer configuration. All fields must be set, even if they are not updated.",
-	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "bigquerydatatransfer.projects.transferConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Identifier. The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "serviceAccountName": {
-	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. Required list of fields to be updated in this request.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "TransferConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "TransferConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.transferConfigs.scheduleRuns":
 
 type ProjectsTransferConfigsScheduleRunsCall struct {
 	s                           *Service
@@ -6299,16 +4671,15 @@ type ProjectsTransferConfigsScheduleRunsCall struct {
 	header_                     http.Header
 }
 
-// ScheduleRuns: Creates transfer runs for a time range [start_time,
-// end_time]. For each date - or whatever granularity the data source
-// supports - in the range, one transfer run is created. Note that runs
-// are created per UTC time in the time range. DEPRECATED: use
-// StartManualTransferRuns instead.
+// ScheduleRuns: Creates transfer runs for a time range [start_time, end_time].
+// For each date - or whatever granularity the data source supports - in the
+// range, one transfer run is created. Note that runs are created per UTC time
+// in the time range. DEPRECATED: use StartManualTransferRuns instead.
 //
 //   - parent: Transfer configuration name in the form:
 //     `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}`.
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
+//     .
 func (r *ProjectsTransferConfigsService) ScheduleRuns(parent string, scheduletransferrunsrequest *ScheduleTransferRunsRequest) *ProjectsTransferConfigsScheduleRunsCall {
 	c := &ProjectsTransferConfigsScheduleRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6317,23 +4688,21 @@ func (r *ProjectsTransferConfigsService) ScheduleRuns(parent string, scheduletra
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTransferConfigsScheduleRunsCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsScheduleRunsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTransferConfigsScheduleRunsCall) Context(ctx context.Context) *ProjectsTransferConfigsScheduleRunsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTransferConfigsScheduleRunsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6342,18 +4711,12 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Header() http.Header {
 }
 
 func (c *ProjectsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scheduletransferrunsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:scheduleRuns")
@@ -6370,12 +4733,11 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "bigquerydatatransfer.projects.transferConfigs.scheduleRuns" call.
-// Exactly one of *ScheduleTransferRunsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ScheduleTransferRunsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ScheduleTransferRunsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.CallOption) (*ScheduleTransferRunsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6406,40 +4768,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.",
-	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}:scheduleRuns",
-	//   "httpMethod": "POST",
-	//   "id": "bigquerydatatransfer.projects.transferConfigs.scheduleRuns",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:scheduleRuns",
-	//   "request": {
-	//     "$ref": "ScheduleTransferRunsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ScheduleTransferRunsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.transferConfigs.startManualRuns":
 
 type ProjectsTransferConfigsStartManualRunsCall struct {
 	s                              *Service
@@ -6451,14 +4780,14 @@ type ProjectsTransferConfigsStartManualRunsCall struct {
 }
 
 // StartManualRuns: Start manual transfer runs to be executed now with
-// schedule_time equal to current time. The transfer runs can be created
-// for a time range where the run_time is between start_time (inclusive)
-// and end_time (exclusive), or for a specific run_time.
+// schedule_time equal to current time. The transfer runs can be created for a
+// time range where the run_time is between start_time (inclusive) and end_time
+// (exclusive), or for a specific run_time.
 //
 //   - parent: Transfer configuration name in the form:
 //     `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}`.
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
+//     .
 func (r *ProjectsTransferConfigsService) StartManualRuns(parent string, startmanualtransferrunsrequest *StartManualTransferRunsRequest) *ProjectsTransferConfigsStartManualRunsCall {
 	c := &ProjectsTransferConfigsStartManualRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6467,23 +4796,21 @@ func (r *ProjectsTransferConfigsService) StartManualRuns(parent string, startman
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTransferConfigsStartManualRunsCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsStartManualRunsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTransferConfigsStartManualRunsCall) Context(ctx context.Context) *ProjectsTransferConfigsStartManualRunsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTransferConfigsStartManualRunsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6492,18 +4819,12 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Header() http.Header {
 }
 
 func (c *ProjectsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.startmanualtransferrunsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:startManualRuns")
@@ -6520,12 +4841,11 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "bigquerydatatransfer.projects.transferConfigs.startManualRuns" call.
-// Exactly one of *StartManualTransferRunsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *StartManualTransferRunsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *StartManualTransferRunsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTransferConfigsStartManualRunsCall) Do(opts ...googleapi.CallOption) (*StartManualTransferRunsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6556,39 +4876,7 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Start manual transfer runs to be executed now with schedule_time equal to current time. The transfer runs can be created for a time range where the run_time is between start_time (inclusive) and end_time (exclusive), or for a specific run_time.",
-	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}:startManualRuns",
-	//   "httpMethod": "POST",
-	//   "id": "bigquerydatatransfer.projects.transferConfigs.startManualRuns",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:startManualRuns",
-	//   "request": {
-	//     "$ref": "StartManualTransferRunsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "StartManualTransferRunsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.transferConfigs.runs.delete":
 
 type ProjectsTransferConfigsRunsDeleteCall struct {
 	s          *Service
@@ -6600,12 +4888,10 @@ type ProjectsTransferConfigsRunsDeleteCall struct {
 
 // Delete: Deletes the specified transfer run.
 //
-//   - name: The field will contain name of the resource requested, for
-//     example:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
-//     or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}/runs/{run_id}`.
+//   - name: The field will contain name of the resource requested, for example:
+//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
+//     runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsService) Delete(name string) *ProjectsTransferConfigsRunsDeleteCall {
 	c := &ProjectsTransferConfigsRunsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6613,23 +4899,21 @@ func (r *ProjectsTransferConfigsRunsService) Delete(name string) *ProjectsTransf
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTransferConfigsRunsDeleteCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsRunsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTransferConfigsRunsDeleteCall) Context(ctx context.Context) *ProjectsTransferConfigsRunsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTransferConfigsRunsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6638,12 +4922,7 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -6661,12 +4940,10 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "bigquerydatatransfer.projects.transferConfigs.runs.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTransferConfigsRunsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6697,36 +4974,7 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the specified transfer run.",
-	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}/runs/{runsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "bigquerydatatransfer.projects.transferConfigs.runs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.transferConfigs.runs.get":
 
 type ProjectsTransferConfigsRunsGetCall struct {
 	s            *Service
@@ -6739,12 +4987,10 @@ type ProjectsTransferConfigsRunsGetCall struct {
 
 // Get: Returns information about the particular transfer run.
 //
-//   - name: The field will contain name of the resource requested, for
-//     example:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
-//     or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}/runs/{run_id}`.
+//   - name: The field will contain name of the resource requested, for example:
+//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
+//     runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsService) Get(name string) *ProjectsTransferConfigsRunsGetCall {
 	c := &ProjectsTransferConfigsRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6752,33 +4998,29 @@ func (r *ProjectsTransferConfigsRunsService) Get(name string) *ProjectsTransferC
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTransferConfigsRunsGetCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsRunsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTransferConfigsRunsGetCall) IfNoneMatch(entityTag string) *ProjectsTransferConfigsRunsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTransferConfigsRunsGetCall) Context(ctx context.Context) *ProjectsTransferConfigsRunsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTransferConfigsRunsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6787,12 +5029,7 @@ func (c *ProjectsTransferConfigsRunsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6813,12 +5050,10 @@ func (c *ProjectsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "bigquerydatatransfer.projects.transferConfigs.runs.get" call.
-// Exactly one of *TransferRun or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TransferRun.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TransferRun.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTransferConfigsRunsGetCall) Do(opts ...googleapi.CallOption) (*TransferRun, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6849,37 +5084,7 @@ func (c *ProjectsTransferConfigsRunsGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns information about the particular transfer run.",
-	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}/runs/{runsId}",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.transferConfigs.runs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "TransferRun"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
-
-// method id "bigquerydatatransfer.projects.transferConfigs.runs.list":
 
 type ProjectsTransferConfigsRunsListCall struct {
 	s            *Service
@@ -6892,37 +5097,36 @@ type ProjectsTransferConfigsRunsListCall struct {
 
 // List: Returns information about running and completed transfer runs.
 //
-//   - parent: Name of transfer configuration for which transfer runs
-//     should be retrieved. Format of transfer configuration resource name
-//     is: `projects/{project_id}/transferConfigs/{config_id}` or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}`.
+//   - parent: Name of transfer configuration for which transfer runs should be
+//     retrieved. Format of transfer configuration resource name is:
+//     `projects/{project_id}/transferConfigs/{config_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
+//     .
 func (r *ProjectsTransferConfigsRunsService) List(parent string) *ProjectsTransferConfigsRunsListCall {
 	c := &ProjectsTransferConfigsRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size. The
-// default page size is the maximum value of 1000 results.
+// PageSize sets the optional parameter "pageSize": Page size. The default page
+// size is the maximum value of 1000 results.
 func (c *ProjectsTransferConfigsRunsListCall) PageSize(pageSize int64) *ProjectsTransferConfigsRunsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page of
-// `ListTransferRunsRequest` list results. For multiple-page results,
-// `ListTransferRunsResponse` outputs a `next_page` token, which can be
-// used as the `page_token` value to request the next page of list
-// results.
+// PageToken sets the optional parameter "pageToken": Pagination token, which
+// can be used to request a specific page of `ListTransferRunsRequest` list
+// results. For multiple-page results, `ListTransferRunsResponse` outputs a
+// `next_page` token, which can be used as the `page_token` value to request
+// the next page of list results.
 func (c *ProjectsTransferConfigsRunsListCall) PageToken(pageToken string) *ProjectsTransferConfigsRunsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// RunAttempt sets the optional parameter "runAttempt": Indicates how
-// run attempts are to be pulled.
+// RunAttempt sets the optional parameter "runAttempt": Indicates how run
+// attempts are to be pulled.
 //
 // Possible values:
 //
@@ -6933,15 +5137,15 @@ func (c *ProjectsTransferConfigsRunsListCall) RunAttempt(runAttempt string) *Pro
 	return c
 }
 
-// States sets the optional parameter "states": When specified, only
-// transfer runs with requested states are returned.
+// States sets the optional parameter "states": When specified, only transfer
+// runs with requested states are returned.
 //
 // Possible values:
 //
 //	"TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
-//	"PENDING" - Data transfer is scheduled and is waiting to be picked
+//	"PENDING" - Data transfer is scheduled and is waiting to be picked up by
 //
-// up by data transfer backend (2).
+// data transfer backend (2).
 //
 //	"RUNNING" - Data transfer is in progress (3).
 //	"SUCCEEDED" - Data transfer completed successfully (4).
@@ -6953,33 +5157,29 @@ func (c *ProjectsTransferConfigsRunsListCall) States(states ...string) *Projects
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTransferConfigsRunsListCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsRunsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTransferConfigsRunsListCall) IfNoneMatch(entityTag string) *ProjectsTransferConfigsRunsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTransferConfigsRunsListCall) Context(ctx context.Context) *ProjectsTransferConfigsRunsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTransferConfigsRunsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6988,12 +5188,7 @@ func (c *ProjectsTransferConfigsRunsListCall) Header() http.Header {
 }
 
 func (c *ProjectsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7014,12 +5209,11 @@ func (c *ProjectsTransferConfigsRunsListCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "bigquerydatatransfer.projects.transferConfigs.runs.list" call.
-// Exactly one of *ListTransferRunsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListTransferRunsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (*ListTransferRunsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7050,80 +5244,6 @@ func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns information about running and completed transfer runs.",
-	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}/runs",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.transferConfigs.runs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Page size. The default page size is the maximum value of 1000 results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page of `ListTransferRunsRequest` list results. For multiple-page results, `ListTransferRunsResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Name of transfer configuration for which transfer runs should be retrieved. Format of transfer configuration resource name is: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "runAttempt": {
-	//       "description": "Indicates how run attempts are to be pulled.",
-	//       "enum": [
-	//         "RUN_ATTEMPT_UNSPECIFIED",
-	//         "LATEST"
-	//       ],
-	//       "enumDescriptions": [
-	//         "All runs should be returned.",
-	//         "Only latest run per day should be returned."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "states": {
-	//       "description": "When specified, only transfer runs with requested states are returned.",
-	//       "enum": [
-	//         "TRANSFER_STATE_UNSPECIFIED",
-	//         "PENDING",
-	//         "RUNNING",
-	//         "SUCCEEDED",
-	//         "FAILED",
-	//         "CANCELLED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "State placeholder (0).",
-	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend (2).",
-	//         "Data transfer is in progress (3).",
-	//         "Data transfer completed successfully (4).",
-	//         "Data transfer failed (5).",
-	//         "Data transfer is cancelled (6)."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/runs",
-	//   "response": {
-	//     "$ref": "ListTransferRunsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7131,7 +5251,7 @@ func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsTransferConfigsRunsListCall) Pages(ctx context.Context, f func(*ListTransferRunsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7147,8 +5267,6 @@ func (c *ProjectsTransferConfigsRunsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
-// method id "bigquerydatatransfer.projects.transferConfigs.runs.transferLogs.list":
-
 type ProjectsTransferConfigsRunsTransferLogsListCall struct {
 	s            *Service
 	parent       string
@@ -7161,19 +5279,17 @@ type ProjectsTransferConfigsRunsTransferLogsListCall struct {
 // List: Returns log messages for the transfer run.
 //
 //   - parent: Transfer run name in the form:
-//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
-//     or
-//     `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
-//     ig_id}/runs/{run_id}`.
+//     `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+//     `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/
+//     runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsTransferLogsService) List(parent string) *ProjectsTransferConfigsRunsTransferLogsListCall {
 	c := &ProjectsTransferConfigsRunsTransferLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// MessageTypes sets the optional parameter "messageTypes": Message
-// types to return. If not populated - INFO, WARNING and ERROR messages
-// are returned.
+// MessageTypes sets the optional parameter "messageTypes": Message types to
+// return. If not populated - INFO, WARNING and ERROR messages are returned.
 //
 // Possible values:
 //
@@ -7186,52 +5302,47 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) MessageTypes(messageTy
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size. The
-// default page size is the maximum value of 1000 results.
+// PageSize sets the optional parameter "pageSize": Page size. The default page
+// size is the maximum value of 1000 results.
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) PageSize(pageSize int64) *ProjectsTransferConfigsRunsTransferLogsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page of
-// `ListTransferLogsRequest` list results. For multiple-page results,
-// `ListTransferLogsResponse` outputs a `next_page` token, which can be
-// used as the `page_token` value to request the next page of list
-// results.
+// PageToken sets the optional parameter "pageToken": Pagination token, which
+// can be used to request a specific page of `ListTransferLogsRequest` list
+// results. For multiple-page results, `ListTransferLogsResponse` outputs a
+// `next_page` token, which can be used as the `page_token` value to request
+// the next page of list results.
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) PageToken(pageToken string) *ProjectsTransferConfigsRunsTransferLogsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Fields(s ...googleapi.Field) *ProjectsTransferConfigsRunsTransferLogsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) IfNoneMatch(entityTag string) *ProjectsTransferConfigsRunsTransferLogsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Context(ctx context.Context) *ProjectsTransferConfigsRunsTransferLogsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7240,12 +5351,7 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Header() http.Header {
 }
 
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7266,12 +5372,11 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) 
 }
 
 // Do executes the "bigquerydatatransfer.projects.transferConfigs.runs.transferLogs.list" call.
-// Exactly one of *ListTransferLogsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListTransferLogsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Do(opts ...googleapi.CallOption) (*ListTransferLogsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7302,63 +5407,6 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns log messages for the transfer run.",
-	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}/runs/{runsId}/transferLogs",
-	//   "httpMethod": "GET",
-	//   "id": "bigquerydatatransfer.projects.transferConfigs.runs.transferLogs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "messageTypes": {
-	//       "description": "Message types to return. If not populated - INFO, WARNING and ERROR messages are returned.",
-	//       "enum": [
-	//         "MESSAGE_SEVERITY_UNSPECIFIED",
-	//         "INFO",
-	//         "WARNING",
-	//         "ERROR"
-	//       ],
-	//       "enumDescriptions": [
-	//         "No severity specified.",
-	//         "Informational message.",
-	//         "Warning message.",
-	//         "Error message."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Page size. The default page size is the maximum value of 1000 results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page of `ListTransferLogsRequest` list results. For multiple-page results, `ListTransferLogsResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Transfer run name in the form: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/transferLogs",
-	//   "response": {
-	//     "$ref": "ListTransferLogsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7366,7 +5414,7 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Do(opts ...googleapi.C
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Pages(ctx context.Context, f func(*ListTransferLogsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

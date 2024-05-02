@@ -199,46 +199,38 @@ type LocationsAdminsService struct {
 	s *Service
 }
 
-// AcceptInvitationRequest: Request message for
-// AccessControl.AcceptInvitation.
+// AcceptInvitationRequest: Request message for AccessControl.AcceptInvitation.
 type AcceptInvitationRequest struct {
 }
 
-// Account: An account is a container for your location. If you are the
-// only user who manages locations for your business, you can use your
-// personal Google Account. To share management of locations with
-// multiple users, [create a business account]
+// Account: An account is a container for your location. If you are the only
+// user who manages locations for your business, you can use your personal
+// Google Account. To share management of locations with multiple users,
+// [create a business account]
 // (https://support.google.com/business/answer/6085339?ref_topic=6085325).
 type Account struct {
-	// AccountName: Required. The name of the account. For an account of
-	// type `PERSONAL`, this is the first and last name of the user account.
+	// AccountName: Required. The name of the account. For an account of type
+	// `PERSONAL`, this is the first and last name of the user account.
 	AccountName string `json:"accountName,omitempty"`
-
 	// AccountNumber: Output only. Account reference number if provisioned.
 	AccountNumber string `json:"accountNumber,omitempty"`
-
-	// Name: Immutable. The resource name, in the format
-	// `accounts/{account_id}`.
+	// Name: Immutable. The resource name, in the format `accounts/{account_id}`.
 	Name string `json:"name,omitempty"`
-
-	// OrganizationInfo: Output only. Additional info for an organization.
-	// This is populated only for an organization account.
+	// OrganizationInfo: Output only. Additional info for an organization. This is
+	// populated only for an organization account.
 	OrganizationInfo *OrganizationInfo `json:"organizationInfo,omitempty"`
-
-	// PermissionLevel: Output only. Specifies the permission level the user
-	// has for this account.
+	// PermissionLevel: Output only. Specifies the permission level the user has
+	// for this account.
 	//
 	// Possible values:
 	//   "PERMISSION_LEVEL_UNSPECIFIED" - Not specified.
 	//   "OWNER_LEVEL" - The user has owner level permission.
 	//   "MEMBER_LEVEL" - The user has member level permission.
 	PermissionLevel string `json:"permissionLevel,omitempty"`
-
-	// PrimaryOwner: Required. Input only. The resource name of the account
-	// which will be the primary owner of the account being created. It
-	// should be of the form `accounts/{account_id}`.
+	// PrimaryOwner: Required. Input only. The resource name of the account which
+	// will be the primary owner of the account being created. It should be of the
+	// form `accounts/{account_id}`.
 	PrimaryOwner string `json:"primaryOwner,omitempty"`
-
 	// Role: Output only. Specifies the AccountRole of this account.
 	//
 	// Possible values:
@@ -246,148 +238,123 @@ type Account struct {
 	//   "PRIMARY_OWNER" - The user is the primary owner this account.
 	//   "OWNER" - The user owner of the account.
 	//   "MANAGER" - The user can manage this account.
-	//   "SITE_MANAGER" - The user can manage a limited set of features for
-	// the account.
+	//   "SITE_MANAGER" - The user can manage a limited set of features for the
+	// account.
 	Role string `json:"role,omitempty"`
-
-	// Type: Required. Contains the type of account. Accounts of type
-	// PERSONAL and ORGANIZATION cannot be created using this API.
+	// Type: Required. Contains the type of account. Accounts of type PERSONAL and
+	// ORGANIZATION cannot be created using this API.
 	//
 	// Possible values:
 	//   "ACCOUNT_TYPE_UNSPECIFIED" - Not specified.
 	//   "PERSONAL" - An end-user account.
-	//   "LOCATION_GROUP" - A group of Locations. For more information, see
-	// the [help center article]
-	// (https://support.google.com/business/answer/6085326)
-	//   "USER_GROUP" - A User Group for segregating organization staff in
-	// groups. For more information, see the [help center
+	//   "LOCATION_GROUP" - A group of Locations. For more information, see the
+	// [help center article] (https://support.google.com/business/answer/6085326)
+	//   "USER_GROUP" - A User Group for segregating organization staff in groups.
+	// For more information, see the [help center
 	// article](https://support.google.com/business/answer/7655731)
 	//   "ORGANIZATION" - An organization representing a company. For more
 	// information, see the [help center
 	// article](https://support.google.com/business/answer/7663063)
 	Type string `json:"type,omitempty"`
-
-	// VerificationState: Output only. If verified, future locations that
-	// are created are automatically connected to Google Maps, and have
-	// Google+ pages created, without requiring moderation.
+	// VerificationState: Output only. If verified, future locations that are
+	// created are automatically connected to Google Maps, and have Google+ pages
+	// created, without requiring moderation.
 	//
 	// Possible values:
 	//   "VERIFICATION_STATE_UNSPECIFIED" - Not specified.
 	//   "VERIFIED" - Verified account.
-	//   "UNVERIFIED" - Account that is not verified, and verification has
-	// not been requested.
-	//   "VERIFICATION_REQUESTED" - Account that is not verified, but
-	// verification has been requested.
+	//   "UNVERIFIED" - Account that is not verified, and verification has not been
+	// requested.
+	//   "VERIFICATION_REQUESTED" - Account that is not verified, but verification
+	// has been requested.
 	VerificationState string `json:"verificationState,omitempty"`
-
-	// VettedState: Output only. Indicates whether the account is vetted by
-	// Google. A vetted account is able to verify locations via the
-	// VETTED_PARTNER method.
+	// VettedState: Output only. Indicates whether the account is vetted by Google.
+	// A vetted account is able to verify locations via the VETTED_PARTNER method.
 	//
 	// Possible values:
 	//   "VETTED_STATE_UNSPECIFIED" - Not Specified
 	//   "NOT_VETTED" - The account is not vetted by Google.
 	//   "VETTED" - The account is vetted by Google and in a valid state. An
-	// account is automatically vetted if it has direct access to a vetted
-	// group account.
-	//   "INVALID" - The account is vetted but in an invalid state. The
-	// account will behave like an unvetted account.
+	// account is automatically vetted if it has direct access to a vetted group
+	// account.
+	//   "INVALID" - The account is vetted but in an invalid state. The account
+	// will behave like an unvetted account.
 	VettedState string `json:"vettedState,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Account) MarshalJSON() ([]byte, error) {
 	type NoMethod Account
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Admin: An administrator of an Account or a location.
 type Admin struct {
-	// Account: Immutable. The name of the Account resource that this Admin
-	// refers to. Used when calling locations.admins.create to invite a
-	// LocationGroup as an admin. If both this field and `admin` are set on
-	// `CREATE` requests, this field takes precedence and the email address
-	// in `admin` will be ignored. Format: `accounts/{account}`.
+	// Account: Immutable. The name of the Account resource that this Admin refers
+	// to. Used when calling locations.admins.create to invite a LocationGroup as
+	// an admin. If both this field and `admin` are set on `CREATE` requests, this
+	// field takes precedence and the email address in `admin` will be ignored.
+	// Format: `accounts/{account}`.
 	Account string `json:"account,omitempty"`
-
-	// Admin: Optional. The name of the admin. When making the initial
-	// invitation, this is the invitee's email address. On `GET` calls, the
-	// user's email address is returned if the invitation is still pending.
-	// Otherwise, it contains the user's first and last names. This field is
-	// only needed to be set during admin creation.
+	// Admin: Optional. The name of the admin. When making the initial invitation,
+	// this is the invitee's email address. On `GET` calls, the user's email
+	// address is returned if the invitation is still pending. Otherwise, it
+	// contains the user's first and last names. This field is only needed to be
+	// set during admin creation.
 	Admin string `json:"admin,omitempty"`
-
-	// Name: Immutable. The resource name. For account admins, this is in
-	// the form: `accounts/{account_id}/admins/{admin_id}` For location
-	// admins, this is in the form:
-	// `locations/{location_id}/admins/{admin_id}` This field will be
+	// Name: Immutable. The resource name. For account admins, this is in the form:
+	// `accounts/{account_id}/admins/{admin_id}` For location admins, this is in
+	// the form: `locations/{location_id}/admins/{admin_id}` This field will be
 	// ignored if set during admin creation.
 	Name string `json:"name,omitempty"`
-
-	// PendingInvitation: Output only. Indicates whether this admin has a
-	// pending invitation for the specified resource.
+	// PendingInvitation: Output only. Indicates whether this admin has a pending
+	// invitation for the specified resource.
 	PendingInvitation bool `json:"pendingInvitation,omitempty"`
-
-	// Role: Required. Specifies the role that this admin uses with the
-	// specified Account or Location.
+	// Role: Required. Specifies the role that this admin uses with the specified
+	// Account or Location.
 	//
 	// Possible values:
 	//   "ADMIN_ROLE_UNSPECIFIED" - Not specified.
-	//   "PRIMARY_OWNER" - The admin has owner-level access and is the
-	// primary owner. (Displays as 'Primary Owner' in UI).
-	//   "OWNER" - The admin has owner-level access. (Displays as 'Owner' in
-	// UI).
+	//   "PRIMARY_OWNER" - The admin has owner-level access and is the primary
+	// owner. (Displays as 'Primary Owner' in UI).
+	//   "OWNER" - The admin has owner-level access. (Displays as 'Owner' in UI).
 	//   "MANAGER" - The admin has managerial access.
-	//   "SITE_MANAGER" - The admin can manage social (Google+) pages.
-	// (Displays as 'Site Manager' in UI). This API doesn't allow creating
-	// an account admin with a SITE_MANAGER role.
+	//   "SITE_MANAGER" - The admin can manage social (Google+) pages. (Displays as
+	// 'Site Manager' in UI). This API doesn't allow creating an account admin with
+	// a SITE_MANAGER role.
 	Role string `json:"role,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Account") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Account") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Account") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Admin) MarshalJSON() ([]byte, error) {
 	type NoMethod Admin
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DeclineInvitationRequest: Request message for
@@ -396,13 +363,11 @@ type DeclineInvitationRequest struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
@@ -411,59 +376,46 @@ type Invitation struct {
 	// Name: Required. The resource name for the invitation.
 	// `accounts/{account_id}/invitations/{invitation_id}`.
 	Name string `json:"name,omitempty"`
-
 	// Role: Output only. The invited role on the account.
 	//
 	// Possible values:
 	//   "ADMIN_ROLE_UNSPECIFIED" - Not specified.
-	//   "PRIMARY_OWNER" - The admin has owner-level access and is the
-	// primary owner. (Displays as 'Primary Owner' in UI).
-	//   "OWNER" - The admin has owner-level access. (Displays as 'Owner' in
-	// UI).
+	//   "PRIMARY_OWNER" - The admin has owner-level access and is the primary
+	// owner. (Displays as 'Primary Owner' in UI).
+	//   "OWNER" - The admin has owner-level access. (Displays as 'Owner' in UI).
 	//   "MANAGER" - The admin has managerial access.
-	//   "SITE_MANAGER" - The admin can manage social (Google+) pages.
-	// (Displays as 'Site Manager' in UI). This API doesn't allow creating
-	// an account admin with a SITE_MANAGER role.
+	//   "SITE_MANAGER" - The admin can manage social (Google+) pages. (Displays as
+	// 'Site Manager' in UI). This API doesn't allow creating an account admin with
+	// a SITE_MANAGER role.
 	Role string `json:"role,omitempty"`
-
 	// TargetAccount: The sparsely populated account this invitation is for.
 	TargetAccount *Account `json:"targetAccount,omitempty"`
-
 	// TargetLocation: The target location this invitation is for.
 	TargetLocation *TargetLocation `json:"targetLocation,omitempty"`
-
-	// TargetType: Output only. Specifies which target types should appear
-	// in the response.
+	// TargetType: Output only. Specifies which target types should appear in the
+	// response.
 	//
 	// Possible values:
 	//   "TARGET_TYPE_UNSPECIFIED" - Set when target type is unspecified.
-	//   "ACCOUNTS_ONLY" - List invitations only for targets of type
-	// Account.
-	//   "LOCATIONS_ONLY" - List invitations only for targets of type
-	// Location.
+	//   "ACCOUNTS_ONLY" - List invitations only for targets of type Account.
+	//   "LOCATIONS_ONLY" - List invitations only for targets of type Location.
 	TargetType string `json:"targetType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Invitation) MarshalJSON() ([]byte, error) {
 	type NoMethod Invitation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountAdminsResponse: Response message for
@@ -472,105 +424,82 @@ type ListAccountAdminsResponse struct {
 	// AccountAdmins: A collection of Admin instances.
 	AccountAdmins []*Admin `json:"accountAdmins,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountAdmins") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountAdmins") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountAdmins") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAccountAdminsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountAdminsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountsResponse: Response message for Accounts.ListAccounts.
 type ListAccountsResponse struct {
 	// Accounts: A collection of accounts to which the user has access. The
-	// personal account of the user doing the query will always be the first
-	// item of the result, unless it is filtered out.
+	// personal account of the user doing the query will always be the first item
+	// of the result, unless it is filtered out.
 	Accounts []*Account `json:"accounts,omitempty"`
-
-	// NextPageToken: If the number of accounts exceeds the requested page
-	// size, this field is populated with a token to fetch the next page of
-	// accounts on a subsequent call to `accounts.list`. If there are no
-	// more accounts, this field is not present in the response.
+	// NextPageToken: If the number of accounts exceeds the requested page size,
+	// this field is populated with a token to fetch the next page of accounts on a
+	// subsequent call to `accounts.list`. If there are no more accounts, this
+	// field is not present in the response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Accounts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Accounts") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Accounts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListInvitationsResponse: Response message for
-// AccessControl.ListInvitations.
+// ListInvitationsResponse: Response message for AccessControl.ListInvitations.
 type ListInvitationsResponse struct {
-	// Invitations: A collection of invitations that are pending for the
-	// account. The number of invitations listed here cannot exceed 1000.
+	// Invitations: A collection of invitations that are pending for the account.
+	// The number of invitations listed here cannot exceed 1000.
 	Invitations []*Invitation `json:"invitations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Invitations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Invitations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Invitations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListInvitationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInvitationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationAdminsResponse: Response message for
@@ -579,252 +508,197 @@ type ListLocationAdminsResponse struct {
 	// Admins: A collection of Admins.
 	Admins []*Admin `json:"admins,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Admins") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Admins") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Admins") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListLocationAdminsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationAdminsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // OrganizationInfo: Additional information stored for an organization.
 type OrganizationInfo struct {
 	// Address: Output only. The postal address for the account.
 	Address *PostalAddress `json:"address,omitempty"`
-
 	// PhoneNumber: Output only. The contact number for the organization.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
-
 	// RegisteredDomain: Output only. The registered domain for the account.
 	RegisteredDomain string `json:"registeredDomain,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Address") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Address") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *OrganizationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod OrganizationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PostalAddress: Represents a postal address, e.g. for postal delivery
-// or payments addresses. Given a postal address, a postal service can
-// deliver items to a premise, P.O. Box or similar. It is not intended
-// to model geographical locations (roads, towns, mountains). In typical
-// usage an address would be created via user input or from importing
-// existing data, depending on the type of process. Advice on address
-// input / editing: - Use an internationalization-ready address widget
-// such as https://github.com/google/libaddressinput) - Users should not
-// be presented with UI elements for input or editing of fields outside
-// countries where that field is used. For more guidance on how to use
-// this schema, please see:
+// PostalAddress: Represents a postal address, e.g. for postal delivery or
+// payments addresses. Given a postal address, a postal service can deliver
+// items to a premise, P.O. Box or similar. It is not intended to model
+// geographical locations (roads, towns, mountains). In typical usage an
+// address would be created via user input or from importing existing data,
+// depending on the type of process. Advice on address input / editing: - Use
+// an internationalization-ready address widget such as
+// https://github.com/google/libaddressinput) - Users should not be presented
+// with UI elements for input or editing of fields outside countries where that
+// field is used. For more guidance on how to use this schema, please see:
 // https://support.google.com/business/answer/6397478
 type PostalAddress struct {
-	// AddressLines: Unstructured address lines describing the lower levels
-	// of an address. Because values in address_lines do not have type
-	// information and may sometimes contain multiple values in a single
-	// field (e.g. "Austin, TX"), it is important that the line order is
-	// clear. The order of address lines should be "envelope order" for the
-	// country/region of the address. In places where this can vary (e.g.
-	// Japan), address_language is used to make it explicit (e.g. "ja" for
-	// large-to-small ordering and "ja-Latn" or "en" for small-to-large).
-	// This way, the most specific line of an address can be selected based
-	// on the language. The minimum permitted structural representation of
-	// an address consists of a region_code with all remaining information
-	// placed in the address_lines. It would be possible to format such an
-	// address very approximately without geocoding, but no semantic
-	// reasoning could be made about any of the address components until it
-	// was at least partially resolved. Creating an address only containing
-	// a region_code and address_lines, and then geocoding is the
-	// recommended way to handle completely unstructured addresses (as
-	// opposed to guessing which parts of the address should be localities
-	// or administrative areas).
+	// AddressLines: Unstructured address lines describing the lower levels of an
+	// address. Because values in address_lines do not have type information and
+	// may sometimes contain multiple values in a single field (e.g. "Austin, TX"),
+	// it is important that the line order is clear. The order of address lines
+	// should be "envelope order" for the country/region of the address. In places
+	// where this can vary (e.g. Japan), address_language is used to make it
+	// explicit (e.g. "ja" for large-to-small ordering and "ja-Latn" or "en" for
+	// small-to-large). This way, the most specific line of an address can be
+	// selected based on the language. The minimum permitted structural
+	// representation of an address consists of a region_code with all remaining
+	// information placed in the address_lines. It would be possible to format such
+	// an address very approximately without geocoding, but no semantic reasoning
+	// could be made about any of the address components until it was at least
+	// partially resolved. Creating an address only containing a region_code and
+	// address_lines, and then geocoding is the recommended way to handle
+	// completely unstructured addresses (as opposed to guessing which parts of the
+	// address should be localities or administrative areas).
 	AddressLines []string `json:"addressLines,omitempty"`
-
-	// AdministrativeArea: Optional. Highest administrative subdivision
-	// which is used for postal addresses of a country or region. For
-	// example, this can be a state, a province, an oblast, or a prefecture.
-	// Specifically, for Spain this is the province and not the autonomous
-	// community (e.g. "Barcelona" and not "Catalonia"). Many countries
-	// don't use an administrative area in postal addresses. E.g. in
-	// Switzerland this should be left unpopulated.
+	// AdministrativeArea: Optional. Highest administrative subdivision which is
+	// used for postal addresses of a country or region. For example, this can be a
+	// state, a province, an oblast, or a prefecture. Specifically, for Spain this
+	// is the province and not the autonomous community (e.g. "Barcelona" and not
+	// "Catalonia"). Many countries don't use an administrative area in postal
+	// addresses. E.g. in Switzerland this should be left unpopulated.
 	AdministrativeArea string `json:"administrativeArea,omitempty"`
-
-	// LanguageCode: Optional. BCP-47 language code of the contents of this
-	// address (if known). This is often the UI language of the input form
-	// or is expected to match one of the languages used in the address'
-	// country/region, or their transliterated equivalents. This can affect
-	// formatting in certain countries, but is not critical to the
-	// correctness of the data and will never affect any validation or other
-	// non-formatting related operations. If this value is not known, it
-	// should be omitted (rather than specifying a possibly incorrect
+	// LanguageCode: Optional. BCP-47 language code of the contents of this address
+	// (if known). This is often the UI language of the input form or is expected
+	// to match one of the languages used in the address' country/region, or their
+	// transliterated equivalents. This can affect formatting in certain countries,
+	// but is not critical to the correctness of the data and will never affect any
+	// validation or other non-formatting related operations. If this value is not
+	// known, it should be omitted (rather than specifying a possibly incorrect
 	// default). Examples: "zh-Hant", "ja", "ja-Latn", "en".
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// Locality: Optional. Generally refers to the city/town portion of the
-	// address. Examples: US city, IT comune, UK post town. In regions of
-	// the world where localities are not well defined or do not fit into
-	// this structure well, leave locality empty and use address_lines.
+	// address. Examples: US city, IT comune, UK post town. In regions of the world
+	// where localities are not well defined or do not fit into this structure
+	// well, leave locality empty and use address_lines.
 	Locality string `json:"locality,omitempty"`
-
 	// Organization: Optional. The name of the organization at the address.
 	Organization string `json:"organization,omitempty"`
-
-	// PostalCode: Optional. Postal code of the address. Not all countries
-	// use or require postal codes to be present, but where they are used,
-	// they may trigger additional validation with other parts of the
-	// address (e.g. state/zip validation in the U.S.A.).
+	// PostalCode: Optional. Postal code of the address. Not all countries use or
+	// require postal codes to be present, but where they are used, they may
+	// trigger additional validation with other parts of the address (e.g.
+	// state/zip validation in the U.S.A.).
 	PostalCode string `json:"postalCode,omitempty"`
-
-	// Recipients: Optional. The recipient at the address. This field may,
-	// under certain circumstances, contain multiline information. For
-	// example, it might contain "care of" information.
+	// Recipients: Optional. The recipient at the address. This field may, under
+	// certain circumstances, contain multiline information. For example, it might
+	// contain "care of" information.
 	Recipients []string `json:"recipients,omitempty"`
-
-	// RegionCode: Required. CLDR region code of the country/region of the
-	// address. This is never inferred and it is up to the user to ensure
-	// the value is correct. See https://cldr.unicode.org/ and
+	// RegionCode: Required. CLDR region code of the country/region of the address.
+	// This is never inferred and it is up to the user to ensure the value is
+	// correct. See https://cldr.unicode.org/ and
 	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
-
-	// Revision: The schema revision of the `PostalAddress`. This must be
-	// set to 0, which is the latest revision. All new revisions **must** be
-	// backward compatible with old revisions.
+	// Revision: The schema revision of the `PostalAddress`. This must be set to 0,
+	// which is the latest revision. All new revisions **must** be backward
+	// compatible with old revisions.
 	Revision int64 `json:"revision,omitempty"`
-
-	// SortingCode: Optional. Additional, country-specific, sorting code.
-	// This is not used in most regions. Where it is used, the value is
-	// either a string like "CEDEX", optionally followed by a number (e.g.
-	// "CEDEX 7"), or just a number alone, representing the "sector code"
-	// (Jamaica), "delivery area indicator" (Malawi) or "post office
-	// indicator" (e.g. Côte d'Ivoire).
+	// SortingCode: Optional. Additional, country-specific, sorting code. This is
+	// not used in most regions. Where it is used, the value is either a string
+	// like "CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a
+	// number alone, representing the "sector code" (Jamaica), "delivery area
+	// indicator" (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
 	SortingCode string `json:"sortingCode,omitempty"`
-
-	// Sublocality: Optional. Sublocality of the address. For example, this
-	// can be neighborhoods, boroughs, districts.
+	// Sublocality: Optional. Sublocality of the address. For example, this can be
+	// neighborhoods, boroughs, districts.
 	Sublocality string `json:"sublocality,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AddressLines") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddressLines") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AddressLines") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod PostalAddress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TargetLocation: Represents a target location for a pending
-// invitation.
+// TargetLocation: Represents a target location for a pending invitation.
 type TargetLocation struct {
 	// Address: The address of the location to which the user is invited.
 	Address string `json:"address,omitempty"`
-
 	// LocationName: The name of the location to which the user is invited.
 	LocationName string `json:"locationName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Address") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Address") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TargetLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetLocation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TransferLocationRequest: Request message for
-// AccessControl.TransferLocation.
+// TransferLocationRequest: Request message for AccessControl.TransferLocation.
 type TransferLocationRequest struct {
-	// DestinationAccount: Required. Name of the account resource to
-	// transfer the location to (for example, "accounts/{account}").
+	// DestinationAccount: Required. Name of the account resource to transfer the
+	// location to (for example, "accounts/{account}").
 	DestinationAccount string `json:"destinationAccount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DestinationAccount")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DestinationAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DestinationAccount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DestinationAccount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TransferLocationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferLocationRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "mybusinessaccountmanagement.accounts.create":
 
 type AccountsCreateCall struct {
 	s          *Service
@@ -834,12 +708,12 @@ type AccountsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates an account with the specified name and type under the
-// given parent. - Personal accounts and Organizations cannot be
-// created. - User Groups cannot be created with a Personal account as
-// primary owner. - Location Groups cannot be created with a primary
-// owner of a Personal account if the Personal account is in an
-// Organization. - Location Groups cannot own Location Groups.
+// Create: Creates an account with the specified name and type under the given
+// parent. - Personal accounts and Organizations cannot be created. - User
+// Groups cannot be created with a Personal account as primary owner. -
+// Location Groups cannot be created with a primary owner of a Personal account
+// if the Personal account is in an Organization. - Location Groups cannot own
+// Location Groups.
 func (r *AccountsService) Create(account *Account) *AccountsCreateCall {
 	c := &AccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -847,23 +721,21 @@ func (r *AccountsService) Create(account *Account) *AccountsCreateCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCreateCall) Fields(s ...googleapi.Field) *AccountsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCreateCall) Context(ctx context.Context) *AccountsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -872,18 +744,12 @@ func (c *AccountsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts")
@@ -897,12 +763,10 @@ func (c *AccountsCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "mybusinessaccountmanagement.accounts.create" call.
-// Exactly one of *Account or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Account.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Account.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsCreateCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -933,25 +797,7 @@ func (c *AccountsCreateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an account with the specified name and type under the given parent. - Personal accounts and Organizations cannot be created. - User Groups cannot be created with a Personal account as primary owner. - Location Groups cannot be created with a primary owner of a Personal account if the Personal account is in an Organization. - Location Groups cannot own Location Groups.",
-	//   "flatPath": "v1/accounts",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessaccountmanagement.accounts.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/accounts",
-	//   "request": {
-	//     "$ref": "Account"
-	//   },
-	//   "response": {
-	//     "$ref": "Account"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.accounts.get":
 
 type AccountsGetCall struct {
 	s            *Service
@@ -962,8 +808,8 @@ type AccountsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified account. Returns `NOT_FOUND` if the account
-// does not exist or if the caller does not have access rights to it.
+// Get: Gets the specified account. Returns `NOT_FOUND` if the account does not
+// exist or if the caller does not have access rights to it.
 //
 // - name: The name of the account to fetch.
 func (r *AccountsService) Get(name string) *AccountsGetCall {
@@ -973,33 +819,29 @@ func (r *AccountsService) Get(name string) *AccountsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsGetCall) IfNoneMatch(entityTag string) *AccountsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1008,12 +850,7 @@ func (c *AccountsGetCall) Header() http.Header {
 }
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1034,12 +871,10 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "mybusinessaccountmanagement.accounts.get" call.
-// Exactly one of *Account or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Account.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Account.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1070,32 +905,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the specified account. Returns `NOT_FOUND` if the account does not exist or if the caller does not have access rights to it.",
-	//   "flatPath": "v1/accounts/{accountsId}",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessaccountmanagement.accounts.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the account to fetch.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Account"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.accounts.list":
 
 type AccountsListCall struct {
 	s            *Service
@@ -1105,79 +915,75 @@ type AccountsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all of the accounts for the authenticated user. This
-// includes all accounts that the user owns, as well as any accounts for
-// which the user has management rights.
+// List: Lists all of the accounts for the authenticated user. This includes
+// all accounts that the user owns, as well as any accounts for which the user
+// has management rights.
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter constraining
-// the accounts to return. The response includes only entries that match
-// the filter. If `filter` is empty, then no constraints are applied and
-// all accounts (paginated) are retrieved for the requested account. For
-// example, a request with the filter `type=USER_GROUP` will only return
-// user groups. The `type` field is the only supported filter.
+// Filter sets the optional parameter "filter": A filter constraining the
+// accounts to return. The response includes only entries that match the
+// filter. If `filter` is empty, then no constraints are applied and all
+// accounts (paginated) are retrieved for the requested account. For example, a
+// request with the filter `type=USER_GROUP` will only return user groups. The
+// `type` field is the only supported filter.
 func (c *AccountsListCall) Filter(filter string) *AccountsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": How many accounts to
-// fetch per page. The default and maximum is 20.
+// PageSize sets the optional parameter "pageSize": How many accounts to fetch
+// per page. The default and maximum is 20.
 func (c *AccountsListCall) PageSize(pageSize int64) *AccountsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": If specified, the
-// next page of accounts is retrieved. The `pageToken` is returned when
-// a call to `accounts.list` returns more results than can fit into the
-// requested page size.
+// PageToken sets the optional parameter "pageToken": If specified, the next
+// page of accounts is retrieved. The `pageToken` is returned when a call to
+// `accounts.list` returns more results than can fit into the requested page
+// size.
 func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ParentAccount sets the optional parameter "parentAccount": The
-// resource name of the account for which the list of directly
-// accessible accounts is to be retrieved. This only makes sense for
-// Organizations and User Groups. If empty, will return `ListAccounts`
-// for the authenticated user. `accounts/{account_id}`.
+// ParentAccount sets the optional parameter "parentAccount": The resource name
+// of the account for which the list of directly accessible accounts is to be
+// retrieved. This only makes sense for Organizations and User Groups. If
+// empty, will return `ListAccounts` for the authenticated user.
+// `accounts/{account_id}`.
 func (c *AccountsListCall) ParentAccount(parentAccount string) *AccountsListCall {
 	c.urlParams_.Set("parentAccount", parentAccount)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsListCall) IfNoneMatch(entityTag string) *AccountsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1186,12 +992,7 @@ func (c *AccountsListCall) Header() http.Header {
 }
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1209,12 +1010,11 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "mybusinessaccountmanagement.accounts.list" call.
-// Exactly one of *ListAccountsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListAccountsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAccountsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1245,41 +1045,6 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsRespon
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all of the accounts for the authenticated user. This includes all accounts that the user owns, as well as any accounts for which the user has management rights.",
-	//   "flatPath": "v1/accounts",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessaccountmanagement.accounts.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. A filter constraining the accounts to return. The response includes only entries that match the filter. If `filter` is empty, then no constraints are applied and all accounts (paginated) are retrieved for the requested account. For example, a request with the filter `type=USER_GROUP` will only return user groups. The `type` field is the only supported filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. How many accounts to fetch per page. The default and maximum is 20.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. If specified, the next page of accounts is retrieved. The `pageToken` is returned when a call to `accounts.list` returns more results than can fit into the requested page size.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parentAccount": {
-	//       "description": "Optional. The resource name of the account for which the list of directly accessible accounts is to be retrieved. This only makes sense for Organizations and User Groups. If empty, will return `ListAccounts` for the authenticated user. `accounts/{account_id}`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/accounts",
-	//   "response": {
-	//     "$ref": "ListAccountsResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1287,7 +1052,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsRespon
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsListCall) Pages(ctx context.Context, f func(*ListAccountsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1303,8 +1068,6 @@ func (c *AccountsListCall) Pages(ctx context.Context, f func(*ListAccountsRespon
 	}
 }
 
-// method id "mybusinessaccountmanagement.accounts.patch":
-
 type AccountsPatchCall struct {
 	s          *Service
 	name       string
@@ -1314,11 +1077,10 @@ type AccountsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates the specified business account. Personal accounts
-// cannot be updated using this method.
+// Patch: Updates the specified business account. Personal accounts cannot be
+// updated using this method.
 //
-//   - name: Immutable. The resource name, in the format
-//     `accounts/{account_id}`.
+// - name: Immutable. The resource name, in the format `accounts/{account_id}`.
 func (r *AccountsService) Patch(name string, account *Account) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1326,9 +1088,8 @@ func (r *AccountsService) Patch(name string, account *Account) *AccountsPatchCal
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// specific fields that should be updated. The only editable field is
-// `accountName`.
+// UpdateMask sets the optional parameter "updateMask": Required. The specific
+// fields that should be updated. The only editable field is `accountName`.
 func (c *AccountsPatchCall) UpdateMask(updateMask string) *AccountsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -1342,23 +1103,21 @@ func (c *AccountsPatchCall) ValidateOnly(validateOnly bool) *AccountsPatchCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsPatchCall) Fields(s ...googleapi.Field) *AccountsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsPatchCall) Context(ctx context.Context) *AccountsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1367,18 +1126,12 @@ func (c *AccountsPatchCall) Header() http.Header {
 }
 
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -1395,12 +1148,10 @@ func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "mybusinessaccountmanagement.accounts.patch" call.
-// Exactly one of *Account or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Account.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Account.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1431,46 +1182,7 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the specified business account. Personal accounts cannot be updated using this method.",
-	//   "flatPath": "v1/accounts/{accountsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "mybusinessaccountmanagement.accounts.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Immutable. The resource name, in the format `accounts/{account_id}`.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The specific fields that should be updated. The only editable field is `accountName`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "validateOnly": {
-	//       "description": "Optional. If true, the request is validated without actually updating the account.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "Account"
-	//   },
-	//   "response": {
-	//     "$ref": "Account"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.accounts.admins.create":
 
 type AccountsAdminsCreateCall struct {
 	s          *Service
@@ -1482,9 +1194,9 @@ type AccountsAdminsCreateCall struct {
 }
 
 // Create: Invites the specified user to become an administrator for the
-// specified account. The invitee must accept the invitation in order to
-// be granted access to the account. See AcceptInvitation to
-// programmatically accept an invitation.
+// specified account. The invitee must accept the invitation in order to be
+// granted access to the account. See AcceptInvitation to programmatically
+// accept an invitation.
 //
 //   - parent: The resource name of the account this admin is created for.
 //     `accounts/{account_id}`.
@@ -1496,23 +1208,21 @@ func (r *AccountsAdminsService) Create(parent string, admin *Admin) *AccountsAdm
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAdminsCreateCall) Fields(s ...googleapi.Field) *AccountsAdminsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAdminsCreateCall) Context(ctx context.Context) *AccountsAdminsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAdminsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1521,18 +1231,12 @@ func (c *AccountsAdminsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsAdminsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.admin)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/admins")
@@ -1549,12 +1253,10 @@ func (c *AccountsAdminsCreateCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "mybusinessaccountmanagement.accounts.admins.create" call.
-// Exactly one of *Admin or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Admin.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Admin.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsAdminsCreateCall) Do(opts ...googleapi.CallOption) (*Admin, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1585,35 +1287,7 @@ func (c *AccountsAdminsCreateCall) Do(opts ...googleapi.CallOption) (*Admin, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Invites the specified user to become an administrator for the specified account. The invitee must accept the invitation in order to be granted access to the account. See AcceptInvitation to programmatically accept an invitation.",
-	//   "flatPath": "v1/accounts/{accountsId}/admins",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessaccountmanagement.accounts.admins.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the account this admin is created for. `accounts/{account_id}`.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/admins",
-	//   "request": {
-	//     "$ref": "Admin"
-	//   },
-	//   "response": {
-	//     "$ref": "Admin"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.accounts.admins.delete":
 
 type AccountsAdminsDeleteCall struct {
 	s          *Service
@@ -1634,23 +1308,21 @@ func (r *AccountsAdminsService) Delete(name string) *AccountsAdminsDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAdminsDeleteCall) Fields(s ...googleapi.Field) *AccountsAdminsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAdminsDeleteCall) Context(ctx context.Context) *AccountsAdminsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAdminsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1659,12 +1331,7 @@ func (c *AccountsAdminsDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsAdminsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1682,12 +1349,10 @@ func (c *AccountsAdminsDeleteCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "mybusinessaccountmanagement.accounts.admins.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsAdminsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1718,32 +1383,7 @@ func (c *AccountsAdminsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Removes the specified admin from the specified account.",
-	//   "flatPath": "v1/accounts/{accountsId}/admins/{adminsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "mybusinessaccountmanagement.accounts.admins.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the admin to remove from the account. `accounts/{account_id}/admins/{admin_id}`.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/admins/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.accounts.admins.list":
 
 type AccountsAdminsListCall struct {
 	s            *Service
@@ -1756,8 +1396,8 @@ type AccountsAdminsListCall struct {
 
 // List: Lists the admins for the specified account.
 //
-//   - parent: The name of the account from which to retrieve a list of
-//     admins. `accounts/{account_id}/admins`.
+//   - parent: The name of the account from which to retrieve a list of admins.
+//     `accounts/{account_id}/admins`.
 func (r *AccountsAdminsService) List(parent string) *AccountsAdminsListCall {
 	c := &AccountsAdminsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1765,33 +1405,29 @@ func (r *AccountsAdminsService) List(parent string) *AccountsAdminsListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAdminsListCall) Fields(s ...googleapi.Field) *AccountsAdminsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsAdminsListCall) IfNoneMatch(entityTag string) *AccountsAdminsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAdminsListCall) Context(ctx context.Context) *AccountsAdminsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAdminsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1800,12 +1436,7 @@ func (c *AccountsAdminsListCall) Header() http.Header {
 }
 
 func (c *AccountsAdminsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1826,12 +1457,11 @@ func (c *AccountsAdminsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "mybusinessaccountmanagement.accounts.admins.list" call.
-// Exactly one of *ListAccountAdminsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListAccountAdminsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListAccountAdminsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsAdminsListCall) Do(opts ...googleapi.CallOption) (*ListAccountAdminsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1862,32 +1492,7 @@ func (c *AccountsAdminsListCall) Do(opts ...googleapi.CallOption) (*ListAccountA
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the admins for the specified account.",
-	//   "flatPath": "v1/accounts/{accountsId}/admins",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessaccountmanagement.accounts.admins.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the account from which to retrieve a list of admins. `accounts/{account_id}/admins`.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/admins",
-	//   "response": {
-	//     "$ref": "ListAccountAdminsResponse"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.accounts.admins.patch":
 
 type AccountsAdminsPatchCall struct {
 	s          *Service
@@ -1900,11 +1505,10 @@ type AccountsAdminsPatchCall struct {
 
 // Patch: Updates the Admin for the specified Account Admin.
 //
-//   - name: Immutable. The resource name. For account admins, this is in
-//     the form: `accounts/{account_id}/admins/{admin_id}` For location
-//     admins, this is in the form:
-//     `locations/{location_id}/admins/{admin_id}` This field will be
-//     ignored if set during admin creation.
+//   - name: Immutable. The resource name. For account admins, this is in the
+//     form: `accounts/{account_id}/admins/{admin_id}` For location admins, this
+//     is in the form: `locations/{location_id}/admins/{admin_id}` This field
+//     will be ignored if set during admin creation.
 func (r *AccountsAdminsService) Patch(name string, admin *Admin) *AccountsAdminsPatchCall {
 	c := &AccountsAdminsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1912,32 +1516,29 @@ func (r *AccountsAdminsService) Patch(name string, admin *Admin) *AccountsAdmins
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// specific fields that should be updated. The only editable field is
-// role.
+// UpdateMask sets the optional parameter "updateMask": Required. The specific
+// fields that should be updated. The only editable field is role.
 func (c *AccountsAdminsPatchCall) UpdateMask(updateMask string) *AccountsAdminsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAdminsPatchCall) Fields(s ...googleapi.Field) *AccountsAdminsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAdminsPatchCall) Context(ctx context.Context) *AccountsAdminsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAdminsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1946,18 +1547,12 @@ func (c *AccountsAdminsPatchCall) Header() http.Header {
 }
 
 func (c *AccountsAdminsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.admin)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -1974,12 +1569,10 @@ func (c *AccountsAdminsPatchCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "mybusinessaccountmanagement.accounts.admins.patch" call.
-// Exactly one of *Admin or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Admin.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Admin.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsAdminsPatchCall) Do(opts ...googleapi.CallOption) (*Admin, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2010,41 +1603,7 @@ func (c *AccountsAdminsPatchCall) Do(opts ...googleapi.CallOption) (*Admin, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the Admin for the specified Account Admin.",
-	//   "flatPath": "v1/accounts/{accountsId}/admins/{adminsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "mybusinessaccountmanagement.accounts.admins.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Immutable. The resource name. For account admins, this is in the form: `accounts/{account_id}/admins/{admin_id}` For location admins, this is in the form: `locations/{location_id}/admins/{admin_id}` This field will be ignored if set during admin creation.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/admins/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The specific fields that should be updated. The only editable field is role.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "Admin"
-	//   },
-	//   "response": {
-	//     "$ref": "Admin"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.accounts.invitations.accept":
 
 type AccountsInvitationsAcceptCall struct {
 	s                       *Service
@@ -2067,23 +1626,21 @@ func (r *AccountsInvitationsService) Accept(name string, acceptinvitationrequest
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsInvitationsAcceptCall) Fields(s ...googleapi.Field) *AccountsInvitationsAcceptCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsInvitationsAcceptCall) Context(ctx context.Context) *AccountsInvitationsAcceptCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsInvitationsAcceptCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2092,18 +1649,12 @@ func (c *AccountsInvitationsAcceptCall) Header() http.Header {
 }
 
 func (c *AccountsInvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.acceptinvitationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:accept")
@@ -2120,12 +1671,10 @@ func (c *AccountsInvitationsAcceptCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "mybusinessaccountmanagement.accounts.invitations.accept" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsInvitationsAcceptCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2156,35 +1705,7 @@ func (c *AccountsInvitationsAcceptCall) Do(opts ...googleapi.CallOption) (*Empty
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Accepts the specified invitation.",
-	//   "flatPath": "v1/accounts/{accountsId}/invitations/{invitationsId}:accept",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessaccountmanagement.accounts.invitations.accept",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the invitation that is being accepted. `accounts/{account_id}/invitations/{invitation_id}`",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/invitations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:accept",
-	//   "request": {
-	//     "$ref": "AcceptInvitationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.accounts.invitations.decline":
 
 type AccountsInvitationsDeclineCall struct {
 	s                        *Service
@@ -2207,23 +1728,21 @@ func (r *AccountsInvitationsService) Decline(name string, declineinvitationreque
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsInvitationsDeclineCall) Fields(s ...googleapi.Field) *AccountsInvitationsDeclineCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsInvitationsDeclineCall) Context(ctx context.Context) *AccountsInvitationsDeclineCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsInvitationsDeclineCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2232,18 +1751,12 @@ func (c *AccountsInvitationsDeclineCall) Header() http.Header {
 }
 
 func (c *AccountsInvitationsDeclineCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.declineinvitationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:decline")
@@ -2260,12 +1773,10 @@ func (c *AccountsInvitationsDeclineCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "mybusinessaccountmanagement.accounts.invitations.decline" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsInvitationsDeclineCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2296,35 +1807,7 @@ func (c *AccountsInvitationsDeclineCall) Do(opts ...googleapi.CallOption) (*Empt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Declines the specified invitation.",
-	//   "flatPath": "v1/accounts/{accountsId}/invitations/{invitationsId}:decline",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessaccountmanagement.accounts.invitations.decline",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the account invitation that is being declined. `accounts/{account_id}/invitations/{invitation_id}`",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/invitations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:decline",
-	//   "request": {
-	//     "$ref": "DeclineInvitationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.accounts.invitations.list":
 
 type AccountsInvitationsListCall struct {
 	s            *Service
@@ -2337,49 +1820,45 @@ type AccountsInvitationsListCall struct {
 
 // List: Lists pending invitations for the specified account.
 //
-//   - parent: The name of the account from which the list of invitations
-//     is being retrieved. `accounts/{account_id}/invitations`.
+//   - parent: The name of the account from which the list of invitations is
+//     being retrieved. `accounts/{account_id}/invitations`.
 func (r *AccountsInvitationsService) List(parent string) *AccountsInvitationsListCall {
 	c := &AccountsInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering the response
-// is supported via the Invitation.target_type field.
+// Filter sets the optional parameter "filter": Filtering the response is
+// supported via the Invitation.target_type field.
 func (c *AccountsInvitationsListCall) Filter(filter string) *AccountsInvitationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsInvitationsListCall) Fields(s ...googleapi.Field) *AccountsInvitationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsInvitationsListCall) IfNoneMatch(entityTag string) *AccountsInvitationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsInvitationsListCall) Context(ctx context.Context) *AccountsInvitationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsInvitationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2388,12 +1867,7 @@ func (c *AccountsInvitationsListCall) Header() http.Header {
 }
 
 func (c *AccountsInvitationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2414,12 +1888,11 @@ func (c *AccountsInvitationsListCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "mybusinessaccountmanagement.accounts.invitations.list" call.
-// Exactly one of *ListInvitationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListInvitationsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsInvitationsListCall) Do(opts ...googleapi.CallOption) (*ListInvitationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2450,37 +1923,7 @@ func (c *AccountsInvitationsListCall) Do(opts ...googleapi.CallOption) (*ListInv
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists pending invitations for the specified account.",
-	//   "flatPath": "v1/accounts/{accountsId}/invitations",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessaccountmanagement.accounts.invitations.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filtering the response is supported via the Invitation.target_type field.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the account from which the list of invitations is being retrieved. `accounts/{account_id}/invitations`",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/invitations",
-	//   "response": {
-	//     "$ref": "ListInvitationsResponse"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.locations.transfer":
 
 type LocationsTransferCall struct {
 	s                       *Service
@@ -2491,13 +1934,12 @@ type LocationsTransferCall struct {
 	header_                 http.Header
 }
 
-// Transfer: Moves a location from an account that the user owns to
-// another account that the same user administers. The user must be an
-// owner of the account the location is currently associated with and
-// must also be at least a manager of the destination account.
+// Transfer: Moves a location from an account that the user owns to another
+// account that the same user administers. The user must be an owner of the
+// account the location is currently associated with and must also be at least
+// a manager of the destination account.
 //
-//   - name: The name of the location to transfer.
-//     `locations/{location_id}`.
+// - name: The name of the location to transfer. `locations/{location_id}`.
 func (r *LocationsService) Transfer(name string, transferlocationrequest *TransferLocationRequest) *LocationsTransferCall {
 	c := &LocationsTransferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2506,23 +1948,21 @@ func (r *LocationsService) Transfer(name string, transferlocationrequest *Transf
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsTransferCall) Fields(s ...googleapi.Field) *LocationsTransferCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsTransferCall) Context(ctx context.Context) *LocationsTransferCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsTransferCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2531,18 +1971,12 @@ func (c *LocationsTransferCall) Header() http.Header {
 }
 
 func (c *LocationsTransferCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.transferlocationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:transfer")
@@ -2559,12 +1993,10 @@ func (c *LocationsTransferCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "mybusinessaccountmanagement.locations.transfer" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *LocationsTransferCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2595,35 +2027,7 @@ func (c *LocationsTransferCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Moves a location from an account that the user owns to another account that the same user administers. The user must be an owner of the account the location is currently associated with and must also be at least a manager of the destination account.",
-	//   "flatPath": "v1/locations/{locationsId}:transfer",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessaccountmanagement.locations.transfer",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the location to transfer. `locations/{location_id}`.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:transfer",
-	//   "request": {
-	//     "$ref": "TransferLocationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.locations.admins.create":
 
 type LocationsAdminsCreateCall struct {
 	s          *Service
@@ -2635,12 +2039,12 @@ type LocationsAdminsCreateCall struct {
 }
 
 // Create: Invites the specified user to become an administrator for the
-// specified location. The invitee must accept the invitation in order
-// to be granted access to the location. See AcceptInvitation to
-// programmatically accept an invitation.
+// specified location. The invitee must accept the invitation in order to be
+// granted access to the location. See AcceptInvitation to programmatically
+// accept an invitation.
 //
-//   - parent: The resource name of the location this admin is created
-//     for. `locations/{location_id}/admins`.
+//   - parent: The resource name of the location this admin is created for.
+//     `locations/{location_id}/admins`.
 func (r *LocationsAdminsService) Create(parent string, admin *Admin) *LocationsAdminsCreateCall {
 	c := &LocationsAdminsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2649,23 +2053,21 @@ func (r *LocationsAdminsService) Create(parent string, admin *Admin) *LocationsA
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsAdminsCreateCall) Fields(s ...googleapi.Field) *LocationsAdminsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsAdminsCreateCall) Context(ctx context.Context) *LocationsAdminsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsAdminsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2674,18 +2076,12 @@ func (c *LocationsAdminsCreateCall) Header() http.Header {
 }
 
 func (c *LocationsAdminsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.admin)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/admins")
@@ -2702,12 +2098,10 @@ func (c *LocationsAdminsCreateCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "mybusinessaccountmanagement.locations.admins.create" call.
-// Exactly one of *Admin or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Admin.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Admin.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *LocationsAdminsCreateCall) Do(opts ...googleapi.CallOption) (*Admin, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2738,35 +2132,7 @@ func (c *LocationsAdminsCreateCall) Do(opts ...googleapi.CallOption) (*Admin, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Invites the specified user to become an administrator for the specified location. The invitee must accept the invitation in order to be granted access to the location. See AcceptInvitation to programmatically accept an invitation.",
-	//   "flatPath": "v1/locations/{locationsId}/admins",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessaccountmanagement.locations.admins.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the location this admin is created for. `locations/{location_id}/admins`.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/admins",
-	//   "request": {
-	//     "$ref": "Admin"
-	//   },
-	//   "response": {
-	//     "$ref": "Admin"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.locations.admins.delete":
 
 type LocationsAdminsDeleteCall struct {
 	s          *Service
@@ -2776,8 +2142,7 @@ type LocationsAdminsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Removes the specified admin as a manager of the specified
-// location.
+// Delete: Removes the specified admin as a manager of the specified location.
 //
 // - name: The resource name of the admin to remove from the location.
 func (r *LocationsAdminsService) Delete(name string) *LocationsAdminsDeleteCall {
@@ -2787,23 +2152,21 @@ func (r *LocationsAdminsService) Delete(name string) *LocationsAdminsDeleteCall 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsAdminsDeleteCall) Fields(s ...googleapi.Field) *LocationsAdminsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsAdminsDeleteCall) Context(ctx context.Context) *LocationsAdminsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsAdminsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2812,12 +2175,7 @@ func (c *LocationsAdminsDeleteCall) Header() http.Header {
 }
 
 func (c *LocationsAdminsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2835,12 +2193,10 @@ func (c *LocationsAdminsDeleteCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "mybusinessaccountmanagement.locations.admins.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *LocationsAdminsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2871,32 +2227,7 @@ func (c *LocationsAdminsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Removes the specified admin as a manager of the specified location.",
-	//   "flatPath": "v1/locations/{locationsId}/admins/{adminsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "mybusinessaccountmanagement.locations.admins.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the admin to remove from the location.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/admins/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.locations.admins.list":
 
 type LocationsAdminsListCall struct {
 	s            *Service
@@ -2918,33 +2249,29 @@ func (r *LocationsAdminsService) List(parent string) *LocationsAdminsListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsAdminsListCall) Fields(s ...googleapi.Field) *LocationsAdminsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *LocationsAdminsListCall) IfNoneMatch(entityTag string) *LocationsAdminsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsAdminsListCall) Context(ctx context.Context) *LocationsAdminsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsAdminsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2953,12 +2280,7 @@ func (c *LocationsAdminsListCall) Header() http.Header {
 }
 
 func (c *LocationsAdminsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2979,12 +2301,11 @@ func (c *LocationsAdminsListCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "mybusinessaccountmanagement.locations.admins.list" call.
-// Exactly one of *ListLocationAdminsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListLocationAdminsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListLocationAdminsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *LocationsAdminsListCall) Do(opts ...googleapi.CallOption) (*ListLocationAdminsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3015,32 +2336,7 @@ func (c *LocationsAdminsListCall) Do(opts ...googleapi.CallOption) (*ListLocatio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all of the admins for the specified location.",
-	//   "flatPath": "v1/locations/{locationsId}/admins",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessaccountmanagement.locations.admins.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the location to list admins of. `locations/{location_id}/admins`.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/admins",
-	//   "response": {
-	//     "$ref": "ListLocationAdminsResponse"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessaccountmanagement.locations.admins.patch":
 
 type LocationsAdminsPatchCall struct {
 	s          *Service
@@ -3051,14 +2347,13 @@ type LocationsAdminsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates the Admin for the specified location. Only the
-// AdminRole of the Admin can be updated.
+// Patch: Updates the Admin for the specified location. Only the AdminRole of
+// the Admin can be updated.
 //
-//   - name: Immutable. The resource name. For account admins, this is in
-//     the form: `accounts/{account_id}/admins/{admin_id}` For location
-//     admins, this is in the form:
-//     `locations/{location_id}/admins/{admin_id}` This field will be
-//     ignored if set during admin creation.
+//   - name: Immutable. The resource name. For account admins, this is in the
+//     form: `accounts/{account_id}/admins/{admin_id}` For location admins, this
+//     is in the form: `locations/{location_id}/admins/{admin_id}` This field
+//     will be ignored if set during admin creation.
 func (r *LocationsAdminsService) Patch(name string, admin *Admin) *LocationsAdminsPatchCall {
 	c := &LocationsAdminsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3066,32 +2361,29 @@ func (r *LocationsAdminsService) Patch(name string, admin *Admin) *LocationsAdmi
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// specific fields that should be updated. The only editable field is
-// role.
+// UpdateMask sets the optional parameter "updateMask": Required. The specific
+// fields that should be updated. The only editable field is role.
 func (c *LocationsAdminsPatchCall) UpdateMask(updateMask string) *LocationsAdminsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsAdminsPatchCall) Fields(s ...googleapi.Field) *LocationsAdminsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsAdminsPatchCall) Context(ctx context.Context) *LocationsAdminsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsAdminsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3100,18 +2392,12 @@ func (c *LocationsAdminsPatchCall) Header() http.Header {
 }
 
 func (c *LocationsAdminsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.admin)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -3128,12 +2414,10 @@ func (c *LocationsAdminsPatchCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "mybusinessaccountmanagement.locations.admins.patch" call.
-// Exactly one of *Admin or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Admin.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Admin.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *LocationsAdminsPatchCall) Do(opts ...googleapi.CallOption) (*Admin, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3164,36 +2448,4 @@ func (c *LocationsAdminsPatchCall) Do(opts ...googleapi.CallOption) (*Admin, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the Admin for the specified location. Only the AdminRole of the Admin can be updated.",
-	//   "flatPath": "v1/locations/{locationsId}/admins/{adminsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "mybusinessaccountmanagement.locations.admins.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Immutable. The resource name. For account admins, this is in the form: `accounts/{account_id}/admins/{admin_id}` For location admins, this is in the form: `locations/{location_id}/admins/{admin_id}` This field will be ignored if set during admin creation.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/admins/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The specific fields that should be updated. The only editable field is role.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "Admin"
-	//   },
-	//   "response": {
-	//     "$ref": "Admin"
-	//   }
-	// }
-
 }

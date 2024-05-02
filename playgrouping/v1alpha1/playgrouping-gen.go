@@ -180,28 +180,22 @@ type AppsTokensTagsService struct {
 type CreateOrUpdateTagsRequest struct {
 	// Tags: Tags to be inserted or updated.
 	Tags []*Tag `json:"tags,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Tags") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Tags") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Tags") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Tags") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreateOrUpdateTagsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateOrUpdateTagsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateOrUpdateTagsResponse: Response message for CreateOrUpdateTags.
@@ -209,71 +203,54 @@ type CreateOrUpdateTagsResponse struct {
 	// Tags: All requested tags are returned, including pre-existing ones.
 	Tags []*Tag `json:"tags,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Tags") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Tags") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Tags") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Tags") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreateOrUpdateTagsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateOrUpdateTagsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Tag: A tag is associated with exactly one package name and user.
 type Tag struct {
 	// BooleanValue: A boolean value of the tag.
 	BooleanValue bool `json:"booleanValue,omitempty"`
-
 	// Int64Value: A signed 64-bit integer value of the tag.
 	Int64Value int64 `json:"int64Value,omitempty,string"`
-
 	// Key: Required. Key for the tag.
 	Key string `json:"key,omitempty"`
-
 	// StringValue: A string value of the tag.
 	StringValue string `json:"stringValue,omitempty"`
-
 	// TimeValue: A time value of the tag.
 	TimeValue string `json:"timeValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BooleanValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BooleanValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BooleanValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Tag) MarshalJSON() ([]byte, error) {
 	type NoMethod Tag
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyTokenRequest: Request message for VerifyToken.
@@ -281,38 +258,29 @@ type VerifyTokenRequest struct {
 	// Persona: Required. Persona represented by the token. Format:
 	// personas/{persona}
 	Persona string `json:"persona,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Persona") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Persona") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Persona") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Persona") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VerifyTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyTokenRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyTokenResponse: Response message for VerifyToken.
 type VerifyTokenResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
-
-// method id "playgrouping.apps.tokens.verify":
 
 type AppsTokensVerifyCall struct {
 	s                  *Service
@@ -324,11 +292,10 @@ type AppsTokensVerifyCall struct {
 	header_            http.Header
 }
 
-// Verify: Verify an API token by asserting the app and persona it
-// belongs to. The verification is a protection against client-side
-// attacks and will fail if the contents of the token don't match the
-// provided values. A token must be verified before it can be used to
-// manipulate user tags.
+// Verify: Verify an API token by asserting the app and persona it belongs to.
+// The verification is a protection against client-side attacks and will fail
+// if the contents of the token don't match the provided values. A token must
+// be verified before it can be used to manipulate user tags.
 //
 // - appPackage: App the token belongs to. Format: apps/{package_name}.
 // - token: The token to be verified. Format: tokens/{token}.
@@ -341,23 +308,21 @@ func (r *AppsTokensService) Verify(appPackage string, token string, verifytokenr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsTokensVerifyCall) Fields(s ...googleapi.Field) *AppsTokensVerifyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsTokensVerifyCall) Context(ctx context.Context) *AppsTokensVerifyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsTokensVerifyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -366,18 +331,12 @@ func (c *AppsTokensVerifyCall) Header() http.Header {
 }
 
 func (c *AppsTokensVerifyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.verifytokenrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+appPackage}/{+token}:verify")
@@ -395,12 +354,11 @@ func (c *AppsTokensVerifyCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "playgrouping.apps.tokens.verify" call.
-// Exactly one of *VerifyTokenResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *VerifyTokenResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *VerifyTokenResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AppsTokensVerifyCall) Do(opts ...googleapi.CallOption) (*VerifyTokenResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -431,43 +389,7 @@ func (c *AppsTokensVerifyCall) Do(opts ...googleapi.CallOption) (*VerifyTokenRes
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Verify an API token by asserting the app and persona it belongs to. The verification is a protection against client-side attacks and will fail if the contents of the token don't match the provided values. A token must be verified before it can be used to manipulate user tags.",
-	//   "flatPath": "v1alpha1/apps/{appsId}/tokens/{tokensId}:verify",
-	//   "httpMethod": "POST",
-	//   "id": "playgrouping.apps.tokens.verify",
-	//   "parameterOrder": [
-	//     "appPackage",
-	//     "token"
-	//   ],
-	//   "parameters": {
-	//     "appPackage": {
-	//       "description": "Required. App the token belongs to. Format: apps/{package_name}",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "token": {
-	//       "description": "Required. The token to be verified. Format: tokens/{token}",
-	//       "location": "path",
-	//       "pattern": "^tokens/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+appPackage}/{+token}:verify",
-	//   "request": {
-	//     "$ref": "VerifyTokenRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "VerifyTokenResponse"
-	//   }
-	// }
-
 }
-
-// method id "playgrouping.apps.tokens.tags.createOrUpdate":
 
 type AppsTokensTagsCreateOrUpdateCall struct {
 	s                         *Service
@@ -484,8 +406,8 @@ type AppsTokensTagsCreateOrUpdateCall struct {
 //
 //   - appPackage: App whose tags are being manipulated. Format:
 //     apps/{package_name}.
-//   - token: Token for which the tags are being inserted or updated.
-//     Format: tokens/{token}.
+//   - token: Token for which the tags are being inserted or updated. Format:
+//     tokens/{token}.
 func (r *AppsTokensTagsService) CreateOrUpdate(appPackage string, token string, createorupdatetagsrequest *CreateOrUpdateTagsRequest) *AppsTokensTagsCreateOrUpdateCall {
 	c := &AppsTokensTagsCreateOrUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appPackage = appPackage
@@ -495,23 +417,21 @@ func (r *AppsTokensTagsService) CreateOrUpdate(appPackage string, token string, 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsTokensTagsCreateOrUpdateCall) Fields(s ...googleapi.Field) *AppsTokensTagsCreateOrUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsTokensTagsCreateOrUpdateCall) Context(ctx context.Context) *AppsTokensTagsCreateOrUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsTokensTagsCreateOrUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -520,18 +440,12 @@ func (c *AppsTokensTagsCreateOrUpdateCall) Header() http.Header {
 }
 
 func (c *AppsTokensTagsCreateOrUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createorupdatetagsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+appPackage}/{+token}/tags:createOrUpdate")
@@ -549,12 +463,11 @@ func (c *AppsTokensTagsCreateOrUpdateCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "playgrouping.apps.tokens.tags.createOrUpdate" call.
-// Exactly one of *CreateOrUpdateTagsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *CreateOrUpdateTagsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *CreateOrUpdateTagsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AppsTokensTagsCreateOrUpdateCall) Do(opts ...googleapi.CallOption) (*CreateOrUpdateTagsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -585,38 +498,4 @@ func (c *AppsTokensTagsCreateOrUpdateCall) Do(opts ...googleapi.CallOption) (*Cr
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create or update tags for the user and app that are represented by the given token.",
-	//   "flatPath": "v1alpha1/apps/{appsId}/tokens/{tokensId}/tags:createOrUpdate",
-	//   "httpMethod": "POST",
-	//   "id": "playgrouping.apps.tokens.tags.createOrUpdate",
-	//   "parameterOrder": [
-	//     "appPackage",
-	//     "token"
-	//   ],
-	//   "parameters": {
-	//     "appPackage": {
-	//       "description": "Required. App whose tags are being manipulated. Format: apps/{package_name}",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "token": {
-	//       "description": "Required. Token for which the tags are being inserted or updated. Format: tokens/{token}",
-	//       "location": "path",
-	//       "pattern": "^tokens/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+appPackage}/{+token}/tags:createOrUpdate",
-	//   "request": {
-	//     "$ref": "CreateOrUpdateTagsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "CreateOrUpdateTagsResponse"
-	//   }
-	// }
-
 }

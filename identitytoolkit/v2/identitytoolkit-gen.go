@@ -100,8 +100,8 @@ const mtlsBasePath = "https://identitytoolkit.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and administer all your Firebase data and settings
@@ -329,365 +329,276 @@ type V2Service struct {
 }
 
 // GoogleCloudIdentitytoolkitAdminV2AllowByDefault: Defines a policy of
-// allowing every region by default and adding disallowed regions to a
-// disallow list.
+// allowing every region by default and adding disallowed regions to a disallow
+// list.
 type GoogleCloudIdentitytoolkitAdminV2AllowByDefault struct {
-	// DisallowedRegions: Two letter unicode region codes to disallow as
-	// defined by https://cldr.unicode.org/ The full list of these region
-	// codes is here:
+	// DisallowedRegions: Two letter unicode region codes to disallow as defined by
+	// https://cldr.unicode.org/ The full list of these region codes is here:
 	// https://github.com/unicode-cldr/cldr-localenames-full/blob/master/main/en/territories.json
 	DisallowedRegions []string `json:"disallowedRegions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DisallowedRegions")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DisallowedRegions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisallowedRegions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DisallowedRegions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2AllowByDefault) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2AllowByDefault
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2AllowlistOnly: Defines a policy of
-// only allowing regions by explicitly adding them to an allowlist.
+// GoogleCloudIdentitytoolkitAdminV2AllowlistOnly: Defines a policy of only
+// allowing regions by explicitly adding them to an allowlist.
 type GoogleCloudIdentitytoolkitAdminV2AllowlistOnly struct {
-	// AllowedRegions: Two letter unicode region codes to allow as defined
-	// by https://cldr.unicode.org/ The full list of these region codes is
-	// here:
+	// AllowedRegions: Two letter unicode region codes to allow as defined by
+	// https://cldr.unicode.org/ The full list of these region codes is here:
 	// https://github.com/unicode-cldr/cldr-localenames-full/blob/master/main/en/territories.json
 	AllowedRegions []string `json:"allowedRegions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AllowedRegions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowedRegions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AllowedRegions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2AllowlistOnly) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2AllowlistOnly
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2Anonymous: Configuration options
-// related to authenticating an anonymous user.
+// GoogleCloudIdentitytoolkitAdminV2Anonymous: Configuration options related to
+// authenticating an anonymous user.
 type GoogleCloudIdentitytoolkitAdminV2Anonymous struct {
-	// Enabled: Whether anonymous user auth is enabled for the project or
-	// not.
+	// Enabled: Whether anonymous user auth is enabled for the project or not.
 	Enabled bool `json:"enabled,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Anonymous) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Anonymous
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2AppleSignInConfig: Additional config
-// for SignInWithApple.
+// GoogleCloudIdentitytoolkitAdminV2AppleSignInConfig: Additional config for
+// SignInWithApple.
 type GoogleCloudIdentitytoolkitAdminV2AppleSignInConfig struct {
 	// BundleIds: A list of Bundle ID's usable by this project
-	BundleIds []string `json:"bundleIds,omitempty"`
-
+	BundleIds      []string                                         `json:"bundleIds,omitempty"`
 	CodeFlowConfig *GoogleCloudIdentitytoolkitAdminV2CodeFlowConfig `json:"codeFlowConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BundleIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BundleIds") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BundleIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2AppleSignInConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2AppleSignInConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2BlockingFunctionsConfig:
-// Configuration related to Blocking Functions.
+// GoogleCloudIdentitytoolkitAdminV2BlockingFunctionsConfig: Configuration
+// related to Blocking Functions.
 type GoogleCloudIdentitytoolkitAdminV2BlockingFunctionsConfig struct {
 	// ForwardInboundCredentials: The user credentials to include in the JWT
 	// payload that is sent to the registered Blocking Functions.
 	ForwardInboundCredentials *GoogleCloudIdentitytoolkitAdminV2ForwardInboundCredentials `json:"forwardInboundCredentials,omitempty"`
-
-	// Triggers: Map of Trigger to event type. Key should be one of the
-	// supported event types: "beforeCreate", "beforeSignIn"
+	// Triggers: Map of Trigger to event type. Key should be one of the supported
+	// event types: "beforeCreate", "beforeSignIn"
 	Triggers map[string]GoogleCloudIdentitytoolkitAdminV2Trigger `json:"triggers,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ForwardInboundCredentials") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ForwardInboundCredentials")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "ForwardInboundCredentials") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ForwardInboundCredentials") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2BlockingFunctionsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2BlockingFunctionsConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitAdminV2ClientConfig: Options related to how
 // clients making requests on behalf of a project should be configured.
 type GoogleCloudIdentitytoolkitAdminV2ClientConfig struct {
-	// ApiKey: Output only. API key that can be used when making requests
-	// for this project.
+	// ApiKey: Output only. API key that can be used when making requests for this
+	// project.
 	ApiKey string `json:"apiKey,omitempty"`
-
 	// FirebaseSubdomain: Output only. Firebase subdomain.
 	FirebaseSubdomain string `json:"firebaseSubdomain,omitempty"`
-
-	// Permissions: Configuration related to restricting a user's ability to
-	// affect their account.
+	// Permissions: Configuration related to restricting a user's ability to affect
+	// their account.
 	Permissions *GoogleCloudIdentitytoolkitAdminV2Permissions `json:"permissions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "ApiKey") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2ClientConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ClientConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2ClientPermissionConfig: Options
-// related to how clients making requests on behalf of a tenant should
-// be configured.
+// GoogleCloudIdentitytoolkitAdminV2ClientPermissionConfig: Options related to
+// how clients making requests on behalf of a tenant should be configured.
 type GoogleCloudIdentitytoolkitAdminV2ClientPermissionConfig struct {
-	// Permissions: Configuration related to restricting a user's ability to
-	// affect their account.
+	// Permissions: Configuration related to restricting a user's ability to affect
+	// their account.
 	Permissions *GoogleCloudIdentitytoolkitAdminV2ClientPermissions `json:"permissions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2ClientPermissionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ClientPermissionConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2ClientPermissions: Configuration
-// related to restricting a user's ability to affect their account.
+// GoogleCloudIdentitytoolkitAdminV2ClientPermissions: Configuration related to
+// restricting a user's ability to affect their account.
 type GoogleCloudIdentitytoolkitAdminV2ClientPermissions struct {
-	// DisabledUserDeletion: When true, end users cannot delete their
-	// account on the associated project through any of our API methods
+	// DisabledUserDeletion: When true, end users cannot delete their account on
+	// the associated project through any of our API methods
 	DisabledUserDeletion bool `json:"disabledUserDeletion,omitempty"`
-
-	// DisabledUserSignup: When true, end users cannot sign up for a new
-	// account on the associated project through any of our API methods
+	// DisabledUserSignup: When true, end users cannot sign up for a new account on
+	// the associated project through any of our API methods
 	DisabledUserSignup bool `json:"disabledUserSignup,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DisabledUserDeletion") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DisabledUserDeletion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisabledUserDeletion") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DisabledUserDeletion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2ClientPermissions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ClientPermissions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2CodeFlowConfig: Additional config
-// for Apple for code flow.
+// GoogleCloudIdentitytoolkitAdminV2CodeFlowConfig: Additional config for Apple
+// for code flow.
 type GoogleCloudIdentitytoolkitAdminV2CodeFlowConfig struct {
 	// KeyId: Key ID for the private key.
 	KeyId string `json:"keyId,omitempty"`
-
 	// PrivateKey: Private key used for signing the client secret JWT.
 	PrivateKey string `json:"privateKey,omitempty"`
-
 	// TeamId: Apple Developer Team ID.
 	TeamId string `json:"teamId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "KeyId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "KeyId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "KeyId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2CodeFlowConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2CodeFlowConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2Config: Represents an Identity
-// Toolkit project.
+// GoogleCloudIdentitytoolkitAdminV2Config: Represents an Identity Toolkit
+// project.
 type GoogleCloudIdentitytoolkitAdminV2Config struct {
 	// AuthorizedDomains: List of domains authorized for OAuth redirects
 	AuthorizedDomains []string `json:"authorizedDomains,omitempty"`
-
-	// AutodeleteAnonymousUsers: Whether anonymous users will be
-	// auto-deleted after a period of 30 days.
+	// AutodeleteAnonymousUsers: Whether anonymous users will be auto-deleted after
+	// a period of 30 days.
 	AutodeleteAnonymousUsers bool `json:"autodeleteAnonymousUsers,omitempty"`
-
 	// BlockingFunctions: Configuration related to blocking functions.
 	BlockingFunctions *GoogleCloudIdentitytoolkitAdminV2BlockingFunctionsConfig `json:"blockingFunctions,omitempty"`
-
 	// Client: Options related to how clients making requests on behalf of a
 	// project should be configured.
 	Client *GoogleCloudIdentitytoolkitAdminV2ClientConfig `json:"client,omitempty"`
-
-	// EmailPrivacyConfig: Configuration for settings related to email
-	// privacy and public visibility.
+	// EmailPrivacyConfig: Configuration for settings related to email privacy and
+	// public visibility.
 	EmailPrivacyConfig *GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig `json:"emailPrivacyConfig,omitempty"`
-
-	// Mfa: Configuration for this project's multi-factor authentication,
-	// including whether it is active and what factors can be used for the
-	// second factor
+	// Mfa: Configuration for this project's multi-factor authentication, including
+	// whether it is active and what factors can be used for the second factor
 	Mfa *GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig `json:"mfa,omitempty"`
-
 	// Monitoring: Configuration related to monitoring project activity.
 	Monitoring *GoogleCloudIdentitytoolkitAdminV2MonitoringConfig `json:"monitoring,omitempty"`
-
 	// MultiTenant: Configuration related to multi-tenant functionality.
 	MultiTenant *GoogleCloudIdentitytoolkitAdminV2MultiTenantConfig `json:"multiTenant,omitempty"`
-
 	// Name: Output only. The name of the Config resource. Example:
 	// "projects/my-awesome-project/config"
 	Name string `json:"name,omitempty"`
-
-	// Notification: Configuration related to sending notifications to
-	// users.
+	// Notification: Configuration related to sending notifications to users.
 	Notification *GoogleCloudIdentitytoolkitAdminV2NotificationConfig `json:"notification,omitempty"`
-
-	// PasswordPolicyConfig: The project level password policy
-	// configuration.
+	// PasswordPolicyConfig: The project level password policy configuration.
 	PasswordPolicyConfig *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig `json:"passwordPolicyConfig,omitempty"`
-
 	// Quota: Configuration related to quotas.
 	Quota *GoogleCloudIdentitytoolkitAdminV2QuotaConfig `json:"quota,omitempty"`
-
 	// RecaptchaConfig: The project-level reCAPTCHA config.
 	RecaptchaConfig *GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig `json:"recaptchaConfig,omitempty"`
-
 	// SignIn: Configuration related to local sign in methods.
 	SignIn *GoogleCloudIdentitytoolkitAdminV2SignInConfig `json:"signIn,omitempty"`
-
-	// SmsRegionConfig: Configures which regions are enabled for SMS
-	// verification code sending.
+	// SmsRegionConfig: Configures which regions are enabled for SMS verification
+	// code sending.
 	SmsRegionConfig *GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig `json:"smsRegionConfig,omitempty"`
-
 	// Subtype: Output only. The subtype of this config.
 	//
 	// Possible values:
@@ -696,303 +607,234 @@ type GoogleCloudIdentitytoolkitAdminV2Config struct {
 	//   "FIREBASE_AUTH" - A Firebase Authentication project.
 	Subtype string `json:"subtype,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AuthorizedDomains")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AuthorizedDomains") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuthorizedDomains") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AuthorizedDomains") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Config) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Config
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions: Custom
-// strength options to enforce on user passwords.
+// GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions: Custom strength
+// options to enforce on user passwords.
 type GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions struct {
 	// ContainsLowercaseCharacter: The password must contain a lower case
 	// character.
 	ContainsLowercaseCharacter bool `json:"containsLowercaseCharacter,omitempty"`
-
-	// ContainsNonAlphanumericCharacter: The password must contain a non
-	// alpha numeric character.
+	// ContainsNonAlphanumericCharacter: The password must contain a non alpha
+	// numeric character.
 	ContainsNonAlphanumericCharacter bool `json:"containsNonAlphanumericCharacter,omitempty"`
-
 	// ContainsNumericCharacter: The password must contain a number.
 	ContainsNumericCharacter bool `json:"containsNumericCharacter,omitempty"`
-
 	// ContainsUppercaseCharacter: The password must contain an upper case
 	// character.
 	ContainsUppercaseCharacter bool `json:"containsUppercaseCharacter,omitempty"`
-
 	// MaxPasswordLength: Maximum password length. No default max length
 	MaxPasswordLength int64 `json:"maxPasswordLength,omitempty"`
-
 	// MinPasswordLength: Minimum password length. Range from 6 to 30
 	MinPasswordLength int64 `json:"minPasswordLength,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ContainsLowercaseCharacter") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ContainsLowercaseCharacter")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "ContainsLowercaseCharacter") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContainsLowercaseCharacter") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdp: Standard
-// Identity Toolkit-trusted IDPs.
+// GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdp: Standard Identity
+// Toolkit-trusted IDPs.
 type GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdp struct {
 	// Description: Description of the Idp
 	Description string `json:"description,omitempty"`
-
 	// IdpId: Id the of Idp
 	IdpId string `json:"idpId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdp) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdp
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig:
-// Configurations options for authenticating with a the standard set of
-// Identity Toolkit-trusted IDPs.
+// GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig: Configurations
+// options for authenticating with a the standard set of Identity
+// Toolkit-trusted IDPs.
 type GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig struct {
 	// AppleSignInConfig: Additional config for Apple-based projects.
 	AppleSignInConfig *GoogleCloudIdentitytoolkitAdminV2AppleSignInConfig `json:"appleSignInConfig,omitempty"`
-
 	// ClientId: OAuth client ID.
 	ClientId string `json:"clientId,omitempty"`
-
 	// ClientSecret: OAuth client secret.
 	ClientSecret string `json:"clientSecret,omitempty"`
-
 	// Enabled: True if allows the user to sign in with the provider.
 	Enabled bool `json:"enabled,omitempty"`
-
-	// Name: The name of the DefaultSupportedIdpConfig resource, for
-	// example:
+	// Name: The name of the DefaultSupportedIdpConfig resource, for example:
 	// "projects/my-awesome-project/defaultSupportedIdpConfigs/google.com"
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AppleSignInConfig")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AppleSignInConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppleSignInConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AppleSignInConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2DnsInfo: Information of custom
-// domain DNS verification. By default, default_domain will be used. A
-// custom domain can be configured using VerifyCustomDomain.
+// GoogleCloudIdentitytoolkitAdminV2DnsInfo: Information of custom domain DNS
+// verification. By default, default_domain will be used. A custom domain can
+// be configured using VerifyCustomDomain.
 type GoogleCloudIdentitytoolkitAdminV2DnsInfo struct {
 	// CustomDomain: Output only. The applied verified custom domain.
 	CustomDomain string `json:"customDomain,omitempty"`
-
-	// CustomDomainState: Output only. The current verification state of the
-	// custom domain. The custom domain will only be used once the domain
-	// verification is successful.
+	// CustomDomainState: Output only. The current verification state of the custom
+	// domain. The custom domain will only be used once the domain verification is
+	// successful.
 	//
 	// Possible values:
 	//   "VERIFICATION_STATE_UNSPECIFIED" - Default value. Do not use.
 	//   "NOT_STARTED" - The verification has not started.
 	//   "IN_PROGRESS" - The verification is in progress.
 	//   "FAILED" - The verification failed.
-	//   "SUCCEEDED" - The verification succeeded and is ready to be
-	// applied.
+	//   "SUCCEEDED" - The verification succeeded and is ready to be applied.
 	CustomDomainState string `json:"customDomainState,omitempty"`
-
-	// DomainVerificationRequestTime: Output only. The timestamp of initial
-	// request for the current domain verification.
+	// DomainVerificationRequestTime: Output only. The timestamp of initial request
+	// for the current domain verification.
 	DomainVerificationRequestTime string `json:"domainVerificationRequestTime,omitempty"`
-
-	// PendingCustomDomain: Output only. The custom domain that's to be
-	// verified.
+	// PendingCustomDomain: Output only. The custom domain that's to be verified.
 	PendingCustomDomain string `json:"pendingCustomDomain,omitempty"`
-
 	// UseCustomDomain: Whether to use custom domain.
 	UseCustomDomain bool `json:"useCustomDomain,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CustomDomain") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomDomain") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CustomDomain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2DnsInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2DnsInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2Email: Configuration options related
-// to authenticating a user by their email address.
+// GoogleCloudIdentitytoolkitAdminV2Email: Configuration options related to
+// authenticating a user by their email address.
 type GoogleCloudIdentitytoolkitAdminV2Email struct {
 	// Enabled: Whether email auth is enabled for the project or not.
 	Enabled bool `json:"enabled,omitempty"`
-
-	// PasswordRequired: Whether a password is required for email auth or
-	// not. If true, both an email and password must be provided to sign in.
-	// If false, a user may sign in via either email/password or email link.
+	// PasswordRequired: Whether a password is required for email auth or not. If
+	// true, both an email and password must be provided to sign in. If false, a
+	// user may sign in via either email/password or email link.
 	PasswordRequired bool `json:"passwordRequired,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Email) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Email
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig: Configuration
-// for settings related to email privacy and public visibility. Settings
-// in this config protect against email enumeration, but may make some
-// trade-offs in user-friendliness.
+// GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig: Configuration for
+// settings related to email privacy and public visibility. Settings in this
+// config protect against email enumeration, but may make some trade-offs in
+// user-friendliness.
 type GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig struct {
-	// EnableImprovedEmailPrivacy: Migrates the project to a state of
-	// improved email privacy. For example certain error codes are more
-	// generic to avoid giving away information on whether the account
-	// exists. In addition, this disables certain features that as a
-	// side-effect allow user enumeration. Enabling this toggle disables the
-	// fetchSignInMethodsForEmail functionality and changing the user's
-	// email to an unverified email. It is recommended to remove dependence
-	// on this functionality and enable this toggle to improve user privacy.
+	// EnableImprovedEmailPrivacy: Migrates the project to a state of improved
+	// email privacy. For example certain error codes are more generic to avoid
+	// giving away information on whether the account exists. In addition, this
+	// disables certain features that as a side-effect allow user enumeration.
+	// Enabling this toggle disables the fetchSignInMethodsForEmail functionality
+	// and changing the user's email to an unverified email. It is recommended to
+	// remove dependence on this functionality and enable this toggle to improve
+	// user privacy.
 	EnableImprovedEmailPrivacy bool `json:"enableImprovedEmailPrivacy,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "EnableImprovedEmailPrivacy") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EnableImprovedEmailPrivacy")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "EnableImprovedEmailPrivacy") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EnableImprovedEmailPrivacy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2EmailTemplate: Email template. The
-// subject and body fields can contain the following placeholders which
-// will be replaced with the appropriate values: %LINK% - The link to
-// use to redeem the send OOB code. %EMAIL% - The email where the email
-// is being sent. %NEW_EMAIL% - The new email being set for the account
-// (when applicable). %APP_NAME% - The GCP project's display name.
-// %DISPLAY_NAME% - The user's display name.
+// GoogleCloudIdentitytoolkitAdminV2EmailTemplate: Email template. The subject
+// and body fields can contain the following placeholders which will be
+// replaced with the appropriate values: %LINK% - The link to use to redeem the
+// send OOB code. %EMAIL% - The email where the email is being sent.
+// %NEW_EMAIL% - The new email being set for the account (when applicable).
+// %APP_NAME% - The Google Cloud project's display name. %DISPLAY_NAME% - The
+// user's display name.
 type GoogleCloudIdentitytoolkitAdminV2EmailTemplate struct {
 	// Body: Email body
 	Body string `json:"body,omitempty"`
-
 	// BodyFormat: Email body format
 	//
 	// Possible values:
@@ -1000,90 +842,70 @@ type GoogleCloudIdentitytoolkitAdminV2EmailTemplate struct {
 	//   "PLAIN_TEXT" - Plain text
 	//   "HTML" - HTML
 	BodyFormat string `json:"bodyFormat,omitempty"`
-
 	// Customized: Output only. Whether the body or subject of the email is
 	// customized.
 	Customized bool `json:"customized,omitempty"`
-
 	// ReplyTo: Reply-to address
 	ReplyTo string `json:"replyTo,omitempty"`
-
 	// SenderDisplayName: Sender display name
 	SenderDisplayName string `json:"senderDisplayName,omitempty"`
-
 	// SenderLocalPart: Local part of From address
 	SenderLocalPart string `json:"senderLocalPart,omitempty"`
-
 	// Subject: Subject of the email
 	Subject string `json:"subject,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Body") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Body") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2EmailTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2EmailTemplate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2ForwardInboundCredentials: Indicates
-// which credentials to pass to the registered Blocking Functions.
+// GoogleCloudIdentitytoolkitAdminV2ForwardInboundCredentials: Indicates which
+// credentials to pass to the registered Blocking Functions.
 type GoogleCloudIdentitytoolkitAdminV2ForwardInboundCredentials struct {
-	// AccessToken: Whether to pass the user's OAuth identity provider's
-	// access token.
-	AccessToken bool `json:"accessToken,omitempty"`
-
-	// IdToken: Whether to pass the user's OIDC identity provider's ID
+	// AccessToken: Whether to pass the user's OAuth identity provider's access
 	// token.
+	AccessToken bool `json:"accessToken,omitempty"`
+	// IdToken: Whether to pass the user's OIDC identity provider's ID token.
 	IdToken bool `json:"idToken,omitempty"`
-
-	// RefreshToken: Whether to pass the user's OAuth identity provider's
-	// refresh token.
+	// RefreshToken: Whether to pass the user's OAuth identity provider's refresh
+	// token.
 	RefreshToken bool `json:"refreshToken,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AccessToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccessToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccessToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2ForwardInboundCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ForwardInboundCredentials
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2HashConfig: History information of
-// the hash algorithm and key. Different accounts' passwords may be
-// generated by different version.
+// GoogleCloudIdentitytoolkitAdminV2HashConfig: History information of the hash
+// algorithm and key. Different accounts' passwords may be generated by
+// different version.
 type GoogleCloudIdentitytoolkitAdminV2HashConfig struct {
-	// Algorithm: Output only. Different password hash algorithms used in
-	// Identity Toolkit.
+	// Algorithm: Output only. Different password hash algorithms used in Identity
+	// Toolkit.
 	//
 	// Possible values:
 	//   "HASH_ALGORITHM_UNSPECIFIED" - Default value. Do not use.
@@ -1101,436 +923,336 @@ type GoogleCloudIdentitytoolkitAdminV2HashConfig struct {
 	//   "SHA512" - SHA512
 	//   "STANDARD_SCRYPT" - STANDARD_SCRYPT
 	Algorithm string `json:"algorithm,omitempty"`
-
-	// MemoryCost: Output only. Memory cost for hash calculation. Used by
-	// scrypt and other similar password derivation algorithms. See
+	// MemoryCost: Output only. Memory cost for hash calculation. Used by scrypt
+	// and other similar password derivation algorithms. See
 	// https://tools.ietf.org/html/rfc7914 for explanation of field.
 	MemoryCost int64 `json:"memoryCost,omitempty"`
-
-	// Rounds: Output only. How many rounds for hash calculation. Used by
-	// scrypt and other similar password derivation algorithms.
+	// Rounds: Output only. How many rounds for hash calculation. Used by scrypt
+	// and other similar password derivation algorithms.
 	Rounds int64 `json:"rounds,omitempty"`
-
-	// SaltSeparator: Output only. Non-printable character to be inserted
-	// between the salt and plain text password in base64.
+	// SaltSeparator: Output only. Non-printable character to be inserted between
+	// the salt and plain text password in base64.
 	SaltSeparator string `json:"saltSeparator,omitempty"`
-
 	// SignerKey: Output only. Signer key in base64.
 	SignerKey string `json:"signerKey,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Algorithm") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Algorithm") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2HashConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2HashConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2IdpCertificate: The IDP's
-// certificate data to verify the signature in the SAMLResponse issued
-// by the IDP.
+// GoogleCloudIdentitytoolkitAdminV2IdpCertificate: The IDP's certificate data
+// to verify the signature in the SAMLResponse issued by the IDP.
 type GoogleCloudIdentitytoolkitAdminV2IdpCertificate struct {
 	// X509Certificate: The x509 certificate
 	X509Certificate string `json:"x509Certificate,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "X509Certificate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "X509Certificate") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "X509Certificate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2IdpCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2IdpCertificate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2IdpConfig: The SAML IdP (Identity
-// Provider) configuration when the project acts as the relying party.
+// GoogleCloudIdentitytoolkitAdminV2IdpConfig: The SAML IdP (Identity Provider)
+// configuration when the project acts as the relying party.
 type GoogleCloudIdentitytoolkitAdminV2IdpConfig struct {
 	// IdpCertificates: IDP's public keys for verifying signature in the
 	// assertions.
 	IdpCertificates []*GoogleCloudIdentitytoolkitAdminV2IdpCertificate `json:"idpCertificates,omitempty"`
-
 	// IdpEntityId: Unique identifier for all SAML entities.
 	IdpEntityId string `json:"idpEntityId,omitempty"`
-
 	// SignRequest: Indicates if outbounding SAMLRequest should be signed.
 	SignRequest bool `json:"signRequest,omitempty"`
-
 	// SsoUrl: URL to send Authentication request to.
 	SsoUrl string `json:"ssoUrl,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IdpCertificates") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IdpCertificates") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "IdpCertificates") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2IdpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2IdpConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig: A pair of SAML
-// RP-IDP configurations when the project acts as the relying party.
+// GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig: A pair of SAML RP-IDP
+// configurations when the project acts as the relying party.
 type GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig struct {
 	// DisplayName: The config's display name set by developers.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Enabled: True if allows the user to sign in with the provider.
 	Enabled bool `json:"enabled,omitempty"`
-
-	// IdpConfig: The SAML IdP (Identity Provider) configuration when the
-	// project acts as the relying party.
+	// IdpConfig: The SAML IdP (Identity Provider) configuration when the project
+	// acts as the relying party.
 	IdpConfig *GoogleCloudIdentitytoolkitAdminV2IdpConfig `json:"idpConfig,omitempty"`
-
 	// Name: The name of the InboundSamlConfig resource, for example:
-	// 'projects/my-awesome-project/inboundSamlConfigs/my-config-id'.
-	// Ignored during create requests.
+	// 'projects/my-awesome-project/inboundSamlConfigs/my-config-id'. Ignored
+	// during create requests.
 	Name string `json:"name,omitempty"`
-
-	// SpConfig: The SAML SP (Service Provider) configuration when the
-	// project acts as the relying party to receive and accept an
-	// authentication assertion issued by a SAML identity provider.
+	// SpConfig: The SAML SP (Service Provider) configuration when the project acts
+	// as the relying party to receive and accept an authentication assertion
+	// issued by a SAML identity provider.
 	SpConfig *GoogleCloudIdentitytoolkitAdminV2SpConfig `json:"spConfig,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2Inheritance: Settings that the
-// tenants will inherit from project level.
+// GoogleCloudIdentitytoolkitAdminV2Inheritance: Settings that the tenants will
+// inherit from project level.
 type GoogleCloudIdentitytoolkitAdminV2Inheritance struct {
-	// EmailSendingConfig: Whether to allow the tenant to inherit custom
-	// domains, email templates, and custom SMTP settings. If true, email
-	// sent from tenant will follow the project level email sending
-	// configurations. If false (by default), emails will go with the
-	// default settings with no customizations.
+	// EmailSendingConfig: Whether to allow the tenant to inherit custom domains,
+	// email templates, and custom SMTP settings. If true, email sent from tenant
+	// will follow the project level email sending configurations. If false (by
+	// default), emails will go with the default settings with no customizations.
 	EmailSendingConfig bool `json:"emailSendingConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EmailSendingConfig")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EmailSendingConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EmailSendingConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EmailSendingConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Inheritance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Inheritance
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformRequest:
-// Request for InitializeIdentityPlatform.
+// GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformRequest: Request
+// for InitializeIdentityPlatform.
 type GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformRequest struct {
 }
 
 // GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse:
 // Response for InitializeIdentityPlatform. Empty for now.
 type GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsRespons
-// e: Response for DefaultSupportedIdpConfigs
+// GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse:
+// Response for DefaultSupportedIdpConfigs
 type GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse struct {
 	// DefaultSupportedIdpConfigs: The set of configs.
 	DefaultSupportedIdpConfigs []*GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig `json:"defaultSupportedIdpConfigs,omitempty"`
-
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DefaultSupportedIdpConfigs") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DefaultSupportedIdpConfigs")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "DefaultSupportedIdpConfigs") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultSupportedIdpConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse:
-// Response for ListDefaultSupportedIdps
+// GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse: Response
+// for ListDefaultSupportedIdps
 type GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse struct {
 	// DefaultSupportedIdps: The set of configs.
 	DefaultSupportedIdps []*GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdp `json:"defaultSupportedIdps,omitempty"`
-
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DefaultSupportedIdps") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DefaultSupportedIdps") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DefaultSupportedIdps") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DefaultSupportedIdps") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse:
-// Response for ListInboundSamlConfigs
+// GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse: Response
+// for ListInboundSamlConfigs
 type GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse struct {
 	// InboundSamlConfigs: The set of configs.
 	InboundSamlConfigs []*GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig `json:"inboundSamlConfigs,omitempty"`
-
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "InboundSamlConfigs")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "InboundSamlConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InboundSamlConfigs") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "InboundSamlConfigs") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse:
-// Response for ListOAuthIdpConfigs
+// GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse: Response for
+// ListOAuthIdpConfigs
 type GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse struct {
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// OauthIdpConfigs: The set of configs.
 	OauthIdpConfigs []*GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig `json:"oauthIdpConfigs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse: Response
-// message for ListTenants.
+// GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse: Response message for
+// ListTenants.
 type GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse struct {
 	// NextPageToken: The token to get the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Tenants: A list of tenants under the given agent project.
 	Tenants []*GoogleCloudIdentitytoolkitAdminV2Tenant `json:"tenants,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2MonitoringConfig: Configuration
-// related to monitoring project activity.
+// GoogleCloudIdentitytoolkitAdminV2MonitoringConfig: Configuration related to
+// monitoring project activity.
 type GoogleCloudIdentitytoolkitAdminV2MonitoringConfig struct {
-	// RequestLogging: Configuration for logging requests made to this
-	// project to Stackdriver Logging
+	// RequestLogging: Configuration for logging requests made to this project to
+	// Stackdriver Logging
 	RequestLogging *GoogleCloudIdentitytoolkitAdminV2RequestLogging `json:"requestLogging,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "RequestLogging") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequestLogging") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "RequestLogging") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2MonitoringConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2MonitoringConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig: Options
-// related to MultiFactor Authentication for the project.
+// GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig: Options related to
+// MultiFactor Authentication for the project.
 type GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig struct {
 	// EnabledProviders: A list of usable second factors for this project.
 	//
@@ -1538,514 +1260,389 @@ type GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig struct {
 	//   "PROVIDER_UNSPECIFIED" - Illegal Provider, should not be used
 	//   "PHONE_SMS" - SMS is enabled as a second factor for this project.
 	EnabledProviders []string `json:"enabledProviders,omitempty"`
-
-	// ProviderConfigs: A list of usable second factors for this project
-	// along with their configurations. This field does not support phone
-	// based MFA, for that use the 'enabled_providers' field.
+	// ProviderConfigs: A list of usable second factors for this project along with
+	// their configurations. This field does not support phone based MFA, for that
+	// use the 'enabled_providers' field.
 	ProviderConfigs []*GoogleCloudIdentitytoolkitAdminV2ProviderConfig `json:"providerConfigs,omitempty"`
-
-	// State: Whether MultiFactor Authentication has been enabled for this
-	// project.
+	// State: Whether MultiFactor Authentication has been enabled for this project.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Illegal State, should not be used.
-	//   "DISABLED" - Multi-factor authentication cannot be used for this
-	// project
-	//   "ENABLED" - Multi-factor authentication can be used for this
-	// project
-	//   "MANDATORY" - Multi-factor authentication is required for this
-	// project. Users from this project must authenticate with the second
-	// factor.
+	//   "DISABLED" - Multi-factor authentication cannot be used for this project
+	//   "ENABLED" - Multi-factor authentication can be used for this project
+	//   "MANDATORY" - Multi-factor authentication is required for this project.
+	// Users from this project must authenticate with the second factor.
 	State string `json:"state,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EnabledProviders") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EnabledProviders") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EnabledProviders") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2MultiTenantConfig: Configuration
-// related to multi-tenant functionality.
+// GoogleCloudIdentitytoolkitAdminV2MultiTenantConfig: Configuration related to
+// multi-tenant functionality.
 type GoogleCloudIdentitytoolkitAdminV2MultiTenantConfig struct {
 	// AllowTenants: Whether this project can have tenants or not.
 	AllowTenants bool `json:"allowTenants,omitempty"`
-
-	// DefaultTenantLocation: The default cloud parent org or folder that
-	// the tenant project should be created under. The parent resource name
-	// should be in the format of "/", such as "folders/123" or
-	// "organizations/456". If the value is not set, the tenant will be
-	// created under the same organization or folder as the agent project.
+	// DefaultTenantLocation: The default cloud parent org or folder that the
+	// tenant project should be created under. The parent resource name should be
+	// in the format of "/", such as "folders/123" or "organizations/456". If the
+	// value is not set, the tenant will be created under the same organization or
+	// folder as the agent project.
 	DefaultTenantLocation string `json:"defaultTenantLocation,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AllowTenants") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowTenants") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AllowTenants") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2MultiTenantConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2MultiTenantConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2NotificationConfig: Configuration
-// related to sending notifications to users.
+// GoogleCloudIdentitytoolkitAdminV2NotificationConfig: Configuration related
+// to sending notifications to users.
 type GoogleCloudIdentitytoolkitAdminV2NotificationConfig struct {
-	// DefaultLocale: Default locale used for email and SMS in IETF BCP 47
-	// format.
+	// DefaultLocale: Default locale used for email and SMS in IETF BCP 47 format.
 	DefaultLocale string `json:"defaultLocale,omitempty"`
-
 	// SendEmail: Options for email sending.
 	SendEmail *GoogleCloudIdentitytoolkitAdminV2SendEmail `json:"sendEmail,omitempty"`
-
 	// SendSms: Options for SMS sending.
 	SendSms *GoogleCloudIdentitytoolkitAdminV2SendSms `json:"sendSms,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DefaultLocale") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DefaultLocale") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultLocale") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2NotificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2NotificationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig: Configuration
-// options for authenticating with an OAuth IDP.
+// GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig: Configuration options for
+// authenticating with an OAuth IDP.
 type GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig struct {
 	// ClientId: The client id of an OAuth client.
 	ClientId string `json:"clientId,omitempty"`
-
-	// ClientSecret: The client secret of the OAuth client, to enable OIDC
-	// code flow.
+	// ClientSecret: The client secret of the OAuth client, to enable OIDC code
+	// flow.
 	ClientSecret string `json:"clientSecret,omitempty"`
-
 	// DisplayName: The config's display name set by developers.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Enabled: True if allows the user to sign in with the provider.
 	Enabled bool `json:"enabled,omitempty"`
-
 	// Issuer: For OIDC Idps, the issuer identifier.
 	Issuer string `json:"issuer,omitempty"`
-
 	// Name: The name of the OAuthIdpConfig resource, for example:
-	// 'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'.
-	// Ignored during create requests.
+	// 'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'. Ignored
+	// during create requests.
 	Name string `json:"name,omitempty"`
-
-	// ResponseType: The response type to request for in the OAuth
-	// authorization flow. You can set either `id_token` or `code` to true,
-	// but not both. Setting both types to be simultaneously true (`{code:
-	// true, id_token: true}`) is not yet supported.
+	// ResponseType: The response type to request for in the OAuth authorization
+	// flow. You can set either `id_token` or `code` to true, but not both. Setting
+	// both types to be simultaneously true (`{code: true, id_token: true}`) is not
+	// yet supported.
 	ResponseType *GoogleCloudIdentitytoolkitAdminV2OAuthResponseType `json:"responseType,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2OAuthResponseType: The response type
-// to request for in the OAuth authorization flow. You can set either
-// `id_token` or `code` to true, but not both. Setting both types to be
-// simultaneously true (`{code: true, id_token: true}`) is not yet
-// supported. See
-// https://openid.net/specs/openid-connect-core-1_0.html#Authentication
-// for a mapping of response type to OAuth 2.0 flow.
+// GoogleCloudIdentitytoolkitAdminV2OAuthResponseType: The response type to
+// request for in the OAuth authorization flow. You can set either `id_token`
+// or `code` to true, but not both. Setting both types to be simultaneously
+// true (`{code: true, id_token: true}`) is not yet supported. See
+// https://openid.net/specs/openid-connect-core-1_0.html#Authentication for a
+// mapping of response type to OAuth 2.0 flow.
 type GoogleCloudIdentitytoolkitAdminV2OAuthResponseType struct {
-	// Code: If true, authorization code is returned from IdP's
-	// authorization endpoint.
-	Code bool `json:"code,omitempty"`
-
-	// IdToken: If true, ID token is returned from IdP's authorization
+	// Code: If true, authorization code is returned from IdP's authorization
 	// endpoint.
+	Code bool `json:"code,omitempty"`
+	// IdToken: If true, ID token is returned from IdP's authorization endpoint.
 	IdToken bool `json:"idToken,omitempty"`
-
-	// Token: Do not use. The `token` response type is not supported at the
-	// moment.
+	// Token: Do not use. The `token` response type is not supported at the moment.
 	Token bool `json:"token,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2OAuthResponseType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2OAuthResponseType
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig: The
-// configuration for the password policy on the project.
+// GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig: The configuration for
+// the password policy on the project.
 type GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig struct {
-	// ForceUpgradeOnSignin: Users must have a password compliant with the
-	// password policy to sign-in.
+	// ForceUpgradeOnSignin: Users must have a password compliant with the password
+	// policy to sign-in.
 	ForceUpgradeOnSignin bool `json:"forceUpgradeOnSignin,omitempty"`
-
 	// LastUpdateTime: Output only. The last time the password policy on the
 	// project was updated.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
-
 	// PasswordPolicyEnforcementState: Which enforcement mode to use for the
 	// password policy.
 	//
 	// Possible values:
-	//   "PASSWORD_POLICY_ENFORCEMENT_STATE_UNSPECIFIED" - Illegal State,
-	// should not be used.
+	//   "PASSWORD_POLICY_ENFORCEMENT_STATE_UNSPECIFIED" - Illegal State, should
+	// not be used.
 	//   "OFF" - Password Policy will not be used on the project.
-	//   "ENFORCE" - Passwords non-compliant with the password policy will
-	// be rejected with an error thrown.
+	//   "ENFORCE" - Passwords non-compliant with the password policy will be
+	// rejected with an error thrown.
 	PasswordPolicyEnforcementState string `json:"passwordPolicyEnforcementState,omitempty"`
-
 	// PasswordPolicyVersions: Must be of length 1. Contains the strength
 	// attributes for the password policy.
 	PasswordPolicyVersions []*GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion `json:"passwordPolicyVersions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ForceUpgradeOnSignin") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ForceUpgradeOnSignin") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ForceUpgradeOnSignin") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ForceUpgradeOnSignin") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion: The strength
 // attributes for the password policy on the project.
 type GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion struct {
-	// CustomStrengthOptions: The custom strength options enforced by the
-	// password policy.
+	// CustomStrengthOptions: The custom strength options enforced by the password
+	// policy.
 	CustomStrengthOptions *GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions `json:"customStrengthOptions,omitempty"`
-
-	// SchemaVersion: Output only. schema version number for the password
-	// policy
+	// SchemaVersion: Output only. schema version number for the password policy
 	SchemaVersion int64 `json:"schemaVersion,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CustomStrengthOptions") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CustomStrengthOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "CustomStrengthOptions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2Permissions: Configuration related
-// to restricting a user's ability to affect their account.
+// GoogleCloudIdentitytoolkitAdminV2Permissions: Configuration related to
+// restricting a user's ability to affect their account.
 type GoogleCloudIdentitytoolkitAdminV2Permissions struct {
-	// DisabledUserDeletion: When true, end users cannot delete their
-	// account on the associated project through any of our API methods
+	// DisabledUserDeletion: When true, end users cannot delete their account on
+	// the associated project through any of our API methods
 	DisabledUserDeletion bool `json:"disabledUserDeletion,omitempty"`
-
-	// DisabledUserSignup: When true, end users cannot sign up for a new
-	// account on the associated project through any of our API methods
+	// DisabledUserSignup: When true, end users cannot sign up for a new account on
+	// the associated project through any of our API methods
 	DisabledUserSignup bool `json:"disabledUserSignup,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DisabledUserDeletion") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DisabledUserDeletion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisabledUserDeletion") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DisabledUserDeletion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Permissions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Permissions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2PhoneNumber: Configuration options
-// related to authenticated a user by their phone number.
+// GoogleCloudIdentitytoolkitAdminV2PhoneNumber: Configuration options related
+// to authenticated a user by their phone number.
 type GoogleCloudIdentitytoolkitAdminV2PhoneNumber struct {
 	// Enabled: Whether phone number auth is enabled for the project or not.
 	Enabled bool `json:"enabled,omitempty"`
-
 	// TestPhoneNumbers: A map of that can be used for phone auth testing.
 	TestPhoneNumbers map[string]string `json:"testPhoneNumbers,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2PhoneNumber) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2PhoneNumber
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2ProviderConfig: ProviderConfig
-// describes the supported MFA providers along with their
-// configurations.
+// GoogleCloudIdentitytoolkitAdminV2ProviderConfig: ProviderConfig describes
+// the supported MFA providers along with their configurations.
 type GoogleCloudIdentitytoolkitAdminV2ProviderConfig struct {
 	// State: Describes the state of the MultiFactor Authentication type.
 	//
 	// Possible values:
 	//   "MFA_STATE_UNSPECIFIED" - Illegal State, should not be used.
-	//   "DISABLED" - Multi-factor authentication cannot be used for this
-	// project.
-	//   "ENABLED" - Multi-factor authentication can be used for this
-	// project.
-	//   "MANDATORY" - Multi-factor authentication is required for this
-	// project. Users from this project must authenticate with the second
-	// factor.
+	//   "DISABLED" - Multi-factor authentication cannot be used for this project.
+	//   "ENABLED" - Multi-factor authentication can be used for this project.
+	//   "MANDATORY" - Multi-factor authentication is required for this project.
+	// Users from this project must authenticate with the second factor.
 	State string `json:"state,omitempty"`
-
 	// TotpProviderConfig: TOTP MFA provider config for this project.
 	TotpProviderConfig *GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig `json:"totpProviderConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "State") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2ProviderConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ProviderConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2QuotaConfig: Configuration related
-// to quotas.
+// GoogleCloudIdentitytoolkitAdminV2QuotaConfig: Configuration related to
+// quotas.
 type GoogleCloudIdentitytoolkitAdminV2QuotaConfig struct {
-	// SignUpQuotaConfig: Quota for the Signup endpoint, if overwritten.
-	// Signup quota is measured in sign ups per project per hour per IP.
+	// SignUpQuotaConfig: Quota for the Signup endpoint, if overwritten. Signup
+	// quota is measured in sign ups per project per hour per IP.
 	SignUpQuotaConfig *GoogleCloudIdentitytoolkitAdminV2TemporaryQuota `json:"signUpQuotaConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SignUpQuotaConfig")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "SignUpQuotaConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SignUpQuotaConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "SignUpQuotaConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2QuotaConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2QuotaConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig: The reCAPTCHA
-// Enterprise integration config.
+// GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig: The reCAPTCHA Enterprise
+// integration config.
 type GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig struct {
-	// EmailPasswordEnforcementState: The reCAPTCHA config for
-	// email/password provider, containing the enforcement status. The
-	// email/password provider contains all related user flows protected by
-	// reCAPTCHA.
+	// EmailPasswordEnforcementState: The reCAPTCHA config for email/password
+	// provider, containing the enforcement status. The email/password provider
+	// contains all related user flows protected by reCAPTCHA.
 	//
 	// Possible values:
-	//   "RECAPTCHA_PROVIDER_ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement
-	// state has not been set.
+	//   "RECAPTCHA_PROVIDER_ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has
+	// not been set.
 	//   "OFF" - Unenforced.
-	//   "AUDIT" - reCAPTCHA assessment is created, result is not used to
-	// enforce.
-	//   "ENFORCE" - reCAPTCHA assessment is created, result is used to
-	// enforce.
+	//   "AUDIT" - reCAPTCHA assessment is created, result is not used to enforce.
+	//   "ENFORCE" - reCAPTCHA assessment is created, result is used to enforce.
 	EmailPasswordEnforcementState string `json:"emailPasswordEnforcementState,omitempty"`
-
-	// ManagedRules: The managed rules for authentication action based on
-	// reCAPTCHA scores. The rules are shared across providers for a given
-	// tenant project.
+	// ManagedRules: The managed rules for authentication action based on reCAPTCHA
+	// scores. The rules are shared across providers for a given tenant project.
 	ManagedRules []*GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule `json:"managedRules,omitempty"`
-
 	// RecaptchaKeys: The reCAPTCHA keys.
 	RecaptchaKeys []*GoogleCloudIdentitytoolkitAdminV2RecaptchaKey `json:"recaptchaKeys,omitempty"`
-
 	// UseAccountDefender: Whether to use the account defender for reCAPTCHA
 	// assessment. Defaults to `false`.
 	UseAccountDefender bool `json:"useAccountDefender,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "EmailPasswordEnforcementState") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "EmailPasswordEnforcementState") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "EmailPasswordEnforcementState") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EmailPasswordEnforcementState")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2RecaptchaKey: The reCAPTCHA key
-// config. reCAPTCHA Enterprise offers different keys for different
-// client platforms.
+// GoogleCloudIdentitytoolkitAdminV2RecaptchaKey: The reCAPTCHA key config.
+// reCAPTCHA Enterprise offers different keys for different client platforms.
 type GoogleCloudIdentitytoolkitAdminV2RecaptchaKey struct {
 	// Key: The reCAPTCHA Enterprise key resource name, e.g.
 	// "projects/{project}/keys/{key}"
 	Key string `json:"key,omitempty"`
-
 	// Type: The client's platform type.
 	//
 	// Possible values:
@@ -2054,74 +1651,59 @@ type GoogleCloudIdentitytoolkitAdminV2RecaptchaKey struct {
 	//   "IOS" - Client type is iOS.
 	//   "ANDROID" - Client type is Android.
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaKey
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule: The config for
-// a reCAPTCHA managed rule. Models a single interval [start_score,
-// end_score]. The start_score is implicit. It is either the closest
-// smaller end_score (if one is available) or 0. Intervals in aggregate
-// span [0, 1] without overlapping.
+// GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule: The config for a
+// reCAPTCHA managed rule. Models a single interval [start_score, end_score].
+// The start_score is implicit. It is either the closest smaller end_score (if
+// one is available) or 0. Intervals in aggregate span [0, 1] without
+// overlapping.
 type GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule struct {
-	// Action: The action taken if the reCAPTCHA score of a request is
-	// within the interval [start_score, end_score].
+	// Action: The action taken if the reCAPTCHA score of a request is within the
+	// interval [start_score, end_score].
 	//
 	// Possible values:
-	//   "RECAPTCHA_ACTION_UNSPECIFIED" - The reCAPTCHA action is not
-	// specified.
+	//   "RECAPTCHA_ACTION_UNSPECIFIED" - The reCAPTCHA action is not specified.
 	//   "BLOCK" - The reCAPTCHA-protected request will be blocked.
 	Action string `json:"action,omitempty"`
-
-	// EndScore: The end score (inclusive) of the score range for an action.
-	// Must be a value between 0.0 and 1.0, at 11 discrete values; e.g. 0,
-	// 0.1, 0.2, 0.3, ... 0.9, 1.0. A score of 0.0 indicates the riskiest
-	// request (likely a bot), whereas 1.0 indicates the safest request
-	// (likely a human). See
+	// EndScore: The end score (inclusive) of the score range for an action. Must
+	// be a value between 0.0 and 1.0, at 11 discrete values; e.g. 0, 0.1, 0.2,
+	// 0.3, ... 0.9, 1.0. A score of 0.0 indicates the riskiest request (likely a
+	// bot), whereas 1.0 indicates the safest request (likely a human). See
 	// https://cloud.google.com/recaptcha-enterprise/docs/interpret-assessment.
 	EndScore float64 `json:"endScore,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Action") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Action") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule) UnmarshalJSON(data []byte) error {
@@ -2138,51 +1720,40 @@ func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule) UnmarshalJSON(da
 	return nil
 }
 
-// GoogleCloudIdentitytoolkitAdminV2RequestLogging: Configuration for
-// logging requests made to this project to Stackdriver Logging
+// GoogleCloudIdentitytoolkitAdminV2RequestLogging: Configuration for logging
+// requests made to this project to Stackdriver Logging
 type GoogleCloudIdentitytoolkitAdminV2RequestLogging struct {
 	// Enabled: Whether logging is enabled for this project or not.
 	Enabled bool `json:"enabled,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2RequestLogging) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2RequestLogging
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2SendEmail: Options for email
-// sending.
+// GoogleCloudIdentitytoolkitAdminV2SendEmail: Options for email sending.
 type GoogleCloudIdentitytoolkitAdminV2SendEmail struct {
 	// CallbackUri: action url in email template.
 	CallbackUri string `json:"callbackUri,omitempty"`
-
 	// ChangeEmailTemplate: Email template for change email
 	ChangeEmailTemplate *GoogleCloudIdentitytoolkitAdminV2EmailTemplate `json:"changeEmailTemplate,omitempty"`
-
 	// DnsInfo: Information of custom domain DNS verification.
 	DnsInfo *GoogleCloudIdentitytoolkitAdminV2DnsInfo `json:"dnsInfo,omitempty"`
-
 	// LegacyResetPasswordTemplate: Reset password email template for legacy
 	// Firebase V1 app.
 	LegacyResetPasswordTemplate *GoogleCloudIdentitytoolkitAdminV2EmailTemplate `json:"legacyResetPasswordTemplate,omitempty"`
-
 	// Method: The method used for sending an email.
 	//
 	// Possible values:
@@ -2191,202 +1762,154 @@ type GoogleCloudIdentitytoolkitAdminV2SendEmail struct {
 	//   "CUSTOM_SMTP" - Sending email using SMTP configuration provided by
 	// developers.
 	Method string `json:"method,omitempty"`
-
 	// ResetPasswordTemplate: Email template for reset password
 	ResetPasswordTemplate *GoogleCloudIdentitytoolkitAdminV2EmailTemplate `json:"resetPasswordTemplate,omitempty"`
-
-	// RevertSecondFactorAdditionTemplate: Email template for reverting
-	// second factor addition emails
+	// RevertSecondFactorAdditionTemplate: Email template for reverting second
+	// factor addition emails
 	RevertSecondFactorAdditionTemplate *GoogleCloudIdentitytoolkitAdminV2EmailTemplate `json:"revertSecondFactorAdditionTemplate,omitempty"`
-
 	// Smtp: Use a custom SMTP relay
 	Smtp *GoogleCloudIdentitytoolkitAdminV2Smtp `json:"smtp,omitempty"`
-
 	// VerifyEmailTemplate: Email template for verify email
 	VerifyEmailTemplate *GoogleCloudIdentitytoolkitAdminV2EmailTemplate `json:"verifyEmailTemplate,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CallbackUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CallbackUri") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CallbackUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2SendEmail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2SendEmail
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitAdminV2SendSms: Options for SMS sending.
 type GoogleCloudIdentitytoolkitAdminV2SendSms struct {
 	// SmsTemplate: Output only. The template to use when sending an SMS.
 	SmsTemplate *GoogleCloudIdentitytoolkitAdminV2SmsTemplate `json:"smsTemplate,omitempty"`
-
 	// UseDeviceLocale: Whether to use the accept_language header for SMS.
 	UseDeviceLocale bool `json:"useDeviceLocale,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SmsTemplate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SmsTemplate") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SmsTemplate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2SendSms) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2SendSms
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2SignInConfig: Configuration related
-// to local sign in methods.
+// GoogleCloudIdentitytoolkitAdminV2SignInConfig: Configuration related to
+// local sign in methods.
 type GoogleCloudIdentitytoolkitAdminV2SignInConfig struct {
-	// AllowDuplicateEmails: Whether to allow more than one account to have
-	// the same email.
+	// AllowDuplicateEmails: Whether to allow more than one account to have the
+	// same email.
 	AllowDuplicateEmails bool `json:"allowDuplicateEmails,omitempty"`
-
-	// Anonymous: Configuration options related to authenticating an
-	// anonymous user.
+	// Anonymous: Configuration options related to authenticating an anonymous
+	// user.
 	Anonymous *GoogleCloudIdentitytoolkitAdminV2Anonymous `json:"anonymous,omitempty"`
-
-	// Email: Configuration options related to authenticating a user by
-	// their email address.
+	// Email: Configuration options related to authenticating a user by their email
+	// address.
 	Email *GoogleCloudIdentitytoolkitAdminV2Email `json:"email,omitempty"`
-
 	// HashConfig: Output only. Hash config information.
 	HashConfig *GoogleCloudIdentitytoolkitAdminV2HashConfig `json:"hashConfig,omitempty"`
-
-	// PhoneNumber: Configuration options related to authenticated a user by
-	// their phone number.
+	// PhoneNumber: Configuration options related to authenticated a user by their
+	// phone number.
 	PhoneNumber *GoogleCloudIdentitytoolkitAdminV2PhoneNumber `json:"phoneNumber,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AllowDuplicateEmails") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AllowDuplicateEmails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowDuplicateEmails") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AllowDuplicateEmails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2SignInConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2SignInConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig: Configures the
-// regions where users are allowed to send verification SMS for the
-// project or tenant. This is based on the calling code of the
-// destination phone number.
+// GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig: Configures the regions
+// where users are allowed to send verification SMS for the project or tenant.
+// This is based on the calling code of the destination phone number.
 type GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig struct {
-	// AllowByDefault: A policy of allowing SMS to every region by default
-	// and adding disallowed regions to a disallow list.
+	// AllowByDefault: A policy of allowing SMS to every region by default and
+	// adding disallowed regions to a disallow list.
 	AllowByDefault *GoogleCloudIdentitytoolkitAdminV2AllowByDefault `json:"allowByDefault,omitempty"`
-
-	// AllowlistOnly: A policy of only allowing regions by explicitly adding
-	// them to an allowlist.
+	// AllowlistOnly: A policy of only allowing regions by explicitly adding them
+	// to an allowlist.
 	AllowlistOnly *GoogleCloudIdentitytoolkitAdminV2AllowlistOnly `json:"allowlistOnly,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AllowByDefault") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowByDefault") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AllowByDefault") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2SmsTemplate: The template to use
-// when sending an SMS.
+// GoogleCloudIdentitytoolkitAdminV2SmsTemplate: The template to use when
+// sending an SMS.
 type GoogleCloudIdentitytoolkitAdminV2SmsTemplate struct {
 	// Content: Output only. The SMS's content. Can contain the following
-	// placeholders which will be replaced with the appropriate values:
-	// %APP_NAME% - For Android or iOS apps, the app's display name. For web
-	// apps, the domain hosting the application. %LOGIN_CODE% - The OOB code
-	// being sent in the SMS.
+	// placeholders which will be replaced with the appropriate values: %APP_NAME%
+	// - For Android or iOS apps, the app's display name. For web apps, the domain
+	// hosting the application. %LOGIN_CODE% - The OOB code being sent in the SMS.
 	Content string `json:"content,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Content") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Content") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2SmsTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2SmsTemplate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitAdminV2Smtp: Configuration for SMTP relay
 type GoogleCloudIdentitytoolkitAdminV2Smtp struct {
 	// Host: SMTP relay host
 	Host string `json:"host,omitempty"`
-
 	// Password: SMTP relay password
 	Password string `json:"password,omitempty"`
-
 	// Port: SMTP relay port
 	Port int64 `json:"port,omitempty"`
-
 	// SecurityMode: SMTP security mode.
 	//
 	// Possible values:
@@ -2394,428 +1917,323 @@ type GoogleCloudIdentitytoolkitAdminV2Smtp struct {
 	//   "SSL" - SSL mode
 	//   "START_TLS" - START_TLS mode
 	SecurityMode string `json:"securityMode,omitempty"`
-
 	// SenderEmail: Sender email for the SMTP relay
 	SenderEmail string `json:"senderEmail,omitempty"`
-
 	// Username: SMTP relay username
 	Username string `json:"username,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Host") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Host") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Host") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Smtp) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Smtp
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2SpCertificate: The SP's certificate
-// data for IDP to verify the SAMLRequest generated by the SP.
+// GoogleCloudIdentitytoolkitAdminV2SpCertificate: The SP's certificate data
+// for IDP to verify the SAMLRequest generated by the SP.
 type GoogleCloudIdentitytoolkitAdminV2SpCertificate struct {
 	// ExpiresAt: Timestamp of the cert expiration instance.
 	ExpiresAt string `json:"expiresAt,omitempty"`
-
 	// X509Certificate: Self-signed public certificate.
 	X509Certificate string `json:"x509Certificate,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ExpiresAt") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExpiresAt") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExpiresAt") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2SpCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2SpCertificate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2SpConfig: The SAML SP (Service
-// Provider) configuration when the project acts as the relying party to
-// receive and accept an authentication assertion issued by a SAML
-// identity provider.
+// GoogleCloudIdentitytoolkitAdminV2SpConfig: The SAML SP (Service Provider)
+// configuration when the project acts as the relying party to receive and
+// accept an authentication assertion issued by a SAML identity provider.
 type GoogleCloudIdentitytoolkitAdminV2SpConfig struct {
 	// CallbackUri: Callback URI where responses from IDP are handled.
 	CallbackUri string `json:"callbackUri,omitempty"`
-
-	// SpCertificates: Output only. Public certificates generated by the
-	// server to verify the signature in SAMLRequest in the SP-initiated
-	// flow.
+	// SpCertificates: Output only. Public certificates generated by the server to
+	// verify the signature in SAMLRequest in the SP-initiated flow.
 	SpCertificates []*GoogleCloudIdentitytoolkitAdminV2SpCertificate `json:"spCertificates,omitempty"`
-
 	// SpEntityId: Unique identifier for all SAML entities.
 	SpEntityId string `json:"spEntityId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CallbackUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CallbackUri") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CallbackUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2SpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2SpConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2TemporaryQuota: Temporary quota
-// increase / decrease
+// GoogleCloudIdentitytoolkitAdminV2TemporaryQuota: Temporary quota increase /
+// decrease
 type GoogleCloudIdentitytoolkitAdminV2TemporaryQuota struct {
-	// Quota: Corresponds to the 'refill_token_count' field in QuotaServer
-	// config
+	// Quota: Corresponds to the 'refill_token_count' field in QuotaServer config
 	Quota int64 `json:"quota,omitempty,string"`
-
 	// QuotaDuration: How long this quota will be active for
 	QuotaDuration string `json:"quotaDuration,omitempty"`
-
 	// StartTime: When this quota will take effect
 	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Quota") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Quota") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Quota") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2TemporaryQuota) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2TemporaryQuota
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2Tenant: A Tenant contains
-// configuration for the tenant in a multi-tenant project.
+// GoogleCloudIdentitytoolkitAdminV2Tenant: A Tenant contains configuration for
+// the tenant in a multi-tenant project.
 type GoogleCloudIdentitytoolkitAdminV2Tenant struct {
-	// AllowPasswordSignup: Whether to allow email/password user
-	// authentication.
+	// AllowPasswordSignup: Whether to allow email/password user authentication.
 	AllowPasswordSignup bool `json:"allowPasswordSignup,omitempty"`
-
-	// AutodeleteAnonymousUsers: Whether anonymous users will be
-	// auto-deleted after a period of 30 days.
+	// AutodeleteAnonymousUsers: Whether anonymous users will be auto-deleted after
+	// a period of 30 days.
 	AutodeleteAnonymousUsers bool `json:"autodeleteAnonymousUsers,omitempty"`
-
 	// Client: Options related to how clients making requests on behalf of a
 	// project should be configured.
 	Client *GoogleCloudIdentitytoolkitAdminV2ClientPermissionConfig `json:"client,omitempty"`
-
-	// DisableAuth: Whether authentication is disabled for the tenant. If
-	// true, the users under the disabled tenant are not allowed to sign-in.
-	// Admins of the disabled tenant are not able to manage its users.
+	// DisableAuth: Whether authentication is disabled for the tenant. If true, the
+	// users under the disabled tenant are not allowed to sign-in. Admins of the
+	// disabled tenant are not able to manage its users.
 	DisableAuth bool `json:"disableAuth,omitempty"`
-
 	// DisplayName: Display name of the tenant.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// EmailPrivacyConfig: Configuration for settings related to email
-	// privacy and public visibility.
+	// EmailPrivacyConfig: Configuration for settings related to email privacy and
+	// public visibility.
 	EmailPrivacyConfig *GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig `json:"emailPrivacyConfig,omitempty"`
-
 	// EnableAnonymousUser: Whether to enable anonymous user authentication.
 	EnableAnonymousUser bool `json:"enableAnonymousUser,omitempty"`
-
-	// EnableEmailLinkSignin: Whether to enable email link user
-	// authentication.
+	// EnableEmailLinkSignin: Whether to enable email link user authentication.
 	EnableEmailLinkSignin bool `json:"enableEmailLinkSignin,omitempty"`
-
-	// HashConfig: Output only. Hash config information of a tenant for
-	// display on Pantheon. This can only be displayed on Pantheon to avoid
-	// the sensitive information to get accidentally leaked. Only returned
-	// in GetTenant response to restrict reading of this information.
-	// Requires firebaseauth.configs.getHashConfig permission on the agent
-	// project for returning this field.
+	// HashConfig: Output only. Hash config information of a tenant for display on
+	// Pantheon. This can only be displayed on Pantheon to avoid the sensitive
+	// information to get accidentally leaked. Only returned in GetTenant response
+	// to restrict reading of this information. Requires
+	// firebaseauth.configs.getHashConfig permission on the agent project for
+	// returning this field.
 	HashConfig *GoogleCloudIdentitytoolkitAdminV2HashConfig `json:"hashConfig,omitempty"`
-
 	// Inheritance: Specify the settings that the tenant could inherit.
 	Inheritance *GoogleCloudIdentitytoolkitAdminV2Inheritance `json:"inheritance,omitempty"`
-
 	// MfaConfig: The tenant-level configuration of MFA options.
 	MfaConfig *GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig `json:"mfaConfig,omitempty"`
-
 	// Monitoring: Configuration related to monitoring project activity.
 	Monitoring *GoogleCloudIdentitytoolkitAdminV2MonitoringConfig `json:"monitoring,omitempty"`
-
 	// Name: Output only. Resource name of a tenant. For example:
 	// "projects/{project-id}/tenants/{tenant-id}"
 	Name string `json:"name,omitempty"`
-
 	// PasswordPolicyConfig: The tenant-level password policy config
 	PasswordPolicyConfig *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig `json:"passwordPolicyConfig,omitempty"`
-
 	// RecaptchaConfig: The tenant-level reCAPTCHA config.
 	RecaptchaConfig *GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig `json:"recaptchaConfig,omitempty"`
-
-	// SmsRegionConfig: Configures which regions are enabled for SMS
-	// verification code sending.
+	// SmsRegionConfig: Configures which regions are enabled for SMS verification
+	// code sending.
 	SmsRegionConfig *GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig `json:"smsRegionConfig,omitempty"`
-
-	// TestPhoneNumbers: A map of pairs that can be used for MFA. The phone
-	// number should be in E.164 format
-	// (https://www.itu.int/rec/T-REC-E.164/) and a maximum of 10 pairs can
-	// be added (error will be thrown once exceeded).
+	// TestPhoneNumbers: A map of pairs that can be used for MFA. The phone number
+	// should be in E.164 format (https://www.itu.int/rec/T-REC-E.164/) and a
+	// maximum of 10 pairs can be added (error will be thrown once exceeded).
 	TestPhoneNumbers map[string]string `json:"testPhoneNumbers,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AllowPasswordSignup")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AllowPasswordSignup") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowPasswordSignup") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AllowPasswordSignup") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Tenant) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Tenant
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig:
 // TotpMFAProviderConfig represents the TOTP based MFA provider.
 type GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig struct {
-	// AdjacentIntervals: The allowed number of adjacent intervals that will
-	// be used for verification to avoid clock skew.
+	// AdjacentIntervals: The allowed number of adjacent intervals that will be
+	// used for verification to avoid clock skew.
 	AdjacentIntervals int64 `json:"adjacentIntervals,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AdjacentIntervals")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdjacentIntervals") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdjacentIntervals") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdjacentIntervals") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitAdminV2Trigger: Synchronous Cloud Function
-// with HTTP Trigger
+// GoogleCloudIdentitytoolkitAdminV2Trigger: Synchronous Cloud Function with
+// HTTP Trigger
 type GoogleCloudIdentitytoolkitAdminV2Trigger struct {
 	// FunctionUri: HTTP URI trigger for the Cloud Function.
 	FunctionUri string `json:"functionUri,omitempty"`
-
 	// UpdateTime: When the trigger was changed.
 	UpdateTime string `json:"updateTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FunctionUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FunctionUri") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FunctionUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Trigger) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Trigger
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2AutoRetrievalInfo: The information
-// required to auto-retrieve an SMS.
+// GoogleCloudIdentitytoolkitV2AutoRetrievalInfo: The information required to
+// auto-retrieve an SMS.
 type GoogleCloudIdentitytoolkitV2AutoRetrievalInfo struct {
-	// AppSignatureHash: The Android app's signature hash for Google Play
-	// Service's SMS Retriever API.
+	// AppSignatureHash: The Android app's signature hash for Google Play Service's
+	// SMS Retriever API.
 	AppSignatureHash string `json:"appSignatureHash,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AppSignatureHash") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppSignatureHash") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AppSignatureHash") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2AutoRetrievalInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2AutoRetrievalInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2CustomStrengthOptions: Custom strength
-// options to enforce on user passwords.
+// GoogleCloudIdentitytoolkitV2CustomStrengthOptions: Custom strength options
+// to enforce on user passwords.
 type GoogleCloudIdentitytoolkitV2CustomStrengthOptions struct {
 	// ContainsLowercaseCharacter: The password must contain a lower case
 	// character.
 	ContainsLowercaseCharacter bool `json:"containsLowercaseCharacter,omitempty"`
-
-	// ContainsNonAlphanumericCharacter: The password must contain a non
-	// alpha numeric character.
+	// ContainsNonAlphanumericCharacter: The password must contain a non alpha
+	// numeric character.
 	ContainsNonAlphanumericCharacter bool `json:"containsNonAlphanumericCharacter,omitempty"`
-
 	// ContainsNumericCharacter: The password must contain a number.
 	ContainsNumericCharacter bool `json:"containsNumericCharacter,omitempty"`
-
 	// ContainsUppercaseCharacter: The password must contain an upper case
 	// character.
 	ContainsUppercaseCharacter bool `json:"containsUppercaseCharacter,omitempty"`
-
 	// MaxPasswordLength: Maximum password length. No default max length
 	MaxPasswordLength int64 `json:"maxPasswordLength,omitempty"`
-
 	// MinPasswordLength: Minimum password length. Range from 6 to 30
 	MinPasswordLength int64 `json:"minPasswordLength,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ContainsLowercaseCharacter") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ContainsLowercaseCharacter")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "ContainsLowercaseCharacter") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContainsLowercaseCharacter") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2CustomStrengthOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2CustomStrengthOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentRequest: Finishes
-// enrolling a second factor for the user.
+// GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentRequest: Finishes enrolling
+// a second factor for the user.
 type GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentRequest struct {
-	// DisplayName: Display name which is entered by users to distinguish
-	// between different second factors with same type or different type.
+	// DisplayName: Display name which is entered by users to distinguish between
+	// different second factors with same type or different type.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// IdToken: Required. ID token.
 	IdToken string `json:"idToken,omitempty"`
-
-	// PhoneVerificationInfo: Verification info to authorize sending an SMS
-	// for phone verification.
+	// PhoneVerificationInfo: Verification info to authorize sending an SMS for
+	// phone verification.
 	PhoneVerificationInfo *GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneRequestInfo `json:"phoneVerificationInfo,omitempty"`
-
-	// TenantId: The ID of the Identity Platform tenant that the user
-	// enrolling MFA belongs to. If not set, the user belongs to the default
-	// Identity Platform project.
+	// TenantId: The ID of the Identity Platform tenant that the user enrolling MFA
+	// belongs to. If not set, the user belongs to the default Identity Platform
+	// project.
 	TenantId string `json:"tenantId,omitempty"`
-
 	// TotpVerificationInfo: Verification information for TOTP.
 	TotpVerificationInfo *GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo `json:"totpVerificationInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse:
@@ -2823,209 +2241,154 @@ func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentRequest) MarshalJSON()
 type GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse struct {
 	// IdToken: ID token updated to reflect MFA enrollment.
 	IdToken string `json:"idToken,omitempty"`
-
 	// PhoneAuthInfo: Auxiliary auth info specific to phone auth.
 	PhoneAuthInfo *GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneResponseInfo `json:"phoneAuthInfo,omitempty"`
-
 	// RefreshToken: Refresh token updated to reflect MFA enrollment.
 	RefreshToken string `json:"refreshToken,omitempty"`
-
 	// TotpAuthInfo: Auxiliary auth info specific to TOTP auth.
 	TotpAuthInfo *GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo `json:"totpAuthInfo,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "IdToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IdToken") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IdToken") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IdToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneRequestInfo: Phone
-// Verification info for a FinalizeMfa request.
+// GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneRequestInfo: Phone Verification
+// info for a FinalizeMfa request.
 type GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneRequestInfo struct {
-	// AndroidVerificationProof: Android only. Uses for "instant" phone
-	// number verification though GmsCore.
+	// AndroidVerificationProof: Android only. Uses for "instant" phone number
+	// verification though GmsCore.
 	AndroidVerificationProof string `json:"androidVerificationProof,omitempty"`
-
 	// Code: User-entered verification code.
 	Code string `json:"code,omitempty"`
-
 	// PhoneNumber: Required if Android verification proof is presented.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
-
 	// SessionInfo: An opaque string that represents the enrollment session.
 	SessionInfo string `json:"sessionInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AndroidVerificationProof") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AndroidVerificationProof")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AndroidVerificationProof")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AndroidVerificationProof") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneRequestInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneRequestInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneResponseInfo: Phone
-// Verification info for a FinalizeMfa response.
+// GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneResponseInfo: Phone Verification
+// info for a FinalizeMfa response.
 type GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneResponseInfo struct {
-	// AndroidVerificationProof: Android only. Long-lived replacement for
-	// valid code tied to android device.
+	// AndroidVerificationProof: Android only. Long-lived replacement for valid
+	// code tied to android device.
 	AndroidVerificationProof string `json:"androidVerificationProof,omitempty"`
-
 	// AndroidVerificationProofExpireTime: Android only. Expiration time of
 	// verification proof in seconds.
 	AndroidVerificationProofExpireTime string `json:"androidVerificationProofExpireTime,omitempty"`
-
 	// PhoneNumber: For Android verification proof.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AndroidVerificationProof") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AndroidVerificationProof")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AndroidVerificationProof")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AndroidVerificationProof") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneResponseInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneResponseInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest: Finalizes
-// sign-in by verifying MFA challenge.
+// GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest: Finalizes sign-in by
+// verifying MFA challenge.
 type GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest struct {
-	// MfaEnrollmentId: The MFA enrollment ID from the user's list of
-	// current MFA enrollments.
+	// MfaEnrollmentId: The MFA enrollment ID from the user's list of current MFA
+	// enrollments.
 	MfaEnrollmentId string `json:"mfaEnrollmentId,omitempty"`
-
 	// MfaPendingCredential: Required. Pending credential from first factor
 	// sign-in.
 	MfaPendingCredential string `json:"mfaPendingCredential,omitempty"`
-
-	// PhoneVerificationInfo: Proof of completion of the SMS based MFA
-	// challenge.
+	// PhoneVerificationInfo: Proof of completion of the SMS based MFA challenge.
 	PhoneVerificationInfo *GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneRequestInfo `json:"phoneVerificationInfo,omitempty"`
-
-	// TenantId: The ID of the Identity Platform tenant the user is signing
-	// in to. If not set, the user will sign in to the default Identity
-	// Platform project.
+	// TenantId: The ID of the Identity Platform tenant the user is signing in to.
+	// If not set, the user will sign in to the default Identity Platform project.
 	TenantId string `json:"tenantId,omitempty"`
-
-	// TotpVerificationInfo: Proof of completion of the TOTP based MFA
-	// challenge.
+	// TotpVerificationInfo: Proof of completion of the TOTP based MFA challenge.
 	TotpVerificationInfo *GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo `json:"totpVerificationInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MfaEnrollmentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MfaEnrollmentId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MfaEnrollmentId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse:
-// FinalizeMfaSignIn response.
+// GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse: FinalizeMfaSignIn
+// response.
 type GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse struct {
 	// IdToken: ID token for the authenticated user.
 	IdToken string `json:"idToken,omitempty"`
-
-	// PhoneAuthInfo: Extra phone auth info, including android verification
-	// proof.
+	// PhoneAuthInfo: Extra phone auth info, including android verification proof.
 	PhoneAuthInfo *GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneResponseInfo `json:"phoneAuthInfo,omitempty"`
-
 	// RefreshToken: Refresh token for the authenticated user.
 	RefreshToken string `json:"refreshToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "IdToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IdToken") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IdToken") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IdToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo: Mfa
@@ -3033,244 +2396,189 @@ func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse) MarshalJSON() ([
 type GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo struct {
 	// SessionInfo: An opaque string that represents the enrollment session.
 	SessionInfo string `json:"sessionInfo,omitempty"`
-
 	// VerificationCode: User-entered verification code.
 	VerificationCode string `json:"verificationCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SessionInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SessionInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SessionInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo:
-// Mfa response info specific to TOTP auth for FinalizeMfa.
+// GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo: Mfa
+// response info specific to TOTP auth for FinalizeMfa.
 type GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo struct {
 }
 
-// GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo: TOTP
-// verification info for FinalizeMfaSignInRequest.
+// GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo: TOTP verification info
+// for FinalizeMfaSignInRequest.
 type GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo struct {
 	// VerificationCode: User-entered verification code.
 	VerificationCode string `json:"verificationCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "VerificationCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "VerificationCode") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "VerificationCode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2PasswordPolicy: Configuration for
-// password policy.
+// GoogleCloudIdentitytoolkitV2PasswordPolicy: Configuration for password
+// policy.
 type GoogleCloudIdentitytoolkitV2PasswordPolicy struct {
-	// AllowedNonAlphanumericCharacters: Output only. Allowed characters
-	// which satisfy the non_alphanumeric requirement.
+	// AllowedNonAlphanumericCharacters: Output only. Allowed characters which
+	// satisfy the non_alphanumeric requirement.
 	AllowedNonAlphanumericCharacters []string `json:"allowedNonAlphanumericCharacters,omitempty"`
-
-	// CustomStrengthOptions: The custom strength options enforced by the
-	// password policy.
+	// CustomStrengthOptions: The custom strength options enforced by the password
+	// policy.
 	CustomStrengthOptions *GoogleCloudIdentitytoolkitV2CustomStrengthOptions `json:"customStrengthOptions,omitempty"`
-
 	// EnforcementState: Output only. Which enforcement mode to use for the
 	// password policy.
 	//
 	// Possible values:
-	//   "ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has not been
-	// set.
+	//   "ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has not been set.
 	//   "OFF" - Password Policy will not be used on the project.
-	//   "ENFORCE" - Passwords non-compliant with the password policy will
-	// be rejected with an error thrown.
+	//   "ENFORCE" - Passwords non-compliant with the password policy will be
+	// rejected with an error thrown.
 	EnforcementState string `json:"enforcementState,omitempty"`
-
-	// ForceUpgradeOnSignin: Users must have a password compliant with the
-	// password policy to sign-in.
+	// ForceUpgradeOnSignin: Users must have a password compliant with the password
+	// policy to sign-in.
 	ForceUpgradeOnSignin bool `json:"forceUpgradeOnSignin,omitempty"`
-
-	// SchemaVersion: Output only. schema version number for the password
-	// policy
+	// SchemaVersion: Output only. schema version number for the password policy
 	SchemaVersion int64 `json:"schemaVersion,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowedNonAlphanumericCharacters") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g.
-	// "AllowedNonAlphanumericCharacters") to include in API requests with
-	// the JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// "AllowedNonAlphanumericCharacters") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2PasswordPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2PasswordPolicy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2RecaptchaConfig: Configuration for
-// reCAPTCHA
+// GoogleCloudIdentitytoolkitV2RecaptchaConfig: Configuration for reCAPTCHA
 type GoogleCloudIdentitytoolkitV2RecaptchaConfig struct {
-	// RecaptchaEnforcementState: The reCAPTCHA enforcement state for the
-	// providers that GCIP supports reCAPTCHA protection.
+	// RecaptchaEnforcementState: The reCAPTCHA enforcement state for the providers
+	// that GCIP supports reCAPTCHA protection.
 	RecaptchaEnforcementState []*GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState `json:"recaptchaEnforcementState,omitempty"`
-
 	// RecaptchaKey: The reCAPTCHA Enterprise key resource name, e.g.
 	// "projects/{project}/keys/{key}". This will only be returned when the
-	// reCAPTCHA enforcement state is AUDIT or ENFORCE on at least one of
-	// the reCAPTCHA providers.
+	// reCAPTCHA enforcement state is AUDIT or ENFORCE on at least one of the
+	// reCAPTCHA providers.
 	RecaptchaKey string `json:"recaptchaKey,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "RecaptchaEnforcementState") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "RecaptchaEnforcementState")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "RecaptchaEnforcementState") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RecaptchaEnforcementState") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2RecaptchaConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2RecaptchaConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState: Enforcement
-// states for reCAPTCHA protection.
+// GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState: Enforcement states
+// for reCAPTCHA protection.
 type GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState struct {
 	// EnforcementState: The reCAPTCHA enforcement state for the provider.
 	//
 	// Possible values:
-	//   "ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has not been
-	// set.
+	//   "ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has not been set.
 	//   "OFF" - Unenforced.
-	//   "AUDIT" - reCAPTCHA assessment is created, result is not used to
-	// enforce.
-	//   "ENFORCE" - reCAPTCHA assessment is created, result is used to
-	// enforce.
+	//   "AUDIT" - reCAPTCHA assessment is created, result is not used to enforce.
+	//   "ENFORCE" - reCAPTCHA assessment is created, result is used to enforce.
 	EnforcementState string `json:"enforcementState,omitempty"`
-
 	// Provider: The provider that has reCAPTCHA protection.
 	//
 	// Possible values:
 	//   "RECAPTCHA_PROVIDER_UNSPECIFIED" - reCAPTCHA provider not specified
 	//   "EMAIL_PASSWORD_PROVIDER" - Email password provider
 	Provider string `json:"provider,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EnforcementState") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EnforcementState") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EnforcementState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV2RevokeTokenRequest: Request message for
 // RevokeToken.
 type GoogleCloudIdentitytoolkitV2RevokeTokenRequest struct {
-	// IdToken: Required. A valid Identity Platform ID token to link the
-	// account. If there was a successful token revocation request on the
-	// account and no tokens are generated after the revocation, the
-	// duplicate requests will be ignored and returned immediately.
+	// IdToken: Required. A valid Identity Platform ID token to link the account.
+	// If there was a successful token revocation request on the account and no
+	// tokens are generated after the revocation, the duplicate requests will be
+	// ignored and returned immediately.
 	IdToken string `json:"idToken,omitempty"`
-
 	// ProviderId: Required. The idp provider for the token. Currently only
 	// supports Apple Idp. The format should be "apple.com".
 	ProviderId string `json:"providerId,omitempty"`
-
-	// RedirectUri: The redirect URI provided in the initial authorization
-	// request made by the client to the IDP. The URI must use the HTTPS
-	// protocol, include a domain name, and can't contain an IP address or
-	// localhost. Required if token_type is CODE.
+	// RedirectUri: The redirect URI provided in the initial authorization request
+	// made by the client to the IDP. The URI must use the HTTPS protocol, include
+	// a domain name, and can't contain an IP address or localhost. Required if
+	// token_type is CODE.
 	RedirectUri string `json:"redirectUri,omitempty"`
-
-	// TenantId: The ID of the Identity Platform tenant the user is signing
-	// in to. If not set, the user will sign in to the default Identity
-	// Platform project.
+	// TenantId: The ID of the Identity Platform tenant the user is signing in to.
+	// If not set, the user will sign in to the default Identity Platform project.
 	TenantId string `json:"tenantId,omitempty"`
-
-	// Token: Required. The token to be revoked. If an authorization_code is
-	// passed in, the API will first exchange the code for access token and
-	// then revoke the token exchanged.
+	// Token: Required. The token to be revoked. If an authorization_code is passed
+	// in, the API will first exchange the code for access token and then revoke
+	// the token exchanged.
 	Token string `json:"token,omitempty"`
-
 	// TokenType: Required. The type of the token to be revoked.
 	//
 	// Possible values:
@@ -3279,484 +2587,370 @@ type GoogleCloudIdentitytoolkitV2RevokeTokenRequest struct {
 	//   "ACCESS_TOKEN" - Token type is access_token.
 	//   "CODE" - Token type is authorization_code.
 	TokenType string `json:"tokenType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IdToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IdToken") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IdToken") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IdToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2RevokeTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2RevokeTokenRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV2RevokeTokenResponse: Response message for
 // RevokeToken. Empty for now.
 type GoogleCloudIdentitytoolkitV2RevokeTokenResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest: Sends MFA
-// enrollment verification SMS for a user.
+// GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest: Sends MFA enrollment
+// verification SMS for a user.
 type GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest struct {
 	// IdToken: Required. User's ID token.
 	IdToken string `json:"idToken,omitempty"`
-
-	// PhoneEnrollmentInfo: Verification info to authorize sending an SMS
-	// for phone verification.
+	// PhoneEnrollmentInfo: Verification info to authorize sending an SMS for phone
+	// verification.
 	PhoneEnrollmentInfo *GoogleCloudIdentitytoolkitV2StartMfaPhoneRequestInfo `json:"phoneEnrollmentInfo,omitempty"`
-
-	// TenantId: The ID of the Identity Platform tenant that the user
-	// enrolling MFA belongs to. If not set, the user belongs to the default
-	// Identity Platform project.
+	// TenantId: The ID of the Identity Platform tenant that the user enrolling MFA
+	// belongs to. If not set, the user belongs to the default Identity Platform
+	// project.
 	TenantId string `json:"tenantId,omitempty"`
-
 	// TotpEnrollmentInfo: Sign-in info specific to TOTP auth.
 	TotpEnrollmentInfo *GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo `json:"totpEnrollmentInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IdToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IdToken") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IdToken") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IdToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse:
-// StartMfaEnrollment response.
+// GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse: StartMfaEnrollment
+// response.
 type GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse struct {
-	// PhoneSessionInfo: Verification info to authorize sending an SMS for
-	// phone verification.
+	// PhoneSessionInfo: Verification info to authorize sending an SMS for phone
+	// verification.
 	PhoneSessionInfo *GoogleCloudIdentitytoolkitV2StartMfaPhoneResponseInfo `json:"phoneSessionInfo,omitempty"`
-
 	// TotpSessionInfo: Enrollment response info specific to TOTP auth.
 	TotpSessionInfo *GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo `json:"totpSessionInfo,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "PhoneSessionInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PhoneSessionInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PhoneSessionInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2StartMfaPhoneRequestInfo: App
-// Verification info for a StartMfa request.
+// GoogleCloudIdentitytoolkitV2StartMfaPhoneRequestInfo: App Verification info
+// for a StartMfa request.
 type GoogleCloudIdentitytoolkitV2StartMfaPhoneRequestInfo struct {
-	// AutoRetrievalInfo: Android only. Used by Google Play Services to
-	// identify the app for auto-retrieval.
+	// AutoRetrievalInfo: Android only. Used by Google Play Services to identify
+	// the app for auto-retrieval.
 	AutoRetrievalInfo *GoogleCloudIdentitytoolkitV2AutoRetrievalInfo `json:"autoRetrievalInfo,omitempty"`
-
-	// IosReceipt: iOS only. Receipt of successful app token validation with
-	// APNS.
+	// IosReceipt: iOS only. Receipt of successful app token validation with APNS.
 	IosReceipt string `json:"iosReceipt,omitempty"`
-
 	// IosSecret: iOS only. Secret delivered to iOS app via APNS.
 	IosSecret string `json:"iosSecret,omitempty"`
-
-	// PhoneNumber: Required for enrollment. Phone number to be enrolled as
-	// MFA.
+	// PhoneNumber: Required for enrollment. Phone number to be enrolled as MFA.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
-
-	// PlayIntegrityToken: Android only. Used to assert application identity
-	// in place of a recaptcha token (or safety net token). A Play Integrity
-	// Token can be generated via the [PlayIntegrity API]
-	// (https://developer.android.com/google/play/integrity) with applying
-	// SHA256 to the `phone_number` field as the nonce.
+	// PlayIntegrityToken: Android only. Used to assert application identity in
+	// place of a recaptcha token (or safety net token). A Play Integrity Token can
+	// be generated via the [PlayIntegrity API]
+	// (https://developer.android.com/google/play/integrity) with applying SHA256
+	// to the `phone_number` field as the nonce.
 	PlayIntegrityToken string `json:"playIntegrityToken,omitempty"`
-
 	// RecaptchaToken: Web only. Recaptcha solution.
 	RecaptchaToken string `json:"recaptchaToken,omitempty"`
-
-	// SafetyNetToken: Android only. Used to assert application identity in
-	// place of a recaptcha token. A SafetyNet Token can be generated via
-	// the SafetyNet Android Attestation API
-	// (https://developer.android.com/training/safetynet/attestation.html),
-	// with the Base64 encoding of the `phone_number` field as the nonce.
+	// SafetyNetToken: Android only. Used to assert application identity in place
+	// of a recaptcha token. A SafetyNet Token can be generated via the SafetyNet
+	// Android Attestation API
+	// (https://developer.android.com/training/safetynet/attestation.html), with
+	// the Base64 encoding of the `phone_number` field as the nonce.
 	SafetyNetToken string `json:"safetyNetToken,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AutoRetrievalInfo")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AutoRetrievalInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AutoRetrievalInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AutoRetrievalInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2StartMfaPhoneRequestInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaPhoneRequestInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2StartMfaPhoneResponseInfo: Phone
-// Verification info for a StartMfa response.
+// GoogleCloudIdentitytoolkitV2StartMfaPhoneResponseInfo: Phone Verification
+// info for a StartMfa response.
 type GoogleCloudIdentitytoolkitV2StartMfaPhoneResponseInfo struct {
 	// SessionInfo: An opaque string that represents the enrollment session.
 	SessionInfo string `json:"sessionInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SessionInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SessionInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SessionInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2StartMfaPhoneResponseInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaPhoneResponseInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2StartMfaSignInRequest: Starts
-// multi-factor sign-in by sending the multi-factor auth challenge.
+// GoogleCloudIdentitytoolkitV2StartMfaSignInRequest: Starts multi-factor
+// sign-in by sending the multi-factor auth challenge.
 type GoogleCloudIdentitytoolkitV2StartMfaSignInRequest struct {
-	// MfaEnrollmentId: Required. MFA enrollment id from the user's list of
-	// current MFA enrollments.
+	// MfaEnrollmentId: Required. MFA enrollment id from the user's list of current
+	// MFA enrollments.
 	MfaEnrollmentId string `json:"mfaEnrollmentId,omitempty"`
-
 	// MfaPendingCredential: Required. Pending credential from first factor
 	// sign-in.
 	MfaPendingCredential string `json:"mfaPendingCredential,omitempty"`
-
-	// PhoneSignInInfo: Verification info to authorize sending an SMS for
-	// phone verification.
+	// PhoneSignInInfo: Verification info to authorize sending an SMS for phone
+	// verification.
 	PhoneSignInInfo *GoogleCloudIdentitytoolkitV2StartMfaPhoneRequestInfo `json:"phoneSignInInfo,omitempty"`
-
-	// TenantId: The ID of the Identity Platform tenant the user is signing
-	// in to. If not set, the user will sign in to the default Identity
-	// Platform project.
+	// TenantId: The ID of the Identity Platform tenant the user is signing in to.
+	// If not set, the user will sign in to the default Identity Platform project.
 	TenantId string `json:"tenantId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MfaEnrollmentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MfaEnrollmentId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MfaEnrollmentId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2StartMfaSignInRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaSignInRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2StartMfaSignInResponse: StartMfaSignIn
-// response.
+// GoogleCloudIdentitytoolkitV2StartMfaSignInResponse: StartMfaSignIn response.
 type GoogleCloudIdentitytoolkitV2StartMfaSignInResponse struct {
-	// PhoneResponseInfo: MultiFactor sign-in session information specific
-	// to SMS-type second factors. Along with the one-time code retrieved
-	// from the sent SMS, the contents of this session information should be
-	// passed to FinalizeMfaSignIn to complete the sign in.
+	// PhoneResponseInfo: MultiFactor sign-in session information specific to
+	// SMS-type second factors. Along with the one-time code retrieved from the
+	// sent SMS, the contents of this session information should be passed to
+	// FinalizeMfaSignIn to complete the sign in.
 	PhoneResponseInfo *GoogleCloudIdentitytoolkitV2StartMfaPhoneResponseInfo `json:"phoneResponseInfo,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "PhoneResponseInfo")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "PhoneResponseInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PhoneResponseInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PhoneResponseInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2StartMfaSignInResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaSignInResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo: Mfa
-// request info specific to TOTP auth for StartMfa.
+// GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo: Mfa request
+// info specific to TOTP auth for StartMfa.
 type GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo struct {
 }
 
-// GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo: Mfa
-// response info specific to TOTP auth for StartMfa.
+// GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo: Mfa response
+// info specific to TOTP auth for StartMfa.
 type GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo struct {
 	// FinalizeEnrollmentTime: The time by which the enrollment must finish.
 	FinalizeEnrollmentTime string `json:"finalizeEnrollmentTime,omitempty"`
-
-	// HashingAlgorithm: The hashing algorithm used to generate the
-	// verification code.
+	// HashingAlgorithm: The hashing algorithm used to generate the verification
+	// code.
 	HashingAlgorithm string `json:"hashingAlgorithm,omitempty"`
-
-	// PeriodSec: Duration in seconds at which the verification code will
-	// change.
+	// PeriodSec: Duration in seconds at which the verification code will change.
 	PeriodSec int64 `json:"periodSec,omitempty"`
-
-	// SessionInfo: An encoded string that represents the enrollment
-	// session.
+	// SessionInfo: An encoded string that represents the enrollment session.
 	SessionInfo string `json:"sessionInfo,omitempty"`
-
-	// SharedSecretKey: A base 32 encoded string that represents the shared
-	// TOTP secret. The base 32 encoding is the one specified by
-	// RFC4648#section-6
-	// (https://datatracker.ietf.org/doc/html/rfc4648#section-6). (This is
-	// the same as the base 32 encoding from RFC3548#section-5
+	// SharedSecretKey: A base 32 encoded string that represents the shared TOTP
+	// secret. The base 32 encoding is the one specified by RFC4648#section-6
+	// (https://datatracker.ietf.org/doc/html/rfc4648#section-6). (This is the same
+	// as the base 32 encoding from RFC3548#section-5
 	// (https://datatracker.ietf.org/doc/html/rfc3548#section-5).)
 	SharedSecretKey string `json:"sharedSecretKey,omitempty"`
-
-	// VerificationCodeLength: The length of the verification code that
-	// needs to be generated.
+	// VerificationCodeLength: The length of the verification code that needs to be
+	// generated.
 	VerificationCodeLength int64 `json:"verificationCodeLength,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "FinalizeEnrollmentTime") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "FinalizeEnrollmentTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FinalizeEnrollmentTime")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FinalizeEnrollmentTime") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV2WithdrawMfaRequest: Withdraws MFA.
 type GoogleCloudIdentitytoolkitV2WithdrawMfaRequest struct {
 	// IdToken: Required. User's ID token.
 	IdToken string `json:"idToken,omitempty"`
-
-	// MfaEnrollmentId: Required. MFA enrollment id from a current MFA
-	// enrollment.
+	// MfaEnrollmentId: Required. MFA enrollment id from a current MFA enrollment.
 	MfaEnrollmentId string `json:"mfaEnrollmentId,omitempty"`
-
-	// TenantId: The ID of the Identity Platform tenant that the user
-	// unenrolling MFA belongs to. If not set, the user belongs to the
-	// default Identity Platform project.
+	// TenantId: The ID of the Identity Platform tenant that the user unenrolling
+	// MFA belongs to. If not set, the user belongs to the default Identity
+	// Platform project.
 	TenantId string `json:"tenantId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IdToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IdToken") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IdToken") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IdToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2WithdrawMfaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2WithdrawMfaRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIdentitytoolkitV2WithdrawMfaResponse: Withdraws
-// MultiFactorAuth response.
+// GoogleCloudIdentitytoolkitV2WithdrawMfaResponse: Withdraws MultiFactorAuth
+// response.
 type GoogleCloudIdentitytoolkitV2WithdrawMfaResponse struct {
 	// IdToken: ID token updated to reflect removal of the second factor.
 	IdToken string `json:"idToken,omitempty"`
-
-	// RefreshToken: Refresh token updated to reflect removal of the second
-	// factor.
+	// RefreshToken: Refresh token updated to reflect removal of the second factor.
 	RefreshToken string `json:"refreshToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "IdToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IdToken") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IdToken") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IdToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudIdentitytoolkitV2WithdrawMfaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2WithdrawMfaResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1AuditConfig: Specifies the audit configuration for a
-// service. The configuration determines which permission types are
-// logged, and what identities, if any, are exempted from logging. An
-// AuditConfig must have one or more AuditLogConfigs. If there are
-// AuditConfigs for both `allServices` and a specific service, the union
-// of the two AuditConfigs is used for that service: the log_types
-// specified in each AuditConfig are enabled, and the exempted_members
-// in each AuditLogConfig are exempted. Example Policy with multiple
-// AuditConfigs: { "audit_configs": [ { "service": "allServices",
-// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members":
-// [ "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, {
-// "log_type": "ADMIN_READ" } ] }, { "service":
-// "sampleservice.googleapis.com", "audit_log_configs": [ { "log_type":
-// "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
-// "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
-// enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
-// from DATA_WRITE logging.
+// GoogleIamV1AuditConfig: Specifies the audit configuration for a service. The
+// configuration determines which permission types are logged, and what
+// identities, if any, are exempted from logging. An AuditConfig must have one
+// or more AuditLogConfigs. If there are AuditConfigs for both `allServices`
+// and a specific service, the union of the two AuditConfigs is used for that
+// service: the log_types specified in each AuditConfig are enabled, and the
+// exempted_members in each AuditLogConfig are exempted. Example Policy with
+// multiple AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members": [
+// "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, { "log_type":
+// "ADMIN_READ" } ] }, { "service": "sampleservice.googleapis.com",
+// "audit_log_configs": [ { "log_type": "DATA_READ" }, { "log_type":
+// "DATA_WRITE", "exempted_members": [ "user:aliya@example.com" ] } ] } ] } For
+// sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
+// logging. It also exempts `jose@example.com` from DATA_READ logging, and
+// `aliya@example.com` from DATA_WRITE logging.
 type GoogleIamV1AuditConfig struct {
-	// AuditLogConfigs: The configuration for logging of each type of
-	// permission.
+	// AuditLogConfigs: The configuration for logging of each type of permission.
 	AuditLogConfigs []*GoogleIamV1AuditLogConfig `json:"auditLogConfigs,omitempty"`
-
-	// Service: Specifies a service that will be enabled for audit logging.
-	// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
-	// `allServices` is a special value that covers all services.
+	// Service: Specifies a service that will be enabled for audit logging. For
+	// example, `storage.googleapis.com`, `cloudsql.googleapis.com`. `allServices`
+	// is a special value that covers all services.
 	Service string `json:"service,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuditLogConfigs") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AuditLogConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1AuditLogConfig: Provides the configuration for logging a
-// type of permissions. Example: { "audit_log_configs": [ { "log_type":
-// "DATA_READ", "exempted_members": [ "user:jose@example.com" ] }, {
-// "log_type": "DATA_WRITE" } ] } This enables 'DATA_READ' and
-// 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ
-// logging.
+// GoogleIamV1AuditLogConfig: Provides the configuration for logging a type of
+// permissions. Example: { "audit_log_configs": [ { "log_type": "DATA_READ",
+// "exempted_members": [ "user:jose@example.com" ] }, { "log_type":
+// "DATA_WRITE" } ] } This enables 'DATA_READ' and 'DATA_WRITE' logging, while
+// exempting jose@example.com from DATA_READ logging.
 type GoogleIamV1AuditLogConfig struct {
-	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of permission. Follows the same format of
-	// Binding.members.
+	// ExemptedMembers: Specifies the identities that do not cause logging for this
+	// type of permission. Follows the same format of Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
-
 	// LogType: The log type that this config enables.
 	//
 	// Possible values:
@@ -3765,500 +2959,409 @@ type GoogleIamV1AuditLogConfig struct {
 	//   "DATA_WRITE" - Data writes. Example: CloudSQL Users create
 	//   "DATA_READ" - Data reads. Example: CloudSQL Users list
 	LogType string `json:"logType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExemptedMembers") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ExemptedMembers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditLogConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1Binding: Associates `members`, or principals, with a
-// `role`.
+// GoogleIamV1Binding: Associates `members`, or principals, with a `role`.
 type GoogleIamV1Binding struct {
 	// Condition: The condition that is associated with this binding. If the
-	// condition evaluates to `true`, then this binding applies to the
-	// current request. If the condition evaluates to `false`, then this
-	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the
-	// principals in this binding. To learn which resources support
-	// conditions in their IAM policies, see the IAM documentation
+	// condition evaluates to `true`, then this binding applies to the current
+	// request. If the condition evaluates to `false`, then this binding does not
+	// apply to the current request. However, a different role binding might grant
+	// the same role to one or more of the principals in this binding. To learn
+	// which resources support conditions in their IAM policies, see the IAM
+	// documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
-
-	// Members: Specifies the principals requesting access for a Google
-	// Cloud resource. `members` can have the following values: *
-	// `allUsers`: A special identifier that represents anyone who is on the
-	// internet; with or without a Google account. *
-	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. Does
-	// not include identities that come from external identity providers
-	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// Members: Specifies the principals requesting access for a Google Cloud
+	// resource. `members` can have the following values: * `allUsers`: A special
+	// identifier that represents anyone who is on the internet; with or without a
+	// Google account. * `allAuthenticatedUsers`: A special identifier that
+	// represents anyone who is authenticated with a Google account or a service
+	// account. Does not include identities that come from external identity
+	// providers (IdPs) through identity federation. * `user:{emailid}`: An email
 	// address that represents a specific Google account. For example,
-	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
-	// that represents a Google service account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address that
+	// represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
-	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
-	//  An identifier for a Kubernetes service account
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An
+	// identifier for a Kubernetes service account
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
-	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
-	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
-	// domain (primary) that represents all the users of that domain. For
-	// example, `google.com` or `example.com`. *
-	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
-	// id}/subject/{subject_attribute_value}`: A single identity in a
-	// workforce identity pool. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/group/{group_id}`: All workforce identities in a group. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
-	// identities with a specific attribute value. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/*`: All identities in a workforce identity pool. *
-	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
-	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
-	// `: A single identity in a workload identity pool. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
-	// identity pool group. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
-	// tribute_value}`: All identities in a workload identity pool with a
-	// certain attribute. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
-	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
-	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus unique identifier) representing a service account that has been
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. *
+	// `group:{emailid}`: An email address that represents a Google group. For
+	// example, `admins@example.com`. * `domain:{domain}`: The G Suite domain
+	// (primary) that represents all the users of that domain. For example,
+	// `google.com` or `example.com`. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/sub
+	// ject/{subject_attribute_value}`: A single identity in a workforce identity
+	// pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// attribute.{attribute_name}/{attribute_value}`: All workforce identities with
+	// a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// *`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/global/wo
+	// rkloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single
+	// identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool
+	// group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}
+	// `: All identities in a workload identity pool with a certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/*`: All identities in a workload identity
+	// pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently deleted. For
+	// example, `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered user
+	// retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a service account that has been recently
+	// deleted. For example,
+	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the
+	// service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains the
+	// role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email
+	// address (plus unique identifier) representing a Google group that has been
 	// recently deleted. For example,
-	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	// If the service account is undeleted, this value reverts to
-	// `serviceAccount:{emailid}` and the undeleted service account retains
-	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
-	// An email address (plus unique identifier) representing a Google group
-	// that has been recently deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If the group is
-	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. *
-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
-	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
-	// identity in a workforce identity pool. For example,
-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
-	// s/my-pool-id/subject/my-subject-attribute-value`.
+	// `admins@example.com?uid=123456789012345678901`. If the group is recovered,
+	// this value reverts to `group:{emailid}` and the recovered group retains the
+	// role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool
+	// _id}/subject/{subject_attribute_value}`: Deleted single identity in a
+	// workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-po
+	// ol-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
-
-	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
-	// overview of the IAM roles and permissions, see the IAM documentation
+	// Role: Role that is assigned to the list of `members`, or principals. For
+	// example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview
+	// of the IAM roles and permissions, see the IAM documentation
 	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
 	// available pre-defined roles, see here
 	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Condition") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Condition") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Binding
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1GetIamPolicyRequest: Request message for `GetIamPolicy`
-// method.
+// GoogleIamV1GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GoogleIamV1GetIamPolicyRequest struct {
-	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
-	// to `GetIamPolicy`.
+	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options to
+	// `GetIamPolicy`.
 	Options *GoogleIamV1GetPolicyOptions `json:"options,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Options") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Options") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Options") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleIamV1GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1GetIamPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1GetPolicyOptions: Encapsulates settings provided to
-// GetIamPolicy.
+// GoogleIamV1GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GoogleIamV1GetPolicyOptions struct {
-	// RequestedPolicyVersion: Optional. The maximum policy version that
-	// will be used to format the policy. Valid values are 0, 1, and 3.
-	// Requests specifying an invalid value will be rejected. Requests for
-	// policies with any conditional role bindings must specify version 3.
-	// Policies with no conditional role bindings may specify any valid
-	// value or leave the field unset. The policy in the response might use
-	// the policy version that you specified, or it might use a lower policy
-	// version. For example, if you specify version 3, but the policy has no
-	// conditional role bindings, the response uses version 1. To learn
-	// which resources support conditions in their IAM policies, see the IAM
-	// documentation
+	// RequestedPolicyVersion: Optional. The maximum policy version that will be
+	// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+	// an invalid value will be rejected. Requests for policies with any
+	// conditional role bindings must specify version 3. Policies with no
+	// conditional role bindings may specify any valid value or leave the field
+	// unset. The policy in the response might use the policy version that you
+	// specified, or it might use a lower policy version. For example, if you
+	// specify version 3, but the policy has no conditional role bindings, the
+	// response uses version 1. To learn which resources support conditions in
+	// their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "RequestedPolicyVersion") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "RequestedPolicyVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequestedPolicyVersion")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "RequestedPolicyVersion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleIamV1GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1GetPolicyOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1Policy: An Identity and Access Management (IAM) policy,
-// which specifies access controls for Google Cloud resources. A
-// `Policy` is a collection of `bindings`. A `binding` binds one or more
-// `members`, or principals, to a single `role`. Principals can be user
-// accounts, service accounts, Google groups, and domains (such as G
-// Suite). A `role` is a named list of permissions; each `role` can be
-// an IAM predefined role or a user-created custom role. For some types
-// of Google Cloud resources, a `binding` can also specify a
-// `condition`, which is a logical expression that allows access to a
-// resource only if the expression evaluates to `true`. A condition can
-// add constraints based on attributes of the request, the resource, or
-// both. To learn which resources support conditions in their IAM
+// GoogleIamV1Policy: An Identity and Access Management (IAM) policy, which
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts, service
+// accounts, Google groups, and domains (such as G Suite). A `role` is a named
+// list of permissions; each `role` can be an IAM predefined role or a
+// user-created custom role. For some types of Google Cloud resources, a
+// `binding` can also specify a `condition`, which is a logical expression that
+// allows access to a resource only if the expression evaluates to `true`. A
+// condition can add constraints based on attributes of the request, the
+// resource, or both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** ``` { "bindings": [ { "role":
+// (https://cloud.google.com/iam/help/conditions/resource-policies). **JSON
+// example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
-// "user:mike@example.com", "group:admins@example.com",
-// "domain:google.com",
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
-// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:mike@example.com", "group:admins@example.com", "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, { "role":
+// "roles/resourcemanager.organizationViewer", "members": [
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
-// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
-// bindings: - members: - user:mike@example.com -
-// group:admins@example.com - domain:google.com -
-// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
-// roles/resourcemanager.organizationAdmin - members: -
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ], "etag":
+// "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ``` bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+// role: roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
-// condition: title: expirable access description: Does not grant access
-// after Sep 2020 expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// ``` For a description of IAM and its features, see the IAM
-// documentation (https://cloud.google.com/iam/docs/).
+// condition: title: expirable access description: Does not grant access after
+// Sep 2020 expression: request.time < timestamp('2020-10-01T00:00:00.000Z')
+// etag: BwWWja0YfJA= version: 3 ``` For a description of IAM and its features,
+// see the IAM documentation (https://cloud.google.com/iam/docs/).
 type GoogleIamV1Policy struct {
-	// AuditConfigs: Specifies cloud audit logging configuration for this
-	// policy.
+	// AuditConfigs: Specifies cloud audit logging configuration for this policy.
 	AuditConfigs []*GoogleIamV1AuditConfig `json:"auditConfigs,omitempty"`
-
-	// Bindings: Associates a list of `members`, or principals, with a
-	// `role`. Optionally, may specify a `condition` that determines how and
-	// when the `bindings` are applied. Each of the `bindings` must contain
-	// at least one principal. The `bindings` in a `Policy` can refer to up
-	// to 1,500 principals; up to 250 of these principals can be Google
-	// groups. Each occurrence of a principal counts towards these limits.
-	// For example, if the `bindings` grant 50 different roles to
-	// `user:alice@example.com`, and not to any other principal, then you
-	// can add another 1,450 principals to the `bindings` in the `Policy`.
+	// Bindings: Associates a list of `members`, or principals, with a `role`.
+	// Optionally, may specify a `condition` that determines how and when the
+	// `bindings` are applied. Each of the `bindings` must contain at least one
+	// principal. The `bindings` in a `Policy` can refer to up to 1,500 principals;
+	// up to 250 of these principals can be Google groups. Each occurrence of a
+	// principal counts towards these limits. For example, if the `bindings` grant
+	// 50 different roles to `user:alice@example.com`, and not to any other
+	// principal, then you can add another 1,450 principals to the `bindings` in
+	// the `Policy`.
 	Bindings []*GoogleIamV1Binding `json:"bindings,omitempty"`
-
-	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help prevent simultaneous updates of a policy from overwriting each
-	// other. It is strongly suggested that systems make use of the `etag`
-	// in the read-modify-write cycle to perform policy updates in order to
-	// avoid race conditions: An `etag` is returned in the response to
-	// `getIamPolicy`, and systems are expected to put that etag in the
-	// request to `setIamPolicy` to ensure that their change will be applied
-	// to the same version of the policy. **Important:** If you use IAM
-	// Conditions, you must include the `etag` field whenever you call
-	// `setIamPolicy`. If you omit this field, then IAM allows you to
-	// overwrite a version `3` policy with a version `1` policy, and all of
+	// Etag: `etag` is used for optimistic concurrency control as a way to help
+	// prevent simultaneous updates of a policy from overwriting each other. It is
+	// strongly suggested that systems make use of the `etag` in the
+	// read-modify-write cycle to perform policy updates in order to avoid race
+	// conditions: An `etag` is returned in the response to `getIamPolicy`, and
+	// systems are expected to put that etag in the request to `setIamPolicy` to
+	// ensure that their change will be applied to the same version of the policy.
+	// **Important:** If you use IAM Conditions, you must include the `etag` field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+	// you to overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
-
-	// Version: Specifies the format of the policy. Valid values are `0`,
-	// `1`, and `3`. Requests that specify an invalid value are rejected.
-	// Any operation that affects conditional role bindings must specify
-	// version `3`. This requirement applies to the following operations: *
-	// Getting a policy that includes a conditional role binding * Adding a
-	// conditional role binding to a policy * Changing a conditional role
-	// binding in a policy * Removing any role binding, with or without a
-	// condition, from a policy that includes conditions **Important:** If
-	// you use IAM Conditions, you must include the `etag` field whenever
-	// you call `setIamPolicy`. If you omit this field, then IAM allows you
-	// to overwrite a version `3` policy with a version `1` policy, and all
-	// of the conditions in the version `3` policy are lost. If a policy
-	// does not include any conditions, operations on that policy may
-	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the IAM
-	// documentation
+	// Version: Specifies the format of the policy. Valid values are `0`, `1`, and
+	// `3`. Requests that specify an invalid value are rejected. Any operation that
+	// affects conditional role bindings must specify version `3`. This requirement
+	// applies to the following operations: * Getting a policy that includes a
+	// conditional role binding * Adding a conditional role binding to a policy *
+	// Changing a conditional role binding in a policy * Removing any role binding,
+	// with or without a condition, from a policy that includes conditions
+	// **Important:** If you use IAM Conditions, you must include the `etag` field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+	// you to overwrite a version `3` policy with a version `1` policy, and all of
+	// the conditions in the version `3` policy are lost. If a policy does not
+	// include any conditions, operations on that policy may specify any valid
+	// version or leave the field unset. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuditConfigs") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AuditConfigs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Policy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1SetIamPolicyRequest: Request message for `SetIamPolicy`
-// method.
+// GoogleIamV1SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type GoogleIamV1SetIamPolicyRequest struct {
-	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Google Cloud services
-	// (such as Projects) might reject them.
+	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
+	// size of the policy is limited to a few 10s of KB. An empty policy is a valid
+	// policy but certain Google Cloud services (such as Projects) might reject
+	// them.
 	Policy *GoogleIamV1Policy `json:"policy,omitempty"`
-
-	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
-	// policy to modify. Only the fields in the mask will be modified. If no
-	// mask is provided, the following default mask is used: `paths:
-	// "bindings, etag"
+	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the policy to
+	// modify. Only the fields in the mask will be modified. If no mask is
+	// provided, the following default mask is used: `paths: "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Policy") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Policy") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleIamV1SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1SetIamPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1TestIamPermissionsRequest: Request message for
 // `TestIamPermissions` method.
 type GoogleIamV1TestIamPermissionsRequest struct {
-	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as `*` or `storage.*`) are not
-	// allowed. For more information see IAM Overview
+	// Permissions: The set of permissions to check for the `resource`. Permissions
+	// with wildcards (such as `*` or `storage.*`) are not allowed. For more
+	// information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleIamV1TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1TestIamPermissionsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1TestIamPermissionsResponse: Response message for
 // `TestIamPermissions` method.
 type GoogleIamV1TestIamPermissionsResponse struct {
-	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is allowed.
+	// Permissions: A subset of `TestPermissionsRequest.permissions` that the
+	// caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1TestIamPermissionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleTypeExpr: Represents a textual expression in the Common
-// Expression Language (CEL) syntax. CEL is a C-like expression
-// language. The syntax and semantics of CEL are documented at
-// https://github.com/google/cel-spec. Example (Comparison): title:
-// "Summary size limit" description: "Determines if a summary is less
-// than 100 chars" expression: "document.summary.size() < 100" Example
-// (Equality): title: "Requestor is owner" description: "Determines if
-// requestor is the document owner" expression: "document.owner ==
-// request.auth.claims.email" Example (Logic): title: "Public documents"
-// description: "Determine whether the document should be publicly
-// visible" expression: "document.type != 'private' && document.type !=
-// 'internal'" Example (Data Manipulation): title: "Notification string"
-// description: "Create a notification string with a timestamp."
-// expression: "'New message received at ' +
-// string(document.create_time)" The exact variables and functions that
-// may be referenced within an expression are determined by the service
-// that evaluates it. See the service documentation for additional
+// GoogleTypeExpr: Represents a textual expression in the Common Expression
+// Language (CEL) syntax. CEL is a C-like expression language. The syntax and
+// semantics of CEL are documented at https://github.com/google/cel-spec.
+// Example (Comparison): title: "Summary size limit" description: "Determines
+// if a summary is less than 100 chars" expression: "document.summary.size() <
+// 100" Example (Equality): title: "Requestor is owner" description:
+// "Determines if requestor is the document owner" expression: "document.owner
+// == request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly visible"
+// expression: "document.type != 'private' && document.type != 'internal'"
+// Example (Data Manipulation): title: "Notification string" description:
+// "Create a notification string with a timestamp." expression: "'New message
+// received at ' + string(document.create_time)" The exact variables and
+// functions that may be referenced within an expression are determined by the
+// service that evaluates it. See the service documentation for additional
 // information.
 type GoogleTypeExpr struct {
-	// Description: Optional. Description of the expression. This is a
-	// longer text which describes the expression, e.g. when hovered over it
-	// in a UI.
+	// Description: Optional. Description of the expression. This is a longer text
+	// which describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
-
-	// Expression: Textual representation of an expression in Common
-	// Expression Language syntax.
+	// Expression: Textual representation of an expression in Common Expression
+	// Language syntax.
 	Expression string `json:"expression,omitempty"`
-
-	// Location: Optional. String indicating the location of the expression
-	// for error reporting, e.g. a file name and a position in the file.
+	// Location: Optional. String indicating the location of the expression for
+	// error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
-
-	// Title: Optional. Title for the expression, i.e. a short string
-	// describing its purpose. This can be used e.g. in UIs which allow to
-	// enter the expression.
+	// Title: Optional. Title for the expression, i.e. a short string describing
+	// its purpose. This can be used e.g. in UIs which allow to enter the
+	// expression.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "identitytoolkit.accounts.revokeToken":
 
 type AccountsRevokeTokenCall struct {
 	s                                              *Service
@@ -4268,11 +3371,11 @@ type AccountsRevokeTokenCall struct {
 	header_                                        http.Header
 }
 
-// RevokeToken: Revokes a user's token from an Identity Provider (IdP).
-// This is done by manually providing an IdP credential, and the token
-// types for revocation. An API key
-// (https://cloud.google.com/docs/authentication/api-keys) is required
-// in the request in order to identify the Google Cloud project.
+// RevokeToken: Revokes a user's token from an Identity Provider (IdP). This is
+// done by manually providing an IdP credential, and the token types for
+// revocation. An API key
+// (https://cloud.google.com/docs/authentication/api-keys) is required in the
+// request in order to identify the Google Cloud project.
 func (r *AccountsService) RevokeToken(googlecloudidentitytoolkitv2revoketokenrequest *GoogleCloudIdentitytoolkitV2RevokeTokenRequest) *AccountsRevokeTokenCall {
 	c := &AccountsRevokeTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlecloudidentitytoolkitv2revoketokenrequest = googlecloudidentitytoolkitv2revoketokenrequest
@@ -4280,23 +3383,21 @@ func (r *AccountsService) RevokeToken(googlecloudidentitytoolkitv2revoketokenreq
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsRevokeTokenCall) Fields(s ...googleapi.Field) *AccountsRevokeTokenCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsRevokeTokenCall) Context(ctx context.Context) *AccountsRevokeTokenCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsRevokeTokenCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4305,18 +3406,12 @@ func (c *AccountsRevokeTokenCall) Header() http.Header {
 }
 
 func (c *AccountsRevokeTokenCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2revoketokenrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts:revokeToken")
@@ -4330,16 +3425,11 @@ func (c *AccountsRevokeTokenCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "identitytoolkit.accounts.revokeToken" call.
-// Exactly one of *GoogleCloudIdentitytoolkitV2RevokeTokenResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitV2RevokeTokenResponse.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitV2RevokeTokenResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsRevokeTokenCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2RevokeTokenResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4370,28 +3460,7 @@ func (c *AccountsRevokeTokenCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Revokes a user's token from an Identity Provider (IdP). This is done by manually providing an IdP credential, and the token types for revocation. An [API key](https://cloud.google.com/docs/authentication/api-keys) is required in the request in order to identify the Google Cloud project.",
-	//   "flatPath": "v2/accounts:revokeToken",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.accounts.revokeToken",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v2/accounts:revokeToken",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2RevokeTokenRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2RevokeTokenResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.accounts.mfaEnrollment.finalize":
 
 type AccountsMfaEnrollmentFinalizeCall struct {
 	s                                                        *Service
@@ -4409,23 +3478,21 @@ func (r *AccountsMfaEnrollmentService) Finalize(googlecloudidentitytoolkitv2fina
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsMfaEnrollmentFinalizeCall) Fields(s ...googleapi.Field) *AccountsMfaEnrollmentFinalizeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsMfaEnrollmentFinalizeCall) Context(ctx context.Context) *AccountsMfaEnrollmentFinalizeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsMfaEnrollmentFinalizeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4434,18 +3501,12 @@ func (c *AccountsMfaEnrollmentFinalizeCall) Header() http.Header {
 }
 
 func (c *AccountsMfaEnrollmentFinalizeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2finalizemfaenrollmentrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts/mfaEnrollment:finalize")
@@ -4459,15 +3520,11 @@ func (c *AccountsMfaEnrollmentFinalizeCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "identitytoolkit.accounts.mfaEnrollment.finalize" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse.ServerRespo
-// nse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsMfaEnrollmentFinalizeCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4498,28 +3555,7 @@ func (c *AccountsMfaEnrollmentFinalizeCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Finishes enrolling a second factor for the user.",
-	//   "flatPath": "v2/accounts/mfaEnrollment:finalize",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.accounts.mfaEnrollment.finalize",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v2/accounts/mfaEnrollment:finalize",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.accounts.mfaEnrollment.start":
 
 type AccountsMfaEnrollmentStartCall struct {
 	s                                                     *Service
@@ -4529,8 +3565,8 @@ type AccountsMfaEnrollmentStartCall struct {
 	header_                                               http.Header
 }
 
-// Start: Step one of the MFA enrollment process. In SMS case, this
-// sends an SMS verification code to the user.
+// Start: Step one of the MFA enrollment process. In SMS case, this sends an
+// SMS verification code to the user.
 func (r *AccountsMfaEnrollmentService) Start(googlecloudidentitytoolkitv2startmfaenrollmentrequest *GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest) *AccountsMfaEnrollmentStartCall {
 	c := &AccountsMfaEnrollmentStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlecloudidentitytoolkitv2startmfaenrollmentrequest = googlecloudidentitytoolkitv2startmfaenrollmentrequest
@@ -4538,23 +3574,21 @@ func (r *AccountsMfaEnrollmentService) Start(googlecloudidentitytoolkitv2startmf
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsMfaEnrollmentStartCall) Fields(s ...googleapi.Field) *AccountsMfaEnrollmentStartCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsMfaEnrollmentStartCall) Context(ctx context.Context) *AccountsMfaEnrollmentStartCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsMfaEnrollmentStartCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4563,18 +3597,12 @@ func (c *AccountsMfaEnrollmentStartCall) Header() http.Header {
 }
 
 func (c *AccountsMfaEnrollmentStartCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2startmfaenrollmentrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts/mfaEnrollment:start")
@@ -4588,15 +3616,13 @@ func (c *AccountsMfaEnrollmentStartCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "identitytoolkit.accounts.mfaEnrollment.start" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsMfaEnrollmentStartCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4627,28 +3653,7 @@ func (c *AccountsMfaEnrollmentStartCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Step one of the MFA enrollment process. In SMS case, this sends an SMS verification code to the user.",
-	//   "flatPath": "v2/accounts/mfaEnrollment:start",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.accounts.mfaEnrollment.start",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v2/accounts/mfaEnrollment:start",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.accounts.mfaEnrollment.withdraw":
 
 type AccountsMfaEnrollmentWithdrawCall struct {
 	s                                              *Service
@@ -4658,8 +3663,8 @@ type AccountsMfaEnrollmentWithdrawCall struct {
 	header_                                        http.Header
 }
 
-// Withdraw: Revokes one second factor from the enrolled second factors
-// for an account.
+// Withdraw: Revokes one second factor from the enrolled second factors for an
+// account.
 func (r *AccountsMfaEnrollmentService) Withdraw(googlecloudidentitytoolkitv2withdrawmfarequest *GoogleCloudIdentitytoolkitV2WithdrawMfaRequest) *AccountsMfaEnrollmentWithdrawCall {
 	c := &AccountsMfaEnrollmentWithdrawCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlecloudidentitytoolkitv2withdrawmfarequest = googlecloudidentitytoolkitv2withdrawmfarequest
@@ -4667,23 +3672,21 @@ func (r *AccountsMfaEnrollmentService) Withdraw(googlecloudidentitytoolkitv2with
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsMfaEnrollmentWithdrawCall) Fields(s ...googleapi.Field) *AccountsMfaEnrollmentWithdrawCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsMfaEnrollmentWithdrawCall) Context(ctx context.Context) *AccountsMfaEnrollmentWithdrawCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsMfaEnrollmentWithdrawCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4692,18 +3695,12 @@ func (c *AccountsMfaEnrollmentWithdrawCall) Header() http.Header {
 }
 
 func (c *AccountsMfaEnrollmentWithdrawCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2withdrawmfarequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts/mfaEnrollment:withdraw")
@@ -4717,16 +3714,11 @@ func (c *AccountsMfaEnrollmentWithdrawCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "identitytoolkit.accounts.mfaEnrollment.withdraw" call.
-// Exactly one of *GoogleCloudIdentitytoolkitV2WithdrawMfaResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitV2WithdrawMfaResponse.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitV2WithdrawMfaResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsMfaEnrollmentWithdrawCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2WithdrawMfaResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4757,28 +3749,7 @@ func (c *AccountsMfaEnrollmentWithdrawCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Revokes one second factor from the enrolled second factors for an account.",
-	//   "flatPath": "v2/accounts/mfaEnrollment:withdraw",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.accounts.mfaEnrollment.withdraw",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v2/accounts/mfaEnrollment:withdraw",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2WithdrawMfaRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2WithdrawMfaResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.accounts.mfaSignIn.finalize":
 
 type AccountsMfaSignInFinalizeCall struct {
 	s                                                    *Service
@@ -4796,23 +3767,21 @@ func (r *AccountsMfaSignInService) Finalize(googlecloudidentitytoolkitv2finalize
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsMfaSignInFinalizeCall) Fields(s ...googleapi.Field) *AccountsMfaSignInFinalizeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsMfaSignInFinalizeCall) Context(ctx context.Context) *AccountsMfaSignInFinalizeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsMfaSignInFinalizeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4821,18 +3790,12 @@ func (c *AccountsMfaSignInFinalizeCall) Header() http.Header {
 }
 
 func (c *AccountsMfaSignInFinalizeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2finalizemfasigninrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts/mfaSignIn:finalize")
@@ -4846,14 +3809,11 @@ func (c *AccountsMfaSignInFinalizeCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "identitytoolkit.accounts.mfaSignIn.finalize" call.
-// Exactly one of *GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsMfaSignInFinalizeCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4884,28 +3844,7 @@ func (c *AccountsMfaSignInFinalizeCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Verifies the MFA challenge and performs sign-in",
-	//   "flatPath": "v2/accounts/mfaSignIn:finalize",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.accounts.mfaSignIn.finalize",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v2/accounts/mfaSignIn:finalize",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.accounts.mfaSignIn.start":
 
 type AccountsMfaSignInStartCall struct {
 	s                                                 *Service
@@ -4923,23 +3862,21 @@ func (r *AccountsMfaSignInService) Start(googlecloudidentitytoolkitv2startmfasig
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsMfaSignInStartCall) Fields(s ...googleapi.Field) *AccountsMfaSignInStartCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsMfaSignInStartCall) Context(ctx context.Context) *AccountsMfaSignInStartCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsMfaSignInStartCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4948,18 +3885,12 @@ func (c *AccountsMfaSignInStartCall) Header() http.Header {
 }
 
 func (c *AccountsMfaSignInStartCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2startmfasigninrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts/mfaSignIn:start")
@@ -4973,14 +3904,11 @@ func (c *AccountsMfaSignInStartCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "identitytoolkit.accounts.mfaSignIn.start" call.
-// Exactly one of *GoogleCloudIdentitytoolkitV2StartMfaSignInResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitV2StartMfaSignInResponse.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitV2StartMfaSignInResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsMfaSignInStartCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2StartMfaSignInResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5011,28 +3939,7 @@ func (c *AccountsMfaSignInStartCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sends the MFA challenge",
-	//   "flatPath": "v2/accounts/mfaSignIn:start",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.accounts.mfaSignIn.start",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v2/accounts/mfaSignIn:start",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2StartMfaSignInRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2StartMfaSignInResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.defaultSupportedIdps.list":
 
 type DefaultSupportedIdpsListCall struct {
 	s            *Service
@@ -5048,48 +3955,44 @@ func (r *DefaultSupportedIdpsService) List() *DefaultSupportedIdpsListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return.
 func (c *DefaultSupportedIdpsListCall) PageSize(pageSize int64) *DefaultSupportedIdpsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous List request, if any.
 func (c *DefaultSupportedIdpsListCall) PageToken(pageToken string) *DefaultSupportedIdpsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DefaultSupportedIdpsListCall) Fields(s ...googleapi.Field) *DefaultSupportedIdpsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *DefaultSupportedIdpsListCall) IfNoneMatch(entityTag string) *DefaultSupportedIdpsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DefaultSupportedIdpsListCall) Context(ctx context.Context) *DefaultSupportedIdpsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DefaultSupportedIdpsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5098,12 +4001,7 @@ func (c *DefaultSupportedIdpsListCall) Header() http.Header {
 }
 
 func (c *DefaultSupportedIdpsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5121,15 +4019,11 @@ func (c *DefaultSupportedIdpsListCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "identitytoolkit.defaultSupportedIdps.list" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse.Ser
-// verResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *DefaultSupportedIdpsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5160,35 +4054,6 @@ func (c *DefaultSupportedIdpsListCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all default supported Idps.",
-	//   "flatPath": "v2/defaultSupportedIdps",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.defaultSupportedIdps.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of items to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/defaultSupportedIdps",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5196,7 +4061,7 @@ func (c *DefaultSupportedIdpsListCall) Do(opts ...googleapi.CallOption) (*Google
 // The provided context supersedes any context provided to the Context method.
 func (c *DefaultSupportedIdpsListCall) Pages(ctx context.Context, f func(*GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5211,8 +4076,6 @@ func (c *DefaultSupportedIdpsListCall) Pages(ctx context.Context, f func(*Google
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "identitytoolkit.projects.getConfig":
 
 type ProjectsGetConfigCall struct {
 	s            *Service
@@ -5234,33 +4097,29 @@ func (r *ProjectsService) GetConfig(name string) *ProjectsGetConfigCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsGetConfigCall) Fields(s ...googleapi.Field) *ProjectsGetConfigCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsGetConfigCall) IfNoneMatch(entityTag string) *ProjectsGetConfigCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsGetConfigCall) Context(ctx context.Context) *ProjectsGetConfigCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsGetConfigCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5269,12 +4128,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 }
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5295,13 +4149,11 @@ func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "identitytoolkit.projects.getConfig" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2Config or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudIdentitytoolkitAdminV2Config.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2Config.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2Config, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5332,35 +4184,7 @@ func (c *ProjectsGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudId
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve an Identity Toolkit project configuration.",
-	//   "flatPath": "v2/projects/{projectsId}/config",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.getConfig",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config, for example: \"projects/my-awesome-project/config\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/config$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2Config"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.updateConfig":
 
 type ProjectsUpdateConfigCall struct {
 	s                                       *Service
@@ -5382,9 +4206,9 @@ func (r *ProjectsService) UpdateConfig(name string, googlecloudidentitytoolkitad
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. Fields set in the config but not included in
-// this update mask will be ignored. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": The update mask applies
+// to the resource. Fields set in the config but not included in this update
+// mask will be ignored. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsUpdateConfigCall) UpdateMask(updateMask string) *ProjectsUpdateConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -5392,23 +4216,21 @@ func (c *ProjectsUpdateConfigCall) UpdateMask(updateMask string) *ProjectsUpdate
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsUpdateConfigCall) Fields(s ...googleapi.Field) *ProjectsUpdateConfigCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsUpdateConfigCall) Context(ctx context.Context) *ProjectsUpdateConfigCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsUpdateConfigCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5417,18 +4239,12 @@ func (c *ProjectsUpdateConfigCall) Header() http.Header {
 }
 
 func (c *ProjectsUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2config)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -5445,13 +4261,11 @@ func (c *ProjectsUpdateConfigCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "identitytoolkit.projects.updateConfig" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2Config or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudIdentitytoolkitAdminV2Config.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2Config.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsUpdateConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2Config, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5482,45 +4296,7 @@ func (c *ProjectsUpdateConfigCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update an Identity Toolkit project configuration.",
-	//   "flatPath": "v2/projects/{projectsId}/config",
-	//   "httpMethod": "PATCH",
-	//   "id": "identitytoolkit.projects.updateConfig",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. The name of the Config resource. Example: \"projects/my-awesome-project/config\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/config$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. Fields set in the config but not included in this update mask will be ignored. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2Config"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2Config"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.defaultSupportedIdpConfigs.create":
 
 type ProjectsDefaultSupportedIdpConfigsCreateCall struct {
 	s                                                          *Service
@@ -5531,11 +4307,11 @@ type ProjectsDefaultSupportedIdpConfigsCreateCall struct {
 	header_                                                    http.Header
 }
 
-// Create: Create a default supported Idp configuration for an Identity
-// Toolkit project.
+// Create: Create a default supported Idp configuration for an Identity Toolkit
+// project.
 //
-//   - parent: The parent resource name where the config to be created,
-//     for example: "projects/my-awesome-project".
+//   - parent: The parent resource name where the config to be created, for
+//     example: "projects/my-awesome-project".
 func (r *ProjectsDefaultSupportedIdpConfigsService) Create(parent string, googlecloudidentitytoolkitadminv2defaultsupportedidpconfig *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig) *ProjectsDefaultSupportedIdpConfigsCreateCall {
 	c := &ProjectsDefaultSupportedIdpConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5543,32 +4319,30 @@ func (r *ProjectsDefaultSupportedIdpConfigsService) Create(parent string, google
 	return c
 }
 
-// IdpId sets the optional parameter "idpId": The id of the Idp to
-// create a config for. Call ListDefaultSupportedIdps for list of all
-// default supported Idps.
+// IdpId sets the optional parameter "idpId": The id of the Idp to create a
+// config for. Call ListDefaultSupportedIdps for list of all default supported
+// Idps.
 func (c *ProjectsDefaultSupportedIdpConfigsCreateCall) IdpId(idpId string) *ProjectsDefaultSupportedIdpConfigsCreateCall {
 	c.urlParams_.Set("idpId", idpId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDefaultSupportedIdpConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsDefaultSupportedIdpConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDefaultSupportedIdpConfigsCreateCall) Context(ctx context.Context) *ProjectsDefaultSupportedIdpConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDefaultSupportedIdpConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5577,18 +4351,12 @@ func (c *ProjectsDefaultSupportedIdpConfigsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsDefaultSupportedIdpConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2defaultsupportedidpconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/defaultSupportedIdpConfigs")
@@ -5605,15 +4373,11 @@ func (c *ProjectsDefaultSupportedIdpConfigsCreateCall) doRequest(alt string) (*h
 }
 
 // Do executes the "identitytoolkit.projects.defaultSupportedIdpConfigs.create" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsDefaultSupportedIdpConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5644,44 +4408,7 @@ func (c *ProjectsDefaultSupportedIdpConfigsCreateCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a default supported Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/defaultSupportedIdpConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.projects.defaultSupportedIdpConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "idpId": {
-	//       "description": "The id of the Idp to create a config for. Call ListDefaultSupportedIdps for list of all default supported Idps.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name where the config to be created, for example: \"projects/my-awesome-project\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/defaultSupportedIdpConfigs",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.defaultSupportedIdpConfigs.delete":
 
 type ProjectsDefaultSupportedIdpConfigsDeleteCall struct {
 	s          *Service
@@ -5691,8 +4418,8 @@ type ProjectsDefaultSupportedIdpConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a default supported Idp configuration for an Identity
-// Toolkit project.
+// Delete: Delete a default supported Idp configuration for an Identity Toolkit
+// project.
 //
 //   - name: The resource name of the config, for example:
 //     "projects/my-awesome-project/defaultSupportedIdpConfigs/google.com".
@@ -5703,23 +4430,21 @@ func (r *ProjectsDefaultSupportedIdpConfigsService) Delete(name string) *Project
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDefaultSupportedIdpConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsDefaultSupportedIdpConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDefaultSupportedIdpConfigsDeleteCall) Context(ctx context.Context) *ProjectsDefaultSupportedIdpConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDefaultSupportedIdpConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5728,12 +4453,7 @@ func (c *ProjectsDefaultSupportedIdpConfigsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsDefaultSupportedIdpConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5751,12 +4471,11 @@ func (c *ProjectsDefaultSupportedIdpConfigsDeleteCall) doRequest(alt string) (*h
 }
 
 // Do executes the "identitytoolkit.projects.defaultSupportedIdpConfigs.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsDefaultSupportedIdpConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5787,36 +4506,7 @@ func (c *ProjectsDefaultSupportedIdpConfigsDeleteCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete a default supported Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/defaultSupportedIdpConfigs/{defaultSupportedIdpConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "identitytoolkit.projects.defaultSupportedIdpConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config, for example: \"projects/my-awesome-project/defaultSupportedIdpConfigs/google.com\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/defaultSupportedIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.defaultSupportedIdpConfigs.get":
 
 type ProjectsDefaultSupportedIdpConfigsGetCall struct {
 	s            *Service
@@ -5827,8 +4517,8 @@ type ProjectsDefaultSupportedIdpConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve a default supported Idp configuration for an Identity
-// Toolkit project.
+// Get: Retrieve a default supported Idp configuration for an Identity Toolkit
+// project.
 //
 //   - name: The resource name of the config, for example:
 //     "projects/my-awesome-project/defaultSupportedIdpConfigs/google.com".
@@ -5839,33 +4529,29 @@ func (r *ProjectsDefaultSupportedIdpConfigsService) Get(name string) *ProjectsDe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDefaultSupportedIdpConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsDefaultSupportedIdpConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDefaultSupportedIdpConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsDefaultSupportedIdpConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDefaultSupportedIdpConfigsGetCall) Context(ctx context.Context) *ProjectsDefaultSupportedIdpConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDefaultSupportedIdpConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5874,12 +4560,7 @@ func (c *ProjectsDefaultSupportedIdpConfigsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsDefaultSupportedIdpConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5900,15 +4581,11 @@ func (c *ProjectsDefaultSupportedIdpConfigsGetCall) doRequest(alt string) (*http
 }
 
 // Do executes the "identitytoolkit.projects.defaultSupportedIdpConfigs.get" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsDefaultSupportedIdpConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5939,36 +4616,7 @@ func (c *ProjectsDefaultSupportedIdpConfigsGetCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve a default supported Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/defaultSupportedIdpConfigs/{defaultSupportedIdpConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.defaultSupportedIdpConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config, for example: \"projects/my-awesome-project/defaultSupportedIdpConfigs/google.com\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/defaultSupportedIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.defaultSupportedIdpConfigs.list":
 
 type ProjectsDefaultSupportedIdpConfigsListCall struct {
 	s            *Service
@@ -5979,8 +4627,8 @@ type ProjectsDefaultSupportedIdpConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: List all default supported Idp configurations for an Identity
-// Toolkit project.
+// List: List all default supported Idp configurations for an Identity Toolkit
+// project.
 //
 //   - parent: The parent resource name, for example,
 //     "projects/my-awesome-project".
@@ -5990,48 +4638,44 @@ func (r *ProjectsDefaultSupportedIdpConfigsService) List(parent string) *Project
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return.
 func (c *ProjectsDefaultSupportedIdpConfigsListCall) PageSize(pageSize int64) *ProjectsDefaultSupportedIdpConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous List request, if any.
 func (c *ProjectsDefaultSupportedIdpConfigsListCall) PageToken(pageToken string) *ProjectsDefaultSupportedIdpConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDefaultSupportedIdpConfigsListCall) Fields(s ...googleapi.Field) *ProjectsDefaultSupportedIdpConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDefaultSupportedIdpConfigsListCall) IfNoneMatch(entityTag string) *ProjectsDefaultSupportedIdpConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDefaultSupportedIdpConfigsListCall) Context(ctx context.Context) *ProjectsDefaultSupportedIdpConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDefaultSupportedIdpConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6040,12 +4684,7 @@ func (c *ProjectsDefaultSupportedIdpConfigsListCall) Header() http.Header {
 }
 
 func (c *ProjectsDefaultSupportedIdpConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6066,15 +4705,11 @@ func (c *ProjectsDefaultSupportedIdpConfigsListCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "identitytoolkit.projects.defaultSupportedIdpConfigs.list" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsRespon
-// se or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsRespon
-// se.ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsDefaultSupportedIdpConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6105,44 +4740,6 @@ func (c *ProjectsDefaultSupportedIdpConfigsListCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all default supported Idp configurations for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/defaultSupportedIdpConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.defaultSupportedIdpConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of items to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name, for example, \"projects/my-awesome-project\".",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/defaultSupportedIdpConfigs",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6150,7 +4747,7 @@ func (c *ProjectsDefaultSupportedIdpConfigsListCall) Do(opts ...googleapi.CallOp
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDefaultSupportedIdpConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6166,8 +4763,6 @@ func (c *ProjectsDefaultSupportedIdpConfigsListCall) Pages(ctx context.Context, 
 	}
 }
 
-// method id "identitytoolkit.projects.defaultSupportedIdpConfigs.patch":
-
 type ProjectsDefaultSupportedIdpConfigsPatchCall struct {
 	s                                                          *Service
 	name                                                       string
@@ -6177,11 +4772,10 @@ type ProjectsDefaultSupportedIdpConfigsPatchCall struct {
 	header_                                                    http.Header
 }
 
-// Patch: Update a default supported Idp configuration for an Identity
-// Toolkit project.
+// Patch: Update a default supported Idp configuration for an Identity Toolkit
+// project.
 //
-//   - name: The name of the DefaultSupportedIdpConfig resource, for
-//     example:
+//   - name: The name of the DefaultSupportedIdpConfig resource, for example:
 //     "projects/my-awesome-project/defaultSupportedIdpConfigs/google.com".
 func (r *ProjectsDefaultSupportedIdpConfigsService) Patch(name string, googlecloudidentitytoolkitadminv2defaultsupportedidpconfig *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig) *ProjectsDefaultSupportedIdpConfigsPatchCall {
 	c := &ProjectsDefaultSupportedIdpConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6190,8 +4784,8 @@ func (r *ProjectsDefaultSupportedIdpConfigsService) Patch(name string, googleclo
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": The update mask applies
+// to the resource. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) UpdateMask(updateMask string) *ProjectsDefaultSupportedIdpConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -6199,23 +4793,21 @@ func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) UpdateMask(updateMask stri
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsDefaultSupportedIdpConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) Context(ctx context.Context) *ProjectsDefaultSupportedIdpConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6224,18 +4816,12 @@ func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2defaultsupportedidpconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -6252,15 +4838,11 @@ func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "identitytoolkit.projects.defaultSupportedIdpConfigs.patch" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6291,45 +4873,7 @@ func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update a default supported Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/defaultSupportedIdpConfigs/{defaultSupportedIdpConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "identitytoolkit.projects.defaultSupportedIdpConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the DefaultSupportedIdpConfig resource, for example: \"projects/my-awesome-project/defaultSupportedIdpConfigs/google.com\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/defaultSupportedIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.identityPlatform.initializeAuth":
 
 type ProjectsIdentityPlatformInitializeAuthCall struct {
 	s                                                                  *Service
@@ -6340,15 +4884,14 @@ type ProjectsIdentityPlatformInitializeAuthCall struct {
 	header_                                                            http.Header
 }
 
-// InitializeAuth: Initialize Identity Platform for a Cloud project.
-// Identity Platform is an end-to-end authentication system for
-// third-party users to access your apps and services. These could
-// include mobile/web apps, games, APIs and beyond. This is the publicly
-// available variant of EnableIdentityPlatform that is only available to
-// billing-enabled projects.
+// InitializeAuth: Initialize Identity Platform for a Cloud project. Identity
+// Platform is an end-to-end authentication system for third-party users to
+// access your apps and services. These could include mobile/web apps, games,
+// APIs and beyond. This is the publicly available variant of
+// EnableIdentityPlatform that is only available to billing-enabled projects.
 //
-//   - project: The resource name of the target project the developer
-//     wants to enable Identity Platform for.
+//   - project: The resource name of the target project the developer wants to
+//     enable Identity Platform for.
 func (r *ProjectsIdentityPlatformService) InitializeAuth(project string, googlecloudidentitytoolkitadminv2initializeidentityplatformrequest *GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformRequest) *ProjectsIdentityPlatformInitializeAuthCall {
 	c := &ProjectsIdentityPlatformInitializeAuthCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6357,23 +4900,21 @@ func (r *ProjectsIdentityPlatformService) InitializeAuth(project string, googlec
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsIdentityPlatformInitializeAuthCall) Fields(s ...googleapi.Field) *ProjectsIdentityPlatformInitializeAuthCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsIdentityPlatformInitializeAuthCall) Context(ctx context.Context) *ProjectsIdentityPlatformInitializeAuthCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsIdentityPlatformInitializeAuthCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6382,18 +4923,12 @@ func (c *ProjectsIdentityPlatformInitializeAuthCall) Header() http.Header {
 }
 
 func (c *ProjectsIdentityPlatformInitializeAuthCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2initializeidentityplatformrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+project}/identityPlatform:initializeAuth")
@@ -6410,15 +4945,11 @@ func (c *ProjectsIdentityPlatformInitializeAuthCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "identitytoolkit.projects.identityPlatform.initializeAuth" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse.S
-// erverResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsIdentityPlatformInitializeAuthCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6449,38 +4980,7 @@ func (c *ProjectsIdentityPlatformInitializeAuthCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Initialize Identity Platform for a Cloud project. Identity Platform is an end-to-end authentication system for third-party users to access your apps and services. These could include mobile/web apps, games, APIs and beyond. This is the publicly available variant of EnableIdentityPlatform that is only available to billing-enabled projects.",
-	//   "flatPath": "v2/projects/{projectsId}/identityPlatform:initializeAuth",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.projects.identityPlatform.initializeAuth",
-	//   "parameterOrder": [
-	//     "project"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "The resource name of the target project the developer wants to enable Identity Platform for.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+project}/identityPlatform:initializeAuth",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.inboundSamlConfigs.create":
 
 type ProjectsInboundSamlConfigsCreateCall struct {
 	s                                                  *Service
@@ -6494,8 +4994,8 @@ type ProjectsInboundSamlConfigsCreateCall struct {
 // Create: Create an inbound SAML configuration for an Identity Toolkit
 // project.
 //
-//   - parent: The parent resource name where the config to be created,
-//     for example: "projects/my-awesome-project".
+//   - parent: The parent resource name where the config to be created, for
+//     example: "projects/my-awesome-project".
 func (r *ProjectsInboundSamlConfigsService) Create(parent string, googlecloudidentitytoolkitadminv2inboundsamlconfig *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig) *ProjectsInboundSamlConfigsCreateCall {
 	c := &ProjectsInboundSamlConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6503,31 +5003,29 @@ func (r *ProjectsInboundSamlConfigsService) Create(parent string, googlecloudide
 	return c
 }
 
-// InboundSamlConfigId sets the optional parameter
-// "inboundSamlConfigId": The id to use for this config.
+// InboundSamlConfigId sets the optional parameter "inboundSamlConfigId": The
+// id to use for this config.
 func (c *ProjectsInboundSamlConfigsCreateCall) InboundSamlConfigId(inboundSamlConfigId string) *ProjectsInboundSamlConfigsCreateCall {
 	c.urlParams_.Set("inboundSamlConfigId", inboundSamlConfigId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsInboundSamlConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsInboundSamlConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsInboundSamlConfigsCreateCall) Context(ctx context.Context) *ProjectsInboundSamlConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsInboundSamlConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6536,18 +5034,12 @@ func (c *ProjectsInboundSamlConfigsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsInboundSamlConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2inboundsamlconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/inboundSamlConfigs")
@@ -6564,14 +5056,11 @@ func (c *ProjectsInboundSamlConfigsCreateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "identitytoolkit.projects.inboundSamlConfigs.create" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsInboundSamlConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6602,44 +5091,7 @@ func (c *ProjectsInboundSamlConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create an inbound SAML configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/inboundSamlConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.projects.inboundSamlConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "inboundSamlConfigId": {
-	//       "description": "The id to use for this config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name where the config to be created, for example: \"projects/my-awesome-project\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/inboundSamlConfigs",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.inboundSamlConfigs.delete":
 
 type ProjectsInboundSamlConfigsDeleteCall struct {
 	s          *Service
@@ -6661,23 +5113,21 @@ func (r *ProjectsInboundSamlConfigsService) Delete(name string) *ProjectsInbound
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsInboundSamlConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsInboundSamlConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsInboundSamlConfigsDeleteCall) Context(ctx context.Context) *ProjectsInboundSamlConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsInboundSamlConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6686,12 +5136,7 @@ func (c *ProjectsInboundSamlConfigsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsInboundSamlConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -6709,12 +5154,11 @@ func (c *ProjectsInboundSamlConfigsDeleteCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "identitytoolkit.projects.inboundSamlConfigs.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsInboundSamlConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6745,36 +5189,7 @@ func (c *ProjectsInboundSamlConfigsDeleteCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete an inbound SAML configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/inboundSamlConfigs/{inboundSamlConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "identitytoolkit.projects.inboundSamlConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config to be deleted, for example: 'projects/my-awesome-project/inboundSamlConfigs/my-config-id'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/inboundSamlConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.inboundSamlConfigs.get":
 
 type ProjectsInboundSamlConfigsGetCall struct {
 	s            *Service
@@ -6785,8 +5200,7 @@ type ProjectsInboundSamlConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve an inbound SAML configuration for an Identity Toolkit
-// project.
+// Get: Retrieve an inbound SAML configuration for an Identity Toolkit project.
 //
 //   - name: The resource name of the config, for example:
 //     'projects/my-awesome-project/inboundSamlConfigs/my-config-id'.
@@ -6797,33 +5211,29 @@ func (r *ProjectsInboundSamlConfigsService) Get(name string) *ProjectsInboundSam
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsInboundSamlConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsInboundSamlConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsInboundSamlConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsInboundSamlConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsInboundSamlConfigsGetCall) Context(ctx context.Context) *ProjectsInboundSamlConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsInboundSamlConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6832,12 +5242,7 @@ func (c *ProjectsInboundSamlConfigsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsInboundSamlConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6858,14 +5263,11 @@ func (c *ProjectsInboundSamlConfigsGetCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "identitytoolkit.projects.inboundSamlConfigs.get" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsInboundSamlConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6896,36 +5298,7 @@ func (c *ProjectsInboundSamlConfigsGetCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve an inbound SAML configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/inboundSamlConfigs/{inboundSamlConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.inboundSamlConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config, for example: 'projects/my-awesome-project/inboundSamlConfigs/my-config-id'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/inboundSamlConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.inboundSamlConfigs.list":
 
 type ProjectsInboundSamlConfigsListCall struct {
 	s            *Service
@@ -6936,8 +5309,7 @@ type ProjectsInboundSamlConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: List all inbound SAML configurations for an Identity Toolkit
-// project.
+// List: List all inbound SAML configurations for an Identity Toolkit project.
 //
 //   - parent: The parent resource name, for example,
 //     "projects/my-awesome-project".
@@ -6947,48 +5319,44 @@ func (r *ProjectsInboundSamlConfigsService) List(parent string) *ProjectsInbound
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return.
 func (c *ProjectsInboundSamlConfigsListCall) PageSize(pageSize int64) *ProjectsInboundSamlConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous List request, if any.
 func (c *ProjectsInboundSamlConfigsListCall) PageToken(pageToken string) *ProjectsInboundSamlConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsInboundSamlConfigsListCall) Fields(s ...googleapi.Field) *ProjectsInboundSamlConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsInboundSamlConfigsListCall) IfNoneMatch(entityTag string) *ProjectsInboundSamlConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsInboundSamlConfigsListCall) Context(ctx context.Context) *ProjectsInboundSamlConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsInboundSamlConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6997,12 +5365,7 @@ func (c *ProjectsInboundSamlConfigsListCall) Header() http.Header {
 }
 
 func (c *ProjectsInboundSamlConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7023,15 +5386,11 @@ func (c *ProjectsInboundSamlConfigsListCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "identitytoolkit.projects.inboundSamlConfigs.list" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse.Serve
-// rResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsInboundSamlConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7062,44 +5421,6 @@ func (c *ProjectsInboundSamlConfigsListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all inbound SAML configurations for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/inboundSamlConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.inboundSamlConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of items to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name, for example, \"projects/my-awesome-project\".",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/inboundSamlConfigs",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7107,7 +5428,7 @@ func (c *ProjectsInboundSamlConfigsListCall) Do(opts ...googleapi.CallOption) (*
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsInboundSamlConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7123,8 +5444,6 @@ func (c *ProjectsInboundSamlConfigsListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
-// method id "identitytoolkit.projects.inboundSamlConfigs.patch":
-
 type ProjectsInboundSamlConfigsPatchCall struct {
 	s                                                  *Service
 	name                                               string
@@ -7134,12 +5453,11 @@ type ProjectsInboundSamlConfigsPatchCall struct {
 	header_                                            http.Header
 }
 
-// Patch: Update an inbound SAML configuration for an Identity Toolkit
-// project.
+// Patch: Update an inbound SAML configuration for an Identity Toolkit project.
 //
 //   - name: The name of the InboundSamlConfig resource, for example:
-//     'projects/my-awesome-project/inboundSamlConfigs/my-config-id'.
-//     Ignored during create requests.
+//     'projects/my-awesome-project/inboundSamlConfigs/my-config-id'. Ignored
+//     during create requests.
 func (r *ProjectsInboundSamlConfigsService) Patch(name string, googlecloudidentitytoolkitadminv2inboundsamlconfig *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig) *ProjectsInboundSamlConfigsPatchCall {
 	c := &ProjectsInboundSamlConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7147,9 +5465,9 @@ func (r *ProjectsInboundSamlConfigsService) Patch(name string, googlecloudidenti
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. Empty update mask will result in updating
-// nothing. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": The update mask applies
+// to the resource. Empty update mask will result in updating nothing. For the
+// `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsInboundSamlConfigsPatchCall) UpdateMask(updateMask string) *ProjectsInboundSamlConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -7157,23 +5475,21 @@ func (c *ProjectsInboundSamlConfigsPatchCall) UpdateMask(updateMask string) *Pro
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsInboundSamlConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsInboundSamlConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsInboundSamlConfigsPatchCall) Context(ctx context.Context) *ProjectsInboundSamlConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsInboundSamlConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7182,18 +5498,12 @@ func (c *ProjectsInboundSamlConfigsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsInboundSamlConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2inboundsamlconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -7210,14 +5520,11 @@ func (c *ProjectsInboundSamlConfigsPatchCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "identitytoolkit.projects.inboundSamlConfigs.patch" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsInboundSamlConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7248,45 +5555,7 @@ func (c *ProjectsInboundSamlConfigsPatchCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update an inbound SAML configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/inboundSamlConfigs/{inboundSamlConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "identitytoolkit.projects.inboundSamlConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the InboundSamlConfig resource, for example: 'projects/my-awesome-project/inboundSamlConfigs/my-config-id'. Ignored during create requests.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/inboundSamlConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. Empty update mask will result in updating nothing. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.oauthIdpConfigs.create":
 
 type ProjectsOauthIdpConfigsCreateCall struct {
 	s                                               *Service
@@ -7297,11 +5566,10 @@ type ProjectsOauthIdpConfigsCreateCall struct {
 	header_                                         http.Header
 }
 
-// Create: Create an Oidc Idp configuration for an Identity Toolkit
-// project.
+// Create: Create an Oidc Idp configuration for an Identity Toolkit project.
 //
-//   - parent: The parent resource name where the config to be created,
-//     for example: "projects/my-awesome-project".
+//   - parent: The parent resource name where the config to be created, for
+//     example: "projects/my-awesome-project".
 func (r *ProjectsOauthIdpConfigsService) Create(parent string, googlecloudidentitytoolkitadminv2oauthidpconfig *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig) *ProjectsOauthIdpConfigsCreateCall {
 	c := &ProjectsOauthIdpConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7309,31 +5577,29 @@ func (r *ProjectsOauthIdpConfigsService) Create(parent string, googlecloudidenti
 	return c
 }
 
-// OauthIdpConfigId sets the optional parameter "oauthIdpConfigId": The
-// id to use for this config.
+// OauthIdpConfigId sets the optional parameter "oauthIdpConfigId": The id to
+// use for this config.
 func (c *ProjectsOauthIdpConfigsCreateCall) OauthIdpConfigId(oauthIdpConfigId string) *ProjectsOauthIdpConfigsCreateCall {
 	c.urlParams_.Set("oauthIdpConfigId", oauthIdpConfigId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOauthIdpConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsOauthIdpConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOauthIdpConfigsCreateCall) Context(ctx context.Context) *ProjectsOauthIdpConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOauthIdpConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7342,18 +5608,12 @@ func (c *ProjectsOauthIdpConfigsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsOauthIdpConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2oauthidpconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/oauthIdpConfigs")
@@ -7370,16 +5630,11 @@ func (c *ProjectsOauthIdpConfigsCreateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "identitytoolkit.projects.oauthIdpConfigs.create" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsOauthIdpConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7410,44 +5665,7 @@ func (c *ProjectsOauthIdpConfigsCreateCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create an Oidc Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/oauthIdpConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.projects.oauthIdpConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "oauthIdpConfigId": {
-	//       "description": "The id to use for this config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name where the config to be created, for example: \"projects/my-awesome-project\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/oauthIdpConfigs",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.oauthIdpConfigs.delete":
 
 type ProjectsOauthIdpConfigsDeleteCall struct {
 	s          *Service
@@ -7457,8 +5675,7 @@ type ProjectsOauthIdpConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete an Oidc Idp configuration for an Identity Toolkit
-// project.
+// Delete: Delete an Oidc Idp configuration for an Identity Toolkit project.
 //
 //   - name: The resource name of the config to be deleted, for example:
 //     'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'.
@@ -7469,23 +5686,21 @@ func (r *ProjectsOauthIdpConfigsService) Delete(name string) *ProjectsOauthIdpCo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOauthIdpConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsOauthIdpConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOauthIdpConfigsDeleteCall) Context(ctx context.Context) *ProjectsOauthIdpConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOauthIdpConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7494,12 +5709,7 @@ func (c *ProjectsOauthIdpConfigsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsOauthIdpConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -7517,12 +5727,11 @@ func (c *ProjectsOauthIdpConfigsDeleteCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "identitytoolkit.projects.oauthIdpConfigs.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsOauthIdpConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7553,36 +5762,7 @@ func (c *ProjectsOauthIdpConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete an Oidc Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/oauthIdpConfigs/{oauthIdpConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "identitytoolkit.projects.oauthIdpConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config to be deleted, for example: 'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/oauthIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.oauthIdpConfigs.get":
 
 type ProjectsOauthIdpConfigsGetCall struct {
 	s            *Service
@@ -7593,8 +5773,7 @@ type ProjectsOauthIdpConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve an Oidc Idp configuration for an Identity Toolkit
-// project.
+// Get: Retrieve an Oidc Idp configuration for an Identity Toolkit project.
 //
 //   - name: The resource name of the config, for example:
 //     'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'.
@@ -7605,33 +5784,29 @@ func (r *ProjectsOauthIdpConfigsService) Get(name string) *ProjectsOauthIdpConfi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOauthIdpConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsOauthIdpConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsOauthIdpConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsOauthIdpConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOauthIdpConfigsGetCall) Context(ctx context.Context) *ProjectsOauthIdpConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOauthIdpConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7640,12 +5815,7 @@ func (c *ProjectsOauthIdpConfigsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsOauthIdpConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7666,16 +5836,11 @@ func (c *ProjectsOauthIdpConfigsGetCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "identitytoolkit.projects.oauthIdpConfigs.get" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsOauthIdpConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7706,36 +5871,7 @@ func (c *ProjectsOauthIdpConfigsGetCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve an Oidc Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/oauthIdpConfigs/{oauthIdpConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.oauthIdpConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config, for example: 'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/oauthIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.oauthIdpConfigs.list":
 
 type ProjectsOauthIdpConfigsListCall struct {
 	s            *Service
@@ -7746,8 +5882,7 @@ type ProjectsOauthIdpConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: List all Oidc Idp configurations for an Identity Toolkit
-// project.
+// List: List all Oidc Idp configurations for an Identity Toolkit project.
 //
 //   - parent: The parent resource name, for example,
 //     "projects/my-awesome-project".
@@ -7757,48 +5892,44 @@ func (r *ProjectsOauthIdpConfigsService) List(parent string) *ProjectsOauthIdpCo
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return.
 func (c *ProjectsOauthIdpConfigsListCall) PageSize(pageSize int64) *ProjectsOauthIdpConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous List request, if any.
 func (c *ProjectsOauthIdpConfigsListCall) PageToken(pageToken string) *ProjectsOauthIdpConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOauthIdpConfigsListCall) Fields(s ...googleapi.Field) *ProjectsOauthIdpConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsOauthIdpConfigsListCall) IfNoneMatch(entityTag string) *ProjectsOauthIdpConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOauthIdpConfigsListCall) Context(ctx context.Context) *ProjectsOauthIdpConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOauthIdpConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7807,12 +5938,7 @@ func (c *ProjectsOauthIdpConfigsListCall) Header() http.Header {
 }
 
 func (c *ProjectsOauthIdpConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7833,15 +5959,11 @@ func (c *ProjectsOauthIdpConfigsListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "identitytoolkit.projects.oauthIdpConfigs.list" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsOauthIdpConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7872,44 +5994,6 @@ func (c *ProjectsOauthIdpConfigsListCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all Oidc Idp configurations for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/oauthIdpConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.oauthIdpConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of items to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name, for example, \"projects/my-awesome-project\".",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/oauthIdpConfigs",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7917,7 +6001,7 @@ func (c *ProjectsOauthIdpConfigsListCall) Do(opts ...googleapi.CallOption) (*Goo
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsOauthIdpConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7933,8 +6017,6 @@ func (c *ProjectsOauthIdpConfigsListCall) Pages(ctx context.Context, f func(*Goo
 	}
 }
 
-// method id "identitytoolkit.projects.oauthIdpConfigs.patch":
-
 type ProjectsOauthIdpConfigsPatchCall struct {
 	s                                               *Service
 	name                                            string
@@ -7944,12 +6026,11 @@ type ProjectsOauthIdpConfigsPatchCall struct {
 	header_                                         http.Header
 }
 
-// Patch: Update an Oidc Idp configuration for an Identity Toolkit
-// project.
+// Patch: Update an Oidc Idp configuration for an Identity Toolkit project.
 //
 //   - name: The name of the OAuthIdpConfig resource, for example:
-//     'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'.
-//     Ignored during create requests.
+//     'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'. Ignored
+//     during create requests.
 func (r *ProjectsOauthIdpConfigsService) Patch(name string, googlecloudidentitytoolkitadminv2oauthidpconfig *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig) *ProjectsOauthIdpConfigsPatchCall {
 	c := &ProjectsOauthIdpConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7957,9 +6038,9 @@ func (r *ProjectsOauthIdpConfigsService) Patch(name string, googlecloudidentityt
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. Empty update mask will result in updating
-// nothing. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": The update mask applies
+// to the resource. Empty update mask will result in updating nothing. For the
+// `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsOauthIdpConfigsPatchCall) UpdateMask(updateMask string) *ProjectsOauthIdpConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -7967,23 +6048,21 @@ func (c *ProjectsOauthIdpConfigsPatchCall) UpdateMask(updateMask string) *Projec
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOauthIdpConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsOauthIdpConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOauthIdpConfigsPatchCall) Context(ctx context.Context) *ProjectsOauthIdpConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOauthIdpConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7992,18 +6071,12 @@ func (c *ProjectsOauthIdpConfigsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsOauthIdpConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2oauthidpconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -8020,16 +6093,11 @@ func (c *ProjectsOauthIdpConfigsPatchCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "identitytoolkit.projects.oauthIdpConfigs.patch" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsOauthIdpConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8060,45 +6128,7 @@ func (c *ProjectsOauthIdpConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update an Oidc Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/oauthIdpConfigs/{oauthIdpConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "identitytoolkit.projects.oauthIdpConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the OAuthIdpConfig resource, for example: 'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'. Ignored during create requests.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/oauthIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. Empty update mask will result in updating nothing. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.create":
 
 type ProjectsTenantsCreateCall struct {
 	s                                       *Service
@@ -8109,11 +6139,10 @@ type ProjectsTenantsCreateCall struct {
 	header_                                 http.Header
 }
 
-// Create: Create a tenant. Requires write permission on the Agent
-// project.
+// Create: Create a tenant. Requires write permission on the Agent project.
 //
-//   - parent: The parent resource name where the tenant will be created.
-//     For example, "projects/project1".
+//   - parent: The parent resource name where the tenant will be created. For
+//     example, "projects/project1".
 func (r *ProjectsTenantsService) Create(parent string, googlecloudidentitytoolkitadminv2tenant *GoogleCloudIdentitytoolkitAdminV2Tenant) *ProjectsTenantsCreateCall {
 	c := &ProjectsTenantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8122,23 +6151,21 @@ func (r *ProjectsTenantsService) Create(parent string, googlecloudidentitytoolki
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsCreateCall) Fields(s ...googleapi.Field) *ProjectsTenantsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsCreateCall) Context(ctx context.Context) *ProjectsTenantsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8147,18 +6174,12 @@ func (c *ProjectsTenantsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2tenant)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/tenants")
@@ -8175,13 +6196,11 @@ func (c *ProjectsTenantsCreateCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "identitytoolkit.projects.tenants.create" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2Tenant or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudIdentitytoolkitAdminV2Tenant.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2Tenant.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTenantsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2Tenant, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8212,39 +6231,7 @@ func (c *ProjectsTenantsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a tenant. Requires write permission on the Agent project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.projects.tenants.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "The parent resource name where the tenant will be created. For example, \"projects/project1\".",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/tenants",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2Tenant"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2Tenant"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.delete":
 
 type ProjectsTenantsDeleteCall struct {
 	s          *Service
@@ -8254,8 +6241,7 @@ type ProjectsTenantsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a tenant. Requires write permission on the Agent
-// project.
+// Delete: Delete a tenant. Requires write permission on the Agent project.
 //
 // - name: Resource name of the tenant to delete.
 func (r *ProjectsTenantsService) Delete(name string) *ProjectsTenantsDeleteCall {
@@ -8265,23 +6251,21 @@ func (r *ProjectsTenantsService) Delete(name string) *ProjectsTenantsDeleteCall 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsDeleteCall) Fields(s ...googleapi.Field) *ProjectsTenantsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsDeleteCall) Context(ctx context.Context) *ProjectsTenantsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8290,12 +6274,7 @@ func (c *ProjectsTenantsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8313,12 +6292,11 @@ func (c *ProjectsTenantsDeleteCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "identitytoolkit.projects.tenants.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsTenantsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8349,36 +6327,7 @@ func (c *ProjectsTenantsDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete a tenant. Requires write permission on the Agent project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "identitytoolkit.projects.tenants.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name of the tenant to delete.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.get":
 
 type ProjectsTenantsGetCall struct {
 	s            *Service
@@ -8399,33 +6348,29 @@ func (r *ProjectsTenantsService) Get(name string) *ProjectsTenantsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsGetCall) Fields(s ...googleapi.Field) *ProjectsTenantsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTenantsGetCall) IfNoneMatch(entityTag string) *ProjectsTenantsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsGetCall) Context(ctx context.Context) *ProjectsTenantsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8434,12 +6379,7 @@ func (c *ProjectsTenantsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8460,13 +6400,11 @@ func (c *ProjectsTenantsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "identitytoolkit.projects.tenants.get" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2Tenant or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudIdentitytoolkitAdminV2Tenant.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2Tenant.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTenantsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2Tenant, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8497,36 +6435,7 @@ func (c *ProjectsTenantsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudI
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a tenant. Requires read permission on the Tenant resource.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.tenants.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name of the tenant to retrieve.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2Tenant"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.getIamPolicy":
 
 type ProjectsTenantsGetIamPolicyCall struct {
 	s                              *Service
@@ -8537,15 +6446,14 @@ type ProjectsTenantsGetIamPolicyCall struct {
 	header_                        http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. An error
-// is returned if the resource does not exist. An empty policy is
-// returned if the resource exists but does not have a policy set on it.
-// Caller must have the right Google IAM permission on the resource.
+// GetIamPolicy: Gets the access control policy for a resource. An error is
+// returned if the resource does not exist. An empty policy is returned if the
+// resource exists but does not have a policy set on it. Caller must have the
+// right Google IAM permission on the resource.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsTenantsService) GetIamPolicy(resource string, googleiamv1getiampolicyrequest *GoogleIamV1GetIamPolicyRequest) *ProjectsTenantsGetIamPolicyCall {
 	c := &ProjectsTenantsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8554,23 +6462,21 @@ func (r *ProjectsTenantsService) GetIamPolicy(resource string, googleiamv1getiam
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsTenantsGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsGetIamPolicyCall) Context(ctx context.Context) *ProjectsTenantsGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8579,18 +6485,12 @@ func (c *ProjectsTenantsGetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1getiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:getIamPolicy")
@@ -8607,12 +6507,11 @@ func (c *ProjectsTenantsGetIamPolicyCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "identitytoolkit.projects.tenants.getIamPolicy" call.
-// Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleIamV1Policy.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsTenantsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8643,39 +6542,7 @@ func (c *ProjectsTenantsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a resource. An error is returned if the resource does not exist. An empty policy is returned if the resource exists but does not have a policy set on it. Caller must have the right Google IAM permission on the resource.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}:getIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.projects.tenants.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+resource}:getIamPolicy",
-	//   "request": {
-	//     "$ref": "GoogleIamV1GetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleIamV1Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.list":
 
 type ProjectsTenantsListCall struct {
 	s            *Service
@@ -8686,8 +6553,8 @@ type ProjectsTenantsListCall struct {
 	header_      http.Header
 }
 
-// List: List tenants under the given agent project. Requires read
-// permission on the Agent project.
+// List: List tenants under the given agent project. Requires read permission
+// on the Agent project.
 //
 // - parent: The parent resource name to list tenants for.
 func (r *ProjectsTenantsService) List(parent string) *ProjectsTenantsListCall {
@@ -8696,49 +6563,45 @@ func (r *ProjectsTenantsService) List(parent string) *ProjectsTenantsListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return, capped at 1000. If not specified, the default
-// value is 20.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return, capped at 1000. If not specified, the default value is
+// 20.
 func (c *ProjectsTenantsListCall) PageSize(pageSize int64) *ProjectsTenantsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The pagination
-// token from the response of a previous request.
+// PageToken sets the optional parameter "pageToken": The pagination token from
+// the response of a previous request.
 func (c *ProjectsTenantsListCall) PageToken(pageToken string) *ProjectsTenantsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsListCall) Fields(s ...googleapi.Field) *ProjectsTenantsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTenantsListCall) IfNoneMatch(entityTag string) *ProjectsTenantsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsListCall) Context(ctx context.Context) *ProjectsTenantsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8747,12 +6610,7 @@ func (c *ProjectsTenantsListCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8773,14 +6631,11 @@ func (c *ProjectsTenantsListCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "identitytoolkit.projects.tenants.list" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTenantsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8811,44 +6666,6 @@ func (c *ProjectsTenantsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List tenants under the given agent project. Requires read permission on the Agent project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.tenants.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of results to return, capped at 1000. If not specified, the default value is 20.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The pagination token from the response of a previous request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource name to list tenants for.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/tenants",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -8856,7 +6673,7 @@ func (c *ProjectsTenantsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsTenantsListCall) Pages(ctx context.Context, f func(*GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -8872,8 +6689,6 @@ func (c *ProjectsTenantsListCall) Pages(ctx context.Context, f func(*GoogleCloud
 	}
 }
 
-// method id "identitytoolkit.projects.tenants.patch":
-
 type ProjectsTenantsPatchCall struct {
 	s                                       *Service
 	name                                    string
@@ -8883,8 +6698,7 @@ type ProjectsTenantsPatchCall struct {
 	header_                                 http.Header
 }
 
-// Patch: Update a tenant. Requires write permission on the Tenant
-// resource.
+// Patch: Update a tenant. Requires write permission on the Tenant resource.
 //
 //   - name: Output only. Resource name of a tenant. For example:
 //     "projects/{project-id}/tenants/{tenant-id}".
@@ -8895,9 +6709,9 @@ func (r *ProjectsTenantsService) Patch(name string, googlecloudidentitytoolkitad
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": If provided,
-// only update fields set in the update mask. Otherwise, all settable
-// fields will be updated. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": If provided, only
+// update fields set in the update mask. Otherwise, all settable fields will be
+// updated. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsTenantsPatchCall) UpdateMask(updateMask string) *ProjectsTenantsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -8905,23 +6719,21 @@ func (c *ProjectsTenantsPatchCall) UpdateMask(updateMask string) *ProjectsTenant
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsPatchCall) Fields(s ...googleapi.Field) *ProjectsTenantsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsPatchCall) Context(ctx context.Context) *ProjectsTenantsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8930,18 +6742,12 @@ func (c *ProjectsTenantsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2tenant)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -8958,13 +6764,11 @@ func (c *ProjectsTenantsPatchCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "identitytoolkit.projects.tenants.patch" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2Tenant or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudIdentitytoolkitAdminV2Tenant.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2Tenant.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTenantsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2Tenant, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8995,45 +6799,7 @@ func (c *ProjectsTenantsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update a tenant. Requires write permission on the Tenant resource.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "identitytoolkit.projects.tenants.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of a tenant. For example: \"projects/{project-id}/tenants/{tenant-id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "If provided, only update fields set in the update mask. Otherwise, all settable fields will be updated. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2Tenant"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2Tenant"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.setIamPolicy":
 
 type ProjectsTenantsSetIamPolicyCall struct {
 	s                              *Service
@@ -9044,14 +6810,13 @@ type ProjectsTenantsSetIamPolicyCall struct {
 	header_                        http.Header
 }
 
-// SetIamPolicy: Sets the access control policy for a resource. If the
-// policy exists, it is replaced. Caller must have the right Google IAM
-// permission on the resource.
+// SetIamPolicy: Sets the access control policy for a resource. If the policy
+// exists, it is replaced. Caller must have the right Google IAM permission on
+// the resource.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsTenantsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsTenantsSetIamPolicyCall {
 	c := &ProjectsTenantsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9060,23 +6825,21 @@ func (r *ProjectsTenantsService) SetIamPolicy(resource string, googleiamv1setiam
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsTenantsSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsSetIamPolicyCall) Context(ctx context.Context) *ProjectsTenantsSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9085,18 +6848,12 @@ func (c *ProjectsTenantsSetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:setIamPolicy")
@@ -9113,12 +6870,11 @@ func (c *ProjectsTenantsSetIamPolicyCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "identitytoolkit.projects.tenants.setIamPolicy" call.
-// Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleIamV1Policy.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsTenantsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9149,39 +6905,7 @@ func (c *ProjectsTenantsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the access control policy for a resource. If the policy exists, it is replaced. Caller must have the right Google IAM permission on the resource.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.projects.tenants.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "GoogleIamV1SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleIamV1Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.testIamPermissions":
 
 type ProjectsTenantsTestIamPermissionsCall struct {
 	s                                    *Service
@@ -9192,14 +6916,14 @@ type ProjectsTenantsTestIamPermissionsCall struct {
 	header_                              http.Header
 }
 
-// TestIamPermissions: Returns the caller's permissions on a resource.
-// An error is returned if the resource does not exist. A caller is not
-// required to have Google IAM permission to make this request.
+// TestIamPermissions: Returns the caller's permissions on a resource. An error
+// is returned if the resource does not exist. A caller is not required to have
+// Google IAM permission to make this request.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
 func (r *ProjectsTenantsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsTenantsTestIamPermissionsCall {
 	c := &ProjectsTenantsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9208,23 +6932,21 @@ func (r *ProjectsTenantsService) TestIamPermissions(resource string, googleiamv1
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsTenantsTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsTenantsTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9233,18 +6955,12 @@ func (c *ProjectsTenantsTestIamPermissionsCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:testIamPermissions")
@@ -9261,13 +6977,11 @@ func (c *ProjectsTenantsTestIamPermissionsCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "identitytoolkit.projects.tenants.testIamPermissions" call.
-// Exactly one of *GoogleIamV1TestIamPermissionsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTenantsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9298,39 +7012,7 @@ func (c *ProjectsTenantsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the caller's permissions on a resource. An error is returned if the resource does not exist. A caller is not required to have Google IAM permission to make this request.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.projects.tenants.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "GoogleIamV1TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleIamV1TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.create":
 
 type ProjectsTenantsDefaultSupportedIdpConfigsCreateCall struct {
 	s                                                          *Service
@@ -9341,11 +7023,11 @@ type ProjectsTenantsDefaultSupportedIdpConfigsCreateCall struct {
 	header_                                                    http.Header
 }
 
-// Create: Create a default supported Idp configuration for an Identity
-// Toolkit project.
+// Create: Create a default supported Idp configuration for an Identity Toolkit
+// project.
 //
-//   - parent: The parent resource name where the config to be created,
-//     for example: "projects/my-awesome-project".
+//   - parent: The parent resource name where the config to be created, for
+//     example: "projects/my-awesome-project".
 func (r *ProjectsTenantsDefaultSupportedIdpConfigsService) Create(parent string, googlecloudidentitytoolkitadminv2defaultsupportedidpconfig *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig) *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall {
 	c := &ProjectsTenantsDefaultSupportedIdpConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9353,32 +7035,30 @@ func (r *ProjectsTenantsDefaultSupportedIdpConfigsService) Create(parent string,
 	return c
 }
 
-// IdpId sets the optional parameter "idpId": The id of the Idp to
-// create a config for. Call ListDefaultSupportedIdps for list of all
-// default supported Idps.
+// IdpId sets the optional parameter "idpId": The id of the Idp to create a
+// config for. Call ListDefaultSupportedIdps for list of all default supported
+// Idps.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall) IdpId(idpId string) *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall {
 	c.urlParams_.Set("idpId", idpId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall) Context(ctx context.Context) *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9387,18 +7067,12 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall) Header() http.Head
 }
 
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2defaultsupportedidpconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/defaultSupportedIdpConfigs")
@@ -9415,15 +7089,11 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall) doRequest(alt stri
 }
 
 // Do executes the "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.create" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9454,44 +7124,7 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall) Do(opts ...googlea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a default supported Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/defaultSupportedIdpConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "idpId": {
-	//       "description": "The id of the Idp to create a config for. Call ListDefaultSupportedIdps for list of all default supported Idps.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name where the config to be created, for example: \"projects/my-awesome-project\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/defaultSupportedIdpConfigs",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.delete":
 
 type ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall struct {
 	s          *Service
@@ -9501,8 +7134,8 @@ type ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a default supported Idp configuration for an Identity
-// Toolkit project.
+// Delete: Delete a default supported Idp configuration for an Identity Toolkit
+// project.
 //
 //   - name: The resource name of the config, for example:
 //     "projects/my-awesome-project/defaultSupportedIdpConfigs/google.com".
@@ -9513,23 +7146,21 @@ func (r *ProjectsTenantsDefaultSupportedIdpConfigsService) Delete(name string) *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall) Context(ctx context.Context) *ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9538,12 +7169,7 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall) Header() http.Head
 }
 
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -9561,12 +7187,11 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall) doRequest(alt stri
 }
 
 // Do executes the "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9597,36 +7222,7 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall) Do(opts ...googlea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete a default supported Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/defaultSupportedIdpConfigs/{defaultSupportedIdpConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config, for example: \"projects/my-awesome-project/defaultSupportedIdpConfigs/google.com\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+/defaultSupportedIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.get":
 
 type ProjectsTenantsDefaultSupportedIdpConfigsGetCall struct {
 	s            *Service
@@ -9637,8 +7233,8 @@ type ProjectsTenantsDefaultSupportedIdpConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve a default supported Idp configuration for an Identity
-// Toolkit project.
+// Get: Retrieve a default supported Idp configuration for an Identity Toolkit
+// project.
 //
 //   - name: The resource name of the config, for example:
 //     "projects/my-awesome-project/defaultSupportedIdpConfigs/google.com".
@@ -9649,33 +7245,29 @@ func (r *ProjectsTenantsDefaultSupportedIdpConfigsService) Get(name string) *Pro
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsTenantsDefaultSupportedIdpConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsTenantsDefaultSupportedIdpConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsGetCall) Context(ctx context.Context) *ProjectsTenantsDefaultSupportedIdpConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9684,12 +7276,7 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsGetCall) Header() http.Header 
 }
 
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9710,15 +7297,11 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsGetCall) doRequest(alt string)
 }
 
 // Do executes the "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.get" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9749,36 +7332,7 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsGetCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve a default supported Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/defaultSupportedIdpConfigs/{defaultSupportedIdpConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config, for example: \"projects/my-awesome-project/defaultSupportedIdpConfigs/google.com\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+/defaultSupportedIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.list":
 
 type ProjectsTenantsDefaultSupportedIdpConfigsListCall struct {
 	s            *Service
@@ -9789,8 +7343,8 @@ type ProjectsTenantsDefaultSupportedIdpConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: List all default supported Idp configurations for an Identity
-// Toolkit project.
+// List: List all default supported Idp configurations for an Identity Toolkit
+// project.
 //
 //   - parent: The parent resource name, for example,
 //     "projects/my-awesome-project".
@@ -9800,48 +7354,44 @@ func (r *ProjectsTenantsDefaultSupportedIdpConfigsService) List(parent string) *
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) PageSize(pageSize int64) *ProjectsTenantsDefaultSupportedIdpConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous List request, if any.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) PageToken(pageToken string) *ProjectsTenantsDefaultSupportedIdpConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) Fields(s ...googleapi.Field) *ProjectsTenantsDefaultSupportedIdpConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) IfNoneMatch(entityTag string) *ProjectsTenantsDefaultSupportedIdpConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) Context(ctx context.Context) *ProjectsTenantsDefaultSupportedIdpConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9850,12 +7400,7 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) Header() http.Header
 }
 
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9876,15 +7421,11 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) doRequest(alt string
 }
 
 // Do executes the "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.list" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsRespon
-// se or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsRespon
-// se.ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9915,44 +7456,6 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all default supported Idp configurations for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/defaultSupportedIdpConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of items to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name, for example, \"projects/my-awesome-project\".",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/defaultSupportedIdpConfigs",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -9960,7 +7463,7 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) Do(opts ...googleapi
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -9976,8 +7479,6 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) Pages(ctx context.Co
 	}
 }
 
-// method id "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.patch":
-
 type ProjectsTenantsDefaultSupportedIdpConfigsPatchCall struct {
 	s                                                          *Service
 	name                                                       string
@@ -9987,11 +7488,10 @@ type ProjectsTenantsDefaultSupportedIdpConfigsPatchCall struct {
 	header_                                                    http.Header
 }
 
-// Patch: Update a default supported Idp configuration for an Identity
-// Toolkit project.
+// Patch: Update a default supported Idp configuration for an Identity Toolkit
+// project.
 //
-//   - name: The name of the DefaultSupportedIdpConfig resource, for
-//     example:
+//   - name: The name of the DefaultSupportedIdpConfig resource, for example:
 //     "projects/my-awesome-project/defaultSupportedIdpConfigs/google.com".
 func (r *ProjectsTenantsDefaultSupportedIdpConfigsService) Patch(name string, googlecloudidentitytoolkitadminv2defaultsupportedidpconfig *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig) *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall {
 	c := &ProjectsTenantsDefaultSupportedIdpConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10000,8 +7500,8 @@ func (r *ProjectsTenantsDefaultSupportedIdpConfigsService) Patch(name string, go
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": The update mask applies
+// to the resource. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall) UpdateMask(updateMask string) *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -10009,23 +7509,21 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall) UpdateMask(updateMa
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall) Context(ctx context.Context) *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10034,18 +7532,12 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall) Header() http.Heade
 }
 
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2defaultsupportedidpconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -10062,15 +7554,11 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall) doRequest(alt strin
 }
 
 // Do executes the "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.patch" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10101,45 +7589,7 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update a default supported Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/defaultSupportedIdpConfigs/{defaultSupportedIdpConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "identitytoolkit.projects.tenants.defaultSupportedIdpConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the DefaultSupportedIdpConfig resource, for example: \"projects/my-awesome-project/defaultSupportedIdpConfigs/google.com\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+/defaultSupportedIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.inboundSamlConfigs.create":
 
 type ProjectsTenantsInboundSamlConfigsCreateCall struct {
 	s                                                  *Service
@@ -10153,8 +7603,8 @@ type ProjectsTenantsInboundSamlConfigsCreateCall struct {
 // Create: Create an inbound SAML configuration for an Identity Toolkit
 // project.
 //
-//   - parent: The parent resource name where the config to be created,
-//     for example: "projects/my-awesome-project".
+//   - parent: The parent resource name where the config to be created, for
+//     example: "projects/my-awesome-project".
 func (r *ProjectsTenantsInboundSamlConfigsService) Create(parent string, googlecloudidentitytoolkitadminv2inboundsamlconfig *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig) *ProjectsTenantsInboundSamlConfigsCreateCall {
 	c := &ProjectsTenantsInboundSamlConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10162,31 +7612,29 @@ func (r *ProjectsTenantsInboundSamlConfigsService) Create(parent string, googlec
 	return c
 }
 
-// InboundSamlConfigId sets the optional parameter
-// "inboundSamlConfigId": The id to use for this config.
+// InboundSamlConfigId sets the optional parameter "inboundSamlConfigId": The
+// id to use for this config.
 func (c *ProjectsTenantsInboundSamlConfigsCreateCall) InboundSamlConfigId(inboundSamlConfigId string) *ProjectsTenantsInboundSamlConfigsCreateCall {
 	c.urlParams_.Set("inboundSamlConfigId", inboundSamlConfigId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsInboundSamlConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsTenantsInboundSamlConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsInboundSamlConfigsCreateCall) Context(ctx context.Context) *ProjectsTenantsInboundSamlConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsInboundSamlConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10195,18 +7643,12 @@ func (c *ProjectsTenantsInboundSamlConfigsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsInboundSamlConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2inboundsamlconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/inboundSamlConfigs")
@@ -10223,14 +7665,11 @@ func (c *ProjectsTenantsInboundSamlConfigsCreateCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "identitytoolkit.projects.tenants.inboundSamlConfigs.create" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTenantsInboundSamlConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10261,44 +7700,7 @@ func (c *ProjectsTenantsInboundSamlConfigsCreateCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create an inbound SAML configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/inboundSamlConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.projects.tenants.inboundSamlConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "inboundSamlConfigId": {
-	//       "description": "The id to use for this config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name where the config to be created, for example: \"projects/my-awesome-project\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/inboundSamlConfigs",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.inboundSamlConfigs.delete":
 
 type ProjectsTenantsInboundSamlConfigsDeleteCall struct {
 	s          *Service
@@ -10320,23 +7722,21 @@ func (r *ProjectsTenantsInboundSamlConfigsService) Delete(name string) *Projects
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsInboundSamlConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsTenantsInboundSamlConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsInboundSamlConfigsDeleteCall) Context(ctx context.Context) *ProjectsTenantsInboundSamlConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsInboundSamlConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10345,12 +7745,7 @@ func (c *ProjectsTenantsInboundSamlConfigsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsInboundSamlConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -10368,12 +7763,11 @@ func (c *ProjectsTenantsInboundSamlConfigsDeleteCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "identitytoolkit.projects.tenants.inboundSamlConfigs.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsTenantsInboundSamlConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10404,36 +7798,7 @@ func (c *ProjectsTenantsInboundSamlConfigsDeleteCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete an inbound SAML configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/inboundSamlConfigs/{inboundSamlConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "identitytoolkit.projects.tenants.inboundSamlConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config to be deleted, for example: 'projects/my-awesome-project/inboundSamlConfigs/my-config-id'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+/inboundSamlConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.inboundSamlConfigs.get":
 
 type ProjectsTenantsInboundSamlConfigsGetCall struct {
 	s            *Service
@@ -10444,8 +7809,7 @@ type ProjectsTenantsInboundSamlConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve an inbound SAML configuration for an Identity Toolkit
-// project.
+// Get: Retrieve an inbound SAML configuration for an Identity Toolkit project.
 //
 //   - name: The resource name of the config, for example:
 //     'projects/my-awesome-project/inboundSamlConfigs/my-config-id'.
@@ -10456,33 +7820,29 @@ func (r *ProjectsTenantsInboundSamlConfigsService) Get(name string) *ProjectsTen
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsInboundSamlConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsTenantsInboundSamlConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTenantsInboundSamlConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsTenantsInboundSamlConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsInboundSamlConfigsGetCall) Context(ctx context.Context) *ProjectsTenantsInboundSamlConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsInboundSamlConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10491,12 +7851,7 @@ func (c *ProjectsTenantsInboundSamlConfigsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsInboundSamlConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10517,14 +7872,11 @@ func (c *ProjectsTenantsInboundSamlConfigsGetCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "identitytoolkit.projects.tenants.inboundSamlConfigs.get" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTenantsInboundSamlConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10555,36 +7907,7 @@ func (c *ProjectsTenantsInboundSamlConfigsGetCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve an inbound SAML configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/inboundSamlConfigs/{inboundSamlConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.tenants.inboundSamlConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config, for example: 'projects/my-awesome-project/inboundSamlConfigs/my-config-id'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+/inboundSamlConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.inboundSamlConfigs.list":
 
 type ProjectsTenantsInboundSamlConfigsListCall struct {
 	s            *Service
@@ -10595,8 +7918,7 @@ type ProjectsTenantsInboundSamlConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: List all inbound SAML configurations for an Identity Toolkit
-// project.
+// List: List all inbound SAML configurations for an Identity Toolkit project.
 //
 //   - parent: The parent resource name, for example,
 //     "projects/my-awesome-project".
@@ -10606,48 +7928,44 @@ func (r *ProjectsTenantsInboundSamlConfigsService) List(parent string) *Projects
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return.
 func (c *ProjectsTenantsInboundSamlConfigsListCall) PageSize(pageSize int64) *ProjectsTenantsInboundSamlConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous List request, if any.
 func (c *ProjectsTenantsInboundSamlConfigsListCall) PageToken(pageToken string) *ProjectsTenantsInboundSamlConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsInboundSamlConfigsListCall) Fields(s ...googleapi.Field) *ProjectsTenantsInboundSamlConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTenantsInboundSamlConfigsListCall) IfNoneMatch(entityTag string) *ProjectsTenantsInboundSamlConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsInboundSamlConfigsListCall) Context(ctx context.Context) *ProjectsTenantsInboundSamlConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsInboundSamlConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10656,12 +7974,7 @@ func (c *ProjectsTenantsInboundSamlConfigsListCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsInboundSamlConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10682,15 +7995,11 @@ func (c *ProjectsTenantsInboundSamlConfigsListCall) doRequest(alt string) (*http
 }
 
 // Do executes the "identitytoolkit.projects.tenants.inboundSamlConfigs.list" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse.Serve
-// rResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTenantsInboundSamlConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10721,44 +8030,6 @@ func (c *ProjectsTenantsInboundSamlConfigsListCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all inbound SAML configurations for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/inboundSamlConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.tenants.inboundSamlConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of items to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name, for example, \"projects/my-awesome-project\".",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/inboundSamlConfigs",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -10766,7 +8037,7 @@ func (c *ProjectsTenantsInboundSamlConfigsListCall) Do(opts ...googleapi.CallOpt
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsTenantsInboundSamlConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -10782,8 +8053,6 @@ func (c *ProjectsTenantsInboundSamlConfigsListCall) Pages(ctx context.Context, f
 	}
 }
 
-// method id "identitytoolkit.projects.tenants.inboundSamlConfigs.patch":
-
 type ProjectsTenantsInboundSamlConfigsPatchCall struct {
 	s                                                  *Service
 	name                                               string
@@ -10793,12 +8062,11 @@ type ProjectsTenantsInboundSamlConfigsPatchCall struct {
 	header_                                            http.Header
 }
 
-// Patch: Update an inbound SAML configuration for an Identity Toolkit
-// project.
+// Patch: Update an inbound SAML configuration for an Identity Toolkit project.
 //
 //   - name: The name of the InboundSamlConfig resource, for example:
-//     'projects/my-awesome-project/inboundSamlConfigs/my-config-id'.
-//     Ignored during create requests.
+//     'projects/my-awesome-project/inboundSamlConfigs/my-config-id'. Ignored
+//     during create requests.
 func (r *ProjectsTenantsInboundSamlConfigsService) Patch(name string, googlecloudidentitytoolkitadminv2inboundsamlconfig *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig) *ProjectsTenantsInboundSamlConfigsPatchCall {
 	c := &ProjectsTenantsInboundSamlConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10806,9 +8074,9 @@ func (r *ProjectsTenantsInboundSamlConfigsService) Patch(name string, googleclou
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. Empty update mask will result in updating
-// nothing. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": The update mask applies
+// to the resource. Empty update mask will result in updating nothing. For the
+// `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsTenantsInboundSamlConfigsPatchCall) UpdateMask(updateMask string) *ProjectsTenantsInboundSamlConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -10816,23 +8084,21 @@ func (c *ProjectsTenantsInboundSamlConfigsPatchCall) UpdateMask(updateMask strin
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsInboundSamlConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsTenantsInboundSamlConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsInboundSamlConfigsPatchCall) Context(ctx context.Context) *ProjectsTenantsInboundSamlConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsInboundSamlConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10841,18 +8107,12 @@ func (c *ProjectsTenantsInboundSamlConfigsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsInboundSamlConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2inboundsamlconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -10869,14 +8129,11 @@ func (c *ProjectsTenantsInboundSamlConfigsPatchCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "identitytoolkit.projects.tenants.inboundSamlConfigs.patch" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTenantsInboundSamlConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10907,45 +8164,7 @@ func (c *ProjectsTenantsInboundSamlConfigsPatchCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update an inbound SAML configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/inboundSamlConfigs/{inboundSamlConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "identitytoolkit.projects.tenants.inboundSamlConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the InboundSamlConfig resource, for example: 'projects/my-awesome-project/inboundSamlConfigs/my-config-id'. Ignored during create requests.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+/inboundSamlConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. Empty update mask will result in updating nothing. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.oauthIdpConfigs.create":
 
 type ProjectsTenantsOauthIdpConfigsCreateCall struct {
 	s                                               *Service
@@ -10956,11 +8175,10 @@ type ProjectsTenantsOauthIdpConfigsCreateCall struct {
 	header_                                         http.Header
 }
 
-// Create: Create an Oidc Idp configuration for an Identity Toolkit
-// project.
+// Create: Create an Oidc Idp configuration for an Identity Toolkit project.
 //
-//   - parent: The parent resource name where the config to be created,
-//     for example: "projects/my-awesome-project".
+//   - parent: The parent resource name where the config to be created, for
+//     example: "projects/my-awesome-project".
 func (r *ProjectsTenantsOauthIdpConfigsService) Create(parent string, googlecloudidentitytoolkitadminv2oauthidpconfig *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig) *ProjectsTenantsOauthIdpConfigsCreateCall {
 	c := &ProjectsTenantsOauthIdpConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10968,31 +8186,29 @@ func (r *ProjectsTenantsOauthIdpConfigsService) Create(parent string, googleclou
 	return c
 }
 
-// OauthIdpConfigId sets the optional parameter "oauthIdpConfigId": The
-// id to use for this config.
+// OauthIdpConfigId sets the optional parameter "oauthIdpConfigId": The id to
+// use for this config.
 func (c *ProjectsTenantsOauthIdpConfigsCreateCall) OauthIdpConfigId(oauthIdpConfigId string) *ProjectsTenantsOauthIdpConfigsCreateCall {
 	c.urlParams_.Set("oauthIdpConfigId", oauthIdpConfigId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsOauthIdpConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsTenantsOauthIdpConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsOauthIdpConfigsCreateCall) Context(ctx context.Context) *ProjectsTenantsOauthIdpConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsOauthIdpConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11001,18 +8217,12 @@ func (c *ProjectsTenantsOauthIdpConfigsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsOauthIdpConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2oauthidpconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/oauthIdpConfigs")
@@ -11029,16 +8239,11 @@ func (c *ProjectsTenantsOauthIdpConfigsCreateCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "identitytoolkit.projects.tenants.oauthIdpConfigs.create" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTenantsOauthIdpConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11069,44 +8274,7 @@ func (c *ProjectsTenantsOauthIdpConfigsCreateCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create an Oidc Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/oauthIdpConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "identitytoolkit.projects.tenants.oauthIdpConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "oauthIdpConfigId": {
-	//       "description": "The id to use for this config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name where the config to be created, for example: \"projects/my-awesome-project\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/oauthIdpConfigs",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.oauthIdpConfigs.delete":
 
 type ProjectsTenantsOauthIdpConfigsDeleteCall struct {
 	s          *Service
@@ -11116,8 +8284,7 @@ type ProjectsTenantsOauthIdpConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete an Oidc Idp configuration for an Identity Toolkit
-// project.
+// Delete: Delete an Oidc Idp configuration for an Identity Toolkit project.
 //
 //   - name: The resource name of the config to be deleted, for example:
 //     'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'.
@@ -11128,23 +8295,21 @@ func (r *ProjectsTenantsOauthIdpConfigsService) Delete(name string) *ProjectsTen
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsOauthIdpConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsTenantsOauthIdpConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsOauthIdpConfigsDeleteCall) Context(ctx context.Context) *ProjectsTenantsOauthIdpConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsOauthIdpConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11153,12 +8318,7 @@ func (c *ProjectsTenantsOauthIdpConfigsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsOauthIdpConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -11176,12 +8336,11 @@ func (c *ProjectsTenantsOauthIdpConfigsDeleteCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "identitytoolkit.projects.tenants.oauthIdpConfigs.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsTenantsOauthIdpConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11212,36 +8371,7 @@ func (c *ProjectsTenantsOauthIdpConfigsDeleteCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete an Oidc Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/oauthIdpConfigs/{oauthIdpConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "identitytoolkit.projects.tenants.oauthIdpConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config to be deleted, for example: 'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+/oauthIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.oauthIdpConfigs.get":
 
 type ProjectsTenantsOauthIdpConfigsGetCall struct {
 	s            *Service
@@ -11252,8 +8382,7 @@ type ProjectsTenantsOauthIdpConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve an Oidc Idp configuration for an Identity Toolkit
-// project.
+// Get: Retrieve an Oidc Idp configuration for an Identity Toolkit project.
 //
 //   - name: The resource name of the config, for example:
 //     'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'.
@@ -11264,33 +8393,29 @@ func (r *ProjectsTenantsOauthIdpConfigsService) Get(name string) *ProjectsTenant
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsOauthIdpConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsTenantsOauthIdpConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTenantsOauthIdpConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsTenantsOauthIdpConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsOauthIdpConfigsGetCall) Context(ctx context.Context) *ProjectsTenantsOauthIdpConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsOauthIdpConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11299,12 +8424,7 @@ func (c *ProjectsTenantsOauthIdpConfigsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsOauthIdpConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11325,16 +8445,11 @@ func (c *ProjectsTenantsOauthIdpConfigsGetCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "identitytoolkit.projects.tenants.oauthIdpConfigs.get" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTenantsOauthIdpConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11365,36 +8480,7 @@ func (c *ProjectsTenantsOauthIdpConfigsGetCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve an Oidc Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/oauthIdpConfigs/{oauthIdpConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.tenants.oauthIdpConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the config, for example: 'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+/oauthIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.projects.tenants.oauthIdpConfigs.list":
 
 type ProjectsTenantsOauthIdpConfigsListCall struct {
 	s            *Service
@@ -11405,8 +8491,7 @@ type ProjectsTenantsOauthIdpConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: List all Oidc Idp configurations for an Identity Toolkit
-// project.
+// List: List all Oidc Idp configurations for an Identity Toolkit project.
 //
 //   - parent: The parent resource name, for example,
 //     "projects/my-awesome-project".
@@ -11416,48 +8501,44 @@ func (r *ProjectsTenantsOauthIdpConfigsService) List(parent string) *ProjectsTen
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return.
 func (c *ProjectsTenantsOauthIdpConfigsListCall) PageSize(pageSize int64) *ProjectsTenantsOauthIdpConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous List request, if any.
 func (c *ProjectsTenantsOauthIdpConfigsListCall) PageToken(pageToken string) *ProjectsTenantsOauthIdpConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsOauthIdpConfigsListCall) Fields(s ...googleapi.Field) *ProjectsTenantsOauthIdpConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTenantsOauthIdpConfigsListCall) IfNoneMatch(entityTag string) *ProjectsTenantsOauthIdpConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsOauthIdpConfigsListCall) Context(ctx context.Context) *ProjectsTenantsOauthIdpConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsOauthIdpConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11466,12 +8547,7 @@ func (c *ProjectsTenantsOauthIdpConfigsListCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsOauthIdpConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11492,15 +8568,11 @@ func (c *ProjectsTenantsOauthIdpConfigsListCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "identitytoolkit.projects.tenants.oauthIdpConfigs.list" call.
-// Exactly one of
-// *GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTenantsOauthIdpConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11531,44 +8603,6 @@ func (c *ProjectsTenantsOauthIdpConfigsListCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all Oidc Idp configurations for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/oauthIdpConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.projects.tenants.oauthIdpConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of items to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name, for example, \"projects/my-awesome-project\".",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/oauthIdpConfigs",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -11576,7 +8610,7 @@ func (c *ProjectsTenantsOauthIdpConfigsListCall) Do(opts ...googleapi.CallOption
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsTenantsOauthIdpConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -11592,8 +8626,6 @@ func (c *ProjectsTenantsOauthIdpConfigsListCall) Pages(ctx context.Context, f fu
 	}
 }
 
-// method id "identitytoolkit.projects.tenants.oauthIdpConfigs.patch":
-
 type ProjectsTenantsOauthIdpConfigsPatchCall struct {
 	s                                               *Service
 	name                                            string
@@ -11603,12 +8635,11 @@ type ProjectsTenantsOauthIdpConfigsPatchCall struct {
 	header_                                         http.Header
 }
 
-// Patch: Update an Oidc Idp configuration for an Identity Toolkit
-// project.
+// Patch: Update an Oidc Idp configuration for an Identity Toolkit project.
 //
 //   - name: The name of the OAuthIdpConfig resource, for example:
-//     'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'.
-//     Ignored during create requests.
+//     'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'. Ignored
+//     during create requests.
 func (r *ProjectsTenantsOauthIdpConfigsService) Patch(name string, googlecloudidentitytoolkitadminv2oauthidpconfig *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig) *ProjectsTenantsOauthIdpConfigsPatchCall {
 	c := &ProjectsTenantsOauthIdpConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11616,9 +8647,9 @@ func (r *ProjectsTenantsOauthIdpConfigsService) Patch(name string, googlecloudid
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. Empty update mask will result in updating
-// nothing. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": The update mask applies
+// to the resource. Empty update mask will result in updating nothing. For the
+// `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsTenantsOauthIdpConfigsPatchCall) UpdateMask(updateMask string) *ProjectsTenantsOauthIdpConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -11626,23 +8657,21 @@ func (c *ProjectsTenantsOauthIdpConfigsPatchCall) UpdateMask(updateMask string) 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTenantsOauthIdpConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsTenantsOauthIdpConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTenantsOauthIdpConfigsPatchCall) Context(ctx context.Context) *ProjectsTenantsOauthIdpConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTenantsOauthIdpConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11651,18 +8680,12 @@ func (c *ProjectsTenantsOauthIdpConfigsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsTenantsOauthIdpConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2oauthidpconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -11679,16 +8702,11 @@ func (c *ProjectsTenantsOauthIdpConfigsPatchCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "identitytoolkit.projects.tenants.oauthIdpConfigs.patch" call.
-// Exactly one of *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsTenantsOauthIdpConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11719,45 +8737,7 @@ func (c *ProjectsTenantsOauthIdpConfigsPatchCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update an Oidc Idp configuration for an Identity Toolkit project.",
-	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/oauthIdpConfigs/{oauthIdpConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "identitytoolkit.projects.tenants.oauthIdpConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the OAuthIdpConfig resource, for example: 'projects/my-awesome-project/oauthIdpConfigs/oauth-config-id'. Ignored during create requests.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/tenants/[^/]+/oauthIdpConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. Empty update mask will result in updating nothing. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.getPasswordPolicy":
 
 type V2GetPasswordPolicyCall struct {
 	s            *Service
@@ -11767,8 +8747,7 @@ type V2GetPasswordPolicyCall struct {
 	header_      http.Header
 }
 
-// GetPasswordPolicy: Gets password policy config set on the project or
-// tenant.
+// GetPasswordPolicy: Gets password policy config set on the project or tenant.
 func (r *V2Service) GetPasswordPolicy() *V2GetPasswordPolicyCall {
 	c := &V2GetPasswordPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -11781,33 +8760,29 @@ func (c *V2GetPasswordPolicyCall) TenantId(tenantId string) *V2GetPasswordPolicy
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *V2GetPasswordPolicyCall) Fields(s ...googleapi.Field) *V2GetPasswordPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *V2GetPasswordPolicyCall) IfNoneMatch(entityTag string) *V2GetPasswordPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *V2GetPasswordPolicyCall) Context(ctx context.Context) *V2GetPasswordPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *V2GetPasswordPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11816,12 +8791,7 @@ func (c *V2GetPasswordPolicyCall) Header() http.Header {
 }
 
 func (c *V2GetPasswordPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11839,14 +8809,11 @@ func (c *V2GetPasswordPolicyCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "identitytoolkit.getPasswordPolicy" call.
-// Exactly one of *GoogleCloudIdentitytoolkitV2PasswordPolicy or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitV2PasswordPolicy.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitV2PasswordPolicy.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *V2GetPasswordPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2PasswordPolicy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11877,31 +8844,7 @@ func (c *V2GetPasswordPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets password policy config set on the project or tenant.",
-	//   "flatPath": "v2/passwordPolicy",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.getPasswordPolicy",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "tenantId": {
-	//       "description": "The id of a tenant.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/passwordPolicy",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2PasswordPolicy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "identitytoolkit.getRecaptchaConfig":
 
 type V2GetRecaptchaConfigCall struct {
 	s            *Service
@@ -11917,9 +8860,9 @@ func (r *V2Service) GetRecaptchaConfig() *V2GetRecaptchaConfigCall {
 	return c
 }
 
-// ClientType sets the optional parameter "clientType": reCAPTCHA
-// Enterprise uses separate site keys for different client types.
-// Specify the client type to get the corresponding key.
+// ClientType sets the optional parameter "clientType": reCAPTCHA Enterprise
+// uses separate site keys for different client types. Specify the client type
+// to get the corresponding key.
 //
 // Possible values:
 //
@@ -11942,44 +8885,37 @@ func (c *V2GetRecaptchaConfigCall) TenantId(tenantId string) *V2GetRecaptchaConf
 //
 // Possible values:
 //
-//	"RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not
-//
-// specified.
-//
-//	"RECAPTCHA_ENTERPRISE" - Use reCAPTCHA Enterprise.
+//	"RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not specified.
+//	"RECAPTCHA_ENTERPRISE" - The reCAPTCHA enterprise.
 func (c *V2GetRecaptchaConfigCall) Version(version string) *V2GetRecaptchaConfigCall {
 	c.urlParams_.Set("version", version)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *V2GetRecaptchaConfigCall) Fields(s ...googleapi.Field) *V2GetRecaptchaConfigCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *V2GetRecaptchaConfigCall) IfNoneMatch(entityTag string) *V2GetRecaptchaConfigCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *V2GetRecaptchaConfigCall) Context(ctx context.Context) *V2GetRecaptchaConfigCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *V2GetRecaptchaConfigCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11988,12 +8924,7 @@ func (c *V2GetRecaptchaConfigCall) Header() http.Header {
 }
 
 func (c *V2GetRecaptchaConfigCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -12011,14 +8942,11 @@ func (c *V2GetRecaptchaConfigCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "identitytoolkit.getRecaptchaConfig" call.
-// Exactly one of *GoogleCloudIdentitytoolkitV2RecaptchaConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIdentitytoolkitV2RecaptchaConfig.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudIdentitytoolkitV2RecaptchaConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *V2GetRecaptchaConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2RecaptchaConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12049,56 +8977,4 @@ func (c *V2GetRecaptchaConfigCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets parameters needed for reCAPTCHA analysis.",
-	//   "flatPath": "v2/recaptchaConfig",
-	//   "httpMethod": "GET",
-	//   "id": "identitytoolkit.getRecaptchaConfig",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "clientType": {
-	//       "description": "reCAPTCHA Enterprise uses separate site keys for different client types. Specify the client type to get the corresponding key.",
-	//       "enum": [
-	//         "CLIENT_TYPE_UNSPECIFIED",
-	//         "CLIENT_TYPE_WEB",
-	//         "CLIENT_TYPE_ANDROID",
-	//         "CLIENT_TYPE_IOS"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Client type is not specified.",
-	//         "Client type is web.",
-	//         "Client type is android.",
-	//         "Client type is ios."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "tenantId": {
-	//       "description": "The id of a tenant.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "version": {
-	//       "description": "The reCAPTCHA version.",
-	//       "enum": [
-	//         "RECAPTCHA_VERSION_UNSPECIFIED",
-	//         "RECAPTCHA_ENTERPRISE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The reCAPTCHA version is not specified.",
-	//         "Use reCAPTCHA Enterprise."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/recaptchaConfig",
-	//   "response": {
-	//     "$ref": "GoogleCloudIdentitytoolkitV2RecaptchaConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

@@ -149,43 +149,32 @@ type AtlasService struct {
 
 // TimeseriesDescriptor: The descriptions of a time series.
 type TimeseriesDescriptor struct {
-	// Labels: The set of key-value pairs that describe this time series,
-	// including target-specific labels and metric-specific labels.
+	// Labels: The set of key-value pairs that describe this time series, including
+	// target-specific labels and metric-specific labels.
 	Labels map[string]string `json:"labels,omitempty"`
-
 	// Metric: The name of the metric.
 	Metric string `json:"metric,omitempty"`
-
 	// Project: The project ID to which this time series belongs.
 	Project string `json:"project,omitempty"`
-
 	// Tags: A map of additional information.
 	Tags map[string][]string `json:"tags,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Labels") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Labels") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TimeseriesDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeseriesDescriptor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "mapofstrings.getMap":
 
 type AtlasGetMapCall struct {
 	s            *Service
@@ -202,33 +191,29 @@ func (r *AtlasService) GetMap() *AtlasGetMapCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AtlasGetMapCall) Fields(s ...googleapi.Field) *AtlasGetMapCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AtlasGetMapCall) IfNoneMatch(entityTag string) *AtlasGetMapCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AtlasGetMapCall) Context(ctx context.Context) *AtlasGetMapCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AtlasGetMapCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -237,12 +222,7 @@ func (c *AtlasGetMapCall) Header() http.Header {
 }
 
 func (c *AtlasGetMapCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -276,14 +256,4 @@ func (c *AtlasGetMapCall) Do(opts ...googleapi.CallOption) (map[string]string, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a map.",
-	//   "httpMethod": "GET",
-	//   "id": "mapofstrings.getMap",
-	//   "path": "map",
-	//   "response": {
-	//     "$ref": "GetMapResponse"
-	//   }
-	// }
-
 }

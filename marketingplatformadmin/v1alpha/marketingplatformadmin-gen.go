@@ -183,74 +183,57 @@ type OrganizationsAnalyticsAccountLinksService struct {
 	s *Service
 }
 
-// AnalyticsAccountLink: A resource message representing the link
-// between a Google Analytics account and a Google Marketing Platform
-// organization.
+// AnalyticsAccountLink: A resource message representing the link between a
+// Google Analytics account and a Google Marketing Platform organization.
 type AnalyticsAccountLink struct {
 	// AnalyticsAccount: Required. Immutable. The resource name of the
-	// AnalyticsAdmin API account. The account ID will be used as the ID of
-	// this AnalyticsAccountLink resource, which will become the final
-	// component of the resource name. Format:
-	// analyticsadmin.googleapis.com/accounts/{account_id}
+	// AnalyticsAdmin API account. The account ID will be used as the ID of this
+	// AnalyticsAccountLink resource, which will become the final component of the
+	// resource name. Format: analyticsadmin.googleapis.com/accounts/{account_id}
 	AnalyticsAccount string `json:"analyticsAccount,omitempty"`
-
-	// DisplayName: Output only. The human-readable name for the Analytics
-	// account.
+	// DisplayName: Output only. The human-readable name for the Analytics account.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// LinkVerificationState: Output only. The verification state of the
-	// link between the Analytics account and the parent organization.
+	// LinkVerificationState: Output only. The verification state of the link
+	// between the Analytics account and the parent organization.
 	//
 	// Possible values:
 	//   "LINK_VERIFICATION_STATE_UNSPECIFIED" - The link state is unknown.
 	//   "LINK_VERIFICATION_STATE_VERIFIED" - The link is established.
-	//   "LINK_VERIFICATION_STATE_NOT_VERIFIED" - The link is requested, but
-	// hasn't been approved by the product account admin.
+	//   "LINK_VERIFICATION_STATE_NOT_VERIFIED" - The link is requested, but hasn't
+	// been approved by the product account admin.
 	LinkVerificationState string `json:"linkVerificationState,omitempty"`
-
-	// Name: Identifier. Resource name of this AnalyticsAccountLink. Note
-	// the resource ID is the same as the ID of the Analtyics account.
-	// Format:
-	// organizations/{org_id}/analyticsAccountLinks/{analytics_account_link_i
-	// d} Example: "organizations/xyz/analyticsAccountLinks/1234"
+	// Name: Identifier. Resource name of this AnalyticsAccountLink. Note the
+	// resource ID is the same as the ID of the Analtyics account. Format:
+	// organizations/{org_id}/analyticsAccountLinks/{analytics_account_link_id}
+	// Example: "organizations/xyz/analyticsAccountLinks/1234"
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AnalyticsAccount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnalyticsAccount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnalyticsAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AnalyticsAccountLink) MarshalJSON() ([]byte, error) {
 	type NoMethod AnalyticsAccountLink
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
@@ -259,130 +242,99 @@ type Empty struct {
 type ListAnalyticsAccountLinksResponse struct {
 	// AnalyticsAccountLinks: Analytics account links in this organization.
 	AnalyticsAccountLinks []*AnalyticsAccountLink `json:"analyticsAccountLinks,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AnalyticsAccountLinks") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnalyticsAccountLinks") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "AnalyticsAccountLinks") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAnalyticsAccountLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAnalyticsAccountLinksResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Organization: A resource message representing a Google Marketing
-// Platform organization.
+// Organization: A resource message representing a Google Marketing Platform
+// organization.
 type Organization struct {
 	// DisplayName: The human-readable name for the organization.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Identifier. The resource name of the GMP organization. Format:
 	// organizations/{org_id}
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Organization) MarshalJSON() ([]byte, error) {
 	type NoMethod Organization
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SetPropertyServiceLevelRequest: Request message for
-// SetPropertyServiceLevel RPC.
+// SetPropertyServiceLevelRequest: Request message for SetPropertyServiceLevel
+// RPC.
 type SetPropertyServiceLevelRequest struct {
 	// AnalyticsProperty: Required. The Analytics property to change the
-	// ServiceLevel setting. This field is the name of the Google Analytics
-	// Admin API property resource. Format:
+	// ServiceLevel setting. This field is the name of the Google Analytics Admin
+	// API property resource. Format:
 	// analyticsadmin.googleapis.com/properties/{property_id}
 	AnalyticsProperty string `json:"analyticsProperty,omitempty"`
-
 	// ServiceLevel: Required. The service level to set for this property.
 	//
 	// Possible values:
 	//   "ANALYTICS_SERVICE_LEVEL_UNSPECIFIED" - Service level unspecified.
 	//   "ANALYTICS_SERVICE_LEVEL_STANDARD" - The standard version of Google
 	// Analytics.
-	//   "ANALYTICS_SERVICE_LEVEL_360" - The premium version of Google
-	// Analytics.
+	//   "ANALYTICS_SERVICE_LEVEL_360" - The premium version of Google Analytics.
 	ServiceLevel string `json:"serviceLevel,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnalyticsProperty")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnalyticsProperty") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnalyticsProperty") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnalyticsProperty") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SetPropertyServiceLevelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetPropertyServiceLevelRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SetPropertyServiceLevelResponse: Response message for
 // SetPropertyServiceLevel RPC.
 type SetPropertyServiceLevelResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
-
-// method id "marketingplatformadmin.organizations.get":
 
 type OrganizationsGetCall struct {
 	s            *Service
@@ -404,33 +356,29 @@ func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsGetCall) Fields(s ...googleapi.Field) *OrganizationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsGetCall) IfNoneMatch(entityTag string) *OrganizationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsGetCall) Context(ctx context.Context) *OrganizationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -439,12 +387,7 @@ func (c *OrganizationsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -465,12 +408,10 @@ func (c *OrganizationsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "marketingplatformadmin.organizations.get" call.
-// Exactly one of *Organization or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Organization.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Organization.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*Organization, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -501,36 +442,7 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*Organization, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lookup for a single organization.",
-	//   "flatPath": "v1alpha/organizations/{organizationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "marketingplatformadmin.organizations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the Organization to retrieve. Format: organizations/{org_id}",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Organization"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/marketingplatformadmin.analytics.read",
-	//     "https://www.googleapis.com/auth/marketingplatformadmin.analytics.update"
-	//   ]
-	// }
-
 }
-
-// method id "marketingplatformadmin.organizations.analyticsAccountLinks.create":
 
 type OrganizationsAnalyticsAccountLinksCreateCall struct {
 	s                    *Service
@@ -542,13 +454,13 @@ type OrganizationsAnalyticsAccountLinksCreateCall struct {
 }
 
 // Create: Creates the link between the Analytics account and the Google
-// Marketing Platform organization. User needs to be an org user, and
-// admin on the Analytics account to create the link. If the account is
-// already linked to an organization, user needs to unlink the account
-// from the current organization, then try link again.
+// Marketing Platform organization. User needs to be an org user, and admin on
+// the Analytics account to create the link. If the account is already linked
+// to an organization, user needs to unlink the account from the current
+// organization, then try link again.
 //
-//   - parent: The parent resource where this Analytics account link will
-//     be created. Format: organizations/{org_id}.
+//   - parent: The parent resource where this Analytics account link will be
+//     created. Format: organizations/{org_id}.
 func (r *OrganizationsAnalyticsAccountLinksService) Create(parent string, analyticsaccountlink *AnalyticsAccountLink) *OrganizationsAnalyticsAccountLinksCreateCall {
 	c := &OrganizationsAnalyticsAccountLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -557,23 +469,21 @@ func (r *OrganizationsAnalyticsAccountLinksService) Create(parent string, analyt
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsAnalyticsAccountLinksCreateCall) Fields(s ...googleapi.Field) *OrganizationsAnalyticsAccountLinksCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsAnalyticsAccountLinksCreateCall) Context(ctx context.Context) *OrganizationsAnalyticsAccountLinksCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsAnalyticsAccountLinksCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -582,18 +492,12 @@ func (c *OrganizationsAnalyticsAccountLinksCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsAnalyticsAccountLinksCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.analyticsaccountlink)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/analyticsAccountLinks")
@@ -610,12 +514,11 @@ func (c *OrganizationsAnalyticsAccountLinksCreateCall) doRequest(alt string) (*h
 }
 
 // Do executes the "marketingplatformadmin.organizations.analyticsAccountLinks.create" call.
-// Exactly one of *AnalyticsAccountLink or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *AnalyticsAccountLink.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *AnalyticsAccountLink.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *OrganizationsAnalyticsAccountLinksCreateCall) Do(opts ...googleapi.CallOption) (*AnalyticsAccountLink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -646,38 +549,7 @@ func (c *OrganizationsAnalyticsAccountLinksCreateCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates the link between the Analytics account and the Google Marketing Platform organization. User needs to be an org user, and admin on the Analytics account to create the link. If the account is already linked to an organization, user needs to unlink the account from the current organization, then try link again.",
-	//   "flatPath": "v1alpha/organizations/{organizationsId}/analyticsAccountLinks",
-	//   "httpMethod": "POST",
-	//   "id": "marketingplatformadmin.organizations.analyticsAccountLinks.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this Analytics account link will be created. Format: organizations/{org_id}",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/analyticsAccountLinks",
-	//   "request": {
-	//     "$ref": "AnalyticsAccountLink"
-	//   },
-	//   "response": {
-	//     "$ref": "AnalyticsAccountLink"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/marketingplatformadmin.analytics.update"
-	//   ]
-	// }
-
 }
-
-// method id "marketingplatformadmin.organizations.analyticsAccountLinks.delete":
 
 type OrganizationsAnalyticsAccountLinksDeleteCall struct {
 	s          *Service
@@ -687,14 +559,12 @@ type OrganizationsAnalyticsAccountLinksDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the AnalyticsAccountLink, which detaches the
-// Analytics account from the Google Marketing Platform organization.
-// User needs to be an org user, and admin on the Analytics account in
-// order to delete the link.
+// Delete: Deletes the AnalyticsAccountLink, which detaches the Analytics
+// account from the Google Marketing Platform organization. User needs to be an
+// org user, and admin on the Analytics account in order to delete the link.
 //
 //   - name: The name of the Analytics account link to delete. Format:
-//     organizations/{org_id}/analyticsAccountLinks/{analytics_account_link
-//     _id}.
+//     organizations/{org_id}/analyticsAccountLinks/{analytics_account_link_id}.
 func (r *OrganizationsAnalyticsAccountLinksService) Delete(name string) *OrganizationsAnalyticsAccountLinksDeleteCall {
 	c := &OrganizationsAnalyticsAccountLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -702,23 +572,21 @@ func (r *OrganizationsAnalyticsAccountLinksService) Delete(name string) *Organiz
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsAnalyticsAccountLinksDeleteCall) Fields(s ...googleapi.Field) *OrganizationsAnalyticsAccountLinksDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsAnalyticsAccountLinksDeleteCall) Context(ctx context.Context) *OrganizationsAnalyticsAccountLinksDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsAnalyticsAccountLinksDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -727,12 +595,7 @@ func (c *OrganizationsAnalyticsAccountLinksDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsAnalyticsAccountLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -750,12 +613,10 @@ func (c *OrganizationsAnalyticsAccountLinksDeleteCall) doRequest(alt string) (*h
 }
 
 // Do executes the "marketingplatformadmin.organizations.analyticsAccountLinks.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *OrganizationsAnalyticsAccountLinksDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -786,35 +647,7 @@ func (c *OrganizationsAnalyticsAccountLinksDeleteCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the AnalyticsAccountLink, which detaches the Analytics account from the Google Marketing Platform organization. User needs to be an org user, and admin on the Analytics account in order to delete the link.",
-	//   "flatPath": "v1alpha/organizations/{organizationsId}/analyticsAccountLinks/{analyticsAccountLinksId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "marketingplatformadmin.organizations.analyticsAccountLinks.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the Analytics account link to delete. Format: organizations/{org_id}/analyticsAccountLinks/{analytics_account_link_id}",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/analyticsAccountLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/marketingplatformadmin.analytics.update"
-	//   ]
-	// }
-
 }
-
-// method id "marketingplatformadmin.organizations.analyticsAccountLinks.list":
 
 type OrganizationsAnalyticsAccountLinksListCall struct {
 	s            *Service
@@ -825,65 +658,61 @@ type OrganizationsAnalyticsAccountLinksListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Google Analytics accounts link to the specified
-// Google Marketing Platform organization.
+// List: Lists the Google Analytics accounts link to the specified Google
+// Marketing Platform organization.
 //
-//   - parent: The parent organization, which owns this collection of
-//     Analytics account links. Format: organizations/{org_id}.
+//   - parent: The parent organization, which owns this collection of Analytics
+//     account links. Format: organizations/{org_id}.
 func (r *OrganizationsAnalyticsAccountLinksService) List(parent string) *OrganizationsAnalyticsAccountLinksListCall {
 	c := &OrganizationsAnalyticsAccountLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of Analytics account links to return in one call. The service may
-// return fewer than this value. If unspecified, at most 50 Analytics
-// account links will be returned. The maximum value is 1000; values
-// above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// Analytics account links to return in one call. The service may return fewer
+// than this value. If unspecified, at most 50 Analytics account links will be
+// returned. The maximum value is 1000; values above 1000 will be coerced to
+// 1000.
 func (c *OrganizationsAnalyticsAccountLinksListCall) PageSize(pageSize int64) *OrganizationsAnalyticsAccountLinksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous ListAnalyticsAccountLinks call. Provide this
-// to retrieve the subsequent page. When paginating, all other
-// parameters provided to `ListAnalyticsAccountLinks` must match the
-// call that provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous ListAnalyticsAccountLinks call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListAnalyticsAccountLinks` must match the call that provided the page
+// token.
 func (c *OrganizationsAnalyticsAccountLinksListCall) PageToken(pageToken string) *OrganizationsAnalyticsAccountLinksListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsAnalyticsAccountLinksListCall) Fields(s ...googleapi.Field) *OrganizationsAnalyticsAccountLinksListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsAnalyticsAccountLinksListCall) IfNoneMatch(entityTag string) *OrganizationsAnalyticsAccountLinksListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsAnalyticsAccountLinksListCall) Context(ctx context.Context) *OrganizationsAnalyticsAccountLinksListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsAnalyticsAccountLinksListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -892,12 +721,7 @@ func (c *OrganizationsAnalyticsAccountLinksListCall) Header() http.Header {
 }
 
 func (c *OrganizationsAnalyticsAccountLinksListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -918,13 +742,11 @@ func (c *OrganizationsAnalyticsAccountLinksListCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "marketingplatformadmin.organizations.analyticsAccountLinks.list" call.
-// Exactly one of *ListAnalyticsAccountLinksResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListAnalyticsAccountLinksResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAnalyticsAccountLinksResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsAnalyticsAccountLinksListCall) Do(opts ...googleapi.CallOption) (*ListAnalyticsAccountLinksResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -955,44 +777,6 @@ func (c *OrganizationsAnalyticsAccountLinksListCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the Google Analytics accounts link to the specified Google Marketing Platform organization.",
-	//   "flatPath": "v1alpha/organizations/{organizationsId}/analyticsAccountLinks",
-	//   "httpMethod": "GET",
-	//   "id": "marketingplatformadmin.organizations.analyticsAccountLinks.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of Analytics account links to return in one call. The service may return fewer than this value. If unspecified, at most 50 Analytics account links will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous ListAnalyticsAccountLinks call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAnalyticsAccountLinks` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent organization, which owns this collection of Analytics account links. Format: organizations/{org_id}",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/analyticsAccountLinks",
-	//   "response": {
-	//     "$ref": "ListAnalyticsAccountLinksResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/marketingplatformadmin.analytics.read",
-	//     "https://www.googleapis.com/auth/marketingplatformadmin.analytics.update"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1000,7 +784,7 @@ func (c *OrganizationsAnalyticsAccountLinksListCall) Do(opts ...googleapi.CallOp
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsAnalyticsAccountLinksListCall) Pages(ctx context.Context, f func(*ListAnalyticsAccountLinksResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1016,8 +800,6 @@ func (c *OrganizationsAnalyticsAccountLinksListCall) Pages(ctx context.Context, 
 	}
 }
 
-// method id "marketingplatformadmin.organizations.analyticsAccountLinks.setPropertyServiceLevel":
-
 type OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall struct {
 	s                              *Service
 	analyticsAccountLink           string
@@ -1030,10 +812,9 @@ type OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall struct {
 // SetPropertyServiceLevel: Updates the service level for an Analytics
 // property.
 //
-//   - analyticsAccountLink: The parent AnalyticsAccountLink scope where
-//     this property is in. Format:
-//     organizations/{org_id}/analyticsAccountLinks/{analytics_account_link
-//     _id}.
+//   - analyticsAccountLink: The parent AnalyticsAccountLink scope where this
+//     property is in. Format:
+//     organizations/{org_id}/analyticsAccountLinks/{analytics_account_link_id}.
 func (r *OrganizationsAnalyticsAccountLinksService) SetPropertyServiceLevel(analyticsAccountLink string, setpropertyservicelevelrequest *SetPropertyServiceLevelRequest) *OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall {
 	c := &OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.analyticsAccountLink = analyticsAccountLink
@@ -1042,23 +823,21 @@ func (r *OrganizationsAnalyticsAccountLinksService) SetPropertyServiceLevel(anal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall) Fields(s ...googleapi.Field) *OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall) Context(ctx context.Context) *OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1067,18 +846,12 @@ func (c *OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall) Header()
 }
 
 func (c *OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setpropertyservicelevelrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+analyticsAccountLink}:setPropertyServiceLevel")
@@ -1095,12 +868,11 @@ func (c *OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall) doReques
 }
 
 // Do executes the "marketingplatformadmin.organizations.analyticsAccountLinks.setPropertyServiceLevel" call.
-// Exactly one of *SetPropertyServiceLevelResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *SetPropertyServiceLevelResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SetPropertyServiceLevelResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall) Do(opts ...googleapi.CallOption) (*SetPropertyServiceLevelResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1131,33 +903,4 @@ func (c *OrganizationsAnalyticsAccountLinksSetPropertyServiceLevelCall) Do(opts 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the service level for an Analytics property.",
-	//   "flatPath": "v1alpha/organizations/{organizationsId}/analyticsAccountLinks/{analyticsAccountLinksId}:setPropertyServiceLevel",
-	//   "httpMethod": "POST",
-	//   "id": "marketingplatformadmin.organizations.analyticsAccountLinks.setPropertyServiceLevel",
-	//   "parameterOrder": [
-	//     "analyticsAccountLink"
-	//   ],
-	//   "parameters": {
-	//     "analyticsAccountLink": {
-	//       "description": "Required. The parent AnalyticsAccountLink scope where this property is in. Format: organizations/{org_id}/analyticsAccountLinks/{analytics_account_link_id}",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/analyticsAccountLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+analyticsAccountLink}:setPropertyServiceLevel",
-	//   "request": {
-	//     "$ref": "SetPropertyServiceLevelRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "SetPropertyServiceLevelResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/marketingplatformadmin.analytics.update"
-	//   ]
-	// }
-
 }

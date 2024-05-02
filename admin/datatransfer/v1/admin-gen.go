@@ -183,231 +183,172 @@ type TransfersService struct {
 	s *Service
 }
 
-// Application: Application resources represent applications installed
-// on the domain that support transferring ownership of user data.
+// Application: Application resources represent applications installed on the
+// domain that support transferring ownership of user data.
 type Application struct {
 	// Etag: Etag of the resource.
 	Etag string `json:"etag,omitempty"`
-
-	// Id: The application's ID. Retrievable by using the
-	// `applications.list()`
-	// (/admin-sdk/data-transfer/reference/rest/v1/applications/list)
-	// method.
+	// Id: The application's ID. Retrievable by using the `applications.list()`
+	// (/admin-sdk/data-transfer/reference/rest/v1/applications/list) method.
 	Id int64 `json:"id,omitempty,string"`
-
 	// Kind: Identifies the resource as a DataTransfer Application Resource.
 	Kind string `json:"kind,omitempty"`
-
 	// Name: The application's name.
 	Name string `json:"name,omitempty"`
-
 	// TransferParams: The list of all possible transfer parameters for this
-	// application. These parameters select which categories of the user's
-	// data to transfer.
+	// application. These parameters select which categories of the user's data to
+	// transfer.
 	TransferParams []*ApplicationTransferParam `json:"transferParams,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Application) MarshalJSON() ([]byte, error) {
 	type NoMethod Application
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ApplicationDataTransfer: Template to map fields of
-// ApplicationDataTransfer resource.
+// ApplicationDataTransfer: Template to map fields of ApplicationDataTransfer
+// resource.
 type ApplicationDataTransfer struct {
 	// ApplicationId: The application's ID.
 	ApplicationId int64 `json:"applicationId,omitempty,string"`
-
-	// ApplicationTransferParams: The transfer parameters for the
-	// application. These parameters are used to select the data which will
-	// get transferred in context of this application. For more information
-	// about the specific values available for each application, see the
-	// Transfer parameters (/admin-sdk/data-transfer/v1/parameters)
-	// reference.
+	// ApplicationTransferParams: The transfer parameters for the application.
+	// These parameters are used to select the data which will get transferred in
+	// context of this application. For more information about the specific values
+	// available for each application, see the Transfer parameters
+	// (/admin-sdk/data-transfer/v1/parameters) reference.
 	ApplicationTransferParams []*ApplicationTransferParam `json:"applicationTransferParams,omitempty"`
-
-	// ApplicationTransferStatus: Read-only. Current status of transfer for
-	// this application.
+	// ApplicationTransferStatus: Read-only. Current status of transfer for this
+	// application.
 	ApplicationTransferStatus string `json:"applicationTransferStatus,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ApplicationId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApplicationId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApplicationId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ApplicationDataTransfer) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationDataTransfer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ApplicationTransferParam: Template for application transfer
-// parameters.
+// ApplicationTransferParam: Template for application transfer parameters.
 type ApplicationTransferParam struct {
 	// Key: The type of the transfer parameter, such as `PRIVACY_LEVEL`.
 	Key string `json:"key,omitempty"`
-
-	// Value: The value of the transfer parameter, such as `PRIVATE` or
-	// `SHARED`.
+	// Value: The value of the transfer parameter, such as `PRIVATE` or `SHARED`.
 	Value []string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ApplicationTransferParam) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationTransferParam
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ApplicationsListResponse: Template for a collection of Applications.
 type ApplicationsListResponse struct {
-	// Applications: The list of applications that support data transfer and
-	// are also installed for the customer.
+	// Applications: The list of applications that support data transfer and are
+	// also installed for the customer.
 	Applications []*Application `json:"applications,omitempty"`
-
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
 	// Kind: Identifies the resource as a collection of Applications.
 	Kind string `json:"kind,omitempty"`
-
 	// NextPageToken: Token to specify the next page in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Applications") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Applications") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Applications") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ApplicationsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationsListResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DataTransfer: A Transfer resource represents the transfer of the
-// ownership of user data between users.
+// DataTransfer: A Transfer resource represents the transfer of the ownership
+// of user data between users.
 type DataTransfer struct {
 	// ApplicationDataTransfers: The list of per-application data transfer
-	// resources. It contains details of the applications associated with
-	// this transfer resource, and also specifies the applications for which
-	// data transfer has to be done at the time of the transfer resource
-	// creation.
+	// resources. It contains details of the applications associated with this
+	// transfer resource, and also specifies the applications for which data
+	// transfer has to be done at the time of the transfer resource creation.
 	ApplicationDataTransfers []*ApplicationDataTransfer `json:"applicationDataTransfers,omitempty"`
-
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
 	// Id: Read-only. The transfer's ID.
 	Id string `json:"id,omitempty"`
-
 	// Kind: Identifies the resource as a DataTransfer request.
 	Kind string `json:"kind,omitempty"`
-
 	// NewOwnerUserId: ID of the user to whom the data is being transferred.
 	NewOwnerUserId string `json:"newOwnerUserId,omitempty"`
-
 	// OldOwnerUserId: ID of the user whose data is being transferred.
 	OldOwnerUserId string `json:"oldOwnerUserId,omitempty"`
-
 	// OverallTransferStatusCode: Read-only. Overall transfer status.
 	OverallTransferStatusCode string `json:"overallTransferStatusCode,omitempty"`
-
-	// RequestTime: Read-only. The time at which the data transfer was
-	// requested.
+	// RequestTime: Read-only. The time at which the data transfer was requested.
 	RequestTime string `json:"requestTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ApplicationDataTransfers") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ApplicationDataTransfers")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApplicationDataTransfers")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ApplicationDataTransfers") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DataTransfer) MarshalJSON() ([]byte, error) {
 	type NoMethod DataTransfer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DataTransfersListResponse: Template for a collection of DataTransfer
@@ -415,45 +356,32 @@ func (s *DataTransfer) MarshalJSON() ([]byte, error) {
 type DataTransfersListResponse struct {
 	// DataTransfers: List of data transfer requests.
 	DataTransfers []*DataTransfer `json:"dataTransfers,omitempty"`
-
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
-	// Kind: Identifies the resource as a collection of data transfer
-	// requests.
+	// Kind: Identifies the resource as a collection of data transfer requests.
 	Kind string `json:"kind,omitempty"`
-
 	// NextPageToken: Token to specify the next page in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DataTransfers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataTransfers") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataTransfers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DataTransfersListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DataTransfersListResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "datatransfer.applications.get":
 
 type ApplicationsGetCall struct {
 	s             *Service
@@ -464,8 +392,8 @@ type ApplicationsGetCall struct {
 	header_       http.Header
 }
 
-// Get: Retrieves information about an application for the given
-// application ID.
+// Get: Retrieves information about an application for the given application
+// ID.
 //
 // - applicationId: ID of the application resource to be retrieved.
 func (r *ApplicationsService) Get(applicationId int64) *ApplicationsGetCall {
@@ -475,33 +403,29 @@ func (r *ApplicationsService) Get(applicationId int64) *ApplicationsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ApplicationsGetCall) Fields(s ...googleapi.Field) *ApplicationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ApplicationsGetCall) IfNoneMatch(entityTag string) *ApplicationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ApplicationsGetCall) Context(ctx context.Context) *ApplicationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ApplicationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -510,12 +434,7 @@ func (c *ApplicationsGetCall) Header() http.Header {
 }
 
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -536,12 +455,10 @@ func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "datatransfer.applications.get" call.
-// Exactly one of *Application or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Application.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Application.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ApplicationsGetCall) Do(opts ...googleapi.CallOption) (*Application, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -572,36 +489,7 @@ func (c *ApplicationsGetCall) Do(opts ...googleapi.CallOption) (*Application, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves information about an application for the given application ID.",
-	//   "flatPath": "admin/datatransfer/v1/applications/{applicationId}",
-	//   "httpMethod": "GET",
-	//   "id": "datatransfer.applications.get",
-	//   "parameterOrder": [
-	//     "applicationId"
-	//   ],
-	//   "parameters": {
-	//     "applicationId": {
-	//       "description": "ID of the application resource to be retrieved.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "admin/datatransfer/v1/applications/{applicationId}",
-	//   "response": {
-	//     "$ref": "Application"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.datatransfer",
-	//     "https://www.googleapis.com/auth/admin.datatransfer.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "datatransfer.applications.list":
 
 type ApplicationsListCall struct {
 	s            *Service
@@ -611,62 +499,57 @@ type ApplicationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the applications available for data transfer for a
-// customer.
+// List: Lists the applications available for data transfer for a customer.
 func (r *ApplicationsService) List() *ApplicationsListCall {
 	c := &ApplicationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// CustomerId sets the optional parameter "customerId": Immutable ID of
-// the Google Workspace account.
+// CustomerId sets the optional parameter "customerId": Immutable ID of the
+// Google Workspace account.
 func (c *ApplicationsListCall) CustomerId(customerId string) *ApplicationsListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return. Default is 100.
+// MaxResults sets the optional parameter "maxResults": Maximum number of
+// results to return. Default is 100.
 func (c *ApplicationsListCall) MaxResults(maxResults int64) *ApplicationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token to specify
-// next page in the list.
+// PageToken sets the optional parameter "pageToken": Token to specify next
+// page in the list.
 func (c *ApplicationsListCall) PageToken(pageToken string) *ApplicationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ApplicationsListCall) Fields(s ...googleapi.Field) *ApplicationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ApplicationsListCall) IfNoneMatch(entityTag string) *ApplicationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ApplicationsListCall) Context(ctx context.Context) *ApplicationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ApplicationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -675,12 +558,7 @@ func (c *ApplicationsListCall) Header() http.Header {
 }
 
 func (c *ApplicationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -698,12 +576,11 @@ func (c *ApplicationsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "datatransfer.applications.list" call.
-// Exactly one of *ApplicationsListResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ApplicationsListResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ApplicationsListCall) Do(opts ...googleapi.CallOption) (*ApplicationsListResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -734,42 +611,6 @@ func (c *ApplicationsListCall) Do(opts ...googleapi.CallOption) (*ApplicationsLi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the applications available for data transfer for a customer.",
-	//   "flatPath": "admin/datatransfer/v1/applications",
-	//   "httpMethod": "GET",
-	//   "id": "datatransfer.applications.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "Immutable ID of the Google Workspace account.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "Maximum number of results to return. Default is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "maximum": "500",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token to specify next page in the list.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "admin/datatransfer/v1/applications",
-	//   "response": {
-	//     "$ref": "ApplicationsListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.datatransfer",
-	//     "https://www.googleapis.com/auth/admin.datatransfer.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -777,7 +618,7 @@ func (c *ApplicationsListCall) Do(opts ...googleapi.CallOption) (*ApplicationsLi
 // The provided context supersedes any context provided to the Context method.
 func (c *ApplicationsListCall) Pages(ctx context.Context, f func(*ApplicationsListResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -793,8 +634,6 @@ func (c *ApplicationsListCall) Pages(ctx context.Context, f func(*ApplicationsLi
 	}
 }
 
-// method id "datatransfer.transfers.get":
-
 type TransfersGetCall struct {
 	s              *Service
 	dataTransferId string
@@ -806,8 +645,8 @@ type TransfersGetCall struct {
 
 // Get: Retrieves a data transfer request by its resource ID.
 //
-//   - dataTransferId: ID of the resource to be retrieved. This is
-//     returned in the response from the insert method.
+//   - dataTransferId: ID of the resource to be retrieved. This is returned in
+//     the response from the insert method.
 func (r *TransfersService) Get(dataTransferId string) *TransfersGetCall {
 	c := &TransfersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dataTransferId = dataTransferId
@@ -815,33 +654,29 @@ func (r *TransfersService) Get(dataTransferId string) *TransfersGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TransfersGetCall) Fields(s ...googleapi.Field) *TransfersGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TransfersGetCall) IfNoneMatch(entityTag string) *TransfersGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TransfersGetCall) Context(ctx context.Context) *TransfersGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TransfersGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -850,12 +685,7 @@ func (c *TransfersGetCall) Header() http.Header {
 }
 
 func (c *TransfersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -876,12 +706,10 @@ func (c *TransfersGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "datatransfer.transfers.get" call.
-// Exactly one of *DataTransfer or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *DataTransfer.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DataTransfer.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TransfersGetCall) Do(opts ...googleapi.CallOption) (*DataTransfer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -912,35 +740,7 @@ func (c *TransfersGetCall) Do(opts ...googleapi.CallOption) (*DataTransfer, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a data transfer request by its resource ID.",
-	//   "flatPath": "admin/datatransfer/v1/transfers/{dataTransferId}",
-	//   "httpMethod": "GET",
-	//   "id": "datatransfer.transfers.get",
-	//   "parameterOrder": [
-	//     "dataTransferId"
-	//   ],
-	//   "parameters": {
-	//     "dataTransferId": {
-	//       "description": "ID of the resource to be retrieved. This is returned in the response from the insert method.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "admin/datatransfer/v1/transfers/{dataTransferId}",
-	//   "response": {
-	//     "$ref": "DataTransfer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.datatransfer",
-	//     "https://www.googleapis.com/auth/admin.datatransfer.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "datatransfer.transfers.insert":
 
 type TransfersInsertCall struct {
 	s            *Service
@@ -951,8 +751,8 @@ type TransfersInsertCall struct {
 }
 
 // Insert: Inserts a data transfer request. See the Transfer parameters
-// (/admin-sdk/data-transfer/v1/parameters) reference for specific
-// application requirements.
+// (/admin-sdk/data-transfer/v1/parameters) reference for specific application
+// requirements.
 func (r *TransfersService) Insert(datatransfer *DataTransfer) *TransfersInsertCall {
 	c := &TransfersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datatransfer = datatransfer
@@ -960,23 +760,21 @@ func (r *TransfersService) Insert(datatransfer *DataTransfer) *TransfersInsertCa
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TransfersInsertCall) Fields(s ...googleapi.Field) *TransfersInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TransfersInsertCall) Context(ctx context.Context) *TransfersInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TransfersInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -985,18 +783,12 @@ func (c *TransfersInsertCall) Header() http.Header {
 }
 
 func (c *TransfersInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datatransfer)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/datatransfer/v1/transfers")
@@ -1010,12 +802,10 @@ func (c *TransfersInsertCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "datatransfer.transfers.insert" call.
-// Exactly one of *DataTransfer or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *DataTransfer.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DataTransfer.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TransfersInsertCall) Do(opts ...googleapi.CallOption) (*DataTransfer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1046,28 +836,7 @@ func (c *TransfersInsertCall) Do(opts ...googleapi.CallOption) (*DataTransfer, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Inserts a data transfer request. See the [Transfer parameters](/admin-sdk/data-transfer/v1/parameters) reference for specific application requirements.",
-	//   "flatPath": "admin/datatransfer/v1/transfers",
-	//   "httpMethod": "POST",
-	//   "id": "datatransfer.transfers.insert",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "admin/datatransfer/v1/transfers",
-	//   "request": {
-	//     "$ref": "DataTransfer"
-	//   },
-	//   "response": {
-	//     "$ref": "DataTransfer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.datatransfer"
-	//   ]
-	// }
-
 }
-
-// method id "datatransfer.transfers.list":
 
 type TransfersListCall struct {
 	s            *Service
@@ -1077,43 +846,43 @@ type TransfersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the transfers for a customer by source user, destination
-// user, or status.
+// List: Lists the transfers for a customer by source user, destination user,
+// or status.
 func (r *TransfersService) List() *TransfersListCall {
 	c := &TransfersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// CustomerId sets the optional parameter "customerId": Immutable ID of
-// the Google Workspace account.
+// CustomerId sets the optional parameter "customerId": Immutable ID of the
+// Google Workspace account.
 func (c *TransfersListCall) CustomerId(customerId string) *TransfersListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return. Default is 100.
+// MaxResults sets the optional parameter "maxResults": Maximum number of
+// results to return. Default is 100.
 func (c *TransfersListCall) MaxResults(maxResults int64) *TransfersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// NewOwnerUserId sets the optional parameter "newOwnerUserId":
-// Destination user's profile ID.
+// NewOwnerUserId sets the optional parameter "newOwnerUserId": Destination
+// user's profile ID.
 func (c *TransfersListCall) NewOwnerUserId(newOwnerUserId string) *TransfersListCall {
 	c.urlParams_.Set("newOwnerUserId", newOwnerUserId)
 	return c
 }
 
-// OldOwnerUserId sets the optional parameter "oldOwnerUserId": Source
-// user's profile ID.
+// OldOwnerUserId sets the optional parameter "oldOwnerUserId": Source user's
+// profile ID.
 func (c *TransfersListCall) OldOwnerUserId(oldOwnerUserId string) *TransfersListCall {
 	c.urlParams_.Set("oldOwnerUserId", oldOwnerUserId)
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token to specify
-// the next page in the list.
+// PageToken sets the optional parameter "pageToken": Token to specify the next
+// page in the list.
 func (c *TransfersListCall) PageToken(pageToken string) *TransfersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1126,33 +895,29 @@ func (c *TransfersListCall) Status(status string) *TransfersListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TransfersListCall) Fields(s ...googleapi.Field) *TransfersListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TransfersListCall) IfNoneMatch(entityTag string) *TransfersListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TransfersListCall) Context(ctx context.Context) *TransfersListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TransfersListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1161,12 +926,7 @@ func (c *TransfersListCall) Header() http.Header {
 }
 
 func (c *TransfersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1184,12 +944,11 @@ func (c *TransfersListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "datatransfer.transfers.list" call.
-// Exactly one of *DataTransfersListResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *DataTransfersListResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *DataTransfersListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *TransfersListCall) Do(opts ...googleapi.CallOption) (*DataTransfersListResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1220,57 +979,6 @@ func (c *TransfersListCall) Do(opts ...googleapi.CallOption) (*DataTransfersList
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the transfers for a customer by source user, destination user, or status.",
-	//   "flatPath": "admin/datatransfer/v1/transfers",
-	//   "httpMethod": "GET",
-	//   "id": "datatransfer.transfers.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "Immutable ID of the Google Workspace account.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "Maximum number of results to return. Default is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "maximum": "500",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "newOwnerUserId": {
-	//       "description": "Destination user's profile ID.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "oldOwnerUserId": {
-	//       "description": "Source user's profile ID.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token to specify the next page in the list.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "status": {
-	//       "description": "Status of the transfer.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "admin/datatransfer/v1/transfers",
-	//   "response": {
-	//     "$ref": "DataTransfersListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.datatransfer",
-	//     "https://www.googleapis.com/auth/admin.datatransfer.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1278,7 +986,7 @@ func (c *TransfersListCall) Do(opts ...googleapi.CallOption) (*DataTransfersList
 // The provided context supersedes any context provided to the Context method.
 func (c *TransfersListCall) Pages(ctx context.Context, f func(*DataTransfersListResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

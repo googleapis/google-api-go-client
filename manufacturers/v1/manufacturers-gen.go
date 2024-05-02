@@ -205,204 +205,149 @@ type Attributes struct {
 	// information, see
 	// https://support.google.com/manufacturers/answer/6124116#addlimage.
 	AdditionalImageLink []*Image `json:"additionalImageLink,omitempty"`
-
-	// AgeGroup: The target age group of the product. For more information,
-	// see https://support.google.com/manufacturers/answer/6124116#agegroup.
+	// AgeGroup: The target age group of the product. For more information, see
+	// https://support.google.com/manufacturers/answer/6124116#agegroup.
 	AgeGroup string `json:"ageGroup,omitempty"`
-
 	// Brand: The brand name of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#brand.
 	Brand string `json:"brand,omitempty"`
-
 	// Capacity: The capacity of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#capacity.
 	Capacity *Capacity `json:"capacity,omitempty"`
-
-	// Certification: Optional. List of certifications claimed by this
-	// product.
+	// Certification: Optional. List of certifications claimed by this product.
 	Certification []*GoogleShoppingManufacturersV1ProductCertification `json:"certification,omitempty"`
-
 	// Color: The color of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#color.
 	Color string `json:"color,omitempty"`
-
 	// Count: The count of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#count.
 	Count *Count `json:"count,omitempty"`
-
-	// Description: The description of the product. For more information,
-	// see
+	// Description: The description of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#description.
 	Description string `json:"description,omitempty"`
-
-	// DisclosureDate: The disclosure date of the product. For more
-	// information, see
-	// https://support.google.com/manufacturers/answer/6124116#disclosure.
+	// DisclosureDate: The disclosure date of the product. For more information,
+	// see https://support.google.com/manufacturers/answer/6124116#disclosure.
 	DisclosureDate string `json:"disclosureDate,omitempty"`
-
-	// ExcludedDestination: A list of excluded destinations such as
-	// "ClientExport", "ClientShoppingCatalog" or "PartnerShoppingCatalog".
-	// For more information, see
-	// https://support.google.com/manufacturers/answer/7443550
+	// ExcludedDestination: A list of excluded destinations such as "ClientExport",
+	// "ClientShoppingCatalog" or "PartnerShoppingCatalog". For more information,
+	// see https://support.google.com/manufacturers/answer/7443550
 	ExcludedDestination []string `json:"excludedDestination,omitempty"`
-
-	// FeatureDescription: The rich format description of the product. For
-	// more information, see
+	// FeatureDescription: The rich format description of the product. For more
+	// information, see
 	// https://support.google.com/manufacturers/answer/6124116#featuredesc.
 	FeatureDescription []*FeatureDescription `json:"featureDescription,omitempty"`
-
 	// Flavor: The flavor of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#flavor.
 	Flavor string `json:"flavor,omitempty"`
-
 	// Format: The format of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#format.
 	Format string `json:"format,omitempty"`
-
 	// Gender: The target gender of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#gender.
 	Gender string `json:"gender,omitempty"`
-
 	// Grocery: Grocery Attributes. See more at
 	// https://support.google.com/manufacturers/answer/12098458#grocery.
 	Grocery *Grocery `json:"grocery,omitempty"`
-
 	// Gtin: The Global Trade Item Number (GTIN) of the product. For more
 	// information, see
 	// https://support.google.com/manufacturers/answer/6124116#gtin.
 	Gtin []string `json:"gtin,omitempty"`
-
 	// ImageLink: The image of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#image.
 	ImageLink *Image `json:"imageLink,omitempty"`
-
-	// IncludedDestination: A list of included destinations such as
-	// "ClientExport", "ClientShoppingCatalog" or "PartnerShoppingCatalog".
-	// For more information, see
-	// https://support.google.com/manufacturers/answer/7443550
+	// IncludedDestination: A list of included destinations such as "ClientExport",
+	// "ClientShoppingCatalog" or "PartnerShoppingCatalog". For more information,
+	// see https://support.google.com/manufacturers/answer/7443550
 	IncludedDestination []string `json:"includedDestination,omitempty"`
-
-	// ItemGroupId: The item group id of the product. For more information,
-	// see
+	// ItemGroupId: The item group id of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#itemgroupid.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
-
 	// Material: The material of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#material.
 	Material string `json:"material,omitempty"`
-
 	// Mpn: The Manufacturer Part Number (MPN) of the product. For more
 	// information, see
 	// https://support.google.com/manufacturers/answer/6124116#mpn.
 	Mpn string `json:"mpn,omitempty"`
-
 	// Nutrition: Nutrition Attributes. See more at
 	// https://support.google.com/manufacturers/answer/12098458#food-servings.
 	Nutrition *Nutrition `json:"nutrition,omitempty"`
-
 	// Pattern: The pattern of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#pattern.
 	Pattern string `json:"pattern,omitempty"`
-
 	// ProductDetail: The details of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#productdetail.
 	ProductDetail []*ProductDetail `json:"productDetail,omitempty"`
-
 	// ProductHighlight: The product highlights. For more information, see
 	// https://support.google.com/manufacturers/answer/10066942
 	ProductHighlight []string `json:"productHighlight,omitempty"`
-
-	// ProductLine: The name of the group of products related to the
-	// product. For more information, see
+	// ProductLine: The name of the group of products related to the product. For
+	// more information, see
 	// https://support.google.com/manufacturers/answer/6124116#productline.
 	ProductLine string `json:"productLine,omitempty"`
-
-	// ProductName: The canonical name of the product. For more information,
-	// see
+	// ProductName: The canonical name of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#productname.
 	ProductName string `json:"productName,omitempty"`
-
 	// ProductPageUrl: The URL of the detail page of the product. For more
 	// information, see
 	// https://support.google.com/manufacturers/answer/6124116#productpage.
 	ProductPageUrl string `json:"productPageUrl,omitempty"`
-
-	// ProductType: The type or category of the product. For more
-	// information, see
+	// ProductType: The type or category of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#producttype.
 	ProductType []string `json:"productType,omitempty"`
-
-	// ReleaseDate: The release date of the product. For more information,
-	// see https://support.google.com/manufacturers/answer/6124116#release.
+	// ReleaseDate: The release date of the product. For more information, see
+	// https://support.google.com/manufacturers/answer/6124116#release.
 	ReleaseDate string `json:"releaseDate,omitempty"`
-
 	// RichProductContent: Rich product content. For more information, see
 	// https://support.google.com/manufacturers/answer/9389865
 	RichProductContent []string `json:"richProductContent,omitempty"`
-
 	// Scent: The scent of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#scent.
 	Scent string `json:"scent,omitempty"`
-
 	// Size: The size of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#size.
 	Size string `json:"size,omitempty"`
-
 	// SizeSystem: The size system of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#sizesystem.
 	SizeSystem string `json:"sizeSystem,omitempty"`
-
 	// SizeType: The size type of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#sizetype.
 	SizeType []string `json:"sizeType,omitempty"`
-
-	// SuggestedRetailPrice: The suggested retail price (MSRP) of the
-	// product. For more information, see
+	// SuggestedRetailPrice: The suggested retail price (MSRP) of the product. For
+	// more information, see
 	// https://support.google.com/manufacturers/answer/6124116#price.
 	SuggestedRetailPrice *Price `json:"suggestedRetailPrice,omitempty"`
-
-	// TargetClientId: The target client id. Should only be used in the
-	// accounts of the data partners. For more information, see
+	// TargetClientId: The target client id. Should only be used in the accounts of
+	// the data partners. For more information, see
 	// https://support.google.com/manufacturers/answer/10857344
 	TargetClientId string `json:"targetClientId,omitempty"`
-
 	// Theme: The theme of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#theme.
 	Theme string `json:"theme,omitempty"`
-
 	// Title: The title of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#title.
 	Title string `json:"title,omitempty"`
-
 	// VideoLink: The videos of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#video.
 	VideoLink []string `json:"videoLink,omitempty"`
-
 	// VirtualModelLink: Virtual Model (3d) asset link.
 	VirtualModelLink string `json:"virtualModelLink,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AdditionalImageLink")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdditionalImageLink") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdditionalImageLink") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdditionalImageLink") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Attributes) MarshalJSON() ([]byte, error) {
 	type NoMethod Attributes
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Capacity: The capacity of a product. For more information, see
@@ -410,158 +355,121 @@ func (s *Attributes) MarshalJSON() ([]byte, error) {
 type Capacity struct {
 	// Unit: The unit of the capacity, i.e., MB, GB, or TB.
 	Unit string `json:"unit,omitempty"`
-
 	// Value: The numeric value of the capacity.
 	Value int64 `json:"value,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Unit") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Unit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Unit") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Unit") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Capacity) MarshalJSON() ([]byte, error) {
 	type NoMethod Capacity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Certification: Description of a certification.
 type Certification struct {
 	// Authority: Required. Name of the certification body.
 	Authority string `json:"authority,omitempty"`
-
 	// Code: Required. A unique code to identify the certification.
 	Code string `json:"code,omitempty"`
-
 	// Link: Optional. A URL link to the certification.
 	Link string `json:"link,omitempty"`
-
 	// Logo: Optional. A URL link to the certification logo.
 	Logo string `json:"logo,omitempty"`
-
 	// Name: Required. Name of the certification.
 	Name string `json:"name,omitempty"`
-
 	// ValidUntil: Optional. The expiration date (UTC).
 	ValidUntil string `json:"validUntil,omitempty"`
-
 	// Value: Optional. A custom value of the certification.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Authority") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Authority") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Authority") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Certification) MarshalJSON() ([]byte, error) {
 	type NoMethod Certification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Count: The number of products in a single package. For more
-// information, see
+// Count: The number of products in a single package. For more information, see
 // https://support.google.com/manufacturers/answer/6124116#count.
 type Count struct {
 	// Unit: The unit in which these products are counted.
 	Unit string `json:"unit,omitempty"`
-
 	// Value: The numeric value of the number of products in a package.
 	Value int64 `json:"value,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Unit") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Unit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Unit") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Unit") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Count) MarshalJSON() ([]byte, error) {
 	type NoMethod Count
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DestinationStatus: The destination status.
 type DestinationStatus struct {
 	// Destination: The name of the destination.
 	Destination string `json:"destination,omitempty"`
-
 	// Status: The status of the destination.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unspecified status, never used.
 	//   "ACTIVE" - The product is used for this destination.
 	//   "PENDING" - The decision is still pending.
-	//   "DISAPPROVED" - The product is disapproved. Please look at the
-	// issues.
+	//   "DISAPPROVED" - The product is disapproved. Please look at the issues.
 	Status string `json:"status,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Destination") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Destination") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Destination") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DestinationStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod DestinationStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
@@ -571,65 +479,50 @@ type Empty struct {
 type FeatureDescription struct {
 	// Headline: A short description of the feature.
 	Headline string `json:"headline,omitempty"`
-
 	// Image: An optional image describing the feature.
 	Image *Image `json:"image,omitempty"`
-
 	// Text: A detailed description of the feature.
 	Text string `json:"text,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Headline") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Headline") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Headline") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FeatureDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod FeatureDescription
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // FloatUnit: Combination of float amount and unit.
 type FloatUnit struct {
 	// Amount: amount.
 	Amount float64 `json:"amount,omitempty"`
-
 	// Unit: unit.
 	Unit string `json:"unit,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Amount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Amount") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FloatUnit) MarshalJSON() ([]byte, error) {
 	type NoMethod FloatUnit
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FloatUnit) UnmarshalJSON(data []byte) error {
@@ -651,86 +544,63 @@ func (s *FloatUnit) UnmarshalJSON(data []byte) error {
 type GoogleShoppingManufacturersV1ProductCertification struct {
 	// Authority: Required. Name of the certification body.
 	Authority string `json:"authority,omitempty"`
-
 	// Code: Required. A unique code to identify the certification.
 	Code string `json:"code,omitempty"`
-
 	// Name: Required. Name of the certification.
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Authority") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Authority") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Authority") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleShoppingManufacturersV1ProductCertification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleShoppingManufacturersV1ProductCertification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type Grocery struct {
 	// ActiveIngredients: Active ingredients.
 	ActiveIngredients string `json:"activeIngredients,omitempty"`
-
 	// AlcoholByVolume: Alcohol by volume.
 	AlcoholByVolume float64 `json:"alcoholByVolume,omitempty"`
-
 	// Allergens: Allergens.
 	Allergens string `json:"allergens,omitempty"`
-
 	// DerivedNutritionClaim: Derived nutrition claim.
 	DerivedNutritionClaim []string `json:"derivedNutritionClaim,omitempty"`
-
 	// Directions: Directions.
 	Directions string `json:"directions,omitempty"`
-
 	// Indications: Indications.
 	Indications string `json:"indications,omitempty"`
-
 	// Ingredients: Ingredients.
 	Ingredients string `json:"ingredients,omitempty"`
-
 	// NutritionClaim: Nutrition claim.
 	NutritionClaim []string `json:"nutritionClaim,omitempty"`
-
 	// StorageInstructions: Storage instructions.
 	StorageInstructions string `json:"storageInstructions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActiveIngredients")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ActiveIngredients") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActiveIngredients") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ActiveIngredients") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Grocery) MarshalJSON() ([]byte, error) {
 	type NoMethod Grocery
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Grocery) UnmarshalJSON(data []byte) error {
@@ -749,35 +619,32 @@ func (s *Grocery) UnmarshalJSON(data []byte) error {
 
 // Image: An image.
 type Image struct {
-	// ImageUrl: The URL of the image. For crawled images, this is the
-	// provided URL. For uploaded images, this is a serving URL from Google
-	// if the image has been processed successfully.
+	// ImageUrl: The URL of the image. For crawled images, this is the provided
+	// URL. For uploaded images, this is a serving URL from Google if the image has
+	// been processed successfully.
 	ImageUrl string `json:"imageUrl,omitempty"`
-
 	// Status: The status of the image. @OutputOnly
 	//
 	// Possible values:
-	//   "STATUS_UNSPECIFIED" - The image status is unspecified. Should not
-	// be used.
-	//   "PENDING_PROCESSING" - The image was uploaded and is being
-	// processed.
+	//   "STATUS_UNSPECIFIED" - The image status is unspecified. Should not be
+	// used.
+	//   "PENDING_PROCESSING" - The image was uploaded and is being processed.
 	//   "PENDING_CRAWL" - The image crawl is still pending.
 	//   "OK" - The image was processed and it meets the requirements.
-	//   "ROBOTED" - The image URL is protected by robots.txt file and
-	// cannot be crawled.
-	//   "XROBOTED" - The image URL is protected by X-Robots-Tag and cannot
-	// be crawled.
+	//   "ROBOTED" - The image URL is protected by robots.txt file and cannot be
+	// crawled.
+	//   "XROBOTED" - The image URL is protected by X-Robots-Tag and cannot be
+	// crawled.
 	//   "CRAWL_ERROR" - There was an error while crawling the image.
 	//   "PROCESSING_ERROR" - The image cannot be processed.
 	//   "DECODING_ERROR" - The image cannot be decoded.
 	//   "TOO_BIG" - The image is too big.
 	//   "CRAWL_SKIPPED" - The image was manually overridden and will not be
 	// crawled.
-	//   "HOSTLOADED" - The image crawl was postponed to avoid overloading
-	// the host.
+	//   "HOSTLOADED" - The image crawl was postponed to avoid overloading the
+	// host.
 	//   "HTTP_404" - The image URL returned a "404 Not Found" error.
 	Status string `json:"status,omitempty"`
-
 	// Type: The type of the image, i.e., crawled or uploaded. @OutputOnly
 	//
 	// Possible values:
@@ -785,329 +652,241 @@ type Image struct {
 	//   "CRAWLED" - The image was crawled from a provided URL.
 	//   "UPLOADED" - The image was uploaded.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ImageUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageUrl") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ImageUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Image) MarshalJSON() ([]byte, error) {
 	type NoMethod Image
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Issue: Product issue.
 type Issue struct {
-	// Attribute: If present, the attribute that triggered the issue. For
-	// more information about attributes, see
+	// Attribute: If present, the attribute that triggered the issue. For more
+	// information about attributes, see
 	// https://support.google.com/manufacturers/answer/6124116.
 	Attribute string `json:"attribute,omitempty"`
-
-	// Description: Longer description of the issue focused on how to
-	// resolve it.
+	// Description: Longer description of the issue focused on how to resolve it.
 	Description string `json:"description,omitempty"`
-
 	// Destination: The destination this issue applies to.
 	Destination string `json:"destination,omitempty"`
-
 	// Resolution: What needs to happen to resolve the issue.
 	//
 	// Possible values:
 	//   "RESOLUTION_UNSPECIFIED" - Unspecified resolution, never used.
 	//   "USER_ACTION" - The user who provided the data must act in order to
 	// resolve the issue (for example by correcting some data).
-	//   "PENDING_PROCESSING" - The issue will be resolved automatically
-	// (for example image crawl or Google review). No action is required
-	// now. Resolution might lead to another issue (for example if crawl
-	// fails).
+	//   "PENDING_PROCESSING" - The issue will be resolved automatically (for
+	// example image crawl or Google review). No action is required now. Resolution
+	// might lead to another issue (for example if crawl fails).
 	Resolution string `json:"resolution,omitempty"`
-
 	// Severity: The severity of the issue.
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Unspecified severity, never used.
-	//   "ERROR" - Error severity. The issue prevents the usage of the whole
-	// item.
-	//   "WARNING" - Warning severity. The issue is either one that prevents
-	// the usage of the attribute that triggered it or one that will soon
-	// prevent the usage of the whole item.
-	//   "INFO" - Info severity. The issue is one that doesn't require
-	// immediate attention. It is, for example, used to communicate which
-	// attributes are still pending review.
+	//   "ERROR" - Error severity. The issue prevents the usage of the whole item.
+	//   "WARNING" - Warning severity. The issue is either one that prevents the
+	// usage of the attribute that triggered it or one that will soon prevent the
+	// usage of the whole item.
+	//   "INFO" - Info severity. The issue is one that doesn't require immediate
+	// attention. It is, for example, used to communicate which attributes are
+	// still pending review.
 	Severity string `json:"severity,omitempty"`
-
 	// Timestamp: The timestamp when this issue appeared.
 	Timestamp string `json:"timestamp,omitempty"`
-
 	// Title: Short title describing the nature of the issue.
 	Title string `json:"title,omitempty"`
-
 	// Type: The server-generated type of the issue, for example,
 	// “INCORRECT_TEXT_FORMATTING”, “IMAGE_NOT_SERVEABLE”, etc.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Attribute") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attribute") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attribute") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Issue) MarshalJSON() ([]byte, error) {
 	type NoMethod Issue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListProductCertificationsResponse: Response for
-// ListProductCertifications method.
+// ListProductCertificationsResponse: Response for ListProductCertifications
+// method.
 type ListProductCertificationsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// ProductCertifications: The product certifications from the specified
 	// certification body.
 	ProductCertifications []*ProductCertification `json:"productCertifications,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListProductCertificationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListProductCertificationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type ListProductsResponse struct {
-	// NextPageToken: The token for the retrieval of the next page of
-	// product statuses.
+	// NextPageToken: The token for the retrieval of the next page of product
+	// statuses.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Products: List of the products.
 	Products []*Product `json:"products,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListProductsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type Nutrition struct {
 	// AddedSugars: Added sugars.
 	AddedSugars *FloatUnit `json:"addedSugars,omitempty"`
-
 	// AddedSugarsDailyPercentage: Added sugars daily percentage.
 	AddedSugarsDailyPercentage float64 `json:"addedSugarsDailyPercentage,omitempty"`
-
 	// Calcium: Calcium.
 	Calcium *FloatUnit `json:"calcium,omitempty"`
-
 	// CalciumDailyPercentage: Calcium daily percentage.
 	CalciumDailyPercentage float64 `json:"calciumDailyPercentage,omitempty"`
-
 	// Cholesterol: Cholesterol.
 	Cholesterol *FloatUnit `json:"cholesterol,omitempty"`
-
 	// CholesterolDailyPercentage: Cholesterol daily percentage.
 	CholesterolDailyPercentage float64 `json:"cholesterolDailyPercentage,omitempty"`
-
 	// DietaryFiber: Dietary fiber.
 	DietaryFiber *FloatUnit `json:"dietaryFiber,omitempty"`
-
 	// DietaryFiberDailyPercentage: Dietary fiber daily percentage.
 	DietaryFiberDailyPercentage float64 `json:"dietaryFiberDailyPercentage,omitempty"`
-
 	// Energy: Mandatory Nutrition Facts. Energy.
 	Energy *FloatUnit `json:"energy,omitempty"`
-
 	// EnergyFromFat: Energy from fat.
 	EnergyFromFat *FloatUnit `json:"energyFromFat,omitempty"`
-
 	// FolateDailyPercentage: Folate daily percentage.
 	FolateDailyPercentage float64 `json:"folateDailyPercentage,omitempty"`
-
 	// FolateFolicAcid: Folate folic acid.
 	FolateFolicAcid *FloatUnit `json:"folateFolicAcid,omitempty"`
-
 	// FolateMcgDfe: Folate mcg DFE.
 	FolateMcgDfe float64 `json:"folateMcgDfe,omitempty"`
-
 	// Iron: Iron.
 	Iron *FloatUnit `json:"iron,omitempty"`
-
 	// IronDailyPercentage: Iron daily percentage.
 	IronDailyPercentage float64 `json:"ironDailyPercentage,omitempty"`
-
 	// MonounsaturatedFat: Monounsaturated fat.
 	MonounsaturatedFat *FloatUnit `json:"monounsaturatedFat,omitempty"`
-
 	// NutritionFactMeasure: Nutrition fact measure.
 	NutritionFactMeasure string `json:"nutritionFactMeasure,omitempty"`
-
 	// Polyols: Polyols.
 	Polyols *FloatUnit `json:"polyols,omitempty"`
-
 	// PolyunsaturatedFat: Polyunsaturated fat.
 	PolyunsaturatedFat *FloatUnit `json:"polyunsaturatedFat,omitempty"`
-
 	// Potassium: Potassium.
 	Potassium *FloatUnit `json:"potassium,omitempty"`
-
 	// PotassiumDailyPercentage: Potassium daily percentage.
 	PotassiumDailyPercentage float64 `json:"potassiumDailyPercentage,omitempty"`
-
 	// PreparedSizeDescription: Prepared size description.
 	PreparedSizeDescription string `json:"preparedSizeDescription,omitempty"`
-
 	// Protein: Protein.
 	Protein *FloatUnit `json:"protein,omitempty"`
-
 	// ProteinDailyPercentage: Protein daily percentage.
 	ProteinDailyPercentage float64 `json:"proteinDailyPercentage,omitempty"`
-
 	// SaturatedFat: Saturated fat.
 	SaturatedFat *FloatUnit `json:"saturatedFat,omitempty"`
-
 	// SaturatedFatDailyPercentage: Saturated fat daily percentage.
 	SaturatedFatDailyPercentage float64 `json:"saturatedFatDailyPercentage,omitempty"`
-
 	// ServingSizeDescription: Food Serving Size. Serving size description.
 	ServingSizeDescription string `json:"servingSizeDescription,omitempty"`
-
 	// ServingSizeMeasure: Serving size measure.
 	ServingSizeMeasure *FloatUnit `json:"servingSizeMeasure,omitempty"`
-
 	// ServingsPerContainer: Servings per container.
 	ServingsPerContainer string `json:"servingsPerContainer,omitempty"`
-
 	// Sodium: Sodium.
 	Sodium *FloatUnit `json:"sodium,omitempty"`
-
 	// SodiumDailyPercentage: Sodium daily percentage.
 	SodiumDailyPercentage float64 `json:"sodiumDailyPercentage,omitempty"`
-
 	// Starch: Starch.
 	Starch *FloatUnit `json:"starch,omitempty"`
-
 	// TotalCarbohydrate: Total carbohydrate.
 	TotalCarbohydrate *FloatUnit `json:"totalCarbohydrate,omitempty"`
-
-	// TotalCarbohydrateDailyPercentage: Total carbohydrate daily
-	// percentage.
+	// TotalCarbohydrateDailyPercentage: Total carbohydrate daily percentage.
 	TotalCarbohydrateDailyPercentage float64 `json:"totalCarbohydrateDailyPercentage,omitempty"`
-
 	// TotalFat: Total fat.
 	TotalFat *FloatUnit `json:"totalFat,omitempty"`
-
 	// TotalFatDailyPercentage: Total fat daily percentage.
 	TotalFatDailyPercentage float64 `json:"totalFatDailyPercentage,omitempty"`
-
 	// TotalSugars: Total sugars.
 	TotalSugars *FloatUnit `json:"totalSugars,omitempty"`
-
 	// TotalSugarsDailyPercentage: Total sugars daily percentage.
 	TotalSugarsDailyPercentage float64 `json:"totalSugarsDailyPercentage,omitempty"`
-
 	// TransFat: Trans fat.
 	TransFat *FloatUnit `json:"transFat,omitempty"`
-
 	// TransFatDailyPercentage: Trans fat daily percentage.
 	TransFatDailyPercentage float64 `json:"transFatDailyPercentage,omitempty"`
-
 	// VitaminD: Vitamin D.
 	VitaminD *FloatUnit `json:"vitaminD,omitempty"`
-
 	// VitaminDDailyPercentage: Vitamin D daily percentage.
 	VitaminDDailyPercentage float64 `json:"vitaminDDailyPercentage,omitempty"`
-
 	// VoluntaryNutritionFact: Voluntary nutrition fact.
 	VoluntaryNutritionFact []*VoluntaryNutritionFact `json:"voluntaryNutritionFact,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AddedSugars") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddedSugars") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AddedSugars") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Nutrition) MarshalJSON() ([]byte, error) {
 	type NoMethod Nutrition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Nutrition) UnmarshalJSON(data []byte) error {
@@ -1158,239 +937,181 @@ func (s *Nutrition) UnmarshalJSON(data []byte) error {
 type Price struct {
 	// Amount: The numeric value of the price.
 	Amount string `json:"amount,omitempty"`
-
 	// Currency: The currency in which the price is denoted.
 	Currency string `json:"currency,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Amount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Amount") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Price) MarshalJSON() ([]byte, error) {
 	type NoMethod Price
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Product: Product data.
 type Product struct {
-	// Attributes: Attributes of the product uploaded to the Manufacturer
-	// Center. Manually edited attributes are taken into account.
+	// Attributes: Attributes of the product uploaded to the Manufacturer Center.
+	// Manually edited attributes are taken into account.
 	Attributes *Attributes `json:"attributes,omitempty"`
-
-	// ContentLanguage: The content language of the product as a two-letter
-	// ISO 639-1 language code (for example, en).
+	// ContentLanguage: The content language of the product as a two-letter ISO
+	// 639-1 language code (for example, en).
 	ContentLanguage string `json:"contentLanguage,omitempty"`
-
 	// DestinationStatuses: The status of the destinations.
 	DestinationStatuses []*DestinationStatus `json:"destinationStatuses,omitempty"`
-
-	// Issues: A server-generated list of issues associated with the
-	// product.
+	// Issues: A server-generated list of issues associated with the product.
 	Issues []*Issue `json:"issues,omitempty"`
-
-	// Name: Name in the format
-	// `{target_country}:{content_language}:{product_id}`. `target_country`
-	// - The target country of the product as a CLDR territory code (for
-	// example, US). `content_language` - The content language of the
+	// Name: Name in the format `{target_country}:{content_language}:{product_id}`.
+	// `target_country` - The target country of the product as a CLDR territory
+	// code (for example, US). `content_language` - The content language of the
 	// product as a two-letter ISO 639-1 language code (for example, en).
 	// `product_id` - The ID of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#id.
 	Name string `json:"name,omitempty"`
-
-	// Parent: Parent ID in the format `accounts/{account_id}`. `account_id`
-	// - The ID of the Manufacturer Center account.
+	// Parent: Parent ID in the format `accounts/{account_id}`. `account_id` - The
+	// ID of the Manufacturer Center account.
 	Parent string `json:"parent,omitempty"`
-
 	// ProductId: The ID of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#id.
 	ProductId string `json:"productId,omitempty"`
-
-	// TargetCountry: The target country of the product as a CLDR territory
-	// code (for example, US).
+	// TargetCountry: The target country of the product as a CLDR territory code
+	// (for example, US).
 	TargetCountry string `json:"targetCountry,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attributes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Product) MarshalJSON() ([]byte, error) {
 	type NoMethod Product
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductCertification: Product certification data.
 type ProductCertification struct {
-	// Brand: Required. This is the product's brand name. The brand is used
-	// to help identify your product.
+	// Brand: Required. This is the product's brand name. The brand is used to help
+	// identify your product.
 	Brand string `json:"brand,omitempty"`
-
-	// Certification: Required. A list of certifications to link to the
-	// described product.
+	// Certification: Required. A list of certifications to link to the described
+	// product.
 	Certification []*Certification `json:"certification,omitempty"`
-
 	// CountryCode: Optional. A 2-letter country code (ISO 3166-1 Alpha 2).
 	CountryCode []string `json:"countryCode,omitempty"`
-
 	// DestinationStatuses: Output only. The statuses of the destinations.
 	DestinationStatuses []*DestinationStatus `json:"destinationStatuses,omitempty"`
-
-	// Issues: Output only. A server-generated list of issues associated
-	// with the product.
+	// Issues: Output only. A server-generated list of issues associated with the
+	// product.
 	Issues []*Issue `json:"issues,omitempty"`
-
-	// Mpn: Optional. These are the Manufacturer Part Numbers (MPN). MPNs
-	// are used to uniquely identify a specific product among all products
-	// from the same manufacturer
+	// Mpn: Optional. These are the Manufacturer Part Numbers (MPN). MPNs are used
+	// to uniquely identify a specific product among all products from the same
+	// manufacturer
 	Mpn []string `json:"mpn,omitempty"`
-
 	// Name: Required. The unique name identifier of a product certification
 	// Format:
-	// accounts/{account}/languages/{language_code}/productCertifications/{id
-	// } Where `id` is a some unique identifier and `language_code` is a
-	// 2-letter ISO 639-1 code of a Shopping supported language according to
+	// accounts/{account}/languages/{language_code}/productCertifications/{id}
+	// Where `id` is a some unique identifier and `language_code` is a 2-letter ISO
+	// 639-1 code of a Shopping supported language according to
 	// https://support.google.com/merchants/answer/160637.
 	Name string `json:"name,omitempty"`
-
 	// ProductCode: Optional. Another name for GTIN.
 	ProductCode []string `json:"productCode,omitempty"`
-
-	// ProductType: Optional. These are your own product categorization
-	// system in your product data.
+	// ProductType: Optional. These are your own product categorization system in
+	// your product data.
 	ProductType []string `json:"productType,omitempty"`
-
-	// Title: Required. This is to clearly identify the product you are
-	// certifying.
+	// Title: Required. This is to clearly identify the product you are certifying.
 	Title string `json:"title,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Brand") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Brand") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Brand") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ProductCertification) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductCertification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ProductDetail: A product detail of the product. For more information,
-// see
+// ProductDetail: A product detail of the product. For more information, see
 // https://support.google.com/manufacturers/answer/6124116#productdetail.
 type ProductDetail struct {
 	// AttributeName: The name of the attribute.
 	AttributeName string `json:"attributeName,omitempty"`
-
 	// AttributeValue: The value of the attribute.
 	AttributeValue string `json:"attributeValue,omitempty"`
-
 	// SectionName: A short section name that can be reused between multiple
 	// product details.
 	SectionName string `json:"sectionName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AttributeName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttributeName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AttributeName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ProductDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductDetail
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // VoluntaryNutritionFact: Voluntary Nutrition Facts.
 type VoluntaryNutritionFact struct {
 	// DailyPercentage: Daily percentage.
 	DailyPercentage float64 `json:"dailyPercentage,omitempty"`
-
 	// Name: Name.
 	Name string `json:"name,omitempty"`
-
 	// Value: Value.
 	Value *FloatUnit `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DailyPercentage") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DailyPercentage") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DailyPercentage") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VoluntaryNutritionFact) MarshalJSON() ([]byte, error) {
 	type NoMethod VoluntaryNutritionFact
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *VoluntaryNutritionFact) UnmarshalJSON(data []byte) error {
@@ -1407,8 +1128,6 @@ func (s *VoluntaryNutritionFact) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// method id "manufacturers.accounts.languages.productCertifications.delete":
-
 type AccountsLanguagesProductCertificationsDeleteCall struct {
 	s          *Service
 	name       string
@@ -1417,12 +1136,11 @@ type AccountsLanguagesProductCertificationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a product certification by its name. This method can
-// only be called by certification bodies.
+// Delete: Deletes a product certification by its name. This method can only be
+// called by certification bodies.
 //
 //   - name: The name of the product certification to delete. Format:
-//     accounts/{account}/languages/{language_code}/productCertifications/{
-//     id}.
+//     accounts/{account}/languages/{language_code}/productCertifications/{id}.
 func (r *AccountsLanguagesProductCertificationsService) Delete(name string) *AccountsLanguagesProductCertificationsDeleteCall {
 	c := &AccountsLanguagesProductCertificationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1430,23 +1148,21 @@ func (r *AccountsLanguagesProductCertificationsService) Delete(name string) *Acc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsLanguagesProductCertificationsDeleteCall) Fields(s ...googleapi.Field) *AccountsLanguagesProductCertificationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsLanguagesProductCertificationsDeleteCall) Context(ctx context.Context) *AccountsLanguagesProductCertificationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsLanguagesProductCertificationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1455,12 +1171,7 @@ func (c *AccountsLanguagesProductCertificationsDeleteCall) Header() http.Header 
 }
 
 func (c *AccountsLanguagesProductCertificationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1478,12 +1189,10 @@ func (c *AccountsLanguagesProductCertificationsDeleteCall) doRequest(alt string)
 }
 
 // Do executes the "manufacturers.accounts.languages.productCertifications.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsLanguagesProductCertificationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1514,35 +1223,7 @@ func (c *AccountsLanguagesProductCertificationsDeleteCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a product certification by its name. This method can only be called by certification bodies.",
-	//   "flatPath": "v1/accounts/{accountsId}/languages/{languagesId}/productCertifications/{productCertificationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "manufacturers.accounts.languages.productCertifications.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the product certification to delete. Format: accounts/{account}/languages/{language_code}/productCertifications/{id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/languages/[^/]+/productCertifications/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/manufacturercenter"
-	//   ]
-	// }
-
 }
-
-// method id "manufacturers.accounts.languages.productCertifications.get":
 
 type AccountsLanguagesProductCertificationsGetCall struct {
 	s            *Service
@@ -1553,12 +1234,11 @@ type AccountsLanguagesProductCertificationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a product certification by its name. This method can only
-// be called by certification bodies.
+// Get: Gets a product certification by its name. This method can only be
+// called by certification bodies.
 //
 //   - name: The name of the product certification to get. Format:
-//     accounts/{account}/languages/{language_code}/productCertifications/{
-//     id}.
+//     accounts/{account}/languages/{language_code}/productCertifications/{id}.
 func (r *AccountsLanguagesProductCertificationsService) Get(name string) *AccountsLanguagesProductCertificationsGetCall {
 	c := &AccountsLanguagesProductCertificationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1566,33 +1246,29 @@ func (r *AccountsLanguagesProductCertificationsService) Get(name string) *Accoun
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsLanguagesProductCertificationsGetCall) Fields(s ...googleapi.Field) *AccountsLanguagesProductCertificationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsLanguagesProductCertificationsGetCall) IfNoneMatch(entityTag string) *AccountsLanguagesProductCertificationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsLanguagesProductCertificationsGetCall) Context(ctx context.Context) *AccountsLanguagesProductCertificationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsLanguagesProductCertificationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1601,12 +1277,7 @@ func (c *AccountsLanguagesProductCertificationsGetCall) Header() http.Header {
 }
 
 func (c *AccountsLanguagesProductCertificationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1627,12 +1298,11 @@ func (c *AccountsLanguagesProductCertificationsGetCall) doRequest(alt string) (*
 }
 
 // Do executes the "manufacturers.accounts.languages.productCertifications.get" call.
-// Exactly one of *ProductCertification or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ProductCertification.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ProductCertification.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsLanguagesProductCertificationsGetCall) Do(opts ...googleapi.CallOption) (*ProductCertification, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1663,35 +1333,7 @@ func (c *AccountsLanguagesProductCertificationsGetCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a product certification by its name. This method can only be called by certification bodies.",
-	//   "flatPath": "v1/accounts/{accountsId}/languages/{languagesId}/productCertifications/{productCertificationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "manufacturers.accounts.languages.productCertifications.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the product certification to get. Format: accounts/{account}/languages/{language_code}/productCertifications/{id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/languages/[^/]+/productCertifications/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "ProductCertification"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/manufacturercenter"
-	//   ]
-	// }
-
 }
-
-// method id "manufacturers.accounts.languages.productCertifications.list":
 
 type AccountsLanguagesProductCertificationsListCall struct {
 	s            *Service
@@ -1702,67 +1344,60 @@ type AccountsLanguagesProductCertificationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists product certifications from a specified certification
-// body. This method can only be called by certification bodies.
+// List: Lists product certifications from a specified certification body. This
+// method can only be called by certification bodies.
 //
-//   - parent: The parent, which owns this collection of product
-//     certifications. Format:
-//     accounts/{account}/languages/{language_code}.
+//   - parent: The parent, which owns this collection of product certifications.
+//     Format: accounts/{account}/languages/{language_code}.
 func (r *AccountsLanguagesProductCertificationsService) List(parent string) *AccountsLanguagesProductCertificationsListCall {
 	c := &AccountsLanguagesProductCertificationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of product certifications to return. The service may return fewer
-// than this value. If unspecified, at most 50 product certifications
-// will be returned. The maximum value is 1000; values above 1000 will
-// be coerced to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// product certifications to return. The service may return fewer than this
+// value. If unspecified, at most 50 product certifications will be returned.
+// The maximum value is 1000; values above 1000 will be coerced to 1000.
 func (c *AccountsLanguagesProductCertificationsListCall) PageSize(pageSize int64) *AccountsLanguagesProductCertificationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListProductCertifications` call. Provide
-// this to retrieve the subsequent page. When paginating, all other
-// parameters provided to `ListProductCertifications` must match the
-// call that provided the page token. Required if requesting the second
-// or higher page.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListProductCertifications` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListProductCertifications` must match the call that provided the page
+// token. Required if requesting the second or higher page.
 func (c *AccountsLanguagesProductCertificationsListCall) PageToken(pageToken string) *AccountsLanguagesProductCertificationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsLanguagesProductCertificationsListCall) Fields(s ...googleapi.Field) *AccountsLanguagesProductCertificationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsLanguagesProductCertificationsListCall) IfNoneMatch(entityTag string) *AccountsLanguagesProductCertificationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsLanguagesProductCertificationsListCall) Context(ctx context.Context) *AccountsLanguagesProductCertificationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsLanguagesProductCertificationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1771,12 +1406,7 @@ func (c *AccountsLanguagesProductCertificationsListCall) Header() http.Header {
 }
 
 func (c *AccountsLanguagesProductCertificationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1797,13 +1427,11 @@ func (c *AccountsLanguagesProductCertificationsListCall) doRequest(alt string) (
 }
 
 // Do executes the "manufacturers.accounts.languages.productCertifications.list" call.
-// Exactly one of *ListProductCertificationsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListProductCertificationsResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListProductCertificationsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsLanguagesProductCertificationsListCall) Do(opts ...googleapi.CallOption) (*ListProductCertificationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1834,43 +1462,6 @@ func (c *AccountsLanguagesProductCertificationsListCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists product certifications from a specified certification body. This method can only be called by certification bodies.",
-	//   "flatPath": "v1/accounts/{accountsId}/languages/{languagesId}/productCertifications",
-	//   "httpMethod": "GET",
-	//   "id": "manufacturers.accounts.languages.productCertifications.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of product certifications to return. The service may return fewer than this value. If unspecified, at most 50 product certifications will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListProductCertifications` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListProductCertifications` must match the call that provided the page token. Required if requesting the second or higher page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of product certifications. Format: accounts/{account}/languages/{language_code}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/languages/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/productCertifications",
-	//   "response": {
-	//     "$ref": "ListProductCertificationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/manufacturercenter"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1878,7 +1469,7 @@ func (c *AccountsLanguagesProductCertificationsListCall) Do(opts ...googleapi.Ca
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsLanguagesProductCertificationsListCall) Pages(ctx context.Context, f func(*ListProductCertificationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1894,8 +1485,6 @@ func (c *AccountsLanguagesProductCertificationsListCall) Pages(ctx context.Conte
 	}
 }
 
-// method id "manufacturers.accounts.languages.productCertifications.patch":
-
 type AccountsLanguagesProductCertificationsPatchCall struct {
 	s                    *Service
 	nameid               string
@@ -1905,15 +1494,15 @@ type AccountsLanguagesProductCertificationsPatchCall struct {
 	header_              http.Header
 }
 
-// Patch: Updates (or creates if allow_missing = true) a product
-// certification which links certifications with products. This method
-// can only be called by certification bodies.
+// Patch: Updates (or creates if allow_missing = true) a product certification
+// which links certifications with products. This method can only be called by
+// certification bodies.
 //
 //   - name: The unique name identifier of a product certification Format:
-//     accounts/{account}/languages/{language_code}/productCertifications/{
-//     id} Where `id` is a some unique identifier and `language_code` is a
-//     2-letter ISO 639-1 code of a Shopping supported language according
-//     to https://support.google.com/merchants/answer/160637.
+//     accounts/{account}/languages/{language_code}/productCertifications/{id}
+//     Where `id` is a some unique identifier and `language_code` is a 2-letter
+//     ISO 639-1 code of a Shopping supported language according to
+//     https://support.google.com/merchants/answer/160637.
 func (r *AccountsLanguagesProductCertificationsService) Patch(nameid string, productcertification *ProductCertification) *AccountsLanguagesProductCertificationsPatchCall {
 	c := &AccountsLanguagesProductCertificationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -1921,34 +1510,31 @@ func (r *AccountsLanguagesProductCertificationsService) Patch(nameid string, pro
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update according to aip.dev/134. However, only full update
-// is supported as of right now. Therefore, it can be either ignored or
-// set to "*". Setting any other values will returns UNIMPLEMENTED
-// error.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update according to aip.dev/134. However, only full update is supported as
+// of right now. Therefore, it can be either ignored or set to "*". Setting any
+// other values will returns UNIMPLEMENTED error.
 func (c *AccountsLanguagesProductCertificationsPatchCall) UpdateMask(updateMask string) *AccountsLanguagesProductCertificationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsLanguagesProductCertificationsPatchCall) Fields(s ...googleapi.Field) *AccountsLanguagesProductCertificationsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsLanguagesProductCertificationsPatchCall) Context(ctx context.Context) *AccountsLanguagesProductCertificationsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsLanguagesProductCertificationsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1957,18 +1543,12 @@ func (c *AccountsLanguagesProductCertificationsPatchCall) Header() http.Header {
 }
 
 func (c *AccountsLanguagesProductCertificationsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productcertification)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -1985,12 +1565,11 @@ func (c *AccountsLanguagesProductCertificationsPatchCall) doRequest(alt string) 
 }
 
 // Do executes the "manufacturers.accounts.languages.productCertifications.patch" call.
-// Exactly one of *ProductCertification or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ProductCertification.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ProductCertification.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsLanguagesProductCertificationsPatchCall) Do(opts ...googleapi.CallOption) (*ProductCertification, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2021,44 +1600,7 @@ func (c *AccountsLanguagesProductCertificationsPatchCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates (or creates if allow_missing = true) a product certification which links certifications with products. This method can only be called by certification bodies.",
-	//   "flatPath": "v1/accounts/{accountsId}/languages/{languagesId}/productCertifications/{productCertificationsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "manufacturers.accounts.languages.productCertifications.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The unique name identifier of a product certification Format: accounts/{account}/languages/{language_code}/productCertifications/{id} Where `id` is a some unique identifier and `language_code` is a 2-letter ISO 639-1 code of a Shopping supported language according to https://support.google.com/merchants/answer/160637.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/languages/[^/]+/productCertifications/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Optional. The list of fields to update according to aip.dev/134. However, only full update is supported as of right now. Therefore, it can be either ignored or set to \"*\". Setting any other values will returns UNIMPLEMENTED error.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "ProductCertification"
-	//   },
-	//   "response": {
-	//     "$ref": "ProductCertification"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/manufacturercenter"
-	//   ]
-	// }
-
 }
-
-// method id "manufacturers.accounts.products.delete":
 
 type AccountsProductsDeleteCall struct {
 	s          *Service
@@ -2072,15 +1614,14 @@ type AccountsProductsDeleteCall struct {
 // Delete: Deletes the product from a Manufacturer Center account.
 //
 //   - name: Name in the format
-//     `{target_country}:{content_language}:{product_id}`.
-//     `target_country` - The target country of the product as a CLDR
-//     territory code (for example, US). `content_language` - The content
-//     language of the product as a two-letter ISO 639-1 language code
-//     (for example, en). `product_id` - The ID of the product. For more
-//     information, see
+//     `{target_country}:{content_language}:{product_id}`. `target_country` - The
+//     target country of the product as a CLDR territory code (for example, US).
+//     `content_language` - The content language of the product as a two-letter
+//     ISO 639-1 language code (for example, en). `product_id` - The ID of the
+//     product. For more information, see
 //     https://support.google.com/manufacturers/answer/6124116#id.
-//   - parent: Parent ID in the format `accounts/{account_id}`.
-//     `account_id` - The ID of the Manufacturer Center account.
+//   - parent: Parent ID in the format `accounts/{account_id}`. `account_id` -
+//     The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Delete(parent string, name string) *AccountsProductsDeleteCall {
 	c := &AccountsProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2089,23 +1630,21 @@ func (r *AccountsProductsService) Delete(parent string, name string) *AccountsPr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsProductsDeleteCall) Fields(s ...googleapi.Field) *AccountsProductsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsProductsDeleteCall) Context(ctx context.Context) *AccountsProductsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsProductsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2114,12 +1653,7 @@ func (c *AccountsProductsDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2138,12 +1672,10 @@ func (c *AccountsProductsDeleteCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "manufacturers.accounts.products.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsProductsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2174,43 +1706,7 @@ func (c *AccountsProductsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the product from a Manufacturer Center account.",
-	//   "flatPath": "v1/accounts/{accountsId}/products/{productsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "manufacturers.accounts.products.delete",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Name in the format `{target_country}:{content_language}:{product_id}`. `target_country` - The target country of the product as a CLDR territory code (for example, US). `content_language` - The content language of the product as a two-letter ISO 639-1 language code (for example, en). `product_id` - The ID of the product. For more information, see https://support.google.com/manufacturers/answer/6124116#id.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent ID in the format `accounts/{account_id}`. `account_id` - The ID of the Manufacturer Center account.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/products/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/manufacturercenter"
-	//   ]
-	// }
-
 }
-
-// method id "manufacturers.accounts.products.get":
 
 type AccountsProductsGetCall struct {
 	s            *Service
@@ -2222,22 +1718,21 @@ type AccountsProductsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the product from a Manufacturer Center account, including
-// product issues. A recently updated product takes around 15 minutes to
-// process. Changes are only visible after it has been processed. While
-// some issues may be available once the product has been processed,
-// other issues may take days to appear.
+// Get: Gets the product from a Manufacturer Center account, including product
+// issues. A recently updated product takes around 15 minutes to process.
+// Changes are only visible after it has been processed. While some issues may
+// be available once the product has been processed, other issues may take days
+// to appear.
 //
 //   - name: Name in the format
-//     `{target_country}:{content_language}:{product_id}`.
-//     `target_country` - The target country of the product as a CLDR
-//     territory code (for example, US). `content_language` - The content
-//     language of the product as a two-letter ISO 639-1 language code
-//     (for example, en). `product_id` - The ID of the product. For more
-//     information, see
+//     `{target_country}:{content_language}:{product_id}`. `target_country` - The
+//     target country of the product as a CLDR territory code (for example, US).
+//     `content_language` - The content language of the product as a two-letter
+//     ISO 639-1 language code (for example, en). `product_id` - The ID of the
+//     product. For more information, see
 //     https://support.google.com/manufacturers/answer/6124116#id.
-//   - parent: Parent ID in the format `accounts/{account_id}`.
-//     `account_id` - The ID of the Manufacturer Center account.
+//   - parent: Parent ID in the format `accounts/{account_id}`. `account_id` -
+//     The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Get(parent string, name string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2253,42 +1748,36 @@ func (r *AccountsProductsService) Get(parent string, name string) *AccountsProdu
 //	"UNKNOWN" - Unknown, never used.
 //	"ATTRIBUTES" - Include the attributes of the product.
 //	"ISSUES" - Include the issues of the product.
-//	"DESTINATION_STATUSES" - Include the destination statuses of the
-//
-// product.
+//	"DESTINATION_STATUSES" - Include the destination statuses of the product.
 func (c *AccountsProductsGetCall) Include(include ...string) *AccountsProductsGetCall {
 	c.urlParams_.SetMulti("include", append([]string{}, include...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsProductsGetCall) Fields(s ...googleapi.Field) *AccountsProductsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsProductsGetCall) IfNoneMatch(entityTag string) *AccountsProductsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsProductsGetCall) Context(ctx context.Context) *AccountsProductsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsProductsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2297,12 +1786,7 @@ func (c *AccountsProductsGetCall) Header() http.Header {
 }
 
 func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2324,12 +1808,10 @@ func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "manufacturers.accounts.products.get" call.
-// Exactly one of *Product or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Product.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Product.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2360,61 +1842,7 @@ func (c *AccountsProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the product from a Manufacturer Center account, including product issues. A recently updated product takes around 15 minutes to process. Changes are only visible after it has been processed. While some issues may be available once the product has been processed, other issues may take days to appear.",
-	//   "flatPath": "v1/accounts/{accountsId}/products/{productsId}",
-	//   "httpMethod": "GET",
-	//   "id": "manufacturers.accounts.products.get",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "include": {
-	//       "description": "The information to be included in the response. Only sections listed here will be returned.",
-	//       "enum": [
-	//         "UNKNOWN",
-	//         "ATTRIBUTES",
-	//         "ISSUES",
-	//         "DESTINATION_STATUSES"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unknown, never used.",
-	//         "Include the attributes of the product.",
-	//         "Include the issues of the product.",
-	//         "Include the destination statuses of the product."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Name in the format `{target_country}:{content_language}:{product_id}`. `target_country` - The target country of the product as a CLDR territory code (for example, US). `content_language` - The content language of the product as a two-letter ISO 639-1 language code (for example, en). `product_id` - The ID of the product. For more information, see https://support.google.com/manufacturers/answer/6124116#id.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent ID in the format `accounts/{account_id}`. `account_id` - The ID of the Manufacturer Center account.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/products/{+name}",
-	//   "response": {
-	//     "$ref": "Product"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/manufacturercenter"
-	//   ]
-	// }
-
 }
-
-// method id "manufacturers.accounts.products.list":
 
 type AccountsProductsListCall struct {
 	s            *Service
@@ -2427,8 +1855,8 @@ type AccountsProductsListCall struct {
 
 // List: Lists all the products in a Manufacturer Center account.
 //
-//   - parent: Parent ID in the format `accounts/{account_id}`.
-//     `account_id` - The ID of the Manufacturer Center account.
+//   - parent: Parent ID in the format `accounts/{account_id}`. `account_id` -
+//     The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall {
 	c := &AccountsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2443,56 +1871,50 @@ func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall 
 //	"UNKNOWN" - Unknown, never used.
 //	"ATTRIBUTES" - Include the attributes of the product.
 //	"ISSUES" - Include the issues of the product.
-//	"DESTINATION_STATUSES" - Include the destination statuses of the
-//
-// product.
+//	"DESTINATION_STATUSES" - Include the destination statuses of the product.
 func (c *AccountsProductsListCall) Include(include ...string) *AccountsProductsListCall {
 	c.urlParams_.SetMulti("include", append([]string{}, include...))
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// product statuses to return in the response, used for paging.
+// PageSize sets the optional parameter "pageSize": Maximum number of product
+// statuses to return in the response, used for paging.
 func (c *AccountsProductsListCall) PageSize(pageSize int64) *AccountsProductsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The token returned
-// by the previous request.
+// PageToken sets the optional parameter "pageToken": The token returned by the
+// previous request.
 func (c *AccountsProductsListCall) PageToken(pageToken string) *AccountsProductsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsProductsListCall) Fields(s ...googleapi.Field) *AccountsProductsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsProductsListCall) IfNoneMatch(entityTag string) *AccountsProductsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsProductsListCall) Context(ctx context.Context) *AccountsProductsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsProductsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2501,12 +1923,7 @@ func (c *AccountsProductsListCall) Header() http.Header {
 }
 
 func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2527,12 +1944,11 @@ func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "manufacturers.accounts.products.list" call.
-// Exactly one of *ListProductsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListProductsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListProductsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsProductsListCall) Do(opts ...googleapi.CallOption) (*ListProductsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2563,61 +1979,6 @@ func (c *AccountsProductsListCall) Do(opts ...googleapi.CallOption) (*ListProduc
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all the products in a Manufacturer Center account.",
-	//   "flatPath": "v1/accounts/{accountsId}/products",
-	//   "httpMethod": "GET",
-	//   "id": "manufacturers.accounts.products.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "include": {
-	//       "description": "The information to be included in the response. Only sections listed here will be returned.",
-	//       "enum": [
-	//         "UNKNOWN",
-	//         "ATTRIBUTES",
-	//         "ISSUES",
-	//         "DESTINATION_STATUSES"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unknown, never used.",
-	//         "Include the attributes of the product.",
-	//         "Include the issues of the product.",
-	//         "Include the destination statuses of the product."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of product statuses to return in the response, used for paging.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The token returned by the previous request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent ID in the format `accounts/{account_id}`. `account_id` - The ID of the Manufacturer Center account.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/products",
-	//   "response": {
-	//     "$ref": "ListProductsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/manufacturercenter"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2625,7 +1986,7 @@ func (c *AccountsProductsListCall) Do(opts ...googleapi.CallOption) (*ListProduc
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsProductsListCall) Pages(ctx context.Context, f func(*ListProductsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2641,8 +2002,6 @@ func (c *AccountsProductsListCall) Pages(ctx context.Context, f func(*ListProduc
 	}
 }
 
-// method id "manufacturers.accounts.products.update":
-
 type AccountsProductsUpdateCall struct {
 	s          *Service
 	parent     string
@@ -2653,30 +2012,27 @@ type AccountsProductsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Inserts or updates the attributes of the product in a
-// Manufacturer Center account. Creates a product with the provided
-// attributes. If the product already exists, then all attributes are
-// replaced with the new ones. The checks at upload time are minimal.
-// All required attributes need to be present for a product to be valid.
-// Issues may show up later after the API has accepted a new upload for
-// a product and it is possible to overwrite an existing valid product
-// with an invalid product. To detect this, you should retrieve the
-// product and check it for issues once the new version is available.
-// Uploaded attributes first need to be processed before they can be
-// retrieved. Until then, new products will be unavailable, and
-// retrieval of previously uploaded products will return the original
-// state of the product.
+// Update: Inserts or updates the attributes of the product in a Manufacturer
+// Center account. Creates a product with the provided attributes. If the
+// product already exists, then all attributes are replaced with the new ones.
+// The checks at upload time are minimal. All required attributes need to be
+// present for a product to be valid. Issues may show up later after the API
+// has accepted a new upload for a product and it is possible to overwrite an
+// existing valid product with an invalid product. To detect this, you should
+// retrieve the product and check it for issues once the new version is
+// available. Uploaded attributes first need to be processed before they can be
+// retrieved. Until then, new products will be unavailable, and retrieval of
+// previously uploaded products will return the original state of the product.
 //
 //   - name: Name in the format
-//     `{target_country}:{content_language}:{product_id}`.
-//     `target_country` - The target country of the product as a CLDR
-//     territory code (for example, US). `content_language` - The content
-//     language of the product as a two-letter ISO 639-1 language code
-//     (for example, en). `product_id` - The ID of the product. For more
-//     information, see
+//     `{target_country}:{content_language}:{product_id}`. `target_country` - The
+//     target country of the product as a CLDR territory code (for example, US).
+//     `content_language` - The content language of the product as a two-letter
+//     ISO 639-1 language code (for example, en). `product_id` - The ID of the
+//     product. For more information, see
 //     https://support.google.com/manufacturers/answer/6124116#id.
-//   - parent: Parent ID in the format `accounts/{account_id}`.
-//     `account_id` - The ID of the Manufacturer Center account.
+//   - parent: Parent ID in the format `accounts/{account_id}`. `account_id` -
+//     The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Update(parent string, name string, attributes *Attributes) *AccountsProductsUpdateCall {
 	c := &AccountsProductsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2686,23 +2042,21 @@ func (r *AccountsProductsService) Update(parent string, name string, attributes 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsProductsUpdateCall) Fields(s ...googleapi.Field) *AccountsProductsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsProductsUpdateCall) Context(ctx context.Context) *AccountsProductsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsProductsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2711,18 +2065,12 @@ func (c *AccountsProductsUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsProductsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.attributes)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/products/{+name}")
@@ -2740,12 +2088,10 @@ func (c *AccountsProductsUpdateCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "manufacturers.accounts.products.update" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsProductsUpdateCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2776,41 +2122,4 @@ func (c *AccountsProductsUpdateCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Inserts or updates the attributes of the product in a Manufacturer Center account. Creates a product with the provided attributes. If the product already exists, then all attributes are replaced with the new ones. The checks at upload time are minimal. All required attributes need to be present for a product to be valid. Issues may show up later after the API has accepted a new upload for a product and it is possible to overwrite an existing valid product with an invalid product. To detect this, you should retrieve the product and check it for issues once the new version is available. Uploaded attributes first need to be processed before they can be retrieved. Until then, new products will be unavailable, and retrieval of previously uploaded products will return the original state of the product.",
-	//   "flatPath": "v1/accounts/{accountsId}/products/{productsId}",
-	//   "httpMethod": "PUT",
-	//   "id": "manufacturers.accounts.products.update",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Name in the format `{target_country}:{content_language}:{product_id}`. `target_country` - The target country of the product as a CLDR territory code (for example, US). `content_language` - The content language of the product as a two-letter ISO 639-1 language code (for example, en). `product_id` - The ID of the product. For more information, see https://support.google.com/manufacturers/answer/6124116#id.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent ID in the format `accounts/{account_id}`. `account_id` - The ID of the Manufacturer Center account.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/products/{+name}",
-	//   "request": {
-	//     "$ref": "Attributes"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/manufacturercenter"
-	//   ]
-	// }
-
 }

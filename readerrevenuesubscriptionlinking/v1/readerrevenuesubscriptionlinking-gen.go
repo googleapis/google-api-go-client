@@ -165,60 +165,48 @@ type PublicationsReadersService struct {
 
 // DeleteReaderResponse: Response to deleting a reader of a publication.
 type DeleteReaderResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
 // Entitlement: A single entitlement for a publication reader
 type Entitlement struct {
-	// Detail: The detail field can carry a description of the SKU that
-	// corresponds to what the user has been granted access to. This
-	// description, which is opaque to Google, can be displayed in the
-	// Google user subscription console for users who linked the
-	// subscription to a Google Account. Max 80 character limit.
+	// Detail: The detail field can carry a description of the SKU that corresponds
+	// to what the user has been granted access to. This description, which is
+	// opaque to Google, can be displayed in the Google user subscription console
+	// for users who linked the subscription to a Google Account. Max 80 character
+	// limit.
 	Detail string `json:"detail,omitempty"`
-
-	// ExpireTime: Required. Expiration time of the entitlement.
-	// Entitlements that have expired over 30 days will be purged. Required.
-	// LINT.IfChange(expire_time) The max expire_time is 398 days from
-	// now().
-	// LINT.ThenChange(//depot/google3/java/com/google/subscribewithgoogle/ac
-	// countlinking/subscriptionlink/service/config/protoconf.pi:max_expiry_a
-	// ge)
+	// ExpireTime: Required. Expiration time of the entitlement. Entitlements that
+	// have expired over 30 days will be purged. Required.
+	// LINT.IfChange(expire_time) The max expire_time is 398 days from now().
+	// LINT.ThenChange(//depot/google3/java/com/google/subscribewithgoogle/accountli
+	// nking/subscriptionlink/service/config/protoconf.pi:max_expiry_age)
 	ExpireTime string `json:"expireTime,omitempty"`
-
-	// ProductId: Required. The publication's product ID that the user has
-	// access to. This is the same product ID as can be found in Schema.org
-	// markup (http://schema.org/productID). E.g. "dailybugle.com:basic"
+	// ProductId: Required. The publication's product ID that the user has access
+	// to. This is the same product ID as can be found in Schema.org markup
+	// (http://schema.org/productID). E.g. "dailybugle.com:basic"
 	ProductId string `json:"productId,omitempty"`
-
-	// SubscriptionToken: A source-specific subscription token. This is an
-	// opaque string that the publisher provides to Google. This token is
-	// opaque and has no meaning to Google.
+	// SubscriptionToken: A source-specific subscription token. This is an opaque
+	// string that the publisher provides to Google. This token is opaque and has
+	// no meaning to Google.
 	SubscriptionToken string `json:"subscriptionToken,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Detail") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Detail") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Entitlement) MarshalJSON() ([]byte, error) {
 	type NoMethod Entitlement
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Reader: A reader of a publication.
@@ -226,75 +214,57 @@ type Reader struct {
 	// CreateTime: Output only. Time the publication reader was created and
 	// associated with a Google user.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Name: Output only. The resource name of the reader. The last part of
-	// ppid in the resource name is the publisher provided id.
+	// Name: Output only. The resource name of the reader. The last part of ppid in
+	// the resource name is the publisher provided id.
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Reader) MarshalJSON() ([]byte, error) {
 	type NoMethod Reader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ReaderEntitlements: A singleton containing all of a reader's
-// entitlements for a publication.
+// ReaderEntitlements: A singleton containing all of a reader's entitlements
+// for a publication.
 type ReaderEntitlements struct {
 	// Entitlements: All of the entitlements for a publication reader.
 	Entitlements []*Entitlement `json:"entitlements,omitempty"`
-
 	// Name: Output only. The resource name of the singleton.
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Entitlements") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entitlements") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entitlements") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ReaderEntitlements) MarshalJSON() ([]byte, error) {
 	type NoMethod ReaderEntitlements
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "readerrevenuesubscriptionlinking.publications.readers.delete":
 
 type PublicationsReadersDeleteCall struct {
 	s          *Service
@@ -304,12 +274,12 @@ type PublicationsReadersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Removes a publication reader, effectively severing the
-// association with a Google user. If `force` is set to true, any
-// entitlements for this reader will also be deleted. (Otherwise, the
-// request will only work if the reader has no entitlements.) - If the
-// reader does not exist, return NOT_FOUND. - Return FAILED_PRECONDITION
-// if the force field is false (or unset) and entitlements are present.
+// Delete: Removes a publication reader, effectively severing the association
+// with a Google user. If `force` is set to true, any entitlements for this
+// reader will also be deleted. (Otherwise, the request will only work if the
+// reader has no entitlements.) - If the reader does not exist, return
+// NOT_FOUND. - Return FAILED_PRECONDITION if the force field is false (or
+// unset) and entitlements are present.
 //
 //   - name: The resource name of the reader. Format:
 //     publications/{publication_id}/readers/{ppid}.
@@ -319,31 +289,29 @@ func (r *PublicationsReadersService) Delete(name string) *PublicationsReadersDel
 	return c
 }
 
-// Force sets the optional parameter "force": If set to true, any
-// entitlements under the reader will also be purged.
+// Force sets the optional parameter "force": If set to true, any entitlements
+// under the reader will also be purged.
 func (c *PublicationsReadersDeleteCall) Force(force bool) *PublicationsReadersDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PublicationsReadersDeleteCall) Fields(s ...googleapi.Field) *PublicationsReadersDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PublicationsReadersDeleteCall) Context(ctx context.Context) *PublicationsReadersDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PublicationsReadersDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -352,12 +320,7 @@ func (c *PublicationsReadersDeleteCall) Header() http.Header {
 }
 
 func (c *PublicationsReadersDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -375,12 +338,11 @@ func (c *PublicationsReadersDeleteCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "readerrevenuesubscriptionlinking.publications.readers.delete" call.
-// Exactly one of *DeleteReaderResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DeleteReaderResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DeleteReaderResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PublicationsReadersDeleteCall) Do(opts ...googleapi.CallOption) (*DeleteReaderResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -411,37 +373,7 @@ func (c *PublicationsReadersDeleteCall) Do(opts ...googleapi.CallOption) (*Delet
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Removes a publication reader, effectively severing the association with a Google user. If `force` is set to true, any entitlements for this reader will also be deleted. (Otherwise, the request will only work if the reader has no entitlements.) - If the reader does not exist, return NOT_FOUND. - Return FAILED_PRECONDITION if the force field is false (or unset) and entitlements are present.",
-	//   "flatPath": "v1/publications/{publicationsId}/readers/{readersId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "readerrevenuesubscriptionlinking.publications.readers.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "force": {
-	//       "description": "If set to true, any entitlements under the reader will also be purged.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "name": {
-	//       "description": "Required. The resource name of the reader. Format: publications/{publication_id}/readers/{ppid}",
-	//       "location": "path",
-	//       "pattern": "^publications/[^/]+/readers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "DeleteReaderResponse"
-	//   }
-	// }
-
 }
-
-// method id "readerrevenuesubscriptionlinking.publications.readers.get":
 
 type PublicationsReadersGetCall struct {
 	s            *Service
@@ -452,8 +384,8 @@ type PublicationsReadersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a reader of a publication. Returns NOT_FOUND if the reader
-// does not exist.
+// Get: Gets a reader of a publication. Returns NOT_FOUND if the reader does
+// not exist.
 //
 //   - name: The resource name of the reader. Format:
 //     publications/{publication_id}/readers/{ppid}.
@@ -464,33 +396,29 @@ func (r *PublicationsReadersService) Get(name string) *PublicationsReadersGetCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PublicationsReadersGetCall) Fields(s ...googleapi.Field) *PublicationsReadersGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PublicationsReadersGetCall) IfNoneMatch(entityTag string) *PublicationsReadersGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PublicationsReadersGetCall) Context(ctx context.Context) *PublicationsReadersGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PublicationsReadersGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -499,12 +427,7 @@ func (c *PublicationsReadersGetCall) Header() http.Header {
 }
 
 func (c *PublicationsReadersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -525,12 +448,10 @@ func (c *PublicationsReadersGetCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "readerrevenuesubscriptionlinking.publications.readers.get" call.
-// Exactly one of *Reader or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Reader.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Reader.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PublicationsReadersGetCall) Do(opts ...googleapi.CallOption) (*Reader, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -561,32 +482,7 @@ func (c *PublicationsReadersGetCall) Do(opts ...googleapi.CallOption) (*Reader, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a reader of a publication. Returns NOT_FOUND if the reader does not exist.",
-	//   "flatPath": "v1/publications/{publicationsId}/readers/{readersId}",
-	//   "httpMethod": "GET",
-	//   "id": "readerrevenuesubscriptionlinking.publications.readers.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the reader. Format: publications/{publication_id}/readers/{ppid}",
-	//       "location": "path",
-	//       "pattern": "^publications/[^/]+/readers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Reader"
-	//   }
-	// }
-
 }
-
-// method id "readerrevenuesubscriptionlinking.publications.readers.getEntitlements":
 
 type PublicationsReadersGetEntitlementsCall struct {
 	s            *Service
@@ -597,9 +493,9 @@ type PublicationsReadersGetEntitlementsCall struct {
 	header_      http.Header
 }
 
-// GetEntitlements: Gets the reader entitlements for a publication
-// reader. - Returns PERMISSION_DENIED if the caller does not have
-// access. - Returns NOT_FOUND if the reader does not exist.
+// GetEntitlements: Gets the reader entitlements for a publication reader. -
+// Returns PERMISSION_DENIED if the caller does not have access. - Returns
+// NOT_FOUND if the reader does not exist.
 //
 //   - name: The name of the reader entitlements to retrieve. Format:
 //     publications/{publication_id}/readers/{reader_id}/entitlements.
@@ -610,33 +506,29 @@ func (r *PublicationsReadersService) GetEntitlements(name string) *PublicationsR
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PublicationsReadersGetEntitlementsCall) Fields(s ...googleapi.Field) *PublicationsReadersGetEntitlementsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PublicationsReadersGetEntitlementsCall) IfNoneMatch(entityTag string) *PublicationsReadersGetEntitlementsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PublicationsReadersGetEntitlementsCall) Context(ctx context.Context) *PublicationsReadersGetEntitlementsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PublicationsReadersGetEntitlementsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -645,12 +537,7 @@ func (c *PublicationsReadersGetEntitlementsCall) Header() http.Header {
 }
 
 func (c *PublicationsReadersGetEntitlementsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -671,12 +558,11 @@ func (c *PublicationsReadersGetEntitlementsCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "readerrevenuesubscriptionlinking.publications.readers.getEntitlements" call.
-// Exactly one of *ReaderEntitlements or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ReaderEntitlements.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ReaderEntitlements.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PublicationsReadersGetEntitlementsCall) Do(opts ...googleapi.CallOption) (*ReaderEntitlements, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -707,32 +593,7 @@ func (c *PublicationsReadersGetEntitlementsCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the reader entitlements for a publication reader. - Returns PERMISSION_DENIED if the caller does not have access. - Returns NOT_FOUND if the reader does not exist.",
-	//   "flatPath": "v1/publications/{publicationsId}/readers/{readersId}/entitlements",
-	//   "httpMethod": "GET",
-	//   "id": "readerrevenuesubscriptionlinking.publications.readers.getEntitlements",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the reader entitlements to retrieve. Format: publications/{publication_id}/readers/{reader_id}/entitlements",
-	//       "location": "path",
-	//       "pattern": "^publications/[^/]+/readers/[^/]+/entitlements$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "ReaderEntitlements"
-	//   }
-	// }
-
 }
-
-// method id "readerrevenuesubscriptionlinking.publications.readers.updateEntitlements":
 
 type PublicationsReadersUpdateEntitlementsCall struct {
 	s                  *Service
@@ -744,10 +605,10 @@ type PublicationsReadersUpdateEntitlementsCall struct {
 }
 
 // UpdateEntitlements: Updates the reader entitlements for a publication
-// reader. The entire reader entitlements will be overwritten by the new
-// reader entitlements in the payload, like a PUT. - Returns
-// PERMISSION_DENIED if the caller does not have access. - Returns
-// NOT_FOUND if the reader does not exist.
+// reader. The entire reader entitlements will be overwritten by the new reader
+// entitlements in the payload, like a PUT. - Returns PERMISSION_DENIED if the
+// caller does not have access. - Returns NOT_FOUND if the reader does not
+// exist.
 //
 // - name: Output only. The resource name of the singleton.
 func (r *PublicationsReadersService) UpdateEntitlements(name string, readerentitlements *ReaderEntitlements) *PublicationsReadersUpdateEntitlementsCall {
@@ -757,31 +618,29 @@ func (r *PublicationsReadersService) UpdateEntitlements(name string, readerentit
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update. Defaults to all fields.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Defaults to all fields.
 func (c *PublicationsReadersUpdateEntitlementsCall) UpdateMask(updateMask string) *PublicationsReadersUpdateEntitlementsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PublicationsReadersUpdateEntitlementsCall) Fields(s ...googleapi.Field) *PublicationsReadersUpdateEntitlementsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PublicationsReadersUpdateEntitlementsCall) Context(ctx context.Context) *PublicationsReadersUpdateEntitlementsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PublicationsReadersUpdateEntitlementsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -790,18 +649,12 @@ func (c *PublicationsReadersUpdateEntitlementsCall) Header() http.Header {
 }
 
 func (c *PublicationsReadersUpdateEntitlementsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.readerentitlements)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -818,12 +671,11 @@ func (c *PublicationsReadersUpdateEntitlementsCall) doRequest(alt string) (*http
 }
 
 // Do executes the "readerrevenuesubscriptionlinking.publications.readers.updateEntitlements" call.
-// Exactly one of *ReaderEntitlements or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ReaderEntitlements.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ReaderEntitlements.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PublicationsReadersUpdateEntitlementsCall) Do(opts ...googleapi.CallOption) (*ReaderEntitlements, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -854,36 +706,4 @@ func (c *PublicationsReadersUpdateEntitlementsCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the reader entitlements for a publication reader. The entire reader entitlements will be overwritten by the new reader entitlements in the payload, like a PUT. - Returns PERMISSION_DENIED if the caller does not have access. - Returns NOT_FOUND if the reader does not exist.",
-	//   "flatPath": "v1/publications/{publicationsId}/readers/{readersId}/entitlements",
-	//   "httpMethod": "PATCH",
-	//   "id": "readerrevenuesubscriptionlinking.publications.readers.updateEntitlements",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. The resource name of the singleton.",
-	//       "location": "path",
-	//       "pattern": "^publications/[^/]+/readers/[^/]+/entitlements$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Optional. The list of fields to update. Defaults to all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "ReaderEntitlements"
-	//   },
-	//   "response": {
-	//     "$ref": "ReaderEntitlements"
-	//   }
-	// }
-
 }

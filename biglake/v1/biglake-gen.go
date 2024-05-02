@@ -100,12 +100,12 @@ const mtlsBasePath = "https://biglake.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data in Google BigQuery and see the email
-	// address for your Google Account
+	// View and manage your data in Google BigQuery and see the email address for
+	// your Google Account
 	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
 
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -225,71 +225,54 @@ type ProjectsLocationsCatalogsDatabasesTablesService struct {
 type Catalog struct {
 	// CreateTime: Output only. The creation time of the catalog.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DeleteTime: Output only. The deletion time of the catalog. Only set
-	// after the catalog is deleted.
+	// DeleteTime: Output only. The deletion time of the catalog. Only set after
+	// the catalog is deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
-
-	// ExpireTime: Output only. The time when this catalog is considered
-	// expired. Only set after the catalog is deleted.
+	// ExpireTime: Output only. The time when this catalog is considered expired.
+	// Only set after the catalog is deleted.
 	ExpireTime string `json:"expireTime,omitempty"`
-
 	// Name: Output only. The resource name. Format:
-	// projects/{project_id_or_number}/locations/{location_id}/catalogs/{cata
-	// log_id}
+	// projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}
 	Name string `json:"name,omitempty"`
-
 	// UpdateTime: Output only. The last modification time of the catalog.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Catalog) MarshalJSON() ([]byte, error) {
 	type NoMethod Catalog
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Database: Database is the container of tables.
 type Database struct {
 	// CreateTime: Output only. The creation time of the database.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DeleteTime: Output only. The deletion time of the database. Only set
-	// after the database is deleted.
+	// DeleteTime: Output only. The deletion time of the database. Only set after
+	// the database is deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
-
-	// ExpireTime: Output only. The time when this database is considered
-	// expired. Only set after the database is deleted.
+	// ExpireTime: Output only. The time when this database is considered expired.
+	// Only set after the database is deleted.
 	ExpireTime string `json:"expireTime,omitempty"`
-
 	// HiveOptions: Options of a Hive database.
 	HiveOptions *HiveDatabaseOptions `json:"hiveOptions,omitempty"`
-
 	// Name: Output only. The resource name. Format:
-	// projects/{project_id_or_number}/locations/{location_id}/catalogs/{cata
-	// log_id}/databases/{database_id}
+	// projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}
+	// /databases/{database_id}
 	Name string `json:"name,omitempty"`
-
 	// Type: The database type.
 	//
 	// Possible values:
@@ -297,381 +280,291 @@ type Database struct {
 	//   "HIVE" - Represents a database storing tables compatible with Hive
 	// Metastore tables.
 	Type string `json:"type,omitempty"`
-
 	// UpdateTime: Output only. The last modification time of the database.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Database) MarshalJSON() ([]byte, error) {
 	type NoMethod Database
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // HiveDatabaseOptions: Options of a Hive database.
 type HiveDatabaseOptions struct {
-	// LocationUri: Cloud Storage folder URI where the database data is
-	// stored, starting with "gs://".
+	// LocationUri: Cloud Storage folder URI where the database data is stored,
+	// starting with "gs://".
 	LocationUri string `json:"locationUri,omitempty"`
-
 	// Parameters: Stores user supplied Hive database parameters.
 	Parameters map[string]string `json:"parameters,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LocationUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LocationUri") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LocationUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *HiveDatabaseOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod HiveDatabaseOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // HiveTableOptions: Options of a Hive table.
 type HiveTableOptions struct {
 	// Parameters: Stores user supplied Hive table parameters.
 	Parameters map[string]string `json:"parameters,omitempty"`
-
 	// StorageDescriptor: Stores physical storage information of the data.
 	StorageDescriptor *StorageDescriptor `json:"storageDescriptor,omitempty"`
-
-	// TableType: Hive table type. For example, MANAGED_TABLE,
-	// EXTERNAL_TABLE.
+	// TableType: Hive table type. For example, MANAGED_TABLE, EXTERNAL_TABLE.
 	TableType string `json:"tableType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Parameters") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Parameters") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Parameters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *HiveTableOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod HiveTableOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCatalogsResponse: Response message for the ListCatalogs method.
 type ListCatalogsResponse struct {
 	// Catalogs: The catalogs from the specified project.
 	Catalogs []*Catalog `json:"catalogs,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Catalogs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Catalogs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Catalogs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCatalogsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCatalogsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDatabasesResponse: Response message for the ListDatabases method.
 type ListDatabasesResponse struct {
 	// Databases: The databases from the specified catalog.
 	Databases []*Database `json:"databases,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Databases") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Databases") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Databases") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListDatabasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatabasesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTablesResponse: Response message for the ListTables method.
 type ListTablesResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Tables: The tables from the specified database.
 	Tables []*Table `json:"tables,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTablesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTablesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RenameTableRequest: Request message for the RenameTable method in
 // MetastoreService
 type RenameTableRequest struct {
-	// NewName: Required. The new `name` for the specified table, must be in
-	// the same database. Format:
-	// projects/{project_id_or_number}/locations/{location_id}/catalogs/{cata
-	// log_id}/databases/{database_id}/tables/{table_id}
+	// NewName: Required. The new `name` for the specified table, must be in the
+	// same database. Format:
+	// projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}
+	// /databases/{database_id}/tables/{table_id}
 	NewName string `json:"newName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NewName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "NewName") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NewName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NewName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RenameTableRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RenameTableRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SerDeInfo: Serializer and deserializer information.
 type SerDeInfo struct {
-	// SerializationLib: The fully qualified Java class name of the
-	// serialization library.
+	// SerializationLib: The fully qualified Java class name of the serialization
+	// library.
 	SerializationLib string `json:"serializationLib,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SerializationLib") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SerializationLib") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "SerializationLib") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SerDeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SerDeInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDescriptor: Stores physical storage information of the data.
 type StorageDescriptor struct {
 	// InputFormat: The fully qualified Java class name of the input format.
 	InputFormat string `json:"inputFormat,omitempty"`
-
 	// LocationUri: Cloud Storage folder URI where the table data is stored,
 	// starting with "gs://".
 	LocationUri string `json:"locationUri,omitempty"`
-
-	// OutputFormat: The fully qualified Java class name of the output
-	// format.
+	// OutputFormat: The fully qualified Java class name of the output format.
 	OutputFormat string `json:"outputFormat,omitempty"`
-
 	// SerdeInfo: Serializer and deserializer information.
 	SerdeInfo *SerDeInfo `json:"serdeInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InputFormat") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InputFormat") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InputFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StorageDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDescriptor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Table: Represents a table.
 type Table struct {
 	// CreateTime: Output only. The creation time of the table.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DeleteTime: Output only. The deletion time of the table. Only set
-	// after the table is deleted.
+	// DeleteTime: Output only. The deletion time of the table. Only set after the
+	// table is deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
-
-	// Etag: The checksum of a table object computed by the server based on
-	// the value of other fields. It may be sent on update requests to
-	// ensure the client has an up-to-date value before proceeding. It is
-	// only checked for update table operations.
+	// Etag: The checksum of a table object computed by the server based on the
+	// value of other fields. It may be sent on update requests to ensure the
+	// client has an up-to-date value before proceeding. It is only checked for
+	// update table operations.
 	Etag string `json:"etag,omitempty"`
-
-	// ExpireTime: Output only. The time when this table is considered
-	// expired. Only set after the table is deleted.
+	// ExpireTime: Output only. The time when this table is considered expired.
+	// Only set after the table is deleted.
 	ExpireTime string `json:"expireTime,omitempty"`
-
 	// HiveOptions: Options of a Hive table.
 	HiveOptions *HiveTableOptions `json:"hiveOptions,omitempty"`
-
 	// Name: Output only. The resource name. Format:
-	// projects/{project_id_or_number}/locations/{location_id}/catalogs/{cata
-	// log_id}/databases/{database_id}/tables/{table_id}
+	// projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}
+	// /databases/{database_id}/tables/{table_id}
 	Name string `json:"name,omitempty"`
-
 	// Type: The table type.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - The type is not specified.
 	//   "HIVE" - Represents a table compatible with Hive Metastore tables.
 	Type string `json:"type,omitempty"`
-
 	// UpdateTime: Output only. The last modification time of the table.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Table) MarshalJSON() ([]byte, error) {
 	type NoMethod Table
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "biglake.projects.locations.catalogs.create":
 
 type ProjectsLocationsCatalogsCreateCall struct {
 	s          *Service
@@ -684,8 +577,8 @@ type ProjectsLocationsCatalogsCreateCall struct {
 
 // Create: Creates a new catalog.
 //
-//   - parent: The parent resource where this catalog will be created.
-//     Format: projects/{project_id_or_number}/locations/{location_id}.
+//   - parent: The parent resource where this catalog will be created. Format:
+//     projects/{project_id_or_number}/locations/{location_id}.
 func (r *ProjectsLocationsCatalogsService) Create(parent string, catalog *Catalog) *ProjectsLocationsCatalogsCreateCall {
 	c := &ProjectsLocationsCatalogsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -693,32 +586,30 @@ func (r *ProjectsLocationsCatalogsService) Create(parent string, catalog *Catalo
 	return c
 }
 
-// CatalogId sets the optional parameter "catalogId": Required. The ID
-// to use for the catalog, which will become the final component of the
-// catalog's resource name.
+// CatalogId sets the optional parameter "catalogId": Required. The ID to use
+// for the catalog, which will become the final component of the catalog's
+// resource name.
 func (c *ProjectsLocationsCatalogsCreateCall) CatalogId(catalogId string) *ProjectsLocationsCatalogsCreateCall {
 	c.urlParams_.Set("catalogId", catalogId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsCreateCall) Context(ctx context.Context) *ProjectsLocationsCatalogsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -727,18 +618,12 @@ func (c *ProjectsLocationsCatalogsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.catalog)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/catalogs")
@@ -755,12 +640,10 @@ func (c *ProjectsLocationsCatalogsCreateCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "biglake.projects.locations.catalogs.create" call.
-// Exactly one of *Catalog or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Catalog.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Catalog.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsCreateCall) Do(opts ...googleapi.CallOption) (*Catalog, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -791,44 +674,7 @@ func (c *ProjectsLocationsCatalogsCreateCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new catalog.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs",
-	//   "httpMethod": "POST",
-	//   "id": "biglake.projects.locations.catalogs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "catalogId": {
-	//       "description": "Required. The ID to use for the catalog, which will become the final component of the catalog's resource name.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource where this catalog will be created. Format: projects/{project_id_or_number}/locations/{location_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/catalogs",
-	//   "request": {
-	//     "$ref": "Catalog"
-	//   },
-	//   "response": {
-	//     "$ref": "Catalog"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "biglake.projects.locations.catalogs.delete":
 
 type ProjectsLocationsCatalogsDeleteCall struct {
 	s          *Service
@@ -841,8 +687,8 @@ type ProjectsLocationsCatalogsDeleteCall struct {
 // Delete: Deletes an existing catalog specified by the catalog ID.
 //
 //   - name: The name of the catalog to delete. Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}.
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}.
 func (r *ProjectsLocationsCatalogsService) Delete(name string) *ProjectsLocationsCatalogsDeleteCall {
 	c := &ProjectsLocationsCatalogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -850,23 +696,21 @@ func (r *ProjectsLocationsCatalogsService) Delete(name string) *ProjectsLocation
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -875,12 +719,7 @@ func (c *ProjectsLocationsCatalogsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -898,12 +737,10 @@ func (c *ProjectsLocationsCatalogsDeleteCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "biglake.projects.locations.catalogs.delete" call.
-// Exactly one of *Catalog or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Catalog.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Catalog.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsDeleteCall) Do(opts ...googleapi.CallOption) (*Catalog, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -934,36 +771,7 @@ func (c *ProjectsLocationsCatalogsDeleteCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an existing catalog specified by the catalog ID.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "biglake.projects.locations.catalogs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the catalog to delete. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Catalog"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "biglake.projects.locations.catalogs.get":
 
 type ProjectsLocationsCatalogsGetCall struct {
 	s            *Service
@@ -977,8 +785,8 @@ type ProjectsLocationsCatalogsGetCall struct {
 // Get: Gets the catalog specified by the resource name.
 //
 //   - name: The name of the catalog to retrieve. Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}.
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}.
 func (r *ProjectsLocationsCatalogsService) Get(name string) *ProjectsLocationsCatalogsGetCall {
 	c := &ProjectsLocationsCatalogsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -986,33 +794,29 @@ func (r *ProjectsLocationsCatalogsService) Get(name string) *ProjectsLocationsCa
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsGetCall) Context(ctx context.Context) *ProjectsLocationsCatalogsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1021,12 +825,7 @@ func (c *ProjectsLocationsCatalogsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1047,12 +846,10 @@ func (c *ProjectsLocationsCatalogsGetCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "biglake.projects.locations.catalogs.get" call.
-// Exactly one of *Catalog or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Catalog.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Catalog.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsGetCall) Do(opts ...googleapi.CallOption) (*Catalog, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1083,36 +880,7 @@ func (c *ProjectsLocationsCatalogsGetCall) Do(opts ...googleapi.CallOption) (*Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the catalog specified by the resource name.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}",
-	//   "httpMethod": "GET",
-	//   "id": "biglake.projects.locations.catalogs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the catalog to retrieve. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Catalog"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "biglake.projects.locations.catalogs.list":
 
 type ProjectsLocationsCatalogsListCall struct {
 	s            *Service
@@ -1133,53 +901,48 @@ func (r *ProjectsLocationsCatalogsService) List(parent string) *ProjectsLocation
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of catalogs to return. The service may return fewer than this value.
-// If unspecified, at most 50 catalogs will be returned. The maximum
-// value is 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// catalogs to return. The service may return fewer than this value. If
+// unspecified, at most 50 catalogs will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsCatalogsListCall) PageSize(pageSize int64) *ProjectsLocationsCatalogsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListCatalogs` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListCatalogs` must match the call that provided the page
-// token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListCatalogs` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to `ListCatalogs` must
+// match the call that provided the page token.
 func (c *ProjectsLocationsCatalogsListCall) PageToken(pageToken string) *ProjectsLocationsCatalogsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsListCall) Context(ctx context.Context) *ProjectsLocationsCatalogsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1188,12 +951,7 @@ func (c *ProjectsLocationsCatalogsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1214,12 +972,11 @@ func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "biglake.projects.locations.catalogs.list" call.
-// Exactly one of *ListCatalogsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListCatalogsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCatalogsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsCatalogsListCall) Do(opts ...googleapi.CallOption) (*ListCatalogsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1250,44 +1007,6 @@ func (c *ProjectsLocationsCatalogsListCall) Do(opts ...googleapi.CallOption) (*L
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all catalogs in a specified project.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs",
-	//   "httpMethod": "GET",
-	//   "id": "biglake.projects.locations.catalogs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of catalogs to return. The service may return fewer than this value. If unspecified, at most 50 catalogs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListCatalogs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListCatalogs` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of catalogs. Format: projects/{project_id_or_number}/locations/{location_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/catalogs",
-	//   "response": {
-	//     "$ref": "ListCatalogsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1295,7 +1014,7 @@ func (c *ProjectsLocationsCatalogsListCall) Do(opts ...googleapi.CallOption) (*L
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCatalogsListCall) Pages(ctx context.Context, f func(*ListCatalogsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1311,8 +1030,6 @@ func (c *ProjectsLocationsCatalogsListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
-// method id "biglake.projects.locations.catalogs.databases.create":
-
 type ProjectsLocationsCatalogsDatabasesCreateCall struct {
 	s          *Service
 	parent     string
@@ -1324,10 +1041,9 @@ type ProjectsLocationsCatalogsDatabasesCreateCall struct {
 
 // Create: Creates a new database.
 //
-//   - parent: The parent resource where this database will be created.
-//     Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}.
+//   - parent: The parent resource where this database will be created. Format:
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}.
 func (r *ProjectsLocationsCatalogsDatabasesService) Create(parent string, database *Database) *ProjectsLocationsCatalogsDatabasesCreateCall {
 	c := &ProjectsLocationsCatalogsDatabasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1335,32 +1051,30 @@ func (r *ProjectsLocationsCatalogsDatabasesService) Create(parent string, databa
 	return c
 }
 
-// DatabaseId sets the optional parameter "databaseId": Required. The ID
-// to use for the database, which will become the final component of the
-// database's resource name.
+// DatabaseId sets the optional parameter "databaseId": Required. The ID to use
+// for the database, which will become the final component of the database's
+// resource name.
 func (c *ProjectsLocationsCatalogsDatabasesCreateCall) DatabaseId(databaseId string) *ProjectsLocationsCatalogsDatabasesCreateCall {
 	c.urlParams_.Set("databaseId", databaseId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDatabasesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDatabasesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDatabasesCreateCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDatabasesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDatabasesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1369,18 +1083,12 @@ func (c *ProjectsLocationsCatalogsDatabasesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsDatabasesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.database)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databases")
@@ -1397,12 +1105,10 @@ func (c *ProjectsLocationsCatalogsDatabasesCreateCall) doRequest(alt string) (*h
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.create" call.
-// Exactly one of *Database or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Database.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Database.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsDatabasesCreateCall) Do(opts ...googleapi.CallOption) (*Database, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1433,44 +1139,7 @@ func (c *ProjectsLocationsCatalogsDatabasesCreateCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new database.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/databases",
-	//   "httpMethod": "POST",
-	//   "id": "biglake.projects.locations.catalogs.databases.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "databaseId": {
-	//       "description": "Required. The ID to use for the database, which will become the final component of the database's resource name.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource where this database will be created. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/databases",
-	//   "request": {
-	//     "$ref": "Database"
-	//   },
-	//   "response": {
-	//     "$ref": "Database"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "biglake.projects.locations.catalogs.databases.delete":
 
 type ProjectsLocationsCatalogsDatabasesDeleteCall struct {
 	s          *Service
@@ -1483,8 +1152,8 @@ type ProjectsLocationsCatalogsDatabasesDeleteCall struct {
 // Delete: Deletes an existing database specified by the database ID.
 //
 //   - name: The name of the database to delete. Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}/databases/{database_id}.
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}/databases/{database_id}.
 func (r *ProjectsLocationsCatalogsDatabasesService) Delete(name string) *ProjectsLocationsCatalogsDatabasesDeleteCall {
 	c := &ProjectsLocationsCatalogsDatabasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1492,23 +1161,21 @@ func (r *ProjectsLocationsCatalogsDatabasesService) Delete(name string) *Project
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDatabasesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDatabasesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDatabasesDeleteCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDatabasesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDatabasesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1517,12 +1184,7 @@ func (c *ProjectsLocationsCatalogsDatabasesDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsDatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1540,12 +1202,10 @@ func (c *ProjectsLocationsCatalogsDatabasesDeleteCall) doRequest(alt string) (*h
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.delete" call.
-// Exactly one of *Database or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Database.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Database.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsDatabasesDeleteCall) Do(opts ...googleapi.CallOption) (*Database, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1576,36 +1236,7 @@ func (c *ProjectsLocationsCatalogsDatabasesDeleteCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an existing database specified by the database ID.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/databases/{databasesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "biglake.projects.locations.catalogs.databases.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the database to delete. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/databases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Database"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "biglake.projects.locations.catalogs.databases.get":
 
 type ProjectsLocationsCatalogsDatabasesGetCall struct {
 	s            *Service
@@ -1619,8 +1250,8 @@ type ProjectsLocationsCatalogsDatabasesGetCall struct {
 // Get: Gets the database specified by the resource name.
 //
 //   - name: The name of the database to retrieve. Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}/databases/{database_id}.
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}/databases/{database_id}.
 func (r *ProjectsLocationsCatalogsDatabasesService) Get(name string) *ProjectsLocationsCatalogsDatabasesGetCall {
 	c := &ProjectsLocationsCatalogsDatabasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1628,33 +1259,29 @@ func (r *ProjectsLocationsCatalogsDatabasesService) Get(name string) *ProjectsLo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDatabasesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDatabasesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsDatabasesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsDatabasesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDatabasesGetCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDatabasesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDatabasesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1663,12 +1290,7 @@ func (c *ProjectsLocationsCatalogsDatabasesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsDatabasesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1689,12 +1311,10 @@ func (c *ProjectsLocationsCatalogsDatabasesGetCall) doRequest(alt string) (*http
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.get" call.
-// Exactly one of *Database or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Database.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Database.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsDatabasesGetCall) Do(opts ...googleapi.CallOption) (*Database, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1725,36 +1345,7 @@ func (c *ProjectsLocationsCatalogsDatabasesGetCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the database specified by the resource name.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/databases/{databasesId}",
-	//   "httpMethod": "GET",
-	//   "id": "biglake.projects.locations.catalogs.databases.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the database to retrieve. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/databases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Database"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "biglake.projects.locations.catalogs.databases.list":
 
 type ProjectsLocationsCatalogsDatabasesListCall struct {
 	s            *Service
@@ -1767,63 +1358,57 @@ type ProjectsLocationsCatalogsDatabasesListCall struct {
 
 // List: List all databases in a specified catalog.
 //
-//   - parent: The parent, which owns this collection of databases.
-//     Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}.
+//   - parent: The parent, which owns this collection of databases. Format:
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}.
 func (r *ProjectsLocationsCatalogsDatabasesService) List(parent string) *ProjectsLocationsCatalogsDatabasesListCall {
 	c := &ProjectsLocationsCatalogsDatabasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of databases to return. The service may return fewer than this value.
-// If unspecified, at most 50 databases will be returned. The maximum
-// value is 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// databases to return. The service may return fewer than this value. If
+// unspecified, at most 50 databases will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsCatalogsDatabasesListCall) PageSize(pageSize int64) *ProjectsLocationsCatalogsDatabasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListDatabases` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListDatabases` must match the call that provided the
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListDatabases` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListDatabases` must match the call that provided the page token.
 func (c *ProjectsLocationsCatalogsDatabasesListCall) PageToken(pageToken string) *ProjectsLocationsCatalogsDatabasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDatabasesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDatabasesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsDatabasesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsDatabasesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDatabasesListCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDatabasesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDatabasesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1832,12 +1417,7 @@ func (c *ProjectsLocationsCatalogsDatabasesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsDatabasesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1858,12 +1438,11 @@ func (c *ProjectsLocationsCatalogsDatabasesListCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.list" call.
-// Exactly one of *ListDatabasesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListDatabasesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDatabasesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsCatalogsDatabasesListCall) Do(opts ...googleapi.CallOption) (*ListDatabasesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1894,44 +1473,6 @@ func (c *ProjectsLocationsCatalogsDatabasesListCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all databases in a specified catalog.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/databases",
-	//   "httpMethod": "GET",
-	//   "id": "biglake.projects.locations.catalogs.databases.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of databases to return. The service may return fewer than this value. If unspecified, at most 50 databases will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListDatabases` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDatabases` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of databases. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/databases",
-	//   "response": {
-	//     "$ref": "ListDatabasesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1939,7 +1480,7 @@ func (c *ProjectsLocationsCatalogsDatabasesListCall) Do(opts ...googleapi.CallOp
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCatalogsDatabasesListCall) Pages(ctx context.Context, f func(*ListDatabasesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1955,8 +1496,6 @@ func (c *ProjectsLocationsCatalogsDatabasesListCall) Pages(ctx context.Context, 
 	}
 }
 
-// method id "biglake.projects.locations.catalogs.databases.patch":
-
 type ProjectsLocationsCatalogsDatabasesPatchCall struct {
 	s          *Service
 	name       string
@@ -1969,8 +1508,8 @@ type ProjectsLocationsCatalogsDatabasesPatchCall struct {
 // Patch: Updates an existing database specified by the database ID.
 //
 //   - name: Output only. The resource name. Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}/databases/{database_id}.
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}/databases/{database_id}.
 func (r *ProjectsLocationsCatalogsDatabasesService) Patch(name string, database *Database) *ProjectsLocationsCatalogsDatabasesPatchCall {
 	c := &ProjectsLocationsCatalogsDatabasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1978,8 +1517,8 @@ func (r *ProjectsLocationsCatalogsDatabasesService) Patch(name string, database 
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 // If not set, defaults to all of the fields that are allowed to update.
 func (c *ProjectsLocationsCatalogsDatabasesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCatalogsDatabasesPatchCall {
@@ -1988,23 +1527,21 @@ func (c *ProjectsLocationsCatalogsDatabasesPatchCall) UpdateMask(updateMask stri
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDatabasesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDatabasesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDatabasesPatchCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDatabasesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDatabasesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2013,18 +1550,12 @@ func (c *ProjectsLocationsCatalogsDatabasesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsDatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.database)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -2041,12 +1572,10 @@ func (c *ProjectsLocationsCatalogsDatabasesPatchCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.patch" call.
-// Exactly one of *Database or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Database.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Database.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsDatabasesPatchCall) Do(opts ...googleapi.CallOption) (*Database, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2077,45 +1606,7 @@ func (c *ProjectsLocationsCatalogsDatabasesPatchCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing database specified by the database ID.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/databases/{databasesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "biglake.projects.locations.catalogs.databases.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. The resource name. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/databases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to update. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to update.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "Database"
-	//   },
-	//   "response": {
-	//     "$ref": "Database"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "biglake.projects.locations.catalogs.databases.tables.create":
 
 type ProjectsLocationsCatalogsDatabasesTablesCreateCall struct {
 	s          *Service
@@ -2128,10 +1619,9 @@ type ProjectsLocationsCatalogsDatabasesTablesCreateCall struct {
 
 // Create: Creates a new table.
 //
-//   - parent: The parent resource where this table will be created.
-//     Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}/databases/{database_id}.
+//   - parent: The parent resource where this table will be created. Format:
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}/databases/{database_id}.
 func (r *ProjectsLocationsCatalogsDatabasesTablesService) Create(parent string, table *Table) *ProjectsLocationsCatalogsDatabasesTablesCreateCall {
 	c := &ProjectsLocationsCatalogsDatabasesTablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2139,32 +1629,30 @@ func (r *ProjectsLocationsCatalogsDatabasesTablesService) Create(parent string, 
 	return c
 }
 
-// TableId sets the optional parameter "tableId": Required. The ID to
-// use for the table, which will become the final component of the
-// table's resource name.
+// TableId sets the optional parameter "tableId": Required. The ID to use for
+// the table, which will become the final component of the table's resource
+// name.
 func (c *ProjectsLocationsCatalogsDatabasesTablesCreateCall) TableId(tableId string) *ProjectsLocationsCatalogsDatabasesTablesCreateCall {
 	c.urlParams_.Set("tableId", tableId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDatabasesTablesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDatabasesTablesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDatabasesTablesCreateCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDatabasesTablesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDatabasesTablesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2173,18 +1661,12 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesCreateCall) Header() http.Heade
 }
 
 func (c *ProjectsLocationsCatalogsDatabasesTablesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/tables")
@@ -2201,12 +1683,10 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesCreateCall) doRequest(alt strin
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.create" call.
-// Exactly one of *Table or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Table.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Table.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsDatabasesTablesCreateCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2237,44 +1717,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesCreateCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new table.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/databases/{databasesId}/tables",
-	//   "httpMethod": "POST",
-	//   "id": "biglake.projects.locations.catalogs.databases.tables.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this table will be created. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/databases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tableId": {
-	//       "description": "Required. The ID to use for the table, which will become the final component of the table's resource name.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/tables",
-	//   "request": {
-	//     "$ref": "Table"
-	//   },
-	//   "response": {
-	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "biglake.projects.locations.catalogs.databases.tables.delete":
 
 type ProjectsLocationsCatalogsDatabasesTablesDeleteCall struct {
 	s          *Service
@@ -2287,8 +1730,8 @@ type ProjectsLocationsCatalogsDatabasesTablesDeleteCall struct {
 // Delete: Deletes an existing table specified by the table ID.
 //
 //   - name: The name of the table to delete. Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}/databases/{database_id}/tables/{table_id}.
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}/databases/{database_id}/tables/{table_id}.
 func (r *ProjectsLocationsCatalogsDatabasesTablesService) Delete(name string) *ProjectsLocationsCatalogsDatabasesTablesDeleteCall {
 	c := &ProjectsLocationsCatalogsDatabasesTablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2296,23 +1739,21 @@ func (r *ProjectsLocationsCatalogsDatabasesTablesService) Delete(name string) *P
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDatabasesTablesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDatabasesTablesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDatabasesTablesDeleteCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDatabasesTablesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDatabasesTablesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2321,12 +1762,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesDeleteCall) Header() http.Heade
 }
 
 func (c *ProjectsLocationsCatalogsDatabasesTablesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2344,12 +1780,10 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesDeleteCall) doRequest(alt strin
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.delete" call.
-// Exactly one of *Table or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Table.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Table.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsDatabasesTablesDeleteCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2380,36 +1814,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesDeleteCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an existing table specified by the table ID.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/databases/{databasesId}/tables/{tablesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "biglake.projects.locations.catalogs.databases.tables.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the table to delete. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id}/tables/{table_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/databases/[^/]+/tables/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "biglake.projects.locations.catalogs.databases.tables.get":
 
 type ProjectsLocationsCatalogsDatabasesTablesGetCall struct {
 	s            *Service
@@ -2423,8 +1828,8 @@ type ProjectsLocationsCatalogsDatabasesTablesGetCall struct {
 // Get: Gets the table specified by the resource name.
 //
 //   - name: The name of the table to retrieve. Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}/databases/{database_id}/tables/{table_id}.
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}/databases/{database_id}/tables/{table_id}.
 func (r *ProjectsLocationsCatalogsDatabasesTablesService) Get(name string) *ProjectsLocationsCatalogsDatabasesTablesGetCall {
 	c := &ProjectsLocationsCatalogsDatabasesTablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2432,33 +1837,29 @@ func (r *ProjectsLocationsCatalogsDatabasesTablesService) Get(name string) *Proj
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDatabasesTablesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDatabasesTablesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsDatabasesTablesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsDatabasesTablesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDatabasesTablesGetCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDatabasesTablesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDatabasesTablesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2467,12 +1868,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsDatabasesTablesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2493,12 +1889,10 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesGetCall) doRequest(alt string) 
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.get" call.
-// Exactly one of *Table or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Table.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Table.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsDatabasesTablesGetCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2529,36 +1923,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesGetCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the table specified by the resource name.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/databases/{databasesId}/tables/{tablesId}",
-	//   "httpMethod": "GET",
-	//   "id": "biglake.projects.locations.catalogs.databases.tables.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the table to retrieve. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id}/tables/{table_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/databases/[^/]+/tables/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "biglake.projects.locations.catalogs.databases.tables.list":
 
 type ProjectsLocationsCatalogsDatabasesTablesListCall struct {
 	s            *Service
@@ -2572,40 +1937,39 @@ type ProjectsLocationsCatalogsDatabasesTablesListCall struct {
 // List: List all tables in a specified database.
 //
 //   - parent: The parent, which owns this collection of tables. Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}/databases/{database_id}.
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}/databases/{database_id}.
 func (r *ProjectsLocationsCatalogsDatabasesTablesService) List(parent string) *ProjectsLocationsCatalogsDatabasesTablesListCall {
 	c := &ProjectsLocationsCatalogsDatabasesTablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of tables to return. The service may return fewer than this value. If
-// unspecified, at most 50 tables will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// tables to return. The service may return fewer than this value. If
+// unspecified, at most 50 tables will be returned. The maximum value is 1000;
+// values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) PageSize(pageSize int64) *ProjectsLocationsCatalogsDatabasesTablesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListTables` call. Provide this to retrieve
-// the subsequent page. When paginating, all other parameters provided
-// to `ListTables` must match the call that provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListTables` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to `ListTables` must
+// match the call that provided the page token.
 func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) PageToken(pageToken string) *ProjectsLocationsCatalogsDatabasesTablesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// View sets the optional parameter "view": The view for the returned
-// tables.
+// View sets the optional parameter "view": The view for the returned tables.
 //
 // Possible values:
 //
-//	"TABLE_VIEW_UNSPECIFIED" - Default value. The API will default to
+//	"TABLE_VIEW_UNSPECIFIED" - Default value. The API will default to the
 //
-// the BASIC view.
+// BASIC view.
 //
 //	"BASIC" - Include only table names. This is the default value.
 //	"FULL" - Include everything.
@@ -2615,33 +1979,29 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) View(view string) *Pr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDatabasesTablesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsDatabasesTablesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDatabasesTablesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2650,12 +2010,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) Header() http.Header 
 }
 
 func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2676,12 +2031,11 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) doRequest(alt string)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.list" call.
-// Exactly one of *ListTablesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListTablesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTablesResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) Do(opts ...googleapi.CallOption) (*ListTablesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2712,59 +2066,6 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all tables in a specified database.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/databases/{databasesId}/tables",
-	//   "httpMethod": "GET",
-	//   "id": "biglake.projects.locations.catalogs.databases.tables.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of tables to return. The service may return fewer than this value. If unspecified, at most 50 tables will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListTables` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTables` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of tables. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/databases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "The view for the returned tables.",
-	//       "enum": [
-	//         "TABLE_VIEW_UNSPECIFIED",
-	//         "BASIC",
-	//         "FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Default value. The API will default to the BASIC view.",
-	//         "Include only table names. This is the default value.",
-	//         "Include everything."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/tables",
-	//   "response": {
-	//     "$ref": "ListTablesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2772,7 +2073,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) Do(opts ...googleapi.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) Pages(ctx context.Context, f func(*ListTablesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2788,8 +2089,6 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) Pages(ctx context.Con
 	}
 }
 
-// method id "biglake.projects.locations.catalogs.databases.tables.patch":
-
 type ProjectsLocationsCatalogsDatabasesTablesPatchCall struct {
 	s          *Service
 	name       string
@@ -2802,8 +2101,8 @@ type ProjectsLocationsCatalogsDatabasesTablesPatchCall struct {
 // Patch: Updates an existing table specified by the table ID.
 //
 //   - name: Output only. The resource name. Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}/databases/{database_id}/tables/{table_id}.
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}/databases/{database_id}/tables/{table_id}.
 func (r *ProjectsLocationsCatalogsDatabasesTablesService) Patch(name string, table *Table) *ProjectsLocationsCatalogsDatabasesTablesPatchCall {
 	c := &ProjectsLocationsCatalogsDatabasesTablesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2811,8 +2110,8 @@ func (r *ProjectsLocationsCatalogsDatabasesTablesService) Patch(name string, tab
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 // If not set, defaults to all of the fields that are allowed to update.
 func (c *ProjectsLocationsCatalogsDatabasesTablesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCatalogsDatabasesTablesPatchCall {
@@ -2821,23 +2120,21 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesPatchCall) UpdateMask(updateMas
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDatabasesTablesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDatabasesTablesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDatabasesTablesPatchCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDatabasesTablesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDatabasesTablesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2846,18 +2143,12 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesPatchCall) Header() http.Header
 }
 
 func (c *ProjectsLocationsCatalogsDatabasesTablesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -2874,12 +2165,10 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesPatchCall) doRequest(alt string
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.patch" call.
-// Exactly one of *Table or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Table.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Table.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsDatabasesTablesPatchCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2910,45 +2199,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesPatchCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing table specified by the table ID.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/databases/{databasesId}/tables/{tablesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "biglake.projects.locations.catalogs.databases.tables.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. The resource name. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id}/tables/{table_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/databases/[^/]+/tables/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to update. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to update.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "Table"
-	//   },
-	//   "response": {
-	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "biglake.projects.locations.catalogs.databases.tables.rename":
 
 type ProjectsLocationsCatalogsDatabasesTablesRenameCall struct {
 	s                  *Service
@@ -2961,10 +2212,10 @@ type ProjectsLocationsCatalogsDatabasesTablesRenameCall struct {
 
 // Rename: Renames an existing table specified by the table ID.
 //
-//   - name: The table's `name` field is used to identify the table to
-//     rename. Format:
-//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{ca
-//     talog_id}/databases/{database_id}/tables/{table_id}.
+//   - name: The table's `name` field is used to identify the table to rename.
+//     Format:
+//     projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_i
+//     d}/databases/{database_id}/tables/{table_id}.
 func (r *ProjectsLocationsCatalogsDatabasesTablesService) Rename(name string, renametablerequest *RenameTableRequest) *ProjectsLocationsCatalogsDatabasesTablesRenameCall {
 	c := &ProjectsLocationsCatalogsDatabasesTablesRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2973,23 +2224,21 @@ func (r *ProjectsLocationsCatalogsDatabasesTablesService) Rename(name string, re
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsDatabasesTablesRenameCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsDatabasesTablesRenameCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsDatabasesTablesRenameCall) Context(ctx context.Context) *ProjectsLocationsCatalogsDatabasesTablesRenameCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsDatabasesTablesRenameCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2998,18 +2247,12 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesRenameCall) Header() http.Heade
 }
 
 func (c *ProjectsLocationsCatalogsDatabasesTablesRenameCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.renametablerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:rename")
@@ -3026,12 +2269,10 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesRenameCall) doRequest(alt strin
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.rename" call.
-// Exactly one of *Table or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Table.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Table.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsDatabasesTablesRenameCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3062,34 +2303,4 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesRenameCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Renames an existing table specified by the table ID.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/databases/{databasesId}/tables/{tablesId}:rename",
-	//   "httpMethod": "POST",
-	//   "id": "biglake.projects.locations.catalogs.databases.tables.rename",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The table's `name` field is used to identify the table to rename. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id}/tables/{table_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/databases/[^/]+/tables/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:rename",
-	//   "request": {
-	//     "$ref": "RenameTableRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

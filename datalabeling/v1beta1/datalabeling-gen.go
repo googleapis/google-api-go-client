@@ -95,8 +95,8 @@ const mtlsBasePath = "https://datalabeling.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -367,166 +367,127 @@ type ProjectsOperationsService struct {
 	s *Service
 }
 
-// GoogleCloudDatalabelingV1alpha1CreateInstructionMetadata: Metadata of
-// a CreateInstruction operation.
+// GoogleCloudDatalabelingV1alpha1CreateInstructionMetadata: Metadata of a
+// CreateInstruction operation.
 type GoogleCloudDatalabelingV1alpha1CreateInstructionMetadata struct {
 	// CreateTime: Timestamp when create instruction request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Instruction: The name of the created Instruction.
 	// projects/{project_id}/instructions/{instruction_id}
 	Instruction string `json:"instruction,omitempty"`
-
 	// PartialFailures: Partial failures encountered. E.g. single files that
-	// couldn't be read. Status details field will contain standard GCP
-	// error details.
+	// couldn't be read. Status details field will contain standard GCP error
+	// details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1CreateInstructionMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1ExportDataOperationMetadata: Metadata
-// of an ExportData operation.
+// GoogleCloudDatalabelingV1alpha1ExportDataOperationMetadata: Metadata of an
+// ExportData operation.
 type GoogleCloudDatalabelingV1alpha1ExportDataOperationMetadata struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
-	// CreateTime: Output only. Timestamp when export dataset request was
-	// created.
+	// CreateTime: Output only. Timestamp when export dataset request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Dataset: Output only. The name of dataset to be exported.
 	// "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1ExportDataOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1ExportDataOperationResponse: Response
-// used for ExportDataset longrunning operation.
+// GoogleCloudDatalabelingV1alpha1ExportDataOperationResponse: Response used
+// for ExportDataset longrunning operation.
 type GoogleCloudDatalabelingV1alpha1ExportDataOperationResponse struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
 	// Dataset: Ouptut only. The name of dataset. "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
 	// ExportCount: Output only. Number of examples exported successfully.
 	ExportCount int64 `json:"exportCount,omitempty"`
-
-	// LabelStats: Output only. Statistic infos of labels in the exported
-	// dataset.
+	// LabelStats: Output only. Statistic infos of labels in the exported dataset.
 	LabelStats *GoogleCloudDatalabelingV1alpha1LabelStats `json:"labelStats,omitempty"`
-
 	// OutputConfig: Output only. output_config in the ExportData request.
 	OutputConfig *GoogleCloudDatalabelingV1alpha1OutputConfig `json:"outputConfig,omitempty"`
-
 	// TotalCount: Output only. Total number of examples requested to export
 	TotalCount int64 `json:"totalCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1ExportDataOperationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1GcsDestination: Export destination of
-// the data.Only gcs path is allowed in output_uri.
+// GoogleCloudDatalabelingV1alpha1GcsDestination: Export destination of the
+// data.Only gcs path is allowed in output_uri.
 type GoogleCloudDatalabelingV1alpha1GcsDestination struct {
-	// MimeType: Required. The format of the gcs destination. Only
-	// "text/csv" and "application/json" are supported.
+	// MimeType: Required. The format of the gcs destination. Only "text/csv" and
+	// "application/json" are supported.
 	MimeType string `json:"mimeType,omitempty"`
-
 	// OutputUri: Required. The output uri of destination file.
 	OutputUri string `json:"outputUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MimeType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MimeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1GcsDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1GcsFolderDestination: Export folder
@@ -534,693 +495,531 @@ func (s *GoogleCloudDatalabelingV1alpha1GcsDestination) MarshalJSON() ([]byte, e
 type GoogleCloudDatalabelingV1alpha1GcsFolderDestination struct {
 	// OutputFolderUri: Required. Cloud Storage directory to export data to.
 	OutputFolderUri string `json:"outputFolderUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OutputFolderUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OutputFolderUri") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "OutputFolderUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1GcsFolderDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1GcsFolderDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig: Configuration
-// for how human labeling task should be done.
+// GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig: Configuration for how
+// human labeling task should be done.
 type GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig struct {
-	// AnnotatedDatasetDescription: Optional. A human-readable description
-	// for AnnotatedDataset. The description can be up to 10000 characters
-	// long.
+	// AnnotatedDatasetDescription: Optional. A human-readable description for
+	// AnnotatedDataset. The description can be up to 10000 characters long.
 	AnnotatedDatasetDescription string `json:"annotatedDatasetDescription,omitempty"`
-
 	// AnnotatedDatasetDisplayName: Required. A human-readable name for
 	// AnnotatedDataset defined by users. Maximum of 64 characters .
 	AnnotatedDatasetDisplayName string `json:"annotatedDatasetDisplayName,omitempty"`
-
-	// ContributorEmails: Optional. If you want your own labeling
-	// contributors to manage and work on this labeling request, you can set
-	// these contributors here. We will give them access to the question
-	// types in crowdcompute. Note that these emails must be registered in
-	// crowdcompute worker UI: https://crowd-compute.appspot.com/
+	// ContributorEmails: Optional. If you want your own labeling contributors to
+	// manage and work on this labeling request, you can set these contributors
+	// here. We will give them access to the question types in crowdcompute. Note
+	// that these emails must be registered in crowdcompute worker UI:
+	// https://crowd-compute.appspot.com/
 	ContributorEmails []string `json:"contributorEmails,omitempty"`
-
 	// Instruction: Required. Instruction resource name.
 	Instruction string `json:"instruction,omitempty"`
-
 	// LabelGroup: Optional. A human-readable label used to logically group
 	// labeling tasks. This string must match the regular expression
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
-
 	// LanguageCode: Optional. The Language of this question, as a BCP-47
-	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
-	// en-US. Only need to set this when task is language related. For
-	// example, French text classification.
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is en-US. Only
+	// need to set this when task is language related. For example, French text
+	// classification.
 	LanguageCode string `json:"languageCode,omitempty"`
-
-	// QuestionDuration: Optional. Maximum duration for contributors to
-	// answer a question. Maximum is 3600 seconds. Default is 3600 seconds.
+	// QuestionDuration: Optional. Maximum duration for contributors to answer a
+	// question. Maximum is 3600 seconds. Default is 3600 seconds.
 	QuestionDuration string `json:"questionDuration,omitempty"`
-
-	// ReplicaCount: Optional. Replication of questions. Each question will
-	// be sent to up to this number of contributors to label. Aggregated
-	// answers will be returned. Default is set to 1. For image related
-	// labeling, valid values are 1, 3, 5.
+	// ReplicaCount: Optional. Replication of questions. Each question will be sent
+	// to up to this number of contributors to label. Aggregated answers will be
+	// returned. Default is set to 1. For image related labeling, valid values are
+	// 1, 3, 5.
 	ReplicaCount int64 `json:"replicaCount,omitempty"`
-
-	// UserEmailAddress: Email of the user who started the labeling task and
-	// should be notified by email. If empty no notification will be sent.
+	// UserEmailAddress: Email of the user who started the labeling task and should
+	// be notified by email. If empty no notification will be sent.
 	UserEmailAddress string `json:"userEmailAddress,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "AnnotatedDatasetDescription") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "AnnotatedDatasetDescription") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "AnnotatedDatasetDescription") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDatasetDescription") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1ImportDataOperationMetadata: Metadata
-// of an ImportData operation.
+// GoogleCloudDatalabelingV1alpha1ImportDataOperationMetadata: Metadata of an
+// ImportData operation.
 type GoogleCloudDatalabelingV1alpha1ImportDataOperationMetadata struct {
-	// CreateTime: Output only. Timestamp when import dataset request was
-	// created.
+	// CreateTime: Output only. Timestamp when import dataset request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Dataset: Output only. The name of imported dataset.
-	// "projects/*/datasets/*"
+	// Dataset: Output only. The name of imported dataset. "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1ImportDataOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse: Response
-// used for ImportData longrunning operation.
+// GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse: Response used
+// for ImportData longrunning operation.
 type GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse struct {
 	// Dataset: Ouptut only. The name of imported dataset.
 	Dataset string `json:"dataset,omitempty"`
-
 	// ImportCount: Output only. Number of examples imported successfully.
 	ImportCount int64 `json:"importCount,omitempty"`
-
 	// TotalCount: Output only. Total number of examples requested to import
 	TotalCount int64 `json:"totalCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Dataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dataset") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dataset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata:
-//
-//	Details of a LabelImageBoundingBox operation metadata.
+// Details of a LabelImageBoundingBox operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata
-// : Details of LabelImageBoundingPoly operation metadata.
+// GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata:
+// Details of LabelImageBoundingPoly operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetada
-// ta: Metadata of a LabelImageClassification operation.
+// GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetadata:
+// Metadata of a LabelImageClassification operation.
 type GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationM
-// etadata: Details of a LabelImageOrientedBoundingBox operation
-// metadata.
+// GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationMetadata
+// : Details of a LabelImageOrientedBoundingBox operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationMetadata struct {
 	// BasicConfig: Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata:
-// Details of LabelImagePolyline operation metadata.
+// GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata: Details
+// of LabelImagePolyline operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata
-// : Details of a LabelImageSegmentation operation metadata.
+// GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata:
+// Details of a LabelImageSegmentation operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelOperationMetadata: Metadata of a
 // labeling operation, such as LabelImage or LabelVideo. Next tag: 23
 type GoogleCloudDatalabelingV1alpha1LabelOperationMetadata struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
 	// CreateTime: Output only. Timestamp when labeling request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Dataset: Output only. The name of dataset to be labeled.
 	// "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// ImageBoundingBoxDetails: Details of label image bounding box
-	// operation.
+	// ImageBoundingBoxDetails: Details of label image bounding box operation.
 	ImageBoundingBoxDetails *GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata `json:"imageBoundingBoxDetails,omitempty"`
-
-	// ImageBoundingPolyDetails: Details of label image bounding poly
-	// operation.
+	// ImageBoundingPolyDetails: Details of label image bounding poly operation.
 	ImageBoundingPolyDetails *GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata `json:"imageBoundingPolyDetails,omitempty"`
-
-	// ImageClassificationDetails: Details of label image classification
-	// operation.
+	// ImageClassificationDetails: Details of label image classification operation.
 	ImageClassificationDetails *GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetadata `json:"imageClassificationDetails,omitempty"`
-
-	// ImageOrientedBoundingBoxDetails: Details of label image oriented
-	// bounding box operation.
+	// ImageOrientedBoundingBoxDetails: Details of label image oriented bounding
+	// box operation.
 	ImageOrientedBoundingBoxDetails *GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationMetadata `json:"imageOrientedBoundingBoxDetails,omitempty"`
-
 	// ImagePolylineDetails: Details of label image polyline operation.
 	ImagePolylineDetails *GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata `json:"imagePolylineDetails,omitempty"`
-
-	// ImageSegmentationDetails: Details of label image segmentation
-	// operation.
+	// ImageSegmentationDetails: Details of label image segmentation operation.
 	ImageSegmentationDetails *GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata `json:"imageSegmentationDetails,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
-	// ProgressPercent: Output only. Progress of label operation. Range: [0,
-	// 100].
+	// ProgressPercent: Output only. Progress of label operation. Range: [0, 100].
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
-
-	// TextClassificationDetails: Details of label text classification
-	// operation.
+	// TextClassificationDetails: Details of label text classification operation.
 	TextClassificationDetails *GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadata `json:"textClassificationDetails,omitempty"`
-
 	// TextEntityExtractionDetails: Details of label text entity extraction
 	// operation.
 	TextEntityExtractionDetails *GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetadata `json:"textEntityExtractionDetails,omitempty"`
-
-	// VideoClassificationDetails: Details of label video classification
-	// operation.
+	// VideoClassificationDetails: Details of label video classification operation.
 	VideoClassificationDetails *GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetadata `json:"videoClassificationDetails,omitempty"`
-
 	// VideoEventDetails: Details of label video event operation.
 	VideoEventDetails *GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata `json:"videoEventDetails,omitempty"`
-
 	// VideoObjectDetectionDetails: Details of label video object detection
 	// operation.
 	VideoObjectDetectionDetails *GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetadata `json:"videoObjectDetectionDetails,omitempty"`
-
 	// VideoObjectTrackingDetails: Details of label video object tracking
 	// operation.
 	VideoObjectTrackingDetails *GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetadata `json:"videoObjectTrackingDetails,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelStats: Statistics about
-// annotation specs.
+// GoogleCloudDatalabelingV1alpha1LabelStats: Statistics about annotation
+// specs.
 type GoogleCloudDatalabelingV1alpha1LabelStats struct {
 	// ExampleCount: Map of each annotation spec's example count. Key is the
-	// annotation spec name and value is the number of examples for that
-	// annotation spec. If the annotated dataset does not have annotation
-	// spec, the map will return a pair where the key is empty string and
-	// value is the total number of annotations.
+	// annotation spec name and value is the number of examples for that annotation
+	// spec. If the annotated dataset does not have annotation spec, the map will
+	// return a pair where the key is empty string and value is the total number of
+	// annotations.
 	ExampleCount map[string]string `json:"exampleCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ExampleCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExampleCount") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExampleCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadat
-// a: Details of a LabelTextClassification operation metadata.
+// GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadata:
+// Details of a LabelTextClassification operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetad
-// ata: Details of a LabelTextEntityExtraction operation metadata.
+// GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetadata:
+// Details of a LabelTextEntityExtraction operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetada
-// ta: Details of a LabelVideoClassification operation metadata.
+// GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetadata:
+// Details of a LabelVideoClassification operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata:
-// Details of a LabelVideoEvent operation metadata.
+// GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata: Details of
+// a LabelVideoEvent operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetad
-// ata: Details of a LabelVideoObjectDetection operation metadata.
+// GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetadata:
+// Details of a LabelVideoObjectDetection operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetada
-// ta: Details of a LabelVideoObjectTracking operation metadata.
+// GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetadata:
+// Details of a LabelVideoObjectTracking operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1alpha1OutputConfig: The configuration of
-// output data.
+// GoogleCloudDatalabelingV1alpha1OutputConfig: The configuration of output
+// data.
 type GoogleCloudDatalabelingV1alpha1OutputConfig struct {
 	// GcsDestination: Output to a file in Cloud Storage. Should be used for
 	// labeling output other than image segmentation.
 	GcsDestination *GoogleCloudDatalabelingV1alpha1GcsDestination `json:"gcsDestination,omitempty"`
-
-	// GcsFolderDestination: Output to a folder in Cloud Storage. Should be
-	// used for image segmentation or document de-identification labeling
-	// outputs.
+	// GcsFolderDestination: Output to a folder in Cloud Storage. Should be used
+	// for image segmentation or document de-identification labeling outputs.
 	GcsFolderDestination *GoogleCloudDatalabelingV1alpha1GcsFolderDestination `json:"gcsFolderDestination,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsDestination") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GcsDestination") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1alpha1OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1alpha1OutputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1AnnotatedDataset: AnnotatedDataset is a
-// set holding annotations for data in a Dataset. Each labeling task
-// will generate an AnnotatedDataset under the Dataset that the task is
-// requested for.
+// GoogleCloudDatalabelingV1beta1AnnotatedDataset: AnnotatedDataset is a set
+// holding annotations for data in a Dataset. Each labeling task will generate
+// an AnnotatedDataset under the Dataset that the task is requested for.
 type GoogleCloudDatalabelingV1beta1AnnotatedDataset struct {
 	// AnnotationSource: Output only. Source of the annotation.
 	//
@@ -1228,176 +1027,131 @@ type GoogleCloudDatalabelingV1beta1AnnotatedDataset struct {
 	//   "ANNOTATION_SOURCE_UNSPECIFIED"
 	//   "OPERATOR" - Answer is provided by a human contributor.
 	AnnotationSource string `json:"annotationSource,omitempty"`
-
-	// AnnotationType: Output only. Type of the annotation. It is specified
-	// when starting labeling task.
+	// AnnotationType: Output only. Type of the annotation. It is specified when
+	// starting labeling task.
 	//
 	// Possible values:
 	//   "ANNOTATION_TYPE_UNSPECIFIED"
-	//   "IMAGE_CLASSIFICATION_ANNOTATION" - Classification annotations in
-	// an image. Allowed for continuous evaluation.
-	//   "IMAGE_BOUNDING_BOX_ANNOTATION" - Bounding box annotations in an
-	// image. A form of image object detection. Allowed for continuous
-	// evaluation.
-	//   "IMAGE_ORIENTED_BOUNDING_BOX_ANNOTATION" - Oriented bounding box.
-	// The box does not have to be parallel to horizontal line.
-	//   "IMAGE_BOUNDING_POLY_ANNOTATION" - Bounding poly annotations in an
-	// image.
+	//   "IMAGE_CLASSIFICATION_ANNOTATION" - Classification annotations in an
+	// image. Allowed for continuous evaluation.
+	//   "IMAGE_BOUNDING_BOX_ANNOTATION" - Bounding box annotations in an image. A
+	// form of image object detection. Allowed for continuous evaluation.
+	//   "IMAGE_ORIENTED_BOUNDING_BOX_ANNOTATION" - Oriented bounding box. The box
+	// does not have to be parallel to horizontal line.
+	//   "IMAGE_BOUNDING_POLY_ANNOTATION" - Bounding poly annotations in an image.
 	//   "IMAGE_POLYLINE_ANNOTATION" - Polyline annotations in an image.
-	//   "IMAGE_SEGMENTATION_ANNOTATION" - Segmentation annotations in an
-	// image.
-	//   "VIDEO_SHOTS_CLASSIFICATION_ANNOTATION" - Classification
-	// annotations in video shots.
-	//   "VIDEO_OBJECT_TRACKING_ANNOTATION" - Video object tracking
-	// annotation.
-	//   "VIDEO_OBJECT_DETECTION_ANNOTATION" - Video object detection
-	// annotation.
+	//   "IMAGE_SEGMENTATION_ANNOTATION" - Segmentation annotations in an image.
+	//   "VIDEO_SHOTS_CLASSIFICATION_ANNOTATION" - Classification annotations in
+	// video shots.
+	//   "VIDEO_OBJECT_TRACKING_ANNOTATION" - Video object tracking annotation.
+	//   "VIDEO_OBJECT_DETECTION_ANNOTATION" - Video object detection annotation.
 	//   "VIDEO_EVENT_ANNOTATION" - Video event annotation.
-	//   "TEXT_CLASSIFICATION_ANNOTATION" - Classification for text. Allowed
-	// for continuous evaluation.
+	//   "TEXT_CLASSIFICATION_ANNOTATION" - Classification for text. Allowed for
+	// continuous evaluation.
 	//   "TEXT_ENTITY_EXTRACTION_ANNOTATION" - Entity extraction for text.
-	//   "GENERAL_CLASSIFICATION_ANNOTATION" - General classification.
-	// Allowed for continuous evaluation.
+	//   "GENERAL_CLASSIFICATION_ANNOTATION" - General classification. Allowed for
+	// continuous evaluation.
 	AnnotationType string `json:"annotationType,omitempty"`
-
-	// BlockingResources: Output only. The names of any related resources
-	// that are blocking changes to the annotated dataset.
+	// BlockingResources: Output only. The names of any related resources that are
+	// blocking changes to the annotated dataset.
 	BlockingResources []string `json:"blockingResources,omitempty"`
-
-	// CompletedExampleCount: Output only. Number of examples that have
-	// annotation in the annotated dataset.
+	// CompletedExampleCount: Output only. Number of examples that have annotation
+	// in the annotated dataset.
 	CompletedExampleCount int64 `json:"completedExampleCount,omitempty,string"`
-
 	// CreateTime: Output only. Time the AnnotatedDataset was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Description: Output only. The description of the AnnotatedDataset. It
-	// is specified in HumanAnnotationConfig when user starts a labeling
-	// task. Maximum of 10000 characters.
+	// Description: Output only. The description of the AnnotatedDataset. It is
+	// specified in HumanAnnotationConfig when user starts a labeling task. Maximum
+	// of 10000 characters.
 	Description string `json:"description,omitempty"`
-
-	// DisplayName: Output only. The display name of the AnnotatedDataset.
-	// It is specified in HumanAnnotationConfig when user starts a labeling
-	// task. Maximum of 64 characters.
+	// DisplayName: Output only. The display name of the AnnotatedDataset. It is
+	// specified in HumanAnnotationConfig when user starts a labeling task. Maximum
+	// of 64 characters.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// ExampleCount: Output only. Number of examples in the annotated
-	// dataset.
+	// ExampleCount: Output only. Number of examples in the annotated dataset.
 	ExampleCount int64 `json:"exampleCount,omitempty,string"`
-
 	// LabelStats: Output only. Per label statistics.
 	LabelStats *GoogleCloudDatalabelingV1beta1LabelStats `json:"labelStats,omitempty"`
-
 	// Metadata: Output only. Additional information about AnnotatedDataset.
 	Metadata *GoogleCloudDatalabelingV1beta1AnnotatedDatasetMetadata `json:"metadata,omitempty"`
-
 	// Name: Output only. AnnotatedDataset resource name in format of:
 	// projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
 	// {annotated_dataset_id}
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSource") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSource") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1AnnotatedDataset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotatedDataset
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1AnnotatedDatasetMetadata: Metadata on
 // AnnotatedDataset.
 type GoogleCloudDatalabelingV1beta1AnnotatedDatasetMetadata struct {
-	// BoundingPolyConfig: Configuration for image bounding box and bounding
-	// poly task.
+	// BoundingPolyConfig: Configuration for image bounding box and bounding poly
+	// task.
 	BoundingPolyConfig *GoogleCloudDatalabelingV1beta1BoundingPolyConfig `json:"boundingPolyConfig,omitempty"`
-
 	// EventConfig: Configuration for video event labeling task.
 	EventConfig *GoogleCloudDatalabelingV1beta1EventConfig `json:"eventConfig,omitempty"`
-
-	// HumanAnnotationConfig: HumanAnnotationConfig used when requesting the
-	// human labeling task for this AnnotatedDataset.
+	// HumanAnnotationConfig: HumanAnnotationConfig used when requesting the human
+	// labeling task for this AnnotatedDataset.
 	HumanAnnotationConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"humanAnnotationConfig,omitempty"`
-
-	// ImageClassificationConfig: Configuration for image classification
-	// task.
+	// ImageClassificationConfig: Configuration for image classification task.
 	ImageClassificationConfig *GoogleCloudDatalabelingV1beta1ImageClassificationConfig `json:"imageClassificationConfig,omitempty"`
-
 	// ObjectDetectionConfig: Configuration for video object detection task.
 	ObjectDetectionConfig *GoogleCloudDatalabelingV1beta1ObjectDetectionConfig `json:"objectDetectionConfig,omitempty"`
-
 	// ObjectTrackingConfig: Configuration for video object tracking task.
 	ObjectTrackingConfig *GoogleCloudDatalabelingV1beta1ObjectTrackingConfig `json:"objectTrackingConfig,omitempty"`
-
 	// PolylineConfig: Configuration for image polyline task.
 	PolylineConfig *GoogleCloudDatalabelingV1beta1PolylineConfig `json:"polylineConfig,omitempty"`
-
 	// SegmentationConfig: Configuration for image segmentation task.
 	SegmentationConfig *GoogleCloudDatalabelingV1beta1SegmentationConfig `json:"segmentationConfig,omitempty"`
-
 	// TextClassificationConfig: Configuration for text classification task.
 	TextClassificationConfig *GoogleCloudDatalabelingV1beta1TextClassificationConfig `json:"textClassificationConfig,omitempty"`
-
-	// TextEntityExtractionConfig: Configuration for text entity extraction
-	// task.
+	// TextEntityExtractionConfig: Configuration for text entity extraction task.
 	TextEntityExtractionConfig *GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig `json:"textEntityExtractionConfig,omitempty"`
-
-	// VideoClassificationConfig: Configuration for video classification
-	// task.
+	// VideoClassificationConfig: Configuration for video classification task.
 	VideoClassificationConfig *GoogleCloudDatalabelingV1beta1VideoClassificationConfig `json:"videoClassificationConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BoundingPolyConfig")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BoundingPolyConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BoundingPolyConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BoundingPolyConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1AnnotatedDatasetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotatedDatasetMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1Annotation: Annotation for Example.
-// Each example may have one or more annotations. For example in image
-// classification problem, each image might have one or more labels. We
-// call labels binded with this image an Annotation.
+// GoogleCloudDatalabelingV1beta1Annotation: Annotation for Example. Each
+// example may have one or more annotations. For example in image
+// classification problem, each image might have one or more labels. We call
+// labels binded with this image an Annotation.
 type GoogleCloudDatalabelingV1beta1Annotation struct {
-	// AnnotationMetadata: Output only. Annotation metadata, including
-	// information like votes for labels.
+	// AnnotationMetadata: Output only. Annotation metadata, including information
+	// like votes for labels.
 	AnnotationMetadata *GoogleCloudDatalabelingV1beta1AnnotationMetadata `json:"annotationMetadata,omitempty"`
-
 	// AnnotationSentiment: Output only. Sentiment for this annotation.
 	//
 	// Possible values:
@@ -1405,378 +1159,292 @@ type GoogleCloudDatalabelingV1beta1Annotation struct {
 	//   "NEGATIVE" - This annotation describes negatively about the data.
 	//   "POSITIVE" - This label describes positively about the data.
 	AnnotationSentiment string `json:"annotationSentiment,omitempty"`
-
 	// AnnotationSource: Output only. The source of the annotation.
 	//
 	// Possible values:
 	//   "ANNOTATION_SOURCE_UNSPECIFIED"
 	//   "OPERATOR" - Answer is provided by a human contributor.
 	AnnotationSource string `json:"annotationSource,omitempty"`
-
-	// AnnotationValue: Output only. This is the actual annotation value,
-	// e.g classification, bounding box values are stored here.
+	// AnnotationValue: Output only. This is the actual annotation value, e.g
+	// classification, bounding box values are stored here.
 	AnnotationValue *GoogleCloudDatalabelingV1beta1AnnotationValue `json:"annotationValue,omitempty"`
-
 	// Name: Output only. Unique name of this annotation, format is:
-	// projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotat
-	// ed_dataset}/examples/{example_id}/annotations/{annotation_id}
+	// projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_data
+	// set}/examples/{example_id}/annotations/{annotation_id}
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationMetadata")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationMetadata") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1Annotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Annotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1AnnotationMetadata: Additional
-// information associated with the annotation.
+// GoogleCloudDatalabelingV1beta1AnnotationMetadata: Additional information
+// associated with the annotation.
 type GoogleCloudDatalabelingV1beta1AnnotationMetadata struct {
 	// OperatorMetadata: Metadata related to human labeling.
 	OperatorMetadata *GoogleCloudDatalabelingV1beta1OperatorMetadata `json:"operatorMetadata,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OperatorMetadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OperatorMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "OperatorMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1AnnotationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1AnnotationSpec: Container of
-// information related to one possible annotation that can be used in a
-// labeling task. For example, an image classification task where images
-// are labeled as `dog` or `cat` must reference an AnnotationSpec for
-// `dog` and an AnnotationSpec for `cat`.
+// GoogleCloudDatalabelingV1beta1AnnotationSpec: Container of information
+// related to one possible annotation that can be used in a labeling task. For
+// example, an image classification task where images are labeled as `dog` or
+// `cat` must reference an AnnotationSpec for `dog` and an AnnotationSpec for
+// `cat`.
 type GoogleCloudDatalabelingV1beta1AnnotationSpec struct {
 	// Description: Optional. User-provided description of the annotation
 	// specification. The description can be up to 10,000 characters long.
 	Description string `json:"description,omitempty"`
-
-	// DisplayName: Required. The display name of the AnnotationSpec.
-	// Maximum of 64 characters.
+	// DisplayName: Required. The display name of the AnnotationSpec. Maximum of 64
+	// characters.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Index: Output only. This is the integer index of the AnnotationSpec.
-	// The index for the whole AnnotationSpecSet is sequential starting from
-	// 0. For example, an AnnotationSpecSet with classes `dog` and `cat`,
-	// might contain one AnnotationSpec with `{ display_name: "dog", index:
-	// 0 }` and one AnnotationSpec with `{ display_name: "cat", index: 1 }`.
-	// This is especially useful for model training as it encodes the string
-	// labels into numeric values.
+	// Index: Output only. This is the integer index of the AnnotationSpec. The
+	// index for the whole AnnotationSpecSet is sequential starting from 0. For
+	// example, an AnnotationSpecSet with classes `dog` and `cat`, might contain
+	// one AnnotationSpec with `{ display_name: "dog", index: 0 }` and one
+	// AnnotationSpec with `{ display_name: "cat", index: 1 }`. This is especially
+	// useful for model training as it encodes the string labels into numeric
+	// values.
 	Index int64 `json:"index,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1AnnotationSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotationSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1AnnotationSpecSet: An AnnotationSpecSet
-// is a collection of label definitions. For example, in image
-// classification tasks, you define a set of possible labels for images
-// as an AnnotationSpecSet. An AnnotationSpecSet is immutable upon
-// creation.
+// GoogleCloudDatalabelingV1beta1AnnotationSpecSet: An AnnotationSpecSet is a
+// collection of label definitions. For example, in image classification tasks,
+// you define a set of possible labels for images as an AnnotationSpecSet. An
+// AnnotationSpecSet is immutable upon creation.
 type GoogleCloudDatalabelingV1beta1AnnotationSpecSet struct {
-	// AnnotationSpecs: Required. The array of AnnotationSpecs that you
-	// define when you create the AnnotationSpecSet. These are the possible
-	// labels for the labeling task.
+	// AnnotationSpecs: Required. The array of AnnotationSpecs that you define when
+	// you create the AnnotationSpecSet. These are the possible labels for the
+	// labeling task.
 	AnnotationSpecs []*GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpecs,omitempty"`
-
-	// BlockingResources: Output only. The names of any related resources
-	// that are blocking changes to the annotation spec set.
+	// BlockingResources: Output only. The names of any related resources that are
+	// blocking changes to the annotation spec set.
 	BlockingResources []string `json:"blockingResources,omitempty"`
-
 	// Description: Optional. User-provided description of the annotation
-	// specification set. The description can be up to 10,000 characters
-	// long.
+	// specification set. The description can be up to 10,000 characters long.
 	Description string `json:"description,omitempty"`
-
-	// DisplayName: Required. The display name for AnnotationSpecSet that
-	// you define when you create it. Maximum of 64 characters.
+	// DisplayName: Required. The display name for AnnotationSpecSet that you
+	// define when you create it. Maximum of 64 characters.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Name: Output only. The AnnotationSpecSet resource name in the
-	// following format:
-	// "projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}"
+	// Name: Output only. The AnnotationSpecSet resource name in the following
+	// format: "projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}"
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecs") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1AnnotationSpecSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotationSpecSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig: Annotation
-// spec set with the setting of allowing multi labels or not.
+// GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig: Annotation spec set
+// with the setting of allowing multi labels or not.
 type GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig struct {
-	// AllowMultiLabel: Optional. If allow_multi_label is true, contributors
-	// are able to choose multiple labels from one annotation spec set.
+	// AllowMultiLabel: Optional. If allow_multi_label is true, contributors are
+	// able to choose multiple labels from one annotation spec set.
 	AllowMultiLabel bool `json:"allowMultiLabel,omitempty"`
-
 	// AnnotationSpecSet: Required. Annotation spec set resource name.
 	AnnotationSpecSet string `json:"annotationSpecSet,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AllowMultiLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowMultiLabel") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AllowMultiLabel") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1AnnotationValue: Annotation value for
-// an example.
+// GoogleCloudDatalabelingV1beta1AnnotationValue: Annotation value for an
+// example.
 type GoogleCloudDatalabelingV1beta1AnnotationValue struct {
 	// ImageBoundingPolyAnnotation: Annotation value for image bounding box,
 	// oriented bounding box and polygon cases.
 	ImageBoundingPolyAnnotation *GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation `json:"imageBoundingPolyAnnotation,omitempty"`
-
-	// ImageClassificationAnnotation: Annotation value for image
-	// classification case.
+	// ImageClassificationAnnotation: Annotation value for image classification
+	// case.
 	ImageClassificationAnnotation *GoogleCloudDatalabelingV1beta1ImageClassificationAnnotation `json:"imageClassificationAnnotation,omitempty"`
-
-	// ImagePolylineAnnotation: Annotation value for image polyline cases.
-	// Polyline here is different from BoundingPoly. It is formed by line
-	// segments connected to each other but not closed form(Bounding Poly).
-	// The line segments can cross each other.
+	// ImagePolylineAnnotation: Annotation value for image polyline cases. Polyline
+	// here is different from BoundingPoly. It is formed by line segments connected
+	// to each other but not closed form(Bounding Poly). The line segments can
+	// cross each other.
 	ImagePolylineAnnotation *GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation `json:"imagePolylineAnnotation,omitempty"`
-
 	// ImageSegmentationAnnotation: Annotation value for image segmentation.
 	ImageSegmentationAnnotation *GoogleCloudDatalabelingV1beta1ImageSegmentationAnnotation `json:"imageSegmentationAnnotation,omitempty"`
-
-	// TextClassificationAnnotation: Annotation value for text
-	// classification case.
+	// TextClassificationAnnotation: Annotation value for text classification case.
 	TextClassificationAnnotation *GoogleCloudDatalabelingV1beta1TextClassificationAnnotation `json:"textClassificationAnnotation,omitempty"`
-
-	// TextEntityExtractionAnnotation: Annotation value for text entity
-	// extraction case.
+	// TextEntityExtractionAnnotation: Annotation value for text entity extraction
+	// case.
 	TextEntityExtractionAnnotation *GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation `json:"textEntityExtractionAnnotation,omitempty"`
-
-	// VideoClassificationAnnotation: Annotation value for video
-	// classification case.
+	// VideoClassificationAnnotation: Annotation value for video classification
+	// case.
 	VideoClassificationAnnotation *GoogleCloudDatalabelingV1beta1VideoClassificationAnnotation `json:"videoClassificationAnnotation,omitempty"`
-
 	// VideoEventAnnotation: Annotation value for video event case.
 	VideoEventAnnotation *GoogleCloudDatalabelingV1beta1VideoEventAnnotation `json:"videoEventAnnotation,omitempty"`
-
-	// VideoObjectTrackingAnnotation: Annotation value for video object
-	// detection and tracking case.
+	// VideoObjectTrackingAnnotation: Annotation value for video object detection
+	// and tracking case.
 	VideoObjectTrackingAnnotation *GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation `json:"videoObjectTrackingAnnotation,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "ImageBoundingPolyAnnotation") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "ImageBoundingPolyAnnotation") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "ImageBoundingPolyAnnotation") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ImageBoundingPolyAnnotation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1AnnotationValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1AnnotationValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1Attempt: Records a failed evaluation
-// job run.
+// GoogleCloudDatalabelingV1beta1Attempt: Records a failed evaluation job run.
 type GoogleCloudDatalabelingV1beta1Attempt struct {
 	AttemptTime string `json:"attemptTime,omitempty"`
-
 	// PartialFailures: Details of errors that occurred.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AttemptTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttemptTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AttemptTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1Attempt) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Attempt
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1BigQuerySource: The BigQuery location
-// for input data. If used in an EvaluationJob, this is where the
-// service saves the prediction input and output sampled from the model
-// version.
+// GoogleCloudDatalabelingV1beta1BigQuerySource: The BigQuery location for
+// input data. If used in an EvaluationJob, this is where the service saves the
+// prediction input and output sampled from the model version.
 type GoogleCloudDatalabelingV1beta1BigQuerySource struct {
-	// InputUri: Required. BigQuery URI to a table, up to 2,000 characters
-	// long. If you specify the URI of a table that does not exist, Data
-	// Labeling Service creates a table at the URI with the correct schema
-	// when you create your EvaluationJob. If you specify the URI of a table
-	// that already exists, it must have the correct schema
+	// InputUri: Required. BigQuery URI to a table, up to 2,000 characters long. If
+	// you specify the URI of a table that does not exist, Data Labeling Service
+	// creates a table at the URI with the correct schema when you create your
+	// EvaluationJob. If you specify the URI of a table that already exists, it
+	// must have the correct schema
+	// (/ml-engine/docs/continuous-evaluation/create-job#table-schema). Provide the
+	// table URI in the following format: "bq://{your_project_id}/
+	// {your_dataset_name}/{your_table_name}" Learn more
 	// (/ml-engine/docs/continuous-evaluation/create-job#table-schema).
-	// Provide the table URI in the following format:
-	// "bq://{your_project_id}/ {your_dataset_name}/{your_table_name}" Learn
-	// more (/ml-engine/docs/continuous-evaluation/create-job#table-schema).
 	InputUri string `json:"inputUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InputUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InputUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1BigQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1BigQuerySource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions: Options
 // regarding evaluation between bounding boxes.
 type GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions struct {
 	// IouThreshold: Minimum intersection-over-union (IOU)
-	// (/vision/automl/object-detection/docs/evaluate#intersection-over-union
-	// ) required for 2 bounding boxes to be considered a match. This must
-	// be a number between 0 and 1.
+	// (/vision/automl/object-detection/docs/evaluate#intersection-over-union)
+	// required for 2 bounding boxes to be considered a match. This must be a
+	// number between 0 and 1.
 	IouThreshold float64 `json:"iouThreshold,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IouThreshold") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IouThreshold") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IouThreshold") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions) UnmarshalJSON(data []byte) error {
@@ -1793,67 +1461,51 @@ func (s *GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions) UnmarshalJS
 	return nil
 }
 
-// GoogleCloudDatalabelingV1beta1BoundingPoly: A bounding polygon in the
-// image.
+// GoogleCloudDatalabelingV1beta1BoundingPoly: A bounding polygon in the image.
 type GoogleCloudDatalabelingV1beta1BoundingPoly struct {
 	// Vertices: The bounding polygon vertices.
 	Vertices []*GoogleCloudDatalabelingV1beta1Vertex `json:"vertices,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Vertices") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Vertices") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Vertices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1BoundingPoly) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1BoundingPoly
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1BoundingPolyConfig: Config for image
-// bounding poly (and bounding box) human labeling task.
+// GoogleCloudDatalabelingV1beta1BoundingPolyConfig: Config for image bounding
+// poly (and bounding box) human labeling task.
 type GoogleCloudDatalabelingV1beta1BoundingPolyConfig struct {
 	// AnnotationSpecSet: Required. Annotation spec set resource name.
 	AnnotationSpecSet string `json:"annotationSpecSet,omitempty"`
-
-	// InstructionMessage: Optional. Instruction message showed on
-	// contributors UI.
+	// InstructionMessage: Optional. Instruction message showed on contributors UI.
 	InstructionMessage string `json:"instructionMessage,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1BoundingPolyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1BoundingPolyConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ClassificationMetadata: Metadata for
@@ -1861,129 +1513,95 @@ func (s *GoogleCloudDatalabelingV1beta1BoundingPolyConfig) MarshalJSON() ([]byte
 type GoogleCloudDatalabelingV1beta1ClassificationMetadata struct {
 	// IsMultiLabel: Whether the classification task is multi-label or not.
 	IsMultiLabel bool `json:"isMultiLabel,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IsMultiLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IsMultiLabel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IsMultiLabel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ClassificationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ClassificationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ClassificationMetrics: Metrics
-// calculated for a classification model.
+// GoogleCloudDatalabelingV1beta1ClassificationMetrics: Metrics calculated for
+// a classification model.
 type GoogleCloudDatalabelingV1beta1ClassificationMetrics struct {
-	// ConfusionMatrix: Confusion matrix of predicted labels vs. ground
-	// truth labels.
+	// ConfusionMatrix: Confusion matrix of predicted labels vs. ground truth
+	// labels.
 	ConfusionMatrix *GoogleCloudDatalabelingV1beta1ConfusionMatrix `json:"confusionMatrix,omitempty"`
-
-	// PrCurve: Precision-recall curve based on ground truth labels,
-	// predicted labels, and scores for the predicted labels.
+	// PrCurve: Precision-recall curve based on ground truth labels, predicted
+	// labels, and scores for the predicted labels.
 	PrCurve *GoogleCloudDatalabelingV1beta1PrCurve `json:"prCurve,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ConfusionMatrix") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConfusionMatrix") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ConfusionMatrix") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ClassificationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ClassificationMetrics
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry struct {
-	// ConfidenceThreshold: Threshold used for this entry. For
-	// classification tasks, this is a classification threshold: a predicted
-	// label is categorized as positive or negative (in the context of this
-	// point on the PR curve) based on whether the label's score meets this
-	// threshold. For image object detection (bounding box) tasks, this is
-	// the intersection-over-union (IOU)
-	// (/vision/automl/object-detection/docs/evaluate#intersection-over-union
-	// ) threshold for the context of this point on the PR curve.
+	// ConfidenceThreshold: Threshold used for this entry. For classification
+	// tasks, this is a classification threshold: a predicted label is categorized
+	// as positive or negative (in the context of this point on the PR curve) based
+	// on whether the label's score meets this threshold. For image object
+	// detection (bounding box) tasks, this is the intersection-over-union (IOU)
+	// (/vision/automl/object-detection/docs/evaluate#intersection-over-union)
+	// threshold for the context of this point on the PR curve.
 	ConfidenceThreshold float64 `json:"confidenceThreshold,omitempty"`
-
 	// F1Score: Harmonic mean of recall and precision.
 	F1Score float64 `json:"f1Score,omitempty"`
-
 	// F1ScoreAt1: The harmonic mean of recall_at1 and precision_at1.
 	F1ScoreAt1 float64 `json:"f1ScoreAt1,omitempty"`
-
 	// F1ScoreAt5: The harmonic mean of recall_at5 and precision_at5.
 	F1ScoreAt5 float64 `json:"f1ScoreAt5,omitempty"`
-
 	// Precision: Precision value.
 	Precision float64 `json:"precision,omitempty"`
-
-	// PrecisionAt1: Precision value for entries with label that has highest
-	// score.
+	// PrecisionAt1: Precision value for entries with label that has highest score.
 	PrecisionAt1 float64 `json:"precisionAt1,omitempty"`
-
-	// PrecisionAt5: Precision value for entries with label that has highest
-	// 5 scores.
+	// PrecisionAt5: Precision value for entries with label that has highest 5
+	// scores.
 	PrecisionAt5 float64 `json:"precisionAt5,omitempty"`
-
 	// Recall: Recall value.
 	Recall float64 `json:"recall,omitempty"`
-
-	// RecallAt1: Recall value for entries with label that has highest
-	// score.
+	// RecallAt1: Recall value for entries with label that has highest score.
 	RecallAt1 float64 `json:"recallAt1,omitempty"`
-
-	// RecallAt5: Recall value for entries with label that has highest 5
-	// scores.
+	// RecallAt5: Recall value for entries with label that has highest 5 scores.
 	RecallAt5 float64 `json:"recallAt5,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConfidenceThreshold")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ConfidenceThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConfidenceThreshold") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ConfidenceThreshold") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry) UnmarshalJSON(data []byte) error {
@@ -2018,649 +1636,505 @@ func (s *GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry) UnmarshalJSON(dat
 	return nil
 }
 
-// GoogleCloudDatalabelingV1beta1ConfusionMatrix: Confusion matrix of
-// the model running the classification. Only applicable when the
-// metrics entry aggregates multiple labels. Not applicable when the
-// entry is for a single label.
+// GoogleCloudDatalabelingV1beta1ConfusionMatrix: Confusion matrix of the model
+// running the classification. Only applicable when the metrics entry
+// aggregates multiple labels. Not applicable when the entry is for a single
+// label.
 type GoogleCloudDatalabelingV1beta1ConfusionMatrix struct {
 	Row []*GoogleCloudDatalabelingV1beta1Row `json:"row,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Row") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Row") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Row") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Row") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ConfusionMatrix) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ConfusionMatrix
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDatalabelingV1beta1ConfusionMatrixEntry struct {
 	// AnnotationSpec: The annotation spec of a predicted label.
 	AnnotationSpec *GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpec,omitempty"`
-
-	// ItemCount: Number of items predicted to have this label. (The ground
-	// truth label for these items is the `Row.annotationSpec` of this
-	// entry's parent.)
+	// ItemCount: Number of items predicted to have this label. (The ground truth
+	// label for these items is the `Row.annotationSpec` of this entry's parent.)
 	ItemCount int64 `json:"itemCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ConfusionMatrixEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ConfusionMatrixEntry
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest: Request
 // message for CreateAnnotationSpecSet.
 type GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest struct {
-	// AnnotationSpecSet: Required. Annotation spec set to create.
-	// Annotation specs must be included. Only one annotation spec will be
-	// accepted for annotation specs with same display_name.
+	// AnnotationSpecSet: Required. Annotation spec set to create. Annotation specs
+	// must be included. Only one annotation spec will be accepted for annotation
+	// specs with same display_name.
 	AnnotationSpecSet *GoogleCloudDatalabelingV1beta1AnnotationSpecSet `json:"annotationSpecSet,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1CreateDatasetRequest: Request message
-// for CreateDataset.
+// GoogleCloudDatalabelingV1beta1CreateDatasetRequest: Request message for
+// CreateDataset.
 type GoogleCloudDatalabelingV1beta1CreateDatasetRequest struct {
 	// Dataset: Required. The dataset to be created.
 	Dataset *GoogleCloudDatalabelingV1beta1Dataset `json:"dataset,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Dataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dataset") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dataset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1CreateDatasetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CreateDatasetRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest: Request
-// message for CreateEvaluationJob.
+// GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest: Request message
+// for CreateEvaluationJob.
 type GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest struct {
 	// Job: Required. The evaluation job to create.
 	Job *GoogleCloudDatalabelingV1beta1EvaluationJob `json:"job,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Job") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Job") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Job") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Job") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1CreateInstructionMetadata: Metadata of
-// a CreateInstruction operation.
+// GoogleCloudDatalabelingV1beta1CreateInstructionMetadata: Metadata of a
+// CreateInstruction operation.
 type GoogleCloudDatalabelingV1beta1CreateInstructionMetadata struct {
 	// CreateTime: Timestamp when create instruction request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Instruction: The name of the created Instruction.
 	// projects/{project_id}/instructions/{instruction_id}
 	Instruction string `json:"instruction,omitempty"`
-
 	// PartialFailures: Partial failures encountered. E.g. single files that
-	// couldn't be read. Status details field will contain standard GCP
-	// error details.
+	// couldn't be read. Status details field will contain standard GCP error
+	// details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CreateInstructionMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1CreateInstructionRequest: Request
-// message for CreateInstruction.
+// GoogleCloudDatalabelingV1beta1CreateInstructionRequest: Request message for
+// CreateInstruction.
 type GoogleCloudDatalabelingV1beta1CreateInstructionRequest struct {
-	// Instruction: Required. Instruction of how to perform the labeling
-	// task.
+	// Instruction: Required. Instruction of how to perform the labeling task.
 	Instruction *GoogleCloudDatalabelingV1beta1Instruction `json:"instruction,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Instruction") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Instruction") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Instruction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1CreateInstructionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CreateInstructionRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1CsvInstruction: Deprecated: this
-// instruction format is not supported any more. Instruction from a CSV
-// file.
+// GoogleCloudDatalabelingV1beta1CsvInstruction: Deprecated: this instruction
+// format is not supported any more. Instruction from a CSV file.
 type GoogleCloudDatalabelingV1beta1CsvInstruction struct {
 	// GcsFileUri: CSV file for the instruction. Only gcs path is allowed.
 	GcsFileUri string `json:"gcsFileUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsFileUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsFileUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GcsFileUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1CsvInstruction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1CsvInstruction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1DataItem: DataItem is a piece of data,
-// without annotation. For example, an image.
+// GoogleCloudDatalabelingV1beta1DataItem: DataItem is a piece of data, without
+// annotation. For example, an image.
 type GoogleCloudDatalabelingV1beta1DataItem struct {
 	// ImagePayload: The image payload, a container of the image bytes/uri.
 	ImagePayload *GoogleCloudDatalabelingV1beta1ImagePayload `json:"imagePayload,omitempty"`
-
 	// Name: Output only. Name of the data item, in format of:
 	// projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}
 	Name string `json:"name,omitempty"`
-
 	// TextPayload: The text payload, a container of text content.
 	TextPayload *GoogleCloudDatalabelingV1beta1TextPayload `json:"textPayload,omitempty"`
-
 	// VideoPayload: The video payload, a container of the video uri.
 	VideoPayload *GoogleCloudDatalabelingV1beta1VideoPayload `json:"videoPayload,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ImagePayload") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImagePayload") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ImagePayload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1DataItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1DataItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1Dataset: Dataset is the resource to
-// hold your data. You can request multiple labeling tasks for a dataset
-// while each one will generate an AnnotatedDataset.
+// GoogleCloudDatalabelingV1beta1Dataset: Dataset is the resource to hold your
+// data. You can request multiple labeling tasks for a dataset while each one
+// will generate an AnnotatedDataset.
 type GoogleCloudDatalabelingV1beta1Dataset struct {
-	// BlockingResources: Output only. The names of any related resources
-	// that are blocking changes to the dataset.
+	// BlockingResources: Output only. The names of any related resources that are
+	// blocking changes to the dataset.
 	BlockingResources []string `json:"blockingResources,omitempty"`
-
 	// CreateTime: Output only. Time the dataset is created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// DataItemCount: Output only. The number of data items in the dataset.
 	DataItemCount int64 `json:"dataItemCount,omitempty,string"`
-
 	// Description: Optional. User-provided description of the annotation
-	// specification set. The description can be up to 10000 characters
-	// long.
+	// specification set. The description can be up to 10000 characters long.
 	Description string `json:"description,omitempty"`
-
 	// DisplayName: Required. The display name of the dataset. Maximum of 64
 	// characters.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// InputConfigs: Output only. This is populated with the original input
-	// configs where ImportData is called. It is available only after the
-	// clients import data to this dataset.
+	// InputConfigs: Output only. This is populated with the original input configs
+	// where ImportData is called. It is available only after the clients import
+	// data to this dataset.
 	InputConfigs []*GoogleCloudDatalabelingV1beta1InputConfig `json:"inputConfigs,omitempty"`
-
-	// LastMigrateTime: Last time that the Dataset is migrated to AI
-	// Platform V2. If any of the AnnotatedDataset is migrated, the
-	// last_migration_time in Dataset is also updated.
+	// LastMigrateTime: Last time that the Dataset is migrated to AI Platform V2.
+	// If any of the AnnotatedDataset is migrated, the last_migration_time in
+	// Dataset is also updated.
 	LastMigrateTime string `json:"lastMigrateTime,omitempty"`
-
 	// Name: Output only. Dataset resource name, format is:
 	// projects/{project_id}/datasets/{dataset_id}
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "BlockingResources")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BlockingResources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BlockingResources") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BlockingResources") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1Dataset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Dataset
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1Evaluation: Describes an evaluation
-// between a machine learning model's predictions and ground truth
-// labels. Created when an EvaluationJob runs successfully.
+// GoogleCloudDatalabelingV1beta1Evaluation: Describes an evaluation between a
+// machine learning model's predictions and ground truth labels. Created when
+// an EvaluationJob runs successfully.
 type GoogleCloudDatalabelingV1beta1Evaluation struct {
-	// AnnotationType: Output only. Type of task that the model version
-	// being evaluated performs, as defined in the
-	// evaluationJobConfig.inputConfig.annotationType field of the
-	// evaluation job that created this evaluation.
+	// AnnotationType: Output only. Type of task that the model version being
+	// evaluated performs, as defined in the
+	// evaluationJobConfig.inputConfig.annotationType field of the evaluation job
+	// that created this evaluation.
 	//
 	// Possible values:
 	//   "ANNOTATION_TYPE_UNSPECIFIED"
-	//   "IMAGE_CLASSIFICATION_ANNOTATION" - Classification annotations in
-	// an image. Allowed for continuous evaluation.
-	//   "IMAGE_BOUNDING_BOX_ANNOTATION" - Bounding box annotations in an
-	// image. A form of image object detection. Allowed for continuous
-	// evaluation.
-	//   "IMAGE_ORIENTED_BOUNDING_BOX_ANNOTATION" - Oriented bounding box.
-	// The box does not have to be parallel to horizontal line.
-	//   "IMAGE_BOUNDING_POLY_ANNOTATION" - Bounding poly annotations in an
-	// image.
+	//   "IMAGE_CLASSIFICATION_ANNOTATION" - Classification annotations in an
+	// image. Allowed for continuous evaluation.
+	//   "IMAGE_BOUNDING_BOX_ANNOTATION" - Bounding box annotations in an image. A
+	// form of image object detection. Allowed for continuous evaluation.
+	//   "IMAGE_ORIENTED_BOUNDING_BOX_ANNOTATION" - Oriented bounding box. The box
+	// does not have to be parallel to horizontal line.
+	//   "IMAGE_BOUNDING_POLY_ANNOTATION" - Bounding poly annotations in an image.
 	//   "IMAGE_POLYLINE_ANNOTATION" - Polyline annotations in an image.
-	//   "IMAGE_SEGMENTATION_ANNOTATION" - Segmentation annotations in an
-	// image.
-	//   "VIDEO_SHOTS_CLASSIFICATION_ANNOTATION" - Classification
-	// annotations in video shots.
-	//   "VIDEO_OBJECT_TRACKING_ANNOTATION" - Video object tracking
-	// annotation.
-	//   "VIDEO_OBJECT_DETECTION_ANNOTATION" - Video object detection
-	// annotation.
+	//   "IMAGE_SEGMENTATION_ANNOTATION" - Segmentation annotations in an image.
+	//   "VIDEO_SHOTS_CLASSIFICATION_ANNOTATION" - Classification annotations in
+	// video shots.
+	//   "VIDEO_OBJECT_TRACKING_ANNOTATION" - Video object tracking annotation.
+	//   "VIDEO_OBJECT_DETECTION_ANNOTATION" - Video object detection annotation.
 	//   "VIDEO_EVENT_ANNOTATION" - Video event annotation.
-	//   "TEXT_CLASSIFICATION_ANNOTATION" - Classification for text. Allowed
-	// for continuous evaluation.
+	//   "TEXT_CLASSIFICATION_ANNOTATION" - Classification for text. Allowed for
+	// continuous evaluation.
 	//   "TEXT_ENTITY_EXTRACTION_ANNOTATION" - Entity extraction for text.
-	//   "GENERAL_CLASSIFICATION_ANNOTATION" - General classification.
-	// Allowed for continuous evaluation.
+	//   "GENERAL_CLASSIFICATION_ANNOTATION" - General classification. Allowed for
+	// continuous evaluation.
 	AnnotationType string `json:"annotationType,omitempty"`
-
-	// Config: Output only. Options used in the evaluation job that created
-	// this evaluation.
+	// Config: Output only. Options used in the evaluation job that created this
+	// evaluation.
 	Config *GoogleCloudDatalabelingV1beta1EvaluationConfig `json:"config,omitempty"`
-
-	// CreateTime: Output only. Timestamp for when this evaluation was
-	// created.
+	// CreateTime: Output only. Timestamp for when this evaluation was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// EvaluatedItemCount: Output only. The number of items in the ground
-	// truth dataset that were used for this evaluation. Only populated when
-	// the evaulation is for certain AnnotationTypes.
+	// EvaluatedItemCount: Output only. The number of items in the ground truth
+	// dataset that were used for this evaluation. Only populated when the
+	// evaulation is for certain AnnotationTypes.
 	EvaluatedItemCount int64 `json:"evaluatedItemCount,omitempty,string"`
-
-	// EvaluationJobRunTime: Output only. Timestamp for when the evaluation
-	// job that created this evaluation ran.
+	// EvaluationJobRunTime: Output only. Timestamp for when the evaluation job
+	// that created this evaluation ran.
 	EvaluationJobRunTime string `json:"evaluationJobRunTime,omitempty"`
-
-	// EvaluationMetrics: Output only. Metrics comparing predictions to
-	// ground truth labels.
+	// EvaluationMetrics: Output only. Metrics comparing predictions to ground
+	// truth labels.
 	EvaluationMetrics *GoogleCloudDatalabelingV1beta1EvaluationMetrics `json:"evaluationMetrics,omitempty"`
-
 	// Name: Output only. Resource name of an evaluation. The name has the
-	// following format:
-	// "projects/{project_id}/datasets/{dataset_id}/evaluations/
+	// following format: "projects/{project_id}/datasets/{dataset_id}/evaluations/
 	// {evaluation_id}'
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1Evaluation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Evaluation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1EvaluationConfig: Configuration details
-// used for calculating evaluation metrics and creating an Evaluation.
+// GoogleCloudDatalabelingV1beta1EvaluationConfig: Configuration details used
+// for calculating evaluation metrics and creating an Evaluation.
 type GoogleCloudDatalabelingV1beta1EvaluationConfig struct {
-	// BoundingBoxEvaluationOptions: Only specify this field if the related
-	// model performs image object detection
-	// (`IMAGE_BOUNDING_BOX_ANNOTATION`). Describes how to evaluate bounding
-	// boxes.
+	// BoundingBoxEvaluationOptions: Only specify this field if the related model
+	// performs image object detection (`IMAGE_BOUNDING_BOX_ANNOTATION`). Describes
+	// how to evaluate bounding boxes.
 	BoundingBoxEvaluationOptions *GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions `json:"boundingBoxEvaluationOptions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "BoundingBoxEvaluationOptions") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "BoundingBoxEvaluationOptions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "BoundingBoxEvaluationOptions") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BoundingBoxEvaluationOptions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1EvaluationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EvaluationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1EvaluationJob: Defines an evaluation
-// job that runs periodically to generate Evaluations. Creating an
-// evaluation job (/ml-engine/docs/continuous-evaluation/create-job) is
-// the starting point for using continuous evaluation.
+// GoogleCloudDatalabelingV1beta1EvaluationJob: Defines an evaluation job that
+// runs periodically to generate Evaluations. Creating an evaluation job
+// (/ml-engine/docs/continuous-evaluation/create-job) is the starting point for
+// using continuous evaluation.
 type GoogleCloudDatalabelingV1beta1EvaluationJob struct {
-	// AnnotationSpecSet: Required. Name of the AnnotationSpecSet describing
-	// all the labels that your machine learning model outputs. You must
-	// create this resource before you create an evaluation job and provide
-	// its name in the following format:
+	// AnnotationSpecSet: Required. Name of the AnnotationSpecSet describing all
+	// the labels that your machine learning model outputs. You must create this
+	// resource before you create an evaluation job and provide its name in the
+	// following format:
 	// "projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}"
 	AnnotationSpecSet string `json:"annotationSpecSet,omitempty"`
-
-	// Attempts: Output only. Every time the evaluation job runs and an
-	// error occurs, the failed attempt is appended to this array.
+	// Attempts: Output only. Every time the evaluation job runs and an error
+	// occurs, the failed attempt is appended to this array.
 	Attempts []*GoogleCloudDatalabelingV1beta1Attempt `json:"attempts,omitempty"`
-
-	// CreateTime: Output only. Timestamp of when this evaluation job was
-	// created.
+	// CreateTime: Output only. Timestamp of when this evaluation job was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Description: Required. Description of the job. The description can be
-	// up to 25,000 characters long.
+	// Description: Required. Description of the job. The description can be up to
+	// 25,000 characters long.
 	Description string `json:"description,omitempty"`
-
-	// EvaluationJobConfig: Required. Configuration details for the
-	// evaluation job.
+	// EvaluationJobConfig: Required. Configuration details for the evaluation job.
 	EvaluationJobConfig *GoogleCloudDatalabelingV1beta1EvaluationJobConfig `json:"evaluationJobConfig,omitempty"`
-
-	// LabelMissingGroundTruth: Required. Whether you want Data Labeling
-	// Service to provide ground truth labels for prediction input. If you
-	// want the service to assign human labelers to annotate your data, set
-	// this to `true`. If you want to provide your own ground truth labels
-	// in the evaluation job's BigQuery table, set this to `false`.
+	// LabelMissingGroundTruth: Required. Whether you want Data Labeling Service to
+	// provide ground truth labels for prediction input. If you want the service to
+	// assign human labelers to annotate your data, set this to `true`. If you want
+	// to provide your own ground truth labels in the evaluation job's BigQuery
+	// table, set this to `false`.
 	LabelMissingGroundTruth bool `json:"labelMissingGroundTruth,omitempty"`
-
 	// ModelVersion: Required. The AI Platform Prediction model version
-	// (/ml-engine/docs/prediction-overview) to be evaluated. Prediction
-	// input and output is sampled from this model version. When creating an
-	// evaluation job, specify the model version in the following format:
-	// "projects/{project_id}/models/{model_name}/versions/{version_name}"
-	// There can only be one evaluation job per model version.
+	// (/ml-engine/docs/prediction-overview) to be evaluated. Prediction input and
+	// output is sampled from this model version. When creating an evaluation job,
+	// specify the model version in the following format:
+	// "projects/{project_id}/models/{model_name}/versions/{version_name}" There
+	// can only be one evaluation job per model version.
 	ModelVersion string `json:"modelVersion,omitempty"`
-
-	// Name: Output only. After you create a job, Data Labeling Service
-	// assigns a name to the job with the following format:
+	// Name: Output only. After you create a job, Data Labeling Service assigns a
+	// name to the job with the following format:
 	// "projects/{project_id}/evaluationJobs/ {evaluation_job_id}"
 	Name string `json:"name,omitempty"`
-
-	// Schedule: Required. Describes the interval at which the job runs.
-	// This interval must be at least 1 day, and it is rounded to the
-	// nearest day. For example, if you specify a 50-hour interval, the job
-	// runs every 2 days. You can provide the schedule in crontab format
-	// (/scheduler/docs/configuring/cron-job-schedules) or in an
-	// English-like format
-	// (/appengine/docs/standard/python/config/cronref#schedule_format).
-	// Regardless of what you specify, the job will run at 10:00 AM UTC.
-	// Only the interval from this schedule is used, not the specific time
-	// of day.
+	// Schedule: Required. Describes the interval at which the job runs. This
+	// interval must be at least 1 day, and it is rounded to the nearest day. For
+	// example, if you specify a 50-hour interval, the job runs every 2 days. You
+	// can provide the schedule in crontab format
+	// (/scheduler/docs/configuring/cron-job-schedules) or in an English-like
+	// format (/appengine/docs/standard/python/config/cronref#schedule_format).
+	// Regardless of what you specify, the job will run at 10:00 AM UTC. Only the
+	// interval from this schedule is used, not the specific time of day.
 	Schedule string `json:"schedule,omitempty"`
-
 	// State: Output only. Describes the current state of the job.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED"
-	//   "SCHEDULED" - The job is scheduled to run at the configured
-	// interval. You can pause or delete the job. When the job is in this
-	// state, it samples prediction input and output from your model version
-	// into your BigQuery table as predictions occur.
-	//   "RUNNING" - The job is currently running. When the job runs, Data
-	// Labeling Service does several things: 1. If you have configured your
-	// job to use Data Labeling Service for ground truth labeling, the
-	// service creates a Dataset and a labeling task for all data sampled
-	// since the last time the job ran. Human labelers provide ground truth
-	// labels for your data. Human labeling may take hours, or even days,
-	// depending on how much data has been sampled. The job remains in the
-	// `RUNNING` state during this time, and it can even be running multiple
-	// times in parallel if it gets triggered again (for example 24 hours
-	// later) before the earlier run has completed. When human labelers have
-	// finished labeling the data, the next step occurs. If you have
-	// configured your job to provide your own ground truth labels, Data
-	// Labeling Service still creates a Dataset for newly sampled data, but
-	// it expects that you have already added ground truth labels to the
-	// BigQuery table by this time. The next step occurs immediately. 2.
-	// Data Labeling Service creates an Evaluation by comparing your model
-	// version's predictions with the ground truth labels. If the job
-	// remains in this state for a long time, it continues to sample
-	// prediction data into your BigQuery table and will run again at the
-	// next interval, even if it causes the job to run multiple times in
-	// parallel.
-	//   "PAUSED" - The job is not sampling prediction input and output into
-	// your BigQuery table and it will not run according to its schedule.
-	// You can resume the job.
+	//   "SCHEDULED" - The job is scheduled to run at the configured interval. You
+	// can pause or delete the job. When the job is in this state, it samples
+	// prediction input and output from your model version into your BigQuery table
+	// as predictions occur.
+	//   "RUNNING" - The job is currently running. When the job runs, Data Labeling
+	// Service does several things: 1. If you have configured your job to use Data
+	// Labeling Service for ground truth labeling, the service creates a Dataset
+	// and a labeling task for all data sampled since the last time the job ran.
+	// Human labelers provide ground truth labels for your data. Human labeling may
+	// take hours, or even days, depending on how much data has been sampled. The
+	// job remains in the `RUNNING` state during this time, and it can even be
+	// running multiple times in parallel if it gets triggered again (for example
+	// 24 hours later) before the earlier run has completed. When human labelers
+	// have finished labeling the data, the next step occurs. If you have
+	// configured your job to provide your own ground truth labels, Data Labeling
+	// Service still creates a Dataset for newly sampled data, but it expects that
+	// you have already added ground truth labels to the BigQuery table by this
+	// time. The next step occurs immediately. 2. Data Labeling Service creates an
+	// Evaluation by comparing your model version's predictions with the ground
+	// truth labels. If the job remains in this state for a long time, it continues
+	// to sample prediction data into your BigQuery table and will run again at the
+	// next interval, even if it causes the job to run multiple times in parallel.
+	//   "PAUSED" - The job is not sampling prediction input and output into your
+	// BigQuery table and it will not run according to its schedule. You can resume
+	// the job.
 	//   "STOPPED" - The job has this state right before it is deleted.
 	State string `json:"state,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1EvaluationJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EvaluationJob
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig: Provides
-// details for how an evaluation job sends email alerts based on the
-// results of a run.
+// GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig: Provides details for
+// how an evaluation job sends email alerts based on the results of a run.
 type GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig struct {
 	// Email: Required. An email address to send alerts to.
 	Email string `json:"email,omitempty"`
-
-	// MinAcceptableMeanAveragePrecision: Required. A number between 0 and 1
-	// that describes a minimum mean average precision threshold. When the
-	// evaluation job runs, if it calculates that your model version's
-	// predictions from the recent interval have meanAveragePrecision below
-	// this threshold, then it sends an alert to your specified email.
+	// MinAcceptableMeanAveragePrecision: Required. A number between 0 and 1 that
+	// describes a minimum mean average precision threshold. When the evaluation
+	// job runs, if it calculates that your model version's predictions from the
+	// recent interval have meanAveragePrecision below this threshold, then it
+	// sends an alert to your specified email.
 	MinAcceptableMeanAveragePrecision float64 `json:"minAcceptableMeanAveragePrecision,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Email") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Email") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig) UnmarshalJSON(data []byte) error {
@@ -2677,118 +2151,93 @@ func (s *GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig) UnmarshalJSON(d
 	return nil
 }
 
-// GoogleCloudDatalabelingV1beta1EvaluationJobConfig: Configures
-// specific details of how a continuous evaluation job works. Provide
-// this configuration when you create an EvaluationJob.
+// GoogleCloudDatalabelingV1beta1EvaluationJobConfig: Configures specific
+// details of how a continuous evaluation job works. Provide this configuration
+// when you create an EvaluationJob.
 type GoogleCloudDatalabelingV1beta1EvaluationJobConfig struct {
 	// BigqueryImportKeys: Required. Prediction keys that tell Data Labeling
-	// Service where to find the data for evaluation in your BigQuery table.
-	// When the service samples prediction input and output from your model
-	// version and saves it to BigQuery, the data gets stored as JSON
-	// strings in the BigQuery table. These keys tell Data Labeling Service
-	// how to parse the JSON. You can provide the following entries in this
-	// field: * `data_json_key`: the data key for prediction input. You must
-	// provide either this key or `reference_json_key`. *
-	// `reference_json_key`: the data reference key for prediction input.
-	// You must provide either this key or `data_json_key`. *
+	// Service where to find the data for evaluation in your BigQuery table. When
+	// the service samples prediction input and output from your model version and
+	// saves it to BigQuery, the data gets stored as JSON strings in the BigQuery
+	// table. These keys tell Data Labeling Service how to parse the JSON. You can
+	// provide the following entries in this field: * `data_json_key`: the data key
+	// for prediction input. You must provide either this key or
+	// `reference_json_key`. * `reference_json_key`: the data reference key for
+	// prediction input. You must provide either this key or `data_json_key`. *
 	// `label_json_key`: the label key for prediction output. Required. *
-	// `label_score_json_key`: the score key for prediction output.
-	// Required. * `bounding_box_json_key`: the bounding box key for
-	// prediction output. Required if your model version perform image
-	// object detection. Learn how to configure prediction keys
+	// `label_score_json_key`: the score key for prediction output. Required. *
+	// `bounding_box_json_key`: the bounding box key for prediction output.
+	// Required if your model version perform image object detection. Learn how to
+	// configure prediction keys
 	// (/ml-engine/docs/continuous-evaluation/create-job#prediction-keys).
 	BigqueryImportKeys map[string]string `json:"bigqueryImportKeys,omitempty"`
-
-	// BoundingPolyConfig: Specify this field if your model version performs
-	// image object detection (bounding box detection). `annotationSpecSet`
-	// in this configuration must match EvaluationJob.annotationSpecSet.
+	// BoundingPolyConfig: Specify this field if your model version performs image
+	// object detection (bounding box detection). `annotationSpecSet` in this
+	// configuration must match EvaluationJob.annotationSpecSet.
 	BoundingPolyConfig *GoogleCloudDatalabelingV1beta1BoundingPolyConfig `json:"boundingPolyConfig,omitempty"`
-
-	// EvaluationConfig: Required. Details for calculating evaluation
-	// metrics and creating Evaulations. If your model version performs
-	// image object detection, you must specify the
-	// `boundingBoxEvaluationOptions` field within this configuration.
-	// Otherwise, provide an empty object for this configuration.
+	// EvaluationConfig: Required. Details for calculating evaluation metrics and
+	// creating Evaulations. If your model version performs image object detection,
+	// you must specify the `boundingBoxEvaluationOptions` field within this
+	// configuration. Otherwise, provide an empty object for this configuration.
 	EvaluationConfig *GoogleCloudDatalabelingV1beta1EvaluationConfig `json:"evaluationConfig,omitempty"`
-
-	// EvaluationJobAlertConfig: Optional. Configuration details for
-	// evaluation job alerts. Specify this field if you want to receive
-	// email alerts if the evaluation job finds that your predictions have
-	// low mean average precision during a run.
+	// EvaluationJobAlertConfig: Optional. Configuration details for evaluation job
+	// alerts. Specify this field if you want to receive email alerts if the
+	// evaluation job finds that your predictions have low mean average precision
+	// during a run.
 	EvaluationJobAlertConfig *GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig `json:"evaluationJobAlertConfig,omitempty"`
-
-	// ExampleCount: Required. The maximum number of predictions to sample
-	// and save to BigQuery during each evaluation interval. This limit
-	// overrides `example_sample_percentage`: even if the service has not
-	// sampled enough predictions to fulfill `example_sample_perecentage`
-	// during an interval, it stops sampling predictions when it meets this
-	// limit.
+	// ExampleCount: Required. The maximum number of predictions to sample and save
+	// to BigQuery during each evaluation interval. This limit overrides
+	// `example_sample_percentage`: even if the service has not sampled enough
+	// predictions to fulfill `example_sample_perecentage` during an interval, it
+	// stops sampling predictions when it meets this limit.
 	ExampleCount int64 `json:"exampleCount,omitempty"`
-
-	// ExampleSamplePercentage: Required. Fraction of predictions to sample
-	// and save to BigQuery during each evaluation interval. For example,
-	// 0.1 means 10% of predictions served by your model version get saved
-	// to BigQuery.
+	// ExampleSamplePercentage: Required. Fraction of predictions to sample and
+	// save to BigQuery during each evaluation interval. For example, 0.1 means 10%
+	// of predictions served by your model version get saved to BigQuery.
 	ExampleSamplePercentage float64 `json:"exampleSamplePercentage,omitempty"`
-
-	// HumanAnnotationConfig: Optional. Details for human annotation of your
-	// data. If you set labelMissingGroundTruth to `true` for this
-	// evaluation job, then you must specify this field. If you plan to
-	// provide your own ground truth labels, then omit this field. Note that
-	// you must create an Instruction resource before you can specify this
-	// field. Provide the name of the instruction resource in the
-	// `instruction` field within this configuration.
+	// HumanAnnotationConfig: Optional. Details for human annotation of your data.
+	// If you set labelMissingGroundTruth to `true` for this evaluation job, then
+	// you must specify this field. If you plan to provide your own ground truth
+	// labels, then omit this field. Note that you must create an Instruction
+	// resource before you can specify this field. Provide the name of the
+	// instruction resource in the `instruction` field within this configuration.
 	HumanAnnotationConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"humanAnnotationConfig,omitempty"`
-
-	// ImageClassificationConfig: Specify this field if your model version
-	// performs image classification or general classification.
-	// `annotationSpecSet` in this configuration must match
-	// EvaluationJob.annotationSpecSet. `allowMultiLabel` in this
-	// configuration must match `classificationMetadata.isMultiLabel` in
+	// ImageClassificationConfig: Specify this field if your model version performs
+	// image classification or general classification. `annotationSpecSet` in this
+	// configuration must match EvaluationJob.annotationSpecSet. `allowMultiLabel`
+	// in this configuration must match `classificationMetadata.isMultiLabel` in
 	// input_config.
 	ImageClassificationConfig *GoogleCloudDatalabelingV1beta1ImageClassificationConfig `json:"imageClassificationConfig,omitempty"`
-
-	// InputConfig: Rquired. Details for the sampled prediction input.
-	// Within this configuration, there are requirements for several fields:
-	// * `dataType` must be one of `IMAGE`, `TEXT`, or `GENERAL_DATA`. *
-	// `annotationType` must be one of `IMAGE_CLASSIFICATION_ANNOTATION`,
-	// `TEXT_CLASSIFICATION_ANNOTATION`,
-	// `GENERAL_CLASSIFICATION_ANNOTATION`, or
-	// `IMAGE_BOUNDING_BOX_ANNOTATION` (image object detection). * If your
-	// machine learning model performs classification, you must specify
-	// `classificationMetadata.isMultiLabel`. * You must specify
-	// `bigquerySource` (not `gcsSource`).
+	// InputConfig: Rquired. Details for the sampled prediction input. Within this
+	// configuration, there are requirements for several fields: * `dataType` must
+	// be one of `IMAGE`, `TEXT`, or `GENERAL_DATA`. * `annotationType` must be one
+	// of `IMAGE_CLASSIFICATION_ANNOTATION`, `TEXT_CLASSIFICATION_ANNOTATION`,
+	// `GENERAL_CLASSIFICATION_ANNOTATION`, or `IMAGE_BOUNDING_BOX_ANNOTATION`
+	// (image object detection). * If your machine learning model performs
+	// classification, you must specify `classificationMetadata.isMultiLabel`. *
+	// You must specify `bigquerySource` (not `gcsSource`).
 	InputConfig *GoogleCloudDatalabelingV1beta1InputConfig `json:"inputConfig,omitempty"`
-
-	// TextClassificationConfig: Specify this field if your model version
-	// performs text classification. `annotationSpecSet` in this
-	// configuration must match EvaluationJob.annotationSpecSet.
-	// `allowMultiLabel` in this configuration must match
-	// `classificationMetadata.isMultiLabel` in input_config.
+	// TextClassificationConfig: Specify this field if your model version performs
+	// text classification. `annotationSpecSet` in this configuration must match
+	// EvaluationJob.annotationSpecSet. `allowMultiLabel` in this configuration
+	// must match `classificationMetadata.isMultiLabel` in input_config.
 	TextClassificationConfig *GoogleCloudDatalabelingV1beta1TextClassificationConfig `json:"textClassificationConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BigqueryImportKeys")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BigqueryImportKeys") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BigqueryImportKeys") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BigqueryImportKeys") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1EvaluationJobConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EvaluationJobConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1EvaluationJobConfig) UnmarshalJSON(data []byte) error {
@@ -2806,123 +2255,93 @@ func (s *GoogleCloudDatalabelingV1beta1EvaluationJobConfig) UnmarshalJSON(data [
 }
 
 type GoogleCloudDatalabelingV1beta1EvaluationMetrics struct {
-	ClassificationMetrics *GoogleCloudDatalabelingV1beta1ClassificationMetrics `json:"classificationMetrics,omitempty"`
-
+	ClassificationMetrics  *GoogleCloudDatalabelingV1beta1ClassificationMetrics  `json:"classificationMetrics,omitempty"`
 	ObjectDetectionMetrics *GoogleCloudDatalabelingV1beta1ObjectDetectionMetrics `json:"objectDetectionMetrics,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ClassificationMetrics") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ClassificationMetrics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "ClassificationMetrics") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1EvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EvaluationMetrics
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1EventConfig: Config for video event
-// human labeling task.
+// GoogleCloudDatalabelingV1beta1EventConfig: Config for video event human
+// labeling task.
 type GoogleCloudDatalabelingV1beta1EventConfig struct {
-	// AnnotationSpecSets: Required. The list of annotation spec set
-	// resource name. Similar to video classification, we support selecting
-	// event from multiple AnnotationSpecSet at the same time.
+	// AnnotationSpecSets: Required. The list of annotation spec set resource name.
+	// Similar to video classification, we support selecting event from multiple
+	// AnnotationSpecSet at the same time.
 	AnnotationSpecSets []string `json:"annotationSpecSets,omitempty"`
-
 	// ClipLength: Videos will be cut to smaller clips to make it easier for
-	// labelers to work on. Users can configure is field in seconds, if not
-	// set, default value is 60s.
+	// labelers to work on. Users can configure is field in seconds, if not set,
+	// default value is 60s.
 	ClipLength int64 `json:"clipLength,omitempty"`
-
-	// OverlapLength: The overlap length between different video clips.
-	// Users can configure is field in seconds, if not set, default value is
-	// 1s.
+	// OverlapLength: The overlap length between different video clips. Users can
+	// configure is field in seconds, if not set, default value is 1s.
 	OverlapLength int64 `json:"overlapLength,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSets")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecSets") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecSets") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1EventConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1EventConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1Example: An Example is a piece of data
-// and its annotation. For example, an image with label "house".
+// GoogleCloudDatalabelingV1beta1Example: An Example is a piece of data and its
+// annotation. For example, an image with label "house".
 type GoogleCloudDatalabelingV1beta1Example struct {
-	// Annotations: Output only. Annotations for the piece of data in
-	// Example. One piece of data can have multiple annotations.
+	// Annotations: Output only. Annotations for the piece of data in Example. One
+	// piece of data can have multiple annotations.
 	Annotations []*GoogleCloudDatalabelingV1beta1Annotation `json:"annotations,omitempty"`
-
 	// ImagePayload: The image payload, a container of the image bytes/uri.
 	ImagePayload *GoogleCloudDatalabelingV1beta1ImagePayload `json:"imagePayload,omitempty"`
-
 	// Name: Output only. Name of the example, in format of:
 	// projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
 	// {annotated_dataset_id}/examples/{example_id}
 	Name string `json:"name,omitempty"`
-
 	// TextPayload: The text payload, a container of the text content.
 	TextPayload *GoogleCloudDatalabelingV1beta1TextPayload `json:"textPayload,omitempty"`
-
 	// VideoPayload: The video payload, a container of the video uri.
 	VideoPayload *GoogleCloudDatalabelingV1beta1VideoPayload `json:"videoPayload,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Annotations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1Example) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Example
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ExampleComparison: Example comparisons
@@ -2930,329 +2349,249 @@ func (s *GoogleCloudDatalabelingV1beta1Example) MarshalJSON() ([]byte, error) {
 type GoogleCloudDatalabelingV1beta1ExampleComparison struct {
 	// GroundTruthExample: The ground truth output for the input.
 	GroundTruthExample *GoogleCloudDatalabelingV1beta1Example `json:"groundTruthExample,omitempty"`
-
 	// ModelCreatedExamples: Predictions by the model for the input.
 	ModelCreatedExamples []*GoogleCloudDatalabelingV1beta1Example `json:"modelCreatedExamples,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GroundTruthExample")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "GroundTruthExample") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GroundTruthExample") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GroundTruthExample") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ExampleComparison) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ExampleComparison
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ExportDataOperationMetadata: Metadata
-// of an ExportData operation.
+// GoogleCloudDatalabelingV1beta1ExportDataOperationMetadata: Metadata of an
+// ExportData operation.
 type GoogleCloudDatalabelingV1beta1ExportDataOperationMetadata struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
-	// CreateTime: Output only. Timestamp when export dataset request was
-	// created.
+	// CreateTime: Output only. Timestamp when export dataset request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Dataset: Output only. The name of dataset to be exported.
 	// "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ExportDataOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ExportDataOperationResponse: Response
-// used for ExportDataset longrunning operation.
+// GoogleCloudDatalabelingV1beta1ExportDataOperationResponse: Response used for
+// ExportDataset longrunning operation.
 type GoogleCloudDatalabelingV1beta1ExportDataOperationResponse struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
 	// Dataset: Ouptut only. The name of dataset. "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
 	// ExportCount: Output only. Number of examples exported successfully.
 	ExportCount int64 `json:"exportCount,omitempty"`
-
-	// LabelStats: Output only. Statistic infos of labels in the exported
-	// dataset.
+	// LabelStats: Output only. Statistic infos of labels in the exported dataset.
 	LabelStats *GoogleCloudDatalabelingV1beta1LabelStats `json:"labelStats,omitempty"`
-
 	// OutputConfig: Output only. output_config in the ExportData request.
 	OutputConfig *GoogleCloudDatalabelingV1beta1OutputConfig `json:"outputConfig,omitempty"`
-
 	// TotalCount: Output only. Total number of examples requested to export
 	TotalCount int64 `json:"totalCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ExportDataOperationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ExportDataRequest: Request message for
 // ExportData API.
 type GoogleCloudDatalabelingV1beta1ExportDataRequest struct {
-	// AnnotatedDataset: Required. Annotated dataset resource name. DataItem
-	// in Dataset and their annotations in specified annotated dataset will
-	// be exported. It's in format of
+	// AnnotatedDataset: Required. Annotated dataset resource name. DataItem in
+	// Dataset and their annotations in specified annotated dataset will be
+	// exported. It's in format of
 	// projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
 	// {annotated_dataset_id}
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
 	// Filter: Optional. Filter is not supported at this moment.
 	Filter string `json:"filter,omitempty"`
-
 	// OutputConfig: Required. Specify the output destination.
 	OutputConfig *GoogleCloudDatalabelingV1beta1OutputConfig `json:"outputConfig,omitempty"`
-
-	// UserEmailAddress: Email of the user who started the export task and
-	// should be notified by email. If empty no notification will be sent.
+	// UserEmailAddress: Email of the user who started the export task and should
+	// be notified by email. If empty no notification will be sent.
 	UserEmailAddress string `json:"userEmailAddress,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ExportDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ExportDataRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1FeedbackMessage: A feedback message
-// inside a feedback thread.
+// GoogleCloudDatalabelingV1beta1FeedbackMessage: A feedback message inside a
+// feedback thread.
 type GoogleCloudDatalabelingV1beta1FeedbackMessage struct {
 	// Body: String content of the feedback. Maximum of 10000 characters.
 	Body string `json:"body,omitempty"`
-
 	// CreateTime: Create time.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Image: The image storing this feedback if the feedback is an image
 	// representing operator's comments.
 	Image string `json:"image,omitempty"`
-
 	// Name: Name of the feedback message in a feedback thread. Format:
-	// 'project/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotat
-	// ed_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessage/{f
-	// eedback_message_id}'
-	Name string `json:"name,omitempty"`
-
-	OperatorFeedbackMetadata *GoogleCloudDatalabelingV1beta1OperatorFeedbackMetadata `json:"operatorFeedbackMetadata,omitempty"`
-
+	// 'project/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_data
+	// set_id}/feedbackThreads/{feedback_thread_id}/feedbackMessage/{feedback_messag
+	// e_id}'
+	Name                      string                                                   `json:"name,omitempty"`
+	OperatorFeedbackMetadata  *GoogleCloudDatalabelingV1beta1OperatorFeedbackMetadata  `json:"operatorFeedbackMetadata,omitempty"`
 	RequesterFeedbackMetadata *GoogleCloudDatalabelingV1beta1RequesterFeedbackMetadata `json:"requesterFeedbackMetadata,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Body") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Body") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1FeedbackMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1FeedbackMessage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1FeedbackThread: A feedback thread of a
-// certain labeling task on a certain annotated dataset.
+// GoogleCloudDatalabelingV1beta1FeedbackThread: A feedback thread of a certain
+// labeling task on a certain annotated dataset.
 type GoogleCloudDatalabelingV1beta1FeedbackThread struct {
 	// FeedbackThreadMetadata: Metadata regarding the feedback thread.
 	FeedbackThreadMetadata *GoogleCloudDatalabelingV1beta1FeedbackThreadMetadata `json:"feedbackThreadMetadata,omitempty"`
-
 	// Name: Name of the feedback thread. Format:
-	// 'project/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotat
-	// ed_dataset_id}/feedbackThreads/{feedback_thread_id}'
+	// 'project/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_data
+	// set_id}/feedbackThreads/{feedback_thread_id}'
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "FeedbackThreadMetadata") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "FeedbackThreadMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FeedbackThreadMetadata")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FeedbackThreadMetadata") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1FeedbackThread) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1FeedbackThread
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDatalabelingV1beta1FeedbackThreadMetadata struct {
 	// CreateTime: When the thread is created
 	CreateTime string `json:"createTime,omitempty"`
-
 	// LastUpdateTime: When the thread is last updated.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
-
 	// Possible values:
 	//   "FEEDBACK_THREAD_STATUS_UNSPECIFIED"
 	//   "NEW" - Feedback thread is created with no reply;
 	//   "REPLIED" - Feedback thread is replied at least once;
 	Status string `json:"status,omitempty"`
-
 	// Thumbnail: An image thumbnail of this thread.
 	Thumbnail string `json:"thumbnail,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1FeedbackThreadMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1FeedbackThreadMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1GcsDestination: Export destination of
-// the data.Only gcs path is allowed in output_uri.
+// GoogleCloudDatalabelingV1beta1GcsDestination: Export destination of the
+// data.Only gcs path is allowed in output_uri.
 type GoogleCloudDatalabelingV1beta1GcsDestination struct {
-	// MimeType: Required. The format of the gcs destination. Only
-	// "text/csv" and "application/json" are supported.
+	// MimeType: Required. The format of the gcs destination. Only "text/csv" and
+	// "application/json" are supported.
 	MimeType string `json:"mimeType,omitempty"`
-
 	// OutputUri: Required. The output uri of destination file.
 	OutputUri string `json:"outputUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MimeType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MimeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1GcsDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1GcsFolderDestination: Export folder
@@ -3260,170 +2599,130 @@ func (s *GoogleCloudDatalabelingV1beta1GcsDestination) MarshalJSON() ([]byte, er
 type GoogleCloudDatalabelingV1beta1GcsFolderDestination struct {
 	// OutputFolderUri: Required. Cloud Storage directory to export data to.
 	OutputFolderUri string `json:"outputFolderUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OutputFolderUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OutputFolderUri") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "OutputFolderUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1GcsFolderDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1GcsFolderDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1GcsSource: Source of the Cloud Storage
-// file to be imported.
+// GoogleCloudDatalabelingV1beta1GcsSource: Source of the Cloud Storage file to
+// be imported.
 type GoogleCloudDatalabelingV1beta1GcsSource struct {
-	// InputUri: Required. The input URI of source file. This must be a
-	// Cloud Storage path (`gs://...`).
+	// InputUri: Required. The input URI of source file. This must be a Cloud
+	// Storage path (`gs://...`).
 	InputUri string `json:"inputUri,omitempty"`
-
 	// MimeType: Required. The format of the source file. Only "text/csv" is
 	// supported.
 	MimeType string `json:"mimeType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InputUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InputUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1GcsSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1HumanAnnotationConfig: Configuration
-// for how human labeling task should be done.
+// GoogleCloudDatalabelingV1beta1HumanAnnotationConfig: Configuration for how
+// human labeling task should be done.
 type GoogleCloudDatalabelingV1beta1HumanAnnotationConfig struct {
-	// AnnotatedDatasetDescription: Optional. A human-readable description
-	// for AnnotatedDataset. The description can be up to 10000 characters
-	// long.
+	// AnnotatedDatasetDescription: Optional. A human-readable description for
+	// AnnotatedDataset. The description can be up to 10000 characters long.
 	AnnotatedDatasetDescription string `json:"annotatedDatasetDescription,omitempty"`
-
 	// AnnotatedDatasetDisplayName: Required. A human-readable name for
 	// AnnotatedDataset defined by users. Maximum of 64 characters .
 	AnnotatedDatasetDisplayName string `json:"annotatedDatasetDisplayName,omitempty"`
-
-	// ContributorEmails: Optional. If you want your own labeling
-	// contributors to manage and work on this labeling request, you can set
-	// these contributors here. We will give them access to the question
-	// types in crowdcompute. Note that these emails must be registered in
-	// crowdcompute worker UI: https://crowd-compute.appspot.com/
+	// ContributorEmails: Optional. If you want your own labeling contributors to
+	// manage and work on this labeling request, you can set these contributors
+	// here. We will give them access to the question types in crowdcompute. Note
+	// that these emails must be registered in crowdcompute worker UI:
+	// https://crowd-compute.appspot.com/
 	ContributorEmails []string `json:"contributorEmails,omitempty"`
-
 	// Instruction: Required. Instruction resource name.
 	Instruction string `json:"instruction,omitempty"`
-
 	// LabelGroup: Optional. A human-readable label used to logically group
 	// labeling tasks. This string must match the regular expression
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
-
 	// LanguageCode: Optional. The Language of this question, as a BCP-47
-	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
-	// en-US. Only need to set this when task is language related. For
-	// example, French text classification.
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is en-US. Only
+	// need to set this when task is language related. For example, French text
+	// classification.
 	LanguageCode string `json:"languageCode,omitempty"`
-
-	// QuestionDuration: Optional. Maximum duration for contributors to
-	// answer a question. Maximum is 3600 seconds. Default is 3600 seconds.
+	// QuestionDuration: Optional. Maximum duration for contributors to answer a
+	// question. Maximum is 3600 seconds. Default is 3600 seconds.
 	QuestionDuration string `json:"questionDuration,omitempty"`
-
-	// ReplicaCount: Optional. Replication of questions. Each question will
-	// be sent to up to this number of contributors to label. Aggregated
-	// answers will be returned. Default is set to 1. For image related
-	// labeling, valid values are 1, 3, 5.
+	// ReplicaCount: Optional. Replication of questions. Each question will be sent
+	// to up to this number of contributors to label. Aggregated answers will be
+	// returned. Default is set to 1. For image related labeling, valid values are
+	// 1, 3, 5.
 	ReplicaCount int64 `json:"replicaCount,omitempty"`
-
-	// UserEmailAddress: Email of the user who started the labeling task and
-	// should be notified by email. If empty no notification will be sent.
+	// UserEmailAddress: Email of the user who started the labeling task and should
+	// be notified by email. If empty no notification will be sent.
 	UserEmailAddress string `json:"userEmailAddress,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "AnnotatedDatasetDescription") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "AnnotatedDatasetDescription") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "AnnotatedDatasetDescription") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDatasetDescription") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1HumanAnnotationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation: Image
-// bounding poly annotation. It represents a polygon including bounding
-// box in the image.
+// GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation: Image bounding
+// poly annotation. It represents a polygon including bounding box in the
+// image.
 type GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation struct {
 	// AnnotationSpec: Label of object in this bounding polygon.
-	AnnotationSpec *GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpec,omitempty"`
-
-	BoundingPoly *GoogleCloudDatalabelingV1beta1BoundingPoly `json:"boundingPoly,omitempty"`
-
+	AnnotationSpec         *GoogleCloudDatalabelingV1beta1AnnotationSpec         `json:"annotationSpec,omitempty"`
+	BoundingPoly           *GoogleCloudDatalabelingV1beta1BoundingPoly           `json:"boundingPoly,omitempty"`
 	NormalizedBoundingPoly *GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly `json:"normalizedBoundingPoly,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImageClassificationAnnotation: Image
@@ -3431,43 +2730,33 @@ func (s *GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation) MarshalJSON(
 type GoogleCloudDatalabelingV1beta1ImageClassificationAnnotation struct {
 	// AnnotationSpec: Label of image.
 	AnnotationSpec *GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpec,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ImageClassificationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImageClassificationAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ImageClassificationConfig: Config for
-// image classification human labeling task.
+// GoogleCloudDatalabelingV1beta1ImageClassificationConfig: Config for image
+// classification human labeling task.
 type GoogleCloudDatalabelingV1beta1ImageClassificationConfig struct {
-	// AllowMultiLabel: Optional. If allow_multi_label is true, contributors
-	// are able to choose multiple labels for one image.
+	// AllowMultiLabel: Optional. If allow_multi_label is true, contributors are
+	// able to choose multiple labels for one image.
 	AllowMultiLabel bool `json:"allowMultiLabel,omitempty"`
-
 	// AnnotationSpecSet: Required. Annotation spec set resource name.
 	AnnotationSpecSet string `json:"annotationSpecSet,omitempty"`
-
-	// AnswerAggregationType: Optional. The type of how to aggregate
-	// answers.
+	// AnswerAggregationType: Optional. The type of how to aggregate answers.
 	//
 	// Possible values:
 	//   "STRING_AGGREGATION_TYPE_UNSPECIFIED"
@@ -3475,214 +2764,161 @@ type GoogleCloudDatalabelingV1beta1ImageClassificationConfig struct {
 	//   "UNANIMOUS_VOTE" - Unanimous answers will be adopted.
 	//   "NO_AGGREGATION" - Preserve all answers by crowd compute.
 	AnswerAggregationType string `json:"answerAggregationType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AllowMultiLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowMultiLabel") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AllowMultiLabel") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ImageClassificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImageClassificationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ImagePayload: Container of information
-// about an image.
+// GoogleCloudDatalabelingV1beta1ImagePayload: Container of information about
+// an image.
 type GoogleCloudDatalabelingV1beta1ImagePayload struct {
 	// ImageThumbnail: A byte string of a thumbnail image.
 	ImageThumbnail string `json:"imageThumbnail,omitempty"`
-
 	// ImageUri: Image uri from the user bucket.
 	ImageUri string `json:"imageUri,omitempty"`
-
 	// MimeType: Image format.
 	MimeType string `json:"mimeType,omitempty"`
-
 	// SignedUri: Signed uri of the image file in the service bucket.
 	SignedUri string `json:"signedUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ImageThumbnail") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageThumbnail") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ImageThumbnail") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ImagePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImagePayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation: A polyline for
-// the image annotation.
+// GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation: A polyline for the
+// image annotation.
 type GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation struct {
 	// AnnotationSpec: Label of this polyline.
-	AnnotationSpec *GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpec,omitempty"`
-
+	AnnotationSpec     *GoogleCloudDatalabelingV1beta1AnnotationSpec     `json:"annotationSpec,omitempty"`
 	NormalizedPolyline *GoogleCloudDatalabelingV1beta1NormalizedPolyline `json:"normalizedPolyline,omitempty"`
-
-	Polyline *GoogleCloudDatalabelingV1beta1Polyline `json:"polyline,omitempty"`
-
+	Polyline           *GoogleCloudDatalabelingV1beta1Polyline           `json:"polyline,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImageSegmentationAnnotation: Image
 // segmentation annotation.
 type GoogleCloudDatalabelingV1beta1ImageSegmentationAnnotation struct {
-	// AnnotationColors: The mapping between rgb color and annotation spec.
-	// The key is the rgb color represented in format of rgb(0, 0, 0). The
-	// value is the AnnotationSpec.
+	// AnnotationColors: The mapping between rgb color and annotation spec. The key
+	// is the rgb color represented in format of rgb(0, 0, 0). The value is the
+	// AnnotationSpec.
 	AnnotationColors map[string]GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationColors,omitempty"`
-
 	// ImageBytes: A byte string of a full image's color map.
 	ImageBytes string `json:"imageBytes,omitempty"`
-
 	// MimeType: Image format.
 	MimeType string `json:"mimeType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationColors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationColors") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationColors") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ImageSegmentationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImageSegmentationAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ImportDataOperationMetadata: Metadata
-// of an ImportData operation.
+// GoogleCloudDatalabelingV1beta1ImportDataOperationMetadata: Metadata of an
+// ImportData operation.
 type GoogleCloudDatalabelingV1beta1ImportDataOperationMetadata struct {
-	// CreateTime: Output only. Timestamp when import dataset request was
-	// created.
+	// CreateTime: Output only. Timestamp when import dataset request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Dataset: Output only. The name of imported dataset.
-	// "projects/*/datasets/*"
+	// Dataset: Output only. The name of imported dataset. "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImportDataOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ImportDataOperationResponse: Response
-// used for ImportData longrunning operation.
+// GoogleCloudDatalabelingV1beta1ImportDataOperationResponse: Response used for
+// ImportData longrunning operation.
 type GoogleCloudDatalabelingV1beta1ImportDataOperationResponse struct {
 	// Dataset: Ouptut only. The name of imported dataset.
 	Dataset string `json:"dataset,omitempty"`
-
 	// ImportCount: Output only. Number of examples imported successfully.
 	ImportCount int64 `json:"importCount,omitempty"`
-
 	// TotalCount: Output only. Total number of examples requested to import
 	TotalCount int64 `json:"totalCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Dataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dataset") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dataset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImportDataOperationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ImportDataRequest: Request message for
@@ -3690,80 +2926,65 @@ func (s *GoogleCloudDatalabelingV1beta1ImportDataOperationResponse) MarshalJSON(
 type GoogleCloudDatalabelingV1beta1ImportDataRequest struct {
 	// InputConfig: Required. Specify the input source of the data.
 	InputConfig *GoogleCloudDatalabelingV1beta1InputConfig `json:"inputConfig,omitempty"`
-
-	// UserEmailAddress: Email of the user who started the import task and
-	// should be notified by email. If empty no notification will be sent.
+	// UserEmailAddress: Email of the user who started the import task and should
+	// be notified by email. If empty no notification will be sent.
 	UserEmailAddress string `json:"userEmailAddress,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InputConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InputConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ImportDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ImportDataRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1InputConfig: The configuration of input
-// data, including data type, location, etc.
+// GoogleCloudDatalabelingV1beta1InputConfig: The configuration of input data,
+// including data type, location, etc.
 type GoogleCloudDatalabelingV1beta1InputConfig struct {
-	// AnnotationType: Optional. The type of annotation to be performed on
-	// this data. You must specify this field if you are using this
-	// InputConfig in an EvaluationJob.
+	// AnnotationType: Optional. The type of annotation to be performed on this
+	// data. You must specify this field if you are using this InputConfig in an
+	// EvaluationJob.
 	//
 	// Possible values:
 	//   "ANNOTATION_TYPE_UNSPECIFIED"
-	//   "IMAGE_CLASSIFICATION_ANNOTATION" - Classification annotations in
-	// an image. Allowed for continuous evaluation.
-	//   "IMAGE_BOUNDING_BOX_ANNOTATION" - Bounding box annotations in an
-	// image. A form of image object detection. Allowed for continuous
-	// evaluation.
-	//   "IMAGE_ORIENTED_BOUNDING_BOX_ANNOTATION" - Oriented bounding box.
-	// The box does not have to be parallel to horizontal line.
-	//   "IMAGE_BOUNDING_POLY_ANNOTATION" - Bounding poly annotations in an
-	// image.
+	//   "IMAGE_CLASSIFICATION_ANNOTATION" - Classification annotations in an
+	// image. Allowed for continuous evaluation.
+	//   "IMAGE_BOUNDING_BOX_ANNOTATION" - Bounding box annotations in an image. A
+	// form of image object detection. Allowed for continuous evaluation.
+	//   "IMAGE_ORIENTED_BOUNDING_BOX_ANNOTATION" - Oriented bounding box. The box
+	// does not have to be parallel to horizontal line.
+	//   "IMAGE_BOUNDING_POLY_ANNOTATION" - Bounding poly annotations in an image.
 	//   "IMAGE_POLYLINE_ANNOTATION" - Polyline annotations in an image.
-	//   "IMAGE_SEGMENTATION_ANNOTATION" - Segmentation annotations in an
-	// image.
-	//   "VIDEO_SHOTS_CLASSIFICATION_ANNOTATION" - Classification
-	// annotations in video shots.
-	//   "VIDEO_OBJECT_TRACKING_ANNOTATION" - Video object tracking
-	// annotation.
-	//   "VIDEO_OBJECT_DETECTION_ANNOTATION" - Video object detection
-	// annotation.
+	//   "IMAGE_SEGMENTATION_ANNOTATION" - Segmentation annotations in an image.
+	//   "VIDEO_SHOTS_CLASSIFICATION_ANNOTATION" - Classification annotations in
+	// video shots.
+	//   "VIDEO_OBJECT_TRACKING_ANNOTATION" - Video object tracking annotation.
+	//   "VIDEO_OBJECT_DETECTION_ANNOTATION" - Video object detection annotation.
 	//   "VIDEO_EVENT_ANNOTATION" - Video event annotation.
-	//   "TEXT_CLASSIFICATION_ANNOTATION" - Classification for text. Allowed
-	// for continuous evaluation.
+	//   "TEXT_CLASSIFICATION_ANNOTATION" - Classification for text. Allowed for
+	// continuous evaluation.
 	//   "TEXT_ENTITY_EXTRACTION_ANNOTATION" - Entity extraction for text.
-	//   "GENERAL_CLASSIFICATION_ANNOTATION" - General classification.
-	// Allowed for continuous evaluation.
+	//   "GENERAL_CLASSIFICATION_ANNOTATION" - General classification. Allowed for
+	// continuous evaluation.
 	AnnotationType string `json:"annotationType,omitempty"`
-
-	// BigquerySource: Source located in BigQuery. You must specify this
-	// field if you are using this InputConfig in an EvaluationJob.
+	// BigquerySource: Source located in BigQuery. You must specify this field if
+	// you are using this InputConfig in an EvaluationJob.
 	BigquerySource *GoogleCloudDatalabelingV1beta1BigQuerySource `json:"bigquerySource,omitempty"`
-
-	// ClassificationMetadata: Optional. Metadata about annotations for the
-	// input. You must specify this field if you are using this InputConfig
-	// in an EvaluationJob for a model version that performs classification.
+	// ClassificationMetadata: Optional. Metadata about annotations for the input.
+	// You must specify this field if you are using this InputConfig in an
+	// EvaluationJob for a model version that performs classification.
 	ClassificationMetadata *GoogleCloudDatalabelingV1beta1ClassificationMetadata `json:"classificationMetadata,omitempty"`
-
-	// DataType: Required. Data type must be specifed when user tries to
-	// import data.
+	// DataType: Required. Data type must be specifed when user tries to import
+	// data.
 	//
 	// Possible values:
 	//   "DATA_TYPE_UNSPECIFIED" - Data type is unspecified.
@@ -3772,57 +2993,43 @@ type GoogleCloudDatalabelingV1beta1InputConfig struct {
 	//   "TEXT" - Allowed for continuous evaluation.
 	//   "GENERAL_DATA" - Allowed for continuous evaluation.
 	DataType string `json:"dataType,omitempty"`
-
 	// GcsSource: Source located in Cloud Storage.
 	GcsSource *GoogleCloudDatalabelingV1beta1GcsSource `json:"gcsSource,omitempty"`
-
-	// TextMetadata: Required for text import, as language code must be
-	// specified.
+	// TextMetadata: Required for text import, as language code must be specified.
 	TextMetadata *GoogleCloudDatalabelingV1beta1TextMetadata `json:"textMetadata,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1InputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1InputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1Instruction: Instruction of how to
-// perform the labeling task for human operators. Currently only PDF
-// instruction is supported.
+// GoogleCloudDatalabelingV1beta1Instruction: Instruction of how to perform the
+// labeling task for human operators. Currently only PDF instruction is
+// supported.
 type GoogleCloudDatalabelingV1beta1Instruction struct {
-	// BlockingResources: Output only. The names of any related resources
-	// that are blocking changes to the instruction.
+	// BlockingResources: Output only. The names of any related resources that are
+	// blocking changes to the instruction.
 	BlockingResources []string `json:"blockingResources,omitempty"`
-
 	// CreateTime: Output only. Creation time of instruction.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// CsvInstruction: Deprecated: this instruction format is not supported
-	// any more. Instruction from a CSV file, such as for classification
-	// task. The CSV file should have exact two columns, in the following
-	// format: * The first column is labeled data, such as an image
-	// reference, text. * The second column is comma separated labels
-	// associated with data.
+	// CsvInstruction: Deprecated: this instruction format is not supported any
+	// more. Instruction from a CSV file, such as for classification task. The CSV
+	// file should have exact two columns, in the following format: * The first
+	// column is labeled data, such as an image reference, text. * The second
+	// column is comma separated labels associated with data.
 	CsvInstruction *GoogleCloudDatalabelingV1beta1CsvInstruction `json:"csvInstruction,omitempty"`
-
 	// DataType: Required. The data type of this instruction.
 	//
 	// Possible values:
@@ -3832,52 +3039,39 @@ type GoogleCloudDatalabelingV1beta1Instruction struct {
 	//   "TEXT" - Allowed for continuous evaluation.
 	//   "GENERAL_DATA" - Allowed for continuous evaluation.
 	DataType string `json:"dataType,omitempty"`
-
-	// Description: Optional. User-provided description of the instruction.
-	// The description can be up to 10000 characters long.
+	// Description: Optional. User-provided description of the instruction. The
+	// description can be up to 10000 characters long.
 	Description string `json:"description,omitempty"`
-
-	// DisplayName: Required. The display name of the instruction. Maximum
-	// of 64 characters.
+	// DisplayName: Required. The display name of the instruction. Maximum of 64
+	// characters.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Output only. Instruction resource name, format:
 	// projects/{project_id}/instructions/{instruction_id}
 	Name string `json:"name,omitempty"`
-
-	// PdfInstruction: Instruction from a PDF document. The PDF should be in
-	// a Cloud Storage bucket.
+	// PdfInstruction: Instruction from a PDF document. The PDF should be in a
+	// Cloud Storage bucket.
 	PdfInstruction *GoogleCloudDatalabelingV1beta1PdfInstruction `json:"pdfInstruction,omitempty"`
-
 	// UpdateTime: Output only. Last update time of instruction.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "BlockingResources")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BlockingResources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BlockingResources") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BlockingResources") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1Instruction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Instruction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata:
@@ -3885,146 +3079,115 @@ func (s *GoogleCloudDatalabelingV1beta1Instruction) MarshalJSON() ([]byte, error
 type GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata:
-//
-//	Details of LabelImageBoundingPoly operation metadata.
+// Details of LabelImageBoundingPoly operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadat
-// a: Metadata of a LabelImageClassification operation.
+// GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadata:
+// Metadata of a LabelImageClassification operation.
 type GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMe
-// tadata: Details of a LabelImageOrientedBoundingBox operation
-// metadata.
+// GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMetadata:
+//
+//	Details of a LabelImageOrientedBoundingBox operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMetadata struct {
 	// BasicConfig: Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata:
-// Details of LabelImagePolyline operation metadata.
+// GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata: Details
+// of LabelImagePolyline operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageRequest: Request message for
@@ -4032,280 +3195,212 @@ func (s *GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata) Mars
 type GoogleCloudDatalabelingV1beta1LabelImageRequest struct {
 	// BasicConfig: Required. Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
-	// BoundingPolyConfig: Configuration for bounding box and bounding poly
-	// task. One of image_classification_config, bounding_poly_config,
-	// polyline_config and segmentation_config are required.
+	// BoundingPolyConfig: Configuration for bounding box and bounding poly task.
+	// One of image_classification_config, bounding_poly_config, polyline_config
+	// and segmentation_config are required.
 	BoundingPolyConfig *GoogleCloudDatalabelingV1beta1BoundingPolyConfig `json:"boundingPolyConfig,omitempty"`
-
 	// Feature: Required. The type of image labeling task.
 	//
 	// Possible values:
 	//   "FEATURE_UNSPECIFIED"
 	//   "CLASSIFICATION" - Label whole image with one or more of labels.
 	//   "BOUNDING_BOX" - Label image with bounding boxes for labels.
-	//   "ORIENTED_BOUNDING_BOX" - Label oriented bounding box. The box does
-	// not have to be parallel to horizontal line.
-	//   "BOUNDING_POLY" - Label images with bounding poly. A bounding poly
-	// is a plane figure that is bounded by a finite chain of straight line
-	// segments closing in a loop.
-	//   "POLYLINE" - Label images with polyline. Polyline is formed by
-	// connected line segments which are not in closed form.
-	//   "SEGMENTATION" - Label images with segmentation. Segmentation is
-	// different from bounding poly since it is more fine-grained, pixel
-	// level annotation.
+	//   "ORIENTED_BOUNDING_BOX" - Label oriented bounding box. The box does not
+	// have to be parallel to horizontal line.
+	//   "BOUNDING_POLY" - Label images with bounding poly. A bounding poly is a
+	// plane figure that is bounded by a finite chain of straight line segments
+	// closing in a loop.
+	//   "POLYLINE" - Label images with polyline. Polyline is formed by connected
+	// line segments which are not in closed form.
+	//   "SEGMENTATION" - Label images with segmentation. Segmentation is different
+	// from bounding poly since it is more fine-grained, pixel level annotation.
 	Feature string `json:"feature,omitempty"`
-
-	// ImageClassificationConfig: Configuration for image classification
-	// task. One of image_classification_config, bounding_poly_config,
-	// polyline_config and segmentation_config are required.
+	// ImageClassificationConfig: Configuration for image classification task. One
+	// of image_classification_config, bounding_poly_config, polyline_config and
+	// segmentation_config are required.
 	ImageClassificationConfig *GoogleCloudDatalabelingV1beta1ImageClassificationConfig `json:"imageClassificationConfig,omitempty"`
-
 	// PolylineConfig: Configuration for polyline task. One of
-	// image_classification_config, bounding_poly_config, polyline_config
-	// and segmentation_config are required.
+	// image_classification_config, bounding_poly_config, polyline_config and
+	// segmentation_config are required.
 	PolylineConfig *GoogleCloudDatalabelingV1beta1PolylineConfig `json:"polylineConfig,omitempty"`
-
 	// SegmentationConfig: Configuration for segmentation task. One of
-	// image_classification_config, bounding_poly_config, polyline_config
-	// and segmentation_config are required.
+	// image_classification_config, bounding_poly_config, polyline_config and
+	// segmentation_config are required.
 	SegmentationConfig *GoogleCloudDatalabelingV1beta1SegmentationConfig `json:"segmentationConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelImageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata:
-//
-//	Details of a LabelImageSegmentation operation metadata.
+// Details of a LabelImageSegmentation operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelOperationMetadata: Metadata of a
-// labeling operation, such as LabelImage or LabelVideo. Next tag: 23
+// GoogleCloudDatalabelingV1beta1LabelOperationMetadata: Metadata of a labeling
+// operation, such as LabelImage or LabelVideo. Next tag: 23
 type GoogleCloudDatalabelingV1beta1LabelOperationMetadata struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
 	// CreateTime: Output only. Timestamp when labeling request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Dataset: Output only. The name of dataset to be labeled.
 	// "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// ImageBoundingBoxDetails: Details of label image bounding box
-	// operation.
+	// ImageBoundingBoxDetails: Details of label image bounding box operation.
 	ImageBoundingBoxDetails *GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata `json:"imageBoundingBoxDetails,omitempty"`
-
-	// ImageBoundingPolyDetails: Details of label image bounding poly
-	// operation.
+	// ImageBoundingPolyDetails: Details of label image bounding poly operation.
 	ImageBoundingPolyDetails *GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata `json:"imageBoundingPolyDetails,omitempty"`
-
-	// ImageClassificationDetails: Details of label image classification
-	// operation.
+	// ImageClassificationDetails: Details of label image classification operation.
 	ImageClassificationDetails *GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadata `json:"imageClassificationDetails,omitempty"`
-
-	// ImageOrientedBoundingBoxDetails: Details of label image oriented
-	// bounding box operation.
+	// ImageOrientedBoundingBoxDetails: Details of label image oriented bounding
+	// box operation.
 	ImageOrientedBoundingBoxDetails *GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMetadata `json:"imageOrientedBoundingBoxDetails,omitempty"`
-
 	// ImagePolylineDetails: Details of label image polyline operation.
 	ImagePolylineDetails *GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata `json:"imagePolylineDetails,omitempty"`
-
-	// ImageSegmentationDetails: Details of label image segmentation
-	// operation.
+	// ImageSegmentationDetails: Details of label image segmentation operation.
 	ImageSegmentationDetails *GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata `json:"imageSegmentationDetails,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
-	// ProgressPercent: Output only. Progress of label operation. Range: [0,
-	// 100].
+	// ProgressPercent: Output only. Progress of label operation. Range: [0, 100].
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
-
-	// TextClassificationDetails: Details of label text classification
-	// operation.
+	// TextClassificationDetails: Details of label text classification operation.
 	TextClassificationDetails *GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata `json:"textClassificationDetails,omitempty"`
-
 	// TextEntityExtractionDetails: Details of label text entity extraction
 	// operation.
 	TextEntityExtractionDetails *GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadata `json:"textEntityExtractionDetails,omitempty"`
-
-	// VideoClassificationDetails: Details of label video classification
-	// operation.
+	// VideoClassificationDetails: Details of label video classification operation.
 	VideoClassificationDetails *GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadata `json:"videoClassificationDetails,omitempty"`
-
 	// VideoEventDetails: Details of label video event operation.
 	VideoEventDetails *GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata `json:"videoEventDetails,omitempty"`
-
 	// VideoObjectDetectionDetails: Details of label video object detection
 	// operation.
 	VideoObjectDetectionDetails *GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetadata `json:"videoObjectDetectionDetails,omitempty"`
-
 	// VideoObjectTrackingDetails: Details of label video object tracking
 	// operation.
 	VideoObjectTrackingDetails *GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata `json:"videoObjectTrackingDetails,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelStats: Statistics about annotation
-// specs.
+// GoogleCloudDatalabelingV1beta1LabelStats: Statistics about annotation specs.
 type GoogleCloudDatalabelingV1beta1LabelStats struct {
 	// ExampleCount: Map of each annotation spec's example count. Key is the
-	// annotation spec name and value is the number of examples for that
-	// annotation spec. If the annotated dataset does not have annotation
-	// spec, the map will return a pair where the key is empty string and
-	// value is the total number of annotations.
+	// annotation spec name and value is the number of examples for that annotation
+	// spec. If the annotated dataset does not have annotation spec, the map will
+	// return a pair where the key is empty string and value is the total number of
+	// annotations.
 	ExampleCount map[string]string `json:"exampleCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ExampleCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExampleCount") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExampleCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata
-// : Details of a LabelTextClassification operation metadata.
+// GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata:
+// Details of a LabelTextClassification operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetada
-// ta: Details of a LabelTextEntityExtraction operation metadata.
+// GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadata:
+// Details of a LabelTextEntityExtraction operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelTextRequest: Request message for
@@ -4313,7 +3408,6 @@ func (s *GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadat
 type GoogleCloudDatalabelingV1beta1LabelTextRequest struct {
 	// BasicConfig: Required. Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// Feature: Required. The type of text labeling task.
 	//
 	// Possible values:
@@ -4321,154 +3415,120 @@ type GoogleCloudDatalabelingV1beta1LabelTextRequest struct {
 	//   "TEXT_CLASSIFICATION" - Label text content to one of more labels.
 	//   "TEXT_ENTITY_EXTRACTION" - Label entities and their span in text.
 	Feature string `json:"feature,omitempty"`
-
-	// TextClassificationConfig: Configuration for text classification task.
-	// One of text_classification_config and text_entity_extraction_config
-	// is required.
+	// TextClassificationConfig: Configuration for text classification task. One of
+	// text_classification_config and text_entity_extraction_config is required.
 	TextClassificationConfig *GoogleCloudDatalabelingV1beta1TextClassificationConfig `json:"textClassificationConfig,omitempty"`
-
-	// TextEntityExtractionConfig: Configuration for entity extraction task.
-	// One of text_classification_config and text_entity_extraction_config
-	// is required.
+	// TextEntityExtractionConfig: Configuration for entity extraction task. One of
+	// text_classification_config and text_entity_extraction_config is required.
 	TextEntityExtractionConfig *GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig `json:"textEntityExtractionConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelTextRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelTextRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadat
-// a: Details of a LabelVideoClassification operation metadata.
+// GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadata:
+// Details of a LabelVideoClassification operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata:
-// Details of a LabelVideoEvent operation metadata.
+// GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata: Details of a
+// LabelVideoEvent operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetada
-// ta: Details of a LabelVideoObjectDetection operation metadata.
+// GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetadata:
+// Details of a LabelVideoObjectDetection operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadat
-// a: Details of a LabelVideoObjectTracking operation metadata.
+// GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata:
+// Details of a LabelVideoObjectTracking operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1LabelVideoRequest: Request message for
@@ -4476,206 +3536,161 @@ func (s *GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata
 type GoogleCloudDatalabelingV1beta1LabelVideoRequest struct {
 	// BasicConfig: Required. Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// EventConfig: Configuration for video event task. One of
-	// video_classification_config, object_detection_config,
-	// object_tracking_config and event_config is required.
+	// video_classification_config, object_detection_config, object_tracking_config
+	// and event_config is required.
 	EventConfig *GoogleCloudDatalabelingV1beta1EventConfig `json:"eventConfig,omitempty"`
-
 	// Feature: Required. The type of video labeling task.
 	//
 	// Possible values:
 	//   "FEATURE_UNSPECIFIED"
-	//   "CLASSIFICATION" - Label whole video or video segment with one or
-	// more labels.
-	//   "OBJECT_DETECTION" - Label objects with bounding box on image
-	// frames extracted from the video.
+	//   "CLASSIFICATION" - Label whole video or video segment with one or more
+	// labels.
+	//   "OBJECT_DETECTION" - Label objects with bounding box on image frames
+	// extracted from the video.
 	//   "OBJECT_TRACKING" - Label and track objects in video.
 	//   "EVENT" - Label the range of video for the specified events.
 	Feature string `json:"feature,omitempty"`
-
-	// ObjectDetectionConfig: Configuration for video object detection task.
-	// One of video_classification_config, object_detection_config,
-	// object_tracking_config and event_config is required.
+	// ObjectDetectionConfig: Configuration for video object detection task. One of
+	// video_classification_config, object_detection_config, object_tracking_config
+	// and event_config is required.
 	ObjectDetectionConfig *GoogleCloudDatalabelingV1beta1ObjectDetectionConfig `json:"objectDetectionConfig,omitempty"`
-
-	// ObjectTrackingConfig: Configuration for video object tracking task.
-	// One of video_classification_config, object_detection_config,
-	// object_tracking_config and event_config is required.
+	// ObjectTrackingConfig: Configuration for video object tracking task. One of
+	// video_classification_config, object_detection_config, object_tracking_config
+	// and event_config is required.
 	ObjectTrackingConfig *GoogleCloudDatalabelingV1beta1ObjectTrackingConfig `json:"objectTrackingConfig,omitempty"`
-
-	// VideoClassificationConfig: Configuration for video classification
-	// task. One of video_classification_config, object_detection_config,
+	// VideoClassificationConfig: Configuration for video classification task. One
+	// of video_classification_config, object_detection_config,
 	// object_tracking_config and event_config is required.
 	VideoClassificationConfig *GoogleCloudDatalabelingV1beta1VideoClassificationConfig `json:"videoClassificationConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1LabelVideoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1LabelVideoRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse: Results
-// of listing annotated datasets for a dataset.
+// GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse: Results of
+// listing annotated datasets for a dataset.
 type GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse struct {
 	// AnnotatedDatasets: The list of annotated datasets to return.
 	AnnotatedDatasets []*GoogleCloudDatalabelingV1beta1AnnotatedDataset `json:"annotatedDatasets,omitempty"`
-
 	// NextPageToken: A token to retrieve next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotatedDatasets")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotatedDatasets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDatasets") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDatasets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse: Results
-// of listing annotation spec set under a project.
+// GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse: Results of
+// listing annotation spec set under a project.
 type GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse struct {
 	// AnnotationSpecSets: The list of annotation spec sets.
 	AnnotationSpecSets []*GoogleCloudDatalabelingV1beta1AnnotationSpecSet `json:"annotationSpecSets,omitempty"`
-
 	// NextPageToken: A token to retrieve next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSets")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecSets") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecSets") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ListDataItemsResponse: Results of
-// listing data items in a dataset.
+// GoogleCloudDatalabelingV1beta1ListDataItemsResponse: Results of listing data
+// items in a dataset.
 type GoogleCloudDatalabelingV1beta1ListDataItemsResponse struct {
 	// DataItems: The list of data items to return.
 	DataItems []*GoogleCloudDatalabelingV1beta1DataItem `json:"dataItems,omitempty"`
-
 	// NextPageToken: A token to retrieve next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DataItems") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataItems") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataItems") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ListDataItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListDataItemsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ListDatasetsResponse: Results of
-// listing datasets within a project.
+// GoogleCloudDatalabelingV1beta1ListDatasetsResponse: Results of listing
+// datasets within a project.
 type GoogleCloudDatalabelingV1beta1ListDatasetsResponse struct {
 	// Datasets: The list of datasets to return.
 	Datasets []*GoogleCloudDatalabelingV1beta1Dataset `json:"datasets,omitempty"`
-
 	// NextPageToken: A token to retrieve next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Datasets") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Datasets") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Datasets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ListDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListDatasetsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse: Results for
@@ -4683,275 +3698,210 @@ func (s *GoogleCloudDatalabelingV1beta1ListDatasetsResponse) MarshalJSON() ([]by
 type GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse struct {
 	// EvaluationJobs: The list of evaluation jobs to return.
 	EvaluationJobs []*GoogleCloudDatalabelingV1beta1EvaluationJob `json:"evaluationJobs,omitempty"`
-
 	// NextPageToken: A token to retrieve next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "EvaluationJobs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EvaluationJobs") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EvaluationJobs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ListExamplesResponse: Results of
-// listing Examples in and annotated dataset.
+// GoogleCloudDatalabelingV1beta1ListExamplesResponse: Results of listing
+// Examples in and annotated dataset.
 type GoogleCloudDatalabelingV1beta1ListExamplesResponse struct {
 	// Examples: The list of examples to return.
 	Examples []*GoogleCloudDatalabelingV1beta1Example `json:"examples,omitempty"`
-
 	// NextPageToken: A token to retrieve next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Examples") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Examples") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Examples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ListExamplesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListExamplesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse: Results
-// for listing FeedbackMessages.
+// GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse: Results for
+// listing FeedbackMessages.
 type GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse struct {
 	// FeedbackMessages: The list of feedback messages to return.
 	FeedbackMessages []*GoogleCloudDatalabelingV1beta1FeedbackMessage `json:"feedbackMessages,omitempty"`
-
 	// NextPageToken: A token to retrieve next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "FeedbackMessages") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FeedbackMessages") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FeedbackMessages") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse: Results
-// for listing FeedbackThreads.
+// GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse: Results for
+// listing FeedbackThreads.
 type GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse struct {
 	// FeedbackThreads: The list of feedback threads to return.
 	FeedbackThreads []*GoogleCloudDatalabelingV1beta1FeedbackThread `json:"feedbackThreads,omitempty"`
-
 	// NextPageToken: A token to retrieve next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "FeedbackThreads") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FeedbackThreads") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FeedbackThreads") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ListInstructionsResponse: Results of
-// listing instructions under a project.
+// GoogleCloudDatalabelingV1beta1ListInstructionsResponse: Results of listing
+// instructions under a project.
 type GoogleCloudDatalabelingV1beta1ListInstructionsResponse struct {
 	// Instructions: The list of Instructions to return.
 	Instructions []*GoogleCloudDatalabelingV1beta1Instruction `json:"instructions,omitempty"`
-
 	// NextPageToken: A token to retrieve next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Instructions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Instructions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Instructions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ListInstructionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ListInstructionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly: Normalized
-// bounding polygon.
+// GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly: Normalized bounding
+// polygon.
 type GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly struct {
 	// NormalizedVertices: The bounding polygon normalized vertices.
 	NormalizedVertices []*GoogleCloudDatalabelingV1beta1NormalizedVertex `json:"normalizedVertices,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "NormalizedVertices") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NormalizedVertices") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "NormalizedVertices") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1NormalizedPolyline: Normalized
-// polyline.
+// GoogleCloudDatalabelingV1beta1NormalizedPolyline: Normalized polyline.
 type GoogleCloudDatalabelingV1beta1NormalizedPolyline struct {
 	// NormalizedVertices: The normalized polyline vertices.
 	NormalizedVertices []*GoogleCloudDatalabelingV1beta1NormalizedVertex `json:"normalizedVertices,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "NormalizedVertices") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NormalizedVertices") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "NormalizedVertices") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1NormalizedPolyline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1NormalizedPolyline
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1NormalizedVertex: A vertex represents a
-// 2D point in the image. NOTE: the normalized vertex coordinates are
-// relative to the original image and range from 0 to 1.
+// GoogleCloudDatalabelingV1beta1NormalizedVertex: A vertex represents a 2D
+// point in the image. NOTE: the normalized vertex coordinates are relative to
+// the original image and range from 0 to 1.
 type GoogleCloudDatalabelingV1beta1NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
-
 	// Y: Y coordinate.
 	Y float64 `json:"y,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "X") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "X") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "X") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "X") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1NormalizedVertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1NormalizedVertex
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1NormalizedVertex) UnmarshalJSON(data []byte) error {
@@ -4970,41 +3920,33 @@ func (s *GoogleCloudDatalabelingV1beta1NormalizedVertex) UnmarshalJSON(data []by
 	return nil
 }
 
-// GoogleCloudDatalabelingV1beta1ObjectDetectionConfig: Config for video
-// object detection human labeling task. Object detection will be
-// conducted on the images extracted from the video, and those objects
-// will be labeled with bounding boxes. User need to specify the number
-// of images to be extracted per second as the extraction frame rate.
+// GoogleCloudDatalabelingV1beta1ObjectDetectionConfig: Config for video object
+// detection human labeling task. Object detection will be conducted on the
+// images extracted from the video, and those objects will be labeled with
+// bounding boxes. User need to specify the number of images to be extracted
+// per second as the extraction frame rate.
 type GoogleCloudDatalabelingV1beta1ObjectDetectionConfig struct {
 	// AnnotationSpecSet: Required. Annotation spec set resource name.
 	AnnotationSpecSet string `json:"annotationSpecSet,omitempty"`
-
-	// ExtractionFrameRate: Required. Number of frames per second to be
-	// extracted from the video.
+	// ExtractionFrameRate: Required. Number of frames per second to be extracted
+	// from the video.
 	ExtractionFrameRate float64 `json:"extractionFrameRate,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ObjectDetectionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ObjectDetectionConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ObjectDetectionConfig) UnmarshalJSON(data []byte) error {
@@ -5021,153 +3963,119 @@ func (s *GoogleCloudDatalabelingV1beta1ObjectDetectionConfig) UnmarshalJSON(data
 	return nil
 }
 
-// GoogleCloudDatalabelingV1beta1ObjectDetectionMetrics: Metrics
-// calculated for an image object detection (bounding box) model.
+// GoogleCloudDatalabelingV1beta1ObjectDetectionMetrics: Metrics calculated for
+// an image object detection (bounding box) model.
 type GoogleCloudDatalabelingV1beta1ObjectDetectionMetrics struct {
 	// PrCurve: Precision-recall curve.
 	PrCurve *GoogleCloudDatalabelingV1beta1PrCurve `json:"prCurve,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "PrCurve") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "PrCurve") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PrCurve") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PrCurve") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ObjectDetectionMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ObjectDetectionMetrics
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1ObjectTrackingConfig: Config for video
-// object tracking human labeling task.
+// GoogleCloudDatalabelingV1beta1ObjectTrackingConfig: Config for video object
+// tracking human labeling task.
 type GoogleCloudDatalabelingV1beta1ObjectTrackingConfig struct {
 	// AnnotationSpecSet: Required. Annotation spec set resource name.
 	AnnotationSpecSet string `json:"annotationSpecSet,omitempty"`
-
 	// ClipLength: Videos will be cut to smaller clips to make it easier for
-	// labelers to work on. Users can configure is field in seconds, if not
-	// set, default value is 20s.
+	// labelers to work on. Users can configure is field in seconds, if not set,
+	// default value is 20s.
 	ClipLength int64 `json:"clipLength,omitempty"`
-
-	// OverlapLength: The overlap length between different video clips.
-	// Users can configure is field in seconds, if not set, default value is
-	// 0.3s.
+	// OverlapLength: The overlap length between different video clips. Users can
+	// configure is field in seconds, if not set, default value is 0.3s.
 	OverlapLength int64 `json:"overlapLength,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ObjectTrackingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ObjectTrackingConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1ObjectTrackingFrame: Video frame level
 // annotation for object detection and tracking.
 type GoogleCloudDatalabelingV1beta1ObjectTrackingFrame struct {
-	BoundingPoly *GoogleCloudDatalabelingV1beta1BoundingPoly `json:"boundingPoly,omitempty"`
-
+	BoundingPoly           *GoogleCloudDatalabelingV1beta1BoundingPoly           `json:"boundingPoly,omitempty"`
 	NormalizedBoundingPoly *GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly `json:"normalizedBoundingPoly,omitempty"`
-
-	// TimeOffset: The time offset of this frame relative to the beginning
-	// of the video.
+	// TimeOffset: The time offset of this frame relative to the beginning of the
+	// video.
 	TimeOffset string `json:"timeOffset,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BoundingPoly") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BoundingPoly") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1ObjectTrackingFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1ObjectTrackingFrame
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1OperatorFeedbackMetadata: Metadata
-// describing the feedback from the operator.
+// GoogleCloudDatalabelingV1beta1OperatorFeedbackMetadata: Metadata describing
+// the feedback from the operator.
 type GoogleCloudDatalabelingV1beta1OperatorFeedbackMetadata struct {
 }
 
-// GoogleCloudDatalabelingV1beta1OperatorMetadata: General information
-// useful for labels coming from contributors.
+// GoogleCloudDatalabelingV1beta1OperatorMetadata: General information useful
+// for labels coming from contributors.
 type GoogleCloudDatalabelingV1beta1OperatorMetadata struct {
 	// Comments: Comments from contributors.
 	Comments []string `json:"comments,omitempty"`
-
 	// LabelVotes: The total number of contributors that choose this label.
 	LabelVotes int64 `json:"labelVotes,omitempty"`
-
 	// Score: Confidence score corresponding to a label. For examle, if 3
-	// contributors have answered the question and 2 of them agree on the
-	// final label, the confidence score will be 0.67 (2/3).
+	// contributors have answered the question and 2 of them agree on the final
+	// label, the confidence score will be 0.67 (2/3).
 	Score float64 `json:"score,omitempty"`
-
-	// TotalVotes: The total number of contributors that answer this
-	// question.
+	// TotalVotes: The total number of contributors that answer this question.
 	TotalVotes int64 `json:"totalVotes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Comments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Comments") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Comments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1OperatorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1OperatorMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1OperatorMetadata) UnmarshalJSON(data []byte) error {
@@ -5184,180 +4092,137 @@ func (s *GoogleCloudDatalabelingV1beta1OperatorMetadata) UnmarshalJSON(data []by
 	return nil
 }
 
-// GoogleCloudDatalabelingV1beta1OutputConfig: The configuration of
-// output data.
+// GoogleCloudDatalabelingV1beta1OutputConfig: The configuration of output
+// data.
 type GoogleCloudDatalabelingV1beta1OutputConfig struct {
 	// GcsDestination: Output to a file in Cloud Storage. Should be used for
 	// labeling output other than image segmentation.
 	GcsDestination *GoogleCloudDatalabelingV1beta1GcsDestination `json:"gcsDestination,omitempty"`
-
-	// GcsFolderDestination: Output to a folder in Cloud Storage. Should be
-	// used for image segmentation or document de-identification labeling
-	// outputs.
+	// GcsFolderDestination: Output to a folder in Cloud Storage. Should be used
+	// for image segmentation or document de-identification labeling outputs.
 	GcsFolderDestination *GoogleCloudDatalabelingV1beta1GcsFolderDestination `json:"gcsFolderDestination,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsDestination") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GcsDestination") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1OutputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1PauseEvaluationJobRequest: Request
-// message for PauseEvaluationJob.
+// GoogleCloudDatalabelingV1beta1PauseEvaluationJobRequest: Request message for
+// PauseEvaluationJob.
 type GoogleCloudDatalabelingV1beta1PauseEvaluationJobRequest struct {
 }
 
-// GoogleCloudDatalabelingV1beta1PdfInstruction: Instruction from a PDF
-// file.
+// GoogleCloudDatalabelingV1beta1PdfInstruction: Instruction from a PDF file.
 type GoogleCloudDatalabelingV1beta1PdfInstruction struct {
 	// GcsFileUri: PDF file for the instruction. Only gcs path is allowed.
 	GcsFileUri string `json:"gcsFileUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsFileUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsFileUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GcsFileUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1PdfInstruction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1PdfInstruction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1Polyline: A line with multiple line
-// segments.
+// GoogleCloudDatalabelingV1beta1Polyline: A line with multiple line segments.
 type GoogleCloudDatalabelingV1beta1Polyline struct {
 	// Vertices: The polyline vertices.
 	Vertices []*GoogleCloudDatalabelingV1beta1Vertex `json:"vertices,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Vertices") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Vertices") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Vertices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1Polyline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Polyline
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1PolylineConfig: Config for image
-// polyline human labeling task.
+// GoogleCloudDatalabelingV1beta1PolylineConfig: Config for image polyline
+// human labeling task.
 type GoogleCloudDatalabelingV1beta1PolylineConfig struct {
 	// AnnotationSpecSet: Required. Annotation spec set resource name.
 	AnnotationSpecSet string `json:"annotationSpecSet,omitempty"`
-
-	// InstructionMessage: Optional. Instruction message showed on
-	// contributors UI.
+	// InstructionMessage: Optional. Instruction message showed on contributors UI.
 	InstructionMessage string `json:"instructionMessage,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1PolylineConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1PolylineConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDatalabelingV1beta1PrCurve struct {
 	// AnnotationSpec: The annotation spec of the label for which the
-	// precision-recall curve calculated. If this field is empty, that means
-	// the precision-recall curve is an aggregate curve for all labels.
+	// precision-recall curve calculated. If this field is empty, that means the
+	// precision-recall curve is an aggregate curve for all labels.
 	AnnotationSpec *GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpec,omitempty"`
-
-	// AreaUnderCurve: Area under the precision-recall curve. Not to be
-	// confused with area under a receiver operating characteristic (ROC)
-	// curve.
+	// AreaUnderCurve: Area under the precision-recall curve. Not to be confused
+	// with area under a receiver operating characteristic (ROC) curve.
 	AreaUnderCurve float64 `json:"areaUnderCurve,omitempty"`
-
-	// ConfidenceMetricsEntries: Entries that make up the precision-recall
-	// graph. Each entry is a "point" on the graph drawn for a different
+	// ConfidenceMetricsEntries: Entries that make up the precision-recall graph.
+	// Each entry is a "point" on the graph drawn for a different
 	// `confidence_threshold`.
 	ConfidenceMetricsEntries []*GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry `json:"confidenceMetricsEntries,omitempty"`
-
 	// MeanAveragePrecision: Mean average prcision of this curve.
 	MeanAveragePrecision float64 `json:"meanAveragePrecision,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1PrCurve) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1PrCurve
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1PrCurve) UnmarshalJSON(data []byte) error {
@@ -5376,49 +4241,40 @@ func (s *GoogleCloudDatalabelingV1beta1PrCurve) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-// GoogleCloudDatalabelingV1beta1RequesterFeedbackMetadata: Metadata
-// describing the feedback from the labeling task requester.
+// GoogleCloudDatalabelingV1beta1RequesterFeedbackMetadata: Metadata describing
+// the feedback from the labeling task requester.
 type GoogleCloudDatalabelingV1beta1RequesterFeedbackMetadata struct {
 }
 
-// GoogleCloudDatalabelingV1beta1ResumeEvaluationJobRequest: Request
-// message ResumeEvaluationJob.
+// GoogleCloudDatalabelingV1beta1ResumeEvaluationJobRequest: Request message
+// ResumeEvaluationJob.
 type GoogleCloudDatalabelingV1beta1ResumeEvaluationJobRequest struct {
 }
 
-// GoogleCloudDatalabelingV1beta1Row: A row in the confusion matrix.
-// Each entry in this row has the same ground truth label.
+// GoogleCloudDatalabelingV1beta1Row: A row in the confusion matrix. Each entry
+// in this row has the same ground truth label.
 type GoogleCloudDatalabelingV1beta1Row struct {
-	// AnnotationSpec: The annotation spec of the ground truth label for
-	// this row.
+	// AnnotationSpec: The annotation spec of the ground truth label for this row.
 	AnnotationSpec *GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpec,omitempty"`
-
-	// Entries: A list of the confusion matrix entries. One entry for each
-	// possible predicted label.
+	// Entries: A list of the confusion matrix entries. One entry for each possible
+	// predicted label.
 	Entries []*GoogleCloudDatalabelingV1beta1ConfusionMatrixEntry `json:"entries,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1Row) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Row
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse: Results of
@@ -5426,209 +4282,161 @@ func (s *GoogleCloudDatalabelingV1beta1Row) MarshalJSON() ([]byte, error) {
 type GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse struct {
 	// Evaluations: The list of evaluations matching the search.
 	Evaluations []*GoogleCloudDatalabelingV1beta1Evaluation `json:"evaluations,omitempty"`
-
 	// NextPageToken: A token to retrieve next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Evaluations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Evaluations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Evaluations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest:
-// Request message of SearchExampleComparisons.
+// GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest: Request
+// message of SearchExampleComparisons.
 type GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest struct {
-	// PageSize: Optional. Requested page size. Server may return fewer
-	// results than requested. Default value is 100.
+	// PageSize: Optional. Requested page size. Server may return fewer results
+	// than requested. Default value is 100.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: Optional. A token identifying a page of results for the
-	// server to return. Typically obtained by the nextPageToken of the
-	// response to a previous search rquest. If you don't specify this
-	// field, the API call requests the first page of the search.
+	// PageToken: Optional. A token identifying a page of results for the server to
+	// return. Typically obtained by the nextPageToken of the response to a
+	// previous search rquest. If you don't specify this field, the API call
+	// requests the first page of the search.
 	PageToken string `json:"pageToken,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PageSize") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PageSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse:
-// Results of searching example comparisons.
+// GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse: Results of
+// searching example comparisons.
 type GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse struct {
 	// ExampleComparisons: A list of example comparisons matching the search
 	// criteria.
 	ExampleComparisons []*GoogleCloudDatalabelingV1beta1ExampleComparison `json:"exampleComparisons,omitempty"`
-
 	// NextPageToken: A token to retrieve next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ExampleComparisons")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ExampleComparisons") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExampleComparisons") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ExampleComparisons") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1SegmentationConfig: Config for image
 // segmentation
 type GoogleCloudDatalabelingV1beta1SegmentationConfig struct {
-	// AnnotationSpecSet: Required. Annotation spec set resource name.
-	// format:
+	// AnnotationSpecSet: Required. Annotation spec set resource name. format:
 	// projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}
 	AnnotationSpecSet string `json:"annotationSpecSet,omitempty"`
-
 	// InstructionMessage: Instruction message showed on labelers UI.
 	InstructionMessage string `json:"instructionMessage,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1SegmentationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SegmentationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1SentimentConfig: Config for setting up
 // sentiments.
 type GoogleCloudDatalabelingV1beta1SentimentConfig struct {
-	// EnableLabelSentimentSelection: If set to true, contributors will have
-	// the option to select sentiment of the label they selected, to mark it
-	// as negative or positive label. Default is false.
+	// EnableLabelSentimentSelection: If set to true, contributors will have the
+	// option to select sentiment of the label they selected, to mark it as
+	// negative or positive label. Default is false.
 	EnableLabelSentimentSelection bool `json:"enableLabelSentimentSelection,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "EnableLabelSentimentSelection") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "EnableLabelSentimentSelection") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "EnableLabelSentimentSelection") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EnableLabelSentimentSelection")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1SentimentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SentimentConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1SequentialSegment: Start and end
-// position in a sequence (e.g. text segment).
+// GoogleCloudDatalabelingV1beta1SequentialSegment: Start and end position in a
+// sequence (e.g. text segment).
 type GoogleCloudDatalabelingV1beta1SequentialSegment struct {
 	// End: End position (exclusive).
 	End int64 `json:"end,omitempty"`
-
 	// Start: Start position (inclusive).
 	Start int64 `json:"start,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "End") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "End") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "End") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "End") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1SequentialSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1SequentialSegment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1TextClassificationAnnotation: Text
@@ -5636,257 +4444,198 @@ func (s *GoogleCloudDatalabelingV1beta1SequentialSegment) MarshalJSON() ([]byte,
 type GoogleCloudDatalabelingV1beta1TextClassificationAnnotation struct {
 	// AnnotationSpec: Label of the text.
 	AnnotationSpec *GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpec,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1TextClassificationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextClassificationAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1TextClassificationConfig: Config for
-// text classification human labeling task.
+// GoogleCloudDatalabelingV1beta1TextClassificationConfig: Config for text
+// classification human labeling task.
 type GoogleCloudDatalabelingV1beta1TextClassificationConfig struct {
-	// AllowMultiLabel: Optional. If allow_multi_label is true, contributors
-	// are able to choose multiple labels for one text segment.
+	// AllowMultiLabel: Optional. If allow_multi_label is true, contributors are
+	// able to choose multiple labels for one text segment.
 	AllowMultiLabel bool `json:"allowMultiLabel,omitempty"`
-
 	// AnnotationSpecSet: Required. Annotation spec set resource name.
 	AnnotationSpecSet string `json:"annotationSpecSet,omitempty"`
-
-	// SentimentConfig: Optional. Configs for sentiment selection. We
-	// deprecate sentiment analysis in data labeling side as it is
-	// incompatible with uCAIP.
+	// SentimentConfig: Optional. Configs for sentiment selection. We deprecate
+	// sentiment analysis in data labeling side as it is incompatible with uCAIP.
 	SentimentConfig *GoogleCloudDatalabelingV1beta1SentimentConfig `json:"sentimentConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AllowMultiLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowMultiLabel") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AllowMultiLabel") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1TextClassificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextClassificationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation: Text
-// entity extraction annotation.
+// GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation: Text entity
+// extraction annotation.
 type GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation struct {
 	// AnnotationSpec: Label of the text entities.
 	AnnotationSpec *GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpec,omitempty"`
-
 	// SequentialSegment: Position of the entity.
 	SequentialSegment *GoogleCloudDatalabelingV1beta1SequentialSegment `json:"sequentialSegment,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig: Config for
-// text entity extraction human labeling task.
+// GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig: Config for text
+// entity extraction human labeling task.
 type GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig struct {
 	// AnnotationSpecSet: Required. Annotation spec set resource name.
 	AnnotationSpecSet string `json:"annotationSpecSet,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1TextMetadata: Metadata for the text.
 type GoogleCloudDatalabelingV1beta1TextMetadata struct {
 	// LanguageCode: The language of this text, as a BCP-47
-	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
-	// en-US.
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is en-US.
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1TextMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1TextPayload: Container of information
-// about a piece of text.
+// GoogleCloudDatalabelingV1beta1TextPayload: Container of information about a
+// piece of text.
 type GoogleCloudDatalabelingV1beta1TextPayload struct {
 	// TextContent: Text content.
 	TextContent string `json:"textContent,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "TextContent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TextContent") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "TextContent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1TextPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TextPayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1TimeSegment: A time period inside of an
 // example that has a time dimension (e.g. video).
 type GoogleCloudDatalabelingV1beta1TimeSegment struct {
-	// EndTimeOffset: End of the time segment (exclusive), represented as
-	// the duration since the example start.
+	// EndTimeOffset: End of the time segment (exclusive), represented as the
+	// duration since the example start.
 	EndTimeOffset string `json:"endTimeOffset,omitempty"`
-
-	// StartTimeOffset: Start of the time segment (inclusive), represented
-	// as the duration since the example start.
+	// StartTimeOffset: Start of the time segment (inclusive), represented as the
+	// duration since the example start.
 	StartTimeOffset string `json:"startTimeOffset,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EndTimeOffset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTimeOffset") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTimeOffset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1TimeSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1TimeSegment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1Vertex: A vertex represents a 2D point
-// in the image. NOTE: the vertex coordinates are in the same scale as
-// the original image.
+// GoogleCloudDatalabelingV1beta1Vertex: A vertex represents a 2D point in the
+// image. NOTE: the vertex coordinates are in the same scale as the original
+// image.
 type GoogleCloudDatalabelingV1beta1Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
-
 	// Y: Y coordinate.
 	Y int64 `json:"y,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "X") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "X") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "X") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "X") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1Vertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1Vertex
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1beta1VideoClassificationAnnotation: Video
@@ -5894,189 +4643,139 @@ func (s *GoogleCloudDatalabelingV1beta1Vertex) MarshalJSON() ([]byte, error) {
 type GoogleCloudDatalabelingV1beta1VideoClassificationAnnotation struct {
 	// AnnotationSpec: Label of the segment specified by time_segment.
 	AnnotationSpec *GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpec,omitempty"`
-
-	// TimeSegment: The time segment of the video to which the annotation
-	// applies.
+	// TimeSegment: The time segment of the video to which the annotation applies.
 	TimeSegment *GoogleCloudDatalabelingV1beta1TimeSegment `json:"timeSegment,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1VideoClassificationAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoClassificationAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1VideoClassificationConfig: Config for
-// video classification human labeling task. Currently two types of
-// video classification are supported: 1. Assign labels on the entire
-// video. 2. Split the video into multiple video clips based on camera
-// shot, and assign labels on each video clip.
+// GoogleCloudDatalabelingV1beta1VideoClassificationConfig: Config for video
+// classification human labeling task. Currently two types of video
+// classification are supported: 1. Assign labels on the entire video. 2. Split
+// the video into multiple video clips based on camera shot, and assign labels
+// on each video clip.
 type GoogleCloudDatalabelingV1beta1VideoClassificationConfig struct {
-	// AnnotationSpecSetConfigs: Required. The list of annotation spec set
-	// configs. Since watching a video clip takes much longer time than an
-	// image, we support label with multiple AnnotationSpecSet at the same
-	// time. Labels in each AnnotationSpecSet will be shown in a group to
-	// contributors. Contributors can select one or more (depending on
-	// whether to allow multi label) from each group.
+	// AnnotationSpecSetConfigs: Required. The list of annotation spec set configs.
+	// Since watching a video clip takes much longer time than an image, we support
+	// label with multiple AnnotationSpecSet at the same time. Labels in each
+	// AnnotationSpecSet will be shown in a group to contributors. Contributors can
+	// select one or more (depending on whether to allow multi label) from each
+	// group.
 	AnnotationSpecSetConfigs []*GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig `json:"annotationSpecSetConfigs,omitempty"`
-
-	// ApplyShotDetection: Optional. Option to apply shot detection on the
-	// video.
+	// ApplyShotDetection: Optional. Option to apply shot detection on the video.
 	ApplyShotDetection bool `json:"applyShotDetection,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AnnotationSpecSetConfigs") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSetConfigs")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpecSetConfigs")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpecSetConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1VideoClassificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoClassificationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1VideoEventAnnotation: Video event
-// annotation.
+// GoogleCloudDatalabelingV1beta1VideoEventAnnotation: Video event annotation.
 type GoogleCloudDatalabelingV1beta1VideoEventAnnotation struct {
 	// AnnotationSpec: Label of the event in this annotation.
 	AnnotationSpec *GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpec,omitempty"`
-
-	// TimeSegment: The time segment of the video to which the annotation
-	// applies.
+	// TimeSegment: The time segment of the video to which the annotation applies.
 	TimeSegment *GoogleCloudDatalabelingV1beta1TimeSegment `json:"timeSegment,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1VideoEventAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoEventAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation: Video
-// object tracking annotation.
+// GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation: Video object
+// tracking annotation.
 type GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation struct {
 	// AnnotationSpec: Label of the object tracked in this annotation.
 	AnnotationSpec *GoogleCloudDatalabelingV1beta1AnnotationSpec `json:"annotationSpec,omitempty"`
-
-	// ObjectTrackingFrames: The list of frames where this object track
-	// appears.
+	// ObjectTrackingFrames: The list of frames where this object track appears.
 	ObjectTrackingFrames []*GoogleCloudDatalabelingV1beta1ObjectTrackingFrame `json:"objectTrackingFrames,omitempty"`
-
-	// TimeSegment: The time segment of the video to which object tracking
-	// applies.
+	// TimeSegment: The time segment of the video to which object tracking applies.
 	TimeSegment *GoogleCloudDatalabelingV1beta1TimeSegment `json:"timeSegment,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1beta1VideoPayload: Container of information
-// of a video.
+// GoogleCloudDatalabelingV1beta1VideoPayload: Container of information of a
+// video.
 type GoogleCloudDatalabelingV1beta1VideoPayload struct {
 	// FrameRate: FPS of the video.
 	FrameRate float64 `json:"frameRate,omitempty"`
-
 	// MimeType: Video format.
 	MimeType string `json:"mimeType,omitempty"`
-
 	// SignedUri: Signed uri of the video file in the service bucket.
 	SignedUri string `json:"signedUri,omitempty"`
-
 	// VideoThumbnails: The list of video thumbnails.
 	VideoThumbnails []*GoogleCloudDatalabelingV1beta1VideoThumbnail `json:"videoThumbnails,omitempty"`
-
 	// VideoUri: Video uri from the user bucket.
 	VideoUri string `json:"videoUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FrameRate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FrameRate") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FrameRate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1VideoPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoPayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDatalabelingV1beta1VideoPayload) UnmarshalJSON(data []byte) error {
@@ -6093,200 +4792,154 @@ func (s *GoogleCloudDatalabelingV1beta1VideoPayload) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-// GoogleCloudDatalabelingV1beta1VideoThumbnail: Container of
-// information of a video thumbnail.
+// GoogleCloudDatalabelingV1beta1VideoThumbnail: Container of information of a
+// video thumbnail.
 type GoogleCloudDatalabelingV1beta1VideoThumbnail struct {
 	// Thumbnail: A byte string of the video frame.
 	Thumbnail string `json:"thumbnail,omitempty"`
-
 	// TimeOffset: Time offset relative to the beginning of the video,
-	// corresponding to the video frame where the thumbnail has been
-	// extracted from.
+	// corresponding to the video frame where the thumbnail has been extracted
+	// from.
 	TimeOffset string `json:"timeOffset,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Thumbnail") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Thumbnail") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Thumbnail") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1beta1VideoThumbnail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1beta1VideoThumbnail
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1CreateInstructionMetadata: Metadata
-// of a CreateInstruction operation.
+// GoogleCloudDatalabelingV1p1alpha1CreateInstructionMetadata: Metadata of a
+// CreateInstruction operation.
 type GoogleCloudDatalabelingV1p1alpha1CreateInstructionMetadata struct {
 	// CreateTime: Timestamp when create instruction request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Instruction: The name of the created Instruction.
 	// projects/{project_id}/instructions/{instruction_id}
 	Instruction string `json:"instruction,omitempty"`
-
 	// PartialFailures: Partial failures encountered. E.g. single files that
-	// couldn't be read. Status details field will contain standard GCP
-	// error details.
+	// couldn't be read. Status details field will contain standard GCP error
+	// details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1CreateInstructionMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1ExportDataOperationMetadata:
-// Metadata of an ExportData operation.
+// GoogleCloudDatalabelingV1p1alpha1ExportDataOperationMetadata: Metadata of an
+// ExportData operation.
 type GoogleCloudDatalabelingV1p1alpha1ExportDataOperationMetadata struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
-	// CreateTime: Output only. Timestamp when export dataset request was
-	// created.
+	// CreateTime: Output only. Timestamp when export dataset request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Dataset: Output only. The name of dataset to be exported.
 	// "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1ExportDataOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1ExportDataOperationResponse:
-// Response used for ExportDataset longrunning operation.
+// GoogleCloudDatalabelingV1p1alpha1ExportDataOperationResponse: Response used
+// for ExportDataset longrunning operation.
 type GoogleCloudDatalabelingV1p1alpha1ExportDataOperationResponse struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
 	// Dataset: Ouptut only. The name of dataset. "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
 	// ExportCount: Output only. Number of examples exported successfully.
 	ExportCount int64 `json:"exportCount,omitempty"`
-
-	// LabelStats: Output only. Statistic infos of labels in the exported
-	// dataset.
+	// LabelStats: Output only. Statistic infos of labels in the exported dataset.
 	LabelStats *GoogleCloudDatalabelingV1p1alpha1LabelStats `json:"labelStats,omitempty"`
-
 	// OutputConfig: Output only. output_config in the ExportData request.
 	OutputConfig *GoogleCloudDatalabelingV1p1alpha1OutputConfig `json:"outputConfig,omitempty"`
-
 	// TotalCount: Output only. Total number of examples requested to export
 	TotalCount int64 `json:"totalCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1ExportDataOperationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1GcsDestination: Export destination
-// of the data.Only gcs path is allowed in output_uri.
+// GoogleCloudDatalabelingV1p1alpha1GcsDestination: Export destination of the
+// data.Only gcs path is allowed in output_uri.
 type GoogleCloudDatalabelingV1p1alpha1GcsDestination struct {
-	// MimeType: Required. The format of the gcs destination. Only
-	// "text/csv" and "application/json" are supported.
+	// MimeType: Required. The format of the gcs destination. Only "text/csv" and
+	// "application/json" are supported.
 	MimeType string `json:"mimeType,omitempty"`
-
 	// OutputUri: Required. The output uri of destination file.
 	OutputUri string `json:"outputUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MimeType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MimeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1GcsDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1GcsFolderDestination: Export folder
@@ -6294,325 +4947,251 @@ func (s *GoogleCloudDatalabelingV1p1alpha1GcsDestination) MarshalJSON() ([]byte,
 type GoogleCloudDatalabelingV1p1alpha1GcsFolderDestination struct {
 	// OutputFolderUri: Required. Cloud Storage directory to export data to.
 	OutputFolderUri string `json:"outputFolderUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OutputFolderUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OutputFolderUri") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "OutputFolderUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1GcsFolderDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1GcsFolderDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1GenerateAnalysisReportOperationMetada
-// ta: Metadata of an GenerateAnalysisReport operation.
+// GoogleCloudDatalabelingV1p1alpha1GenerateAnalysisReportOperationMetadata:
+// Metadata of an GenerateAnalysisReport operation.
 type GoogleCloudDatalabelingV1p1alpha1GenerateAnalysisReportOperationMetadata struct {
 	// CreateTime: Timestamp when generate report request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Dataset: The name of the dataset for which the analysis report is
-	// generated. Format: "projects/*/datasets/*"
+	// Dataset: The name of the dataset for which the analysis report is generated.
+	// Format: "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1GenerateAnalysisReportOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1GenerateAnalysisReportOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig: Configuration
-// for how human labeling task should be done.
+// GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig: Configuration for
+// how human labeling task should be done.
 type GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig struct {
-	// AnnotatedDatasetDescription: Optional. A human-readable description
-	// for AnnotatedDataset. The description can be up to 10000 characters
-	// long.
+	// AnnotatedDatasetDescription: Optional. A human-readable description for
+	// AnnotatedDataset. The description can be up to 10000 characters long.
 	AnnotatedDatasetDescription string `json:"annotatedDatasetDescription,omitempty"`
-
 	// AnnotatedDatasetDisplayName: Required. A human-readable name for
 	// AnnotatedDataset defined by users. Maximum of 64 characters .
 	AnnotatedDatasetDisplayName string `json:"annotatedDatasetDisplayName,omitempty"`
-
-	// ContributorEmails: Optional. If you want your own labeling
-	// contributors to manage and work on this labeling request, you can set
-	// these contributors here. We will give them access to the question
-	// types in crowdcompute. Note that these emails must be registered in
-	// crowdcompute worker UI: https://crowd-compute.appspot.com/
+	// ContributorEmails: Optional. If you want your own labeling contributors to
+	// manage and work on this labeling request, you can set these contributors
+	// here. We will give them access to the question types in crowdcompute. Note
+	// that these emails must be registered in crowdcompute worker UI:
+	// https://crowd-compute.appspot.com/
 	ContributorEmails []string `json:"contributorEmails,omitempty"`
-
 	// Instruction: Required. Instruction resource name.
 	Instruction string `json:"instruction,omitempty"`
-
 	// LabelGroup: Optional. A human-readable label used to logically group
 	// labeling tasks. This string must match the regular expression
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
-
 	// LanguageCode: Optional. The Language of this question, as a BCP-47
-	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
-	// en-US. Only need to set this when task is language related. For
-	// example, French text classification.
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is en-US. Only
+	// need to set this when task is language related. For example, French text
+	// classification.
 	LanguageCode string `json:"languageCode,omitempty"`
-
-	// QuestionDuration: Optional. Maximum duration for contributors to
-	// answer a question. Maximum is 3600 seconds. Default is 3600 seconds.
+	// QuestionDuration: Optional. Maximum duration for contributors to answer a
+	// question. Maximum is 3600 seconds. Default is 3600 seconds.
 	QuestionDuration string `json:"questionDuration,omitempty"`
-
-	// ReplicaCount: Optional. Replication of questions. Each question will
-	// be sent to up to this number of contributors to label. Aggregated
-	// answers will be returned. Default is set to 1. For image related
-	// labeling, valid values are 1, 3, 5.
+	// ReplicaCount: Optional. Replication of questions. Each question will be sent
+	// to up to this number of contributors to label. Aggregated answers will be
+	// returned. Default is set to 1. For image related labeling, valid values are
+	// 1, 3, 5.
 	ReplicaCount int64 `json:"replicaCount,omitempty"`
-
-	// UserEmailAddress: Email of the user who started the labeling task and
-	// should be notified by email. If empty no notification will be sent.
+	// UserEmailAddress: Email of the user who started the labeling task and should
+	// be notified by email. If empty no notification will be sent.
 	UserEmailAddress string `json:"userEmailAddress,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "AnnotatedDatasetDescription") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "AnnotatedDatasetDescription") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "AnnotatedDatasetDescription") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDatasetDescription") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1ImportDataOperationMetadata:
-// Metadata of an ImportData operation.
+// GoogleCloudDatalabelingV1p1alpha1ImportDataOperationMetadata: Metadata of an
+// ImportData operation.
 type GoogleCloudDatalabelingV1p1alpha1ImportDataOperationMetadata struct {
-	// CreateTime: Output only. Timestamp when import dataset request was
-	// created.
+	// CreateTime: Output only. Timestamp when import dataset request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Dataset: Output only. The name of imported dataset.
-	// "projects/*/datasets/*"
+	// Dataset: Output only. The name of imported dataset. "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1ImportDataOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1ImportDataOperationResponse:
-// Response used for ImportData longrunning operation.
+// GoogleCloudDatalabelingV1p1alpha1ImportDataOperationResponse: Response used
+// for ImportData longrunning operation.
 type GoogleCloudDatalabelingV1p1alpha1ImportDataOperationResponse struct {
 	// Dataset: Ouptut only. The name of imported dataset.
 	Dataset string `json:"dataset,omitempty"`
-
 	// ImportCount: Output only. Number of examples imported successfully.
 	ImportCount int64 `json:"importCount,omitempty"`
-
 	// TotalCount: Output only. Total number of examples requested to import
 	TotalCount int64 `json:"totalCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Dataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dataset") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dataset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1ImportDataOperationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadat
-// a: Details of a LabelImageBoundingBox operation metadata.
+// GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadata:
+// Details of a LabelImageBoundingBox operation metadata.
 type GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetada
-// ta: Details of LabelImageBoundingPoly operation metadata.
+// GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetadata:
+// Details of LabelImageBoundingPoly operation metadata.
 type GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMeta
-// data: Metadata of a LabelImageClassification operation.
+// GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMetadata:
+// Metadata of a LabelImageClassification operation.
 type GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperatio
-// nMetadata: Details of a LabelImageOrientedBoundingBox operation
-// metadata.
+// GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperationMetada
+// ta: Details of a LabelImageOrientedBoundingBox operation metadata.
 type GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperationMetadata struct {
 	// BasicConfig: Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p1alpha1LabelImagePolylineOperationMetadata:
@@ -6620,555 +5199,423 @@ func (s *GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperation
 type GoogleCloudDatalabelingV1p1alpha1LabelImagePolylineOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImagePolylineOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetada
-// ta: Details of a LabelImageSegmentation operation metadata.
+// GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetadata:
+// Details of a LabelImageSegmentation operation metadata.
 type GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelOperationMetadata: Metadata of
-// a labeling operation, such as LabelImage or LabelVideo. Next tag: 23
+// GoogleCloudDatalabelingV1p1alpha1LabelOperationMetadata: Metadata of a
+// labeling operation, such as LabelImage or LabelVideo. Next tag: 23
 type GoogleCloudDatalabelingV1p1alpha1LabelOperationMetadata struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
 	// CreateTime: Output only. Timestamp when labeling request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Dataset: Output only. The name of dataset to be labeled.
 	// "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// ImageBoundingBoxDetails: Details of label image bounding box
-	// operation.
+	// ImageBoundingBoxDetails: Details of label image bounding box operation.
 	ImageBoundingBoxDetails *GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadata `json:"imageBoundingBoxDetails,omitempty"`
-
-	// ImageBoundingPolyDetails: Details of label image bounding poly
-	// operation.
+	// ImageBoundingPolyDetails: Details of label image bounding poly operation.
 	ImageBoundingPolyDetails *GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetadata `json:"imageBoundingPolyDetails,omitempty"`
-
-	// ImageClassificationDetails: Details of label image classification
-	// operation.
+	// ImageClassificationDetails: Details of label image classification operation.
 	ImageClassificationDetails *GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMetadata `json:"imageClassificationDetails,omitempty"`
-
-	// ImageOrientedBoundingBoxDetails: Details of label image oriented
-	// bounding box operation.
+	// ImageOrientedBoundingBoxDetails: Details of label image oriented bounding
+	// box operation.
 	ImageOrientedBoundingBoxDetails *GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperationMetadata `json:"imageOrientedBoundingBoxDetails,omitempty"`
-
 	// ImagePolylineDetails: Details of label image polyline operation.
 	ImagePolylineDetails *GoogleCloudDatalabelingV1p1alpha1LabelImagePolylineOperationMetadata `json:"imagePolylineDetails,omitempty"`
-
-	// ImageSegmentationDetails: Details of label image segmentation
-	// operation.
+	// ImageSegmentationDetails: Details of label image segmentation operation.
 	ImageSegmentationDetails *GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetadata `json:"imageSegmentationDetails,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
-	// ProgressPercent: Output only. Progress of label operation. Range: [0,
-	// 100].
+	// ProgressPercent: Output only. Progress of label operation. Range: [0, 100].
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
-
-	// TextClassificationDetails: Details of label text classification
-	// operation.
+	// TextClassificationDetails: Details of label text classification operation.
 	TextClassificationDetails *GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetadata `json:"textClassificationDetails,omitempty"`
-
 	// TextEntityExtractionDetails: Details of label text entity extraction
 	// operation.
 	TextEntityExtractionDetails *GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMetadata `json:"textEntityExtractionDetails,omitempty"`
-
-	// VideoClassificationDetails: Details of label video classification
-	// operation.
+	// VideoClassificationDetails: Details of label video classification operation.
 	VideoClassificationDetails *GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMetadata `json:"videoClassificationDetails,omitempty"`
-
 	// VideoEventDetails: Details of label video event operation.
 	VideoEventDetails *GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata `json:"videoEventDetails,omitempty"`
-
 	// VideoObjectDetectionDetails: Details of label video object detection
 	// operation.
 	VideoObjectDetectionDetails *GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMetadata `json:"videoObjectDetectionDetails,omitempty"`
-
 	// VideoObjectTrackingDetails: Details of label video object tracking
 	// operation.
 	VideoObjectTrackingDetails *GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMetadata `json:"videoObjectTrackingDetails,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelStats: Statistics about
-// annotation specs.
+// GoogleCloudDatalabelingV1p1alpha1LabelStats: Statistics about annotation
+// specs.
 type GoogleCloudDatalabelingV1p1alpha1LabelStats struct {
 	// ExampleCount: Map of each annotation spec's example count. Key is the
-	// annotation spec name and value is the number of examples for that
-	// annotation spec. If the annotated dataset does not have annotation
-	// spec, the map will return a pair where the key is empty string and
-	// value is the total number of annotations.
+	// annotation spec name and value is the number of examples for that annotation
+	// spec. If the annotated dataset does not have annotation spec, the map will
+	// return a pair where the key is empty string and value is the total number of
+	// annotations.
 	ExampleCount map[string]string `json:"exampleCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ExampleCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExampleCount") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExampleCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetad
-// ata: Details of a LabelTextClassification operation metadata.
+// GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetadata:
+// Details of a LabelTextClassification operation metadata.
 type GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMet
-// adata: Details of a LabelTextEntityExtraction operation metadata.
+// GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMetadata:
+// Details of a LabelTextEntityExtraction operation metadata.
 type GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMeta
-// data: Details of a LabelVideoClassification operation metadata.
+// GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMetadata:
+// Details of a LabelVideoClassification operation metadata.
 type GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata:
-// Details of a LabelVideoEvent operation metadata.
+// GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata: Details
+// of a LabelVideoEvent operation metadata.
 type GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMet
-// adata: Details of a LabelVideoObjectDetection operation metadata.
+// GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMetadata:
+// Details of a LabelVideoObjectDetection operation metadata.
 type GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMeta
-// data: Details of a LabelVideoObjectTracking operation metadata.
+// GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMetadata:
+// Details of a LabelVideoObjectTracking operation metadata.
 type GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p1alpha1OutputConfig: The configuration of
-// output data.
+// GoogleCloudDatalabelingV1p1alpha1OutputConfig: The configuration of output
+// data.
 type GoogleCloudDatalabelingV1p1alpha1OutputConfig struct {
 	// GcsDestination: Output to a file in Cloud Storage. Should be used for
 	// labeling output other than image segmentation.
 	GcsDestination *GoogleCloudDatalabelingV1p1alpha1GcsDestination `json:"gcsDestination,omitempty"`
-
-	// GcsFolderDestination: Output to a folder in Cloud Storage. Should be
-	// used for image segmentation or document de-identification labeling
-	// outputs.
+	// GcsFolderDestination: Output to a folder in Cloud Storage. Should be used
+	// for image segmentation or document de-identification labeling outputs.
 	GcsFolderDestination *GoogleCloudDatalabelingV1p1alpha1GcsFolderDestination `json:"gcsFolderDestination,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsDestination") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GcsDestination") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p1alpha1OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p1alpha1OutputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1CreateInstructionMetadata: Metadata
-// of a CreateInstruction operation.
+// GoogleCloudDatalabelingV1p2alpha1CreateInstructionMetadata: Metadata of a
+// CreateInstruction operation.
 type GoogleCloudDatalabelingV1p2alpha1CreateInstructionMetadata struct {
 	// CreateTime: Timestamp when create instruction request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Instruction: The name of the created Instruction.
 	// projects/{project_id}/instructions/{instruction_id}
 	Instruction string `json:"instruction,omitempty"`
-
 	// PartialFailures: Partial failures encountered. E.g. single files that
-	// couldn't be read. Status details field will contain standard GCP
-	// error details.
+	// couldn't be read. Status details field will contain standard GCP error
+	// details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1CreateInstructionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1CreateInstructionMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1ExportDataOperationMetadata:
-// Metadata of an ExportData operation.
+// GoogleCloudDatalabelingV1p2alpha1ExportDataOperationMetadata: Metadata of an
+// ExportData operation.
 type GoogleCloudDatalabelingV1p2alpha1ExportDataOperationMetadata struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
-	// CreateTime: Output only. Timestamp when export dataset request was
-	// created.
+	// CreateTime: Output only. Timestamp when export dataset request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Dataset: Output only. The name of dataset to be exported.
 	// "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1ExportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1ExportDataOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1ExportDataOperationResponse:
-// Response used for ExportDataset longrunning operation.
+// GoogleCloudDatalabelingV1p2alpha1ExportDataOperationResponse: Response used
+// for ExportDataset longrunning operation.
 type GoogleCloudDatalabelingV1p2alpha1ExportDataOperationResponse struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
 	// Dataset: Ouptut only. The name of dataset. "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
 	// ExportCount: Output only. Number of examples exported successfully.
 	ExportCount int64 `json:"exportCount,omitempty"`
-
-	// LabelStats: Output only. Statistic infos of labels in the exported
-	// dataset.
+	// LabelStats: Output only. Statistic infos of labels in the exported dataset.
 	LabelStats *GoogleCloudDatalabelingV1p2alpha1LabelStats `json:"labelStats,omitempty"`
-
 	// OutputConfig: Output only. output_config in the ExportData request.
 	OutputConfig *GoogleCloudDatalabelingV1p2alpha1OutputConfig `json:"outputConfig,omitempty"`
-
 	// TotalCount: Output only. Total number of examples requested to export
 	TotalCount int64 `json:"totalCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1ExportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1ExportDataOperationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1GcsDestination: Export destination
-// of the data.Only gcs path is allowed in output_uri.
+// GoogleCloudDatalabelingV1p2alpha1GcsDestination: Export destination of the
+// data.Only gcs path is allowed in output_uri.
 type GoogleCloudDatalabelingV1p2alpha1GcsDestination struct {
-	// MimeType: Required. The format of the gcs destination. Only
-	// "text/csv" and "application/json" are supported.
+	// MimeType: Required. The format of the gcs destination. Only "text/csv" and
+	// "application/json" are supported.
 	MimeType string `json:"mimeType,omitempty"`
-
 	// OutputUri: Required. The output uri of destination file.
 	OutputUri string `json:"outputUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MimeType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MimeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1GcsDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1GcsFolderDestination: Export folder
@@ -7176,292 +5623,225 @@ func (s *GoogleCloudDatalabelingV1p2alpha1GcsDestination) MarshalJSON() ([]byte,
 type GoogleCloudDatalabelingV1p2alpha1GcsFolderDestination struct {
 	// OutputFolderUri: Required. Cloud Storage directory to export data to.
 	OutputFolderUri string `json:"outputFolderUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OutputFolderUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OutputFolderUri") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "OutputFolderUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1GcsFolderDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1GcsFolderDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig: Configuration
-// for how human labeling task should be done.
+// GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig: Configuration for
+// how human labeling task should be done.
 type GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig struct {
-	// AnnotatedDatasetDescription: Optional. A human-readable description
-	// for AnnotatedDataset. The description can be up to 10000 characters
-	// long.
+	// AnnotatedDatasetDescription: Optional. A human-readable description for
+	// AnnotatedDataset. The description can be up to 10000 characters long.
 	AnnotatedDatasetDescription string `json:"annotatedDatasetDescription,omitempty"`
-
 	// AnnotatedDatasetDisplayName: Required. A human-readable name for
 	// AnnotatedDataset defined by users. Maximum of 64 characters .
 	AnnotatedDatasetDisplayName string `json:"annotatedDatasetDisplayName,omitempty"`
-
-	// ContributorEmails: Optional. If you want your own labeling
-	// contributors to manage and work on this labeling request, you can set
-	// these contributors here. We will give them access to the question
-	// types in crowdcompute. Note that these emails must be registered in
-	// crowdcompute worker UI: https://crowd-compute.appspot.com/
+	// ContributorEmails: Optional. If you want your own labeling contributors to
+	// manage and work on this labeling request, you can set these contributors
+	// here. We will give them access to the question types in crowdcompute. Note
+	// that these emails must be registered in crowdcompute worker UI:
+	// https://crowd-compute.appspot.com/
 	ContributorEmails []string `json:"contributorEmails,omitempty"`
-
 	// Instruction: Required. Instruction resource name.
 	Instruction string `json:"instruction,omitempty"`
-
 	// LabelGroup: Optional. A human-readable label used to logically group
 	// labeling tasks. This string must match the regular expression
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
-
 	// LanguageCode: Optional. The Language of this question, as a BCP-47
-	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
-	// en-US. Only need to set this when task is language related. For
-	// example, French text classification.
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is en-US. Only
+	// need to set this when task is language related. For example, French text
+	// classification.
 	LanguageCode string `json:"languageCode,omitempty"`
-
-	// QuestionDuration: Optional. Maximum duration for contributors to
-	// answer a question. Maximum is 3600 seconds. Default is 3600 seconds.
+	// QuestionDuration: Optional. Maximum duration for contributors to answer a
+	// question. Maximum is 3600 seconds. Default is 3600 seconds.
 	QuestionDuration string `json:"questionDuration,omitempty"`
-
-	// ReplicaCount: Optional. Replication of questions. Each question will
-	// be sent to up to this number of contributors to label. Aggregated
-	// answers will be returned. Default is set to 1. For image related
-	// labeling, valid values are 1, 3, 5.
+	// ReplicaCount: Optional. Replication of questions. Each question will be sent
+	// to up to this number of contributors to label. Aggregated answers will be
+	// returned. Default is set to 1. For image related labeling, valid values are
+	// 1, 3, 5.
 	ReplicaCount int64 `json:"replicaCount,omitempty"`
-
-	// UserEmailAddress: Email of the user who started the labeling task and
-	// should be notified by email. If empty no notification will be sent.
+	// UserEmailAddress: Email of the user who started the labeling task and should
+	// be notified by email. If empty no notification will be sent.
 	UserEmailAddress string `json:"userEmailAddress,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "AnnotatedDatasetDescription") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "AnnotatedDatasetDescription") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "AnnotatedDatasetDescription") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDatasetDescription") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1ImportDataOperationMetadata:
-// Metadata of an ImportData operation.
+// GoogleCloudDatalabelingV1p2alpha1ImportDataOperationMetadata: Metadata of an
+// ImportData operation.
 type GoogleCloudDatalabelingV1p2alpha1ImportDataOperationMetadata struct {
-	// CreateTime: Output only. Timestamp when import dataset request was
-	// created.
+	// CreateTime: Output only. Timestamp when import dataset request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Dataset: Output only. The name of imported dataset.
-	// "projects/*/datasets/*"
+	// Dataset: Output only. The name of imported dataset. "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1ImportDataOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1ImportDataOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1ImportDataOperationResponse:
-// Response used for ImportData longrunning operation.
+// GoogleCloudDatalabelingV1p2alpha1ImportDataOperationResponse: Response used
+// for ImportData longrunning operation.
 type GoogleCloudDatalabelingV1p2alpha1ImportDataOperationResponse struct {
 	// Dataset: Ouptut only. The name of imported dataset.
 	Dataset string `json:"dataset,omitempty"`
-
 	// ImportCount: Output only. Number of examples imported successfully.
 	ImportCount int64 `json:"importCount,omitempty"`
-
 	// TotalCount: Output only. Total number of examples requested to import
 	TotalCount int64 `json:"totalCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Dataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dataset") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dataset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1ImportDataOperationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1ImportDataOperationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadat
-// a: Details of a LabelImageBoundingBox operation metadata.
+// GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadata:
+// Details of a LabelImageBoundingBox operation metadata.
 type GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetada
-// ta: Details of LabelImageBoundingPoly operation metadata.
+// GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetadata:
+// Details of LabelImageBoundingPoly operation metadata.
 type GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMeta
-// data: Metadata of a LabelImageClassification operation.
+// GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMetadata:
+// Metadata of a LabelImageClassification operation.
 type GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperatio
-// nMetadata: Details of a LabelImageOrientedBoundingBox operation
-// metadata.
+// GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperationMetada
+// ta: Details of a LabelImageOrientedBoundingBox operation metadata.
 type GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperationMetadata struct {
 	// BasicConfig: Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatalabelingV1p2alpha1LabelImagePolylineOperationMetadata:
@@ -7469,393 +5849,300 @@ func (s *GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperation
 type GoogleCloudDatalabelingV1p2alpha1LabelImagePolylineOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelImagePolylineOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImagePolylineOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetada
-// ta: Details of a LabelImageSegmentation operation metadata.
+// GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetadata:
+// Details of a LabelImageSegmentation operation metadata.
 type GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelOperationMetadata: Metadata of
-// a labeling operation, such as LabelImage or LabelVideo. Next tag: 23
+// GoogleCloudDatalabelingV1p2alpha1LabelOperationMetadata: Metadata of a
+// labeling operation, such as LabelImage or LabelVideo. Next tag: 23
 type GoogleCloudDatalabelingV1p2alpha1LabelOperationMetadata struct {
-	// AnnotatedDataset: Output only. The name of annotated dataset in
-	// format "projects/*/datasets/*/annotatedDatasets/*".
+	// AnnotatedDataset: Output only. The name of annotated dataset in format
+	// "projects/*/datasets/*/annotatedDatasets/*".
 	AnnotatedDataset string `json:"annotatedDataset,omitempty"`
-
 	// CreateTime: Output only. Timestamp when labeling request was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Dataset: Output only. The name of dataset to be labeled.
 	// "projects/*/datasets/*"
 	Dataset string `json:"dataset,omitempty"`
-
-	// ImageBoundingBoxDetails: Details of label image bounding box
-	// operation.
+	// ImageBoundingBoxDetails: Details of label image bounding box operation.
 	ImageBoundingBoxDetails *GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadata `json:"imageBoundingBoxDetails,omitempty"`
-
-	// ImageBoundingPolyDetails: Details of label image bounding poly
-	// operation.
+	// ImageBoundingPolyDetails: Details of label image bounding poly operation.
 	ImageBoundingPolyDetails *GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetadata `json:"imageBoundingPolyDetails,omitempty"`
-
-	// ImageClassificationDetails: Details of label image classification
-	// operation.
+	// ImageClassificationDetails: Details of label image classification operation.
 	ImageClassificationDetails *GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMetadata `json:"imageClassificationDetails,omitempty"`
-
-	// ImageOrientedBoundingBoxDetails: Details of label image oriented
-	// bounding box operation.
+	// ImageOrientedBoundingBoxDetails: Details of label image oriented bounding
+	// box operation.
 	ImageOrientedBoundingBoxDetails *GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperationMetadata `json:"imageOrientedBoundingBoxDetails,omitempty"`
-
 	// ImagePolylineDetails: Details of label image polyline operation.
 	ImagePolylineDetails *GoogleCloudDatalabelingV1p2alpha1LabelImagePolylineOperationMetadata `json:"imagePolylineDetails,omitempty"`
-
-	// ImageSegmentationDetails: Details of label image segmentation
-	// operation.
+	// ImageSegmentationDetails: Details of label image segmentation operation.
 	ImageSegmentationDetails *GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetadata `json:"imageSegmentationDetails,omitempty"`
-
-	// PartialFailures: Output only. Partial failures encountered. E.g.
-	// single files that couldn't be read. Status details field will contain
-	// standard GCP error details.
+	// PartialFailures: Output only. Partial failures encountered. E.g. single
+	// files that couldn't be read. Status details field will contain standard GCP
+	// error details.
 	PartialFailures []*GoogleRpcStatus `json:"partialFailures,omitempty"`
-
-	// ProgressPercent: Output only. Progress of label operation. Range: [0,
-	// 100].
+	// ProgressPercent: Output only. Progress of label operation. Range: [0, 100].
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
-
-	// TextClassificationDetails: Details of label text classification
-	// operation.
+	// TextClassificationDetails: Details of label text classification operation.
 	TextClassificationDetails *GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetadata `json:"textClassificationDetails,omitempty"`
-
 	// TextEntityExtractionDetails: Details of label text entity extraction
 	// operation.
 	TextEntityExtractionDetails *GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMetadata `json:"textEntityExtractionDetails,omitempty"`
-
-	// VideoClassificationDetails: Details of label video classification
-	// operation.
+	// VideoClassificationDetails: Details of label video classification operation.
 	VideoClassificationDetails *GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMetadata `json:"videoClassificationDetails,omitempty"`
-
 	// VideoEventDetails: Details of label video event operation.
 	VideoEventDetails *GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata `json:"videoEventDetails,omitempty"`
-
 	// VideoObjectDetectionDetails: Details of label video object detection
 	// operation.
 	VideoObjectDetectionDetails *GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMetadata `json:"videoObjectDetectionDetails,omitempty"`
-
 	// VideoObjectTrackingDetails: Details of label video object tracking
 	// operation.
 	VideoObjectTrackingDetails *GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMetadata `json:"videoObjectTrackingDetails,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnnotatedDataset") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelStats: Statistics about
-// annotation specs.
+// GoogleCloudDatalabelingV1p2alpha1LabelStats: Statistics about annotation
+// specs.
 type GoogleCloudDatalabelingV1p2alpha1LabelStats struct {
 	// ExampleCount: Map of each annotation spec's example count. Key is the
-	// annotation spec name and value is the number of examples for that
-	// annotation spec. If the annotated dataset does not have annotation
-	// spec, the map will return a pair where the key is empty string and
-	// value is the total number of annotations.
+	// annotation spec name and value is the number of examples for that annotation
+	// spec. If the annotated dataset does not have annotation spec, the map will
+	// return a pair where the key is empty string and value is the total number of
+	// annotations.
 	ExampleCount map[string]string `json:"exampleCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ExampleCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExampleCount") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExampleCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetad
-// ata: Details of a LabelTextClassification operation metadata.
+// GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetadata:
+// Details of a LabelTextClassification operation metadata.
 type GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMet
-// adata: Details of a LabelTextEntityExtraction operation metadata.
+// GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMetadata:
+// Details of a LabelTextEntityExtraction operation metadata.
 type GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMeta
-// data: Details of a LabelVideoClassification operation metadata.
+// GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMetadata:
+// Details of a LabelVideoClassification operation metadata.
 type GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata:
-// Details of a LabelVideoEvent operation metadata.
+// GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata: Details
+// of a LabelVideoEvent operation metadata.
 type GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMet
-// adata: Details of a LabelVideoObjectDetection operation metadata.
+// GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMetadata:
+// Details of a LabelVideoObjectDetection operation metadata.
 type GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMeta
-// data: Details of a LabelVideoObjectTracking operation metadata.
+// GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMetadata:
+// Details of a LabelVideoObjectTracking operation metadata.
 type GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BasicConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BasicConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatalabelingV1p2alpha1OutputConfig: The configuration of
-// output data.
+// GoogleCloudDatalabelingV1p2alpha1OutputConfig: The configuration of output
+// data.
 type GoogleCloudDatalabelingV1p2alpha1OutputConfig struct {
 	// GcsDestination: Output to a file in Cloud Storage. Should be used for
 	// labeling output other than image segmentation.
 	GcsDestination *GoogleCloudDatalabelingV1p2alpha1GcsDestination `json:"gcsDestination,omitempty"`
-
-	// GcsFolderDestination: Output to a folder in Cloud Storage. Should be
-	// used for image segmentation or document de-identification labeling
-	// outputs.
+	// GcsFolderDestination: Output to a folder in Cloud Storage. Should be used
+	// for image segmentation or document de-identification labeling outputs.
 	GcsFolderDestination *GoogleCloudDatalabelingV1p2alpha1GcsFolderDestination `json:"gcsFolderDestination,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsDestination") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GcsDestination") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatalabelingV1p2alpha1OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatalabelingV1p2alpha1OutputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -7863,156 +6150,120 @@ func (s *GoogleCloudDatalabelingV1p2alpha1OutputConfig) MarshalJSON() ([]byte, e
 type GoogleLongrunningListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Operations: A list of operations that matches the specified filter in
-	// the request.
+	// Operations: A list of operations that matches the specified filter in the
+	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
 // operation that is the result of a network API call.
 type GoogleLongrunningOperation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If `true`, the operation is completed, and either `error`
-	// or `response` is available.
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
-
 	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should be a resource name ending with
-	// `operations/{unique_id}`.
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal, successful response of the operation. If the
-	// original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleRpcStatus: The `Status` type defines a logical error model that
-// is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// GoogleRpcStatus: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs and RPC
+// APIs. It is used by gRPC (https://github.com/grpc). Each `Status` message
+// contains three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it in the
+// API Design Guide (https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "datalabeling.projects.annotationSpecSets.create":
 
 type ProjectsAnnotationSpecSetsCreateCall struct {
 	s                                                            *Service
@@ -8025,8 +6276,7 @@ type ProjectsAnnotationSpecSetsCreateCall struct {
 
 // Create: Creates an annotation spec set by providing a set of labels.
 //
-//   - parent: AnnotationSpecSet resource parent, format:
-//     projects/{project_id}.
+// - parent: AnnotationSpecSet resource parent, format: projects/{project_id}.
 func (r *ProjectsAnnotationSpecSetsService) Create(parent string, googleclouddatalabelingv1beta1createannotationspecsetrequest *GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest) *ProjectsAnnotationSpecSetsCreateCall {
 	c := &ProjectsAnnotationSpecSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8035,23 +6285,21 @@ func (r *ProjectsAnnotationSpecSetsService) Create(parent string, googleclouddat
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAnnotationSpecSetsCreateCall) Fields(s ...googleapi.Field) *ProjectsAnnotationSpecSetsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAnnotationSpecSetsCreateCall) Context(ctx context.Context) *ProjectsAnnotationSpecSetsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAnnotationSpecSetsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8060,18 +6308,12 @@ func (c *ProjectsAnnotationSpecSetsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsAnnotationSpecSetsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1createannotationspecsetrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/annotationSpecSets")
@@ -8088,16 +6330,11 @@ func (c *ProjectsAnnotationSpecSetsCreateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "datalabeling.projects.annotationSpecSets.create" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1AnnotationSpecSet or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1AnnotationSpecSet.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1AnnotationSpecSet.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAnnotationSpecSetsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1AnnotationSpecSet, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8128,38 +6365,7 @@ func (c *ProjectsAnnotationSpecSetsCreateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an annotation spec set by providing a set of labels.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/annotationSpecSets",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.annotationSpecSets.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. AnnotationSpecSet resource parent, format: projects/{project_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/annotationSpecSets",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1AnnotationSpecSet"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.annotationSpecSets.delete":
 
 type ProjectsAnnotationSpecSetsDeleteCall struct {
 	s          *Service
@@ -8180,23 +6386,21 @@ func (r *ProjectsAnnotationSpecSetsService) Delete(name string) *ProjectsAnnotat
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAnnotationSpecSetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsAnnotationSpecSetsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAnnotationSpecSetsDeleteCall) Context(ctx context.Context) *ProjectsAnnotationSpecSetsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAnnotationSpecSetsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8205,12 +6409,7 @@ func (c *ProjectsAnnotationSpecSetsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsAnnotationSpecSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8228,12 +6427,11 @@ func (c *ProjectsAnnotationSpecSetsDeleteCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "datalabeling.projects.annotationSpecSets.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsAnnotationSpecSetsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8264,35 +6462,7 @@ func (c *ProjectsAnnotationSpecSetsDeleteCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an annotation spec set by resource name.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/annotationSpecSets/{annotationSpecSetsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalabeling.projects.annotationSpecSets.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. AnnotationSpec resource name, format: `projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/annotationSpecSets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.annotationSpecSets.get":
 
 type ProjectsAnnotationSpecSetsGetCall struct {
 	s            *Service
@@ -8314,33 +6484,29 @@ func (r *ProjectsAnnotationSpecSetsService) Get(name string) *ProjectsAnnotation
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAnnotationSpecSetsGetCall) Fields(s ...googleapi.Field) *ProjectsAnnotationSpecSetsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAnnotationSpecSetsGetCall) IfNoneMatch(entityTag string) *ProjectsAnnotationSpecSetsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAnnotationSpecSetsGetCall) Context(ctx context.Context) *ProjectsAnnotationSpecSetsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAnnotationSpecSetsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8349,12 +6515,7 @@ func (c *ProjectsAnnotationSpecSetsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAnnotationSpecSetsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8375,16 +6536,11 @@ func (c *ProjectsAnnotationSpecSetsGetCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "datalabeling.projects.annotationSpecSets.get" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1AnnotationSpecSet or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1AnnotationSpecSet.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1AnnotationSpecSet.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAnnotationSpecSetsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1AnnotationSpecSet, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8415,35 +6571,7 @@ func (c *ProjectsAnnotationSpecSetsGetCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets an annotation spec set by resource name.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/annotationSpecSets/{annotationSpecSetsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.annotationSpecSets.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. AnnotationSpecSet resource name, format: projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/annotationSpecSets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1AnnotationSpecSet"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.annotationSpecSets.list":
 
 type ProjectsAnnotationSpecSetsListCall struct {
 	s            *Service
@@ -8454,8 +6582,7 @@ type ProjectsAnnotationSpecSetsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists annotation spec sets for a project. Pagination is
-// supported.
+// List: Lists annotation spec sets for a project. Pagination is supported.
 //
 //   - parent: Parent of AnnotationSpecSet resource, format:
 //     projects/{project_id}.
@@ -8465,58 +6592,54 @@ func (r *ProjectsAnnotationSpecSetsService) List(parent string) *ProjectsAnnotat
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter is not supported
-// at this moment.
+// Filter sets the optional parameter "filter": Filter is not supported at this
+// moment.
 func (c *ProjectsAnnotationSpecSetsListCall) Filter(filter string) *ProjectsAnnotationSpecSetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer results than requested. Default value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer results than requested. Default value is 100.
 func (c *ProjectsAnnotationSpecSetsListCall) PageSize(pageSize int64) *ProjectsAnnotationSpecSetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained by ListAnnotationSpecSetsResponse.next_page_token of the
-// previous [DataLabelingService.ListAnnotationSpecSets] call. Return
-// first page if empty.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained by
+// ListAnnotationSpecSetsResponse.next_page_token of the previous
+// [DataLabelingService.ListAnnotationSpecSets] call. Return first page if
+// empty.
 func (c *ProjectsAnnotationSpecSetsListCall) PageToken(pageToken string) *ProjectsAnnotationSpecSetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAnnotationSpecSetsListCall) Fields(s ...googleapi.Field) *ProjectsAnnotationSpecSetsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAnnotationSpecSetsListCall) IfNoneMatch(entityTag string) *ProjectsAnnotationSpecSetsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAnnotationSpecSetsListCall) Context(ctx context.Context) *ProjectsAnnotationSpecSetsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAnnotationSpecSetsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8525,12 +6648,7 @@ func (c *ProjectsAnnotationSpecSetsListCall) Header() http.Header {
 }
 
 func (c *ProjectsAnnotationSpecSetsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8551,15 +6669,11 @@ func (c *ProjectsAnnotationSpecSetsListCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "datalabeling.projects.annotationSpecSets.list" call.
-// Exactly one of
-// *GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAnnotationSpecSetsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8590,48 +6704,6 @@ func (c *ProjectsAnnotationSpecSetsListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists annotation spec sets for a project. Pagination is supported.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/annotationSpecSets",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.annotationSpecSets.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filter is not supported at this moment.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer results than requested. Default value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained by ListAnnotationSpecSetsResponse.next_page_token of the previous [DataLabelingService.ListAnnotationSpecSets] call. Return first page if empty.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent of AnnotationSpecSet resource, format: projects/{project_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/annotationSpecSets",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -8639,7 +6711,7 @@ func (c *ProjectsAnnotationSpecSetsListCall) Do(opts ...googleapi.CallOption) (*
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsAnnotationSpecSetsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -8654,8 +6726,6 @@ func (c *ProjectsAnnotationSpecSetsListCall) Pages(ctx context.Context, f func(*
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "datalabeling.projects.datasets.create":
 
 type ProjectsDatasetsCreateCall struct {
 	s                                                  *Service
@@ -8677,23 +6747,21 @@ func (r *ProjectsDatasetsService) Create(parent string, googleclouddatalabelingv
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsCreateCall) Fields(s ...googleapi.Field) *ProjectsDatasetsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsCreateCall) Context(ctx context.Context) *ProjectsDatasetsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8702,18 +6770,12 @@ func (c *ProjectsDatasetsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1createdatasetrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/datasets")
@@ -8730,13 +6792,11 @@ func (c *ProjectsDatasetsCreateCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "datalabeling.projects.datasets.create" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1Dataset or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleCloudDatalabelingV1beta1Dataset.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1Dataset, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8767,38 +6827,7 @@ func (c *ProjectsDatasetsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates dataset. If success return a Dataset resource.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.datasets.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Dataset resource parent, format: projects/{project_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/datasets",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1CreateDatasetRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1Dataset"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.delete":
 
 type ProjectsDatasetsDeleteCall struct {
 	s          *Service
@@ -8819,23 +6848,21 @@ func (r *ProjectsDatasetsService) Delete(name string) *ProjectsDatasetsDeleteCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsDatasetsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsDeleteCall) Context(ctx context.Context) *ProjectsDatasetsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8844,12 +6871,7 @@ func (c *ProjectsDatasetsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8867,12 +6889,11 @@ func (c *ProjectsDatasetsDeleteCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "datalabeling.projects.datasets.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8903,35 +6924,7 @@ func (c *ProjectsDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePr
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a dataset by resource name.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalabeling.projects.datasets.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Dataset resource name, format: projects/{project_id}/datasets/{dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.exportData":
 
 type ProjectsDatasetsExportDataCall struct {
 	s                                               *Service
@@ -8954,23 +6947,21 @@ func (r *ProjectsDatasetsService) ExportData(name string, googleclouddatalabelin
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsExportDataCall) Fields(s ...googleapi.Field) *ProjectsDatasetsExportDataCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsExportDataCall) Context(ctx context.Context) *ProjectsDatasetsExportDataCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsExportDataCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8979,18 +6970,12 @@ func (c *ProjectsDatasetsExportDataCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsExportDataCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1exportdatarequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:exportData")
@@ -9007,12 +6992,11 @@ func (c *ProjectsDatasetsExportDataCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "datalabeling.projects.datasets.exportData" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsExportDataCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9043,38 +7027,7 @@ func (c *ProjectsDatasetsExportDataCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Exports data and annotations from dataset.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}:exportData",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.datasets.exportData",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Dataset resource name, format: projects/{project_id}/datasets/{dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:exportData",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ExportDataRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.get":
 
 type ProjectsDatasetsGetCall struct {
 	s            *Service
@@ -9096,33 +7049,29 @@ func (r *ProjectsDatasetsService) Get(name string) *ProjectsDatasetsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsGetCall) Fields(s ...googleapi.Field) *ProjectsDatasetsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsGetCall) IfNoneMatch(entityTag string) *ProjectsDatasetsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsGetCall) Context(ctx context.Context) *ProjectsDatasetsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9131,12 +7080,7 @@ func (c *ProjectsDatasetsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9157,13 +7101,11 @@ func (c *ProjectsDatasetsGetCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "datalabeling.projects.datasets.get" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1Dataset or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleCloudDatalabelingV1beta1Dataset.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1Dataset, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9194,35 +7136,7 @@ func (c *ProjectsDatasetsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets dataset by resource name.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Dataset resource name, format: projects/{project_id}/datasets/{dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1Dataset"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.importData":
 
 type ProjectsDatasetsImportDataCall struct {
 	s                                               *Service
@@ -9233,12 +7147,11 @@ type ProjectsDatasetsImportDataCall struct {
 	header_                                         http.Header
 }
 
-// ImportData: Imports data into dataset based on source locations
-// defined in request. It can be called multiple times for the same
-// dataset. Each dataset can only have one long running operation
-// running on it. For example, no labeling task (also long running
-// operation) can be started while importing is still ongoing. Vice
-// versa.
+// ImportData: Imports data into dataset based on source locations defined in
+// request. It can be called multiple times for the same dataset. Each dataset
+// can only have one long running operation running on it. For example, no
+// labeling task (also long running operation) can be started while importing
+// is still ongoing. Vice versa.
 //
 //   - name: Dataset resource name, format:
 //     projects/{project_id}/datasets/{dataset_id}.
@@ -9250,23 +7163,21 @@ func (r *ProjectsDatasetsService) ImportData(name string, googleclouddatalabelin
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsImportDataCall) Fields(s ...googleapi.Field) *ProjectsDatasetsImportDataCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsImportDataCall) Context(ctx context.Context) *ProjectsDatasetsImportDataCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsImportDataCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9275,18 +7186,12 @@ func (c *ProjectsDatasetsImportDataCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsImportDataCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1importdatarequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:importData")
@@ -9303,12 +7208,11 @@ func (c *ProjectsDatasetsImportDataCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "datalabeling.projects.datasets.importData" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsImportDataCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9339,38 +7243,7 @@ func (c *ProjectsDatasetsImportDataCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Imports data into dataset based on source locations defined in request. It can be called multiple times for the same dataset. Each dataset can only have one long running operation running on it. For example, no labeling task (also long running operation) can be started while importing is still ongoing. Vice versa.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}:importData",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.datasets.importData",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Dataset resource name, format: projects/{project_id}/datasets/{dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:importData",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ImportDataRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.list":
 
 type ProjectsDatasetsListCall struct {
 	s            *Service
@@ -9397,51 +7270,46 @@ func (c *ProjectsDatasetsListCall) Filter(filter string) *ProjectsDatasetsListCa
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer results than requested. Default value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer results than requested. Default value is 100.
 func (c *ProjectsDatasetsListCall) PageSize(pageSize int64) *ProjectsDatasetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained by ListDatasetsResponse.next_page_token of the previous
-// [DataLabelingService.ListDatasets] call. Returns the first page if
-// empty.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained by
+// ListDatasetsResponse.next_page_token of the previous
+// [DataLabelingService.ListDatasets] call. Returns the first page if empty.
 func (c *ProjectsDatasetsListCall) PageToken(pageToken string) *ProjectsDatasetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsListCall) Fields(s ...googleapi.Field) *ProjectsDatasetsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsListCall) IfNoneMatch(entityTag string) *ProjectsDatasetsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsListCall) Context(ctx context.Context) *ProjectsDatasetsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9450,12 +7318,7 @@ func (c *ProjectsDatasetsListCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9476,14 +7339,11 @@ func (c *ProjectsDatasetsListCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "datalabeling.projects.datasets.list" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1ListDatasetsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1ListDatasetsResponse.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1ListDatasetsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1ListDatasetsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9514,48 +7374,6 @@ func (c *ProjectsDatasetsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists datasets under a project. Pagination is supported.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filter on dataset is not supported at this moment.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer results than requested. Default value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained by ListDatasetsResponse.next_page_token of the previous [DataLabelingService.ListDatasets] call. Returns the first page if empty.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Dataset resource parent, format: projects/{project_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/datasets",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ListDatasetsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -9563,7 +7381,7 @@ func (c *ProjectsDatasetsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDatasetsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1ListDatasetsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -9578,8 +7396,6 @@ func (c *ProjectsDatasetsListCall) Pages(ctx context.Context, f func(*GoogleClou
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "datalabeling.projects.datasets.annotatedDatasets.delete":
 
 type ProjectsDatasetsAnnotatedDatasetsDeleteCall struct {
 	s          *Service
@@ -9601,23 +7417,21 @@ func (r *ProjectsDatasetsAnnotatedDatasetsService) Delete(name string) *Projects
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9626,12 +7440,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -9649,12 +7458,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9685,35 +7493,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an annotated dataset by resource name.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the annotated dataset to delete, format: projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/ {annotated_dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.annotatedDatasets.get":
 
 type ProjectsDatasetsAnnotatedDatasetsGetCall struct {
 	s            *Service
@@ -9736,33 +7516,29 @@ func (r *ProjectsDatasetsAnnotatedDatasetsService) Get(name string) *ProjectsDat
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) IfNoneMatch(entityTag string) *ProjectsDatasetsAnnotatedDatasetsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9771,12 +7547,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9797,14 +7568,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.get" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1AnnotatedDataset or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1AnnotatedDataset.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1AnnotatedDataset.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1AnnotatedDataset, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9835,35 +7603,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets an annotated dataset by resource name.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the annotated dataset to get, format: projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/ {annotated_dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1AnnotatedDataset"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.annotatedDatasets.list":
 
 type ProjectsDatasetsAnnotatedDatasetsListCall struct {
 	s            *Service
@@ -9874,8 +7614,7 @@ type ProjectsDatasetsAnnotatedDatasetsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists annotated datasets for a dataset. Pagination is
-// supported.
+// List: Lists annotated datasets for a dataset. Pagination is supported.
 //
 //   - parent: Name of the dataset to list annotated datasets, format:
 //     projects/{project_id}/datasets/{dataset_id}.
@@ -9885,58 +7624,54 @@ func (r *ProjectsDatasetsAnnotatedDatasetsService) List(parent string) *Projects
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter is not supported
-// at this moment.
+// Filter sets the optional parameter "filter": Filter is not supported at this
+// moment.
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Filter(filter string) *ProjectsDatasetsAnnotatedDatasetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer results than requested. Default value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer results than requested. Default value is 100.
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) PageSize(pageSize int64) *ProjectsDatasetsAnnotatedDatasetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained by ListAnnotatedDatasetsResponse.next_page_token of the
-// previous [DataLabelingService.ListAnnotatedDatasets] call. Return
-// first page if empty.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained by
+// ListAnnotatedDatasetsResponse.next_page_token of the previous
+// [DataLabelingService.ListAnnotatedDatasets] call. Return first page if
+// empty.
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) PageToken(pageToken string) *ProjectsDatasetsAnnotatedDatasetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) IfNoneMatch(entityTag string) *ProjectsDatasetsAnnotatedDatasetsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9945,12 +7680,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9971,15 +7701,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsListCall) doRequest(alt string) (*http
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.list" call.
-// Exactly one of
-// *GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse.ServerRes
-// ponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10010,48 +7736,6 @@ func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists annotated datasets for a dataset. Pagination is supported.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filter is not supported at this moment.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer results than requested. Default value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained by ListAnnotatedDatasetsResponse.next_page_token of the previous [DataLabelingService.ListAnnotatedDatasets] call. Return first page if empty.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Name of the dataset to list annotated datasets, format: projects/{project_id}/datasets/{dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/annotatedDatasets",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -10059,7 +7743,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Do(opts ...googleapi.CallOpt
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -10075,8 +7759,6 @@ func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Pages(ctx context.Context, f
 	}
 }
 
-// method id "datalabeling.projects.datasets.annotatedDatasets.dataItems.get":
-
 type ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall struct {
 	s            *Service
 	name         string
@@ -10086,8 +7768,8 @@ type ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a data item in a dataset by resource name. This API can be
-// called after data are imported into dataset.
+// Get: Gets a data item in a dataset by resource name. This API can be called
+// after data are imported into dataset.
 //
 //   - name: The name of the data item to get, format:
 //     projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}.
@@ -10098,33 +7780,29 @@ func (r *ProjectsDatasetsAnnotatedDatasetsDataItemsService) Get(name string) *Pr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) IfNoneMatch(entityTag string) *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10133,12 +7811,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) Header() http.Header
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10159,13 +7832,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) doRequest(alt string
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.dataItems.get" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1DataItem or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudDatalabelingV1beta1DataItem.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1DataItem.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1DataItem, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10196,35 +7867,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a data item in a dataset by resource name. This API can be called after data are imported into dataset.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/dataItems/{dataItemsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.dataItems.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the data item to get, format: projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+/dataItems/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1DataItem"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.annotatedDatasets.dataItems.list":
 
 type ProjectsDatasetsAnnotatedDatasetsDataItemsListCall struct {
 	s            *Service
@@ -10235,8 +7878,8 @@ type ProjectsDatasetsAnnotatedDatasetsDataItemsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists data items in a dataset. This API can be called after
-// data are imported into dataset. Pagination is supported.
+// List: Lists data items in a dataset. This API can be called after data are
+// imported into dataset. Pagination is supported.
 //
 //   - parent: Name of the dataset to list data items, format:
 //     projects/{project_id}/datasets/{dataset_id}.
@@ -10246,23 +7889,23 @@ func (r *ProjectsDatasetsAnnotatedDatasetsDataItemsService) List(parent string) 
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter is not supported
-// at this moment.
+// Filter sets the optional parameter "filter": Filter is not supported at this
+// moment.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Filter(filter string) *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer results than requested. Default value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer results than requested. Default value is 100.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) PageSize(pageSize int64) *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained by ListDataItemsResponse.next_page_token of the previous
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained by
+// ListDataItemsResponse.next_page_token of the previous
 // [DataLabelingService.ListDataItems] call. Return first page if empty.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) PageToken(pageToken string) *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -10270,33 +7913,29 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) PageToken(pageToken
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) IfNoneMatch(entityTag string) *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10305,12 +7944,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Header() http.Heade
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10331,14 +7965,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) doRequest(alt strin
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.dataItems.list" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1ListDataItemsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudDatalabelingV1beta1ListDataItemsResponse.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1ListDataItemsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1ListDataItemsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10369,48 +8000,6 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists data items in a dataset. This API can be called after data are imported into dataset. Pagination is supported.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/dataItems",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.dataItems.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filter is not supported at this moment.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer results than requested. Default value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained by ListDataItemsResponse.next_page_token of the previous [DataLabelingService.ListDataItems] call. Return first page if empty.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Name of the dataset to list data items, format: projects/{project_id}/datasets/{dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/dataItems",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ListDataItemsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -10418,7 +8007,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Do(opts ...googleap
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1ListDataItemsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -10434,8 +8023,6 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Pages(ctx context.C
 	}
 }
 
-// method id "datalabeling.projects.datasets.annotatedDatasets.examples.get":
-
 type ProjectsDatasetsAnnotatedDatasetsExamplesGetCall struct {
 	s            *Service
 	name         string
@@ -10445,8 +8032,7 @@ type ProjectsDatasetsAnnotatedDatasetsExamplesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an example by resource name, including both data and
-// annotation.
+// Get: Gets an example by resource name, including both data and annotation.
 //
 //   - name: Name of example, format:
 //     projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
@@ -10457,42 +8043,38 @@ func (r *ProjectsDatasetsAnnotatedDatasetsExamplesService) Get(name string) *Pro
 	return c
 }
 
-// Filter sets the optional parameter "filter": An expression for
-// filtering Examples. Filter by annotation_spec.display_name is
-// supported. Format "annotation_spec.display_name = {display_name}"
+// Filter sets the optional parameter "filter": An expression for filtering
+// Examples. Filter by annotation_spec.display_name is supported. Format
+// "annotation_spec.display_name = {display_name}"
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) Filter(filter string) *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) IfNoneMatch(entityTag string) *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10501,12 +8083,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) Header() http.Header 
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10527,13 +8104,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) doRequest(alt string)
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.examples.get" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1Example or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleCloudDatalabelingV1beta1Example.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1Example, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10564,40 +8139,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets an example by resource name, including both data and annotation.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/examples/{examplesId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.examples.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. An expression for filtering Examples. Filter by annotation_spec.display_name is supported. Format \"annotation_spec.display_name = {display_name}\"",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. Name of example, format: projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/ {annotated_dataset_id}/examples/{example_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+/examples/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1Example"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.annotatedDatasets.examples.list":
 
 type ProjectsDatasetsAnnotatedDatasetsExamplesListCall struct {
 	s            *Service
@@ -10608,8 +8150,7 @@ type ProjectsDatasetsAnnotatedDatasetsExamplesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists examples in an annotated dataset. Pagination is
-// supported.
+// List: Lists examples in an annotated dataset. Pagination is supported.
 //
 // - parent: Example resource parent.
 func (r *ProjectsDatasetsAnnotatedDatasetsExamplesService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsExamplesListCall {
@@ -10618,25 +8159,25 @@ func (r *ProjectsDatasetsAnnotatedDatasetsExamplesService) List(parent string) *
 	return c
 }
 
-// Filter sets the optional parameter "filter": An expression for
-// filtering Examples. For annotated datasets that have annotation spec
-// set, filter by annotation_spec.display_name is supported. Format
+// Filter sets the optional parameter "filter": An expression for filtering
+// Examples. For annotated datasets that have annotation spec set, filter by
+// annotation_spec.display_name is supported. Format
 // "annotation_spec.display_name = {display_name}"
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Filter(filter string) *ProjectsDatasetsAnnotatedDatasetsExamplesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer results than requested. Default value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer results than requested. Default value is 100.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) PageSize(pageSize int64) *ProjectsDatasetsAnnotatedDatasetsExamplesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained by ListExamplesResponse.next_page_token of the previous
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained by
+// ListExamplesResponse.next_page_token of the previous
 // [DataLabelingService.ListExamples] call. Return first page if empty.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) PageToken(pageToken string) *ProjectsDatasetsAnnotatedDatasetsExamplesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -10644,33 +8185,29 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) PageToken(pageToken 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsExamplesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) IfNoneMatch(entityTag string) *ProjectsDatasetsAnnotatedDatasetsExamplesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsExamplesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10679,12 +8216,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Header() http.Header
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10705,14 +8237,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) doRequest(alt string
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.examples.list" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1ListExamplesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1ListExamplesResponse.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1ListExamplesResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1ListExamplesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10743,48 +8272,6 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists examples in an annotated dataset. Pagination is supported.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/examples",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.examples.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. An expression for filtering Examples. For annotated datasets that have annotation spec set, filter by annotation_spec.display_name is supported. Format \"annotation_spec.display_name = {display_name}\"",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer results than requested. Default value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained by ListExamplesResponse.next_page_token of the previous [DataLabelingService.ListExamples] call. Return first page if empty.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Example resource parent.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/examples",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ListExamplesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -10792,7 +8279,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Do(opts ...googleapi
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1ListExamplesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -10808,8 +8295,6 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Pages(ctx context.Co
 	}
 }
 
-// method id "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.delete":
-
 type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall struct {
 	s          *Service
 	name       string
@@ -10820,10 +8305,9 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall struct {
 
 // Delete: Delete a FeedbackThread.
 //
-//   - name: Name of the FeedbackThread that is going to be deleted.
-//     Format:
-//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//     tated_dataset_id}/feedbackThreads/{feedback_thread_id}'.
+//   - name: Name of the FeedbackThread that is going to be deleted. Format:
+//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_d
+//     ataset_id}/feedbackThreads/{feedback_thread_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) Delete(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10831,23 +8315,21 @@ func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) Delete(name st
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10856,12 +8338,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) Header() ht
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -10879,12 +8356,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) doRequest(a
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10915,35 +8391,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) Do(opts ...
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete a FeedbackThread.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the FeedbackThread that is going to be deleted. Format: 'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}/feedbackThreads/{feedback_thread_id}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+/feedbackThreads/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.get":
 
 type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall struct {
 	s            *Service
@@ -10957,8 +8405,8 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall struct {
 // Get: Get a FeedbackThread object.
 //
 //   - name: Name of the feedback. Format:
-//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//     tated_dataset_id}/feedbackThreads/{feedback_thread_id}'.
+//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_d
+//     ataset_id}/feedbackThreads/{feedback_thread_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10966,33 +8414,29 @@ func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) Get(name strin
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) IfNoneMatch(entityTag string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11001,12 +8445,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) Header() http.
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11027,14 +8466,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) doRequest(alt 
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.get" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1FeedbackThread or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1FeedbackThread.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1FeedbackThread.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1FeedbackThread, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11065,35 +8501,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) Do(opts ...goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a FeedbackThread object.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the feedback. Format: 'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}/feedbackThreads/{feedback_thread_id}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+/feedbackThreads/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1FeedbackThread"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.list":
 
 type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall struct {
 	s            *Service
@@ -11107,59 +8515,54 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall struct {
 // List: List FeedbackThreads with pagination.
 //
 //   - parent: FeedbackThread resource parent. Format:
-//     "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//     tated_dataset_id}".
+//     "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_d
+//     ataset_id}".
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer results than requested. Default value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer results than requested. Default value is 100.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) PageSize(pageSize int64) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained by ListFeedbackThreads.next_page_token of the previous
-// [DataLabelingService.ListFeedbackThreads] call. Return first page if
-// empty.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained by
+// ListFeedbackThreads.next_page_token of the previous
+// [DataLabelingService.ListFeedbackThreads] call. Return first page if empty.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) PageToken(pageToken string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) IfNoneMatch(entityTag string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11168,12 +8571,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Header() http
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11194,15 +8592,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) doRequest(alt
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.list" call.
-// Exactly one of
-// *GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse.ServerRespo
-// nse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11233,43 +8627,6 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Do(opts ...go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List FeedbackThreads with pagination.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer results than requested. Default value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained by ListFeedbackThreads.next_page_token of the previous [DataLabelingService.ListFeedbackThreads] call. Return first page if empty.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. FeedbackThread resource parent. Format: \"projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/feedbackThreads",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -11277,7 +8634,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Do(opts ...go
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -11293,8 +8650,6 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Pages(ctx con
 	}
 }
 
-// method id "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.create":
-
 type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall struct {
 	s                                             *Service
 	parent                                        string
@@ -11307,8 +8662,8 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall 
 // Create: Create a FeedbackMessage object.
 //
 //   - parent: FeedbackMessage resource parent, format:
-//     projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annot
-//     ated_dataset_id}/feedbackThreads/{feedback_thread_id}.
+//     projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_da
+//     taset_id}/feedbackThreads/{feedback_thread_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Create(parent string, googleclouddatalabelingv1beta1feedbackmessage *GoogleCloudDatalabelingV1beta1FeedbackMessage) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11317,23 +8672,21 @@ func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11342,18 +8695,12 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateC
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1feedbackmessage)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/feedbackMessages")
@@ -11370,12 +8717,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateC
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.create" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11406,38 +8752,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a FeedbackMessage object.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}/feedbackMessages",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. FeedbackMessage resource parent, format: projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}/feedbackThreads/{feedback_thread_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+/feedbackThreads/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/feedbackMessages",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1FeedbackMessage"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.delete":
 
 type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall struct {
 	s          *Service
@@ -11449,11 +8764,10 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall 
 
 // Delete: Delete a FeedbackMessage.
 //
-//   - name: Name of the FeedbackMessage that is going to be deleted.
-//     Format:
-//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//     tated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessa
-//     ges/{feedback_message_id}'.
+//   - name: Name of the FeedbackMessage that is going to be deleted. Format:
+//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_d
+//     ataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessages/{feedback_
+//     message_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Delete(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11461,23 +8775,21 @@ func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11486,12 +8798,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteC
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -11509,12 +8816,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteC
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11545,35 +8851,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete a FeedbackMessage.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}/feedbackMessages/{feedbackMessagesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the FeedbackMessage that is going to be deleted. Format: 'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessages/{feedback_message_id}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+/feedbackThreads/[^/]+/feedbackMessages/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.get":
 
 type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall struct {
 	s            *Service
@@ -11587,9 +8865,9 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall str
 // Get: Get a FeedbackMessage object.
 //
 //   - name: Name of the feedback. Format:
-//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//     tated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessa
-//     ges/{feedback_message_id}'.
+//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_d
+//     ataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessages/{feedback_
+//     message_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11597,33 +8875,29 @@ func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall) IfNoneMatch(entityTag string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11632,12 +8906,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11658,14 +8927,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.get" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1FeedbackMessage or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1FeedbackMessage.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1FeedbackMessage.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1FeedbackMessage, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11696,35 +8962,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a FeedbackMessage object.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}/feedbackMessages/{feedbackMessagesId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the feedback. Format: 'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessages/{feedback_message_id}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+/feedbackThreads/[^/]+/feedbackMessages/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1FeedbackMessage"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.list":
 
 type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall struct {
 	s            *Service
@@ -11738,59 +8976,54 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall st
 // List: List FeedbackMessages with pagination.
 //
 //   - parent: FeedbackMessage resource parent. Format:
-//     "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//     tated_dataset_id}/feedbackThreads/{feedback_thread_id}".
+//     "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_d
+//     ataset_id}/feedbackThreads/{feedback_thread_id}".
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer results than requested. Default value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer results than requested. Default value is 100.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) PageSize(pageSize int64) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained by ListFeedbackMessages.next_page_token of the previous
-// [DataLabelingService.ListFeedbackMessages] call. Return first page if
-// empty.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained by
+// ListFeedbackMessages.next_page_token of the previous
+// [DataLabelingService.ListFeedbackMessages] call. Return first page if empty.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) PageToken(pageToken string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) Fields(s ...googleapi.Field) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) IfNoneMatch(entityTag string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) Context(ctx context.Context) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11799,12 +9032,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCal
 }
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11825,15 +9053,11 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCal
 }
 
 // Do executes the "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.list" call.
-// Exactly one of
-// *GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11864,43 +9088,6 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List FeedbackMessages with pagination.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}/feedbackMessages",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer results than requested. Default value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained by ListFeedbackMessages.next_page_token of the previous [DataLabelingService.ListFeedbackMessages] call. Return first page if empty.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. FeedbackMessage resource parent. Format: \"projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}/feedbackThreads/{feedback_thread_id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/annotatedDatasets/[^/]+/feedbackThreads/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/feedbackMessages",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -11908,7 +9095,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCal
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -11924,8 +9111,6 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCal
 	}
 }
 
-// method id "datalabeling.projects.datasets.dataItems.get":
-
 type ProjectsDatasetsDataItemsGetCall struct {
 	s            *Service
 	name         string
@@ -11935,8 +9120,8 @@ type ProjectsDatasetsDataItemsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a data item in a dataset by resource name. This API can be
-// called after data are imported into dataset.
+// Get: Gets a data item in a dataset by resource name. This API can be called
+// after data are imported into dataset.
 //
 //   - name: The name of the data item to get, format:
 //     projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}.
@@ -11947,33 +9132,29 @@ func (r *ProjectsDatasetsDataItemsService) Get(name string) *ProjectsDatasetsDat
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsDataItemsGetCall) Fields(s ...googleapi.Field) *ProjectsDatasetsDataItemsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsDataItemsGetCall) IfNoneMatch(entityTag string) *ProjectsDatasetsDataItemsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsDataItemsGetCall) Context(ctx context.Context) *ProjectsDatasetsDataItemsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsDataItemsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11982,12 +9163,7 @@ func (c *ProjectsDatasetsDataItemsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsDataItemsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -12008,13 +9184,11 @@ func (c *ProjectsDatasetsDataItemsGetCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "datalabeling.projects.datasets.dataItems.get" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1DataItem or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudDatalabelingV1beta1DataItem.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1DataItem.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsDataItemsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1DataItem, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12045,35 +9219,7 @@ func (c *ProjectsDatasetsDataItemsGetCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a data item in a dataset by resource name. This API can be called after data are imported into dataset.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/dataItems/{dataItemsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.dataItems.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the data item to get, format: projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/dataItems/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1DataItem"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.dataItems.list":
 
 type ProjectsDatasetsDataItemsListCall struct {
 	s            *Service
@@ -12084,8 +9230,8 @@ type ProjectsDatasetsDataItemsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists data items in a dataset. This API can be called after
-// data are imported into dataset. Pagination is supported.
+// List: Lists data items in a dataset. This API can be called after data are
+// imported into dataset. Pagination is supported.
 //
 //   - parent: Name of the dataset to list data items, format:
 //     projects/{project_id}/datasets/{dataset_id}.
@@ -12095,23 +9241,23 @@ func (r *ProjectsDatasetsDataItemsService) List(parent string) *ProjectsDatasets
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter is not supported
-// at this moment.
+// Filter sets the optional parameter "filter": Filter is not supported at this
+// moment.
 func (c *ProjectsDatasetsDataItemsListCall) Filter(filter string) *ProjectsDatasetsDataItemsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer results than requested. Default value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer results than requested. Default value is 100.
 func (c *ProjectsDatasetsDataItemsListCall) PageSize(pageSize int64) *ProjectsDatasetsDataItemsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained by ListDataItemsResponse.next_page_token of the previous
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained by
+// ListDataItemsResponse.next_page_token of the previous
 // [DataLabelingService.ListDataItems] call. Return first page if empty.
 func (c *ProjectsDatasetsDataItemsListCall) PageToken(pageToken string) *ProjectsDatasetsDataItemsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -12119,33 +9265,29 @@ func (c *ProjectsDatasetsDataItemsListCall) PageToken(pageToken string) *Project
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsDataItemsListCall) Fields(s ...googleapi.Field) *ProjectsDatasetsDataItemsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsDataItemsListCall) IfNoneMatch(entityTag string) *ProjectsDatasetsDataItemsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsDataItemsListCall) Context(ctx context.Context) *ProjectsDatasetsDataItemsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsDataItemsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12154,12 +9296,7 @@ func (c *ProjectsDatasetsDataItemsListCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsDataItemsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -12180,14 +9317,11 @@ func (c *ProjectsDatasetsDataItemsListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "datalabeling.projects.datasets.dataItems.list" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1ListDataItemsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudDatalabelingV1beta1ListDataItemsResponse.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1ListDataItemsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsDataItemsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1ListDataItemsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12218,48 +9352,6 @@ func (c *ProjectsDatasetsDataItemsListCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists data items in a dataset. This API can be called after data are imported into dataset. Pagination is supported.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/dataItems",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.dataItems.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filter is not supported at this moment.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer results than requested. Default value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained by ListDataItemsResponse.next_page_token of the previous [DataLabelingService.ListDataItems] call. Return first page if empty.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Name of the dataset to list data items, format: projects/{project_id}/datasets/{dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/dataItems",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ListDataItemsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -12267,7 +9359,7 @@ func (c *ProjectsDatasetsDataItemsListCall) Do(opts ...googleapi.CallOption) (*G
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDatasetsDataItemsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1ListDataItemsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -12283,8 +9375,6 @@ func (c *ProjectsDatasetsDataItemsListCall) Pages(ctx context.Context, f func(*G
 	}
 }
 
-// method id "datalabeling.projects.datasets.evaluations.get":
-
 type ProjectsDatasetsEvaluationsGetCall struct {
 	s            *Service
 	name         string
@@ -12297,8 +9387,7 @@ type ProjectsDatasetsEvaluationsGetCall struct {
 // Get: Gets an evaluation by resource name (to search, use
 // projects.evaluations.search).
 //
-//   - name: Name of the evaluation. Format:
-//     "projects/{project_id}/datasets/
+//   - name: Name of the evaluation. Format: "projects/{project_id}/datasets/
 //     {dataset_id}/evaluations/{evaluation_id}'.
 func (r *ProjectsDatasetsEvaluationsService) Get(name string) *ProjectsDatasetsEvaluationsGetCall {
 	c := &ProjectsDatasetsEvaluationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12307,33 +9396,29 @@ func (r *ProjectsDatasetsEvaluationsService) Get(name string) *ProjectsDatasetsE
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsEvaluationsGetCall) Fields(s ...googleapi.Field) *ProjectsDatasetsEvaluationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatasetsEvaluationsGetCall) IfNoneMatch(entityTag string) *ProjectsDatasetsEvaluationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsEvaluationsGetCall) Context(ctx context.Context) *ProjectsDatasetsEvaluationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsEvaluationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12342,12 +9427,7 @@ func (c *ProjectsDatasetsEvaluationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsEvaluationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -12368,14 +9448,11 @@ func (c *ProjectsDatasetsEvaluationsGetCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "datalabeling.projects.datasets.evaluations.get" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1Evaluation or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1Evaluation.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1Evaluation.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsEvaluationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1Evaluation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12406,35 +9483,7 @@ func (c *ProjectsDatasetsEvaluationsGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets an evaluation by resource name (to search, use projects.evaluations.search).",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/evaluations/{evaluationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.datasets.evaluations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the evaluation. Format: \"projects/{project_id}/datasets/ {dataset_id}/evaluations/{evaluation_id}'",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/evaluations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1Evaluation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.evaluations.exampleComparisons.search":
 
 type ProjectsDatasetsEvaluationsExampleComparisonsSearchCall struct {
 	s                                                             *Service
@@ -12445,14 +9494,12 @@ type ProjectsDatasetsEvaluationsExampleComparisonsSearchCall struct {
 	header_                                                       http.Header
 }
 
-// Search: Searches example comparisons from an evaluation. The return
-// format is a list of example comparisons that show ground truth and
-// prediction(s) for a single input. Search by providing an evaluation
-// ID.
+// Search: Searches example comparisons from an evaluation. The return format
+// is a list of example comparisons that show ground truth and prediction(s)
+// for a single input. Search by providing an evaluation ID.
 //
-//   - parent: Name of the Evaluation resource to search for example
-//     comparisons from. Format:
-//     "projects/{project_id}/datasets/{dataset_id}/evaluations/
+//   - parent: Name of the Evaluation resource to search for example comparisons
+//     from. Format: "projects/{project_id}/datasets/{dataset_id}/evaluations/
 //     {evaluation_id}".
 func (r *ProjectsDatasetsEvaluationsExampleComparisonsService) Search(parent string, googleclouddatalabelingv1beta1searchexamplecomparisonsrequest *GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest) *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall {
 	c := &ProjectsDatasetsEvaluationsExampleComparisonsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12462,23 +9509,21 @@ func (r *ProjectsDatasetsEvaluationsExampleComparisonsService) Search(parent str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Fields(s ...googleapi.Field) *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Context(ctx context.Context) *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12487,18 +9532,12 @@ func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Header() http.
 }
 
 func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1searchexamplecomparisonsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/exampleComparisons:search")
@@ -12515,15 +9554,11 @@ func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) doRequest(alt 
 }
 
 // Do executes the "datalabeling.projects.datasets.evaluations.exampleComparisons.search" call.
-// Exactly one of
-// *GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse.Server
-// Response.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12554,35 +9589,6 @@ func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Do(opts ...goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Searches example comparisons from an evaluation. The return format is a list of example comparisons that show ground truth and prediction(s) for a single input. Search by providing an evaluation ID.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/evaluations/{evaluationsId}/exampleComparisons:search",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.datasets.evaluations.exampleComparisons.search",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Name of the Evaluation resource to search for example comparisons from. Format: \"projects/{project_id}/datasets/{dataset_id}/evaluations/ {evaluation_id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+/evaluations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/exampleComparisons:search",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -12590,7 +9596,7 @@ func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Do(opts ...goo
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googleclouddatalabelingv1beta1searchexamplecomparisonsrequest.PageToken = pt }(c.googleclouddatalabelingv1beta1searchexamplecomparisonsrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googleclouddatalabelingv1beta1searchexamplecomparisonsrequest.PageToken = pt }(c.googleclouddatalabelingv1beta1searchexamplecomparisonsrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -12606,8 +9612,6 @@ func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Pages(ctx cont
 	}
 }
 
-// method id "datalabeling.projects.datasets.image.label":
-
 type ProjectsDatasetsImageLabelCall struct {
 	s                                               *Service
 	parent                                          string
@@ -12617,8 +9621,8 @@ type ProjectsDatasetsImageLabelCall struct {
 	header_                                         http.Header
 }
 
-// Label: Starts a labeling task for image. The type of image labeling
-// task is configured by feature in the request.
+// Label: Starts a labeling task for image. The type of image labeling task is
+// configured by feature in the request.
 //
 //   - parent: Name of the dataset to request labeling task, format:
 //     projects/{project_id}/datasets/{dataset_id}.
@@ -12630,23 +9634,21 @@ func (r *ProjectsDatasetsImageService) Label(parent string, googleclouddatalabel
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsImageLabelCall) Fields(s ...googleapi.Field) *ProjectsDatasetsImageLabelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsImageLabelCall) Context(ctx context.Context) *ProjectsDatasetsImageLabelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsImageLabelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12655,18 +9657,12 @@ func (c *ProjectsDatasetsImageLabelCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsImageLabelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1labelimagerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/image:label")
@@ -12683,12 +9679,11 @@ func (c *ProjectsDatasetsImageLabelCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "datalabeling.projects.datasets.image.label" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsImageLabelCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12719,38 +9714,7 @@ func (c *ProjectsDatasetsImageLabelCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts a labeling task for image. The type of image labeling task is configured by feature in the request.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/image:label",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.datasets.image.label",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Name of the dataset to request labeling task, format: projects/{project_id}/datasets/{dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/image:label",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1LabelImageRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.text.label":
 
 type ProjectsDatasetsTextLabelCall struct {
 	s                                              *Service
@@ -12761,8 +9725,8 @@ type ProjectsDatasetsTextLabelCall struct {
 	header_                                        http.Header
 }
 
-// Label: Starts a labeling task for text. The type of text labeling
-// task is configured by feature in the request.
+// Label: Starts a labeling task for text. The type of text labeling task is
+// configured by feature in the request.
 //
 //   - parent: Name of the data set to request labeling task, format:
 //     projects/{project_id}/datasets/{dataset_id}.
@@ -12774,23 +9738,21 @@ func (r *ProjectsDatasetsTextService) Label(parent string, googleclouddatalabeli
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsTextLabelCall) Fields(s ...googleapi.Field) *ProjectsDatasetsTextLabelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsTextLabelCall) Context(ctx context.Context) *ProjectsDatasetsTextLabelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsTextLabelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12799,18 +9761,12 @@ func (c *ProjectsDatasetsTextLabelCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsTextLabelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1labeltextrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/text:label")
@@ -12827,12 +9783,11 @@ func (c *ProjectsDatasetsTextLabelCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "datalabeling.projects.datasets.text.label" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsTextLabelCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12863,38 +9818,7 @@ func (c *ProjectsDatasetsTextLabelCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts a labeling task for text. The type of text labeling task is configured by feature in the request.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/text:label",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.datasets.text.label",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Name of the data set to request labeling task, format: projects/{project_id}/datasets/{dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/text:label",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1LabelTextRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.datasets.video.label":
 
 type ProjectsDatasetsVideoLabelCall struct {
 	s                                               *Service
@@ -12905,8 +9829,8 @@ type ProjectsDatasetsVideoLabelCall struct {
 	header_                                         http.Header
 }
 
-// Label: Starts a labeling task for video. The type of video labeling
-// task is configured by feature in the request.
+// Label: Starts a labeling task for video. The type of video labeling task is
+// configured by feature in the request.
 //
 //   - parent: Name of the dataset to request labeling task, format:
 //     projects/{project_id}/datasets/{dataset_id}.
@@ -12918,23 +9842,21 @@ func (r *ProjectsDatasetsVideoService) Label(parent string, googleclouddatalabel
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatasetsVideoLabelCall) Fields(s ...googleapi.Field) *ProjectsDatasetsVideoLabelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatasetsVideoLabelCall) Context(ctx context.Context) *ProjectsDatasetsVideoLabelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatasetsVideoLabelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -12943,18 +9865,12 @@ func (c *ProjectsDatasetsVideoLabelCall) Header() http.Header {
 }
 
 func (c *ProjectsDatasetsVideoLabelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1labelvideorequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/video:label")
@@ -12971,12 +9887,11 @@ func (c *ProjectsDatasetsVideoLabelCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "datalabeling.projects.datasets.video.label" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatasetsVideoLabelCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13007,38 +9922,7 @@ func (c *ProjectsDatasetsVideoLabelCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts a labeling task for video. The type of video labeling task is configured by feature in the request.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/datasets/{datasetsId}/video:label",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.datasets.video.label",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Name of the dataset to request labeling task, format: projects/{project_id}/datasets/{dataset_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/video:label",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1LabelVideoRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.evaluationJobs.create":
 
 type ProjectsEvaluationJobsCreateCall struct {
 	s                                                        *Service
@@ -13051,8 +9935,7 @@ type ProjectsEvaluationJobsCreateCall struct {
 
 // Create: Creates an evaluation job.
 //
-//   - parent: Evaluation job resource parent. Format:
-//     "projects/{project_id}".
+// - parent: Evaluation job resource parent. Format: "projects/{project_id}".
 func (r *ProjectsEvaluationJobsService) Create(parent string, googleclouddatalabelingv1beta1createevaluationjobrequest *GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest) *ProjectsEvaluationJobsCreateCall {
 	c := &ProjectsEvaluationJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13061,23 +9944,21 @@ func (r *ProjectsEvaluationJobsService) Create(parent string, googleclouddatalab
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsEvaluationJobsCreateCall) Fields(s ...googleapi.Field) *ProjectsEvaluationJobsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsEvaluationJobsCreateCall) Context(ctx context.Context) *ProjectsEvaluationJobsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsEvaluationJobsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13086,18 +9967,12 @@ func (c *ProjectsEvaluationJobsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsEvaluationJobsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1createevaluationjobrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/evaluationJobs")
@@ -13114,14 +9989,11 @@ func (c *ProjectsEvaluationJobsCreateCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "datalabeling.projects.evaluationJobs.create" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1EvaluationJob or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1EvaluationJob.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1EvaluationJob.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsEvaluationJobsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1EvaluationJob, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13152,38 +10024,7 @@ func (c *ProjectsEvaluationJobsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an evaluation job.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/evaluationJobs",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.evaluationJobs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Evaluation job resource parent. Format: \"projects/{project_id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/evaluationJobs",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1EvaluationJob"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.evaluationJobs.delete":
 
 type ProjectsEvaluationJobsDeleteCall struct {
 	s          *Service
@@ -13195,8 +10036,8 @@ type ProjectsEvaluationJobsDeleteCall struct {
 
 // Delete: Stops and deletes an evaluation job.
 //
-//   - name: Name of the evaluation job that is going to be deleted.
-//     Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
+//   - name: Name of the evaluation job that is going to be deleted. Format:
+//     "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Delete(name string) *ProjectsEvaluationJobsDeleteCall {
 	c := &ProjectsEvaluationJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13204,23 +10045,21 @@ func (r *ProjectsEvaluationJobsService) Delete(name string) *ProjectsEvaluationJ
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsEvaluationJobsDeleteCall) Fields(s ...googleapi.Field) *ProjectsEvaluationJobsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsEvaluationJobsDeleteCall) Context(ctx context.Context) *ProjectsEvaluationJobsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsEvaluationJobsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13229,12 +10068,7 @@ func (c *ProjectsEvaluationJobsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsEvaluationJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -13252,12 +10086,11 @@ func (c *ProjectsEvaluationJobsDeleteCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "datalabeling.projects.evaluationJobs.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsEvaluationJobsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13288,35 +10121,7 @@ func (c *ProjectsEvaluationJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Stops and deletes an evaluation job.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/evaluationJobs/{evaluationJobsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalabeling.projects.evaluationJobs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the evaluation job that is going to be deleted. Format: \"projects/{project_id}/evaluationJobs/{evaluation_job_id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/evaluationJobs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.evaluationJobs.get":
 
 type ProjectsEvaluationJobsGetCall struct {
 	s            *Service
@@ -13338,33 +10143,29 @@ func (r *ProjectsEvaluationJobsService) Get(name string) *ProjectsEvaluationJobs
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsEvaluationJobsGetCall) Fields(s ...googleapi.Field) *ProjectsEvaluationJobsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsEvaluationJobsGetCall) IfNoneMatch(entityTag string) *ProjectsEvaluationJobsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsEvaluationJobsGetCall) Context(ctx context.Context) *ProjectsEvaluationJobsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsEvaluationJobsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13373,12 +10174,7 @@ func (c *ProjectsEvaluationJobsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsEvaluationJobsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -13399,14 +10195,11 @@ func (c *ProjectsEvaluationJobsGetCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "datalabeling.projects.evaluationJobs.get" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1EvaluationJob or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1EvaluationJob.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1EvaluationJob.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsEvaluationJobsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1EvaluationJob, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13437,35 +10230,7 @@ func (c *ProjectsEvaluationJobsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets an evaluation job by resource name.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/evaluationJobs/{evaluationJobsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.evaluationJobs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the evaluation job. Format: \"projects/{project_id} /evaluationJobs/{evaluation_job_id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/evaluationJobs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1EvaluationJob"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.evaluationJobs.list":
 
 type ProjectsEvaluationJobsListCall struct {
 	s            *Service
@@ -13476,73 +10241,68 @@ type ProjectsEvaluationJobsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all evaluation jobs within a project with possible
-// filters. Pagination is supported.
+// List: Lists all evaluation jobs within a project with possible filters.
+// Pagination is supported.
 //
-//   - parent: Evaluation job resource parent. Format:
-//     "projects/{project_id}".
+// - parent: Evaluation job resource parent. Format: "projects/{project_id}".
 func (r *ProjectsEvaluationJobsService) List(parent string) *ProjectsEvaluationJobsListCall {
 	c := &ProjectsEvaluationJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": You can filter the jobs
-// to list by model_id (also known as model_name, as described in
-// EvaluationJob.modelVersion) or by evaluation job state (as described
-// in EvaluationJob.state). To filter by both criteria, use the `AND`
-// operator or the `OR` operator. For example, you can use the following
-// string for your filter: "evaluation_job.model_id = {model_name} AND
-// evaluation_job.state = {evaluation_job_state}"
+// Filter sets the optional parameter "filter": You can filter the jobs to list
+// by model_id (also known as model_name, as described in
+// EvaluationJob.modelVersion) or by evaluation job state (as described in
+// EvaluationJob.state). To filter by both criteria, use the `AND` operator or
+// the `OR` operator. For example, you can use the following string for your
+// filter: "evaluation_job.model_id = {model_name} AND evaluation_job.state =
+// {evaluation_job_state}"
 func (c *ProjectsEvaluationJobsListCall) Filter(filter string) *ProjectsEvaluationJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer results than requested. Default value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer results than requested. Default value is 100.
 func (c *ProjectsEvaluationJobsListCall) PageSize(pageSize int64) *ProjectsEvaluationJobsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained by the nextPageToken in the response to the previous
-// request. The request returns the first page if this is empty.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained by the
+// nextPageToken in the response to the previous request. The request returns
+// the first page if this is empty.
 func (c *ProjectsEvaluationJobsListCall) PageToken(pageToken string) *ProjectsEvaluationJobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsEvaluationJobsListCall) Fields(s ...googleapi.Field) *ProjectsEvaluationJobsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsEvaluationJobsListCall) IfNoneMatch(entityTag string) *ProjectsEvaluationJobsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsEvaluationJobsListCall) Context(ctx context.Context) *ProjectsEvaluationJobsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsEvaluationJobsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13551,12 +10311,7 @@ func (c *ProjectsEvaluationJobsListCall) Header() http.Header {
 }
 
 func (c *ProjectsEvaluationJobsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -13577,15 +10332,11 @@ func (c *ProjectsEvaluationJobsListCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "datalabeling.projects.evaluationJobs.list" call.
-// Exactly one of
-// *GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse.ServerRespon
-// se.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsEvaluationJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13616,48 +10367,6 @@ func (c *ProjectsEvaluationJobsListCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all evaluation jobs within a project with possible filters. Pagination is supported.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/evaluationJobs",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.evaluationJobs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. You can filter the jobs to list by model_id (also known as model_name, as described in EvaluationJob.modelVersion) or by evaluation job state (as described in EvaluationJob.state). To filter by both criteria, use the `AND` operator or the `OR` operator. For example, you can use the following string for your filter: \"evaluation_job.model_id = {model_name} AND evaluation_job.state = {evaluation_job_state}\"",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer results than requested. Default value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained by the nextPageToken in the response to the previous request. The request returns the first page if this is empty.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Evaluation job resource parent. Format: \"projects/{project_id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/evaluationJobs",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -13665,7 +10374,7 @@ func (c *ProjectsEvaluationJobsListCall) Do(opts ...googleapi.CallOption) (*Goog
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsEvaluationJobsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -13681,8 +10390,6 @@ func (c *ProjectsEvaluationJobsListCall) Pages(ctx context.Context, f func(*Goog
 	}
 }
 
-// method id "datalabeling.projects.evaluationJobs.patch":
-
 type ProjectsEvaluationJobsPatchCall struct {
 	s                                           *Service
 	name                                        string
@@ -13692,14 +10399,14 @@ type ProjectsEvaluationJobsPatchCall struct {
 	header_                                     http.Header
 }
 
-// Patch: Updates an evaluation job. You can only update certain fields
-// of the job's EvaluationJobConfig:
-// `humanAnnotationConfig.instruction`, `exampleCount`, and
-// `exampleSamplePercentage`. If you want to change any other aspect of
-// the evaluation job, you must delete the job and create a new one.
+// Patch: Updates an evaluation job. You can only update certain fields of the
+// job's EvaluationJobConfig: `humanAnnotationConfig.instruction`,
+// `exampleCount`, and `exampleSamplePercentage`. If you want to change any
+// other aspect of the evaluation job, you must delete the job and create a new
+// one.
 //
-//   - name: Output only. After you create a job, Data Labeling Service
-//     assigns a name to the job with the following format:
+//   - name: Output only. After you create a job, Data Labeling Service assigns a
+//     name to the job with the following format:
 //     "projects/{project_id}/evaluationJobs/ {evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Patch(name string, googleclouddatalabelingv1beta1evaluationjob *GoogleCloudDatalabelingV1beta1EvaluationJob) *ProjectsEvaluationJobsPatchCall {
 	c := &ProjectsEvaluationJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13708,35 +10415,33 @@ func (r *ProjectsEvaluationJobsService) Patch(name string, googleclouddatalabeli
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Mask for which
-// fields to update. You can only provide the following fields: *
+// UpdateMask sets the optional parameter "updateMask": Mask for which fields
+// to update. You can only provide the following fields: *
 // `evaluationJobConfig.humanAnnotationConfig.instruction` *
 // `evaluationJobConfig.exampleCount` *
-// `evaluationJobConfig.exampleSamplePercentage` You can provide more
-// than one of these fields by separating them with commas.
+// `evaluationJobConfig.exampleSamplePercentage` You can provide more than one
+// of these fields by separating them with commas.
 func (c *ProjectsEvaluationJobsPatchCall) UpdateMask(updateMask string) *ProjectsEvaluationJobsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsEvaluationJobsPatchCall) Fields(s ...googleapi.Field) *ProjectsEvaluationJobsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsEvaluationJobsPatchCall) Context(ctx context.Context) *ProjectsEvaluationJobsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsEvaluationJobsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13745,18 +10450,12 @@ func (c *ProjectsEvaluationJobsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsEvaluationJobsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1evaluationjob)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
@@ -13773,14 +10472,11 @@ func (c *ProjectsEvaluationJobsPatchCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "datalabeling.projects.evaluationJobs.patch" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1EvaluationJob or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1EvaluationJob.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1EvaluationJob.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsEvaluationJobsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1EvaluationJob, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13811,44 +10507,7 @@ func (c *ProjectsEvaluationJobsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an evaluation job. You can only update certain fields of the job's EvaluationJobConfig: `humanAnnotationConfig.instruction`, `exampleCount`, and `exampleSamplePercentage`. If you want to change any other aspect of the evaluation job, you must delete the job and create a new one.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/evaluationJobs/{evaluationJobsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "datalabeling.projects.evaluationJobs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. After you create a job, Data Labeling Service assigns a name to the job with the following format: \"projects/{project_id}/evaluationJobs/ {evaluation_job_id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/evaluationJobs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Optional. Mask for which fields to update. You can only provide the following fields: * `evaluationJobConfig.humanAnnotationConfig.instruction` * `evaluationJobConfig.exampleCount` * `evaluationJobConfig.exampleSamplePercentage` You can provide more than one of these fields by separating them with commas.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1EvaluationJob"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1EvaluationJob"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.evaluationJobs.pause":
 
 type ProjectsEvaluationJobsPauseCall struct {
 	s                                                       *Service
@@ -13859,11 +10518,11 @@ type ProjectsEvaluationJobsPauseCall struct {
 	header_                                                 http.Header
 }
 
-// Pause: Pauses an evaluation job. Pausing an evaluation job that is
-// already in a `PAUSED` state is a no-op.
+// Pause: Pauses an evaluation job. Pausing an evaluation job that is already
+// in a `PAUSED` state is a no-op.
 //
-//   - name: Name of the evaluation job that is going to be paused.
-//     Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
+//   - name: Name of the evaluation job that is going to be paused. Format:
+//     "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Pause(name string, googleclouddatalabelingv1beta1pauseevaluationjobrequest *GoogleCloudDatalabelingV1beta1PauseEvaluationJobRequest) *ProjectsEvaluationJobsPauseCall {
 	c := &ProjectsEvaluationJobsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13872,23 +10531,21 @@ func (r *ProjectsEvaluationJobsService) Pause(name string, googleclouddatalabeli
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsEvaluationJobsPauseCall) Fields(s ...googleapi.Field) *ProjectsEvaluationJobsPauseCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsEvaluationJobsPauseCall) Context(ctx context.Context) *ProjectsEvaluationJobsPauseCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsEvaluationJobsPauseCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -13897,18 +10554,12 @@ func (c *ProjectsEvaluationJobsPauseCall) Header() http.Header {
 }
 
 func (c *ProjectsEvaluationJobsPauseCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1pauseevaluationjobrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:pause")
@@ -13925,12 +10576,11 @@ func (c *ProjectsEvaluationJobsPauseCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "datalabeling.projects.evaluationJobs.pause" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsEvaluationJobsPauseCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -13961,38 +10611,7 @@ func (c *ProjectsEvaluationJobsPauseCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Pauses an evaluation job. Pausing an evaluation job that is already in a `PAUSED` state is a no-op.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/evaluationJobs/{evaluationJobsId}:pause",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.evaluationJobs.pause",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the evaluation job that is going to be paused. Format: \"projects/{project_id}/evaluationJobs/{evaluation_job_id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/evaluationJobs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:pause",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1PauseEvaluationJobRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.evaluationJobs.resume":
 
 type ProjectsEvaluationJobsResumeCall struct {
 	s                                                        *Service
@@ -14003,12 +10622,11 @@ type ProjectsEvaluationJobsResumeCall struct {
 	header_                                                  http.Header
 }
 
-// Resume: Resumes a paused evaluation job. A deleted evaluation job
-// can't be resumed. Resuming a running or scheduled evaluation job is a
-// no-op.
+// Resume: Resumes a paused evaluation job. A deleted evaluation job can't be
+// resumed. Resuming a running or scheduled evaluation job is a no-op.
 //
-//   - name: Name of the evaluation job that is going to be resumed.
-//     Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
+//   - name: Name of the evaluation job that is going to be resumed. Format:
+//     "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Resume(name string, googleclouddatalabelingv1beta1resumeevaluationjobrequest *GoogleCloudDatalabelingV1beta1ResumeEvaluationJobRequest) *ProjectsEvaluationJobsResumeCall {
 	c := &ProjectsEvaluationJobsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14017,23 +10635,21 @@ func (r *ProjectsEvaluationJobsService) Resume(name string, googleclouddatalabel
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsEvaluationJobsResumeCall) Fields(s ...googleapi.Field) *ProjectsEvaluationJobsResumeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsEvaluationJobsResumeCall) Context(ctx context.Context) *ProjectsEvaluationJobsResumeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsEvaluationJobsResumeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14042,18 +10658,12 @@ func (c *ProjectsEvaluationJobsResumeCall) Header() http.Header {
 }
 
 func (c *ProjectsEvaluationJobsResumeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1resumeevaluationjobrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:resume")
@@ -14070,12 +10680,11 @@ func (c *ProjectsEvaluationJobsResumeCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "datalabeling.projects.evaluationJobs.resume" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsEvaluationJobsResumeCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -14106,38 +10715,7 @@ func (c *ProjectsEvaluationJobsResumeCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Resumes a paused evaluation job. A deleted evaluation job can't be resumed. Resuming a running or scheduled evaluation job is a no-op.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/evaluationJobs/{evaluationJobsId}:resume",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.evaluationJobs.resume",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the evaluation job that is going to be resumed. Format: \"projects/{project_id}/evaluationJobs/{evaluation_job_id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/evaluationJobs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:resume",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ResumeEvaluationJobRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.evaluations.search":
 
 type ProjectsEvaluationsSearchCall struct {
 	s            *Service
@@ -14158,19 +10736,18 @@ func (r *ProjectsEvaluationsService) Search(parent string) *ProjectsEvaluationsS
 	return c
 }
 
-// Filter sets the optional parameter "filter": To search evaluations,
-// you can filter by the following: * evaluation_job.evaluation_job_id
-// (the last part of EvaluationJob.name) * evaluation_job.model_id (the
-// {model_name} portion of EvaluationJob.modelVersion) *
-// evaluation_job.evaluation_job_run_time_start (Minimum threshold for
-// the evaluationJobRunTime that created the evaluation) *
-// evaluation_job.evaluation_job_run_time_end (Maximum threshold for the
+// Filter sets the optional parameter "filter": To search evaluations, you can
+// filter by the following: * evaluation_job.evaluation_job_id (the last part
+// of EvaluationJob.name) * evaluation_job.model_id (the {model_name} portion
+// of EvaluationJob.modelVersion) *
+// evaluation_job.evaluation_job_run_time_start (Minimum threshold for the
 // evaluationJobRunTime that created the evaluation) *
-// evaluation_job.job_state (EvaluationJob.state) *
-// annotation_spec.display_name (the Evaluation contains a metric for
-// the annotation spec with this displayName) To filter by multiple
-// critiera, use the `AND` operator or the `OR` operator. The following
-// examples shows a string that filters by several critiera:
+// evaluation_job.evaluation_job_run_time_end (Maximum threshold for the
+// evaluationJobRunTime that created the evaluation) * evaluation_job.job_state
+// (EvaluationJob.state) * annotation_spec.display_name (the Evaluation
+// contains a metric for the annotation spec with this displayName) To filter
+// by multiple critiera, use the `AND` operator or the `OR` operator. The
+// following examples shows a string that filters by several critiera:
 // "evaluation_job.evaluation_job_id = {evaluation_job_id} AND
 // evaluation_job.model_id = {model_name} AND
 // evaluation_job.evaluation_job_run_time_start = {timestamp_1} AND
@@ -14181,51 +10758,46 @@ func (c *ProjectsEvaluationsSearchCall) Filter(filter string) *ProjectsEvaluatio
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer results than requested. Default value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer results than requested. Default value is 100.
 func (c *ProjectsEvaluationsSearchCall) PageSize(pageSize int64) *ProjectsEvaluationsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained by the nextPageToken of the response to a previous search
-// request. If you don't specify this field, the API call requests the
-// first page of the search.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained by the
+// nextPageToken of the response to a previous search request. If you don't
+// specify this field, the API call requests the first page of the search.
 func (c *ProjectsEvaluationsSearchCall) PageToken(pageToken string) *ProjectsEvaluationsSearchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsEvaluationsSearchCall) Fields(s ...googleapi.Field) *ProjectsEvaluationsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsEvaluationsSearchCall) IfNoneMatch(entityTag string) *ProjectsEvaluationsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsEvaluationsSearchCall) Context(ctx context.Context) *ProjectsEvaluationsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsEvaluationsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14234,12 +10806,7 @@ func (c *ProjectsEvaluationsSearchCall) Header() http.Header {
 }
 
 func (c *ProjectsEvaluationsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -14260,15 +10827,11 @@ func (c *ProjectsEvaluationsSearchCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "datalabeling.projects.evaluations.search" call.
-// Exactly one of
-// *GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse.ServerRespons
-// e.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsEvaluationsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -14299,48 +10862,6 @@ func (c *ProjectsEvaluationsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Searches evaluations within a project.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/evaluations:search",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.evaluations.search",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. To search evaluations, you can filter by the following: * evaluation_job.evaluation_job_id (the last part of EvaluationJob.name) * evaluation_job.model_id (the {model_name} portion of EvaluationJob.modelVersion) * evaluation_job.evaluation_job_run_time_start (Minimum threshold for the evaluationJobRunTime that created the evaluation) * evaluation_job.evaluation_job_run_time_end (Maximum threshold for the evaluationJobRunTime that created the evaluation) * evaluation_job.job_state (EvaluationJob.state) * annotation_spec.display_name (the Evaluation contains a metric for the annotation spec with this displayName) To filter by multiple critiera, use the `AND` operator or the `OR` operator. The following examples shows a string that filters by several critiera: \"evaluation_job.evaluation_job_id = {evaluation_job_id} AND evaluation_job.model_id = {model_name} AND evaluation_job.evaluation_job_run_time_start = {timestamp_1} AND evaluation_job.evaluation_job_run_time_end = {timestamp_2} AND annotation_spec.display_name = {display_name}\"",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer results than requested. Default value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained by the nextPageToken of the response to a previous search request. If you don't specify this field, the API call requests the first page of the search.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Evaluation search parent (project ID). Format: \"projects/ {project_id}\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/evaluations:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -14348,7 +10869,7 @@ func (c *ProjectsEvaluationsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsEvaluationsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -14363,8 +10884,6 @@ func (c *ProjectsEvaluationsSearchCall) Pages(ctx context.Context, f func(*Googl
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "datalabeling.projects.instructions.create":
 
 type ProjectsInstructionsCreateCall struct {
 	s                                                      *Service
@@ -14386,23 +10905,21 @@ func (r *ProjectsInstructionsService) Create(parent string, googleclouddatalabel
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsInstructionsCreateCall) Fields(s ...googleapi.Field) *ProjectsInstructionsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsInstructionsCreateCall) Context(ctx context.Context) *ProjectsInstructionsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsInstructionsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14411,18 +10928,12 @@ func (c *ProjectsInstructionsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsInstructionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatalabelingv1beta1createinstructionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/instructions")
@@ -14439,12 +10950,11 @@ func (c *ProjectsInstructionsCreateCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "datalabeling.projects.instructions.create" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsInstructionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -14475,38 +10985,7 @@ func (c *ProjectsInstructionsCreateCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an instruction for how data should be labeled.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/instructions",
-	//   "httpMethod": "POST",
-	//   "id": "datalabeling.projects.instructions.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Instruction resource parent, format: projects/{project_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/instructions",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1CreateInstructionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.instructions.delete":
 
 type ProjectsInstructionsDeleteCall struct {
 	s          *Service
@@ -14527,23 +11006,21 @@ func (r *ProjectsInstructionsService) Delete(name string) *ProjectsInstructionsD
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsInstructionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsInstructionsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsInstructionsDeleteCall) Context(ctx context.Context) *ProjectsInstructionsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsInstructionsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14552,12 +11029,7 @@ func (c *ProjectsInstructionsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsInstructionsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -14575,12 +11047,11 @@ func (c *ProjectsInstructionsDeleteCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "datalabeling.projects.instructions.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsInstructionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -14611,35 +11082,7 @@ func (c *ProjectsInstructionsDeleteCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an instruction object by resource name.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/instructions/{instructionsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalabeling.projects.instructions.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Instruction resource name, format: projects/{project_id}/instructions/{instruction_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/instructions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.instructions.get":
 
 type ProjectsInstructionsGetCall struct {
 	s            *Service
@@ -14661,33 +11104,29 @@ func (r *ProjectsInstructionsService) Get(name string) *ProjectsInstructionsGetC
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsInstructionsGetCall) Fields(s ...googleapi.Field) *ProjectsInstructionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsInstructionsGetCall) IfNoneMatch(entityTag string) *ProjectsInstructionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsInstructionsGetCall) Context(ctx context.Context) *ProjectsInstructionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsInstructionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14696,12 +11135,7 @@ func (c *ProjectsInstructionsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsInstructionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -14722,14 +11156,11 @@ func (c *ProjectsInstructionsGetCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "datalabeling.projects.instructions.get" call.
-// Exactly one of *GoogleCloudDatalabelingV1beta1Instruction or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatalabelingV1beta1Instruction.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1Instruction.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsInstructionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1Instruction, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -14760,35 +11191,7 @@ func (c *ProjectsInstructionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets an instruction by resource name.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/instructions/{instructionsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.instructions.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Instruction resource name, format: projects/{project_id}/instructions/{instruction_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/instructions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1Instruction"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.instructions.list":
 
 type ProjectsInstructionsListCall struct {
 	s            *Service
@@ -14808,58 +11211,53 @@ func (r *ProjectsInstructionsService) List(parent string) *ProjectsInstructionsL
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter is not supported
-// at this moment.
+// Filter sets the optional parameter "filter": Filter is not supported at this
+// moment.
 func (c *ProjectsInstructionsListCall) Filter(filter string) *ProjectsInstructionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer results than requested. Default value is 100.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer results than requested. Default value is 100.
 func (c *ProjectsInstructionsListCall) PageSize(pageSize int64) *ProjectsInstructionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained by ListInstructionsResponse.next_page_token of the previous
-// [DataLabelingService.ListInstructions] call. Return first page if
-// empty.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained by
+// ListInstructionsResponse.next_page_token of the previous
+// [DataLabelingService.ListInstructions] call. Return first page if empty.
 func (c *ProjectsInstructionsListCall) PageToken(pageToken string) *ProjectsInstructionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsInstructionsListCall) Fields(s ...googleapi.Field) *ProjectsInstructionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsInstructionsListCall) IfNoneMatch(entityTag string) *ProjectsInstructionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsInstructionsListCall) Context(ctx context.Context) *ProjectsInstructionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsInstructionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -14868,12 +11266,7 @@ func (c *ProjectsInstructionsListCall) Header() http.Header {
 }
 
 func (c *ProjectsInstructionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -14894,15 +11287,13 @@ func (c *ProjectsInstructionsListCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "datalabeling.projects.instructions.list" call.
-// Exactly one of
-// *GoogleCloudDatalabelingV1beta1ListInstructionsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudDatalabelingV1beta1ListInstructionsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatalabelingV1beta1ListInstructionsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsInstructionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatalabelingV1beta1ListInstructionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -14933,48 +11324,6 @@ func (c *ProjectsInstructionsListCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists instructions for a project. Pagination is supported.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/instructions",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.instructions.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filter is not supported at this moment.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer results than requested. Default value is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained by ListInstructionsResponse.next_page_token of the previous [DataLabelingService.ListInstructions] call. Return first page if empty.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Instruction resource parent, format: projects/{project_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/instructions",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatalabelingV1beta1ListInstructionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -14982,7 +11331,7 @@ func (c *ProjectsInstructionsListCall) Do(opts ...googleapi.CallOption) (*Google
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsInstructionsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatalabelingV1beta1ListInstructionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -14998,8 +11347,6 @@ func (c *ProjectsInstructionsListCall) Pages(ctx context.Context, f func(*Google
 	}
 }
 
-// method id "datalabeling.projects.operations.cancel":
-
 type ProjectsOperationsCancelCall struct {
 	s            *Service
 	name         string
@@ -15009,15 +11356,14 @@ type ProjectsOperationsCancelCall struct {
 	header_      http.Header
 }
 
-// Cancel: Starts asynchronous cancellation on a long-running operation.
-// The server makes a best effort to cancel the operation, but success
-// is not guaranteed. If the server doesn't support this method, it
-// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
-// Operations.GetOperation or other methods to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation. On successful cancellation, the operation is not
-// deleted; instead, it becomes an operation with an Operation.error
-// value with a google.rpc.Status.code of 1, corresponding to
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -15028,33 +11374,29 @@ func (r *ProjectsOperationsService) Cancel(name string) *ProjectsOperationsCance
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsOperationsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsOperationsCancelCall) IfNoneMatch(entityTag string) *ProjectsOperationsCancelCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOperationsCancelCall) Context(ctx context.Context) *ProjectsOperationsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOperationsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -15063,12 +11405,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 }
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -15089,12 +11426,11 @@ func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "datalabeling.projects.operations.cancel" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -15125,35 +11461,7 @@ func (c *ProjectsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/operations/{operationsId}:cancel",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.operations.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be cancelled.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:cancel",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.operations.delete":
 
 type ProjectsOperationsDeleteCall struct {
 	s          *Service
@@ -15163,10 +11471,10 @@ type ProjectsOperationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a long-running operation. This method indicates that
-// the client is no longer interested in the operation result. It does
-// not cancel the operation. If the server doesn't support this method,
-// it returns `google.rpc.Code.UNIMPLEMENTED`.
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`.
 //
 // - name: The name of the operation resource to be deleted.
 func (r *ProjectsOperationsService) Delete(name string) *ProjectsOperationsDeleteCall {
@@ -15176,23 +11484,21 @@ func (r *ProjectsOperationsService) Delete(name string) *ProjectsOperationsDelet
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsOperationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOperationsDeleteCall) Context(ctx context.Context) *ProjectsOperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOperationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -15201,12 +11507,7 @@ func (c *ProjectsOperationsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -15224,12 +11525,11 @@ func (c *ProjectsOperationsDeleteCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "datalabeling.projects.operations.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -15260,35 +11560,7 @@ func (c *ProjectsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/operations/{operationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalabeling.projects.operations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be deleted.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.operations.get":
 
 type ProjectsOperationsGetCall struct {
 	s            *Service
@@ -15299,9 +11571,9 @@ type ProjectsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
 //
 // - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
@@ -15311,33 +11583,29 @@ func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOperationsGetCall) Context(ctx context.Context) *ProjectsOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -15346,12 +11614,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -15372,12 +11635,11 @@ func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "datalabeling.projects.operations.get" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -15408,35 +11670,7 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalabeling.projects.operations.list":
 
 type ProjectsOperationsListCall struct {
 	s            *Service
@@ -15447,9 +11681,8 @@ type ProjectsOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
@@ -15458,55 +11691,50 @@ func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCal
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": The standard list filter.
 func (c *ProjectsOperationsListCall) Filter(filter string) *ProjectsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
 func (c *ProjectsOperationsListCall) PageSize(pageSize int64) *ProjectsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
 func (c *ProjectsOperationsListCall) PageToken(pageToken string) *ProjectsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOperationsListCall) Context(ctx context.Context) *ProjectsOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -15515,12 +11743,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -15541,13 +11764,11 @@ func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "datalabeling.projects.operations.list" call.
-// Exactly one of *GoogleLongrunningListOperationsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -15578,48 +11799,6 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/operations",
-	//   "httpMethod": "GET",
-	//   "id": "datalabeling.projects.operations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The standard list filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The standard list page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The standard list page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}/operations",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningListOperationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -15627,7 +11806,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

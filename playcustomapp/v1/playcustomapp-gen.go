@@ -178,85 +178,64 @@ type AccountsCustomAppsService struct {
 type CustomApp struct {
 	// LanguageCode: Default listing language in BCP 47 format.
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// Organizations: Organizations to which the custom app should be made
-	// available. If the request contains any organizations, then the app
-	// will be restricted to only these organizations. To support the
-	// organization linked to the developer account, the organization ID
-	// should be provided explicitly together with other organizations. If
-	// no organizations are provided, then the app is only available to the
-	// organization linked to the developer account.
+	// available. If the request contains any organizations, then the app will be
+	// restricted to only these organizations. To support the organization linked
+	// to the developer account, the organization ID should be provided explicitly
+	// together with other organizations. If no organizations are provided, then
+	// the app is only available to the organization linked to the developer
+	// account.
 	Organizations []*Organization `json:"organizations,omitempty"`
-
-	// PackageName: Output only. Package name of the created Android app.
-	// Only present in the API response.
+	// PackageName: Output only. Package name of the created Android app. Only
+	// present in the API response.
 	PackageName string `json:"packageName,omitempty"`
-
 	// Title: Title for the Android app.
 	Title string `json:"title,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CustomApp) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomApp
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Organization: Represents an organization that can access a custom
-// app.
+// Organization: Represents an organization that can access a custom app.
 type Organization struct {
 	// OrganizationId: Required. ID of the organization.
 	OrganizationId string `json:"organizationId,omitempty"`
-
-	// OrganizationName: Optional. A human-readable name of the
-	// organization, to help recognize the organization.
+	// OrganizationName: Optional. A human-readable name of the organization, to
+	// help recognize the organization.
 	OrganizationName string `json:"organizationName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OrganizationId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OrganizationId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "OrganizationId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Organization) MarshalJSON() ([]byte, error) {
 	type NoMethod Organization
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "playcustomapp.accounts.customApps.create":
 
 type AccountsCustomAppsCreateCall struct {
 	s          *Service
@@ -278,54 +257,51 @@ func (r *AccountsCustomAppsService) Create(account int64, customapp *CustomApp) 
 	return c
 }
 
-// Media specifies the media to upload in one or more chunks. The chunk
-// size may be controlled by supplying a MediaOption generated by
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
 // googleapi.ChunkSize. The chunk size defaults to
-// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
-// upload request will be determined by sniffing the contents of r,
-// unless a MediaOption generated by googleapi.ContentType is
-// supplied.
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
 // At most one of Media and ResumableMedia may be set.
 func (c *AccountsCustomAppsCreateCall) Media(r io.Reader, options ...googleapi.MediaOption) *AccountsCustomAppsCreateCall {
 	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
 //
 // Deprecated: use Media instead.
 //
-// At most one of Media and ResumableMedia may be set. mediaType
-// identifies the MIME media type of the upload, such as "image/png". If
-// mediaType is "", it will be auto-detected. The provided ctx will
-// supersede any context previously provided to the Context method.
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
 func (c *AccountsCustomAppsCreateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *AccountsCustomAppsCreateCall {
 	c.ctx_ = ctx
 	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
 func (c *AccountsCustomAppsCreateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *AccountsCustomAppsCreateCall {
 	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCustomAppsCreateCall) Fields(s ...googleapi.Field) *AccountsCustomAppsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 // This context will supersede any context previously provided to the
 // ResumableMedia method.
 func (c *AccountsCustomAppsCreateCall) Context(ctx context.Context) *AccountsCustomAppsCreateCall {
@@ -333,8 +309,8 @@ func (c *AccountsCustomAppsCreateCall) Context(ctx context.Context) *AccountsCus
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCustomAppsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -343,18 +319,12 @@ func (c *AccountsCustomAppsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsCustomAppsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customapp)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "playcustomapp/v1/accounts/{account}/customApps")
@@ -382,12 +352,10 @@ func (c *AccountsCustomAppsCreateCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "playcustomapp.accounts.customApps.create" call.
-// Exactly one of *CustomApp or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CustomApp.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CustomApp.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsCustomAppsCreateCall) Do(opts ...googleapi.CallOption) (*CustomApp, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -435,50 +403,4 @@ func (c *AccountsCustomAppsCreateCall) Do(opts ...googleapi.CallOption) (*Custom
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new custom app.",
-	//   "flatPath": "playcustomapp/v1/accounts/{account}/customApps",
-	//   "httpMethod": "POST",
-	//   "id": "playcustomapp.accounts.customApps.create",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "*/*"
-	//     ],
-	//     "maxSize": "10737418240",
-	//     "protocols": {
-	//       "resumable": {
-	//         "multipart": true,
-	//         "path": "/resumable/upload/playcustomapp/v1/accounts/{account}/customApps"
-	//       },
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/playcustomapp/v1/accounts/{account}/customApps"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "account"
-	//   ],
-	//   "parameters": {
-	//     "account": {
-	//       "description": "Developer account ID.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "playcustomapp/v1/accounts/{account}/customApps",
-	//   "request": {
-	//     "$ref": "CustomApp"
-	//   },
-	//   "response": {
-	//     "$ref": "CustomApp"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/androidpublisher"
-	//   ],
-	//   "supportsMediaUpload": true
-	// }
-
 }

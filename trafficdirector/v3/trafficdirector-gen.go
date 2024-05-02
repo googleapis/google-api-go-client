@@ -95,8 +95,8 @@ const mtlsBasePath = "https://trafficdirector.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -163,306 +163,235 @@ type DiscoveryService struct {
 	s *Service
 }
 
-// Address: Addresses specify either a logical or physical address and
-// port, which are used to tell Envoy where to bind/listen, connect to
-// upstream and find management servers.
+// Address: Addresses specify either a logical or physical address and port,
+// which are used to tell Envoy where to bind/listen, connect to upstream and
+// find management servers.
 type Address struct {
 	// EnvoyInternalAddress: Specifies a user-space address handled by
 	// :ref:`internal listeners `.
 	EnvoyInternalAddress *EnvoyInternalAddress `json:"envoyInternalAddress,omitempty"`
-
-	Pipe *Pipe `json:"pipe,omitempty"`
-
-	SocketAddress *SocketAddress `json:"socketAddress,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "EnvoyInternalAddress") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	Pipe                 *Pipe                 `json:"pipe,omitempty"`
+	SocketAddress        *SocketAddress        `json:"socketAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnvoyInternalAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EnvoyInternalAddress") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EnvoyInternalAddress") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Address) MarshalJSON() ([]byte, error) {
 	type NoMethod Address
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BuildVersion: BuildVersion combines SemVer version of extension with
-// free-form build information (i.e. 'alpha', 'private-build') as a set
-// of strings.
+// free-form build information (i.e. 'alpha', 'private-build') as a set of
+// strings.
 type BuildVersion struct {
-	// Metadata: Free-form build information. Envoy defines several well
-	// known keys in the source/common/version/version.h file
+	// Metadata: Free-form build information. Envoy defines several well known keys
+	// in the source/common/version/version.h file
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
 	// Version: SemVer version of extension.
 	Version *SemanticVersion `json:"version,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BuildVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildVersion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ClientConfig: All xds configs for a particular client.
 type ClientConfig struct {
-	// ClientScope: For xDS clients, the scope in which the data is used.
-	// For example, gRPC indicates the data plane target or that the data is
-	// associated with gRPC server(s).
+	// ClientScope: For xDS clients, the scope in which the data is used. For
+	// example, gRPC indicates the data plane target or that the data is associated
+	// with gRPC server(s).
 	ClientScope string `json:"clientScope,omitempty"`
-
 	// GenericXdsConfigs: Represents generic xDS config and the exact config
 	// structure depends on the type URL (like Cluster if it is CDS)
 	GenericXdsConfigs []*GenericXdsConfig `json:"genericXdsConfigs,omitempty"`
-
 	// Node: Node for a particular client.
 	Node *Node `json:"node,omitempty"`
-
-	// XdsConfig: This field is deprecated in favor of generic_xds_configs
-	// which is much simpler and uniform in structure.
+	// XdsConfig: This field is deprecated in favor of generic_xds_configs which is
+	// much simpler and uniform in structure.
 	XdsConfig []*PerXdsConfig `json:"xdsConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientScope") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientScope") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientScope") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ClientConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ClientStatusRequest: Request for client status of clients identified
-// by a list of NodeMatchers.
+// ClientStatusRequest: Request for client status of clients identified by a
+// list of NodeMatchers.
 type ClientStatusRequest struct {
-	// ExcludeResourceContents: If true, the server will not include the
-	// resource contents in the response (i.e., the
-	// generic_xds_configs.xds_config field will not be populated).
-	// [#not-implemented-hide:]
+	// ExcludeResourceContents: If true, the server will not include the resource
+	// contents in the response (i.e., the generic_xds_configs.xds_config field
+	// will not be populated). [#not-implemented-hide:]
 	ExcludeResourceContents bool `json:"excludeResourceContents,omitempty"`
-
 	// Node: The node making the csds request.
 	Node *Node `json:"node,omitempty"`
-
-	// NodeMatchers: Management server can use these match criteria to
-	// identify clients. The match follows OR semantics.
+	// NodeMatchers: Management server can use these match criteria to identify
+	// clients. The match follows OR semantics.
 	NodeMatchers []*NodeMatcher `json:"nodeMatchers,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ExcludeResourceContents") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ExcludeResourceContents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExcludeResourceContents")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ExcludeResourceContents") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ClientStatusRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientStatusRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type ClientStatusResponse struct {
-	// Config: Client configs for the clients specified in the
-	// ClientStatusRequest.
+	// Config: Client configs for the clients specified in the ClientStatusRequest.
 	Config []*ClientConfig `json:"config,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Config") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ClientStatusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientStatusResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ClustersConfigDump: Envoy's cluster manager fills this message with
-// all currently known clusters. Cluster configuration information can
-// be used to recreate an Envoy configuration by populating all clusters
-// as static clusters or by returning them in a CDS response.
+// ClustersConfigDump: Envoy's cluster manager fills this message with all
+// currently known clusters. Cluster configuration information can be used to
+// recreate an Envoy configuration by populating all clusters as static
+// clusters or by returning them in a CDS response.
 type ClustersConfigDump struct {
-	// DynamicActiveClusters: The dynamically loaded active clusters. These
-	// are clusters that are available to service data plane traffic.
+	// DynamicActiveClusters: The dynamically loaded active clusters. These are
+	// clusters that are available to service data plane traffic.
 	DynamicActiveClusters []*DynamicCluster `json:"dynamicActiveClusters,omitempty"`
-
-	// DynamicWarmingClusters: The dynamically loaded warming clusters.
-	// These are clusters that are currently undergoing warming in
-	// preparation to service data plane traffic. Note that if attempting to
-	// recreate an Envoy configuration from a configuration dump, the
-	// warming clusters should generally be discarded.
+	// DynamicWarmingClusters: The dynamically loaded warming clusters. These are
+	// clusters that are currently undergoing warming in preparation to service
+	// data plane traffic. Note that if attempting to recreate an Envoy
+	// configuration from a configuration dump, the warming clusters should
+	// generally be discarded.
 	DynamicWarmingClusters []*DynamicCluster `json:"dynamicWarmingClusters,omitempty"`
-
 	// StaticClusters: The statically loaded cluster configs.
 	StaticClusters []*StaticCluster `json:"staticClusters,omitempty"`
-
-	// VersionInfo: This is the :ref:`version_info ` in the last processed
-	// CDS discovery response. If there are only static bootstrap clusters,
-	// this field will be "".
+	// VersionInfo: This is the :ref:`version_info ` in the last processed CDS
+	// discovery response. If there are only static bootstrap clusters, this field
+	// will be "".
 	VersionInfo string `json:"versionInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DynamicActiveClusters") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DynamicActiveClusters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "DynamicActiveClusters") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ClustersConfigDump) MarshalJSON() ([]byte, error) {
 	type NoMethod ClustersConfigDump
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ContextParams: Additional parameters that can be used to select
-// resource variants. These include any global context parameters,
-// per-resource type client feature capabilities and per-resource type
-// functional attributes. All per-resource type attributes will be
-// `xds.resource.` prefixed and some of these are documented below:
-// `xds.resource.listening_address`: The value is "IP:port" (e.g.
-// "10.1.1.3:8080") which is the listening address of a Listener. Used
-// in a Listener resource query.
+// ContextParams: Additional parameters that can be used to select resource
+// variants. These include any global context parameters, per-resource type
+// client feature capabilities and per-resource type functional attributes. All
+// per-resource type attributes will be `xds.resource.` prefixed and some of
+// these are documented below: `xds.resource.listening_address`: The value is
+// "IP:port" (e.g. "10.1.1.3:8080") which is the listening address of a
+// Listener. Used in a Listener resource query.
 type ContextParams struct {
 	Params map[string]string `json:"params,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Params") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Params") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Params") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ContextParams) MarshalJSON() ([]byte, error) {
 	type NoMethod ContextParams
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DoubleMatcher: Specifies the way to match a double value.
 type DoubleMatcher struct {
-	// Exact: If specified, the input double value must be equal to the
-	// value specified here.
+	// Exact: If specified, the input double value must be equal to the value
+	// specified here.
 	Exact float64 `json:"exact,omitempty"`
-
-	// Range: If specified, the input double value must be in the range
-	// specified here. Note: The range is using half-open interval semantics
-	// [start, end).
+	// Range: If specified, the input double value must be in the range specified
+	// here. Note: The range is using half-open interval semantics [start, end).
 	Range *DoubleRange `json:"range,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Exact") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Exact") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Exact") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DoubleMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleMatcher
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DoubleMatcher) UnmarshalJSON(data []byte) error {
@@ -479,36 +408,29 @@ func (s *DoubleMatcher) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// DoubleRange: Specifies the double start and end of the range using
-// half-open interval semantics [start, end).
+// DoubleRange: Specifies the double start and end of the range using half-open
+// interval semantics [start, end).
 type DoubleRange struct {
 	// End: end of the range (exclusive)
 	End float64 `json:"end,omitempty"`
-
 	// Start: start of the range (inclusive)
 	Start float64 `json:"start,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "End") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "End") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "End") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "End") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DoubleRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DoubleRange) UnmarshalJSON(data []byte) error {
@@ -527,873 +449,694 @@ func (s *DoubleRange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// DynamicCluster: Describes a dynamically loaded cluster via the CDS
-// API. [#next-free-field: 6]
+// DynamicCluster: Describes a dynamically loaded cluster via the CDS API.
+// [#next-free-field: 6]
 type DynamicCluster struct {
-	// ClientStatus: The client status of this resource.
-	// [#not-implemented-hide:]
+	// ClientStatus: The client status of this resource. [#not-implemented-hide:]
 	//
 	// Possible values:
 	//   "UNKNOWN" - Resource status is not available/unknown.
-	//   "REQUESTED" - Client requested this resource but hasn't received
-	// any update from management server. The client will not fail requests,
-	// but will queue them until update arrives or the client times out
-	// waiting for the resource.
-	//   "DOES_NOT_EXIST" - This resource has been requested by the client
-	// but has either not been delivered by the server or was previously
-	// delivered by the server and then subsequently removed from resources
-	// provided by the server. For more information, please refer to the
-	// :ref:"Knowing When a Requested Resource Does Not Exist" ` section.
+	//   "REQUESTED" - Client requested this resource but hasn't received any
+	// update from management server. The client will not fail requests, but will
+	// queue them until update arrives or the client times out waiting for the
+	// resource.
+	//   "DOES_NOT_EXIST" - This resource has been requested by the client but has
+	// either not been delivered by the server or was previously delivered by the
+	// server and then subsequently removed from resources provided by the server.
+	// For more information, please refer to the :ref:"Knowing When a Requested
+	// Resource Does Not Exist" ` section.
 	//   "ACKED" - Client received this resource and replied with ACK.
 	//   "NACKED" - Client received this resource and replied with NACK.
 	ClientStatus string `json:"clientStatus,omitempty"`
-
 	// Cluster: The cluster config.
 	Cluster googleapi.RawMessage `json:"cluster,omitempty"`
-
-	// ErrorState: Set if the last update failed, cleared after the next
-	// successful update. The ``error_state`` field contains the rejected
-	// version of this particular resource along with the reason and
-	// timestamp. For successfully updated or acknowledged resource, this
-	// field should be empty. [#not-implemented-hide:]
+	// ErrorState: Set if the last update failed, cleared after the next successful
+	// update. The ``error_state`` field contains the rejected version of this
+	// particular resource along with the reason and timestamp. For successfully
+	// updated or acknowledged resource, this field should be empty.
+	// [#not-implemented-hide:]
 	ErrorState *UpdateFailureState `json:"errorState,omitempty"`
-
 	// LastUpdated: The timestamp when the Cluster was last updated.
 	LastUpdated string `json:"lastUpdated,omitempty"`
-
-	// VersionInfo: This is the per-resource version information. This
-	// version is currently taken from the :ref:`version_info ` field at the
-	// time that the cluster was loaded. In the future, discrete per-cluster
-	// versions may be supported by the API.
+	// VersionInfo: This is the per-resource version information. This version is
+	// currently taken from the :ref:`version_info ` field at the time that the
+	// cluster was loaded. In the future, discrete per-cluster versions may be
+	// supported by the API.
 	VersionInfo string `json:"versionInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientStatus") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DynamicCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicCluster
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicEndpointConfig: [#next-free-field: 6]
 type DynamicEndpointConfig struct {
-	// ClientStatus: The client status of this resource.
-	// [#not-implemented-hide:]
+	// ClientStatus: The client status of this resource. [#not-implemented-hide:]
 	//
 	// Possible values:
 	//   "UNKNOWN" - Resource status is not available/unknown.
-	//   "REQUESTED" - Client requested this resource but hasn't received
-	// any update from management server. The client will not fail requests,
-	// but will queue them until update arrives or the client times out
-	// waiting for the resource.
-	//   "DOES_NOT_EXIST" - This resource has been requested by the client
-	// but has either not been delivered by the server or was previously
-	// delivered by the server and then subsequently removed from resources
-	// provided by the server. For more information, please refer to the
-	// :ref:"Knowing When a Requested Resource Does Not Exist" ` section.
+	//   "REQUESTED" - Client requested this resource but hasn't received any
+	// update from management server. The client will not fail requests, but will
+	// queue them until update arrives or the client times out waiting for the
+	// resource.
+	//   "DOES_NOT_EXIST" - This resource has been requested by the client but has
+	// either not been delivered by the server or was previously delivered by the
+	// server and then subsequently removed from resources provided by the server.
+	// For more information, please refer to the :ref:"Knowing When a Requested
+	// Resource Does Not Exist" ` section.
 	//   "ACKED" - Client received this resource and replied with ACK.
 	//   "NACKED" - Client received this resource and replied with NACK.
 	ClientStatus string `json:"clientStatus,omitempty"`
-
 	// EndpointConfig: The endpoint config.
 	EndpointConfig googleapi.RawMessage `json:"endpointConfig,omitempty"`
-
-	// ErrorState: Set if the last update failed, cleared after the next
-	// successful update. The ``error_state`` field contains the rejected
-	// version of this particular resource along with the reason and
-	// timestamp. For successfully updated or acknowledged resource, this
-	// field should be empty. [#not-implemented-hide:]
+	// ErrorState: Set if the last update failed, cleared after the next successful
+	// update. The ``error_state`` field contains the rejected version of this
+	// particular resource along with the reason and timestamp. For successfully
+	// updated or acknowledged resource, this field should be empty.
+	// [#not-implemented-hide:]
 	ErrorState *UpdateFailureState `json:"errorState,omitempty"`
-
-	// LastUpdated: [#not-implemented-hide:] The timestamp when the Endpoint
-	// was last updated.
+	// LastUpdated: [#not-implemented-hide:] The timestamp when the Endpoint was
+	// last updated.
 	LastUpdated string `json:"lastUpdated,omitempty"`
-
-	// VersionInfo: [#not-implemented-hide:] This is the per-resource
-	// version information. This version is currently taken from the
-	// :ref:`version_info ` field at the time that the endpoint
-	// configuration was loaded.
+	// VersionInfo: [#not-implemented-hide:] This is the per-resource version
+	// information. This version is currently taken from the :ref:`version_info `
+	// field at the time that the endpoint configuration was loaded.
 	VersionInfo string `json:"versionInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientStatus") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DynamicEndpointConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicEndpointConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DynamicListener: Describes a dynamically loaded listener via the LDS
-// API. [#next-free-field: 7]
+// DynamicListener: Describes a dynamically loaded listener via the LDS API.
+// [#next-free-field: 7]
 type DynamicListener struct {
-	// ActiveState: The listener state for any active listener by this name.
-	// These are listeners that are available to service data plane traffic.
+	// ActiveState: The listener state for any active listener by this name. These
+	// are listeners that are available to service data plane traffic.
 	ActiveState *DynamicListenerState `json:"activeState,omitempty"`
-
-	// ClientStatus: The client status of this resource.
-	// [#not-implemented-hide:]
+	// ClientStatus: The client status of this resource. [#not-implemented-hide:]
 	//
 	// Possible values:
 	//   "UNKNOWN" - Resource status is not available/unknown.
-	//   "REQUESTED" - Client requested this resource but hasn't received
-	// any update from management server. The client will not fail requests,
-	// but will queue them until update arrives or the client times out
-	// waiting for the resource.
-	//   "DOES_NOT_EXIST" - This resource has been requested by the client
-	// but has either not been delivered by the server or was previously
-	// delivered by the server and then subsequently removed from resources
-	// provided by the server. For more information, please refer to the
-	// :ref:"Knowing When a Requested Resource Does Not Exist" ` section.
+	//   "REQUESTED" - Client requested this resource but hasn't received any
+	// update from management server. The client will not fail requests, but will
+	// queue them until update arrives or the client times out waiting for the
+	// resource.
+	//   "DOES_NOT_EXIST" - This resource has been requested by the client but has
+	// either not been delivered by the server or was previously delivered by the
+	// server and then subsequently removed from resources provided by the server.
+	// For more information, please refer to the :ref:"Knowing When a Requested
+	// Resource Does Not Exist" ` section.
 	//   "ACKED" - Client received this resource and replied with ACK.
 	//   "NACKED" - Client received this resource and replied with NACK.
 	ClientStatus string `json:"clientStatus,omitempty"`
-
-	// DrainingState: The listener state for any draining listener by this
-	// name. These are listeners that are currently undergoing draining in
-	// preparation to stop servicing data plane traffic. Note that if
-	// attempting to recreate an Envoy configuration from a configuration
-	// dump, the draining listeners should generally be discarded.
+	// DrainingState: The listener state for any draining listener by this name.
+	// These are listeners that are currently undergoing draining in preparation to
+	// stop servicing data plane traffic. Note that if attempting to recreate an
+	// Envoy configuration from a configuration dump, the draining listeners should
+	// generally be discarded.
 	DrainingState *DynamicListenerState `json:"drainingState,omitempty"`
-
-	// ErrorState: Set if the last update failed, cleared after the next
-	// successful update. The ``error_state`` field contains the rejected
-	// version of this particular resource along with the reason and
-	// timestamp. For successfully updated or acknowledged resource, this
-	// field should be empty.
+	// ErrorState: Set if the last update failed, cleared after the next successful
+	// update. The ``error_state`` field contains the rejected version of this
+	// particular resource along with the reason and timestamp. For successfully
+	// updated or acknowledged resource, this field should be empty.
 	ErrorState *UpdateFailureState `json:"errorState,omitempty"`
-
 	// Name: The name or unique id of this listener, pulled from the
 	// DynamicListenerState config.
 	Name string `json:"name,omitempty"`
-
-	// WarmingState: The listener state for any warming listener by this
-	// name. These are listeners that are currently undergoing warming in
-	// preparation to service data plane traffic. Note that if attempting to
-	// recreate an Envoy configuration from a configuration dump, the
-	// warming listeners should generally be discarded.
+	// WarmingState: The listener state for any warming listener by this name.
+	// These are listeners that are currently undergoing warming in preparation to
+	// service data plane traffic. Note that if attempting to recreate an Envoy
+	// configuration from a configuration dump, the warming listeners should
+	// generally be discarded.
 	WarmingState *DynamicListenerState `json:"warmingState,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ActiveState") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActiveState") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ActiveState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DynamicListener) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicListener
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type DynamicListenerState struct {
-	// LastUpdated: The timestamp when the Listener was last successfully
-	// updated.
+	// LastUpdated: The timestamp when the Listener was last successfully updated.
 	LastUpdated string `json:"lastUpdated,omitempty"`
-
 	// Listener: The listener config.
 	Listener googleapi.RawMessage `json:"listener,omitempty"`
-
-	// VersionInfo: This is the per-resource version information. This
-	// version is currently taken from the :ref:`version_info ` field at the
-	// time that the listener was loaded. In the future, discrete
-	// per-listener versions may be supported by the API.
+	// VersionInfo: This is the per-resource version information. This version is
+	// currently taken from the :ref:`version_info ` field at the time that the
+	// listener was loaded. In the future, discrete per-listener versions may be
+	// supported by the API.
 	VersionInfo string `json:"versionInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LastUpdated") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LastUpdated") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LastUpdated") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DynamicListenerState) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicListenerState
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicRouteConfig: [#next-free-field: 6]
 type DynamicRouteConfig struct {
-	// ClientStatus: The client status of this resource.
-	// [#not-implemented-hide:]
+	// ClientStatus: The client status of this resource. [#not-implemented-hide:]
 	//
 	// Possible values:
 	//   "UNKNOWN" - Resource status is not available/unknown.
-	//   "REQUESTED" - Client requested this resource but hasn't received
-	// any update from management server. The client will not fail requests,
-	// but will queue them until update arrives or the client times out
-	// waiting for the resource.
-	//   "DOES_NOT_EXIST" - This resource has been requested by the client
-	// but has either not been delivered by the server or was previously
-	// delivered by the server and then subsequently removed from resources
-	// provided by the server. For more information, please refer to the
-	// :ref:"Knowing When a Requested Resource Does Not Exist" ` section.
+	//   "REQUESTED" - Client requested this resource but hasn't received any
+	// update from management server. The client will not fail requests, but will
+	// queue them until update arrives or the client times out waiting for the
+	// resource.
+	//   "DOES_NOT_EXIST" - This resource has been requested by the client but has
+	// either not been delivered by the server or was previously delivered by the
+	// server and then subsequently removed from resources provided by the server.
+	// For more information, please refer to the :ref:"Knowing When a Requested
+	// Resource Does Not Exist" ` section.
 	//   "ACKED" - Client received this resource and replied with ACK.
 	//   "NACKED" - Client received this resource and replied with NACK.
 	ClientStatus string `json:"clientStatus,omitempty"`
-
-	// ErrorState: Set if the last update failed, cleared after the next
-	// successful update. The ``error_state`` field contains the rejected
-	// version of this particular resource along with the reason and
-	// timestamp. For successfully updated or acknowledged resource, this
-	// field should be empty. [#not-implemented-hide:]
+	// ErrorState: Set if the last update failed, cleared after the next successful
+	// update. The ``error_state`` field contains the rejected version of this
+	// particular resource along with the reason and timestamp. For successfully
+	// updated or acknowledged resource, this field should be empty.
+	// [#not-implemented-hide:]
 	ErrorState *UpdateFailureState `json:"errorState,omitempty"`
-
 	// LastUpdated: The timestamp when the Route was last updated.
 	LastUpdated string `json:"lastUpdated,omitempty"`
-
 	// RouteConfig: The route config.
 	RouteConfig googleapi.RawMessage `json:"routeConfig,omitempty"`
-
-	// VersionInfo: This is the per-resource version information. This
-	// version is currently taken from the :ref:`version_info ` field at the
-	// time that the route configuration was loaded.
+	// VersionInfo: This is the per-resource version information. This version is
+	// currently taken from the :ref:`version_info ` field at the time that the
+	// route configuration was loaded.
 	VersionInfo string `json:"versionInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientStatus") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DynamicRouteConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicRouteConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicScopedRouteConfigs: [#next-free-field: 7]
 type DynamicScopedRouteConfigs struct {
-	// ClientStatus: The client status of this resource.
-	// [#not-implemented-hide:]
+	// ClientStatus: The client status of this resource. [#not-implemented-hide:]
 	//
 	// Possible values:
 	//   "UNKNOWN" - Resource status is not available/unknown.
-	//   "REQUESTED" - Client requested this resource but hasn't received
-	// any update from management server. The client will not fail requests,
-	// but will queue them until update arrives or the client times out
-	// waiting for the resource.
-	//   "DOES_NOT_EXIST" - This resource has been requested by the client
-	// but has either not been delivered by the server or was previously
-	// delivered by the server and then subsequently removed from resources
-	// provided by the server. For more information, please refer to the
-	// :ref:"Knowing When a Requested Resource Does Not Exist" ` section.
+	//   "REQUESTED" - Client requested this resource but hasn't received any
+	// update from management server. The client will not fail requests, but will
+	// queue them until update arrives or the client times out waiting for the
+	// resource.
+	//   "DOES_NOT_EXIST" - This resource has been requested by the client but has
+	// either not been delivered by the server or was previously delivered by the
+	// server and then subsequently removed from resources provided by the server.
+	// For more information, please refer to the :ref:"Knowing When a Requested
+	// Resource Does Not Exist" ` section.
 	//   "ACKED" - Client received this resource and replied with ACK.
 	//   "NACKED" - Client received this resource and replied with NACK.
 	ClientStatus string `json:"clientStatus,omitempty"`
-
-	// ErrorState: Set if the last update failed, cleared after the next
-	// successful update. The ``error_state`` field contains the rejected
-	// version of this particular resource along with the reason and
-	// timestamp. For successfully updated or acknowledged resource, this
-	// field should be empty. [#not-implemented-hide:]
+	// ErrorState: Set if the last update failed, cleared after the next successful
+	// update. The ``error_state`` field contains the rejected version of this
+	// particular resource along with the reason and timestamp. For successfully
+	// updated or acknowledged resource, this field should be empty.
+	// [#not-implemented-hide:]
 	ErrorState *UpdateFailureState `json:"errorState,omitempty"`
-
 	// LastUpdated: The timestamp when the scoped route config set was last
 	// updated.
 	LastUpdated string `json:"lastUpdated,omitempty"`
-
 	// Name: The name assigned to the scoped route configurations.
 	Name string `json:"name,omitempty"`
-
 	// ScopedRouteConfigs: The scoped route configurations.
 	ScopedRouteConfigs []googleapi.RawMessage `json:"scopedRouteConfigs,omitempty"`
-
-	// VersionInfo: This is the per-resource version information. This
-	// version is currently taken from the :ref:`version_info ` field at the
-	// time that the scoped routes configuration was loaded.
+	// VersionInfo: This is the per-resource version information. This version is
+	// currently taken from the :ref:`version_info ` field at the time that the
+	// scoped routes configuration was loaded.
 	VersionInfo string `json:"versionInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientStatus") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DynamicScopedRouteConfigs) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicScopedRouteConfigs
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// EndpointsConfigDump: Envoy's admin fill this message with all
-// currently known endpoints. Endpoint configuration information can be
-// used to recreate an Envoy configuration by populating all endpoints
-// as static endpoints or by returning them in an EDS response.
+// EndpointsConfigDump: Envoy's admin fill this message with all currently
+// known endpoints. Endpoint configuration information can be used to recreate
+// an Envoy configuration by populating all endpoints as static endpoints or by
+// returning them in an EDS response.
 type EndpointsConfigDump struct {
 	// DynamicEndpointConfigs: The dynamically loaded endpoint configs.
 	DynamicEndpointConfigs []*DynamicEndpointConfig `json:"dynamicEndpointConfigs,omitempty"`
-
 	// StaticEndpointConfigs: The statically loaded endpoint configs.
 	StaticEndpointConfigs []*StaticEndpointConfig `json:"staticEndpointConfigs,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DynamicEndpointConfigs") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DynamicEndpointConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DynamicEndpointConfigs")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DynamicEndpointConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EndpointsConfigDump) MarshalJSON() ([]byte, error) {
 	type NoMethod EndpointsConfigDump
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// EnvoyInternalAddress: The address represents an envoy internal
-// listener. [#comment:
+// EnvoyInternalAddress: The address represents an envoy internal listener.
+// [#comment:
 type EnvoyInternalAddress struct {
-	// EndpointId: Specifies an endpoint identifier to distinguish between
-	// multiple endpoints for the same internal listener in a single
-	// upstream pool. Only used in the upstream addresses for tracking
-	// changes to individual endpoints. This, for example, may be set to the
-	// final destination IP for the target internal listener.
+	// EndpointId: Specifies an endpoint identifier to distinguish between multiple
+	// endpoints for the same internal listener in a single upstream pool. Only
+	// used in the upstream addresses for tracking changes to individual endpoints.
+	// This, for example, may be set to the final destination IP for the target
+	// internal listener.
 	EndpointId string `json:"endpointId,omitempty"`
-
-	// ServerListenerName: Specifies the :ref:`name ` of the internal
-	// listener.
+	// ServerListenerName: Specifies the :ref:`name ` of the internal listener.
 	ServerListenerName string `json:"serverListenerName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EndpointId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndpointId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndpointId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EnvoyInternalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvoyInternalAddress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Extension: Version and identification for an Envoy extension.
 // [#next-free-field: 7]
 type Extension struct {
-	// Category: Category of the extension. Extension category names use
-	// reverse DNS notation. For instance "envoy.filters.listener" for
-	// Envoy's built-in listener filters or "com.acme.filters.http" for HTTP
-	// filters from acme.com vendor. [#comment:
+	// Category: Category of the extension. Extension category names use reverse
+	// DNS notation. For instance "envoy.filters.listener" for Envoy's built-in
+	// listener filters or "com.acme.filters.http" for HTTP filters from acme.com
+	// vendor. [#comment:
 	Category string `json:"category,omitempty"`
-
-	// Disabled: Indicates that the extension is present but was disabled
-	// via dynamic configuration.
+	// Disabled: Indicates that the extension is present but was disabled via
+	// dynamic configuration.
 	Disabled bool `json:"disabled,omitempty"`
-
 	// Name: This is the name of the Envoy filter as specified in the Envoy
 	// configuration, e.g. envoy.filters.http.router, com.acme.widget.
 	Name string `json:"name,omitempty"`
-
 	// TypeDescriptor: [#not-implemented-hide:] Type descriptor of extension
 	// configuration proto. [#comment:
 	TypeDescriptor string `json:"typeDescriptor,omitempty"`
-
 	// TypeUrls: Type URLs of extension configuration protos.
 	TypeUrls []string `json:"typeUrls,omitempty"`
-
 	// Version: The version is a property of the extension and maintained
-	// independently of other extensions and the Envoy API. This field is
-	// not set when extension did not provide version information.
+	// independently of other extensions and the Envoy API. This field is not set
+	// when extension did not provide version information.
 	Version *BuildVersion `json:"version,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Category") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Category") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Extension) MarshalJSON() ([]byte, error) {
 	type NoMethod Extension
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GenericXdsConfig: GenericXdsConfig is used to specify the config
-// status and the dump of any xDS resource identified by their type URL.
-// It is the generalized version of the now deprecated
-// ListenersConfigDump, ClustersConfigDump etc [#next-free-field: 10]
+// GenericXdsConfig: GenericXdsConfig is used to specify the config status and
+// the dump of any xDS resource identified by their type URL. It is the
+// generalized version of the now deprecated ListenersConfigDump,
+// ClustersConfigDump etc [#next-free-field: 10]
 type GenericXdsConfig struct {
 	// ClientStatus: Per xDS resource status from the view of a xDS client
 	//
 	// Possible values:
 	//   "UNKNOWN" - Resource status is not available/unknown.
-	//   "REQUESTED" - Client requested this resource but hasn't received
-	// any update from management server. The client will not fail requests,
-	// but will queue them until update arrives or the client times out
-	// waiting for the resource.
-	//   "DOES_NOT_EXIST" - This resource has been requested by the client
-	// but has either not been delivered by the server or was previously
-	// delivered by the server and then subsequently removed from resources
-	// provided by the server. For more information, please refer to the
-	// :ref:"Knowing When a Requested Resource Does Not Exist" ` section.
+	//   "REQUESTED" - Client requested this resource but hasn't received any
+	// update from management server. The client will not fail requests, but will
+	// queue them until update arrives or the client times out waiting for the
+	// resource.
+	//   "DOES_NOT_EXIST" - This resource has been requested by the client but has
+	// either not been delivered by the server or was previously delivered by the
+	// server and then subsequently removed from resources provided by the server.
+	// For more information, please refer to the :ref:"Knowing When a Requested
+	// Resource Does Not Exist" ` section.
 	//   "ACKED" - Client received this resource and replied with ACK.
 	//   "NACKED" - Client received this resource and replied with NACK.
 	ClientStatus string `json:"clientStatus,omitempty"`
-
-	// ConfigStatus: Per xDS resource config status. It is generated by
-	// management servers. It will not be present if the CSDS server is an
-	// xDS client.
+	// ConfigStatus: Per xDS resource config status. It is generated by management
+	// servers. It will not be present if the CSDS server is an xDS client.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Status info is not available/unknown.
-	//   "SYNCED" - Management server has sent the config to client and
-	// received ACK.
+	//   "SYNCED" - Management server has sent the config to client and received
+	// ACK.
 	//   "NOT_SENT" - Config is not sent.
-	//   "STALE" - Management server has sent the config to client but
-	// hasn’t received ACK/NACK.
-	//   "ERROR" - Management server has sent the config to client but
-	// received NACK. The attached config dump will be the latest config
-	// (the rejected one), since it is the persisted version in the
-	// management server.
+	//   "STALE" - Management server has sent the config to client but hasn’t
+	// received ACK/NACK.
+	//   "ERROR" - Management server has sent the config to client but received
+	// NACK. The attached config dump will be the latest config (the rejected one),
+	// since it is the persisted version in the management server.
 	ConfigStatus string `json:"configStatus,omitempty"`
-
-	// ErrorState: Set if the last update failed, cleared after the next
-	// successful update. The *error_state* field contains the rejected
-	// version of this particular resource along with the reason and
-	// timestamp. For successfully updated or acknowledged resource, this
-	// field should be empty. [#not-implemented-hide:]
+	// ErrorState: Set if the last update failed, cleared after the next successful
+	// update. The *error_state* field contains the rejected version of this
+	// particular resource along with the reason and timestamp. For successfully
+	// updated or acknowledged resource, this field should be empty.
+	// [#not-implemented-hide:]
 	ErrorState *UpdateFailureState `json:"errorState,omitempty"`
-
-	// IsStaticResource: Is static resource is true if it is specified in
-	// the config supplied through the file at the startup.
+	// IsStaticResource: Is static resource is true if it is specified in the
+	// config supplied through the file at the startup.
 	IsStaticResource bool `json:"isStaticResource,omitempty"`
-
 	// LastUpdated: Timestamp when the xDS resource was last updated
 	LastUpdated string `json:"lastUpdated,omitempty"`
-
 	// Name: Name of the xDS resource
 	Name string `json:"name,omitempty"`
-
-	// TypeUrl: Type_url represents the fully qualified name of xDS resource
-	// type like envoy.v3.Cluster, envoy.v3.ClusterLoadAssignment etc.
+	// TypeUrl: Type_url represents the fully qualified name of xDS resource type
+	// like envoy.v3.Cluster, envoy.v3.ClusterLoadAssignment etc.
 	TypeUrl string `json:"typeUrl,omitempty"`
-
-	// VersionInfo: This is the :ref:`version_info ` in the last processed
-	// xDS discovery response. If there are only static bootstrap listeners,
-	// this field will be ""
+	// VersionInfo: This is the :ref:`version_info ` in the last processed xDS
+	// discovery response. If there are only static bootstrap listeners, this field
+	// will be ""
 	VersionInfo string `json:"versionInfo,omitempty"`
-
-	// XdsConfig: The xDS resource config. Actual content depends on the
-	// type
+	// XdsConfig: The xDS resource config. Actual content depends on the type
 	XdsConfig googleapi.RawMessage `json:"xdsConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientStatus") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GenericXdsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GenericXdsConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleRE2: Google's `RE2 `_ regex engine. The regex string must
-// adhere to the documented `syntax `_. The engine is designed to
-// complete execution in linear time as well as limit the amount of
-// memory used. Envoy supports program size checking via runtime. The
-// runtime keys “re2.max_program_size.error_level“ and
-// “re2.max_program_size.warn_level“ can be set to integers as the
-// maximum program size or complexity that a compiled regex can have
-// before an exception is thrown or a warning is logged, respectively.
-// “re2.max_program_size.error_level“ defaults to 100, and
-// “re2.max_program_size.warn_level“ has no default if unset (will not
-// check/log a warning). Envoy emits two stats for tracking the program
-// size of regexes: the histogram “re2.program_size“, which records
-// the program size, and the counter “re2.exceeded_warn_level“, which
-// is incremented each time the program size exceeds the warn level
-// threshold.
+// GoogleRE2: Google's `RE2 `_ regex engine. The regex string must adhere to
+// the documented `syntax `_. The engine is designed to complete execution in
+// linear time as well as limit the amount of memory used. Envoy supports
+// program size checking via runtime. The runtime keys
+// “re2.max_program_size.error_level“ and “re2.max_program_size.warn_level“
+// can be set to integers as the maximum program size or complexity that a
+// compiled regex can have before an exception is thrown or a warning is
+// logged, respectively. “re2.max_program_size.error_level“ defaults to 100,
+// and “re2.max_program_size.warn_level“ has no default if unset (will not
+// check/log a warning). Envoy emits two stats for tracking the program size of
+// regexes: the histogram “re2.program_size“, which records the program size,
+// and the counter “re2.exceeded_warn_level“, which is incremented each time
+// the program size exceeds the warn level threshold.
 type GoogleRE2 struct {
-	// MaxProgramSize: This field controls the RE2 "program size" which is a
-	// rough estimate of how complex a compiled regex is to evaluate. A
-	// regex that has a program size greater than the configured value will
-	// fail to compile. In this case, the configured max program size can be
-	// increased or the regex can be simplified. If not specified, the
-	// default is 100. This field is deprecated; regexp validation should be
-	// performed on the management server instead of being done by each
-	// individual client. .. note:: Although this field is deprecated, the
-	// program size will still be checked against the global
+	// MaxProgramSize: This field controls the RE2 "program size" which is a rough
+	// estimate of how complex a compiled regex is to evaluate. A regex that has a
+	// program size greater than the configured value will fail to compile. In this
+	// case, the configured max program size can be increased or the regex can be
+	// simplified. If not specified, the default is 100. This field is deprecated;
+	// regexp validation should be performed on the management server instead of
+	// being done by each individual client. .. note:: Although this field is
+	// deprecated, the program size will still be checked against the global
 	// ``re2.max_program_size.error_level`` runtime value.
 	MaxProgramSize int64 `json:"maxProgramSize,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MaxProgramSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MaxProgramSize") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MaxProgramSize") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleRE2) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRE2
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type InlineScopedRouteConfigs struct {
 	// LastUpdated: The timestamp when the scoped route config set was last
 	// updated.
 	LastUpdated string `json:"lastUpdated,omitempty"`
-
 	// Name: The name assigned to the scoped route configurations.
 	Name string `json:"name,omitempty"`
-
 	// ScopedRouteConfigs: The scoped route configurations.
 	ScopedRouteConfigs []googleapi.RawMessage `json:"scopedRouteConfigs,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LastUpdated") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LastUpdated") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LastUpdated") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *InlineScopedRouteConfigs) MarshalJSON() ([]byte, error) {
 	type NoMethod InlineScopedRouteConfigs
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMatcher: Specifies the way to match a list value.
 type ListMatcher struct {
-	// OneOf: If specified, at least one of the values in the list must
-	// match the value specified.
+	// OneOf: If specified, at least one of the values in the list must match the
+	// value specified.
 	OneOf *ValueMatcher `json:"oneOf,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "OneOf") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "OneOf") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "OneOf") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMatcher
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListenersConfigDump: Envoy's listener manager fills this message with
-// all currently known listeners. Listener configuration information can
-// be used to recreate an Envoy configuration by populating all
-// listeners as static listeners or by returning them in a LDS response.
+// ListenersConfigDump: Envoy's listener manager fills this message with all
+// currently known listeners. Listener configuration information can be used to
+// recreate an Envoy configuration by populating all listeners as static
+// listeners or by returning them in a LDS response.
 type ListenersConfigDump struct {
-	// DynamicListeners: State for any warming, active, or draining
-	// listeners.
+	// DynamicListeners: State for any warming, active, or draining listeners.
 	DynamicListeners []*DynamicListener `json:"dynamicListeners,omitempty"`
-
 	// StaticListeners: The statically loaded listener configs.
 	StaticListeners []*StaticListener `json:"staticListeners,omitempty"`
-
-	// VersionInfo: This is the :ref:`version_info ` in the last processed
-	// LDS discovery response. If there are only static bootstrap listeners,
-	// this field will be "".
+	// VersionInfo: This is the :ref:`version_info ` in the last processed LDS
+	// discovery response. If there are only static bootstrap listeners, this field
+	// will be "".
 	VersionInfo string `json:"versionInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DynamicListeners") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DynamicListeners") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DynamicListeners") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListenersConfigDump) MarshalJSON() ([]byte, error) {
 	type NoMethod ListenersConfigDump
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Locality: Identifies location of where either Envoy runs or where
-// upstream hosts run.
+// Locality: Identifies location of where either Envoy runs or where upstream
+// hosts run.
 type Locality struct {
 	// Region: Region this :ref:`zone ` belongs to.
 	Region string `json:"region,omitempty"`
-
-	// SubZone: When used for locality of upstream hosts, this field further
-	// splits zone into smaller chunks of sub-zones so they can be load
-	// balanced independently.
+	// SubZone: When used for locality of upstream hosts, this field further splits
+	// zone into smaller chunks of sub-zones so they can be load balanced
+	// independently.
 	SubZone string `json:"subZone,omitempty"`
-
 	// Zone: Defines the local service zone where Envoy is running. Though
-	// optional, it should be set if discovery service routing is used and
-	// the discovery service exposes :ref:`zone data `, either in this
-	// message or via :option:`--service-zone`. The meaning of zone is
-	// context dependent, e.g. `Availability Zone (AZ) `_ on AWS, `Zone `_
-	// on GCP, etc.
+	// optional, it should be set if discovery service routing is used and the
+	// discovery service exposes :ref:`zone data `, either in this message or via
+	// :option:`--service-zone`. The meaning of zone is context dependent, e.g.
+	// `Availability Zone (AZ) `_ on AWS, `Zone `_ on GCP, etc.
 	Zone string `json:"zone,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Region") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Region") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Region") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Locality) MarshalJSON() ([]byte, error) {
 	type NoMethod Locality
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Node: Identifies a specific Envoy instance. The node identifier is
-// presented to the management server, which may use this identifier to
-// distinguish per Envoy configuration for serving. [#next-free-field:
-// 13]
+// Node: Identifies a specific Envoy instance. The node identifier is presented
+// to the management server, which may use this identifier to distinguish per
+// Envoy configuration for serving. [#next-free-field: 13]
 type Node struct {
-	// ClientFeatures: Client feature support list. These are well known
-	// features described in the Envoy API repository for a given major
-	// version of an API. Client features use reverse DNS naming scheme, for
-	// example ``com.acme.feature``. See :ref:`the list of features ` that
-	// xDS client may support.
+	// ClientFeatures: Client feature support list. These are well known features
+	// described in the Envoy API repository for a given major version of an API.
+	// Client features use reverse DNS naming scheme, for example
+	// ``com.acme.feature``. See :ref:`the list of features ` that xDS client may
+	// support.
 	ClientFeatures []string `json:"clientFeatures,omitempty"`
-
-	// Cluster: Defines the local service cluster name where Envoy is
-	// running. Though optional, it should be set if any of the following
-	// features are used: :ref:`statsd `, :ref:`health check cluster
-	// verification `, :ref:`runtime override directory `, :ref:`user agent
-	// addition `, :ref:`HTTP global rate limiting `, :ref:`CDS `, and
-	// :ref:`HTTP tracing `, either in this message or via
-	// :option:`--service-cluster`.
+	// Cluster: Defines the local service cluster name where Envoy is running.
+	// Though optional, it should be set if any of the following features are used:
+	// :ref:`statsd `, :ref:`health check cluster verification `, :ref:`runtime
+	// override directory `, :ref:`user agent addition `, :ref:`HTTP global rate
+	// limiting `, :ref:`CDS `, and :ref:`HTTP tracing `, either in this message or
+	// via :option:`--service-cluster`.
 	Cluster string `json:"cluster,omitempty"`
-
 	// DynamicParameters: Map from xDS resource type URL to dynamic context
-	// parameters. These may vary at runtime (unlike other fields in this
-	// message). For example, the xDS client may have a shard identifier
-	// that changes during the lifetime of the xDS client. In Envoy, this
-	// would be achieved by updating the dynamic context on the
-	// Server::Instance's LocalInfo context provider. The shard ID dynamic
-	// parameter then appears in this field during future discovery
-	// requests.
+	// parameters. These may vary at runtime (unlike other fields in this message).
+	// For example, the xDS client may have a shard identifier that changes during
+	// the lifetime of the xDS client. In Envoy, this would be achieved by updating
+	// the dynamic context on the Server::Instance's LocalInfo context provider.
+	// The shard ID dynamic parameter then appears in this field during future
+	// discovery requests.
 	DynamicParameters map[string]ContextParams `json:"dynamicParameters,omitempty"`
-
-	// Extensions: List of extensions and their versions supported by the
-	// node.
+	// Extensions: List of extensions and their versions supported by the node.
 	Extensions []*Extension `json:"extensions,omitempty"`
-
-	// Id: An opaque node identifier for the Envoy node. This also provides
-	// the local service node name. It should be set if any of the following
-	// features are used: :ref:`statsd `, :ref:`CDS `, and :ref:`HTTP
-	// tracing `, either in this message or via :option:`--service-node`.
+	// Id: An opaque node identifier for the Envoy node. This also provides the
+	// local service node name. It should be set if any of the following features
+	// are used: :ref:`statsd `, :ref:`CDS `, and :ref:`HTTP tracing `, either in
+	// this message or via :option:`--service-node`.
 	Id string `json:"id,omitempty"`
-
-	// ListeningAddresses: Known listening ports on the node as a generic
-	// hint to the management server for filtering :ref:`listeners ` to be
-	// returned. For example, if there is a listener bound to port 80, the
-	// list can optionally contain the SocketAddress ``(0.0.0.0,80)``. The
-	// field is optional and just a hint.
+	// ListeningAddresses: Known listening ports on the node as a generic hint to
+	// the management server for filtering :ref:`listeners ` to be returned. For
+	// example, if there is a listener bound to port 80, the list can optionally
+	// contain the SocketAddress ``(0.0.0.0,80)``. The field is optional and just a
+	// hint.
 	ListeningAddresses []*Address `json:"listeningAddresses,omitempty"`
-
 	// Locality: Locality specifying where the Envoy instance is running.
 	Locality *Locality `json:"locality,omitempty"`
-
-	// Metadata: Opaque metadata extending the node identifier. Envoy will
-	// pass this directly to the management server.
+	// Metadata: Opaque metadata extending the node identifier. Envoy will pass
+	// this directly to the management server.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// UserAgentBuildVersion: Structured version of the entity requesting
-	// config.
+	// UserAgentBuildVersion: Structured version of the entity requesting config.
 	UserAgentBuildVersion *BuildVersion `json:"userAgentBuildVersion,omitempty"`
-
 	// UserAgentName: Free-form string that identifies the entity requesting
 	// config. E.g. "envoy" or "grpc"
 	UserAgentName string `json:"userAgentName,omitempty"`
-
-	// UserAgentVersion: Free-form string that identifies the version of the
-	// entity requesting config. E.g. "1.12.2" or "abcd1234", or
-	// "SpecialEnvoyBuild"
+	// UserAgentVersion: Free-form string that identifies the version of the entity
+	// requesting config. E.g. "1.12.2" or "abcd1234", or "SpecialEnvoyBuild"
 	UserAgentVersion string `json:"userAgentVersion,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientFeatures") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientFeatures") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ClientFeatures") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Node) MarshalJSON() ([]byte, error) {
 	type NoMethod Node
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeMatcher: Specifies the way to match a Node. The match follows AND
@@ -1401,31 +1144,24 @@ func (s *Node) MarshalJSON() ([]byte, error) {
 type NodeMatcher struct {
 	// NodeId: Specifies match criteria on the node id.
 	NodeId *StringMatcher `json:"nodeId,omitempty"`
-
 	// NodeMetadatas: Specifies match criteria on the node metadata.
 	NodeMetadatas []*StructMatcher `json:"nodeMetadatas,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NodeId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "NodeId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "NodeId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *NodeMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeMatcher
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // NullMatch: NullMatch is an empty message to specify a null value.
@@ -1435,734 +1171,570 @@ type NullMatch struct {
 // OrMatcher: Specifies a list of alternatives for the match.
 type OrMatcher struct {
 	ValueMatchers []*ValueMatcher `json:"valueMatchers,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ValueMatchers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ValueMatchers") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ValueMatchers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *OrMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod OrMatcher
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PathSegment: Specifies the segment in a path to retrieve value from
-// Struct.
+// PathSegment: Specifies the segment in a path to retrieve value from Struct.
 type PathSegment struct {
 	// Key: If specified, use the key to retrieve the value in a Struct.
 	Key string `json:"key,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PathSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod PathSegment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PerXdsConfig: Detailed config (per xDS) with status.
-// [#next-free-field: 8]
+// PerXdsConfig: Detailed config (per xDS) with status. [#next-free-field: 8]
 type PerXdsConfig struct {
-	// ClientStatus: Client config status is populated by xDS clients. Will
-	// not be present if the CSDS server is an xDS server. No matter what
-	// the client config status is, xDS clients should always dump the most
-	// recent accepted xDS config. .. attention:: This field is deprecated.
-	// Use :ref:`ClientResourceStatus ` for per-resource config status
-	// instead.
+	// ClientStatus: Client config status is populated by xDS clients. Will not be
+	// present if the CSDS server is an xDS server. No matter what the client
+	// config status is, xDS clients should always dump the most recent accepted
+	// xDS config. .. attention:: This field is deprecated. Use
+	// :ref:`ClientResourceStatus ` for per-resource config status instead.
 	//
 	// Possible values:
 	//   "CLIENT_UNKNOWN" - Config status is not available/unknown.
-	//   "CLIENT_REQUESTED" - Client requested the config but hasn't
-	// received any config from management server yet.
+	//   "CLIENT_REQUESTED" - Client requested the config but hasn't received any
+	// config from management server yet.
 	//   "CLIENT_ACKED" - Client received the config and replied with ACK.
 	//   "CLIENT_NACKED" - Client received the config and replied with NACK.
-	// Notably, the attached config dump is not the NACKed version, but the
-	// most recent accepted one. If no config is accepted yet, the attached
-	// config dump will be empty.
-	ClientStatus string `json:"clientStatus,omitempty"`
-
-	ClusterConfig *ClustersConfigDump `json:"clusterConfig,omitempty"`
-
-	EndpointConfig *EndpointsConfigDump `json:"endpointConfig,omitempty"`
-
-	ListenerConfig *ListenersConfigDump `json:"listenerConfig,omitempty"`
-
-	RouteConfig *RoutesConfigDump `json:"routeConfig,omitempty"`
-
+	// Notably, the attached config dump is not the NACKed version, but the most
+	// recent accepted one. If no config is accepted yet, the attached config dump
+	// will be empty.
+	ClientStatus      string                  `json:"clientStatus,omitempty"`
+	ClusterConfig     *ClustersConfigDump     `json:"clusterConfig,omitempty"`
+	EndpointConfig    *EndpointsConfigDump    `json:"endpointConfig,omitempty"`
+	ListenerConfig    *ListenersConfigDump    `json:"listenerConfig,omitempty"`
+	RouteConfig       *RoutesConfigDump       `json:"routeConfig,omitempty"`
 	ScopedRouteConfig *ScopedRoutesConfigDump `json:"scopedRouteConfig,omitempty"`
-
-	// Status: Config status generated by management servers. Will not be
-	// present if the CSDS server is an xDS client.
+	// Status: Config status generated by management servers. Will not be present
+	// if the CSDS server is an xDS client.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Status info is not available/unknown.
-	//   "SYNCED" - Management server has sent the config to client and
-	// received ACK.
+	//   "SYNCED" - Management server has sent the config to client and received
+	// ACK.
 	//   "NOT_SENT" - Config is not sent.
-	//   "STALE" - Management server has sent the config to client but
-	// hasn’t received ACK/NACK.
-	//   "ERROR" - Management server has sent the config to client but
-	// received NACK. The attached config dump will be the latest config
-	// (the rejected one), since it is the persisted version in the
-	// management server.
+	//   "STALE" - Management server has sent the config to client but hasn’t
+	// received ACK/NACK.
+	//   "ERROR" - Management server has sent the config to client but received
+	// NACK. The attached config dump will be the latest config (the rejected one),
+	// since it is the persisted version in the management server.
 	Status string `json:"status,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientStatus") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PerXdsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PerXdsConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type Pipe struct {
 	// Mode: The mode for the Pipe. Not applicable for abstract sockets.
 	Mode int64 `json:"mode,omitempty"`
-
-	// Path: Unix Domain Socket path. On Linux, paths starting with '@' will
-	// use the abstract namespace. The starting '@' is replaced by a null
-	// byte by Envoy. Paths starting with '@' will result in an error in
-	// environments other than Linux.
+	// Path: Unix Domain Socket path. On Linux, paths starting with '@' will use
+	// the abstract namespace. The starting '@' is replaced by a null byte by
+	// Envoy. Paths starting with '@' will result in an error in environments other
+	// than Linux.
 	Path string `json:"path,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Mode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Mode") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Pipe) MarshalJSON() ([]byte, error) {
 	type NoMethod Pipe
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RegexMatcher: A regex matcher designed for safety when used with
-// untrusted input.
+// RegexMatcher: A regex matcher designed for safety when used with untrusted
+// input.
 type RegexMatcher struct {
 	// GoogleRe2: Google's RE2 regex engine.
 	GoogleRe2 *GoogleRE2 `json:"googleRe2,omitempty"`
-
 	// Regex: The regex match string. The string must be supported by the
-	// configured engine. The regex is matched against the full string, not
-	// as a partial match.
+	// configured engine. The regex is matched against the full string, not as a
+	// partial match.
 	Regex string `json:"regex,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GoogleRe2") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GoogleRe2") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GoogleRe2") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RegexMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod RegexMatcher
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RoutesConfigDump: Envoy's RDS implementation fills this message with
-// all currently loaded routes, as described by their RouteConfiguration
-// objects. Static routes that are either defined in the bootstrap
-// configuration or defined inline while configuring listeners are
-// separated from those configured dynamically via RDS. Route
-// configuration information can be used to recreate an Envoy
-// configuration by populating all routes as static routes or by
-// returning them in RDS responses.
+// RoutesConfigDump: Envoy's RDS implementation fills this message with all
+// currently loaded routes, as described by their RouteConfiguration objects.
+// Static routes that are either defined in the bootstrap configuration or
+// defined inline while configuring listeners are separated from those
+// configured dynamically via RDS. Route configuration information can be used
+// to recreate an Envoy configuration by populating all routes as static routes
+// or by returning them in RDS responses.
 type RoutesConfigDump struct {
 	// DynamicRouteConfigs: The dynamically loaded route configs.
 	DynamicRouteConfigs []*DynamicRouteConfig `json:"dynamicRouteConfigs,omitempty"`
-
 	// StaticRouteConfigs: The statically loaded route configs.
 	StaticRouteConfigs []*StaticRouteConfig `json:"staticRouteConfigs,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DynamicRouteConfigs")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DynamicRouteConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DynamicRouteConfigs") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DynamicRouteConfigs") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RoutesConfigDump) MarshalJSON() ([]byte, error) {
 	type NoMethod RoutesConfigDump
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ScopedRoutesConfigDump: Envoy's scoped RDS implementation fills this
-// message with all currently loaded route configuration scopes (defined
-// via ScopedRouteConfigurationsSet protos). This message lists both the
-// scopes defined inline with the higher order object (i.e., the
-// HttpConnectionManager) and the dynamically obtained scopes via the
-// SRDS API.
+// ScopedRoutesConfigDump: Envoy's scoped RDS implementation fills this message
+// with all currently loaded route configuration scopes (defined via
+// ScopedRouteConfigurationsSet protos). This message lists both the scopes
+// defined inline with the higher order object (i.e., the
+// HttpConnectionManager) and the dynamically obtained scopes via the SRDS API.
 type ScopedRoutesConfigDump struct {
-	// DynamicScopedRouteConfigs: The dynamically loaded scoped route
-	// configs.
+	// DynamicScopedRouteConfigs: The dynamically loaded scoped route configs.
 	DynamicScopedRouteConfigs []*DynamicScopedRouteConfigs `json:"dynamicScopedRouteConfigs,omitempty"`
-
 	// InlineScopedRouteConfigs: The statically loaded scoped route configs.
 	InlineScopedRouteConfigs []*InlineScopedRouteConfigs `json:"inlineScopedRouteConfigs,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DynamicScopedRouteConfigs") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DynamicScopedRouteConfigs")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "DynamicScopedRouteConfigs") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DynamicScopedRouteConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScopedRoutesConfigDump) MarshalJSON() ([]byte, error) {
 	type NoMethod ScopedRoutesConfigDump
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SemanticVersion: Envoy uses SemVer (https://semver.org/). Major/minor
-// versions indicate expected behaviors and APIs, the patch version
-// field is used only for security fixes and can be generally ignored.
+// versions indicate expected behaviors and APIs, the patch version field is
+// used only for security fixes and can be generally ignored.
 type SemanticVersion struct {
 	MajorNumber int64 `json:"majorNumber,omitempty"`
-
 	MinorNumber int64 `json:"minorNumber,omitempty"`
-
-	Patch int64 `json:"patch,omitempty"`
-
+	Patch       int64 `json:"patch,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MajorNumber") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MajorNumber") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MajorNumber") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SemanticVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod SemanticVersion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SocketAddress: [#next-free-field: 7]
 type SocketAddress struct {
-	// Address: The address for this socket. :ref:`Listeners ` will bind to
-	// the address. An empty address is not allowed. Specify ``0.0.0.0`` or
-	// ``::`` to bind to any address. [#comment:TODO(zuercher) reinstate
-	// when implemented: It is possible to distinguish a Listener address
-	// via the prefix/suffix matching in :ref:`FilterChainMatch `.] When
-	// used within an upstream :ref:`BindConfig `, the address controls the
-	// source address of outbound connections. For :ref:`clusters `, the
-	// cluster type determines whether the address must be an IP (``STATIC``
-	// or ``EDS`` clusters) or a hostname resolved by DNS (``STRICT_DNS`` or
-	// ``LOGICAL_DNS`` clusters). Address resolution can be customized via
-	// :ref:`resolver_name `.
+	// Address: The address for this socket. :ref:`Listeners ` will bind to the
+	// address. An empty address is not allowed. Specify ``0.0.0.0`` or ``::`` to
+	// bind to any address. [#comment:TODO(zuercher) reinstate when implemented: It
+	// is possible to distinguish a Listener address via the prefix/suffix matching
+	// in :ref:`FilterChainMatch `.] When used within an upstream :ref:`BindConfig
+	// `, the address controls the source address of outbound connections. For
+	// :ref:`clusters `, the cluster type determines whether the address must be an
+	// IP (``STATIC`` or ``EDS`` clusters) or a hostname resolved by DNS
+	// (``STRICT_DNS`` or ``LOGICAL_DNS`` clusters). Address resolution can be
+	// customized via :ref:`resolver_name `.
 	Address string `json:"address,omitempty"`
-
 	// Ipv4Compat: When binding to an IPv6 address above, this enables `IPv4
 	// compatibility `_. Binding to ``::`` will allow both IPv4 and IPv6
-	// connections, with peer IPv4 addresses mapped into IPv6 space as
-	// ``::FFFF:``.
+	// connections, with peer IPv4 addresses mapped into IPv6 space as ``::FFFF:``.
 	Ipv4Compat bool `json:"ipv4Compat,omitempty"`
-
-	// NamedPort: This is only valid if :ref:`resolver_name ` is specified
-	// below and the named resolver is capable of named port resolution.
+	// NamedPort: This is only valid if :ref:`resolver_name ` is specified below
+	// and the named resolver is capable of named port resolution.
 	NamedPort string `json:"namedPort,omitempty"`
-
-	PortValue int64 `json:"portValue,omitempty"`
-
+	PortValue int64  `json:"portValue,omitempty"`
 	// Possible values:
 	//   "TCP"
 	//   "UDP"
 	Protocol string `json:"protocol,omitempty"`
-
 	// ResolverName: The name of the custom resolver. This must have been
 	// registered with Envoy. If this is empty, a context dependent default
-	// applies. If the address is a concrete IP address, no resolution will
-	// occur. If address is a hostname this should be set for resolution
-	// other than DNS. Specifying a custom resolver with ``STRICT_DNS`` or
-	// ``LOGICAL_DNS`` will generate an error at runtime.
+	// applies. If the address is a concrete IP address, no resolution will occur.
+	// If address is a hostname this should be set for resolution other than DNS.
+	// Specifying a custom resolver with ``STRICT_DNS`` or ``LOGICAL_DNS`` will
+	// generate an error at runtime.
 	ResolverName string `json:"resolverName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Address") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Address") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SocketAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod SocketAddress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // StaticCluster: Describes a statically loaded cluster.
 type StaticCluster struct {
 	// Cluster: The cluster config.
 	Cluster googleapi.RawMessage `json:"cluster,omitempty"`
-
 	// LastUpdated: The timestamp when the Cluster was last updated.
 	LastUpdated string `json:"lastUpdated,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Cluster") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Cluster") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Cluster") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Cluster") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StaticCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod StaticCluster
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type StaticEndpointConfig struct {
 	// EndpointConfig: The endpoint config.
 	EndpointConfig googleapi.RawMessage `json:"endpointConfig,omitempty"`
-
-	// LastUpdated: [#not-implemented-hide:] The timestamp when the Endpoint
-	// was last updated.
+	// LastUpdated: [#not-implemented-hide:] The timestamp when the Endpoint was
+	// last updated.
 	LastUpdated string `json:"lastUpdated,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EndpointConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndpointConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EndpointConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StaticEndpointConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StaticEndpointConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // StaticListener: Describes a statically loaded listener.
 type StaticListener struct {
-	// LastUpdated: The timestamp when the Listener was last successfully
-	// updated.
+	// LastUpdated: The timestamp when the Listener was last successfully updated.
 	LastUpdated string `json:"lastUpdated,omitempty"`
-
 	// Listener: The listener config.
 	Listener googleapi.RawMessage `json:"listener,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LastUpdated") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LastUpdated") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LastUpdated") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StaticListener) MarshalJSON() ([]byte, error) {
 	type NoMethod StaticListener
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type StaticRouteConfig struct {
 	// LastUpdated: The timestamp when the Route was last updated.
 	LastUpdated string `json:"lastUpdated,omitempty"`
-
 	// RouteConfig: The route config.
 	RouteConfig googleapi.RawMessage `json:"routeConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LastUpdated") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LastUpdated") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LastUpdated") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StaticRouteConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StaticRouteConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// StringMatcher: Specifies the way to match a string.
-// [#next-free-field: 9]
+// StringMatcher: Specifies the way to match a string. [#next-free-field: 9]
 type StringMatcher struct {
-	// Contains: The input string must have the substring specified here.
-	// Note: empty contains match is not allowed, please use regex instead.
-	// Examples: * ``abc`` matches the value ``xyz.abc.def``
+	// Contains: The input string must have the substring specified here. Note:
+	// empty contains match is not allowed, please use regex instead. Examples: *
+	// ``abc`` matches the value ``xyz.abc.def``
 	Contains string `json:"contains,omitempty"`
-
 	// Custom: Use an extension as the matcher type. [#extension-category:
 	// envoy.string_matcher]
 	Custom *TypedExtensionConfig `json:"custom,omitempty"`
-
 	// Exact: The input string must match exactly the string specified here.
 	// Examples: * ``abc`` only matches the value ``abc``.
 	Exact string `json:"exact,omitempty"`
-
-	// IgnoreCase: If true, indicates the exact/prefix/suffix/contains
-	// matching should be case insensitive. This has no effect for the
-	// safe_regex match. For example, the matcher ``data`` will match both
-	// input string ``Data`` and ``data`` if set to true.
+	// IgnoreCase: If true, indicates the exact/prefix/suffix/contains matching
+	// should be case insensitive. This has no effect for the safe_regex match. For
+	// example, the matcher ``data`` will match both input string ``Data`` and
+	// ``data`` if set to true.
 	IgnoreCase bool `json:"ignoreCase,omitempty"`
-
-	// Prefix: The input string must have the prefix specified here. Note:
-	// empty prefix is not allowed, please use regex instead. Examples: *
-	// ``abc`` matches the value ``abc.xyz``
+	// Prefix: The input string must have the prefix specified here. Note: empty
+	// prefix is not allowed, please use regex instead. Examples: * ``abc`` matches
+	// the value ``abc.xyz``
 	Prefix string `json:"prefix,omitempty"`
-
-	// SafeRegex: The input string must match the regular expression
-	// specified here.
+	// SafeRegex: The input string must match the regular expression specified
+	// here.
 	SafeRegex *RegexMatcher `json:"safeRegex,omitempty"`
-
-	// Suffix: The input string must have the suffix specified here. Note:
-	// empty prefix is not allowed, please use regex instead. Examples: *
-	// ``abc`` matches the value ``xyz.abc``
+	// Suffix: The input string must have the suffix specified here. Note: empty
+	// prefix is not allowed, please use regex instead. Examples: * ``abc`` matches
+	// the value ``xyz.abc``
 	Suffix string `json:"suffix,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Contains") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Contains") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Contains") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StringMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod StringMatcher
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// StructMatcher: StructMatcher provides a general interface to check if
-// a given value is matched in google.protobuf.Struct. It uses “path“
-// to retrieve the value from the struct and then check if it's matched
-// to the specified value. For example, for the following Struct: ..
-// code-block:: yaml fields: a: struct_value: fields: b: struct_value:
-// fields: c: string_value: pro t: list_value: values: - string_value: m
-// - string_value: n The following MetadataMatcher is matched as the
-// path [a, b, c] will retrieve a string value "pro" from the Metadata
-// which is matched to the specified prefix match. .. code-block:: yaml
-// path: - key: a - key: b - key: c value: string_match: prefix: pr The
-// following StructMatcher is matched as the code will match one of the
-// string values in the list at the path [a, t]. .. code-block:: yaml
-// path: - key: a - key: t value: list_match: one_of: string_match:
-// exact: m An example use of StructMatcher is to match metadata in
-// envoy.v*.core.Node.
+// StructMatcher: StructMatcher provides a general interface to check if a
+// given value is matched in google.protobuf.Struct. It uses “path“ to
+// retrieve the value from the struct and then check if it's matched to the
+// specified value. For example, for the following Struct: .. code-block:: yaml
+// fields: a: struct_value: fields: b: struct_value: fields: c: string_value:
+// pro t: list_value: values: - string_value: m - string_value: n The following
+// MetadataMatcher is matched as the path [a, b, c] will retrieve a string
+// value "pro" from the Metadata which is matched to the specified prefix
+// match. .. code-block:: yaml path: - key: a - key: b - key: c value:
+// string_match: prefix: pr The following StructMatcher is matched as the code
+// will match one of the string values in the list at the path [a, t]. ..
+// code-block:: yaml path: - key: a - key: t value: list_match: one_of:
+// string_match: exact: m An example use of StructMatcher is to match metadata
+// in envoy.v*.core.Node.
 type StructMatcher struct {
 	// Path: The path to retrieve the Value from the Struct.
 	Path []*PathSegment `json:"path,omitempty"`
-
 	// Value: The StructMatcher is matched if the value retrieved by path is
 	// matched to this value.
 	Value *ValueMatcher `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Path") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Path") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Path") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StructMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod StructMatcher
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TypedExtensionConfig: Message type for extension configuration.
 type TypedExtensionConfig struct {
-	// Name: The name of an extension. This is not used to select the
-	// extension, instead it serves the role of an opaque identifier.
+	// Name: The name of an extension. This is not used to select the extension,
+	// instead it serves the role of an opaque identifier.
 	Name string `json:"name,omitempty"`
-
-	// TypedConfig: The typed config for the extension. The type URL will be
-	// used to identify the extension. In the case that the type URL is
+	// TypedConfig: The typed config for the extension. The type URL will be used
+	// to identify the extension. In the case that the type URL is
 	// *xds.type.v3.TypedStruct* (or, for historical reasons,
-	// *udpa.type.v1.TypedStruct*), the inner type URL of *TypedStruct* will
-	// be utilized. See the :ref:`extension configuration overview ` for
-	// further details.
+	// *udpa.type.v1.TypedStruct*), the inner type URL of *TypedStruct* will be
+	// utilized. See the :ref:`extension configuration overview ` for further
+	// details.
 	TypedConfig googleapi.RawMessage `json:"typedConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TypedExtensionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TypedExtensionConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type UpdateFailureState struct {
 	// Details: Details about the last failed update attempt.
 	Details string `json:"details,omitempty"`
-
-	// FailedConfiguration: What the component configuration would have been
-	// if the update had succeeded. This field may not be populated by xDS
-	// clients due to storage overhead.
+	// FailedConfiguration: What the component configuration would have been if the
+	// update had succeeded. This field may not be populated by xDS clients due to
+	// storage overhead.
 	FailedConfiguration googleapi.RawMessage `json:"failedConfiguration,omitempty"`
-
 	// LastUpdateAttempt: Time of the latest failed update attempt.
 	LastUpdateAttempt string `json:"lastUpdateAttempt,omitempty"`
-
 	// VersionInfo: This is the version of the rejected resource.
 	// [#not-implemented-hide:]
 	VersionInfo string `json:"versionInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Details") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Details") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UpdateFailureState) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateFailureState
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ValueMatcher: Specifies the way to match a ProtobufWkt::Value.
-// Primitive values and ListValue are supported. StructValue is not
-// supported and is always not matched. [#next-free-field: 8]
+// ValueMatcher: Specifies the way to match a ProtobufWkt::Value. Primitive
+// values and ListValue are supported. StructValue is not supported and is
+// always not matched. [#next-free-field: 8]
 type ValueMatcher struct {
-	// BoolMatch: If specified, a match occurs if and only if the target
-	// value is a bool value and is equal to this field.
+	// BoolMatch: If specified, a match occurs if and only if the target value is a
+	// bool value and is equal to this field.
 	BoolMatch bool `json:"boolMatch,omitempty"`
-
-	// DoubleMatch: If specified, a match occurs if and only if the target
-	// value is a double value and is matched to this field.
+	// DoubleMatch: If specified, a match occurs if and only if the target value is
+	// a double value and is matched to this field.
 	DoubleMatch *DoubleMatcher `json:"doubleMatch,omitempty"`
-
-	// ListMatch: If specified, a match occurs if and only if the target
-	// value is a list value and is matched to this field.
+	// ListMatch: If specified, a match occurs if and only if the target value is a
+	// list value and is matched to this field.
 	ListMatch *ListMatcher `json:"listMatch,omitempty"`
-
-	// NullMatch: If specified, a match occurs if and only if the target
-	// value is a NullValue.
+	// NullMatch: If specified, a match occurs if and only if the target value is a
+	// NullValue.
 	NullMatch *NullMatch `json:"nullMatch,omitempty"`
-
-	// OrMatch: If specified, a match occurs if and only if any of the
-	// alternatives in the match accept the value.
+	// OrMatch: If specified, a match occurs if and only if any of the alternatives
+	// in the match accept the value.
 	OrMatch *OrMatcher `json:"orMatch,omitempty"`
-
-	// PresentMatch: If specified, value match will be performed based on
-	// whether the path is referring to a valid primitive value in the
-	// metadata. If the path is referring to a non-primitive value, the
-	// result is always not matched.
+	// PresentMatch: If specified, value match will be performed based on whether
+	// the path is referring to a valid primitive value in the metadata. If the
+	// path is referring to a non-primitive value, the result is always not
+	// matched.
 	PresentMatch bool `json:"presentMatch,omitempty"`
-
-	// StringMatch: If specified, a match occurs if and only if the target
-	// value is a string value and is matched to this field.
+	// StringMatch: If specified, a match occurs if and only if the target value is
+	// a string value and is matched to this field.
 	StringMatch *StringMatcher `json:"stringMatch,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BoolMatch") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BoolMatch") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BoolMatch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ValueMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod ValueMatcher
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "trafficdirector.discovery.client_status":
 
 type DiscoveryClientStatusCall struct {
 	s                   *Service
@@ -2180,23 +1752,21 @@ func (r *DiscoveryService) ClientStatus(clientstatusrequest *ClientStatusRequest
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DiscoveryClientStatusCall) Fields(s ...googleapi.Field) *DiscoveryClientStatusCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DiscoveryClientStatusCall) Context(ctx context.Context) *DiscoveryClientStatusCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DiscoveryClientStatusCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2205,18 +1775,12 @@ func (c *DiscoveryClientStatusCall) Header() http.Header {
 }
 
 func (c *DiscoveryClientStatusCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clientstatusrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/discovery:client_status")
@@ -2230,12 +1794,11 @@ func (c *DiscoveryClientStatusCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "trafficdirector.discovery.client_status" call.
-// Exactly one of *ClientStatusResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ClientStatusResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ClientStatusResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *DiscoveryClientStatusCall) Do(opts ...googleapi.CallOption) (*ClientStatusResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2266,23 +1829,4 @@ func (c *DiscoveryClientStatusCall) Do(opts ...googleapi.CallOption) (*ClientSta
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "",
-	//   "flatPath": "v3/discovery:client_status",
-	//   "httpMethod": "POST",
-	//   "id": "trafficdirector.discovery.client_status",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v3/discovery:client_status",
-	//   "request": {
-	//     "$ref": "ClientStatusRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ClientStatusResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

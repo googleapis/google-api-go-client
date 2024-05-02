@@ -104,8 +104,8 @@ const (
 	// Browsers managed within your organization
 	ChromeManagementPolicyScope = "https://www.googleapis.com/auth/chrome.management.policy"
 
-	// See policies applied to Chrome OS and Chrome Browsers managed within
-	// your organization
+	// See policies applied to Chrome OS and Chrome Browsers managed within your
+	// organization
 	ChromeManagementPolicyReadonlyScope = "https://www.googleapis.com/auth/chrome.management.policy.readonly"
 )
 
@@ -245,305 +245,240 @@ type MediaService struct {
 	s *Service
 }
 
-// GoogleChromePolicyVersionsV1AdditionalTargetKeyName: Additional key
-// names that will be used to identify the target of the policy value.
+// GoogleChromePolicyVersionsV1AdditionalTargetKeyName: Additional key names
+// that will be used to identify the target of the policy value.
 type GoogleChromePolicyVersionsV1AdditionalTargetKeyName struct {
 	// Key: Key name.
 	Key string `json:"key,omitempty"`
-
 	// KeyDescription: Key description.
 	KeyDescription string `json:"keyDescription,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1AdditionalTargetKeyName) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1AdditionalTargetKeyName
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest: Request
-// message for specifying that multiple policy values will be deleted.
+// GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest: Request message
+// for specifying that multiple policy values will be deleted.
 type GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest struct {
 	// Requests: List of policies that will be deleted as defined by the
-	// `requests`. All requests in the list must follow these restrictions:
-	// 1. All schemas in the list must have the same root namespace. 2. All
-	// `policyTargetKey.targetResource` values must point to a group
-	// resource. 3. All `policyTargetKey` values must have the same `app_id`
-	// key name in the `additionalTargetKeys`. 4. No two modification
-	// requests can reference the same `policySchema` + ` policyTargetKey`
-	// pair.
+	// `requests`. All requests in the list must follow these restrictions: 1. All
+	// schemas in the list must have the same root namespace. 2. All
+	// `policyTargetKey.targetResource` values must point to a group resource. 3.
+	// All `policyTargetKey` values must have the same `app_id` key name in the
+	// `additionalTargetKeys`. 4. No two modification requests can reference the
+	// same `policySchema` + ` policyTargetKey` pair.
 	Requests []*GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest `json:"requests,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Requests") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest:
-// Request message for specifying that multiple policy values inherit
-// their value from their parents.
+// GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest: Request
+// message for specifying that multiple policy values inherit their value from
+// their parents.
 type GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest struct {
-	// Requests: List of policies that have to inherit their values as
-	// defined by the `requests`. All requests in the list must follow these
-	// restrictions: 1. All schemas in the list must have the same root
-	// namespace. 2. All `policyTargetKey.targetResource` values must point
-	// to an org unit resource. 3. All `policyTargetKey` values must have
-	// the same key names in the ` additionalTargetKeys`. This also means if
-	// one of the targets has an empty `additionalTargetKeys` map, all of
-	// the targets must have an empty `additionalTargetKeys` map. 4. No two
-	// modification requests can reference the same `policySchema` + `
-	// policyTargetKey` pair.
+	// Requests: List of policies that have to inherit their values as defined by
+	// the `requests`. All requests in the list must follow these restrictions: 1.
+	// All schemas in the list must have the same root namespace. 2. All
+	// `policyTargetKey.targetResource` values must point to an org unit resource.
+	// 3. All `policyTargetKey` values must have the same key names in the `
+	// additionalTargetKeys`. This also means if one of the targets has an empty
+	// `additionalTargetKeys` map, all of the targets must have an empty
+	// `additionalTargetKeys` map. 4. No two modification requests can reference
+	// the same `policySchema` + ` policyTargetKey` pair.
 	Requests []*GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest `json:"requests,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Requests") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest: Request
-// message for modifying multiple policy values for a specific
-// group-based target.
+// GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest: Request message
+// for modifying multiple policy values for a specific group-based target.
 type GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest struct {
-	// Requests: List of policies to modify as defined by the `requests`.
-	// All requests in the list must follow these restrictions: 1. All
-	// schemas in the list must have the same root namespace. 2. All
-	// `policyTargetKey.targetResource` values must point to a group
-	// resource. 3. All `policyTargetKey` values must have the same `app_id`
-	// key name in the `additionalTargetKeys`. 4. No two modification
-	// requests can reference the same `policySchema` + ` policyTargetKey`
-	// pair.
+	// Requests: List of policies to modify as defined by the `requests`. All
+	// requests in the list must follow these restrictions: 1. All schemas in the
+	// list must have the same root namespace. 2. All
+	// `policyTargetKey.targetResource` values must point to a group resource. 3.
+	// All `policyTargetKey` values must have the same `app_id` key name in the
+	// `additionalTargetKeys`. 4. No two modification requests can reference the
+	// same `policySchema` + ` policyTargetKey` pair.
 	Requests []*GoogleChromePolicyVersionsV1ModifyGroupPolicyRequest `json:"requests,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Requests") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest:
-// Request message for modifying multiple policy values for a specific
-// target.
+// GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest: Request
+// message for modifying multiple policy values for a specific target.
 type GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest struct {
-	// Requests: List of policies to modify as defined by the `requests`.
-	// All requests in the list must follow these restrictions: 1. All
-	// schemas in the list must have the same root namespace. 2. All
-	// `policyTargetKey.targetResource` values must point to an org unit
-	// resource. 3. All `policyTargetKey` values must have the same key
-	// names in the ` additionalTargetKeys`. This also means if one of the
-	// targets has an empty `additionalTargetKeys` map, all of the targets
-	// must have an empty `additionalTargetKeys` map. 4. No two modification
-	// requests can reference the same `policySchema` + ` policyTargetKey`
-	// pair.
+	// Requests: List of policies to modify as defined by the `requests`. All
+	// requests in the list must follow these restrictions: 1. All schemas in the
+	// list must have the same root namespace. 2. All
+	// `policyTargetKey.targetResource` values must point to an org unit resource.
+	// 3. All `policyTargetKey` values must have the same key names in the `
+	// additionalTargetKeys`. This also means if one of the targets has an empty
+	// `additionalTargetKeys` map, all of the targets must have an empty
+	// `additionalTargetKeys` map. 4. No two modification requests can reference
+	// the same `policySchema` + ` policyTargetKey` pair.
 	Requests []*GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest `json:"requests,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Requests") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1CertificateReference: Error information
-// for removing of a specific certificate on a specific target. A
-// reference to a certificate.
+// GoogleChromePolicyVersionsV1CertificateReference: Error information for
+// removing of a specific certificate on a specific target. A reference to a
+// certificate.
 type GoogleChromePolicyVersionsV1CertificateReference struct {
 	// Network: Output only. The name of the referencing network.
 	Network string `json:"network,omitempty"`
-
-	// OrgUnitId: Output only. The obfuscated id of the org unit the
-	// referencing network is in.
+	// OrgUnitId: Output only. The obfuscated id of the org unit the referencing
+	// network is in.
 	OrgUnitId string `json:"orgUnitId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Network") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Network") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Network") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Network") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1CertificateReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1CertificateReference
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1DefineCertificateRequest: Request object
-// for creating a certificate.
+// GoogleChromePolicyVersionsV1DefineCertificateRequest: Request object for
+// creating a certificate.
 type GoogleChromePolicyVersionsV1DefineCertificateRequest struct {
-	// CeritificateName: Optional. The optional name of the certificate. If
-	// not specified, the certificate issuer will be used as the name.
+	// CeritificateName: Optional. The optional name of the certificate. If not
+	// specified, the certificate issuer will be used as the name.
 	CeritificateName string `json:"ceritificateName,omitempty"`
-
-	// Certificate: Required. The raw contents of the .PEM, .CRT, or .CER
-	// file.
+	// Certificate: Required. The raw contents of the .PEM, .CRT, or .CER file.
 	Certificate string `json:"certificate,omitempty"`
-
 	// Settings: Optional. Certificate settings within the
 	// chrome.networks.certificates namespace.
 	Settings []*GoogleChromePolicyVersionsV1NetworkSetting `json:"settings,omitempty"`
-
-	// TargetResource: Required. The target resource on which this
-	// certificate is applied. The following resources are supported: *
-	// Organizational Unit ("orgunits/{orgunit_id}")
+	// TargetResource: Required. The target resource on which this certificate is
+	// applied. The following resources are supported: * Organizational Unit
+	// ("orgunits/{orgunit_id}")
 	TargetResource string `json:"targetResource,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CeritificateName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CeritificateName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CeritificateName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1DefineCertificateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1DefineCertificateRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1DefineCertificateResponse: Response
-// object for creating a certificate.
+// GoogleChromePolicyVersionsV1DefineCertificateResponse: Response object for
+// creating a certificate.
 type GoogleChromePolicyVersionsV1DefineCertificateResponse struct {
 	// NetworkId: The guid of the certificate created by the action.
 	NetworkId string `json:"networkId,omitempty"`
-
-	// Settings: the affiliated settings of the certificate (NOT
-	// IMPLEMENTED)
+	// Settings: the affiliated settings of the certificate (NOT IMPLEMENTED)
 	Settings []*GoogleChromePolicyVersionsV1NetworkSetting `json:"settings,omitempty"`
-
 	// TargetResource: the resource at which the certificate is defined.
 	TargetResource string `json:"targetResource,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NetworkId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NetworkId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NetworkId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1DefineCertificateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1DefineCertificateResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1DefineNetworkRequest: Request object for
@@ -551,182 +486,142 @@ func (s *GoogleChromePolicyVersionsV1DefineCertificateResponse) MarshalJSON() ([
 type GoogleChromePolicyVersionsV1DefineNetworkRequest struct {
 	// Name: Required. Name of the new created network.
 	Name string `json:"name,omitempty"`
-
 	// Settings: Required. Detailed network settings.
 	Settings []*GoogleChromePolicyVersionsV1NetworkSetting `json:"settings,omitempty"`
-
-	// TargetResource: Required. The target resource on which this new
-	// network will be defined. The following resources are supported: *
-	// Organizational Unit ("orgunits/{orgunit_id}")
+	// TargetResource: Required. The target resource on which this new network will
+	// be defined. The following resources are supported: * Organizational Unit
+	// ("orgunits/{orgunit_id}")
 	TargetResource string `json:"targetResource,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1DefineNetworkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1DefineNetworkRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1DefineNetworkResponse: Response object
-// for creating a network.
+// GoogleChromePolicyVersionsV1DefineNetworkResponse: Response object for
+// creating a network.
 type GoogleChromePolicyVersionsV1DefineNetworkResponse struct {
 	// NetworkId: Network ID of the new created network.
 	NetworkId string `json:"networkId,omitempty"`
-
 	// Settings: Detailed network settings of the new created network
 	Settings []*GoogleChromePolicyVersionsV1NetworkSetting `json:"settings,omitempty"`
-
 	// TargetResource: The target resource on which this new network will be
 	// defined. The following resources are supported: * Organizational Unit
 	// ("orgunits/{orgunit_id}")
 	TargetResource string `json:"targetResource,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NetworkId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NetworkId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NetworkId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1DefineNetworkResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1DefineNetworkResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest: Request
-// parameters for deleting the policy value of a specific group target.
+// GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest: Request parameters for
+// deleting the policy value of a specific group target.
 type GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest struct {
-	// PolicySchema: The fully qualified name of the policy schema that is
-	// being inherited.
+	// PolicySchema: The fully qualified name of the policy schema that is being
+	// inherited.
 	PolicySchema string `json:"policySchema,omitempty"`
-
-	// PolicyTargetKey: Required. The key of the target for which we want to
-	// modify a policy. The target resource must point to a Group.
+	// PolicyTargetKey: Required. The key of the target for which we want to modify
+	// a policy. The target resource must point to a Group.
 	PolicyTargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PolicySchema") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PolicySchema") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PolicySchema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1FieldConstraints: Information about any
-// range constraints.
+// GoogleChromePolicyVersionsV1FieldConstraints: Information about any range
+// constraints.
 type GoogleChromePolicyVersionsV1FieldConstraints struct {
 	// NumericRangeConstraint: The allowed range for numeric fields.
 	NumericRangeConstraint *GoogleChromePolicyVersionsV1NumericRangeConstraint `json:"numericRangeConstraint,omitempty"`
-
-	// UploadedFileConstraints: Constraints on the uploaded file of a file
-	// policy. If present, this policy requires a URL that can be fetched by
-	// uploading a file with the constraints specified in this proto.
+	// UploadedFileConstraints: Constraints on the uploaded file of a file policy.
+	// If present, this policy requires a URL that can be fetched by uploading a
+	// file with the constraints specified in this proto.
 	UploadedFileConstraints *GoogleChromePolicyVersionsV1UploadedFileConstraints `json:"uploadedFileConstraints,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "NumericRangeConstraint") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "NumericRangeConstraint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NumericRangeConstraint")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "NumericRangeConstraint") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1FieldConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1FieldConstraints
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest: Request
-// parameters for inheriting policy value of a specific org unit target
-// from the policy value of its parent org unit.
+// GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest: Request parameters
+// for inheriting policy value of a specific org unit target from the policy
+// value of its parent org unit.
 type GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest struct {
-	// PolicySchema: The fully qualified name of the policy schema that is
-	// being inherited.
+	// PolicySchema: The fully qualified name of the policy schema that is being
+	// inherited.
 	PolicySchema string `json:"policySchema,omitempty"`
-
-	// PolicyTargetKey: Required. The key of the target for which we want to
-	// modify a policy. The target resource must point to an Org Unit.
+	// PolicyTargetKey: Required. The key of the target for which we want to modify
+	// a policy. The target resource must point to an Org Unit.
 	PolicyTargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PolicySchema") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PolicySchema") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PolicySchema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest: Request
@@ -734,501 +629,379 @@ func (s *GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest) MarshalJSON() 
 type GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest struct {
 	// PolicyNamespace: The namespace of the policy type for the request.
 	PolicyNamespace string `json:"policyNamespace,omitempty"`
-
 	// PolicySchema: The schema name of the policy for the request.
 	PolicySchema string `json:"policySchema,omitempty"`
-
 	// PolicyTargetKey: Required. The key of the target for which we want to
-	// retrieve the group priority ordering. The target resource must point
-	// to an app.
+	// retrieve the group priority ordering. The target resource must point to an
+	// app.
 	PolicyTargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PolicyNamespace") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PolicyNamespace") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PolicyNamespace") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse:
-// Response message for listing the group priority ordering of an app.
+// GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse: Response
+// message for listing the group priority ordering of an app.
 type GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse struct {
 	// GroupIds: Output only. The group IDs, in priority ordering.
 	GroupIds []string `json:"groupIds,omitempty"`
-
-	// PolicyNamespace: Output only. The namespace of the policy type of the
-	// group IDs.
+	// PolicyNamespace: Output only. The namespace of the policy type of the group
+	// IDs.
 	PolicyNamespace string `json:"policyNamespace,omitempty"`
-
-	// PolicySchema: Output only. The schema name of the policy for the
-	// group IDs.
+	// PolicySchema: Output only. The schema name of the policy for the group IDs.
 	PolicySchema string `json:"policySchema,omitempty"`
-
 	// PolicyTargetKey: Output only. The target resource for which the group
 	// priority ordering has been retrieved.
 	PolicyTargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "GroupIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GroupIds") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GroupIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1ListPolicySchemasResponse: Response
-// message for listing policy schemas that match a filter.
+// GoogleChromePolicyVersionsV1ListPolicySchemasResponse: Response message for
+// listing policy schemas that match a filter.
 type GoogleChromePolicyVersionsV1ListPolicySchemasResponse struct {
-	// NextPageToken: The page token used to get the next page of policy
-	// schemas.
+	// NextPageToken: The page token used to get the next page of policy schemas.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// PolicySchemas: The list of policy schemas that match the query.
 	PolicySchemas []*GoogleChromePolicyVersionsV1PolicySchema `json:"policySchemas,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1ListPolicySchemasResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ListPolicySchemasResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1ModifyGroupPolicyRequest: Request
-// parameters for modifying a policy value for a specific group target.
+// GoogleChromePolicyVersionsV1ModifyGroupPolicyRequest: Request parameters for
+// modifying a policy value for a specific group target.
 type GoogleChromePolicyVersionsV1ModifyGroupPolicyRequest struct {
-	// PolicyTargetKey: Required. The key of the target for which we want to
-	// modify a policy. The target resource must point to a Group.
+	// PolicyTargetKey: Required. The key of the target for which we want to modify
+	// a policy. The target resource must point to a Group.
 	PolicyTargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
-
 	// PolicyValue: The new value for the policy.
 	PolicyValue *GoogleChromePolicyVersionsV1PolicyValue `json:"policyValue,omitempty"`
-
-	// UpdateMask: Required. Policy fields to update. Only fields in this
-	// mask will be updated; other fields in `policy_value` will be ignored
-	// (even if they have values). If a field is in this list it must have a
-	// value in 'policy_value'.
+	// UpdateMask: Required. Policy fields to update. Only fields in this mask will
+	// be updated; other fields in `policy_value` will be ignored (even if they
+	// have values). If a field is in this list it must have a value in
+	// 'policy_value'.
 	UpdateMask string `json:"updateMask,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PolicyTargetKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PolicyTargetKey") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PolicyTargetKey") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1ModifyGroupPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ModifyGroupPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest: Request
-// parameters for modifying a policy value for a specific org unit
-// target.
+// GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest: Request parameters
+// for modifying a policy value for a specific org unit target.
 type GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest struct {
-	// PolicyTargetKey: Required. The key of the target for which we want to
-	// modify a policy. The target resource must point to an Org Unit.
+	// PolicyTargetKey: Required. The key of the target for which we want to modify
+	// a policy. The target resource must point to an Org Unit.
 	PolicyTargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
-
 	// PolicyValue: The new value for the policy.
 	PolicyValue *GoogleChromePolicyVersionsV1PolicyValue `json:"policyValue,omitempty"`
-
-	// UpdateMask: Required. Policy fields to update. Only fields in this
-	// mask will be updated; other fields in `policy_value` will be ignored
-	// (even if they have values). If a field is in this list it must have a
-	// value in 'policy_value'.
+	// UpdateMask: Required. Policy fields to update. Only fields in this mask will
+	// be updated; other fields in `policy_value` will be ignored (even if they
+	// have values). If a field is in this list it must have a value in
+	// 'policy_value'.
 	UpdateMask string `json:"updateMask,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PolicyTargetKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PolicyTargetKey") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PolicyTargetKey") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ModifyOrgUnitPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1NetworkSetting: A network setting
-// contains network configurations.
+// GoogleChromePolicyVersionsV1NetworkSetting: A network setting contains
+// network configurations.
 type GoogleChromePolicyVersionsV1NetworkSetting struct {
 	// PolicySchema: The fully qualified name of the network setting.
 	PolicySchema string `json:"policySchema,omitempty"`
-
 	// Value: The value of the network setting.
 	Value googleapi.RawMessage `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PolicySchema") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PolicySchema") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PolicySchema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1NetworkSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1NetworkSetting
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1NumericRangeConstraint: A constraint on
-// upper and/or lower bounds, with at least one being set.
+// GoogleChromePolicyVersionsV1NumericRangeConstraint: A constraint on upper
+// and/or lower bounds, with at least one being set.
 type GoogleChromePolicyVersionsV1NumericRangeConstraint struct {
 	// Maximum: Maximum value.
 	Maximum int64 `json:"maximum,omitempty,string"`
-
 	// Minimum: Minimum value.
 	Minimum int64 `json:"minimum,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Maximum") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Maximum") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Maximum") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Maximum") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1NumericRangeConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1NumericRangeConstraint
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicyApiLifecycle: Lifecycle
-// information.
+// GoogleChromePolicyVersionsV1PolicyApiLifecycle: Lifecycle information.
 type GoogleChromePolicyVersionsV1PolicyApiLifecycle struct {
-	// DeprecatedInFavorOf: In the event that this policy was deprecated in
-	// favor of another policy, the fully qualified namespace(s) of the new
-	// policies as they will show in PolicyAPI. Could only be set if
-	// policy_api_lifecycle_stage is API_DEPRECATED.
+	// DeprecatedInFavorOf: In the event that this policy was deprecated in favor
+	// of another policy, the fully qualified namespace(s) of the new policies as
+	// they will show in PolicyAPI. Could only be set if policy_api_lifecycle_stage
+	// is API_DEPRECATED.
 	DeprecatedInFavorOf []string `json:"deprecatedInFavorOf,omitempty"`
-
 	// Description: Description about current life cycle.
 	Description string `json:"description,omitempty"`
-
-	// EndSupport: End supporting date for current policy. Attempting to
-	// modify a policy after its end support date will result in a Bad
-	// Request (400 error). Could only be set if policy_api_lifecycle_stage
-	// is API_DEPRECATED.
+	// EndSupport: End supporting date for current policy. Attempting to modify a
+	// policy after its end support date will result in a Bad Request (400 error).
+	// Could only be set if policy_api_lifecycle_stage is API_DEPRECATED.
 	EndSupport *GoogleTypeDate `json:"endSupport,omitempty"`
-
-	// PolicyApiLifecycleStage: Indicates current life cycle stage of the
-	// policy API.
+	// PolicyApiLifecycleStage: Indicates current life cycle stage of the policy
+	// API.
 	//
 	// Possible values:
 	//   "API_UNSPECIFIED" - Policy Api Lifecycle is Unspecified.
-	//   "API_PREVIEW" - Policy is not working yet, but giving developers
-	// heads up on format. This stage can transfer to API_DEVELOPEMNT or
-	// API_CURRENT.
-	//   "API_DEVELOPMENT" - Policy can change format in backward
-	// incompatible way (breaking change). This stage can transfer to
-	// API_CURRENT or API_DEPRECATED. This could be used for policies
-	// launched only to TTs or launched to selected customers for emergency
-	// usage.
-	//   "API_CURRENT" - Policy in official format. Policy can change format
-	// in backward compatible way (non-breaking change). Example: this
-	// policy can introduce a new field, which is considered non-breaking
-	// change, when field masks are properly utilized. This stage can
-	// transfer to API_DEPRECATED.
+	//   "API_PREVIEW" - Policy is not working yet, but giving developers heads up
+	// on format. This stage can transfer to API_DEVELOPEMNT or API_CURRENT.
+	//   "API_DEVELOPMENT" - Policy can change format in backward incompatible way
+	// (breaking change). This stage can transfer to API_CURRENT or API_DEPRECATED.
+	// This could be used for policies launched only to TTs or launched to selected
+	// customers for emergency usage.
+	//   "API_CURRENT" - Policy in official format. Policy can change format in
+	// backward compatible way (non-breaking change). Example: this policy can
+	// introduce a new field, which is considered non-breaking change, when field
+	// masks are properly utilized. This stage can transfer to API_DEPRECATED.
 	//   "API_DEPRECATED" - Please stop using this policy. This policy is
-	// deprecated and may/will be removed in the future. Most likely a new
-	// policy was introduced to replace this one.
+	// deprecated and may/will be removed in the future. Most likely a new policy
+	// was introduced to replace this one.
 	PolicyApiLifecycleStage string `json:"policyApiLifecycleStage,omitempty"`
-
-	// ScheduledToDeprecatePolicies: Corresponding to
-	// deprecated_in_favor_of, the fully qualified namespace(s) of the old
-	// policies that will be deprecated because of introduction of this
-	// policy. This field should not be manually set but will be set and
-	// exposed through PolicyAPI automatically.
+	// ScheduledToDeprecatePolicies: Corresponding to deprecated_in_favor_of, the
+	// fully qualified namespace(s) of the old policies that will be deprecated
+	// because of introduction of this policy. This field should not be manually
+	// set but will be set and exposed through PolicyAPI automatically.
 	ScheduledToDeprecatePolicies []string `json:"scheduledToDeprecatePolicies,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DeprecatedInFavorOf")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DeprecatedInFavorOf") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DeprecatedInFavorOf") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DeprecatedInFavorOf") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicyApiLifecycle) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyApiLifecycle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicyModificationError: Error
-// information for a modification request of a specific policy on a
-// specific target.
+// GoogleChromePolicyVersionsV1PolicyModificationError: Error information for a
+// modification request of a specific policy on a specific target.
 type GoogleChromePolicyVersionsV1PolicyModificationError struct {
-	// Errors: Output only. The non-field errors related to the
-	// modification.
+	// Errors: Output only. The non-field errors related to the modification.
 	Errors []string `json:"errors,omitempty"`
-
-	// FieldErrors: Output only. The error messages related to the
-	// modification.
+	// FieldErrors: Output only. The error messages related to the modification.
 	FieldErrors []*GoogleChromePolicyVersionsV1PolicyModificationFieldError `json:"fieldErrors,omitempty"`
-
-	// PolicySchema: Output only. The specific policy schema modification
-	// that had an error.
+	// PolicySchema: Output only. The specific policy schema modification that had
+	// an error.
 	PolicySchema string `json:"policySchema,omitempty"`
-
-	// PolicyTargetKey: Output only. The specific policy target modification
-	// that had error.
+	// PolicyTargetKey: Output only. The specific policy target modification that
+	// had error.
 	PolicyTargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Errors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Errors") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicyModificationError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyModificationError
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicyModificationErrorDetails: Details
-// of the errors encountered during a policy modification request. This
-// message will be returned as part of the details of a
-// google.rpc.Status returned to the user when there is an error in
-// their request.
+// GoogleChromePolicyVersionsV1PolicyModificationErrorDetails: Details of the
+// errors encountered during a policy modification request. This message will
+// be returned as part of the details of a google.rpc.Status returned to the
+// user when there is an error in their request.
 type GoogleChromePolicyVersionsV1PolicyModificationErrorDetails struct {
-	// ModificationErrors: Output only. List of specific policy
-	// modifications errors that may have occurred during a modifying
-	// request.
+	// ModificationErrors: Output only. List of specific policy modifications
+	// errors that may have occurred during a modifying request.
 	ModificationErrors []*GoogleChromePolicyVersionsV1PolicyModificationError `json:"modificationErrors,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ModificationErrors")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ModificationErrors") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ModificationErrors") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ModificationErrors") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicyModificationErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyModificationErrorDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicyModificationFieldError: Error
-// information for a modification request of a specific field on a
-// specific policy.
+// GoogleChromePolicyVersionsV1PolicyModificationFieldError: Error information
+// for a modification request of a specific field on a specific policy.
 type GoogleChromePolicyVersionsV1PolicyModificationFieldError struct {
 	// Error: Output only. The error message related to the field.
 	Error string `json:"error,omitempty"`
-
 	// Field: Output only. The name of the field with the error.
 	Field string `json:"field,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Error") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Error") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicyModificationFieldError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyModificationFieldError
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicySchema: Resource representing a
-// policy schema.
+// GoogleChromePolicyVersionsV1PolicySchema: Resource representing a policy
+// schema.
 type GoogleChromePolicyVersionsV1PolicySchema struct {
-	// AccessRestrictions: Output only. Specific access restrictions related
-	// to this policy.
+	// AccessRestrictions: Output only. Specific access restrictions related to
+	// this policy.
 	AccessRestrictions []string `json:"accessRestrictions,omitempty"`
-
-	// AdditionalTargetKeyNames: Output only. Additional key names that will
-	// be used to identify the target of the policy value. When specifying a
-	// `policyTargetKey`, each of the additional keys specified here will
-	// have to be included in the `additionalTargetKeys` map.
+	// AdditionalTargetKeyNames: Output only. Additional key names that will be
+	// used to identify the target of the policy value. When specifying a
+	// `policyTargetKey`, each of the additional keys specified here will have to
+	// be included in the `additionalTargetKeys` map.
 	AdditionalTargetKeyNames []*GoogleChromePolicyVersionsV1AdditionalTargetKeyName `json:"additionalTargetKeyNames,omitempty"`
-
 	// CategoryTitle: Title of the category in which a setting belongs.
 	CategoryTitle string `json:"categoryTitle,omitempty"`
-
 	// Definition: Schema definition using proto descriptor.
 	Definition *Proto2FileDescriptorProto `json:"definition,omitempty"`
-
-	// FieldDescriptions: Output only. Detailed description of each field
-	// that is part of the schema. Fields are suggested to be displayed by
-	// the ordering in this list, not by field number.
+	// FieldDescriptions: Output only. Detailed description of each field that is
+	// part of the schema. Fields are suggested to be displayed by the ordering in
+	// this list, not by field number.
 	FieldDescriptions []*GoogleChromePolicyVersionsV1PolicySchemaFieldDescription `json:"fieldDescriptions,omitempty"`
-
-	// Name: Format:
-	// name=customers/{customer}/policySchemas/{schema_namespace}
+	// Name: Format: name=customers/{customer}/policySchemas/{schema_namespace}
 	Name string `json:"name,omitempty"`
-
-	// Notices: Output only. Special notice messages related to setting
-	// certain values in certain fields in the schema.
+	// Notices: Output only. Special notice messages related to setting certain
+	// values in certain fields in the schema.
 	Notices []*GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription `json:"notices,omitempty"`
-
 	// PolicyApiLifecycle: Output only. Current lifecycle information.
 	PolicyApiLifecycle *GoogleChromePolicyVersionsV1PolicyApiLifecycle `json:"policyApiLifecycle,omitempty"`
-
-	// PolicyDescription: Output only. Description about the policy schema
-	// for user consumption.
+	// PolicyDescription: Output only. Description about the policy schema for user
+	// consumption.
 	PolicyDescription string `json:"policyDescription,omitempty"`
-
-	// SchemaName: Output only. The fully qualified name of the policy
-	// schema. This value is used to fill the field `policy_schema` in
-	// PolicyValue when calling BatchInheritOrgUnitPolicies
-	// BatchModifyOrgUnitPolicies BatchModifyGroupPolicies or
-	// BatchDeleteGroupPolicies.
+	// SchemaName: Output only. The fully qualified name of the policy schema. This
+	// value is used to fill the field `policy_schema` in PolicyValue when calling
+	// BatchInheritOrgUnitPolicies BatchModifyOrgUnitPolicies
+	// BatchModifyGroupPolicies or BatchDeleteGroupPolicies.
 	SchemaName string `json:"schemaName,omitempty"`
-
-	// SupportUri: Output only. URI to related support article for this
-	// schema.
+	// SupportUri: Output only. URI to related support article for this schema.
 	SupportUri string `json:"supportUri,omitempty"`
-
-	// SupportedPlatforms: Output only. List indicates that the policy will
-	// only apply to devices/users on these platforms.
+	// SupportedPlatforms: Output only. List indicates that the policy will only
+	// apply to devices/users on these platforms.
 	//
 	// Possible values:
 	//   "PLATFORM_UNSPECIFIED" - Unspecified platform.
@@ -1237,9 +1010,8 @@ type GoogleChromePolicyVersionsV1PolicySchema struct {
 	//   "CHROME_BROWSER_FOR_ANDROID" - Chrome Browser for Android.
 	//   "CHROME_BROWSER_FOR_IOS" - Chrome Browser for iOS.
 	SupportedPlatforms []string `json:"supportedPlatforms,omitempty"`
-
-	// ValidTargetResources: Output only. Information about applicable
-	// target resources for the policy.
+	// ValidTargetResources: Output only. Information about applicable target
+	// resources for the policy.
 	//
 	// Possible values:
 	//   "TARGET_RESOURCE_UNSPECIFIED" - Unspecified target resource.
@@ -1247,403 +1019,311 @@ type GoogleChromePolicyVersionsV1PolicySchema struct {
 	//   "GROUP" - Group target resource.
 	ValidTargetResources []string `json:"validTargetResources,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AccessRestrictions")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AccessRestrictions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccessRestrictions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AccessRestrictions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicySchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchema
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies: The field
-// and the value it must have for another field to be allowed to be set.
+// GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies: The field and the
+// value it must have for another field to be allowed to be set.
 type GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies struct {
 	// SourceField: The source field which this field depends on.
 	SourceField string `json:"sourceField,omitempty"`
-
-	// SourceFieldValue: The value which the source field must have for this
-	// field to be allowed to be set.
+	// SourceFieldValue: The value which the source field must have for this field
+	// to be allowed to be set.
 	SourceFieldValue string `json:"sourceFieldValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SourceField") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SourceField") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SourceField") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicySchemaFieldDescription: Provides
-// detailed information for a particular field that is part of a
-// PolicySchema.
+// GoogleChromePolicyVersionsV1PolicySchemaFieldDescription: Provides detailed
+// information for a particular field that is part of a PolicySchema.
 type GoogleChromePolicyVersionsV1PolicySchemaFieldDescription struct {
 	// DefaultValue: Output only. Client default if the policy is unset.
 	DefaultValue interface{} `json:"defaultValue,omitempty"`
-
 	// Description: Deprecated. Use name and field_description instead. The
 	// description for the field.
 	Description string `json:"description,omitempty"`
-
 	// Field: Output only. The name of the field for associated with this
 	// description.
 	Field string `json:"field,omitempty"`
-
 	// FieldConstraints: Output only. Information on any input constraints
 	// associated on the values for the field.
 	FieldConstraints *GoogleChromePolicyVersionsV1FieldConstraints `json:"fieldConstraints,omitempty"`
-
-	// FieldDependencies: Output only. Provides a list of fields and values.
-	// At least one of the fields must have the corresponding value in order
-	// for this field to be allowed to be set.
+	// FieldDependencies: Output only. Provides a list of fields and values. At
+	// least one of the fields must have the corresponding value in order for this
+	// field to be allowed to be set.
 	FieldDependencies []*GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies `json:"fieldDependencies,omitempty"`
-
 	// FieldDescription: Output only. The description of the field.
 	FieldDescription string `json:"fieldDescription,omitempty"`
-
-	// InputConstraint: Output only. Any input constraints associated on the
-	// values for the field.
+	// InputConstraint: Output only. Any input constraints associated on the values
+	// for the field.
 	InputConstraint string `json:"inputConstraint,omitempty"`
-
-	// KnownValueDescriptions: Output only. If the field has a set of known
-	// values, this field will provide a description for these values.
+	// KnownValueDescriptions: Output only. If the field has a set of known values,
+	// this field will provide a description for these values.
 	KnownValueDescriptions []*GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription `json:"knownValueDescriptions,omitempty"`
-
 	// Name: Output only. The name of the field.
 	Name string `json:"name,omitempty"`
-
-	// NestedFieldDescriptions: Output only. Provides the description of the
-	// fields nested in this field, if the field is a message type that
-	// defines multiple fields. Fields are suggested to be displayed by the
-	// ordering in this list, not by field number.
+	// NestedFieldDescriptions: Output only. Provides the description of the fields
+	// nested in this field, if the field is a message type that defines multiple
+	// fields. Fields are suggested to be displayed by the ordering in this list,
+	// not by field number.
 	NestedFieldDescriptions []*GoogleChromePolicyVersionsV1PolicySchemaFieldDescription `json:"nestedFieldDescriptions,omitempty"`
-
-	// RequiredItems: Output only. Provides a list of fields that are
-	// required to be set if this field has a certain value.
+	// RequiredItems: Output only. Provides a list of fields that are required to
+	// be set if this field has a certain value.
 	RequiredItems []*GoogleChromePolicyVersionsV1PolicySchemaRequiredItems `json:"requiredItems,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DefaultValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DefaultValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicySchemaFieldDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchemaFieldDescription
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription:
-// Provides detailed information about a known value that is allowed for
-// a particular field in a PolicySchema.
+// GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription: Provides
+// detailed information about a known value that is allowed for a particular
+// field in a PolicySchema.
 type GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription struct {
 	// Description: Output only. Additional description for this value.
 	Description string `json:"description,omitempty"`
-
-	// FieldDependencies: Output only. Field conditions required for this
-	// value to be valid.
+	// FieldDependencies: Output only. Field conditions required for this value to
+	// be valid.
 	FieldDependencies []*GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies `json:"fieldDependencies,omitempty"`
-
-	// Value: Output only. The string represenstation of the value that can
-	// be set for the field.
+	// Value: Output only. The string represenstation of the value that can be set
+	// for the field.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription: Provides
-// special notice messages related to a particular value in a field that
-// is part of a PolicySchema.
+// GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription: Provides special
+// notice messages related to a particular value in a field that is part of a
+// PolicySchema.
 type GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription struct {
-	// AcknowledgementRequired: Output only. Whether the user needs to
-	// acknowledge the notice message before the value can be set.
+	// AcknowledgementRequired: Output only. Whether the user needs to acknowledge
+	// the notice message before the value can be set.
 	AcknowledgementRequired bool `json:"acknowledgementRequired,omitempty"`
-
 	// Field: Output only. The field name associated with the notice.
 	Field string `json:"field,omitempty"`
-
-	// NoticeMessage: Output only. The notice message associate with the
-	// value of the field.
+	// NoticeMessage: Output only. The notice message associate with the value of
+	// the field.
 	NoticeMessage string `json:"noticeMessage,omitempty"`
-
-	// NoticeValue: Output only. The value of the field that has a notice.
-	// When setting the field to this value, the user may be required to
-	// acknowledge the notice message in order for the value to be set.
+	// NoticeValue: Output only. The value of the field that has a notice. When
+	// setting the field to this value, the user may be required to acknowledge the
+	// notice message in order for the value to be set.
 	NoticeValue string `json:"noticeValue,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AcknowledgementRequired") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AcknowledgementRequired") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AcknowledgementRequired")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AcknowledgementRequired") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicySchemaRequiredItems: The fields
-// that will become required based on the value of this field.
+// GoogleChromePolicyVersionsV1PolicySchemaRequiredItems: The fields that will
+// become required based on the value of this field.
 type GoogleChromePolicyVersionsV1PolicySchemaRequiredItems struct {
-	// FieldConditions: The value(s) of the field that provoke required
-	// field enforcement. An empty field_conditions implies that any value
-	// assigned to this field will provoke required field enforcement.
+	// FieldConditions: The value(s) of the field that provoke required field
+	// enforcement. An empty field_conditions implies that any value assigned to
+	// this field will provoke required field enforcement.
 	FieldConditions []string `json:"fieldConditions,omitempty"`
-
-	// RequiredFields: The fields that are required as a consequence of the
-	// field conditions.
+	// RequiredFields: The fields that are required as a consequence of the field
+	// conditions.
 	RequiredFields []string `json:"requiredFields,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FieldConditions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FieldConditions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FieldConditions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicySchemaRequiredItems) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicySchemaRequiredItems
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicyTargetKey: The key used to identify
-// the target on which the policy will be applied.
+// GoogleChromePolicyVersionsV1PolicyTargetKey: The key used to identify the
+// target on which the policy will be applied.
 type GoogleChromePolicyVersionsV1PolicyTargetKey struct {
-	// AdditionalTargetKeys: Map containing the additional target key name
-	// and value pairs used to further identify the target of the policy.
+	// AdditionalTargetKeys: Map containing the additional target key name and
+	// value pairs used to further identify the target of the policy.
 	AdditionalTargetKeys map[string]string `json:"additionalTargetKeys,omitempty"`
-
-	// TargetResource: The target resource on which this policy is applied.
-	// The following resources are supported: * Organizational Unit
+	// TargetResource: The target resource on which this policy is applied. The
+	// following resources are supported: * Organizational Unit
 	// ("orgunits/{orgunit_id}") * Group ("groups/{group_id}")
 	TargetResource string `json:"targetResource,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdditionalTargetKeys") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdditionalTargetKeys") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdditionalTargetKeys") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdditionalTargetKeys") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicyTargetKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyTargetKey
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1PolicyValue: A particular value for a
-// policy managed by the service.
+// GoogleChromePolicyVersionsV1PolicyValue: A particular value for a policy
+// managed by the service.
 type GoogleChromePolicyVersionsV1PolicyValue struct {
-	// PolicySchema: The fully qualified name of the policy schema
-	// associated with this policy.
+	// PolicySchema: The fully qualified name of the policy schema associated with
+	// this policy.
 	PolicySchema string `json:"policySchema,omitempty"`
-
-	// Value: The value of the policy that is compatible with the schema
-	// that it is associated with.
+	// Value: The value of the policy that is compatible with the schema that it is
+	// associated with.
 	Value googleapi.RawMessage `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PolicySchema") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PolicySchema") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PolicySchema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1PolicyValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails: Details of
-// the errors encountered during a remove certificate request. This
-// message will be returned as part of the details of a
-// google.rpc.Status returned to the user when there is an error in
-// their request.
+// GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails: Details of the
+// errors encountered during a remove certificate request. This message will be
+// returned as part of the details of a google.rpc.Status returned to the user
+// when there is an error in their request.
 type GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails struct {
-	// CertificateReferences: Output only. If the certificate was not
-	// removed, a list of references to the certificate that prevented it
-	// from being removed. Only unreferenced certificates can be removed.
+	// CertificateReferences: Output only. If the certificate was not removed, a
+	// list of references to the certificate that prevented it from being removed.
+	// Only unreferenced certificates can be removed.
 	CertificateReferences []*GoogleChromePolicyVersionsV1CertificateReference `json:"certificateReferences,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CertificateReferences") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CertificateReferences") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "CertificateReferences") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1RemoveCertificateRequest: Request object
-// for removing a certificate.
+// GoogleChromePolicyVersionsV1RemoveCertificateRequest: Request object for
+// removing a certificate.
 type GoogleChromePolicyVersionsV1RemoveCertificateRequest struct {
 	// NetworkId: Required. The GUID of the certificate to remove.
 	NetworkId string `json:"networkId,omitempty"`
-
-	// TargetResource: Required. The target resource on which this
-	// certificate will be removed. The following resources are supported: *
-	// Organizational Unit ("orgunits/{orgunit_id}")
+	// TargetResource: Required. The target resource on which this certificate will
+	// be removed. The following resources are supported: * Organizational Unit
+	// ("orgunits/{orgunit_id}")
 	TargetResource string `json:"targetResource,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "NetworkId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NetworkId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NetworkId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1RemoveCertificateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1RemoveCertificateRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1RemoveCertificateResponse: Response
-// object for removing a certificate.
+// GoogleChromePolicyVersionsV1RemoveCertificateResponse: Response object for
+// removing a certificate.
 type GoogleChromePolicyVersionsV1RemoveCertificateResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
@@ -1652,292 +1332,230 @@ type GoogleChromePolicyVersionsV1RemoveCertificateResponse struct {
 type GoogleChromePolicyVersionsV1RemoveNetworkRequest struct {
 	// NetworkId: Required. The GUID of the network to remove.
 	NetworkId string `json:"networkId,omitempty"`
-
-	// TargetResource: Required. The target resource on which this network
-	// will be removed. The following resources are supported: *
-	// Organizational Unit ("orgunits/{orgunit_id}")
+	// TargetResource: Required. The target resource on which this network will be
+	// removed. The following resources are supported: * Organizational Unit
+	// ("orgunits/{orgunit_id}")
 	TargetResource string `json:"targetResource,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "NetworkId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NetworkId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NetworkId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1RemoveNetworkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1RemoveNetworkRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1RemoveNetworkResponse: Response object
-// for removing a network.
+// GoogleChromePolicyVersionsV1RemoveNetworkResponse: Response object for
+// removing a network.
 type GoogleChromePolicyVersionsV1RemoveNetworkResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleChromePolicyVersionsV1ResolveRequest: Request message for
-// getting the resolved policy value for a specific target.
+// GoogleChromePolicyVersionsV1ResolveRequest: Request message for getting the
+// resolved policy value for a specific target.
 type GoogleChromePolicyVersionsV1ResolveRequest struct {
-	// PageSize: The maximum number of policies to return, defaults to 100
-	// and has a maximum of 1000.
+	// PageSize: The maximum number of policies to return, defaults to 100 and has
+	// a maximum of 1000.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: The page token used to retrieve a specific page of the
-	// request.
+	// PageToken: The page token used to retrieve a specific page of the request.
 	PageToken string `json:"pageToken,omitempty"`
-
-	// PolicySchemaFilter: Required. The schema filter to apply to the
-	// resolve request. Specify a schema name to view a particular schema,
-	// for example: chrome.users.ShowLogoutButton Wildcards are supported,
-	// but only in the leaf portion of the schema name. Wildcards cannot be
-	// used in namespace directly. Please read
+	// PolicySchemaFilter: Required. The schema filter to apply to the resolve
+	// request. Specify a schema name to view a particular schema, for example:
+	// chrome.users.ShowLogoutButton Wildcards are supported, but only in the leaf
+	// portion of the schema name. Wildcards cannot be used in namespace directly.
+	// Please read
 	// https://developers.google.com/chrome/policy/guides/policy-schemas for
 	// details on schema namespaces. For example: Valid: "chrome.users.*",
 	// "chrome.users.apps.*", "chrome.printers.*" Invalid: "*", "*.users",
 	// "chrome.*", "chrome.*.apps.*"
 	PolicySchemaFilter string `json:"policySchemaFilter,omitempty"`
-
-	// PolicyTargetKey: Required. The key of the target resource on which
-	// the policies should be resolved.
+	// PolicyTargetKey: Required. The key of the target resource on which the
+	// policies should be resolved.
 	PolicyTargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PageSize") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PageSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1ResolveRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ResolveRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1ResolveResponse: Response message for
-// getting the resolved policy value for a specific target.
+// GoogleChromePolicyVersionsV1ResolveResponse: Response message for getting
+// the resolved policy value for a specific target.
 type GoogleChromePolicyVersionsV1ResolveResponse struct {
-	// NextPageToken: The page token used to get the next set of resolved
-	// policies found by the request.
+	// NextPageToken: The page token used to get the next set of resolved policies
+	// found by the request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// ResolvedPolicies: The list of resolved policies found by the resolve
 	// request.
 	ResolvedPolicies []*GoogleChromePolicyVersionsV1ResolvedPolicy `json:"resolvedPolicies,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1ResolveResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ResolveResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1ResolvedPolicy: The resolved value of a
-// policy for a given target.
+// GoogleChromePolicyVersionsV1ResolvedPolicy: The resolved value of a policy
+// for a given target.
 type GoogleChromePolicyVersionsV1ResolvedPolicy struct {
-	// AddedSourceKey: Output only. The added source key establishes at
-	// which level an entity was explicitly added for management. This is
-	// useful for certain type of policies that are only applied if they are
-	// explicitly added for management. For example: apps and networks. An
-	// entity can only be deleted from management in an Organizational Unit
-	// that it was explicitly added to. If this is not present it means that
-	// the policy is managed without the need to explicitly add an entity,
-	// for example: standard user or device policies.
+	// AddedSourceKey: Output only. The added source key establishes at which level
+	// an entity was explicitly added for management. This is useful for certain
+	// type of policies that are only applied if they are explicitly added for
+	// management. For example: apps and networks. An entity can only be deleted
+	// from management in an Organizational Unit that it was explicitly added to.
+	// If this is not present it means that the policy is managed without the need
+	// to explicitly add an entity, for example: standard user or device policies.
 	AddedSourceKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"addedSourceKey,omitempty"`
-
-	// SourceKey: Output only. The source resource from which this policy
-	// value is obtained. May be the same as `targetKey` if the policy is
-	// directly modified on the target, otherwise it would be another
-	// resource from which the policy gets its value (if applicable). If not
-	// present, the source is the default value for the customer.
+	// SourceKey: Output only. The source resource from which this policy value is
+	// obtained. May be the same as `targetKey` if the policy is directly modified
+	// on the target, otherwise it would be another resource from which the policy
+	// gets its value (if applicable). If not present, the source is the default
+	// value for the customer.
 	SourceKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"sourceKey,omitempty"`
-
-	// TargetKey: Output only. The target resource for which the resolved
-	// policy value applies.
+	// TargetKey: Output only. The target resource for which the resolved policy
+	// value applies.
 	TargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"targetKey,omitempty"`
-
 	// Value: Output only. The resolved value of the policy.
 	Value *GoogleChromePolicyVersionsV1PolicyValue `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AddedSourceKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddedSourceKey") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AddedSourceKey") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1ResolvedPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1ResolvedPolicy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest:
-// Request message for updating the group priority ordering of an app.
+// GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest: Request
+// message for updating the group priority ordering of an app.
 type GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest struct {
 	// GroupIds: Required. The group IDs, in desired priority ordering.
 	GroupIds []string `json:"groupIds,omitempty"`
-
 	// PolicyNamespace: The namespace of the policy type for the request.
 	PolicyNamespace string `json:"policyNamespace,omitempty"`
-
 	// PolicySchema: The schema name of the policy for the request.
 	PolicySchema string `json:"policySchema,omitempty"`
-
-	// PolicyTargetKey: Required. The key of the target for which we want to
-	// update the group priority ordering. The target resource must point to
-	// an app.
+	// PolicyTargetKey: Required. The key of the target for which we want to update
+	// the group priority ordering. The target resource must point to an app.
 	PolicyTargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GroupIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GroupIds") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GroupIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1UploadPolicyFileRequest: Request message
-// for uploading a file for a policy.
+// GoogleChromePolicyVersionsV1UploadPolicyFileRequest: Request message for
+// uploading a file for a policy.
 type GoogleChromePolicyVersionsV1UploadPolicyFileRequest struct {
-	// PolicyField: Required. The fully qualified policy schema and field
-	// name this file is uploaded for. This information will be used to
-	// validate the content type of the file.
+	// PolicyField: Required. The fully qualified policy schema and field name this
+	// file is uploaded for. This information will be used to validate the content
+	// type of the file.
 	PolicyField string `json:"policyField,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PolicyField") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PolicyField") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PolicyField") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1UploadPolicyFileRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1UploadPolicyFileRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1UploadPolicyFileResponse: Response
-// message for downloading an uploaded file.
+// GoogleChromePolicyVersionsV1UploadPolicyFileResponse: Response message for
+// downloading an uploaded file.
 type GoogleChromePolicyVersionsV1UploadPolicyFileResponse struct {
 	// DownloadUri: The uri for end user to download the file.
 	DownloadUri string `json:"downloadUri,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DownloadUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DownloadUri") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DownloadUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1UploadPolicyFileResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1UploadPolicyFileResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyVersionsV1UploadedFileConstraints: Constraints on
-// the uploaded file of a file policy.
+// GoogleChromePolicyVersionsV1UploadedFileConstraints: Constraints on the
+// uploaded file of a file policy.
 type GoogleChromePolicyVersionsV1UploadedFileConstraints struct {
-	// SizeLimitBytes: The size limit of uploaded files for a setting, in
-	// bytes.
+	// SizeLimitBytes: The size limit of uploaded files for a setting, in bytes.
 	SizeLimitBytes int64 `json:"sizeLimitBytes,omitempty,string"`
-
 	// SupportedContentTypes: File types that can be uploaded for a setting.
 	//
 	// Possible values:
@@ -1954,255 +1572,203 @@ type GoogleChromePolicyVersionsV1UploadedFileConstraints struct {
 	//   "CONTENT_TYPE_YAML" - YAML.
 	//   "CONTENT_TYPE_IMAGE_WEBP" - WEBP.
 	SupportedContentTypes []string `json:"supportedContentTypes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SizeLimitBytes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SizeLimitBytes") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "SizeLimitBytes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleChromePolicyVersionsV1UploadedFileConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1UploadedFileConstraints
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleTypeDate: Represents a whole or partial calendar date, such as
-// a birthday. The time of day and time zone are either specified
-// elsewhere or are insignificant. The date is relative to the Gregorian
-// Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values. * A month and day, with a
-// zero year (for example, an anniversary). * A year on its own, with a
-// zero month and a zero day. * A year and month, with a zero day (for
-// example, a credit card expiration date). Related types: *
-// google.type.TimeOfDay * google.type.DateTime *
+// GoogleTypeDate: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified elsewhere or
+// are insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
 // google.protobuf.Timestamp
 type GoogleTypeDate struct {
-	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 to specify a year by itself or a year and month where the
-	// day isn't significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
 	Day int64 `json:"day,omitempty"`
-
-	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
-	// without a month and day.
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
 	Month int64 `json:"month,omitempty"`
-
-	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
-	// date without a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
 	Year int64 `json:"year,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Day") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Day") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2DescriptorProto: Describes a message type.
 type Proto2DescriptorProto struct {
-	EnumType []*Proto2EnumDescriptorProto `json:"enumType,omitempty"`
-
-	Field []*Proto2FieldDescriptorProto `json:"field,omitempty"`
-
-	Name string `json:"name,omitempty"`
-
-	NestedType []*Proto2DescriptorProto `json:"nestedType,omitempty"`
-
-	OneofDecl []*Proto2OneofDescriptorProto `json:"oneofDecl,omitempty"`
-
+	EnumType   []*Proto2EnumDescriptorProto  `json:"enumType,omitempty"`
+	Field      []*Proto2FieldDescriptorProto `json:"field,omitempty"`
+	Name       string                        `json:"name,omitempty"`
+	NestedType []*Proto2DescriptorProto      `json:"nestedType,omitempty"`
+	OneofDecl  []*Proto2OneofDescriptorProto `json:"oneofDecl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnumType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EnumType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EnumType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Proto2DescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2DescriptorProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2EnumDescriptorProto: Describes an enum type.
 type Proto2EnumDescriptorProto struct {
-	Name string `json:"name,omitempty"`
-
+	Name  string                            `json:"name,omitempty"`
 	Value []*Proto2EnumValueDescriptorProto `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Proto2EnumDescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2EnumDescriptorProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2EnumValueDescriptorProto: Describes a value within an enum.
 type Proto2EnumValueDescriptorProto struct {
-	Name string `json:"name,omitempty"`
-
-	Number int64 `json:"number,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	Name   string `json:"name,omitempty"`
+	Number int64  `json:"number,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Proto2EnumValueDescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2EnumValueDescriptorProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2FieldDescriptorProto: Describes a field within a message.
 type Proto2FieldDescriptorProto struct {
-	// DefaultValue: For numeric types, contains the original text
-	// representation of the value. For booleans, "true" or "false". For
-	// strings, contains the default text contents (not escaped in any way).
-	// For bytes, contains the C escaped value. All bytes >= 128 are
-	// escaped.
+	// DefaultValue: For numeric types, contains the original text representation
+	// of the value. For booleans, "true" or "false". For strings, contains the
+	// default text contents (not escaped in any way). For bytes, contains the C
+	// escaped value. All bytes >= 128 are escaped.
 	DefaultValue string `json:"defaultValue,omitempty"`
-
-	// JsonName: JSON name of this field. The value is set by protocol
-	// compiler. If the user has set a "json_name" option on this field,
-	// that option's value will be used. Otherwise, it's deduced from the
-	// field's name by converting it to camelCase.
+	// JsonName: JSON name of this field. The value is set by protocol compiler. If
+	// the user has set a "json_name" option on this field, that option's value
+	// will be used. Otherwise, it's deduced from the field's name by converting it
+	// to camelCase.
 	JsonName string `json:"jsonName,omitempty"`
-
 	// Possible values:
 	//   "LABEL_OPTIONAL" - 0 is reserved for errors
 	//   "LABEL_REPEATED"
-	//   "LABEL_REQUIRED" - The required label is only allowed in proto2. In
-	// proto3 and Editions it's explicitly prohibited. In Editions, the
-	// `field_presence` feature can be used to get this behavior.
-	Label string `json:"label,omitempty"`
-
-	Name string `json:"name,omitempty"`
-
-	Number int64 `json:"number,omitempty"`
-
-	// OneofIndex: If set, gives the index of a oneof in the containing
-	// type's oneof_decl list. This field is a member of that oneof.
+	//   "LABEL_REQUIRED" - The required label is only allowed in proto2. In proto3
+	// and Editions it's explicitly prohibited. In Editions, the `field_presence`
+	// feature can be used to get this behavior.
+	Label  string `json:"label,omitempty"`
+	Name   string `json:"name,omitempty"`
+	Number int64  `json:"number,omitempty"`
+	// OneofIndex: If set, gives the index of a oneof in the containing type's
+	// oneof_decl list. This field is a member of that oneof.
 	OneofIndex int64 `json:"oneofIndex,omitempty"`
-
-	// Proto3Optional: If true, this is a proto3 "optional". When a proto3
-	// field is optional, it tracks presence regardless of field type. When
-	// proto3_optional is true, this field must belong to a oneof to signal
-	// to old proto3 clients that presence is tracked for this field. This
-	// oneof is known as a "synthetic" oneof, and this field must be its
-	// sole member (each proto3 optional field gets its own synthetic
-	// oneof). Synthetic oneofs exist in the descriptor only, and do not
-	// generate any API. Synthetic oneofs must be ordered after all "real"
-	// oneofs. For message fields, proto3_optional doesn't create any
-	// semantic change, since non-repeated message fields always track
-	// presence. However it still indicates the semantic detail of whether
-	// the user wrote "optional" or not. This can be useful for
-	// round-tripping the .proto file. For consistency we give message
-	// fields a synthetic oneof also, even though it is not required to
-	// track presence. This is especially important because the parser can't
-	// tell if a field is a message or an enum, so it must always create a
-	// synthetic oneof. Proto2 optional fields do not set this flag, because
-	// they already indicate optional with `LABEL_OPTIONAL`.
+	// Proto3Optional: If true, this is a proto3 "optional". When a proto3 field is
+	// optional, it tracks presence regardless of field type. When proto3_optional
+	// is true, this field must belong to a oneof to signal to old proto3 clients
+	// that presence is tracked for this field. This oneof is known as a
+	// "synthetic" oneof, and this field must be its sole member (each proto3
+	// optional field gets its own synthetic oneof). Synthetic oneofs exist in the
+	// descriptor only, and do not generate any API. Synthetic oneofs must be
+	// ordered after all "real" oneofs. For message fields, proto3_optional doesn't
+	// create any semantic change, since non-repeated message fields always track
+	// presence. However it still indicates the semantic detail of whether the user
+	// wrote "optional" or not. This can be useful for round-tripping the .proto
+	// file. For consistency we give message fields a synthetic oneof also, even
+	// though it is not required to track presence. This is especially important
+	// because the parser can't tell if a field is a message or an enum, so it must
+	// always create a synthetic oneof. Proto2 optional fields do not set this
+	// flag, because they already indicate optional with `LABEL_OPTIONAL`.
 	Proto3Optional bool `json:"proto3Optional,omitempty"`
-
-	// Type: If type_name is set, this need not be set. If both this and
-	// type_name are set, this must be one of TYPE_ENUM, TYPE_MESSAGE or
-	// TYPE_GROUP.
+	// Type: If type_name is set, this need not be set. If both this and type_name
+	// are set, this must be one of TYPE_ENUM, TYPE_MESSAGE or TYPE_GROUP.
 	//
 	// Possible values:
-	//   "TYPE_DOUBLE" - 0 is reserved for errors. Order is weird for
-	// historical reasons.
+	//   "TYPE_DOUBLE" - 0 is reserved for errors. Order is weird for historical
+	// reasons.
 	//   "TYPE_FLOAT"
-	//   "TYPE_INT64" - Not ZigZag encoded. Negative numbers take 10 bytes.
-	// Use TYPE_SINT64 if negative values are likely.
+	//   "TYPE_INT64" - Not ZigZag encoded. Negative numbers take 10 bytes. Use
+	// TYPE_SINT64 if negative values are likely.
 	//   "TYPE_UINT64"
-	//   "TYPE_INT32" - Not ZigZag encoded. Negative numbers take 10 bytes.
-	// Use TYPE_SINT32 if negative values are likely.
+	//   "TYPE_INT32" - Not ZigZag encoded. Negative numbers take 10 bytes. Use
+	// TYPE_SINT32 if negative values are likely.
 	//   "TYPE_FIXED64"
 	//   "TYPE_FIXED32"
 	//   "TYPE_BOOL"
 	//   "TYPE_STRING"
-	//   "TYPE_GROUP" - Tag-delimited aggregate. Group type is deprecated
-	// and not supported after proto2. However, Proto3 implementations
-	// should still be able to parse the group wire format and treat group
-	// fields as unknown fields. In Editions, the group wire format can be
-	// enabled via the `message_encoding` feature.
+	//   "TYPE_GROUP" - Tag-delimited aggregate. Group type is deprecated and not
+	// supported after proto2. However, Proto3 implementations should still be able
+	// to parse the group wire format and treat group fields as unknown fields. In
+	// Editions, the group wire format can be enabled via the `message_encoding`
+	// feature.
 	//   "TYPE_MESSAGE" - Length-delimited aggregate.
 	//   "TYPE_BYTES" - New in version 2.
 	//   "TYPE_UINT32"
@@ -2212,111 +1778,83 @@ type Proto2FieldDescriptorProto struct {
 	//   "TYPE_SINT32" - Uses ZigZag encoding.
 	//   "TYPE_SINT64" - Uses ZigZag encoding.
 	Type string `json:"type,omitempty"`
-
-	// TypeName: For message and enum types, this is the name of the type.
-	// If the name starts with a '.', it is fully-qualified. Otherwise,
-	// C++-like scoping rules are used to find the type (i.e. first the
-	// nested types within this message are searched, then within the
-	// parent, on up to the root namespace).
+	// TypeName: For message and enum types, this is the name of the type. If the
+	// name starts with a '.', it is fully-qualified. Otherwise, C++-like scoping
+	// rules are used to find the type (i.e. first the nested types within this
+	// message are searched, then within the parent, on up to the root namespace).
 	TypeName string `json:"typeName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DefaultValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DefaultValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Proto2FieldDescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2FieldDescriptorProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2FileDescriptorProto: Describes a complete .proto file.
 type Proto2FileDescriptorProto struct {
-	// EditionDeprecated: BEGIN GOOGLE-INTERNAL TODO(b/297898292) Deprecate
-	// and remove this field in favor of enums. END GOOGLE-INTERNAL
-	EditionDeprecated string `json:"editionDeprecated,omitempty"`
-
-	EnumType []*Proto2EnumDescriptorProto `json:"enumType,omitempty"`
-
+	// EditionDeprecated: BEGIN GOOGLE-INTERNAL TODO(b/297898292) Deprecate and
+	// remove this field in favor of enums. END GOOGLE-INTERNAL
+	EditionDeprecated string                       `json:"editionDeprecated,omitempty"`
+	EnumType          []*Proto2EnumDescriptorProto `json:"enumType,omitempty"`
 	// MessageType: All top-level definitions in this file.
 	MessageType []*Proto2DescriptorProto `json:"messageType,omitempty"`
-
 	// Name: file name, relative to root of source tree
 	Name string `json:"name,omitempty"`
-
 	// Package: e.g. "foo", "foo.bar", etc.
 	Package string `json:"package,omitempty"`
-
-	// Syntax: The syntax of the proto file. The supported values are
-	// "proto2", "proto3", and "editions". If `edition` is present, this
-	// value must be "editions".
+	// Syntax: The syntax of the proto file. The supported values are "proto2",
+	// "proto3", and "editions". If `edition` is present, this value must be
+	// "editions".
 	Syntax string `json:"syntax,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EditionDeprecated")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EditionDeprecated") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EditionDeprecated") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EditionDeprecated") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Proto2FileDescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2FileDescriptorProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Proto2OneofDescriptorProto: Describes a oneof.
 type Proto2OneofDescriptorProto struct {
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Proto2OneofDescriptorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod Proto2OneofDescriptorProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "chromepolicy.customers.policies.resolve":
 
 type CustomersPoliciesResolveCall struct {
 	s                                          *Service
@@ -2327,11 +1865,11 @@ type CustomersPoliciesResolveCall struct {
 	header_                                    http.Header
 }
 
-// Resolve: Gets the resolved policy values for a list of policies that
-// match a search query.
+// Resolve: Gets the resolved policy values for a list of policies that match a
+// search query.
 //
-//   - customer: ID of the G Suite account or literal "my_customer" for
-//     the customer associated to the request.
+//   - customer: ID of the G Suite account or literal "my_customer" for the
+//     customer associated to the request.
 func (r *CustomersPoliciesService) Resolve(customer string, googlechromepolicyversionsv1resolverequest *GoogleChromePolicyVersionsV1ResolveRequest) *CustomersPoliciesResolveCall {
 	c := &CustomersPoliciesResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2340,23 +1878,21 @@ func (r *CustomersPoliciesService) Resolve(customer string, googlechromepolicyve
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPoliciesResolveCall) Fields(s ...googleapi.Field) *CustomersPoliciesResolveCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPoliciesResolveCall) Context(ctx context.Context) *CustomersPoliciesResolveCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPoliciesResolveCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2365,18 +1901,12 @@ func (c *CustomersPoliciesResolveCall) Header() http.Header {
 }
 
 func (c *CustomersPoliciesResolveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1resolverequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies:resolve")
@@ -2393,14 +1923,11 @@ func (c *CustomersPoliciesResolveCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "chromepolicy.customers.policies.resolve" call.
-// Exactly one of *GoogleChromePolicyVersionsV1ResolveResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleChromePolicyVersionsV1ResolveResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromePolicyVersionsV1ResolveResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CustomersPoliciesResolveCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyVersionsV1ResolveResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2431,36 +1958,6 @@ func (c *CustomersPoliciesResolveCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the resolved policy values for a list of policies that match a search query.",
-	//   "flatPath": "v1/customers/{customersId}/policies:resolve",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.customers.policies.resolve",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "ID of the G Suite account or literal \"my_customer\" for the customer associated to the request.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies:resolve",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1ResolveRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleChromePolicyVersionsV1ResolveResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy",
-	//     "https://www.googleapis.com/auth/chrome.management.policy.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2468,7 +1965,7 @@ func (c *CustomersPoliciesResolveCall) Do(opts ...googleapi.CallOption) (*Google
 // The provided context supersedes any context provided to the Context method.
 func (c *CustomersPoliciesResolveCall) Pages(ctx context.Context, f func(*GoogleChromePolicyVersionsV1ResolveResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googlechromepolicyversionsv1resolverequest.PageToken = pt }(c.googlechromepolicyversionsv1resolverequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googlechromepolicyversionsv1resolverequest.PageToken = pt }(c.googlechromepolicyversionsv1resolverequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2484,8 +1981,6 @@ func (c *CustomersPoliciesResolveCall) Pages(ctx context.Context, f func(*Google
 	}
 }
 
-// method id "chromepolicy.customers.policies.groups.batchDelete":
-
 type CustomersPoliciesGroupsBatchDeleteCall struct {
 	s                                                           *Service
 	customer                                                    string
@@ -2495,15 +1990,15 @@ type CustomersPoliciesGroupsBatchDeleteCall struct {
 	header_                                                     http.Header
 }
 
-// BatchDelete: Delete multiple policy values that are applied to a
-// specific group. All targets must have the same target format. That is
-// to say that they must point to the same target resource and must have
-// the same keys specified in `additionalTargetKeyNames`, though the
-// values for those keys may be different. On failure the request will
-// return the error details as part of the google.rpc.Status.
+// BatchDelete: Delete multiple policy values that are applied to a specific
+// group. All targets must have the same target format. That is to say that
+// they must point to the same target resource and must have the same keys
+// specified in `additionalTargetKeyNames`, though the values for those keys
+// may be different. On failure the request will return the error details as
+// part of the google.rpc.Status.
 //
-//   - customer: ID of the Google Workspace account or literal
-//     "my_customer" for the customer associated to the request.
+//   - customer: ID of the Google Workspace account or literal "my_customer" for
+//     the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) BatchDelete(customer string, googlechromepolicyversionsv1batchdeletegrouppoliciesrequest *GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest) *CustomersPoliciesGroupsBatchDeleteCall {
 	c := &CustomersPoliciesGroupsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2512,23 +2007,21 @@ func (r *CustomersPoliciesGroupsService) BatchDelete(customer string, googlechro
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPoliciesGroupsBatchDeleteCall) Fields(s ...googleapi.Field) *CustomersPoliciesGroupsBatchDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPoliciesGroupsBatchDeleteCall) Context(ctx context.Context) *CustomersPoliciesGroupsBatchDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPoliciesGroupsBatchDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2537,18 +2030,12 @@ func (c *CustomersPoliciesGroupsBatchDeleteCall) Header() http.Header {
 }
 
 func (c *CustomersPoliciesGroupsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1batchdeletegrouppoliciesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/groups:batchDelete")
@@ -2565,12 +2052,11 @@ func (c *CustomersPoliciesGroupsBatchDeleteCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "chromepolicy.customers.policies.groups.batchDelete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CustomersPoliciesGroupsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2601,38 +2087,7 @@ func (c *CustomersPoliciesGroupsBatchDeleteCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete multiple policy values that are applied to a specific group. All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
-	//   "flatPath": "v1/customers/{customersId}/policies/groups:batchDelete",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.customers.policies.groups.batchDelete",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "ID of the Google Workspace account or literal \"my_customer\" for the customer associated to the request.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies/groups:batchDelete",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1BatchDeleteGroupPoliciesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy"
-	//   ]
-	// }
-
 }
-
-// method id "chromepolicy.customers.policies.groups.batchModify":
 
 type CustomersPoliciesGroupsBatchModifyCall struct {
 	s                                                           *Service
@@ -2643,15 +2098,15 @@ type CustomersPoliciesGroupsBatchModifyCall struct {
 	header_                                                     http.Header
 }
 
-// BatchModify: Modify multiple policy values that are applied to a
-// specific group. All targets must have the same target format. That is
-// to say that they must point to the same target resource and must have
-// the same keys specified in `additionalTargetKeyNames`, though the
-// values for those keys may be different. On failure the request will
-// return the error details as part of the google.rpc.Status.
+// BatchModify: Modify multiple policy values that are applied to a specific
+// group. All targets must have the same target format. That is to say that
+// they must point to the same target resource and must have the same keys
+// specified in `additionalTargetKeyNames`, though the values for those keys
+// may be different. On failure the request will return the error details as
+// part of the google.rpc.Status.
 //
-//   - customer: ID of the Google Workspace account or literal
-//     "my_customer" for the customer associated to the request.
+//   - customer: ID of the Google Workspace account or literal "my_customer" for
+//     the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) BatchModify(customer string, googlechromepolicyversionsv1batchmodifygrouppoliciesrequest *GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest) *CustomersPoliciesGroupsBatchModifyCall {
 	c := &CustomersPoliciesGroupsBatchModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2660,23 +2115,21 @@ func (r *CustomersPoliciesGroupsService) BatchModify(customer string, googlechro
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPoliciesGroupsBatchModifyCall) Fields(s ...googleapi.Field) *CustomersPoliciesGroupsBatchModifyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPoliciesGroupsBatchModifyCall) Context(ctx context.Context) *CustomersPoliciesGroupsBatchModifyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPoliciesGroupsBatchModifyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2685,18 +2138,12 @@ func (c *CustomersPoliciesGroupsBatchModifyCall) Header() http.Header {
 }
 
 func (c *CustomersPoliciesGroupsBatchModifyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1batchmodifygrouppoliciesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/groups:batchModify")
@@ -2713,12 +2160,11 @@ func (c *CustomersPoliciesGroupsBatchModifyCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "chromepolicy.customers.policies.groups.batchModify" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CustomersPoliciesGroupsBatchModifyCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2749,38 +2195,7 @@ func (c *CustomersPoliciesGroupsBatchModifyCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modify multiple policy values that are applied to a specific group. All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
-	//   "flatPath": "v1/customers/{customersId}/policies/groups:batchModify",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.customers.policies.groups.batchModify",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "ID of the Google Workspace account or literal \"my_customer\" for the customer associated to the request.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies/groups:batchModify",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1BatchModifyGroupPoliciesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy"
-	//   ]
-	// }
-
 }
-
-// method id "chromepolicy.customers.policies.groups.listGroupPriorityOrdering":
 
 type CustomersPoliciesGroupsListGroupPriorityOrderingCall struct {
 	s                                                            *Service
@@ -2791,13 +2206,13 @@ type CustomersPoliciesGroupsListGroupPriorityOrderingCall struct {
 	header_                                                      http.Header
 }
 
-// ListGroupPriorityOrdering: Retrieve a group priority ordering for an
-// app. The target app must be supplied in `additionalTargetKeyNames` in
-// the PolicyTargetKey. On failure the request will return the error
-// details as part of the google.rpc.Status.
+// ListGroupPriorityOrdering: Retrieve a group priority ordering for an app.
+// The target app must be supplied in `additionalTargetKeyNames` in the
+// PolicyTargetKey. On failure the request will return the error details as
+// part of the google.rpc.Status.
 //
-//   - customer: ID of the Google Workspace account or literal
-//     "my_customer" for the customer associated to the request.
+//   - customer: ID of the Google Workspace account or literal "my_customer" for
+//     the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) ListGroupPriorityOrdering(customer string, googlechromepolicyversionsv1listgrouppriorityorderingrequest *GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest) *CustomersPoliciesGroupsListGroupPriorityOrderingCall {
 	c := &CustomersPoliciesGroupsListGroupPriorityOrderingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2806,23 +2221,21 @@ func (r *CustomersPoliciesGroupsService) ListGroupPriorityOrdering(customer stri
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Fields(s ...googleapi.Field) *CustomersPoliciesGroupsListGroupPriorityOrderingCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Context(ctx context.Context) *CustomersPoliciesGroupsListGroupPriorityOrderingCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2831,18 +2244,12 @@ func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Header() http.Hea
 }
 
 func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1listgrouppriorityorderingrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/groups:listGroupPriorityOrdering")
@@ -2859,15 +2266,11 @@ func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) doRequest(alt str
 }
 
 // Do executes the "chromepolicy.customers.policies.groups.listGroupPriorityOrdering" call.
-// Exactly one of
-// *GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse.ServerR
-// esponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse.ServerResponse
+// .Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2898,39 +2301,7 @@ func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Do(opts ...google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve a group priority ordering for an app. The target app must be supplied in `additionalTargetKeyNames` in the PolicyTargetKey. On failure the request will return the error details as part of the google.rpc.Status.",
-	//   "flatPath": "v1/customers/{customersId}/policies/groups:listGroupPriorityOrdering",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.customers.policies.groups.listGroupPriorityOrdering",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "Required. ID of the Google Workspace account or literal \"my_customer\" for the customer associated to the request.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies/groups:listGroupPriorityOrdering",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy",
-	//     "https://www.googleapis.com/auth/chrome.management.policy.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "chromepolicy.customers.policies.groups.updateGroupPriorityOrdering":
 
 type CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall struct {
 	s                                                              *Service
@@ -2941,13 +2312,13 @@ type CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall struct {
 	header_                                                        http.Header
 }
 
-// UpdateGroupPriorityOrdering: Update a group priority ordering for an
-// app. The target app must be supplied in `additionalTargetKeyNames` in
-// the PolicyTargetKey. On failure the request will return the error
-// details as part of the google.rpc.Status.
+// UpdateGroupPriorityOrdering: Update a group priority ordering for an app.
+// The target app must be supplied in `additionalTargetKeyNames` in the
+// PolicyTargetKey. On failure the request will return the error details as
+// part of the google.rpc.Status.
 //
-//   - customer: ID of the Google Workspace account or literal
-//     "my_customer" for the customer associated to the request.
+//   - customer: ID of the Google Workspace account or literal "my_customer" for
+//     the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) UpdateGroupPriorityOrdering(customer string, googlechromepolicyversionsv1updategrouppriorityorderingrequest *GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest) *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall {
 	c := &CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2956,23 +2327,21 @@ func (r *CustomersPoliciesGroupsService) UpdateGroupPriorityOrdering(customer st
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Fields(s ...googleapi.Field) *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Context(ctx context.Context) *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2981,18 +2350,12 @@ func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Header() http.H
 }
 
 func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1updategrouppriorityorderingrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/groups:updateGroupPriorityOrdering")
@@ -3009,12 +2372,11 @@ func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) doRequest(alt s
 }
 
 // Do executes the "chromepolicy.customers.policies.groups.updateGroupPriorityOrdering" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3045,38 +2407,7 @@ func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Do(opts ...goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update a group priority ordering for an app. The target app must be supplied in `additionalTargetKeyNames` in the PolicyTargetKey. On failure the request will return the error details as part of the google.rpc.Status.",
-	//   "flatPath": "v1/customers/{customersId}/policies/groups:updateGroupPriorityOrdering",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.customers.policies.groups.updateGroupPriorityOrdering",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "Required. ID of the Google Workspace account or literal \"my_customer\" for the customer associated to the request.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies/groups:updateGroupPriorityOrdering",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy"
-	//   ]
-	// }
-
 }
-
-// method id "chromepolicy.customers.policies.networks.defineCertificate":
 
 type CustomersPoliciesNetworksDefineCertificateCall struct {
 	s                                                    *Service
@@ -3087,8 +2418,7 @@ type CustomersPoliciesNetworksDefineCertificateCall struct {
 	header_                                              http.Header
 }
 
-// DefineCertificate: Creates a certificate at a specified OU for a
-// customer.
+// DefineCertificate: Creates a certificate at a specified OU for a customer.
 //
 // - customer: The customer for which the certificate will apply.
 func (r *CustomersPoliciesNetworksService) DefineCertificate(customer string, googlechromepolicyversionsv1definecertificaterequest *GoogleChromePolicyVersionsV1DefineCertificateRequest) *CustomersPoliciesNetworksDefineCertificateCall {
@@ -3099,23 +2429,21 @@ func (r *CustomersPoliciesNetworksService) DefineCertificate(customer string, go
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPoliciesNetworksDefineCertificateCall) Fields(s ...googleapi.Field) *CustomersPoliciesNetworksDefineCertificateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPoliciesNetworksDefineCertificateCall) Context(ctx context.Context) *CustomersPoliciesNetworksDefineCertificateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPoliciesNetworksDefineCertificateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3124,18 +2452,12 @@ func (c *CustomersPoliciesNetworksDefineCertificateCall) Header() http.Header {
 }
 
 func (c *CustomersPoliciesNetworksDefineCertificateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1definecertificaterequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/networks:defineCertificate")
@@ -3152,14 +2474,11 @@ func (c *CustomersPoliciesNetworksDefineCertificateCall) doRequest(alt string) (
 }
 
 // Do executes the "chromepolicy.customers.policies.networks.defineCertificate" call.
-// Exactly one of *GoogleChromePolicyVersionsV1DefineCertificateResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleChromePolicyVersionsV1DefineCertificateResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromePolicyVersionsV1DefineCertificateResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CustomersPoliciesNetworksDefineCertificateCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyVersionsV1DefineCertificateResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3190,38 +2509,7 @@ func (c *CustomersPoliciesNetworksDefineCertificateCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a certificate at a specified OU for a customer.",
-	//   "flatPath": "v1/customers/{customersId}/policies/networks:defineCertificate",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.customers.policies.networks.defineCertificate",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "Required. The customer for which the certificate will apply.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies/networks:defineCertificate",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1DefineCertificateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleChromePolicyVersionsV1DefineCertificateResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy"
-	//   ]
-	// }
-
 }
-
-// method id "chromepolicy.customers.policies.networks.defineNetwork":
 
 type CustomersPoliciesNetworksDefineNetworkCall struct {
 	s                                                *Service
@@ -3243,23 +2531,21 @@ func (r *CustomersPoliciesNetworksService) DefineNetwork(customer string, google
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPoliciesNetworksDefineNetworkCall) Fields(s ...googleapi.Field) *CustomersPoliciesNetworksDefineNetworkCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPoliciesNetworksDefineNetworkCall) Context(ctx context.Context) *CustomersPoliciesNetworksDefineNetworkCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPoliciesNetworksDefineNetworkCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3268,18 +2554,12 @@ func (c *CustomersPoliciesNetworksDefineNetworkCall) Header() http.Header {
 }
 
 func (c *CustomersPoliciesNetworksDefineNetworkCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1definenetworkrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/networks:defineNetwork")
@@ -3296,14 +2576,11 @@ func (c *CustomersPoliciesNetworksDefineNetworkCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "chromepolicy.customers.policies.networks.defineNetwork" call.
-// Exactly one of *GoogleChromePolicyVersionsV1DefineNetworkResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleChromePolicyVersionsV1DefineNetworkResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromePolicyVersionsV1DefineNetworkResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CustomersPoliciesNetworksDefineNetworkCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyVersionsV1DefineNetworkResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3334,38 +2611,7 @@ func (c *CustomersPoliciesNetworksDefineNetworkCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Define a new network.",
-	//   "flatPath": "v1/customers/{customersId}/policies/networks:defineNetwork",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.customers.policies.networks.defineNetwork",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "Required. The customer who will own this new network.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies/networks:defineNetwork",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1DefineNetworkRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleChromePolicyVersionsV1DefineNetworkResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy"
-	//   ]
-	// }
-
 }
-
-// method id "chromepolicy.customers.policies.networks.removeCertificate":
 
 type CustomersPoliciesNetworksRemoveCertificateCall struct {
 	s                                                    *Service
@@ -3387,23 +2633,21 @@ func (r *CustomersPoliciesNetworksService) RemoveCertificate(customer string, go
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPoliciesNetworksRemoveCertificateCall) Fields(s ...googleapi.Field) *CustomersPoliciesNetworksRemoveCertificateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPoliciesNetworksRemoveCertificateCall) Context(ctx context.Context) *CustomersPoliciesNetworksRemoveCertificateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPoliciesNetworksRemoveCertificateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3412,18 +2656,12 @@ func (c *CustomersPoliciesNetworksRemoveCertificateCall) Header() http.Header {
 }
 
 func (c *CustomersPoliciesNetworksRemoveCertificateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1removecertificaterequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/networks:removeCertificate")
@@ -3440,14 +2678,11 @@ func (c *CustomersPoliciesNetworksRemoveCertificateCall) doRequest(alt string) (
 }
 
 // Do executes the "chromepolicy.customers.policies.networks.removeCertificate" call.
-// Exactly one of *GoogleChromePolicyVersionsV1RemoveCertificateResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleChromePolicyVersionsV1RemoveCertificateResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromePolicyVersionsV1RemoveCertificateResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CustomersPoliciesNetworksRemoveCertificateCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyVersionsV1RemoveCertificateResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3478,38 +2713,7 @@ func (c *CustomersPoliciesNetworksRemoveCertificateCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Remove an existing certificate by guid.",
-	//   "flatPath": "v1/customers/{customersId}/policies/networks:removeCertificate",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.customers.policies.networks.removeCertificate",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "Required. The customer whose certificate will be removed.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies/networks:removeCertificate",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1RemoveCertificateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleChromePolicyVersionsV1RemoveCertificateResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy"
-	//   ]
-	// }
-
 }
-
-// method id "chromepolicy.customers.policies.networks.removeNetwork":
 
 type CustomersPoliciesNetworksRemoveNetworkCall struct {
 	s                                                *Service
@@ -3531,23 +2735,21 @@ func (r *CustomersPoliciesNetworksService) RemoveNetwork(customer string, google
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPoliciesNetworksRemoveNetworkCall) Fields(s ...googleapi.Field) *CustomersPoliciesNetworksRemoveNetworkCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPoliciesNetworksRemoveNetworkCall) Context(ctx context.Context) *CustomersPoliciesNetworksRemoveNetworkCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPoliciesNetworksRemoveNetworkCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3556,18 +2758,12 @@ func (c *CustomersPoliciesNetworksRemoveNetworkCall) Header() http.Header {
 }
 
 func (c *CustomersPoliciesNetworksRemoveNetworkCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1removenetworkrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/networks:removeNetwork")
@@ -3584,14 +2780,11 @@ func (c *CustomersPoliciesNetworksRemoveNetworkCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "chromepolicy.customers.policies.networks.removeNetwork" call.
-// Exactly one of *GoogleChromePolicyVersionsV1RemoveNetworkResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleChromePolicyVersionsV1RemoveNetworkResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromePolicyVersionsV1RemoveNetworkResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CustomersPoliciesNetworksRemoveNetworkCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyVersionsV1RemoveNetworkResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3622,38 +2815,7 @@ func (c *CustomersPoliciesNetworksRemoveNetworkCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Remove an existing network by guid.",
-	//   "flatPath": "v1/customers/{customersId}/policies/networks:removeNetwork",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.customers.policies.networks.removeNetwork",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "Required. The customer whose network will be removed.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies/networks:removeNetwork",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1RemoveNetworkRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleChromePolicyVersionsV1RemoveNetworkResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy"
-	//   ]
-	// }
-
 }
-
-// method id "chromepolicy.customers.policies.orgunits.batchInherit":
 
 type CustomersPoliciesOrgunitsBatchInheritCall struct {
 	s                                                              *Service
@@ -3664,16 +2826,16 @@ type CustomersPoliciesOrgunitsBatchInheritCall struct {
 	header_                                                        http.Header
 }
 
-// BatchInherit: Modify multiple policy values that are applied to a
-// specific org unit so that they now inherit the value from a parent
-// (if applicable). All targets must have the same target format. That
-// is to say that they must point to the same target resource and must
-// have the same keys specified in `additionalTargetKeyNames`, though
-// the values for those keys may be different. On failure the request
-// will return the error details as part of the google.rpc.Status.
+// BatchInherit: Modify multiple policy values that are applied to a specific
+// org unit so that they now inherit the value from a parent (if applicable).
+// All targets must have the same target format. That is to say that they must
+// point to the same target resource and must have the same keys specified in
+// `additionalTargetKeyNames`, though the values for those keys may be
+// different. On failure the request will return the error details as part of
+// the google.rpc.Status.
 //
-//   - customer: ID of the G Suite account or literal "my_customer" for
-//     the customer associated to the request.
+//   - customer: ID of the G Suite account or literal "my_customer" for the
+//     customer associated to the request.
 func (r *CustomersPoliciesOrgunitsService) BatchInherit(customer string, googlechromepolicyversionsv1batchinheritorgunitpoliciesrequest *GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest) *CustomersPoliciesOrgunitsBatchInheritCall {
 	c := &CustomersPoliciesOrgunitsBatchInheritCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -3682,23 +2844,21 @@ func (r *CustomersPoliciesOrgunitsService) BatchInherit(customer string, googlec
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPoliciesOrgunitsBatchInheritCall) Fields(s ...googleapi.Field) *CustomersPoliciesOrgunitsBatchInheritCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPoliciesOrgunitsBatchInheritCall) Context(ctx context.Context) *CustomersPoliciesOrgunitsBatchInheritCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPoliciesOrgunitsBatchInheritCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3707,18 +2867,12 @@ func (c *CustomersPoliciesOrgunitsBatchInheritCall) Header() http.Header {
 }
 
 func (c *CustomersPoliciesOrgunitsBatchInheritCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1batchinheritorgunitpoliciesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/orgunits:batchInherit")
@@ -3735,12 +2889,11 @@ func (c *CustomersPoliciesOrgunitsBatchInheritCall) doRequest(alt string) (*http
 }
 
 // Do executes the "chromepolicy.customers.policies.orgunits.batchInherit" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CustomersPoliciesOrgunitsBatchInheritCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3771,38 +2924,7 @@ func (c *CustomersPoliciesOrgunitsBatchInheritCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modify multiple policy values that are applied to a specific org unit so that they now inherit the value from a parent (if applicable). All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
-	//   "flatPath": "v1/customers/{customersId}/policies/orgunits:batchInherit",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.customers.policies.orgunits.batchInherit",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "ID of the G Suite account or literal \"my_customer\" for the customer associated to the request.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies/orgunits:batchInherit",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1BatchInheritOrgUnitPoliciesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy"
-	//   ]
-	// }
-
 }
-
-// method id "chromepolicy.customers.policies.orgunits.batchModify":
 
 type CustomersPoliciesOrgunitsBatchModifyCall struct {
 	s                                                             *Service
@@ -3813,15 +2935,15 @@ type CustomersPoliciesOrgunitsBatchModifyCall struct {
 	header_                                                       http.Header
 }
 
-// BatchModify: Modify multiple policy values that are applied to a
-// specific org unit. All targets must have the same target format. That
-// is to say that they must point to the same target resource and must
-// have the same keys specified in `additionalTargetKeyNames`, though
-// the values for those keys may be different. On failure the request
-// will return the error details as part of the google.rpc.Status.
+// BatchModify: Modify multiple policy values that are applied to a specific
+// org unit. All targets must have the same target format. That is to say that
+// they must point to the same target resource and must have the same keys
+// specified in `additionalTargetKeyNames`, though the values for those keys
+// may be different. On failure the request will return the error details as
+// part of the google.rpc.Status.
 //
-//   - customer: ID of the G Suite account or literal "my_customer" for
-//     the customer associated to the request.
+//   - customer: ID of the G Suite account or literal "my_customer" for the
+//     customer associated to the request.
 func (r *CustomersPoliciesOrgunitsService) BatchModify(customer string, googlechromepolicyversionsv1batchmodifyorgunitpoliciesrequest *GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest) *CustomersPoliciesOrgunitsBatchModifyCall {
 	c := &CustomersPoliciesOrgunitsBatchModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -3830,23 +2952,21 @@ func (r *CustomersPoliciesOrgunitsService) BatchModify(customer string, googlech
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPoliciesOrgunitsBatchModifyCall) Fields(s ...googleapi.Field) *CustomersPoliciesOrgunitsBatchModifyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPoliciesOrgunitsBatchModifyCall) Context(ctx context.Context) *CustomersPoliciesOrgunitsBatchModifyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPoliciesOrgunitsBatchModifyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3855,18 +2975,12 @@ func (c *CustomersPoliciesOrgunitsBatchModifyCall) Header() http.Header {
 }
 
 func (c *CustomersPoliciesOrgunitsBatchModifyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1batchmodifyorgunitpoliciesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/orgunits:batchModify")
@@ -3883,12 +2997,11 @@ func (c *CustomersPoliciesOrgunitsBatchModifyCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "chromepolicy.customers.policies.orgunits.batchModify" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CustomersPoliciesOrgunitsBatchModifyCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3919,38 +3032,7 @@ func (c *CustomersPoliciesOrgunitsBatchModifyCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modify multiple policy values that are applied to a specific org unit. All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
-	//   "flatPath": "v1/customers/{customersId}/policies/orgunits:batchModify",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.customers.policies.orgunits.batchModify",
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "ID of the G Suite account or literal \"my_customer\" for the customer associated to the request.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies/orgunits:batchModify",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy"
-	//   ]
-	// }
-
 }
-
-// method id "chromepolicy.customers.policySchemas.get":
 
 type CustomersPolicySchemasGetCall struct {
 	s            *Service
@@ -3961,8 +3043,7 @@ type CustomersPolicySchemasGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a specific policy schema for a customer by its resource
-// name.
+// Get: Get a specific policy schema for a customer by its resource name.
 //
 // - name: The policy schema resource name to query.
 func (r *CustomersPolicySchemasService) Get(name string) *CustomersPolicySchemasGetCall {
@@ -3972,33 +3053,29 @@ func (r *CustomersPolicySchemasService) Get(name string) *CustomersPolicySchemas
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPolicySchemasGetCall) Fields(s ...googleapi.Field) *CustomersPolicySchemasGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CustomersPolicySchemasGetCall) IfNoneMatch(entityTag string) *CustomersPolicySchemasGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPolicySchemasGetCall) Context(ctx context.Context) *CustomersPolicySchemasGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPolicySchemasGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4007,12 +3084,7 @@ func (c *CustomersPolicySchemasGetCall) Header() http.Header {
 }
 
 func (c *CustomersPolicySchemasGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4033,14 +3105,11 @@ func (c *CustomersPolicySchemasGetCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "chromepolicy.customers.policySchemas.get" call.
-// Exactly one of *GoogleChromePolicyVersionsV1PolicySchema or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleChromePolicyVersionsV1PolicySchema.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromePolicyVersionsV1PolicySchema.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CustomersPolicySchemasGetCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyVersionsV1PolicySchema, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4071,36 +3140,7 @@ func (c *CustomersPolicySchemasGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a specific policy schema for a customer by its resource name.",
-	//   "flatPath": "v1/customers/{customersId}/policySchemas/{policySchemasId}",
-	//   "httpMethod": "GET",
-	//   "id": "chromepolicy.customers.policySchemas.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The policy schema resource name to query.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+/policySchemas/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleChromePolicyVersionsV1PolicySchema"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy",
-	//     "https://www.googleapis.com/auth/chrome.management.policy.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "chromepolicy.customers.policySchemas.list":
 
 type CustomersPolicySchemasListCall struct {
 	s            *Service
@@ -4111,8 +3151,8 @@ type CustomersPolicySchemasListCall struct {
 	header_      http.Header
 }
 
-// List: Gets a list of policy schemas that match a specified filter
-// value for a given customer.
+// List: Gets a list of policy schemas that match a specified filter value for
+// a given customer.
 //
 // - parent: The customer for which the listing request will apply.
 func (r *CustomersPolicySchemasService) List(parent string) *CustomersPolicySchemasListCall {
@@ -4121,57 +3161,52 @@ func (r *CustomersPolicySchemasService) List(parent string) *CustomersPolicySche
 	return c
 }
 
-// Filter sets the optional parameter "filter": The schema filter used
-// to find a particular schema based on fields like its resource name,
-// description and `additionalTargetKeyNames`.
+// Filter sets the optional parameter "filter": The schema filter used to find
+// a particular schema based on fields like its resource name, description and
+// `additionalTargetKeyNames`.
 func (c *CustomersPolicySchemasListCall) Filter(filter string) *CustomersPolicySchemasListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of policy schemas to return, defaults to 100 and has a maximum of
-// 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// policy schemas to return, defaults to 100 and has a maximum of 1000.
 func (c *CustomersPolicySchemasListCall) PageSize(pageSize int64) *CustomersPolicySchemasListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The page token
-// used to retrieve a specific page of the listing request.
+// PageToken sets the optional parameter "pageToken": The page token used to
+// retrieve a specific page of the listing request.
 func (c *CustomersPolicySchemasListCall) PageToken(pageToken string) *CustomersPolicySchemasListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPolicySchemasListCall) Fields(s ...googleapi.Field) *CustomersPolicySchemasListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CustomersPolicySchemasListCall) IfNoneMatch(entityTag string) *CustomersPolicySchemasListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPolicySchemasListCall) Context(ctx context.Context) *CustomersPolicySchemasListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPolicySchemasListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4180,12 +3215,7 @@ func (c *CustomersPolicySchemasListCall) Header() http.Header {
 }
 
 func (c *CustomersPolicySchemasListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4206,14 +3236,11 @@ func (c *CustomersPolicySchemasListCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "chromepolicy.customers.policySchemas.list" call.
-// Exactly one of *GoogleChromePolicyVersionsV1ListPolicySchemasResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleChromePolicyVersionsV1ListPolicySchemasResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromePolicyVersionsV1ListPolicySchemasResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CustomersPolicySchemasListCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyVersionsV1ListPolicySchemasResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4244,49 +3271,6 @@ func (c *CustomersPolicySchemasListCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a list of policy schemas that match a specified filter value for a given customer.",
-	//   "flatPath": "v1/customers/{customersId}/policySchemas",
-	//   "httpMethod": "GET",
-	//   "id": "chromepolicy.customers.policySchemas.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The schema filter used to find a particular schema based on fields like its resource name, description and `additionalTargetKeyNames`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of policy schemas to return, defaults to 100 and has a maximum of 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The page token used to retrieve a specific page of the listing request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The customer for which the listing request will apply.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/policySchemas",
-	//   "response": {
-	//     "$ref": "GoogleChromePolicyVersionsV1ListPolicySchemasResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy",
-	//     "https://www.googleapis.com/auth/chrome.management.policy.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4294,7 +3278,7 @@ func (c *CustomersPolicySchemasListCall) Do(opts ...googleapi.CallOption) (*Goog
 // The provided context supersedes any context provided to the Context method.
 func (c *CustomersPolicySchemasListCall) Pages(ctx context.Context, f func(*GoogleChromePolicyVersionsV1ListPolicySchemasResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4309,8 +3293,6 @@ func (c *CustomersPolicySchemasListCall) Pages(ctx context.Context, f func(*Goog
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "chromepolicy.media.upload":
 
 type MediaUploadCall struct {
 	s                                                   *Service
@@ -4333,54 +3315,51 @@ func (r *MediaService) Upload(customer string, googlechromepolicyversionsv1uploa
 	return c
 }
 
-// Media specifies the media to upload in one or more chunks. The chunk
-// size may be controlled by supplying a MediaOption generated by
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
 // googleapi.ChunkSize. The chunk size defaults to
-// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
-// upload request will be determined by sniffing the contents of r,
-// unless a MediaOption generated by googleapi.ContentType is
-// supplied.
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
 // At most one of Media and ResumableMedia may be set.
 func (c *MediaUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *MediaUploadCall {
 	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
 //
 // Deprecated: use Media instead.
 //
-// At most one of Media and ResumableMedia may be set. mediaType
-// identifies the MIME media type of the upload, such as "image/png". If
-// mediaType is "", it will be auto-detected. The provided ctx will
-// supersede any context previously provided to the Context method.
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
 func (c *MediaUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *MediaUploadCall {
 	c.ctx_ = ctx
 	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
 func (c *MediaUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *MediaUploadCall {
 	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *MediaUploadCall) Fields(s ...googleapi.Field) *MediaUploadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 // This context will supersede any context previously provided to the
 // ResumableMedia method.
 func (c *MediaUploadCall) Context(ctx context.Context) *MediaUploadCall {
@@ -4388,8 +3367,8 @@ func (c *MediaUploadCall) Context(ctx context.Context) *MediaUploadCall {
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *MediaUploadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4398,18 +3377,12 @@ func (c *MediaUploadCall) Header() http.Header {
 }
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1uploadpolicyfilerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/files:uploadPolicyFile")
@@ -4437,14 +3410,11 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "chromepolicy.media.upload" call.
-// Exactly one of *GoogleChromePolicyVersionsV1UploadPolicyFileResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleChromePolicyVersionsV1UploadPolicyFileResponse.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromePolicyVersionsV1UploadPolicyFileResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyVersionsV1UploadPolicyFileResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4492,45 +3462,4 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyV
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an enterprise file from the content provided by user. Returns a public download url for end user.",
-	//   "flatPath": "v1/customers/{customersId}/policies/files:uploadPolicyFile",
-	//   "httpMethod": "POST",
-	//   "id": "chromepolicy.media.upload",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "*/*"
-	//     ],
-	//     "protocols": {
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/v1/{+customer}/policies/files:uploadPolicyFile"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "customer"
-	//   ],
-	//   "parameters": {
-	//     "customer": {
-	//       "description": "Required. The customer for which the file upload will apply.",
-	//       "location": "path",
-	//       "pattern": "^customers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+customer}/policies/files:uploadPolicyFile",
-	//   "request": {
-	//     "$ref": "GoogleChromePolicyVersionsV1UploadPolicyFileRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleChromePolicyVersionsV1UploadPolicyFileResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chrome.management.policy"
-	//   ],
-	//   "supportsMediaUpload": true
-	// }
-
 }

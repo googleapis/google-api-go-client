@@ -95,8 +95,8 @@ const mtlsBasePath = "https://cloudsupport.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -211,488 +211,374 @@ type MediaService struct {
 	s *Service
 }
 
-// Actor: An Actor represents an entity that performed an action. For
-// example, an actor could be a user who posted a comment on a support
-// case, a user who uploaded an attachment, or a service account that
-// created a support case.
+// Actor: An Actor represents an entity that performed an action. For example,
+// an actor could be a user who posted a comment on a support case, a user who
+// uploaded an attachment, or a service account that created a support case.
 type Actor struct {
-	// DisplayName: The name to display for the actor. If not provided, it
-	// is inferred from credentials supplied during case creation. When an
-	// email is provided, a display name must also be provided. This will be
-	// obfuscated if the user is a Google Support agent.
+	// DisplayName: The name to display for the actor. If not provided, it is
+	// inferred from credentials supplied during case creation. When an email is
+	// provided, a display name must also be provided. This will be obfuscated if
+	// the user is a Google Support agent.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Email: The email address of the actor. If not provided, it is
-	// inferred from the credentials supplied during case creation. When a
-	// name is provided, an email must also be provided. If the user is a
-	// Google Support agent, this is obfuscated. This field is deprecated.
-	// Use **username** field instead.
+	// Email: The email address of the actor. If not provided, it is inferred from
+	// the credentials supplied during case creation. When a name is provided, an
+	// email must also be provided. If the user is a Google Support agent, this is
+	// obfuscated. This field is deprecated. Use **username** field instead.
 	Email string `json:"email,omitempty"`
-
-	// GoogleSupport: Output only. Whether the actor is a Google support
-	// actor.
+	// GoogleSupport: Output only. Whether the actor is a Google support actor.
 	GoogleSupport bool `json:"googleSupport,omitempty"`
-
-	// Username: Output only. The username of the actor. It may look like an
-	// email or other format provided by the identity provider. If not
-	// provided, it is inferred from the credentials supplied. When a name
-	// is provided, a username must also be provided. If the user is a
-	// Google Support agent, this will not be set.
+	// Username: Output only. The username of the actor. It may look like an email
+	// or other format provided by the identity provider. If not provided, it is
+	// inferred from the credentials supplied. When a name is provided, a username
+	// must also be provided. If the user is a Google Support agent, this will not
+	// be set.
 	Username string `json:"username,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Actor) MarshalJSON() ([]byte, error) {
 	type NoMethod Actor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Attachment: An Attachment contains metadata about a file that was
-// uploaded to a case - it is NOT a file itself. That being said, the
-// name of an Attachment object can be used to download its accompanying
-// file through the `media.download` endpoint. While attachments can be
-// uploaded in the console at the same time as a comment, they're
-// associated on a "case" level, not a "comment" level.
+// Attachment: An Attachment contains metadata about a file that was uploaded
+// to a case - it is NOT a file itself. That being said, the name of an
+// Attachment object can be used to download its accompanying file through the
+// `media.download` endpoint. While attachments can be uploaded in the console
+// at the same time as a comment, they're associated on a "case" level, not a
+// "comment" level.
 type Attachment struct {
-	// CreateTime: Output only. The time at which the attachment was
-	// created.
+	// CreateTime: Output only. The time at which the attachment was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Creator: Output only. The user who uploaded the attachment. Note, the
-	// name and email will be obfuscated if the attachment was uploaded by
-	// Google support.
+	// Creator: Output only. The user who uploaded the attachment. Note, the name
+	// and email will be obfuscated if the attachment was uploaded by Google
+	// support.
 	Creator *Actor `json:"creator,omitempty"`
-
 	// Filename: The filename of the attachment (e.g. "graph.jpg").
 	Filename string `json:"filename,omitempty"`
-
-	// MimeType: Output only. The MIME type of the attachment (e.g.
-	// text/plain).
+	// MimeType: Output only. The MIME type of the attachment (e.g. text/plain).
 	MimeType string `json:"mimeType,omitempty"`
-
 	// Name: Output only. The resource name of the attachment.
 	Name string `json:"name,omitempty"`
-
 	// SizeBytes: Output only. The size of the attachment in bytes.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Attachment) MarshalJSON() ([]byte, error) {
 	type NoMethod Attachment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Blobstore2Info: # gdata.* are outside protos with mising
-// documentation
+// Blobstore2Info: # gdata.* are outside protos with mising documentation
 type Blobstore2Info struct {
-	// BlobGeneration: # gdata.* are outside protos with mising
-	// documentation
+	// BlobGeneration: # gdata.* are outside protos with mising documentation
 	BlobGeneration int64 `json:"blobGeneration,omitempty,string"`
-
 	// BlobId: # gdata.* are outside protos with mising documentation
 	BlobId string `json:"blobId,omitempty"`
-
-	// DownloadReadHandle: # gdata.* are outside protos with mising
-	// documentation
+	// DownloadReadHandle: # gdata.* are outside protos with mising documentation
 	DownloadReadHandle string `json:"downloadReadHandle,omitempty"`
-
 	// ReadToken: # gdata.* are outside protos with mising documentation
 	ReadToken string `json:"readToken,omitempty"`
-
 	// UploadMetadataContainer: # gdata.* are outside protos with mising
 	// documentation
 	UploadMetadataContainer string `json:"uploadMetadataContainer,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BlobGeneration") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BlobGeneration") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BlobGeneration") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Blobstore2Info) MarshalJSON() ([]byte, error) {
 	type NoMethod Blobstore2Info
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Case: A Case is an object that contains the details of a support
-// case. It contains fields for the time it was created, its priority,
-// its classification, and more. Cases can also have comments and
-// attachments that get added over time. A case is parented by a Google
-// Cloud organization or project. Organizations are identified by a
-// number, so the name of a case parented by an organization would look
-// like this: ``` organizations/123/cases/456 ``` Projects have two
-// unique identifiers, an ID and a number, and they look like this: ```
-// projects/abc/cases/456 ``` ``` projects/123/cases/456 ``` You can use
-// either of them when calling the API. To learn more about project
-// identifiers, see AIP-2510 (https://google.aip.dev/cloud/2510).
+// Case: A Case is an object that contains the details of a support case. It
+// contains fields for the time it was created, its priority, its
+// classification, and more. Cases can also have comments and attachments that
+// get added over time. A case is parented by a Google Cloud organization or
+// project. Organizations are identified by a number, so the name of a case
+// parented by an organization would look like this: ```
+// organizations/123/cases/456 ``` Projects have two unique identifiers, an ID
+// and a number, and they look like this: ``` projects/abc/cases/456 ``` ```
+// projects/123/cases/456 ``` You can use either of them when calling the API.
+// To learn more about project identifiers, see AIP-2510
+// (https://google.aip.dev/cloud/2510).
 type Case struct {
 	// Classification: The issue classification applicable to this case.
 	Classification *CaseClassification `json:"classification,omitempty"`
-
 	// ContactEmail: A user-supplied email address to send case update
-	// notifications for. This should only be used in BYOID flows, where we
-	// cannot infer the user's email address directly from their EUCs.
+	// notifications for. This should only be used in BYOID flows, where we cannot
+	// infer the user's email address directly from their EUCs.
 	ContactEmail string `json:"contactEmail,omitempty"`
-
 	// CreateTime: Output only. The time this case was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Creator: The user who created the case. Note: The name and email will
-	// be obfuscated if the case was created by Google Support.
+	// Creator: The user who created the case. Note: The name and email will be
+	// obfuscated if the case was created by Google Support.
 	Creator *Actor `json:"creator,omitempty"`
-
 	// Description: A broad description of the issue.
 	Description string `json:"description,omitempty"`
-
 	// DisplayName: The short summary of the issue reported in this case.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Escalated: Whether the case is currently escalated.
 	Escalated bool `json:"escalated,omitempty"`
-
-	// LanguageCode: The language the user has requested to receive support
-	// in. This should be a BCP 47 language code (e.g., "en", "zh-CN",
-	// "zh-TW", "ja", "ko"). If no language or an unsupported language
-	// is specified, this field defaults to English (en). Language selection
-	// during case creation may affect your available support options. For a
-	// list of supported languages and their support working hours, see:
+	// LanguageCode: The language the user has requested to receive support in.
+	// This should be a BCP 47 language code (e.g., "en", "zh-CN", "zh-TW",
+	// "ja", "ko"). If no language or an unsupported language is specified,
+	// this field defaults to English (en). Language selection during case creation
+	// may affect your available support options. For a list of supported languages
+	// and their support working hours, see:
 	// https://cloud.google.com/support/docs/language-working-hours
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// Name: The resource name for the case.
 	Name string `json:"name,omitempty"`
-
 	// Priority: The priority of this case.
 	//
 	// Possible values:
-	//   "PRIORITY_UNSPECIFIED" - Priority is undefined or has not been set
-	// yet.
-	//   "P0" - Extreme impact on a production service. Service is hard
-	// down.
-	//   "P1" - Critical impact on a production service. Service is
-	// currently unusable.
+	//   "PRIORITY_UNSPECIFIED" - Priority is undefined or has not been set yet.
+	//   "P0" - Extreme impact on a production service. Service is hard down.
+	//   "P1" - Critical impact on a production service. Service is currently
+	// unusable.
 	//   "P2" - Severe impact on a production service. Service is usable but
 	// greatly impaired.
-	//   "P3" - Medium impact on a production service. Service is available,
-	// but moderately impaired.
-	//   "P4" - General questions or minor issues. Production service is
-	// fully available.
+	//   "P3" - Medium impact on a production service. Service is available, but
+	// moderately impaired.
+	//   "P4" - General questions or minor issues. Production service is fully
+	// available.
 	Priority string `json:"priority,omitempty"`
-
 	// State: Output only. The current status of the support case.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Case is in an unknown state.
-	//   "NEW" - The case has been created but no one is assigned to work on
-	// it yet.
-	//   "IN_PROGRESS_GOOGLE_SUPPORT" - The case is currently being handled
-	// by Google support.
+	//   "NEW" - The case has been created but no one is assigned to work on it
+	// yet.
+	//   "IN_PROGRESS_GOOGLE_SUPPORT" - The case is currently being handled by
+	// Google support.
 	//   "ACTION_REQUIRED" - Google is waiting for a response.
-	//   "SOLUTION_PROVIDED" - A solution has been offered for the case, but
-	// it isn't yet closed.
+	//   "SOLUTION_PROVIDED" - A solution has been offered for the case, but it
+	// isn't yet closed.
 	//   "CLOSED" - The case has been resolved.
 	State string `json:"state,omitempty"`
-
-	// SubscriberEmailAddresses: The email addresses to receive updates on
-	// this case.
+	// SubscriberEmailAddresses: The email addresses to receive updates on this
+	// case.
 	SubscriberEmailAddresses []string `json:"subscriberEmailAddresses,omitempty"`
-
-	// TestCase: Whether this case was created for internal API testing and
-	// should not be acted on by the support team.
+	// TestCase: Whether this case was created for internal API testing and should
+	// not be acted on by the support team.
 	TestCase bool `json:"testCase,omitempty"`
-
-	// TimeZone: The timezone of the user who created the support case. It
-	// should be in a format IANA recognizes:
-	// https://www.iana.org/time-zones. There is no additional validation
-	// done by the API.
+	// TimeZone: The timezone of the user who created the support case. It should
+	// be in a format IANA recognizes: https://www.iana.org/time-zones. There is no
+	// additional validation done by the API.
 	TimeZone string `json:"timeZone,omitempty"`
-
 	// UpdateTime: Output only. The time this case was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Classification") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Classification") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Classification") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Case) MarshalJSON() ([]byte, error) {
 	type NoMethod Case
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CaseClassification: A Case Classification represents the topic that a
-// case is about. It's very important to use accurate classifications,
-// because they're used to route your cases to specialists who can help
-// you. A classification always has an ID that is its unique identifier.
-// A valid ID is required when creating a case.
+// CaseClassification: A Case Classification represents the topic that a case
+// is about. It's very important to use accurate classifications, because
+// they're used to route your cases to specialists who can help you. A
+// classification always has an ID that is its unique identifier. A valid ID is
+// required when creating a case.
 type CaseClassification struct {
-	// DisplayName: A display name for the classification. The display name
-	// is not static and can change. To uniquely and consistently identify
+	// DisplayName: A display name for the classification. The display name is not
+	// static and can change. To uniquely and consistently identify
 	// classifications, use the `CaseClassification.id` field.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Id: The unique ID for a classification. Must be specified for case
-	// creation. To retrieve valid classification IDs for case creation, use
+	// Id: The unique ID for a classification. Must be specified for case creation.
+	// To retrieve valid classification IDs for case creation, use
 	// `caseClassifications.search`. Classification IDs returned by
-	// `caseClassifications.search` are guaranteed to be valid for at least
-	// 6 months. If a given classification is deactiveated, it will
-	// immediately stop being returned. After 6 months, `case.create`
-	// requests using the classification ID will fail.
+	// `caseClassifications.search` are guaranteed to be valid for at least 6
+	// months. If a given classification is deactiveated, it will immediately stop
+	// being returned. After 6 months, `case.create` requests using the
+	// classification ID will fail.
 	Id string `json:"id,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CaseClassification) MarshalJSON() ([]byte, error) {
 	type NoMethod CaseClassification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CloseCaseRequest: The request message for the CloseCase endpoint.
 type CloseCaseRequest struct {
 }
 
-// Comment: A comment associated with a support case. Case comments are
-// the primary way for Google Support to communicate with a user who has
-// opened a case. When a user responds to Google Support, the user's
-// responses also appear as comments.
+// Comment: A comment associated with a support case. Case comments are the
+// primary way for Google Support to communicate with a user who has opened a
+// case. When a user responds to Google Support, the user's responses also
+// appear as comments.
 type Comment struct {
 	// Body: The full comment body. Maximum of 12800 characters.
 	Body string `json:"body,omitempty"`
-
 	// CreateTime: Output only. The time when the comment was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Creator: Output only. The user or Google Support agent who created
-	// the comment.
+	// Creator: Output only. The user or Google Support agent who created the
+	// comment.
 	Creator *Actor `json:"creator,omitempty"`
-
 	// Name: Output only. Identifier. The resource name of the comment.
 	Name string `json:"name,omitempty"`
-
-	// PlainTextBody: Output only. DEPRECATED. DO NOT USE. A duplicate of
-	// the `body` field. This field is only present for legacy reasons.
+	// PlainTextBody: Output only. DEPRECATED. DO NOT USE. A duplicate of the
+	// `body` field. This field is only present for legacy reasons.
 	PlainTextBody string `json:"plainTextBody,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Body") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Body") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Comment) MarshalJSON() ([]byte, error) {
 	type NoMethod Comment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CompositeMedia: # gdata.* are outside protos with mising
-// documentation
+// CompositeMedia: # gdata.* are outside protos with mising documentation
 type CompositeMedia struct {
 	// BlobRef: # gdata.* are outside protos with mising documentation
 	BlobRef string `json:"blobRef,omitempty"`
-
-	// Blobstore2Info: # gdata.* are outside protos with mising
-	// documentation
+	// Blobstore2Info: # gdata.* are outside protos with mising documentation
 	Blobstore2Info *Blobstore2Info `json:"blobstore2Info,omitempty"`
-
-	// CosmoBinaryReference: # gdata.* are outside protos with mising
-	// documentation
+	// CosmoBinaryReference: # gdata.* are outside protos with mising documentation
 	CosmoBinaryReference string `json:"cosmoBinaryReference,omitempty"`
-
 	// Crc32cHash: # gdata.* are outside protos with mising documentation
 	Crc32cHash int64 `json:"crc32cHash,omitempty"`
-
 	// Inline: # gdata.* are outside protos with mising documentation
 	Inline string `json:"inline,omitempty"`
-
 	// Length: # gdata.* are outside protos with mising documentation
 	Length int64 `json:"length,omitempty,string"`
-
 	// Md5Hash: # gdata.* are outside protos with mising documentation
 	Md5Hash string `json:"md5Hash,omitempty"`
-
 	// ObjectId: # gdata.* are outside protos with mising documentation
 	ObjectId *ObjectId `json:"objectId,omitempty"`
-
 	// Path: # gdata.* are outside protos with mising documentation
 	Path string `json:"path,omitempty"`
-
 	// ReferenceType: # gdata.* are outside protos with mising documentation
 	//
 	// Possible values:
 	//   "PATH" - # gdata.* are outside protos with mising documentation
 	//   "BLOB_REF" - # gdata.* are outside protos with mising documentation
 	//   "INLINE" - # gdata.* are outside protos with mising documentation
-	//   "BIGSTORE_REF" - # gdata.* are outside protos with mising
-	// documentation
+	//   "BIGSTORE_REF" - # gdata.* are outside protos with mising documentation
 	//   "COSMO_BINARY_REFERENCE" - # gdata.* are outside protos with mising
 	// documentation
 	ReferenceType string `json:"referenceType,omitempty"`
-
 	// Sha1Hash: # gdata.* are outside protos with mising documentation
 	Sha1Hash string `json:"sha1Hash,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BlobRef") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BlobRef") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BlobRef") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BlobRef") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CompositeMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod CompositeMedia
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ContentTypeInfo: # gdata.* are outside protos with mising
-// documentation
+// ContentTypeInfo: # gdata.* are outside protos with mising documentation
 type ContentTypeInfo struct {
 	// BestGuess: # gdata.* are outside protos with mising documentation
 	BestGuess string `json:"bestGuess,omitempty"`
-
 	// FromBytes: # gdata.* are outside protos with mising documentation
 	FromBytes string `json:"fromBytes,omitempty"`
-
 	// FromFileName: # gdata.* are outside protos with mising documentation
 	FromFileName string `json:"fromFileName,omitempty"`
-
 	// FromHeader: # gdata.* are outside protos with mising documentation
 	FromHeader string `json:"fromHeader,omitempty"`
-
 	// FromUrlPath: # gdata.* are outside protos with mising documentation
 	FromUrlPath string `json:"fromUrlPath,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BestGuess") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BestGuess") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BestGuess") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ContentTypeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentTypeInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateAttachmentRequest: The request message for the CreateAttachment
@@ -700,314 +586,229 @@ func (s *ContentTypeInfo) MarshalJSON() ([]byte, error) {
 type CreateAttachmentRequest struct {
 	// Attachment: Required. The attachment to be created.
 	Attachment *Attachment `json:"attachment,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Attachment") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attachment") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attachment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreateAttachmentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateAttachmentRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DiffChecksumsResponse: # gdata.* are outside protos with mising
 // documentation
 type DiffChecksumsResponse struct {
-	// ChecksumsLocation: # gdata.* are outside protos with mising
-	// documentation
+	// ChecksumsLocation: # gdata.* are outside protos with mising documentation
 	ChecksumsLocation *CompositeMedia `json:"checksumsLocation,omitempty"`
-
-	// ChunkSizeBytes: # gdata.* are outside protos with mising
-	// documentation
+	// ChunkSizeBytes: # gdata.* are outside protos with mising documentation
 	ChunkSizeBytes int64 `json:"chunkSizeBytes,omitempty,string"`
-
-	// ObjectLocation: # gdata.* are outside protos with mising
-	// documentation
+	// ObjectLocation: # gdata.* are outside protos with mising documentation
 	ObjectLocation *CompositeMedia `json:"objectLocation,omitempty"`
-
-	// ObjectSizeBytes: # gdata.* are outside protos with mising
-	// documentation
+	// ObjectSizeBytes: # gdata.* are outside protos with mising documentation
 	ObjectSizeBytes int64 `json:"objectSizeBytes,omitempty,string"`
-
 	// ObjectVersion: # gdata.* are outside protos with mising documentation
 	ObjectVersion string `json:"objectVersion,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ChecksumsLocation")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ChecksumsLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChecksumsLocation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ChecksumsLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DiffChecksumsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffChecksumsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DiffDownloadResponse: # gdata.* are outside protos with mising
-// documentation
+// DiffDownloadResponse: # gdata.* are outside protos with mising documentation
 type DiffDownloadResponse struct {
-	// ObjectLocation: # gdata.* are outside protos with mising
-	// documentation
+	// ObjectLocation: # gdata.* are outside protos with mising documentation
 	ObjectLocation *CompositeMedia `json:"objectLocation,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ObjectLocation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ObjectLocation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ObjectLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DiffDownloadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffDownloadResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DiffUploadRequest: # gdata.* are outside protos with mising
-// documentation
+// DiffUploadRequest: # gdata.* are outside protos with mising documentation
 type DiffUploadRequest struct {
 	// ChecksumsInfo: # gdata.* are outside protos with mising documentation
 	ChecksumsInfo *CompositeMedia `json:"checksumsInfo,omitempty"`
-
 	// ObjectInfo: # gdata.* are outside protos with mising documentation
 	ObjectInfo *CompositeMedia `json:"objectInfo,omitempty"`
-
 	// ObjectVersion: # gdata.* are outside protos with mising documentation
 	ObjectVersion string `json:"objectVersion,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ChecksumsInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChecksumsInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ChecksumsInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DiffUploadRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffUploadRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DiffUploadResponse: # gdata.* are outside protos with mising
-// documentation
+// DiffUploadResponse: # gdata.* are outside protos with mising documentation
 type DiffUploadResponse struct {
 	// ObjectVersion: # gdata.* are outside protos with mising documentation
 	ObjectVersion string `json:"objectVersion,omitempty"`
-
-	// OriginalObject: # gdata.* are outside protos with mising
-	// documentation
+	// OriginalObject: # gdata.* are outside protos with mising documentation
 	OriginalObject *CompositeMedia `json:"originalObject,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ObjectVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ObjectVersion") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ObjectVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DiffUploadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffUploadResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DiffVersionResponse: # gdata.* are outside protos with mising
-// documentation
+// DiffVersionResponse: # gdata.* are outside protos with mising documentation
 type DiffVersionResponse struct {
-	// ObjectSizeBytes: # gdata.* are outside protos with mising
-	// documentation
+	// ObjectSizeBytes: # gdata.* are outside protos with mising documentation
 	ObjectSizeBytes int64 `json:"objectSizeBytes,omitempty,string"`
-
 	// ObjectVersion: # gdata.* are outside protos with mising documentation
 	ObjectVersion string `json:"objectVersion,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ObjectSizeBytes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ObjectSizeBytes") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ObjectSizeBytes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DiffVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiffVersionResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DownloadParameters: # gdata.* are outside protos with mising
-// documentation
+// DownloadParameters: # gdata.* are outside protos with mising documentation
 type DownloadParameters struct {
-	// AllowGzipCompression: # gdata.* are outside protos with mising
-	// documentation
+	// AllowGzipCompression: # gdata.* are outside protos with mising documentation
 	AllowGzipCompression bool `json:"allowGzipCompression,omitempty"`
-
 	// IgnoreRange: # gdata.* are outside protos with mising documentation
 	IgnoreRange bool `json:"ignoreRange,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AllowGzipCompression") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AllowGzipCompression") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowGzipCompression") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AllowGzipCompression") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DownloadParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod DownloadParameters
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// EscalateCaseRequest: The request message for the EscalateCase
-// endpoint.
+// EscalateCaseRequest: The request message for the EscalateCase endpoint.
 type EscalateCaseRequest struct {
 	// Escalation: The escalation information to be sent with the escalation
 	// request.
 	Escalation *Escalation `json:"escalation,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Escalation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Escalation") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Escalation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EscalateCaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EscalateCaseRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Escalation: An escalation of a support case.
 type Escalation struct {
-	// Justification: Required. A free text description to accompany the
-	// `reason` field above. Provides additional context on why the case is
-	// being escalated.
+	// Justification: Required. A free text description to accompany the `reason`
+	// field above. Provides additional context on why the case is being escalated.
 	Justification string `json:"justification,omitempty"`
-
 	// Reason: Required. The reason why the Case is being escalated.
 	//
 	// Possible values:
-	//   "REASON_UNSPECIFIED" - The escalation reason is in an unknown state
-	// or has not been specified.
+	//   "REASON_UNSPECIFIED" - The escalation reason is in an unknown state or has
+	// not been specified.
 	//   "RESOLUTION_TIME" - The case is taking too long to resolve.
-	//   "TECHNICAL_EXPERTISE" - The support agent does not have the
-	// expertise required to successfully resolve the issue.
-	//   "BUSINESS_IMPACT" - The issue is having a significant business
-	// impact.
+	//   "TECHNICAL_EXPERTISE" - The support agent does not have the expertise
+	// required to successfully resolve the issue.
+	//   "BUSINESS_IMPACT" - The issue is having a significant business impact.
 	Reason string `json:"reason,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Justification") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Justification") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Justification") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Escalation) MarshalJSON() ([]byte, error) {
 	type NoMethod Escalation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAttachmentsResponse: The response message for the ListAttachments
@@ -1015,220 +816,156 @@ func (s *Escalation) MarshalJSON() ([]byte, error) {
 type ListAttachmentsResponse struct {
 	// Attachments: The list of attachments associated with a case.
 	Attachments []*Attachment `json:"attachments,omitempty"`
-
-	// NextPageToken: A token to retrieve the next page of results. Set this
-	// in the `page_token` field of subsequent `cases.attachments.list`
-	// requests. If unspecified, there are no more results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. Set this in the
+	// `page_token` field of subsequent `cases.attachments.list` requests. If
+	// unspecified, there are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Attachments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attachments") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attachments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAttachmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAttachmentsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCasesResponse: The response message for the ListCases endpoint.
 type ListCasesResponse struct {
-	// Cases: The list of cases associated with the parent after any filters
-	// have been applied.
+	// Cases: The list of cases associated with the parent after any filters have
+	// been applied.
 	Cases []*Case `json:"cases,omitempty"`
-
-	// NextPageToken: A token to retrieve the next page of results. Set this
-	// in the `page_token` field of subsequent `cases.list` requests. If
-	// unspecified, there are no more results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. Set this in the
+	// `page_token` field of subsequent `cases.list` requests. If unspecified,
+	// there are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Cases") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Cases") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Cases") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCasesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListCommentsResponse: The response message for the ListComments
-// endpoint.
+// ListCommentsResponse: The response message for the ListComments endpoint.
 type ListCommentsResponse struct {
 	// Comments: List of the comments associated with the case.
 	Comments []*Comment `json:"comments,omitempty"`
-
-	// NextPageToken: A token to retrieve the next page of results. Set this
-	// in the `page_token` field of subsequent `cases.comments.list`
-	// requests. If unspecified, there are no more results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. Set this in the
+	// `page_token` field of subsequent `cases.comments.list` requests. If
+	// unspecified, there are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Comments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Comments") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Comments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCommentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCommentsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Media: # gdata.* are outside protos with mising documentation
 type Media struct {
 	// Algorithm: # gdata.* are outside protos with mising documentation
 	Algorithm string `json:"algorithm,omitempty"`
-
-	// BigstoreObjectRef: # gdata.* are outside protos with mising
-	// documentation
+	// BigstoreObjectRef: # gdata.* are outside protos with mising documentation
 	BigstoreObjectRef string `json:"bigstoreObjectRef,omitempty"`
-
 	// BlobRef: # gdata.* are outside protos with mising documentation
 	BlobRef string `json:"blobRef,omitempty"`
-
-	// Blobstore2Info: # gdata.* are outside protos with mising
-	// documentation
+	// Blobstore2Info: # gdata.* are outside protos with mising documentation
 	Blobstore2Info *Blobstore2Info `json:"blobstore2Info,omitempty"`
-
-	// CompositeMedia: # gdata.* are outside protos with mising
-	// documentation
+	// CompositeMedia: # gdata.* are outside protos with mising documentation
 	CompositeMedia []*CompositeMedia `json:"compositeMedia,omitempty"`
-
 	// ContentType: # gdata.* are outside protos with mising documentation
 	ContentType string `json:"contentType,omitempty"`
-
-	// ContentTypeInfo: # gdata.* are outside protos with mising
-	// documentation
+	// ContentTypeInfo: # gdata.* are outside protos with mising documentation
 	ContentTypeInfo *ContentTypeInfo `json:"contentTypeInfo,omitempty"`
-
-	// CosmoBinaryReference: # gdata.* are outside protos with mising
-	// documentation
+	// CosmoBinaryReference: # gdata.* are outside protos with mising documentation
 	CosmoBinaryReference string `json:"cosmoBinaryReference,omitempty"`
-
 	// Crc32cHash: # gdata.* are outside protos with mising documentation
 	Crc32cHash int64 `json:"crc32cHash,omitempty"`
-
 	// DiffChecksumsResponse: # gdata.* are outside protos with mising
 	// documentation
 	DiffChecksumsResponse *DiffChecksumsResponse `json:"diffChecksumsResponse,omitempty"`
-
-	// DiffDownloadResponse: # gdata.* are outside protos with mising
-	// documentation
+	// DiffDownloadResponse: # gdata.* are outside protos with mising documentation
 	DiffDownloadResponse *DiffDownloadResponse `json:"diffDownloadResponse,omitempty"`
-
-	// DiffUploadRequest: # gdata.* are outside protos with mising
-	// documentation
+	// DiffUploadRequest: # gdata.* are outside protos with mising documentation
 	DiffUploadRequest *DiffUploadRequest `json:"diffUploadRequest,omitempty"`
-
-	// DiffUploadResponse: # gdata.* are outside protos with mising
-	// documentation
+	// DiffUploadResponse: # gdata.* are outside protos with mising documentation
 	DiffUploadResponse *DiffUploadResponse `json:"diffUploadResponse,omitempty"`
-
-	// DiffVersionResponse: # gdata.* are outside protos with mising
-	// documentation
+	// DiffVersionResponse: # gdata.* are outside protos with mising documentation
 	DiffVersionResponse *DiffVersionResponse `json:"diffVersionResponse,omitempty"`
-
-	// DownloadParameters: # gdata.* are outside protos with mising
-	// documentation
+	// DownloadParameters: # gdata.* are outside protos with mising documentation
 	DownloadParameters *DownloadParameters `json:"downloadParameters,omitempty"`
-
 	// Filename: # gdata.* are outside protos with mising documentation
 	Filename string `json:"filename,omitempty"`
-
 	// Hash: # gdata.* are outside protos with mising documentation
 	Hash string `json:"hash,omitempty"`
-
 	// HashVerified: # gdata.* are outside protos with mising documentation
 	HashVerified bool `json:"hashVerified,omitempty"`
-
 	// Inline: # gdata.* are outside protos with mising documentation
 	Inline string `json:"inline,omitempty"`
-
-	// IsPotentialRetry: # gdata.* are outside protos with mising
-	// documentation
+	// IsPotentialRetry: # gdata.* are outside protos with mising documentation
 	IsPotentialRetry bool `json:"isPotentialRetry,omitempty"`
-
 	// Length: # gdata.* are outside protos with mising documentation
 	Length int64 `json:"length,omitempty,string"`
-
 	// Md5Hash: # gdata.* are outside protos with mising documentation
 	Md5Hash string `json:"md5Hash,omitempty"`
-
 	// MediaId: # gdata.* are outside protos with mising documentation
 	MediaId string `json:"mediaId,omitempty"`
-
 	// ObjectId: # gdata.* are outside protos with mising documentation
 	ObjectId *ObjectId `json:"objectId,omitempty"`
-
 	// Path: # gdata.* are outside protos with mising documentation
 	Path string `json:"path,omitempty"`
-
 	// ReferenceType: # gdata.* are outside protos with mising documentation
 	//
 	// Possible values:
 	//   "PATH" - # gdata.* are outside protos with mising documentation
 	//   "BLOB_REF" - # gdata.* are outside protos with mising documentation
 	//   "INLINE" - # gdata.* are outside protos with mising documentation
-	//   "GET_MEDIA" - # gdata.* are outside protos with mising
-	// documentation
-	//   "COMPOSITE_MEDIA" - # gdata.* are outside protos with mising
-	// documentation
-	//   "BIGSTORE_REF" - # gdata.* are outside protos with mising
-	// documentation
+	//   "GET_MEDIA" - # gdata.* are outside protos with mising documentation
+	//   "COMPOSITE_MEDIA" - # gdata.* are outside protos with mising documentation
+	//   "BIGSTORE_REF" - # gdata.* are outside protos with mising documentation
 	//   "DIFF_VERSION_RESPONSE" - # gdata.* are outside protos with mising
 	// documentation
-	//   "DIFF_CHECKSUMS_RESPONSE" - # gdata.* are outside protos with
-	// mising documentation
+	//   "DIFF_CHECKSUMS_RESPONSE" - # gdata.* are outside protos with mising
+	// documentation
 	//   "DIFF_DOWNLOAD_RESPONSE" - # gdata.* are outside protos with mising
 	// documentation
 	//   "DIFF_UPLOAD_REQUEST" - # gdata.* are outside protos with mising
@@ -1237,81 +974,61 @@ type Media struct {
 	// documentation
 	//   "COSMO_BINARY_REFERENCE" - # gdata.* are outside protos with mising
 	// documentation
-	//   "ARBITRARY_BYTES" - # gdata.* are outside protos with mising
-	// documentation
+	//   "ARBITRARY_BYTES" - # gdata.* are outside protos with mising documentation
 	ReferenceType string `json:"referenceType,omitempty"`
-
 	// Sha1Hash: # gdata.* are outside protos with mising documentation
 	Sha1Hash string `json:"sha1Hash,omitempty"`
-
 	// Sha256Hash: # gdata.* are outside protos with mising documentation
 	Sha256Hash string `json:"sha256Hash,omitempty"`
-
 	// Timestamp: # gdata.* are outside protos with mising documentation
 	Timestamp uint64 `json:"timestamp,omitempty,string"`
-
 	// Token: # gdata.* are outside protos with mising documentation
 	Token string `json:"token,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Algorithm") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Algorithm") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Media) MarshalJSON() ([]byte, error) {
 	type NoMethod Media
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ObjectId: # gdata.* are outside protos with mising documentation
 type ObjectId struct {
 	// BucketName: # gdata.* are outside protos with mising documentation
 	BucketName string `json:"bucketName,omitempty"`
-
 	// Generation: # gdata.* are outside protos with mising documentation
 	Generation int64 `json:"generation,omitempty,string"`
-
 	// ObjectName: # gdata.* are outside protos with mising documentation
 	ObjectName string `json:"objectName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BucketName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BucketName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BucketName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ObjectId) MarshalJSON() ([]byte, error) {
 	type NoMethod ObjectId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchCaseClassificationsResponse: The response message for
@@ -1319,132 +1036,103 @@ func (s *ObjectId) MarshalJSON() ([]byte, error) {
 type SearchCaseClassificationsResponse struct {
 	// CaseClassifications: The classifications retrieved.
 	CaseClassifications []*CaseClassification `json:"caseClassifications,omitempty"`
-
-	// NextPageToken: A token to retrieve the next page of results. Set this
-	// in the `page_token` field of subsequent `caseClassifications.list`
-	// requests. If unspecified, there are no more results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. Set this in the
+	// `page_token` field of subsequent `caseClassifications.list` requests. If
+	// unspecified, there are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CaseClassifications")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CaseClassifications") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CaseClassifications") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CaseClassifications") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SearchCaseClassificationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchCaseClassificationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchCasesResponse: The response message for the SearchCases
-// endpoint.
+// SearchCasesResponse: The response message for the SearchCases endpoint.
 type SearchCasesResponse struct {
-	// Cases: The list of cases associated with the parent after any filters
-	// have been applied.
+	// Cases: The list of cases associated with the parent after any filters have
+	// been applied.
 	Cases []*Case `json:"cases,omitempty"`
-
-	// NextPageToken: A token to retrieve the next page of results. Set this
-	// in the `page_token` field of subsequent `cases.search` requests. If
-	// unspecified, there are no more results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. Set this in the
+	// `page_token` field of subsequent `cases.search` requests. If unspecified,
+	// there are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Cases") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Cases") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Cases") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SearchCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchCasesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// WorkflowOperationMetadata: Metadata about the operation. Used to
-// lookup the current status.
+// WorkflowOperationMetadata: Metadata about the operation. Used to lookup the
+// current status.
 type WorkflowOperationMetadata struct {
-	// Namespace: The namespace that the job was scheduled in. Must be
-	// included in the workflow metadata so the workflow status can be
-	// retrieved.
+	// Namespace: The namespace that the job was scheduled in. Must be included in
+	// the workflow metadata so the workflow status can be retrieved.
 	Namespace string `json:"namespace,omitempty"`
-
 	// OperationAction: The type of action the operation is classified as.
 	//
 	// Possible values:
 	//   "OPERATION_ACTION_UNSPECIFIED" - Operation action is not specified.
-	//   "CREATE_SUPPORT_ACCOUNT" - Operation pertains to the creation of a
-	// new support account.
+	//   "CREATE_SUPPORT_ACCOUNT" - Operation pertains to the creation of a new
+	// support account.
 	//   "UPDATE_SUPPORT_ACCOUNT" - Operation pertains to the updating of an
 	// existing support account.
-	//   "PURCHASE_SUPPORT_ACCOUNT" - Operation pertains to the purchasing
-	// of a support plan that may either create or update a support account.
+	//   "PURCHASE_SUPPORT_ACCOUNT" - Operation pertains to the purchasing of a
+	// support plan that may either create or update a support account.
 	OperationAction string `json:"operationAction,omitempty"`
-
-	// WorkflowOperationType: Which version of the workflow service this
-	// operation came from.
+	// WorkflowOperationType: Which version of the workflow service this operation
+	// came from.
 	//
 	// Possible values:
 	//   "UNKNOWN_OPERATION_TYPE" - Unknown version.
 	//   "WORKFLOWS_V1" - Version 1.
 	//   "WORKFLOWS_V2" - Version 2.
 	WorkflowOperationType string `json:"workflowOperationType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Namespace") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Namespace") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Namespace") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *WorkflowOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkflowOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "cloudsupport.caseClassifications.search":
 
 type CaseClassificationsSearchCall struct {
 	s            *Service
@@ -1454,83 +1142,73 @@ type CaseClassificationsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Retrieve valid classifications to use when creating a support
-// case. Classifications are hierarchical. Each classification is a
-// string containing all levels of the hierarchy separated by " > ".
-// For example, "Technical Issue > Compute > Compute Engine".
-// Classification IDs returned by this endpoint are valid for at least
-// six months. When a classification is deactivated, this endpoint
-// immediately stops returning it. After six months, `case.create`
-// requests using the classification will fail. EXAMPLES: cURL: ```shell
-// curl \ --header "Authorization: Bearer $(gcloud auth
+// Search: Retrieve valid classifications to use when creating a support case.
+// Classifications are hierarchical. Each classification is a string containing
+// all levels of the hierarchy separated by " > ". For example, "Technical
+// Issue > Compute > Compute Engine". Classification IDs returned by this
+// endpoint are valid for at least six months. When a classification is
+// deactivated, this endpoint immediately stops returning it. After six months,
+// `case.create` requests using the classification will fail. EXAMPLES: cURL:
+// ```shell curl \ --header "Authorization: Bearer $(gcloud auth
 // print-access-token)" \
-// 'https://cloudsupport.googleapis.com/v2/caseClassifications:search?que
-// ry=display_name:"*Compute%20Engine*"' ``` Python: ```python import
+// 'https://cloudsupport.googleapis.com/v2/caseClassifications:search?query=disp
+// lay_name:"*Compute%20Engine*"' ``` Python: ```python import
 // googleapiclient.discovery supportApiService =
-// googleapiclient.discovery.build( serviceName="cloudsupport",
-// version="v2",
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version=v2", ) request =
-// supportApiService.caseClassifications().search(
-// query='display_name:"*Compute Engine*"' ) print(request.execute())
-// ```
+// googleapiclient.discovery.build( serviceName="cloudsupport", version="v2",
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion=v2", ) request = supportApiService.caseClassifications().search(
+// query='display_name:"*Compute Engine*"' ) print(request.execute()) ```
 func (r *CaseClassificationsService) Search() *CaseClassificationsSearchCall {
 	c := &CaseClassificationsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of classifications fetched with each request.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// classifications fetched with each request.
 func (c *CaseClassificationsSearchCall) PageSize(pageSize int64) *CaseClassificationsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying the page of results to return. If unspecified, the first
-// page is retrieved.
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// page of results to return. If unspecified, the first page is retrieved.
 func (c *CaseClassificationsSearchCall) PageToken(pageToken string) *CaseClassificationsSearchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Query sets the optional parameter "query": An expression used to
-// filter case classifications. If it's an empty string, then no
-// filtering happens. Otherwise, case classifications will be returned
-// that match the filter.
+// Query sets the optional parameter "query": An expression used to filter case
+// classifications. If it's an empty string, then no filtering happens.
+// Otherwise, case classifications will be returned that match the filter.
 func (c *CaseClassificationsSearchCall) Query(query string) *CaseClassificationsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CaseClassificationsSearchCall) Fields(s ...googleapi.Field) *CaseClassificationsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CaseClassificationsSearchCall) IfNoneMatch(entityTag string) *CaseClassificationsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CaseClassificationsSearchCall) Context(ctx context.Context) *CaseClassificationsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CaseClassificationsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1539,12 +1217,7 @@ func (c *CaseClassificationsSearchCall) Header() http.Header {
 }
 
 func (c *CaseClassificationsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1562,13 +1235,11 @@ func (c *CaseClassificationsSearchCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "cloudsupport.caseClassifications.search" call.
-// Exactly one of *SearchCaseClassificationsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *SearchCaseClassificationsResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchCaseClassificationsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CaseClassificationsSearchCall) Do(opts ...googleapi.CallOption) (*SearchCaseClassificationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1599,39 +1270,6 @@ func (c *CaseClassificationsSearchCall) Do(opts ...googleapi.CallOption) (*Searc
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve valid classifications to use when creating a support case. Classifications are hierarchical. Each classification is a string containing all levels of the hierarchy separated by `\" \u003e \"`. For example, `\"Technical Issue \u003e Compute \u003e Compute Engine\"`. Classification IDs returned by this endpoint are valid for at least six months. When a classification is deactivated, this endpoint immediately stops returning it. After six months, `case.create` requests using the classification will fail. EXAMPLES: cURL: ```shell curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ 'https://cloudsupport.googleapis.com/v2/caseClassifications:search?query=display_name:\"*Compute%20Engine*\"' ``` Python: ```python import googleapiclient.discovery supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=\"v2\", discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version=v2\", ) request = supportApiService.caseClassifications().search( query='display_name:\"*Compute Engine*\"' ) print(request.execute()) ```",
-	//   "flatPath": "v2/caseClassifications:search",
-	//   "httpMethod": "GET",
-	//   "id": "cloudsupport.caseClassifications.search",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of classifications fetched with each request.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying the page of results to return. If unspecified, the first page is retrieved.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "An expression used to filter case classifications. If it's an empty string, then no filtering happens. Otherwise, case classifications will be returned that match the filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/caseClassifications:search",
-	//   "response": {
-	//     "$ref": "SearchCaseClassificationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1639,7 +1277,7 @@ func (c *CaseClassificationsSearchCall) Do(opts ...googleapi.CallOption) (*Searc
 // The provided context supersedes any context provided to the Context method.
 func (c *CaseClassificationsSearchCall) Pages(ctx context.Context, f func(*SearchCaseClassificationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1655,8 +1293,6 @@ func (c *CaseClassificationsSearchCall) Pages(ctx context.Context, f func(*Searc
 	}
 }
 
-// method id "cloudsupport.cases.close":
-
 type CasesCloseCall struct {
 	s                *Service
 	name             string
@@ -1667,17 +1303,15 @@ type CasesCloseCall struct {
 }
 
 // Close: Close a case. EXAMPLES: cURL: ```shell
-// case="projects/some-project/cases/43595344" curl \ --request POST \
-// --header "Authorization: Bearer $(gcloud auth print-access-token)" \
-// "https://cloudsupport.googleapis.com/v2/$case:close" ``` Python:
-// ```python import googleapiclient.discovery api_version = "v2"
-// supportApiService = googleapiclient.discovery.build(
-// serviceName="cloudsupport", version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) request =
-// supportApiService.cases().close(
-// name="projects/some-project/cases/43595344" )
-// print(request.execute()) ```
+// case="projects/some-project/cases/43595344" curl \ --request POST \ --header
+// "Authorization: Bearer $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$case:close" ``` Python: ```python
+// import googleapiclient.discovery api_version = "v2" supportApiService =
+// googleapiclient.discovery.build( serviceName="cloudsupport",
+// version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = supportApiService.cases().close(
+// name="projects/some-project/cases/43595344" ) print(request.execute()) ```
 //
 // - name: The name of the case to close.
 func (r *CasesService) Close(name string, closecaserequest *CloseCaseRequest) *CasesCloseCall {
@@ -1688,23 +1322,21 @@ func (r *CasesService) Close(name string, closecaserequest *CloseCaseRequest) *C
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CasesCloseCall) Fields(s ...googleapi.Field) *CasesCloseCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CasesCloseCall) Context(ctx context.Context) *CasesCloseCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CasesCloseCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1713,18 +1345,12 @@ func (c *CasesCloseCall) Header() http.Header {
 }
 
 func (c *CasesCloseCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.closecaserequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:close")
@@ -1741,12 +1367,10 @@ func (c *CasesCloseCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudsupport.cases.close" call.
-// Exactly one of *Case or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Case.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CasesCloseCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1777,38 +1401,7 @@ func (c *CasesCloseCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Close a case. EXAMPLES: cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case:close\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().close( name=\"projects/some-project/cases/43595344\" ) print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}:close",
-	//   "httpMethod": "POST",
-	//   "id": "cloudsupport.cases.close",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the case to close.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}:close",
-	//   "request": {
-	//     "$ref": "CloseCaseRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Case"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudsupport.cases.create":
 
 type CasesCreateCall struct {
 	s          *Service
@@ -1819,34 +1412,33 @@ type CasesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Create a new case and associate it with a parent. It must
-// have the following fields set: `display_name`, `description`,
-// `classification`, and `priority`. If you're just testing the API and
-// don't want to route your case to an agent, set `testCase=true`.
-// EXAMPLES: cURL: ```shell parent="projects/some-project" curl \
-// --request POST \ --header "Authorization: Bearer $(gcloud auth
-// print-access-token)" \ --header 'Content-Type: application/json' \
-// --data '{ "display_name": "Test case created by me.", "description":
-// "a random test case, feel free to close", "classification": { "id":
-// "100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2
-// TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8" }, "time_zone":
-// "-07:00", "subscriber_email_addresses": [ "foo@domain.com",
-// "bar@domain.com" ], "testCase": true, "priority": "P3" }' \
-// "https://cloudsupport.googleapis.com/v2/$parent/cases" ``` Python:
-// ```python import googleapiclient.discovery api_version = "v2"
-// supportApiService = googleapiclient.discovery.build(
-// serviceName="cloudsupport", version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) request =
-// supportApiService.cases().create( parent="projects/some-project",
-// body={ "displayName": "A Test Case", "description": "This is a test
-// case.", "testCase": True, "priority": "P2", "classification": { "id":
-// "100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2
-// TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8" }, }, )
-// print(request.execute()) ```
+// Create: Create a new case and associate it with a parent. It must have the
+// following fields set: `display_name`, `description`, `classification`, and
+// `priority`. If you're just testing the API and don't want to route your case
+// to an agent, set `testCase=true`. EXAMPLES: cURL: ```shell
+// parent="projects/some-project" curl \ --request POST \ --header
+// "Authorization: Bearer $(gcloud auth print-access-token)" \ --header
+// 'Content-Type: application/json' \ --data '{ "display_name": "Test case
+// created by me.", "description": "a random test case, feel free to close",
+// "classification": { "id":
+// "100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN
+// 6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8" }, "time_zone": "-07:00",
+// "subscriber_email_addresses": [ "foo@domain.com", "bar@domain.com" ],
+// "testCase": true, "priority": "P3" }' \
+// "https://cloudsupport.googleapis.com/v2/$parent/cases" ``` Python: ```python
+// import googleapiclient.discovery api_version = "v2" supportApiService =
+// googleapiclient.discovery.build( serviceName="cloudsupport",
+// version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = supportApiService.cases().create(
+// parent="projects/some-project", body={ "displayName": "A Test Case",
+// "description": "This is a test case.", "testCase": True, "priority": "P2",
+// "classification": { "id":
+// "100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN
+// 6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8" }, }, ) print(request.execute())
+// ```
 //
-//   - parent: The name of the parent under which the case should be
-//     created.
+// - parent: The name of the parent under which the case should be created.
 func (r *CasesService) Create(parent string, case_ *Case) *CasesCreateCall {
 	c := &CasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1855,23 +1447,21 @@ func (r *CasesService) Create(parent string, case_ *Case) *CasesCreateCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CasesCreateCall) Fields(s ...googleapi.Field) *CasesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CasesCreateCall) Context(ctx context.Context) *CasesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CasesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1880,18 +1470,12 @@ func (c *CasesCreateCall) Header() http.Header {
 }
 
 func (c *CasesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.case_)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/cases")
@@ -1908,12 +1492,10 @@ func (c *CasesCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudsupport.cases.create" call.
-// Exactly one of *Case or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Case.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CasesCreateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1944,38 +1526,7 @@ func (c *CasesCreateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a new case and associate it with a parent. It must have the following fields set: `display_name`, `description`, `classification`, and `priority`. If you're just testing the API and don't want to route your case to an agent, set `testCase=true`. EXAMPLES: cURL: ```shell parent=\"projects/some-project\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header 'Content-Type: application/json' \\ --data '{ \"display_name\": \"Test case created by me.\", \"description\": \"a random test case, feel free to close\", \"classification\": { \"id\": \"100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8\" }, \"time_zone\": \"-07:00\", \"subscriber_email_addresses\": [ \"foo@domain.com\", \"bar@domain.com\" ], \"testCase\": true, \"priority\": \"P3\" }' \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().create( parent=\"projects/some-project\", body={ \"displayName\": \"A Test Case\", \"description\": \"This is a test case.\", \"testCase\": True, \"priority\": \"P2\", \"classification\": { \"id\": \"100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8\" }, }, ) print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases",
-	//   "httpMethod": "POST",
-	//   "id": "cloudsupport.cases.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the parent under which the case should be created.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/cases",
-	//   "request": {
-	//     "$ref": "Case"
-	//   },
-	//   "response": {
-	//     "$ref": "Case"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudsupport.cases.escalate":
 
 type CasesEscalateCall struct {
 	s                   *Service
@@ -1986,26 +1537,24 @@ type CasesEscalateCall struct {
 	header_             http.Header
 }
 
-// Escalate: Escalate a case, starting the Google Cloud Support
-// escalation management process. This operation is only available for
-// some support services. Go to https://cloud.google.com/support and
-// look for 'Technical support escalations' in the feature list to find
-// out which ones let you do that. EXAMPLES: cURL: ```shell
-// case="projects/some-project/cases/43595344" curl \ --request POST \
-// --header "Authorization: Bearer $(gcloud auth print-access-token)" \
-// --header "Content-Type: application/json" \ --data '{ "escalation": {
-// "reason": "BUSINESS_IMPACT", "justification": "This is a test
-// escalation." } }' \
+// Escalate: Escalate a case, starting the Google Cloud Support escalation
+// management process. This operation is only available for some support
+// services. Go to https://cloud.google.com/support and look for 'Technical
+// support escalations' in the feature list to find out which ones let you do
+// that. EXAMPLES: cURL: ```shell case="projects/some-project/cases/43595344"
+// curl \ --request POST \ --header "Authorization: Bearer $(gcloud auth
+// print-access-token)" \ --header "Content-Type: application/json" \ --data '{
+// "escalation": { "reason": "BUSINESS_IMPACT", "justification": "This is a
+// test escalation." } }' \
 // "https://cloudsupport.googleapis.com/v2/$case:escalate" ``` Python:
 // ```python import googleapiclient.discovery api_version = "v2"
 // supportApiService = googleapiclient.discovery.build(
 // serviceName="cloudsupport", version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) request =
-// supportApiService.cases().escalate(
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = supportApiService.cases().escalate(
 // name="projects/some-project/cases/43595344", body={ "escalation": {
-// "reason": "BUSINESS_IMPACT", "justification": "This is a test
-// escalation.", }, }, ) print(request.execute()) ```
+// "reason": "BUSINESS_IMPACT", "justification": "This is a test escalation.",
+// }, }, ) print(request.execute()) ```
 //
 // - name: The name of the case to be escalated.
 func (r *CasesService) Escalate(name string, escalatecaserequest *EscalateCaseRequest) *CasesEscalateCall {
@@ -2016,23 +1565,21 @@ func (r *CasesService) Escalate(name string, escalatecaserequest *EscalateCaseRe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CasesEscalateCall) Fields(s ...googleapi.Field) *CasesEscalateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CasesEscalateCall) Context(ctx context.Context) *CasesEscalateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CasesEscalateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2041,18 +1588,12 @@ func (c *CasesEscalateCall) Header() http.Header {
 }
 
 func (c *CasesEscalateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.escalatecaserequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:escalate")
@@ -2069,12 +1610,10 @@ func (c *CasesEscalateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudsupport.cases.escalate" call.
-// Exactly one of *Case or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Case.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CasesEscalateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2105,38 +1644,7 @@ func (c *CasesEscalateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Escalate a case, starting the Google Cloud Support escalation management process. This operation is only available for some support services. Go to https://cloud.google.com/support and look for 'Technical support escalations' in the feature list to find out which ones let you do that. EXAMPLES: cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header \"Content-Type: application/json\" \\ --data '{ \"escalation\": { \"reason\": \"BUSINESS_IMPACT\", \"justification\": \"This is a test escalation.\" } }' \\ \"https://cloudsupport.googleapis.com/v2/$case:escalate\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().escalate( name=\"projects/some-project/cases/43595344\", body={ \"escalation\": { \"reason\": \"BUSINESS_IMPACT\", \"justification\": \"This is a test escalation.\", }, }, ) print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}:escalate",
-	//   "httpMethod": "POST",
-	//   "id": "cloudsupport.cases.escalate",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the case to be escalated.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}:escalate",
-	//   "request": {
-	//     "$ref": "EscalateCaseRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Case"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudsupport.cases.get":
 
 type CasesGetCall struct {
 	s            *Service
@@ -2148,17 +1656,15 @@ type CasesGetCall struct {
 }
 
 // Get: Retrieve a case. EXAMPLES: cURL: ```shell
-// case="projects/some-project/cases/16033687" curl \ --header
-// "Authorization: Bearer $(gcloud auth print-access-token)" \
-// "https://cloudsupport.googleapis.com/v2/$case" ``` Python: ```python
-// import googleapiclient.discovery api_version = "v2" supportApiService
-// = googleapiclient.discovery.build( serviceName="cloudsupport",
+// case="projects/some-project/cases/16033687" curl \ --header "Authorization:
+// Bearer $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$case" ``` Python: ```python import
+// googleapiclient.discovery api_version = "v2" supportApiService =
+// googleapiclient.discovery.build( serviceName="cloudsupport",
 // version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) request =
-// supportApiService.cases().get(
-// name="projects/some-project/cases/43595344", )
-// print(request.execute()) ```
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = supportApiService.cases().get(
+// name="projects/some-project/cases/43595344", ) print(request.execute()) ```
 //
 // - name: The full name of a case to be retrieved.
 func (r *CasesService) Get(name string) *CasesGetCall {
@@ -2168,33 +1674,29 @@ func (r *CasesService) Get(name string) *CasesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CasesGetCall) Fields(s ...googleapi.Field) *CasesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CasesGetCall) IfNoneMatch(entityTag string) *CasesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CasesGetCall) Context(ctx context.Context) *CasesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CasesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2203,12 +1705,7 @@ func (c *CasesGetCall) Header() http.Header {
 }
 
 func (c *CasesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2229,12 +1726,10 @@ func (c *CasesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudsupport.cases.get" call.
-// Exactly one of *Case or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Case.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CasesGetCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2265,35 +1760,7 @@ func (c *CasesGetCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve a case. EXAMPLES: cURL: ```shell case=\"projects/some-project/cases/16033687\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().get( name=\"projects/some-project/cases/43595344\", ) print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudsupport.cases.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The full name of a case to be retrieved.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "Case"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudsupport.cases.list":
 
 type CasesListCall struct {
 	s            *Service
@@ -2304,18 +1771,18 @@ type CasesListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieve all cases under a parent, but not its children. For
-// example, listing cases under an organization only returns the cases
-// that are directly parented by that organization. To retrieve cases
-// under an organization and its projects, use `cases.search`. EXAMPLES:
-// cURL: ```shell parent="projects/some-project" curl \ --header
-// "Authorization: Bearer $(gcloud auth print-access-token)" \
-// "https://cloudsupport.googleapis.com/v2/$parent/cases" ``` Python:
-// ```python import googleapiclient.discovery api_version = "v2"
-// supportApiService = googleapiclient.discovery.build(
-// serviceName="cloudsupport", version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) request =
+// List: Retrieve all cases under a parent, but not its children. For example,
+// listing cases under an organization only returns the cases that are directly
+// parented by that organization. To retrieve cases under an organization and
+// its projects, use `cases.search`. EXAMPLES: cURL: ```shell
+// parent="projects/some-project" curl \ --header "Authorization: Bearer
+// $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$parent/cases" ``` Python: ```python
+// import googleapiclient.discovery api_version = "v2" supportApiService =
+// googleapiclient.discovery.build( serviceName="cloudsupport",
+// version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request =
 // supportApiService.cases().list(parent="projects/some-project")
 // print(request.execute()) ```
 //
@@ -2326,15 +1793,14 @@ func (r *CasesService) List(parent string) *CasesListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": An expression used to
-// filter cases. If it's an empty string, then no filtering happens.
-// Otherwise, the endpoint returns the cases that match the filter.
-// Expressions use the following fields separated by `AND` and specified
-// with `=`: - `state`: Can be `OPEN` or `CLOSED`. - `priority`: Can be
-// `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for
-// priority using the `OR` operator. For example, `priority=P1 OR
-// priority=P2`. - `creator.email`: The email address of the case
-// creator. EXAMPLES: - `state=CLOSED` - `state=OPEN AND
+// Filter sets the optional parameter "filter": An expression used to filter
+// cases. If it's an empty string, then no filtering happens. Otherwise, the
+// endpoint returns the cases that match the filter. Expressions use the
+// following fields separated by `AND` and specified with `=`: - `state`: Can
+// be `OPEN` or `CLOSED`. - `priority`: Can be `P0`, `P1`, `P2`, `P3`, or `P4`.
+// You can specify multiple values for priority using the `OR` operator. For
+// example, `priority=P1 OR priority=P2`. - `creator.email`: The email address
+// of the case creator. EXAMPLES: - `state=CLOSED` - `state=OPEN AND
 // creator.email="tester@example.com" - `state=OPEN AND (priority=P0 OR
 // priority=P1)`
 func (c *CasesListCall) Filter(filter string) *CasesListCall {
@@ -2342,49 +1808,44 @@ func (c *CasesListCall) Filter(filter string) *CasesListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of cases fetched with each request. Defaults to 10.
+// PageSize sets the optional parameter "pageSize": The maximum number of cases
+// fetched with each request. Defaults to 10.
 func (c *CasesListCall) PageSize(pageSize int64) *CasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying the page of results to return. If unspecified, the first
-// page is retrieved.
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// page of results to return. If unspecified, the first page is retrieved.
 func (c *CasesListCall) PageToken(pageToken string) *CasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CasesListCall) Fields(s ...googleapi.Field) *CasesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CasesListCall) IfNoneMatch(entityTag string) *CasesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CasesListCall) Context(ctx context.Context) *CasesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CasesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2393,12 +1854,7 @@ func (c *CasesListCall) Header() http.Header {
 }
 
 func (c *CasesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2419,12 +1875,11 @@ func (c *CasesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudsupport.cases.list" call.
-// Exactly one of *ListCasesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListCasesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCasesResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2455,48 +1910,6 @@ func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve all cases under a parent, but not its children. For example, listing cases under an organization only returns the cases that are directly parented by that organization. To retrieve cases under an organization and its projects, use `cases.search`. EXAMPLES: cURL: ```shell parent=\"projects/some-project\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().list(parent=\"projects/some-project\") print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases",
-	//   "httpMethod": "GET",
-	//   "id": "cloudsupport.cases.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "An expression used to filter cases. If it's an empty string, then no filtering happens. Otherwise, the endpoint returns the cases that match the filter. Expressions use the following fields separated by `AND` and specified with `=`: - `state`: Can be `OPEN` or `CLOSED`. - `priority`: Can be `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for priority using the `OR` operator. For example, `priority=P1 OR priority=P2`. - `creator.email`: The email address of the case creator. EXAMPLES: - `state=CLOSED` - `state=OPEN AND creator.email=\"tester@example.com\"` - `state=OPEN AND (priority=P0 OR priority=P1)`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of cases fetched with each request. Defaults to 10.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying the page of results to return. If unspecified, the first page is retrieved.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of a parent to list cases under.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/cases",
-	//   "response": {
-	//     "$ref": "ListCasesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2504,7 +1917,7 @@ func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, er
 // The provided context supersedes any context provided to the Context method.
 func (c *CasesListCall) Pages(ctx context.Context, f func(*ListCasesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2520,8 +1933,6 @@ func (c *CasesListCall) Pages(ctx context.Context, f func(*ListCasesResponse) er
 	}
 }
 
-// method id "cloudsupport.cases.patch":
-
 type CasesPatchCall struct {
 	s          *Service
 	name       string
@@ -2531,21 +1942,18 @@ type CasesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Update a case. Only some fields can be updated. EXAMPLES:
-// cURL: ```shell case="projects/some-project/cases/43595344" curl \
-// --request PATCH \ --header "Authorization: Bearer $(gcloud auth
-// print-access-token)" \ --header "Content-Type: application/json" \
-// --data '{ "priority": "P1" }' \
-// "https://cloudsupport.googleapis.com/v2/$case?updateMask=priority"
-// ``` Python: ```python import googleapiclient.discovery api_version =
-// "v2" supportApiService = googleapiclient.discovery.build(
+// Patch: Update a case. Only some fields can be updated. EXAMPLES: cURL:
+// ```shell case="projects/some-project/cases/43595344" curl \ --request PATCH
+// \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+// --header "Content-Type: application/json" \ --data '{ "priority": "P1" }' \
+// "https://cloudsupport.googleapis.com/v2/$case?updateMask=priority" ```
+// Python: ```python import googleapiclient.discovery api_version = "v2"
+// supportApiService = googleapiclient.discovery.build(
 // serviceName="cloudsupport", version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) request =
-// supportApiService.cases().patch(
-// name="projects/some-project/cases/43112854", body={ "displayName":
-// "This is Now a New Title", "priority": "P2", }, )
-// print(request.execute()) ```
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = supportApiService.cases().patch(
+// name="projects/some-project/cases/43112854", body={ "displayName": "This is
+// Now a New Title", "priority": "P2", }, ) print(request.execute()) ```
 //
 // - name: The resource name for the case.
 func (r *CasesService) Patch(name string, case_ *Case) *CasesPatchCall {
@@ -2555,37 +1963,35 @@ func (r *CasesService) Patch(name string, case_ *Case) *CasesPatchCall {
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": A list of
-// attributes of the case that should be updated. Supported values are
-// `priority`, `display_name`, and `subscriber_email_addresses`. If no
-// fields are specified, all supported fields are updated. Be careful -
-// if you do not provide a field mask, then you might accidentally clear
-// some fields. For example, if you leave the field mask empty and do
-// not provide a value for `subscriber_email_addresses`, then
-// `subscriber_email_addresses` is updated to empty.
+// UpdateMask sets the optional parameter "updateMask": A list of attributes of
+// the case that should be updated. Supported values are `priority`,
+// `display_name`, and `subscriber_email_addresses`. If no fields are
+// specified, all supported fields are updated. Be careful - if you do not
+// provide a field mask, then you might accidentally clear some fields. For
+// example, if you leave the field mask empty and do not provide a value for
+// `subscriber_email_addresses`, then `subscriber_email_addresses` is updated
+// to empty.
 func (c *CasesPatchCall) UpdateMask(updateMask string) *CasesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CasesPatchCall) Fields(s ...googleapi.Field) *CasesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CasesPatchCall) Context(ctx context.Context) *CasesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CasesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2594,18 +2000,12 @@ func (c *CasesPatchCall) Header() http.Header {
 }
 
 func (c *CasesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.case_)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -2622,12 +2022,10 @@ func (c *CasesPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudsupport.cases.patch" call.
-// Exactly one of *Case or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Case.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CasesPatchCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2658,44 +2056,7 @@ func (c *CasesPatchCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update a case. Only some fields can be updated. EXAMPLES: cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request PATCH \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header \"Content-Type: application/json\" \\ --data '{ \"priority\": \"P1\" }' \\ \"https://cloudsupport.googleapis.com/v2/$case?updateMask=priority\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().patch( name=\"projects/some-project/cases/43112854\", body={ \"displayName\": \"This is Now a New Title\", \"priority\": \"P2\", }, ) print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudsupport.cases.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name for the case.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "A list of attributes of the case that should be updated. Supported values are `priority`, `display_name`, and `subscriber_email_addresses`. If no fields are specified, all supported fields are updated. Be careful - if you do not provide a field mask, then you might accidentally clear some fields. For example, if you leave the field mask empty and do not provide a value for `subscriber_email_addresses`, then `subscriber_email_addresses` is updated to empty.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "Case"
-	//   },
-	//   "response": {
-	//     "$ref": "Case"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudsupport.cases.search":
 
 type CasesSearchCall struct {
 	s            *Service
@@ -2709,14 +2070,14 @@ type CasesSearchCall struct {
 // Search: Search for cases using a query. EXAMPLES: cURL: ```shell
 // parent="projects/some-project" curl \ --header "Authorization: Bearer
 // $(gcloud auth print-access-token)" \
-// "https://cloudsupport.googleapis.com/v2/$parent/cases:search" ```
-// Python: ```python import googleapiclient.discovery api_version = "v2"
+// "https://cloudsupport.googleapis.com/v2/$parent/cases:search" ``` Python:
+// ```python import googleapiclient.discovery api_version = "v2"
 // supportApiService = googleapiclient.discovery.build(
 // serviceName="cloudsupport", version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) request =
-// supportApiService.cases().search( parent="projects/some-project",
-// query="state=OPEN" ) print(request.execute()) ```
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = supportApiService.cases().search(
+// parent="projects/some-project", query="state=OPEN" )
+// print(request.execute()) ```
 //
 // - parent: The name of the parent resource to search for cases under.
 func (r *CasesService) Search(parent string) *CasesSearchCall {
@@ -2725,42 +2086,38 @@ func (r *CasesService) Search(parent string) *CasesSearchCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of cases fetched with each request. The default page size is 10.
+// PageSize sets the optional parameter "pageSize": The maximum number of cases
+// fetched with each request. The default page size is 10.
 func (c *CasesSearchCall) PageSize(pageSize int64) *CasesSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying the page of results to return. If unspecified, the first
-// page is retrieved.
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// page of results to return. If unspecified, the first page is retrieved.
 func (c *CasesSearchCall) PageToken(pageToken string) *CasesSearchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Query sets the optional parameter "query": An expression used to
-// filter cases. Expressions use the following fields separated by `AND`
-// and specified with `=`: - `organization`: An organization name in the
-// form `organizations/`. - `project`: A project name in the form
-// `projects/`. - `state`: Can be `OPEN` or `CLOSED`. - `priority`: Can
-// be `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values
-// for priority using the `OR` operator. For example, `priority=P1 OR
-// priority=P2`. - `creator.email`: The email address of the case
-// creator. You must specify either `organization` or `project`. To
-// search across `displayName`, `description`, and comments, use a
-// global restriction with no keyword or operator. For example, "my
+// Query sets the optional parameter "query": An expression used to filter
+// cases. Expressions use the following fields separated by `AND` and specified
+// with `=`: - `organization`: An organization name in the form
+// `organizations/`. - `project`: A project name in the form `projects/`. -
+// `state`: Can be `OPEN` or `CLOSED`. - `priority`: Can be `P0`, `P1`, `P2`,
+// `P3`, or `P4`. You can specify multiple values for priority using the `OR`
+// operator. For example, `priority=P1 OR priority=P2`. - `creator.email`: The
+// email address of the case creator. You must specify either `organization` or
+// `project`. To search across `displayName`, `description`, and comments, use
+// a global restriction with no keyword or operator. For example, "my
 // search". To search only cases updated after a certain date, use
-// `update_time` restricted with that particular date, time, and
-// timezone in ISO datetime format. For example,
-// `update_time>"2020-01-01T00:00:00-05:00". `update_time` only
-// supports the greater than operator (`>`). Examples: -
+// `update_time` restricted with that particular date, time, and timezone in
+// ISO datetime format. For example, `update_time>"2020-01-01T00:00:00-05:00".
+// `update_time` only supports the greater than operator (`>`). Examples: -
 // `organization="organizations/123456789" -
 // `project="projects/my-project-id" - `project="projects/123456789" -
 // `organization="organizations/123456789" AND state=CLOSED` -
-// `project="projects/my-project-id" AND
-// creator.email="tester@example.com" -
+// `project="projects/my-project-id" AND creator.email="tester@example.com" -
 // `project="projects/my-project-id" AND (priority=P0 OR priority=P1)`
 func (c *CasesSearchCall) Query(query string) *CasesSearchCall {
 	c.urlParams_.Set("query", query)
@@ -2768,33 +2125,29 @@ func (c *CasesSearchCall) Query(query string) *CasesSearchCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CasesSearchCall) Fields(s ...googleapi.Field) *CasesSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CasesSearchCall) IfNoneMatch(entityTag string) *CasesSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CasesSearchCall) Context(ctx context.Context) *CasesSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CasesSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2803,12 +2156,7 @@ func (c *CasesSearchCall) Header() http.Header {
 }
 
 func (c *CasesSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2829,12 +2177,11 @@ func (c *CasesSearchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudsupport.cases.search" call.
-// Exactly one of *SearchCasesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *SearchCasesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchCasesResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CasesSearchCall) Do(opts ...googleapi.CallOption) (*SearchCasesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2865,48 +2212,6 @@ func (c *CasesSearchCall) Do(opts ...googleapi.CallOption) (*SearchCasesResponse
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search for cases using a query. EXAMPLES: cURL: ```shell parent=\"projects/some-project\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases:search\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().search( parent=\"projects/some-project\", query=\"state=OPEN\" ) print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases:search",
-	//   "httpMethod": "GET",
-	//   "id": "cloudsupport.cases.search",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of cases fetched with each request. The default page size is 10.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying the page of results to return. If unspecified, the first page is retrieved.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The name of the parent resource to search for cases under.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "An expression used to filter cases. Expressions use the following fields separated by `AND` and specified with `=`: - `organization`: An organization name in the form `organizations/`. - `project`: A project name in the form `projects/`. - `state`: Can be `OPEN` or `CLOSED`. - `priority`: Can be `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for priority using the `OR` operator. For example, `priority=P1 OR priority=P2`. - `creator.email`: The email address of the case creator. You must specify either `organization` or `project`. To search across `displayName`, `description`, and comments, use a global restriction with no keyword or operator. For example, `\"my search\"`. To search only cases updated after a certain date, use `update_time` restricted with that particular date, time, and timezone in ISO datetime format. For example, `update_time\u003e\"2020-01-01T00:00:00-05:00\"`. `update_time` only supports the greater than operator (`\u003e`). Examples: - `organization=\"organizations/123456789\"` - `project=\"projects/my-project-id\"` - `project=\"projects/123456789\"` - `organization=\"organizations/123456789\" AND state=CLOSED` - `project=\"projects/my-project-id\" AND creator.email=\"tester@example.com\"` - `project=\"projects/my-project-id\" AND (priority=P0 OR priority=P1)`",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/cases:search",
-	//   "response": {
-	//     "$ref": "SearchCasesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2914,7 +2219,7 @@ func (c *CasesSearchCall) Do(opts ...googleapi.CallOption) (*SearchCasesResponse
 // The provided context supersedes any context provided to the Context method.
 func (c *CasesSearchCall) Pages(ctx context.Context, f func(*SearchCasesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2930,8 +2235,6 @@ func (c *CasesSearchCall) Pages(ctx context.Context, f func(*SearchCasesResponse
 	}
 }
 
-// method id "cloudsupport.cases.attachments.list":
-
 type CasesAttachmentsListCall struct {
 	s            *Service
 	parent       string
@@ -2941,71 +2244,64 @@ type CasesAttachmentsListCall struct {
 	header_      http.Header
 }
 
-// List: List all the attachments associated with a support case.
-// EXAMPLES: cURL: ```shell case="projects/some-project/cases/23598314"
-// curl \ --header "Authorization: Bearer $(gcloud auth
-// print-access-token)" \
-// "https://cloudsupport.googleapis.com/v2/$case/attachments" ```
-// Python: ```python import googleapiclient.discovery api_version = "v2"
+// List: List all the attachments associated with a support case. EXAMPLES:
+// cURL: ```shell case="projects/some-project/cases/23598314" curl \ --header
+// "Authorization: Bearer $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$case/attachments" ``` Python:
+// ```python import googleapiclient.discovery api_version = "v2"
 // supportApiService = googleapiclient.discovery.build(
 // serviceName="cloudsupport", version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) request = ( supportApiService.cases()
-// .attachments() .list(parent="projects/some-project/cases/43595344") )
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = ( supportApiService.cases() .attachments()
+// .list(parent="projects/some-project/cases/43595344") )
 // print(request.execute()) ```
 //
-//   - parent: The name of the case for which attachments should be
-//     listed.
+// - parent: The name of the case for which attachments should be listed.
 func (r *CasesAttachmentsService) List(parent string) *CasesAttachmentsListCall {
 	c := &CasesAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of attachments fetched with each request. If not provided, the
-// default is 10. The maximum page size that will be returned is 100.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// attachments fetched with each request. If not provided, the default is 10.
+// The maximum page size that will be returned is 100.
 func (c *CasesAttachmentsListCall) PageSize(pageSize int64) *CasesAttachmentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying the page of results to return. If unspecified, the first
-// page is retrieved.
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// page of results to return. If unspecified, the first page is retrieved.
 func (c *CasesAttachmentsListCall) PageToken(pageToken string) *CasesAttachmentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CasesAttachmentsListCall) Fields(s ...googleapi.Field) *CasesAttachmentsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CasesAttachmentsListCall) IfNoneMatch(entityTag string) *CasesAttachmentsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CasesAttachmentsListCall) Context(ctx context.Context) *CasesAttachmentsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CasesAttachmentsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3014,12 +2310,7 @@ func (c *CasesAttachmentsListCall) Header() http.Header {
 }
 
 func (c *CasesAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3040,12 +2331,11 @@ func (c *CasesAttachmentsListCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "cloudsupport.cases.attachments.list" call.
-// Exactly one of *ListAttachmentsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListAttachmentsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CasesAttachmentsListCall) Do(opts ...googleapi.CallOption) (*ListAttachmentsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3076,43 +2366,6 @@ func (c *CasesAttachmentsListCall) Do(opts ...googleapi.CallOption) (*ListAttach
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all the attachments associated with a support case. EXAMPLES: cURL: ```shell case=\"projects/some-project/cases/23598314\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case/attachments\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = ( supportApiService.cases() .attachments() .list(parent=\"projects/some-project/cases/43595344\") ) print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}/attachments",
-	//   "httpMethod": "GET",
-	//   "id": "cloudsupport.cases.attachments.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of attachments fetched with each request. If not provided, the default is 10. The maximum page size that will be returned is 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying the page of results to return. If unspecified, the first page is retrieved.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the case for which attachments should be listed.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/attachments",
-	//   "response": {
-	//     "$ref": "ListAttachmentsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3120,7 +2373,7 @@ func (c *CasesAttachmentsListCall) Do(opts ...googleapi.CallOption) (*ListAttach
 // The provided context supersedes any context provided to the Context method.
 func (c *CasesAttachmentsListCall) Pages(ctx context.Context, f func(*ListAttachmentsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3136,8 +2389,6 @@ func (c *CasesAttachmentsListCall) Pages(ctx context.Context, f func(*ListAttach
 	}
 }
 
-// method id "cloudsupport.cases.comments.create":
-
 type CasesCommentsCreateCall struct {
 	s          *Service
 	parent     string
@@ -3147,21 +2398,19 @@ type CasesCommentsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Add a new comment to a case. The comment must have the
-// following fields set: `body`. EXAMPLES: cURL: ```shell
-// case="projects/some-project/cases/43591344" curl \ --request POST \
-// --header "Authorization: Bearer $(gcloud auth print-access-token)" \
-// --header 'Content-Type: application/json' \ --data '{ "body": "This
-// is a test comment." }' \
-// "https://cloudsupport.googleapis.com/v2/$case/comments" ``` Python:
-// ```python import googleapiclient.discovery api_version = "v2"
+// Create: Add a new comment to a case. The comment must have the following
+// fields set: `body`. EXAMPLES: cURL: ```shell
+// case="projects/some-project/cases/43591344" curl \ --request POST \ --header
+// "Authorization: Bearer $(gcloud auth print-access-token)" \ --header
+// 'Content-Type: application/json' \ --data '{ "body": "This is a test
+// comment." }' \ "https://cloudsupport.googleapis.com/v2/$case/comments" ```
+// Python: ```python import googleapiclient.discovery api_version = "v2"
 // supportApiService = googleapiclient.discovery.build(
 // serviceName="cloudsupport", version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) request = ( supportApiService.cases()
-// .comments() .create( parent="projects/some-project/cases/43595344",
-// body={"body": "This is a test comment."}, ) )
-// print(request.execute()) ```
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = ( supportApiService.cases() .comments()
+// .create( parent="projects/some-project/cases/43595344", body={"body": "This
+// is a test comment."}, ) ) print(request.execute()) ```
 //
 // - parent: The name of the case to which the comment should be added.
 func (r *CasesCommentsService) Create(parent string, comment *Comment) *CasesCommentsCreateCall {
@@ -3172,23 +2421,21 @@ func (r *CasesCommentsService) Create(parent string, comment *Comment) *CasesCom
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CasesCommentsCreateCall) Fields(s ...googleapi.Field) *CasesCommentsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CasesCommentsCreateCall) Context(ctx context.Context) *CasesCommentsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CasesCommentsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3197,18 +2444,12 @@ func (c *CasesCommentsCreateCall) Header() http.Header {
 }
 
 func (c *CasesCommentsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.comment)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/comments")
@@ -3225,12 +2466,10 @@ func (c *CasesCommentsCreateCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "cloudsupport.cases.comments.create" call.
-// Exactly one of *Comment or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Comment.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Comment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CasesCommentsCreateCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3261,38 +2500,7 @@ func (c *CasesCommentsCreateCall) Do(opts ...googleapi.CallOption) (*Comment, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Add a new comment to a case. The comment must have the following fields set: `body`. EXAMPLES: cURL: ```shell case=\"projects/some-project/cases/43591344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header 'Content-Type: application/json' \\ --data '{ \"body\": \"This is a test comment.\" }' \\ \"https://cloudsupport.googleapis.com/v2/$case/comments\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = ( supportApiService.cases() .comments() .create( parent=\"projects/some-project/cases/43595344\", body={\"body\": \"This is a test comment.\"}, ) ) print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}/comments",
-	//   "httpMethod": "POST",
-	//   "id": "cloudsupport.cases.comments.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the case to which the comment should be added.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/comments",
-	//   "request": {
-	//     "$ref": "Comment"
-	//   },
-	//   "response": {
-	//     "$ref": "Comment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudsupport.cases.comments.list":
 
 type CasesCommentsListCall struct {
 	s            *Service
@@ -3303,16 +2511,16 @@ type CasesCommentsListCall struct {
 	header_      http.Header
 }
 
-// List: List all the comments associated with a case. EXAMPLES: cURL:
-// ```shell case="projects/some-project/cases/43595344" curl \ --header
-// "Authorization: Bearer $(gcloud auth print-access-token)" \
+// List: List all the comments associated with a case. EXAMPLES: cURL: ```shell
+// case="projects/some-project/cases/43595344" curl \ --header "Authorization:
+// Bearer $(gcloud auth print-access-token)" \
 // "https://cloudsupport.googleapis.com/v2/$case/comments" ``` Python:
 // ```python import googleapiclient.discovery api_version = "v2"
 // supportApiService = googleapiclient.discovery.build(
 // serviceName="cloudsupport", version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) request = ( supportApiService.cases()
-// .comments() .list(parent="projects/some-project/cases/43595344") )
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = ( supportApiService.cases() .comments()
+// .list(parent="projects/some-project/cases/43595344") )
 // print(request.execute()) ```
 //
 // - parent: The name of the case for which to list comments.
@@ -3322,49 +2530,44 @@ func (r *CasesCommentsService) List(parent string) *CasesCommentsListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of comments to fetch. Defaults to 10.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// comments to fetch. Defaults to 10.
 func (c *CasesCommentsListCall) PageSize(pageSize int64) *CasesCommentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying the page of results to return. If unspecified, the first
-// page is returned.
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// page of results to return. If unspecified, the first page is returned.
 func (c *CasesCommentsListCall) PageToken(pageToken string) *CasesCommentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CasesCommentsListCall) Fields(s ...googleapi.Field) *CasesCommentsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CasesCommentsListCall) IfNoneMatch(entityTag string) *CasesCommentsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CasesCommentsListCall) Context(ctx context.Context) *CasesCommentsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CasesCommentsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3373,12 +2576,7 @@ func (c *CasesCommentsListCall) Header() http.Header {
 }
 
 func (c *CasesCommentsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3399,12 +2597,11 @@ func (c *CasesCommentsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudsupport.cases.comments.list" call.
-// Exactly one of *ListCommentsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListCommentsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCommentsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CasesCommentsListCall) Do(opts ...googleapi.CallOption) (*ListCommentsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3435,43 +2632,6 @@ func (c *CasesCommentsListCall) Do(opts ...googleapi.CallOption) (*ListCommentsR
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all the comments associated with a case. EXAMPLES: cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case/comments\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = ( supportApiService.cases() .comments() .list(parent=\"projects/some-project/cases/43595344\") ) print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}/comments",
-	//   "httpMethod": "GET",
-	//   "id": "cloudsupport.cases.comments.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of comments to fetch. Defaults to 10.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying the page of results to return. If unspecified, the first page is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the case for which to list comments.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/comments",
-	//   "response": {
-	//     "$ref": "ListCommentsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3479,7 +2639,7 @@ func (c *CasesCommentsListCall) Do(opts ...googleapi.CallOption) (*ListCommentsR
 // The provided context supersedes any context provided to the Context method.
 func (c *CasesCommentsListCall) Pages(ctx context.Context, f func(*ListCommentsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3495,8 +2655,6 @@ func (c *CasesCommentsListCall) Pages(ctx context.Context, f func(*ListCommentsR
 	}
 }
 
-// method id "cloudsupport.media.download":
-
 type MediaDownloadCall struct {
 	s            *Service
 	name         string
@@ -3506,20 +2664,18 @@ type MediaDownloadCall struct {
 	header_      http.Header
 }
 
-// Download: Download a file attached to a case. Note: HTTP requests
-// must append "?alt=media" to the URL. EXAMPLES: cURL: ```shell
-// name="projects/some-project/cases/43594844/attachments/0674M00000WijAn
-// ZAJ" curl \ --header "Authorization: Bearer $(gcloud auth
-// print-access-token)" \
+// Download: Download a file attached to a case. Note: HTTP requests must
+// append "?alt=media" to the URL. EXAMPLES: cURL: ```shell
+// name="projects/some-project/cases/43594844/attachments/0674M00000WijAnZAJ"
+// curl \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \
 // "https://cloudsupport.googleapis.com/v2/$name:download?alt=media" ```
 // Python: ```python import googleapiclient.discovery api_version = "v2"
 // supportApiService = googleapiclient.discovery.build(
 // serviceName="cloudsupport", version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) request =
-// supportApiService.media().download(
-// name="projects/some-project/cases/43595344/attachments/0684M00000Pw6pH
-// QAR" ) request.uri = request.uri.split("?")[0] + "?alt=media"
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = supportApiService.media().download(
+// name="projects/some-project/cases/43595344/attachments/0684M00000Pw6pHQAR" )
+// request.uri = request.uri.split("?")[0] + "?alt=media"
 // print(request.execute()) ```
 //
 // - name: The name of the file attachment to download.
@@ -3530,33 +2686,29 @@ func (r *MediaService) Download(name string) *MediaDownloadCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *MediaDownloadCall) Fields(s ...googleapi.Field) *MediaDownloadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *MediaDownloadCall) IfNoneMatch(entityTag string) *MediaDownloadCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download
-// methods. Any pending HTTP request will be aborted if the provided
-// context is canceled.
+// Context sets the context to be used in this call's Do and Download methods.
 func (c *MediaDownloadCall) Context(ctx context.Context) *MediaDownloadCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *MediaDownloadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3565,12 +2717,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 }
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3607,12 +2754,10 @@ func (c *MediaDownloadCall) Download(opts ...googleapi.CallOption) (*http.Respon
 }
 
 // Do executes the "cloudsupport.media.download" call.
-// Exactly one of *Media or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Media.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Media.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3643,37 +2788,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Download a file attached to a case. Note: HTTP requests must append \"?alt=media\" to the URL. EXAMPLES: cURL: ```shell name=\"projects/some-project/cases/43594844/attachments/0674M00000WijAnZAJ\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$name:download?alt=media\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.media().download( name=\"projects/some-project/cases/43595344/attachments/0684M00000Pw6pHQAR\" ) request.uri = request.uri.split(\"?\")[0] + \"?alt=media\" print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}/attachments/{attachmentsId}:download",
-	//   "httpMethod": "GET",
-	//   "id": "cloudsupport.media.download",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the file attachment to download.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+/attachments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}:download",
-	//   "response": {
-	//     "$ref": "Media"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ],
-	//   "supportsMediaDownload": true,
-	//   "useMediaDownloadService": true
-	// }
-
 }
-
-// method id "cloudsupport.media.upload":
 
 type MediaUploadCall struct {
 	s                       *Service
@@ -3685,30 +2800,27 @@ type MediaUploadCall struct {
 	header_                 http.Header
 }
 
-// Upload: Create a file attachment on a case or Cloud resource. The
-// attachment must have the following fields set: `filename`. EXAMPLES:
-// cURL: ```shell echo "This text is in a file I'm uploading using
-// CSAPI." \ > "./example_file.txt"
-// case="projects/some-project/cases/43594844" curl \ --header
-// "Authorization: Bearer $(gcloud auth print-access-token)" \
+// Upload: Create a file attachment on a case or Cloud resource. The attachment
+// must have the following fields set: `filename`. EXAMPLES: cURL: ```shell
+// echo "This text is in a file I'm uploading using CSAPI." \ >
+// "./example_file.txt" case="projects/some-project/cases/43594844" curl \
+// --header "Authorization: Bearer $(gcloud auth print-access-token)" \
 // --data-binary @"./example_file.txt" \
-// "https://cloudsupport.googleapis.com/upload/v2beta/$case/attachments?a
-// ttachment.filename=uploaded_via_curl.txt" ``` Python: ```python
-// import googleapiclient.discovery api_version = "v2" supportApiService
-// = googleapiclient.discovery.build( serviceName="cloudsupport",
+// "https://cloudsupport.googleapis.com/upload/v2beta/$case/attachments?attachme
+// nt.filename=uploaded_via_curl.txt" ``` Python: ```python import
+// googleapiclient.discovery api_version = "v2" supportApiService =
+// googleapiclient.discovery.build( serviceName="cloudsupport",
 // version=api_version,
-// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
-// est?version={api_version}", ) file_path = "./example_file.txt" with
-// open(file_path, "w") as file: file.write( "This text is inside a file
-// I'm going to upload using the Cloud Support API.", ) request =
-// supportApiService.media().upload(
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) file_path = "./example_file.txt" with open(file_path,
+// "w") as file: file.write( "This text is inside a file I'm going to upload
+// using the Cloud Support API.", ) request = supportApiService.media().upload(
 // parent="projects/some-project/cases/43595344", media_body=file_path )
 // request.uri = request.uri.split("?")[0] +
-// "?attachment.filename=uploaded_via_python.txt"
-// print(request.execute()) ```
+// "?attachment.filename=uploaded_via_python.txt" print(request.execute()) ```
 //
-//   - parent: The name of the case or Cloud resource to which the
-//     attachment should be attached.
+//   - parent: The name of the case or Cloud resource to which the attachment
+//     should be attached.
 func (r *MediaService) Upload(parent string, createattachmentrequest *CreateAttachmentRequest) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3716,54 +2828,51 @@ func (r *MediaService) Upload(parent string, createattachmentrequest *CreateAtta
 	return c
 }
 
-// Media specifies the media to upload in one or more chunks. The chunk
-// size may be controlled by supplying a MediaOption generated by
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
 // googleapi.ChunkSize. The chunk size defaults to
-// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
-// upload request will be determined by sniffing the contents of r,
-// unless a MediaOption generated by googleapi.ContentType is
-// supplied.
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
 // At most one of Media and ResumableMedia may be set.
 func (c *MediaUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *MediaUploadCall {
 	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
 //
 // Deprecated: use Media instead.
 //
-// At most one of Media and ResumableMedia may be set. mediaType
-// identifies the MIME media type of the upload, such as "image/png". If
-// mediaType is "", it will be auto-detected. The provided ctx will
-// supersede any context previously provided to the Context method.
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
 func (c *MediaUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *MediaUploadCall {
 	c.ctx_ = ctx
 	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
 func (c *MediaUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *MediaUploadCall {
 	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *MediaUploadCall) Fields(s ...googleapi.Field) *MediaUploadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 // This context will supersede any context previously provided to the
 // ResumableMedia method.
 func (c *MediaUploadCall) Context(ctx context.Context) *MediaUploadCall {
@@ -3771,8 +2880,8 @@ func (c *MediaUploadCall) Context(ctx context.Context) *MediaUploadCall {
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *MediaUploadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3781,18 +2890,12 @@ func (c *MediaUploadCall) Header() http.Header {
 }
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createattachmentrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/attachments")
@@ -3820,12 +2923,10 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudsupport.media.upload" call.
-// Exactly one of *Attachment or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Attachment.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Attachment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Attachment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3873,45 +2974,4 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Attachment, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a file attachment on a case or Cloud resource. The attachment must have the following fields set: `filename`. EXAMPLES: cURL: ```shell echo \"This text is in a file I'm uploading using CSAPI.\" \\ \u003e \"./example_file.txt\" case=\"projects/some-project/cases/43594844\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --data-binary @\"./example_file.txt\" \\ \"https://cloudsupport.googleapis.com/upload/v2beta/$case/attachments?attachment.filename=uploaded_via_curl.txt\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) file_path = \"./example_file.txt\" with open(file_path, \"w\") as file: file.write( \"This text is inside a file I'm going to upload using the Cloud Support API.\", ) request = supportApiService.media().upload( parent=\"projects/some-project/cases/43595344\", media_body=file_path ) request.uri = request.uri.split(\"?\")[0] + \"?attachment.filename=uploaded_via_python.txt\" print(request.execute()) ```",
-	//   "flatPath": "v2/{v2Id}/{v2Id1}/cases/{casesId}/attachments",
-	//   "httpMethod": "POST",
-	//   "id": "cloudsupport.media.upload",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "*/*"
-	//     ],
-	//     "protocols": {
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/v2/{+parent}/attachments"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the case or Cloud resource to which the attachment should be attached.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/attachments",
-	//   "request": {
-	//     "$ref": "CreateAttachmentRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Attachment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ],
-	//   "supportsMediaUpload": true
-	// }
-
 }

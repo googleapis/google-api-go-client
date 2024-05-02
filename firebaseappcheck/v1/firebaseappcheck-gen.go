@@ -100,8 +100,8 @@ const mtlsBasePath = "https://firebaseappcheck.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and administer all your Firebase data and settings
@@ -292,1462 +292,1167 @@ type ProjectsServicesService struct {
 	s *Service
 }
 
-// GoogleFirebaseAppcheckV1AppAttestConfig: An app's App Attest
-// configuration object. This configuration controls certain properties
-// of the `AppCheckToken` returned by ExchangeAppAttestAttestation and
+// GoogleFirebaseAppcheckV1AppAttestConfig: An app's App Attest configuration
+// object. This configuration controls certain properties of the
+// `AppCheckToken` returned by ExchangeAppAttestAttestation and
 // ExchangeAppAttestAssertion, such as its ttl. Note that the Team ID
-// registered with your app is used as part of the validation process.
-// Please register it via the Firebase Console or programmatically via
-// the Firebase Management Service
+// registered with your app is used as part of the validation process. Please
+// register it via the Firebase Console or programmatically via the Firebase
+// Management Service
 // (https://firebase.google.com/docs/projects/api/reference/rest/v11/projects.iosApps/patch).
 type GoogleFirebaseAppcheckV1AppAttestConfig struct {
-	// Name: Required. The relative resource name of the App Attest
-	// configuration object, in the format: ```
+	// Name: Required. The relative resource name of the App Attest configuration
+	// object, in the format: ```
 	// projects/{project_number}/apps/{app_id}/appAttestConfig ```
 	Name string `json:"name,omitempty"`
-
-	// TokenTtl: Specifies the duration for which App Check tokens exchanged
-	// from App Attest artifacts will be valid. If unset, a default value of
-	// 1 hour is assumed. Must be between 30 minutes and 7 days, inclusive.
+	// TokenTtl: Specifies the duration for which App Check tokens exchanged from
+	// App Attest artifacts will be valid. If unset, a default value of 1 hour is
+	// assumed. Must be between 30 minutes and 7 days, inclusive.
 	TokenTtl string `json:"tokenTtl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1AppAttestConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1AppAttestConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1AppCheckToken: Encapsulates an *App Check
-// token*, which are used to access Firebase services protected by App
-// Check.
+// GoogleFirebaseAppcheckV1AppCheckToken: Encapsulates an *App Check token*,
+// which are used to access Firebase services protected by App Check.
 type GoogleFirebaseAppcheckV1AppCheckToken struct {
 	// Token: The App Check token. App Check tokens are signed JWTs
-	// (https://tools.ietf.org/html/rfc7519) containing claims that identify
-	// the attested app and Firebase project. This token is used to access
-	// Firebase services protected by App Check. These tokens can also be
-	// verified by your own custom backends
-	// (https://firebase.google.com/docs/app-check/custom-resource-backend)
-	// using the Firebase Admin SDK.
+	// (https://tools.ietf.org/html/rfc7519) containing claims that identify the
+	// attested app and Firebase project. This token is used to access Firebase
+	// services protected by App Check. These tokens can also be verified by your
+	// own custom backends
+	// (https://firebase.google.com/docs/app-check/custom-resource-backend) using
+	// the Firebase Admin SDK.
 	Token string `json:"token,omitempty"`
-
-	// Ttl: The duration from the time this token is minted until its
-	// expiration. This field is intended to ease client-side token
-	// management, since the client may have clock skew, but is still able
-	// to accurately measure a duration.
+	// Ttl: The duration from the time this token is minted until its expiration.
+	// This field is intended to ease client-side token management, since the
+	// client may have clock skew, but is still able to accurately measure a
+	// duration.
 	Ttl string `json:"ttl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Token") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Token") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Token") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1AppCheckToken) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1AppCheckToken
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse: Response
-// message for the BatchGetAppAttestConfigs method.
+// GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse: Response message
+// for the BatchGetAppAttestConfigs method.
 type GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse struct {
 	// Configs: AppAttestConfigs retrieved.
 	Configs []*GoogleFirebaseAppcheckV1AppAttestConfig `json:"configs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Configs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Configs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Configs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Configs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse: Response
-// message for the BatchGetDeviceCheckConfigs method.
+// GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse: Response message
+// for the BatchGetDeviceCheckConfigs method.
 type GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse struct {
 	// Configs: DeviceCheckConfigs retrieved.
 	Configs []*GoogleFirebaseAppcheckV1DeviceCheckConfig `json:"configs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Configs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Configs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Configs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Configs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse:
-// Response message for the BatchGetPlayIntegrityConfigs method.
+// GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse: Response
+// message for the BatchGetPlayIntegrityConfigs method.
 type GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse struct {
 	// Configs: PlayIntegrityConfigs retrieved.
 	Configs []*GoogleFirebaseAppcheckV1PlayIntegrityConfig `json:"configs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Configs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Configs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Configs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Configs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse:
-// Response message for the BatchGetRecaptchaEnterpriseConfigs method.
+// GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse: Response
+// message for the BatchGetRecaptchaEnterpriseConfigs method.
 type GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse struct {
 	// Configs: RecaptchaEnterpriseConfigs retrieved.
 	Configs []*GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig `json:"configs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Configs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Configs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Configs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Configs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse: Response
-// message for the BatchGetRecaptchaV3Configs method.
+// GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse: Response message
+// for the BatchGetRecaptchaV3Configs method.
 type GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse struct {
 	// Configs: RecaptchaV3Configs retrieved.
 	Configs []*GoogleFirebaseAppcheckV1RecaptchaV3Config `json:"configs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Configs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Configs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Configs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Configs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse: Response
-// message for the BatchGetSafetyNetConfigs method.
+// GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse: Response message
+// for the BatchGetSafetyNetConfigs method.
 type GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse struct {
 	// Configs: SafetyNetConfigs retrieved.
 	Configs []*GoogleFirebaseAppcheckV1SafetyNetConfig `json:"configs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Configs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Configs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Configs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Configs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1BatchUpdateServicesRequest: Request message
-// for the BatchUpdateServices method.
+// GoogleFirebaseAppcheckV1BatchUpdateServicesRequest: Request message for the
+// BatchUpdateServices method.
 type GoogleFirebaseAppcheckV1BatchUpdateServicesRequest struct {
-	// Requests: Required. The request messages specifying the Services to
-	// update. A maximum of 100 objects can be updated in a batch.
+	// Requests: Required. The request messages specifying the Services to update.
+	// A maximum of 100 objects can be updated in a batch.
 	Requests []*GoogleFirebaseAppcheckV1UpdateServiceRequest `json:"requests,omitempty"`
-
-	// UpdateMask: Optional. A comma-separated list of names of fields in
-	// the Services to update. Example: `display_name`. If the `update_mask`
-	// field is set in both this request and any of the UpdateServiceRequest
-	// messages, they must match or the entire batch fails and no updates
-	// will be committed.
+	// UpdateMask: Optional. A comma-separated list of names of fields in the
+	// Services to update. Example: `display_name`. If the `update_mask` field is
+	// set in both this request and any of the UpdateServiceRequest messages, they
+	// must match or the entire batch fails and no updates will be committed.
 	UpdateMask string `json:"updateMask,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Requests") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1BatchUpdateServicesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchUpdateServicesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1BatchUpdateServicesResponse: Response message
-// for the BatchUpdateServices method.
+// GoogleFirebaseAppcheckV1BatchUpdateServicesResponse: Response message for
+// the BatchUpdateServices method.
 type GoogleFirebaseAppcheckV1BatchUpdateServicesResponse struct {
 	// Services: Service objects after the updates have been applied.
 	Services []*GoogleFirebaseAppcheckV1Service `json:"services,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Services") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Services") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Services") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1BatchUpdateServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchUpdateServicesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1DebugToken: A *debug token* is a secret used
-// during the development or integration testing of an app. It
-// essentially allows the development or integration testing to bypass
-// app attestation while still allowing App Check to enforce protection
-// on supported production Firebase services.
+// GoogleFirebaseAppcheckV1DebugToken: A *debug token* is a secret used during
+// the development or integration testing of an app. It essentially allows the
+// development or integration testing to bypass app attestation while still
+// allowing App Check to enforce protection on supported production Firebase
+// services.
 type GoogleFirebaseAppcheckV1DebugToken struct {
-	// DisplayName: Required. A human readable display name used to identify
-	// this debug token.
+	// DisplayName: Required. A human readable display name used to identify this
+	// debug token.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Required. The relative resource name of the debug token, in the
 	// format: ```
-	// projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id}
-	// ```
+	// projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```
 	Name string `json:"name,omitempty"`
-
-	// Token: Required. Input only. Immutable. The secret token itself. Must
-	// be provided during creation, and must be a UUID4, case insensitive.
-	// This field is immutable once set, and cannot be provided during an
-	// UpdateDebugToken request. You can, however, delete this debug token
-	// using DeleteDebugToken to revoke it. For security reasons, this field
-	// will never be populated in any response.
+	// Token: Required. Input only. Immutable. The secret token itself. Must be
+	// provided during creation, and must be a UUID4, case insensitive. This field
+	// is immutable once set, and cannot be provided during an UpdateDebugToken
+	// request. You can, however, delete this debug token using DeleteDebugToken to
+	// revoke it. For security reasons, this field will never be populated in any
+	// response.
 	Token string `json:"token,omitempty"`
+	// UpdateTime: Output only. Timestamp when this debug token was most recently
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1DebugToken) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1DebugToken
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1DeviceCheckConfig: An app's DeviceCheck
-// configuration object. This configuration is used by
-// ExchangeDeviceCheckToken to validate device tokens issued to apps by
-// DeviceCheck. It also controls certain properties of the returned
-// `AppCheckToken`, such as its ttl. Note that the Team ID registered
-// with your app is used as part of the validation process. Please
-// register it via the Firebase Console or programmatically via the
-// Firebase Management Service
+// configuration object. This configuration is used by ExchangeDeviceCheckToken
+// to validate device tokens issued to apps by DeviceCheck. It also controls
+// certain properties of the returned `AppCheckToken`, such as its ttl. Note
+// that the Team ID registered with your app is used as part of the validation
+// process. Please register it via the Firebase Console or programmatically via
+// the Firebase Management Service
 // (https://firebase.google.com/docs/projects/api/reference/rest/v11/projects.iosApps/patch).
 type GoogleFirebaseAppcheckV1DeviceCheckConfig struct {
 	// KeyId: Required. The key identifier of a private key enabled with
 	// DeviceCheck, created in your Apple Developer account.
 	KeyId string `json:"keyId,omitempty"`
-
-	// Name: Required. The relative resource name of the DeviceCheck
-	// configuration object, in the format: ```
+	// Name: Required. The relative resource name of the DeviceCheck configuration
+	// object, in the format: ```
 	// projects/{project_number}/apps/{app_id}/deviceCheckConfig ```
 	Name string `json:"name,omitempty"`
-
-	// PrivateKey: Required. Input only. The contents of the private key
-	// (`.p8`) file associated with the key specified by `key_id`. For
-	// security reasons, this field will never be populated in any response.
+	// PrivateKey: Required. Input only. The contents of the private key (`.p8`)
+	// file associated with the key specified by `key_id`. For security reasons,
+	// this field will never be populated in any response.
 	PrivateKey string `json:"privateKey,omitempty"`
-
-	// PrivateKeySet: Output only. Whether the `private_key` field was
-	// previously set. Since we will never return the `private_key` field,
-	// this field is the only way to find out whether it was previously set.
+	// PrivateKeySet: Output only. Whether the `private_key` field was previously
+	// set. Since we will never return the `private_key` field, this field is the
+	// only way to find out whether it was previously set.
 	PrivateKeySet bool `json:"privateKeySet,omitempty"`
-
-	// TokenTtl: Specifies the duration for which App Check tokens exchanged
-	// from DeviceCheck tokens will be valid. If unset, a default value of 1
-	// hour is assumed. Must be between 30 minutes and 7 days, inclusive.
+	// TokenTtl: Specifies the duration for which App Check tokens exchanged from
+	// DeviceCheck tokens will be valid. If unset, a default value of 1 hour is
+	// assumed. Must be between 30 minutes and 7 days, inclusive.
 	TokenTtl string `json:"tokenTtl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "KeyId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "KeyId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "KeyId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1DeviceCheckConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1DeviceCheckConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest: Request
-// message for the ExchangeAppAttestAssertion method.
+// GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest: Request message
+// for the ExchangeAppAttestAssertion method.
 type GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest struct {
 	// Artifact: Required. The artifact returned by a previous call to
 	// ExchangeAppAttestAttestation.
 	Artifact string `json:"artifact,omitempty"`
-
-	// Assertion: Required. The CBOR-encoded assertion returned by the
-	// client-side App Attest API.
+	// Assertion: Required. The CBOR-encoded assertion returned by the client-side
+	// App Attest API.
 	Assertion string `json:"assertion,omitempty"`
-
-	// Challenge: Required. A one-time challenge returned by an immediately
-	// prior call to GenerateAppAttestChallenge.
+	// Challenge: Required. A one-time challenge returned by an immediately prior
+	// call to GenerateAppAttestChallenge.
 	Challenge string `json:"challenge,omitempty"`
-
-	// LimitedUse: Specifies whether this attestation is for use in a
-	// *limited use* (`true`) or *session based* (`false`) context. To
-	// enable this attestation to be used with the *replay protection*
-	// feature, set this to `true`. The default value is `false`.
+	// LimitedUse: Specifies whether this attestation is for use in a *limited use*
+	// (`true`) or *session based* (`false`) context. To enable this attestation to
+	// be used with the *replay protection* feature, set this to `true`. The
+	// default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Artifact") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Artifact") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Artifact") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest: Request
-// message for the ExchangeAppAttestAttestation method.
+// GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest: Request message
+// for the ExchangeAppAttestAttestation method.
 type GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest struct {
-	// AttestationStatement: Required. The App Attest statement returned by
-	// the client-side App Attest API. This is a base64url encoded CBOR
-	// object in the JSON response.
+	// AttestationStatement: Required. The App Attest statement returned by the
+	// client-side App Attest API. This is a base64url encoded CBOR object in the
+	// JSON response.
 	AttestationStatement string `json:"attestationStatement,omitempty"`
-
-	// Challenge: Required. A one-time challenge returned by an immediately
-	// prior call to GenerateAppAttestChallenge.
+	// Challenge: Required. A one-time challenge returned by an immediately prior
+	// call to GenerateAppAttestChallenge.
 	Challenge string `json:"challenge,omitempty"`
-
-	// KeyId: Required. The key ID generated by App Attest for the client
-	// app.
+	// KeyId: Required. The key ID generated by App Attest for the client app.
 	KeyId string `json:"keyId,omitempty"`
-
-	// LimitedUse: Specifies whether this attestation is for use in a
-	// *limited use* (`true`) or *session based* (`false`) context. To
-	// enable this attestation to be used with the *replay protection*
-	// feature, set this to `true`. The default value is `false`.
+	// LimitedUse: Specifies whether this attestation is for use in a *limited use*
+	// (`true`) or *session based* (`false`) context. To enable this attestation to
+	// be used with the *replay protection* feature, set this to `true`. The
+	// default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AttestationStatement") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AttestationStatement") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttestationStatement") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AttestationStatement") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse:
-// Response message for the ExchangeAppAttestAttestation method.
+// GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse: Response
+// message for the ExchangeAppAttestAttestation method.
 type GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse struct {
 	// AppCheckToken: Encapsulates an App Check token.
 	AppCheckToken *GoogleFirebaseAppcheckV1AppCheckToken `json:"appCheckToken,omitempty"`
-
 	// Artifact: An artifact that can be used in future calls to
 	// ExchangeAppAttestAssertion.
 	Artifact string `json:"artifact,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AppCheckToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppCheckToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AppCheckToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest: Request message
-// for the ExchangeCustomToken method.
+// GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest: Request message for the
+// ExchangeCustomToken method.
 type GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest struct {
-	// CustomToken: Required. A custom token signed using your project's
-	// Admin SDK service account credentials.
+	// CustomToken: Required. A custom token signed using your project's Admin SDK
+	// service account credentials.
 	CustomToken string `json:"customToken,omitempty"`
-
-	// LimitedUse: Specifies whether this attestation is for use in a
-	// *limited use* (`true`) or *session based* (`false`) context. To
-	// enable this attestation to be used with the *replay protection*
-	// feature, set this to `true`. The default value is `false`.
+	// LimitedUse: Specifies whether this attestation is for use in a *limited use*
+	// (`true`) or *session based* (`false`) context. To enable this attestation to
+	// be used with the *replay protection* feature, set this to `true`. The
+	// default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CustomToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CustomToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest: Request message
-// for the ExchangeDebugToken method.
+// GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest: Request message for the
+// ExchangeDebugToken method.
 type GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest struct {
-	// DebugToken: Required. A debug token secret. This string must match a
-	// debug token secret previously created using CreateDebugToken.
+	// DebugToken: Required. A debug token secret. This string must match a debug
+	// token secret previously created using CreateDebugToken.
 	DebugToken string `json:"debugToken,omitempty"`
-
-	// LimitedUse: Specifies whether this attestation is for use in a
-	// *limited use* (`true`) or *session based* (`false`) context. To
-	// enable this attestation to be used with the *replay protection*
-	// feature, set this to `true`. The default value is `false`.
+	// LimitedUse: Specifies whether this attestation is for use in a *limited use*
+	// (`true`) or *session based* (`false`) context. To enable this attestation to
+	// be used with the *replay protection* feature, set this to `true`. The
+	// default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DebugToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DebugToken") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DebugToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest: Request
-// message for the ExchangeDeviceCheckToken method.
+// GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest: Request message for
+// the ExchangeDeviceCheckToken method.
 type GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest struct {
-	// DeviceToken: Required. The `device_token` as returned by Apple's
-	// client-side DeviceCheck API
-	// (https://developer.apple.com/documentation/devicecheck/dcdevice).
-	// This is the base64 encoded `Data` (Swift) or `NSData` (ObjC) object.
+	// DeviceToken: Required. The `device_token` as returned by Apple's client-side
+	// DeviceCheck API
+	// (https://developer.apple.com/documentation/devicecheck/dcdevice). This is
+	// the base64 encoded `Data` (Swift) or `NSData` (ObjC) object.
 	DeviceToken string `json:"deviceToken,omitempty"`
-
-	// LimitedUse: Specifies whether this attestation is for use in a
-	// *limited use* (`true`) or *session based* (`false`) context. To
-	// enable this attestation to be used with the *replay protection*
-	// feature, set this to `true`. The default value is `false`.
+	// LimitedUse: Specifies whether this attestation is for use in a *limited use*
+	// (`true`) or *session based* (`false`) context. To enable this attestation to
+	// be used with the *replay protection* feature, set this to `true`. The
+	// default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DeviceToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DeviceToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DeviceToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest: Request
-// message for the ExchangePlayIntegrityToken method.
+// GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest: Request message
+// for the ExchangePlayIntegrityToken method.
 type GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest struct {
-	// LimitedUse: Specifies whether this attestation is for use in a
-	// *limited use* (`true`) or *session based* (`false`) context. To
-	// enable this attestation to be used with the *replay protection*
-	// feature, set this to `true`. The default value is `false`.
+	// LimitedUse: Specifies whether this attestation is for use in a *limited use*
+	// (`true`) or *session based* (`false`) context. To enable this attestation to
+	// be used with the *replay protection* feature, set this to `true`. The
+	// default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
-
-	// PlayIntegrityToken: Required. The integrity verdict response token
-	// from Play Integrity
+	// PlayIntegrityToken: Required. The integrity verdict response token from Play
+	// Integrity
 	// (https://developer.android.com/google/play/integrity/verdict#decrypt-verify)
 	// issued to your app.
 	PlayIntegrityToken string `json:"playIntegrityToken,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LimitedUse") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LimitedUse") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LimitedUse") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest:
-// Request message for the ExchangeRecaptchaEnterpriseToken method.
+// GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest: Request
+// message for the ExchangeRecaptchaEnterpriseToken method.
 type GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest struct {
-	// LimitedUse: Specifies whether this attestation is for use in a
-	// *limited use* (`true`) or *session based* (`false`) context. To
-	// enable this attestation to be used with the *replay protection*
-	// feature, set this to `true`. The default value is `false`.
+	// LimitedUse: Specifies whether this attestation is for use in a *limited use*
+	// (`true`) or *session based* (`false`) context. To enable this attestation to
+	// be used with the *replay protection* feature, set this to `true`. The
+	// default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
-
-	// RecaptchaEnterpriseToken: Required. The reCAPTCHA token as returned
-	// by the reCAPTCHA Enterprise JavaScript API
+	// RecaptchaEnterpriseToken: Required. The reCAPTCHA token as returned by the
+	// reCAPTCHA Enterprise JavaScript API
 	// (https://cloud.google.com/recaptcha-enterprise/docs/instrument-web-pages).
 	RecaptchaEnterpriseToken string `json:"recaptchaEnterpriseToken,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LimitedUse") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LimitedUse") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LimitedUse") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest: Request
-// message for the ExchangeRecaptchaV3Token method.
+// GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest: Request message for
+// the ExchangeRecaptchaV3Token method.
 type GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest struct {
-	// LimitedUse: Specifies whether this attestation is for use in a
-	// *limited use* (`true`) or *session based* (`false`) context. To
-	// enable this attestation to be used with the *replay protection*
-	// feature, set this to `true`. The default value is `false`.
+	// LimitedUse: Specifies whether this attestation is for use in a *limited use*
+	// (`true`) or *session based* (`false`) context. To enable this attestation to
+	// be used with the *replay protection* feature, set this to `true`. The
+	// default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
-
-	// RecaptchaV3Token: Required. The reCAPTCHA token as returned by the
-	// reCAPTCHA v3 JavaScript API
-	// (https://developers.google.com/recaptcha/docs/v3).
+	// RecaptchaV3Token: Required. The reCAPTCHA token as returned by the reCAPTCHA
+	// v3 JavaScript API (https://developers.google.com/recaptcha/docs/v3).
 	RecaptchaV3Token string `json:"recaptchaV3Token,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LimitedUse") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LimitedUse") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LimitedUse") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest: Request
-// message for the ExchangeSafetyNetToken method.
+// GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest: Request message for
+// the ExchangeSafetyNetToken method.
 type GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest struct {
 	// SafetyNetToken: Required. The SafetyNet attestation response
 	// (https://developer.android.com/training/safetynet/attestation#request-attestation-step)
 	// issued to your app.
 	SafetyNetToken string `json:"safetyNetToken,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SafetyNetToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SafetyNetToken") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "SafetyNetToken") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1GenerateAppAttestChallengeRequest: Request
-// message for the GenerateAppAttestChallenge method.
+// GoogleFirebaseAppcheckV1GenerateAppAttestChallengeRequest: Request message
+// for the GenerateAppAttestChallenge method.
 type GoogleFirebaseAppcheckV1GenerateAppAttestChallengeRequest struct {
 }
 
-// GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse: Response
-// message for the GenerateAppAttestChallenge method.
+// GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse: Response message
+// for the GenerateAppAttestChallenge method.
 type GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse struct {
-	// Challenge: A one-time use challenge for the client to pass to the App
-	// Attest API.
+	// Challenge: A one-time use challenge for the client to pass to the App Attest
+	// API.
 	Challenge string `json:"challenge,omitempty"`
-
 	// Ttl: The duration from the time this challenge is minted until its
-	// expiration. This field is intended to ease client-side token
-	// management, since the client may have clock skew, but is still able
-	// to accurately measure a duration.
+	// expiration. This field is intended to ease client-side token management,
+	// since the client may have clock skew, but is still able to accurately
+	// measure a duration.
 	Ttl string `json:"ttl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Challenge") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Challenge") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Challenge") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeRequest:
-// Request message for the GeneratePlayIntegrityChallenge method.
+// GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeRequest: Request
+// message for the GeneratePlayIntegrityChallenge method.
 type GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeRequest struct {
 }
 
-// GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse:
-// Response message for the GeneratePlayIntegrityChallenge method.
+// GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse: Response
+// message for the GeneratePlayIntegrityChallenge method.
 type GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse struct {
 	// Challenge: A one-time use challenge
 	// (https://developer.android.com/google/play/integrity/verdict#protect-against-replay-attacks)
 	// for the client to pass to the Play Integrity API.
 	Challenge string `json:"challenge,omitempty"`
-
 	// Ttl: The duration from the time this challenge is minted until its
-	// expiration. This field is intended to ease client-side token
-	// management, since the client may have clock skew, but is still able
-	// to accurately measure a duration.
+	// expiration. This field is intended to ease client-side token management,
+	// since the client may have clock skew, but is still able to accurately
+	// measure a duration.
 	Ttl string `json:"ttl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Challenge") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Challenge") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Challenge") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ListDebugTokensResponse: Response message for
-// the ListDebugTokens method.
+// GoogleFirebaseAppcheckV1ListDebugTokensResponse: Response message for the
+// ListDebugTokens method.
 type GoogleFirebaseAppcheckV1ListDebugTokensResponse struct {
 	// DebugTokens: The DebugTokens retrieved.
 	DebugTokens []*GoogleFirebaseAppcheckV1DebugToken `json:"debugTokens,omitempty"`
-
-	// NextPageToken: If the result list is too large to fit in a single
-	// response, then a token is returned. If the string is empty or
-	// omitted, then this response is the last page of results. This token
-	// can be used in a subsequent call to ListDebugTokens to find the next
-	// group of DebugTokens. Page tokens are short-lived and should not be
-	// persisted.
+	// NextPageToken: If the result list is too large to fit in a single response,
+	// then a token is returned. If the string is empty or omitted, then this
+	// response is the last page of results. This token can be used in a subsequent
+	// call to ListDebugTokens to find the next group of DebugTokens. Page tokens
+	// are short-lived and should not be persisted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DebugTokens") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DebugTokens") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DebugTokens") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ListDebugTokensResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ListDebugTokensResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1ListServicesResponse: Response message for
-// the ListServices method.
+// GoogleFirebaseAppcheckV1ListServicesResponse: Response message for the
+// ListServices method.
 type GoogleFirebaseAppcheckV1ListServicesResponse struct {
-	// NextPageToken: If the result list is too large to fit in a single
-	// response, then a token is returned. If the string is empty or
-	// omitted, then this response is the last page of results. This token
-	// can be used in a subsequent call to ListServices to find the next
-	// group of Services. Page tokens are short-lived and should not be
-	// persisted.
+	// NextPageToken: If the result list is too large to fit in a single response,
+	// then a token is returned. If the string is empty or omitted, then this
+	// response is the last page of results. This token can be used in a subsequent
+	// call to ListServices to find the next group of Services. Page tokens are
+	// short-lived and should not be persisted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Services: The Services retrieved.
 	Services []*GoogleFirebaseAppcheckV1Service `json:"services,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1ListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ListServicesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1PlayIntegrityConfig: An app's Play Integrity
-// configuration object. This configuration controls certain properties
-// of the `AppCheckToken` returned by ExchangePlayIntegrityToken, such
-// as its ttl. Note that your registered SHA-256 certificate
-// fingerprints are used to validate tokens issued by the Play Integrity
-// API; please register them via the Firebase Console or
-// programmatically via the Firebase Management Service
+// configuration object. This configuration controls certain properties of the
+// `AppCheckToken` returned by ExchangePlayIntegrityToken, such as its ttl.
+// Note that your registered SHA-256 certificate fingerprints are used to
+// validate tokens issued by the Play Integrity API; please register them via
+// the Firebase Console or programmatically via the Firebase Management Service
 // (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.androidApps.sha/create).
 type GoogleFirebaseAppcheckV1PlayIntegrityConfig struct {
 	// Name: Required. The relative resource name of the Play Integrity
 	// configuration object, in the format: ```
 	// projects/{project_number}/apps/{app_id}/playIntegrityConfig ```
 	Name string `json:"name,omitempty"`
-
-	// TokenTtl: Specifies the duration for which App Check tokens exchanged
-	// from Play Integrity tokens will be valid. If unset, a default value
-	// of 1 hour is assumed. Must be between 30 minutes and 7 days,
-	// inclusive.
+	// TokenTtl: Specifies the duration for which App Check tokens exchanged from
+	// Play Integrity tokens will be valid. If unset, a default value of 1 hour is
+	// assumed. Must be between 30 minutes and 7 days, inclusive.
 	TokenTtl string `json:"tokenTtl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1PlayIntegrityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1PlayIntegrityConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1PublicJwk: A JWK as specified by section 4 of
-// RFC 7517 (https://tools.ietf.org/html/rfc7517#section-4) and section
-// 6.3.1 of RFC 7518
-// (https://tools.ietf.org/html/rfc7518#section-6.3.1).
+// GoogleFirebaseAppcheckV1PublicJwk: A JWK as specified by section 4 of RFC
+// 7517 (https://tools.ietf.org/html/rfc7517#section-4) and section 6.3.1 of
+// RFC 7518 (https://tools.ietf.org/html/rfc7518#section-6.3.1).
 type GoogleFirebaseAppcheckV1PublicJwk struct {
 	// Alg: See section 4.4 of RFC 7517
 	// (https://tools.ietf.org/html/rfc7517#section-4.4).
 	Alg string `json:"alg,omitempty"`
-
 	// E: See section 6.3.1.2 of RFC 7518
 	// (https://tools.ietf.org/html/rfc7518#section-6.3.1.2).
 	E string `json:"e,omitempty"`
-
 	// Kid: See section 4.5 of RFC 7517
 	// (https://tools.ietf.org/html/rfc7517#section-4.5).
 	Kid string `json:"kid,omitempty"`
-
 	// Kty: See section 4.1 of RFC 7517
 	// (https://tools.ietf.org/html/rfc7517#section-4.1).
 	Kty string `json:"kty,omitempty"`
-
 	// N: See section 6.3.1.1 of RFC 7518
 	// (https://tools.ietf.org/html/rfc7518#section-6.3.1.1).
 	N string `json:"n,omitempty"`
-
 	// Use: See section 4.2 of RFC 7517
 	// (https://tools.ietf.org/html/rfc7517#section-4.2).
 	Use string `json:"use,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Alg") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Alg") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Alg") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Alg") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1PublicJwk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1PublicJwk
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1PublicJwkSet: The currently active set of
-// public keys that can be used to verify App Check tokens. This object
-// is a JWK set as specified by section 5 of RFC 7517
-// (https://tools.ietf.org/html/rfc7517#section-5). For security, the
-// response **must not** be cached for longer than six hours.
+// GoogleFirebaseAppcheckV1PublicJwkSet: The currently active set of public
+// keys that can be used to verify App Check tokens. This object is a JWK set
+// as specified by section 5 of RFC 7517
+// (https://tools.ietf.org/html/rfc7517#section-5). For security, the response
+// **must not** be cached for longer than six hours.
 type GoogleFirebaseAppcheckV1PublicJwkSet struct {
 	// Keys: The set of public keys. See section 5.1 of RFC 7517
 	// (https://tools.ietf.org/html/rfc7517#section-5).
 	Keys []*GoogleFirebaseAppcheckV1PublicJwk `json:"keys,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Keys") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Keys") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Keys") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Keys") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1PublicJwkSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1PublicJwkSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig: An app's reCAPTCHA
 // Enterprise configuration object. This configuration is used by
-// ExchangeRecaptchaEnterpriseToken to validate reCAPTCHA tokens issued
-// to apps by reCAPTCHA Enterprise. It also controls certain properties
-// of the returned `AppCheckToken`, such as its ttl.
+// ExchangeRecaptchaEnterpriseToken to validate reCAPTCHA tokens issued to apps
+// by reCAPTCHA Enterprise. It also controls certain properties of the returned
+// `AppCheckToken`, such as its ttl.
 type GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig struct {
-	// Name: Required. The relative resource name of the reCAPTCHA
-	// Enterprise configuration object, in the format: ```
+	// Name: Required. The relative resource name of the reCAPTCHA Enterprise
+	// configuration object, in the format: ```
 	// projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```
 	Name string `json:"name,omitempty"`
-
 	// SiteKey: The score-based site key created in reCAPTCHA Enterprise
 	// (https://cloud.google.com/recaptcha-enterprise/docs/create-key#creating_a_site_key)
 	// used to invoke reCAPTCHA and generate the reCAPTCHA tokens
 	// (https://cloud.google.com/recaptcha-enterprise/docs/instrument-web-pages)
-	// for your application. Important: This is *not* the `site_secret` (as
-	// it is in reCAPTCHA v3), but rather your score-based reCAPTCHA
-	// Enterprise site key.
+	// for your application. Important: This is *not* the `site_secret` (as it is
+	// in reCAPTCHA v3), but rather your score-based reCAPTCHA Enterprise site key.
 	SiteKey string `json:"siteKey,omitempty"`
-
-	// TokenTtl: Specifies the duration for which App Check tokens exchanged
-	// from reCAPTCHA Enterprise tokens will be valid. If unset, a default
-	// value of 1 hour is assumed. Must be between 30 minutes and 7 days,
-	// inclusive.
+	// TokenTtl: Specifies the duration for which App Check tokens exchanged from
+	// reCAPTCHA Enterprise tokens will be valid. If unset, a default value of 1
+	// hour is assumed. Must be between 30 minutes and 7 days, inclusive.
 	TokenTtl string `json:"tokenTtl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1RecaptchaV3Config: An app's reCAPTCHA v3
-// configuration object. This configuration is used by
-// ExchangeRecaptchaV3Token to validate reCAPTCHA tokens issued to apps
-// by reCAPTCHA v3. It also controls certain properties of the returned
-// `AppCheckToken`, such as its ttl.
+// configuration object. This configuration is used by ExchangeRecaptchaV3Token
+// to validate reCAPTCHA tokens issued to apps by reCAPTCHA v3. It also
+// controls certain properties of the returned `AppCheckToken`, such as its
+// ttl.
 type GoogleFirebaseAppcheckV1RecaptchaV3Config struct {
-	// Name: Required. The relative resource name of the reCAPTCHA v3
-	// configuration object, in the format: ```
+	// Name: Required. The relative resource name of the reCAPTCHA v3 configuration
+	// object, in the format: ```
 	// projects/{project_number}/apps/{app_id}/recaptchaV3Config ```
 	Name string `json:"name,omitempty"`
-
-	// SiteSecret: Required. Input only. The site secret used to identify
-	// your service for reCAPTCHA v3 verification. For security reasons,
-	// this field will never be populated in any response.
+	// SiteSecret: Required. Input only. The site secret used to identify your
+	// service for reCAPTCHA v3 verification. For security reasons, this field will
+	// never be populated in any response.
 	SiteSecret string `json:"siteSecret,omitempty"`
-
-	// SiteSecretSet: Output only. Whether the `site_secret` field was
-	// previously set. Since we will never return the `site_secret` field,
-	// this field is the only way to find out whether it was previously set.
+	// SiteSecretSet: Output only. Whether the `site_secret` field was previously
+	// set. Since we will never return the `site_secret` field, this field is the
+	// only way to find out whether it was previously set.
 	SiteSecretSet bool `json:"siteSecretSet,omitempty"`
-
-	// TokenTtl: Specifies the duration for which App Check tokens exchanged
-	// from reCAPTCHA tokens will be valid. If unset, a default value of 1
-	// day is assumed. Must be between 30 minutes and 7 days, inclusive.
+	// TokenTtl: Specifies the duration for which App Check tokens exchanged from
+	// reCAPTCHA tokens will be valid. If unset, a default value of 1 day is
+	// assumed. Must be between 30 minutes and 7 days, inclusive.
 	TokenTtl string `json:"tokenTtl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1RecaptchaV3Config) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1RecaptchaV3Config
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppcheckV1SafetyNetConfig: An app's SafetyNet
-// configuration object. This configuration controls certain properties
-// of the `AppCheckToken` returned by ExchangeSafetyNetToken, such as
-// its ttl. Note that your registered SHA-256 certificate fingerprints
-// are used to validate tokens issued by SafetyNet; please register them
-// via the Firebase Console or programmatically via the Firebase
-// Management Service
+// GoogleFirebaseAppcheckV1SafetyNetConfig: An app's SafetyNet configuration
+// object. This configuration controls certain properties of the
+// `AppCheckToken` returned by ExchangeSafetyNetToken, such as its ttl. Note
+// that your registered SHA-256 certificate fingerprints are used to validate
+// tokens issued by SafetyNet; please register them via the Firebase Console or
+// programmatically via the Firebase Management Service
 // (https://firebase.google.com/docs/projects/api/reference/rest/v11/projects.androidApps.sha/create).
 type GoogleFirebaseAppcheckV1SafetyNetConfig struct {
-	// Name: Required. The relative resource name of the SafetyNet
-	// configuration object, in the format: ```
+	// Name: Required. The relative resource name of the SafetyNet configuration
+	// object, in the format: ```
 	// projects/{project_number}/apps/{app_id}/safetyNetConfig ```
 	Name string `json:"name,omitempty"`
-
-	// TokenTtl: Specifies the duration for which App Check tokens exchanged
-	// from SafetyNet tokens will be valid. If unset, a default value of 1
-	// hour is assumed. Must be between 30 minutes and 7 days, inclusive.
+	// TokenTtl: Specifies the duration for which App Check tokens exchanged from
+	// SafetyNet tokens will be valid. If unset, a default value of 1 hour is
+	// assumed. Must be between 30 minutes and 7 days, inclusive.
 	TokenTtl string `json:"tokenTtl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1SafetyNetConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1SafetyNetConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1Service: The enforcement configuration for a
 // Firebase service supported by App Check.
 type GoogleFirebaseAppcheckV1Service struct {
-	// EnforcementMode: Required. The App Check enforcement mode for this
-	// service.
+	// EnforcementMode: Required. The App Check enforcement mode for this service.
 	//
 	// Possible values:
-	//   "OFF" - Firebase App Check is not enforced for the service, nor are
-	// App Check metrics collected. Though the service is not protected by
-	// App Check in this mode, other applicable protections, such as user
-	// authorization, are still enforced. An unconfigured service is in this
-	// mode by default. Note that resource policies behave slightly
-	// differently as an unconfigured resource policy means that the
-	// resource will inherit the EnforcementMode configured for the service
-	// it belongs to and will not be considered as being in OFF mode by
-	// default.
-	//   "UNENFORCED" - Firebase App Check is not enforced for the service.
-	// App Check metrics are collected to help you decide when to turn on
-	// enforcement for the service. Though the service is not protected by
-	// App Check in this mode, other applicable protections, such as user
-	// authorization, are still enforced. Some services require certain
-	// conditions to be met before they will work with App Check, such as
-	// requiring you to upgrade to a specific service tier. Until those
-	// requirements are met for a service, this `UNENFORCED` setting will
-	// have no effect and App Check will not work with that service.
-	//   "ENFORCED" - Firebase App Check is enforced for the service. The
-	// service will reject any request that attempts to access your
-	// project's resources if it does not have valid App Check token
-	// attached, with some exceptions depending on the service; for example,
-	// some services will still allow requests bearing the developer's
-	// privileged service account credentials without an App Check token.
-	// App Check metrics continue to be collected to help you detect issues
-	// with your App Check integration and monitor the composition of your
-	// callers. While the service is protected by App Check, other
-	// applicable protections, such as user authorization, continue to be
-	// enforced at the same time. Use caution when choosing to enforce App
-	// Check on a Firebase service. If your users have not updated to an App
-	// Check capable version of your app, their apps will no longer be able
-	// to use your Firebase services that are enforcing App Check. App Check
-	// metrics can help you decide whether to enforce App Check on your
-	// Firebase services. If your app has not launched yet, you should
-	// enable enforcement immediately, since there are no outdated clients
-	// in use. Some services require certain conditions to be met before
-	// they will work with App Check, such as requiring you to upgrade to a
-	// specific service tier or requiring you to enable the service first.
-	// Until those requirements are met for a service, this `ENFORCED`
-	// setting will have no effect and App Check will not work with that
-	// service.
+	//   "OFF" - Firebase App Check is not enforced for the service, nor are App
+	// Check metrics collected. Though the service is not protected by App Check in
+	// this mode, other applicable protections, such as user authorization, are
+	// still enforced. An unconfigured service is in this mode by default.
+	//   "UNENFORCED" - Firebase App Check is not enforced for the service. App
+	// Check metrics are collected to help you decide when to turn on enforcement
+	// for the service. Though the service is not protected by App Check in this
+	// mode, other applicable protections, such as user authorization, are still
+	// enforced. Some services require certain conditions to be met before they
+	// will work with App Check, such as requiring you to upgrade to a specific
+	// service tier. Until those requirements are met for a service, this
+	// `UNENFORCED` setting will have no effect and App Check will not work with
+	// that service.
+	//   "ENFORCED" - Firebase App Check is enforced for the service. The service
+	// will reject any request that attempts to access your project's resources if
+	// it does not have valid App Check token attached, with some exceptions
+	// depending on the service; for example, some services will still allow
+	// requests bearing the developer's privileged service account credentials
+	// without an App Check token. App Check metrics continue to be collected to
+	// help you detect issues with your App Check integration and monitor the
+	// composition of your callers. While the service is protected by App Check,
+	// other applicable protections, such as user authorization, continue to be
+	// enforced at the same time. Use caution when choosing to enforce App Check on
+	// a Firebase service. If your users have not updated to an App Check capable
+	// version of your app, their apps will no longer be able to use your Firebase
+	// services that are enforcing App Check. App Check metrics can help you decide
+	// whether to enforce App Check on your Firebase services. If your app has not
+	// launched yet, you should enable enforcement immediately, since there are no
+	// outdated clients in use. Some services require certain conditions to be met
+	// before they will work with App Check, such as requiring you to upgrade to a
+	// specific service tier or requiring you to enable the service first. Until
+	// those requirements are met for a service, this `ENFORCED` setting will have
+	// no effect and App Check will not work with that service.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
-
-	// Name: Required. The relative resource name of the service
-	// configuration object, in the format: ```
-	// projects/{project_number}/services/{service_id} ``` Note that the
-	// `service_id` element must be a supported service ID. Currently, the
-	// following service IDs are supported: *
+	// Name: Required. The relative resource name of the service configuration
+	// object, in the format: ``` projects/{project_number}/services/{service_id}
+	// ``` Note that the `service_id` element must be a supported service ID.
+	// Currently, the following service IDs are supported: *
 	// `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
 	// `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
 	// `firestore.googleapis.com` (Cloud Firestore)
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "EnforcementMode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EnforcementMode") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EnforcementMode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1Service) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1Service
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1UpdateServiceRequest: Request message for the
 // UpdateService method as well as an individual update message for the
 // BatchUpdateServices method.
 type GoogleFirebaseAppcheckV1UpdateServiceRequest struct {
-	// Service: Required. The Service to update. The Service's `name` field
-	// is used to identify the Service to be updated, in the format: ```
+	// Service: Required. The Service to update. The Service's `name` field is used
+	// to identify the Service to be updated, in the format: ```
 	// projects/{project_number}/services/{service_id} ``` Note that the
 	// `service_id` element must be a supported service ID. Currently, the
-	// following service IDs are supported: *
-	// `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
-	// `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
-	// `firestore.googleapis.com` (Cloud Firestore)
+	// following service IDs are supported: * `firebasestorage.googleapis.com`
+	// (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase
+	// Realtime Database) * `firestore.googleapis.com` (Cloud Firestore)
 	Service *GoogleFirebaseAppcheckV1Service `json:"service,omitempty"`
-
-	// UpdateMask: Required. A comma-separated list of names of fields in
-	// the Service to update. Example: `enforcement_mode`.
+	// UpdateMask: Required. A comma-separated list of names of fields in the
+	// Service to update. Example: `enforcement_mode`.
 	UpdateMask string `json:"updateMask,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Service") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Service") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Service") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirebaseAppcheckV1UpdateServiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1UpdateServiceRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
-
-// method id "firebaseappcheck.jwks.get":
 
 type JwksGetCall struct {
 	s            *Service
@@ -1759,12 +1464,12 @@ type JwksGetCall struct {
 }
 
 // Get: Returns a public JWK set as specified by RFC 7517
-// (https://tools.ietf.org/html/rfc7517) that can be used to verify App
-// Check tokens. Exactly one of the public keys in the returned set will
-// successfully validate any App Check token that is currently valid.
+// (https://tools.ietf.org/html/rfc7517) that can be used to verify App Check
+// tokens. Exactly one of the public keys in the returned set will successfully
+// validate any App Check token that is currently valid.
 //
-//   - name: The relative resource name to the public JWK set. Must always
-//     be exactly the string `jwks`.
+//   - name: The relative resource name to the public JWK set. Must always be
+//     exactly the string `jwks`.
 func (r *JwksService) Get(name string) *JwksGetCall {
 	c := &JwksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1772,33 +1477,29 @@ func (r *JwksService) Get(name string) *JwksGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *JwksGetCall) Fields(s ...googleapi.Field) *JwksGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *JwksGetCall) IfNoneMatch(entityTag string) *JwksGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *JwksGetCall) Context(ctx context.Context) *JwksGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *JwksGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1807,12 +1508,7 @@ func (c *JwksGetCall) Header() http.Header {
 }
 
 func (c *JwksGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1833,13 +1529,11 @@ func (c *JwksGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "firebaseappcheck.jwks.get" call.
-// Exactly one of *GoogleFirebaseAppcheckV1PublicJwkSet or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleFirebaseAppcheckV1PublicJwkSet.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1PublicJwkSet.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *JwksGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1PublicJwkSet, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1870,36 +1564,7 @@ func (c *JwksGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a public JWK set as specified by [RFC 7517](https://tools.ietf.org/html/rfc7517) that can be used to verify App Check tokens. Exactly one of the public keys in the returned set will successfully validate any App Check token that is currently valid.",
-	//   "flatPath": "v1/jwks",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.jwks.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name to the public JWK set. Must always be exactly the string `jwks`.",
-	//       "location": "path",
-	//       "pattern": "^jwks$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1PublicJwkSet"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.exchangeAppAttestAssertion":
 
 type ProjectsAppsExchangeAppAttestAssertionCall struct {
 	s                                                         *Service
@@ -1910,15 +1575,15 @@ type ProjectsAppsExchangeAppAttestAssertionCall struct {
 	header_                                                   http.Header
 }
 
-// ExchangeAppAttestAssertion: Accepts an App Attest assertion and an
-// artifact previously obtained from ExchangeAppAttestAttestation and
-// verifies those with Apple. If valid, returns an AppCheckToken.
+// ExchangeAppAttestAssertion: Accepts an App Attest assertion and an artifact
+// previously obtained from ExchangeAppAttestAttestation and verifies those
+// with Apple. If valid, returns an AppCheckToken.
 //
 //   - app: The relative resource name of the iOS app, in the format: ```
 //     projects/{project_number}/apps/{app_id} ``` If necessary, the
 //     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeAppAttestAssertion(appid string, googlefirebaseappcheckv1exchangeappattestassertionrequest *GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest) *ProjectsAppsExchangeAppAttestAssertionCall {
 	c := &ProjectsAppsExchangeAppAttestAssertionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -1927,23 +1592,21 @@ func (r *ProjectsAppsService) ExchangeAppAttestAssertion(appid string, googlefir
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsExchangeAppAttestAssertionCall) Fields(s ...googleapi.Field) *ProjectsAppsExchangeAppAttestAssertionCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsExchangeAppAttestAssertionCall) Context(ctx context.Context) *ProjectsAppsExchangeAppAttestAssertionCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsExchangeAppAttestAssertionCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1952,18 +1615,12 @@ func (c *ProjectsAppsExchangeAppAttestAssertionCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsExchangeAppAttestAssertionCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangeappattestassertionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangeAppAttestAssertion")
@@ -1980,13 +1637,11 @@ func (c *ProjectsAppsExchangeAppAttestAssertionCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "firebaseappcheck.projects.apps.exchangeAppAttestAssertion" call.
-// Exactly one of *GoogleFirebaseAppcheckV1AppCheckToken or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleFirebaseAppcheckV1AppCheckToken.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsExchangeAppAttestAssertionCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppCheckToken, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2017,39 +1672,7 @@ func (c *ProjectsAppsExchangeAppAttestAssertionCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Accepts an App Attest assertion and an artifact previously obtained from ExchangeAppAttestAttestation and verifies those with Apple. If valid, returns an AppCheckToken.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:exchangeAppAttestAssertion",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.exchangeAppAttestAssertion",
-	//   "parameterOrder": [
-	//     "app"
-	//   ],
-	//   "parameters": {
-	//     "app": {
-	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+app}:exchangeAppAttestAssertion",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1AppCheckToken"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.exchangeAppAttestAttestation":
 
 type ProjectsAppsExchangeAppAttestAttestationCall struct {
 	s                                                           *Service
@@ -2060,18 +1683,18 @@ type ProjectsAppsExchangeAppAttestAttestationCall struct {
 	header_                                                     http.Header
 }
 
-// ExchangeAppAttestAttestation: Accepts an App Attest CBOR attestation
-// and verifies it with Apple using your preconfigured team and bundle
-// IDs. If valid, returns an attestation artifact that can later be
-// exchanged for an AppCheckToken using ExchangeAppAttestAssertion. For
-// convenience and performance, this method's response object will also
-// contain an AppCheckToken (if the verification is successful).
+// ExchangeAppAttestAttestation: Accepts an App Attest CBOR attestation and
+// verifies it with Apple using your preconfigured team and bundle IDs. If
+// valid, returns an attestation artifact that can later be exchanged for an
+// AppCheckToken using ExchangeAppAttestAssertion. For convenience and
+// performance, this method's response object will also contain an
+// AppCheckToken (if the verification is successful).
 //
 //   - app: The relative resource name of the iOS app, in the format: ```
 //     projects/{project_number}/apps/{app_id} ``` If necessary, the
 //     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeAppAttestAttestation(appid string, googlefirebaseappcheckv1exchangeappattestattestationrequest *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest) *ProjectsAppsExchangeAppAttestAttestationCall {
 	c := &ProjectsAppsExchangeAppAttestAttestationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2080,23 +1703,21 @@ func (r *ProjectsAppsService) ExchangeAppAttestAttestation(appid string, googlef
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsExchangeAppAttestAttestationCall) Fields(s ...googleapi.Field) *ProjectsAppsExchangeAppAttestAttestationCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsExchangeAppAttestAttestationCall) Context(ctx context.Context) *ProjectsAppsExchangeAppAttestAttestationCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsExchangeAppAttestAttestationCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2105,18 +1726,12 @@ func (c *ProjectsAppsExchangeAppAttestAttestationCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsExchangeAppAttestAttestationCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangeappattestattestationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangeAppAttestAttestation")
@@ -2133,15 +1748,11 @@ func (c *ProjectsAppsExchangeAppAttestAttestationCall) doRequest(alt string) (*h
 }
 
 // Do executes the "firebaseappcheck.projects.apps.exchangeAppAttestAttestation" call.
-// Exactly one of
-// *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse.ServerResponse.
+// Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAppsExchangeAppAttestAttestationCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2172,39 +1783,7 @@ func (c *ProjectsAppsExchangeAppAttestAttestationCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Accepts an App Attest CBOR attestation and verifies it with Apple using your preconfigured team and bundle IDs. If valid, returns an attestation artifact that can later be exchanged for an AppCheckToken using ExchangeAppAttestAssertion. For convenience and performance, this method's response object will also contain an AppCheckToken (if the verification is successful).",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:exchangeAppAttestAttestation",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.exchangeAppAttestAttestation",
-	//   "parameterOrder": [
-	//     "app"
-	//   ],
-	//   "parameters": {
-	//     "app": {
-	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+app}:exchangeAppAttestAttestation",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.exchangeCustomToken":
 
 type ProjectsAppsExchangeCustomTokenCall struct {
 	s                                                  *Service
@@ -2215,15 +1794,14 @@ type ProjectsAppsExchangeCustomTokenCall struct {
 	header_                                            http.Header
 }
 
-// ExchangeCustomToken: Validates a custom token signed using your
-// project's Admin SDK service account credentials. If valid, returns an
-// AppCheckToken.
+// ExchangeCustomToken: Validates a custom token signed using your project's
+// Admin SDK service account credentials. If valid, returns an AppCheckToken.
 //
 //   - app: The relative resource name of the app, in the format: ```
 //     projects/{project_number}/apps/{app_id} ``` If necessary, the
 //     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeCustomToken(appid string, googlefirebaseappcheckv1exchangecustomtokenrequest *GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest) *ProjectsAppsExchangeCustomTokenCall {
 	c := &ProjectsAppsExchangeCustomTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2232,23 +1810,21 @@ func (r *ProjectsAppsService) ExchangeCustomToken(appid string, googlefirebaseap
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsExchangeCustomTokenCall) Fields(s ...googleapi.Field) *ProjectsAppsExchangeCustomTokenCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsExchangeCustomTokenCall) Context(ctx context.Context) *ProjectsAppsExchangeCustomTokenCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsExchangeCustomTokenCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2257,18 +1833,12 @@ func (c *ProjectsAppsExchangeCustomTokenCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsExchangeCustomTokenCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangecustomtokenrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangeCustomToken")
@@ -2285,13 +1855,11 @@ func (c *ProjectsAppsExchangeCustomTokenCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "firebaseappcheck.projects.apps.exchangeCustomToken" call.
-// Exactly one of *GoogleFirebaseAppcheckV1AppCheckToken or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleFirebaseAppcheckV1AppCheckToken.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsExchangeCustomTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppCheckToken, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2322,39 +1890,7 @@ func (c *ProjectsAppsExchangeCustomTokenCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Validates a custom token signed using your project's Admin SDK service account credentials. If valid, returns an AppCheckToken.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:exchangeCustomToken",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.exchangeCustomToken",
-	//   "parameterOrder": [
-	//     "app"
-	//   ],
-	//   "parameters": {
-	//     "app": {
-	//       "description": "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+app}:exchangeCustomToken",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1AppCheckToken"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.exchangeDebugToken":
 
 type ProjectsAppsExchangeDebugTokenCall struct {
 	s                                                 *Service
@@ -2365,16 +1901,16 @@ type ProjectsAppsExchangeDebugTokenCall struct {
 	header_                                           http.Header
 }
 
-// ExchangeDebugToken: Validates a debug token secret that you have
-// previously created using CreateDebugToken. If valid, returns an
-// AppCheckToken. Note that a restrictive quota is enforced on this
-// method to prevent accidental exposure of the app to abuse.
+// ExchangeDebugToken: Validates a debug token secret that you have previously
+// created using CreateDebugToken. If valid, returns an AppCheckToken. Note
+// that a restrictive quota is enforced on this method to prevent accidental
+// exposure of the app to abuse.
 //
 //   - app: The relative resource name of the app, in the format: ```
 //     projects/{project_number}/apps/{app_id} ``` If necessary, the
 //     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeDebugToken(appid string, googlefirebaseappcheckv1exchangedebugtokenrequest *GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest) *ProjectsAppsExchangeDebugTokenCall {
 	c := &ProjectsAppsExchangeDebugTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2383,23 +1919,21 @@ func (r *ProjectsAppsService) ExchangeDebugToken(appid string, googlefirebaseapp
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsExchangeDebugTokenCall) Fields(s ...googleapi.Field) *ProjectsAppsExchangeDebugTokenCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsExchangeDebugTokenCall) Context(ctx context.Context) *ProjectsAppsExchangeDebugTokenCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsExchangeDebugTokenCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2408,18 +1942,12 @@ func (c *ProjectsAppsExchangeDebugTokenCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsExchangeDebugTokenCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangedebugtokenrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangeDebugToken")
@@ -2436,13 +1964,11 @@ func (c *ProjectsAppsExchangeDebugTokenCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "firebaseappcheck.projects.apps.exchangeDebugToken" call.
-// Exactly one of *GoogleFirebaseAppcheckV1AppCheckToken or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleFirebaseAppcheckV1AppCheckToken.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsExchangeDebugTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppCheckToken, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2473,39 +1999,7 @@ func (c *ProjectsAppsExchangeDebugTokenCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Validates a debug token secret that you have previously created using CreateDebugToken. If valid, returns an AppCheckToken. Note that a restrictive quota is enforced on this method to prevent accidental exposure of the app to abuse.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:exchangeDebugToken",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.exchangeDebugToken",
-	//   "parameterOrder": [
-	//     "app"
-	//   ],
-	//   "parameters": {
-	//     "app": {
-	//       "description": "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+app}:exchangeDebugToken",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1AppCheckToken"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.exchangeDeviceCheckToken":
 
 type ProjectsAppsExchangeDeviceCheckTokenCall struct {
 	s                                                       *Service
@@ -2517,15 +2011,15 @@ type ProjectsAppsExchangeDeviceCheckTokenCall struct {
 }
 
 // ExchangeDeviceCheckToken: Accepts a `device_token`
-// (https://developer.apple.com/documentation/devicecheck/dcdevice)
-// issued by DeviceCheck, and attempts to validate it with Apple. If
-// valid, returns an AppCheckToken.
+// (https://developer.apple.com/documentation/devicecheck/dcdevice) issued by
+// DeviceCheck, and attempts to validate it with Apple. If valid, returns an
+// AppCheckToken.
 //
 //   - app: The relative resource name of the iOS app, in the format: ```
 //     projects/{project_number}/apps/{app_id} ``` If necessary, the
 //     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeDeviceCheckToken(appid string, googlefirebaseappcheckv1exchangedevicechecktokenrequest *GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest) *ProjectsAppsExchangeDeviceCheckTokenCall {
 	c := &ProjectsAppsExchangeDeviceCheckTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2534,23 +2028,21 @@ func (r *ProjectsAppsService) ExchangeDeviceCheckToken(appid string, googlefireb
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsExchangeDeviceCheckTokenCall) Fields(s ...googleapi.Field) *ProjectsAppsExchangeDeviceCheckTokenCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsExchangeDeviceCheckTokenCall) Context(ctx context.Context) *ProjectsAppsExchangeDeviceCheckTokenCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsExchangeDeviceCheckTokenCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2559,18 +2051,12 @@ func (c *ProjectsAppsExchangeDeviceCheckTokenCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsExchangeDeviceCheckTokenCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangedevicechecktokenrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangeDeviceCheckToken")
@@ -2587,13 +2073,11 @@ func (c *ProjectsAppsExchangeDeviceCheckTokenCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "firebaseappcheck.projects.apps.exchangeDeviceCheckToken" call.
-// Exactly one of *GoogleFirebaseAppcheckV1AppCheckToken or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleFirebaseAppcheckV1AppCheckToken.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsExchangeDeviceCheckTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppCheckToken, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2624,39 +2108,7 @@ func (c *ProjectsAppsExchangeDeviceCheckTokenCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Accepts a [`device_token`](https://developer.apple.com/documentation/devicecheck/dcdevice) issued by DeviceCheck, and attempts to validate it with Apple. If valid, returns an AppCheckToken.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:exchangeDeviceCheckToken",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.exchangeDeviceCheckToken",
-	//   "parameterOrder": [
-	//     "app"
-	//   ],
-	//   "parameters": {
-	//     "app": {
-	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+app}:exchangeDeviceCheckToken",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1AppCheckToken"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.exchangePlayIntegrityToken":
 
 type ProjectsAppsExchangePlayIntegrityTokenCall struct {
 	s                                                         *Service
@@ -2667,16 +2119,16 @@ type ProjectsAppsExchangePlayIntegrityTokenCall struct {
 	header_                                                   http.Header
 }
 
-// ExchangePlayIntegrityToken: Validates an integrity verdict response
-// token from Play Integrity
+// ExchangePlayIntegrityToken: Validates an integrity verdict response token
+// from Play Integrity
 // (https://developer.android.com/google/play/integrity/verdict#decrypt-verify).
 // If valid, returns an AppCheckToken.
 //
-//   - app: The relative resource name of the Android app, in the format:
-//     ``` projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   - app: The relative resource name of the Android app, in the format: ```
+//     projects/{project_number}/apps/{app_id} ``` If necessary, the
 //     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangePlayIntegrityToken(appid string, googlefirebaseappcheckv1exchangeplayintegritytokenrequest *GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest) *ProjectsAppsExchangePlayIntegrityTokenCall {
 	c := &ProjectsAppsExchangePlayIntegrityTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2685,23 +2137,21 @@ func (r *ProjectsAppsService) ExchangePlayIntegrityToken(appid string, googlefir
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsExchangePlayIntegrityTokenCall) Fields(s ...googleapi.Field) *ProjectsAppsExchangePlayIntegrityTokenCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsExchangePlayIntegrityTokenCall) Context(ctx context.Context) *ProjectsAppsExchangePlayIntegrityTokenCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsExchangePlayIntegrityTokenCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2710,18 +2160,12 @@ func (c *ProjectsAppsExchangePlayIntegrityTokenCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsExchangePlayIntegrityTokenCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangeplayintegritytokenrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangePlayIntegrityToken")
@@ -2738,13 +2182,11 @@ func (c *ProjectsAppsExchangePlayIntegrityTokenCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "firebaseappcheck.projects.apps.exchangePlayIntegrityToken" call.
-// Exactly one of *GoogleFirebaseAppcheckV1AppCheckToken or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleFirebaseAppcheckV1AppCheckToken.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsExchangePlayIntegrityTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppCheckToken, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2775,39 +2217,7 @@ func (c *ProjectsAppsExchangePlayIntegrityTokenCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Validates an [integrity verdict response token from Play Integrity](https://developer.android.com/google/play/integrity/verdict#decrypt-verify). If valid, returns an AppCheckToken.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:exchangePlayIntegrityToken",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.exchangePlayIntegrityToken",
-	//   "parameterOrder": [
-	//     "app"
-	//   ],
-	//   "parameters": {
-	//     "app": {
-	//       "description": "Required. The relative resource name of the Android app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+app}:exchangePlayIntegrityToken",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1AppCheckToken"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.exchangeRecaptchaEnterpriseToken":
 
 type ProjectsAppsExchangeRecaptchaEnterpriseTokenCall struct {
 	s                                                               *Service
@@ -2818,16 +2228,16 @@ type ProjectsAppsExchangeRecaptchaEnterpriseTokenCall struct {
 	header_                                                         http.Header
 }
 
-// ExchangeRecaptchaEnterpriseToken: Validates a reCAPTCHA Enterprise
-// response token
+// ExchangeRecaptchaEnterpriseToken: Validates a reCAPTCHA Enterprise response
+// token
 // (https://cloud.google.com/recaptcha-enterprise/docs/create-assessment#retrieve_token).
 // If valid, returns an AppCheckToken.
 //
 //   - app: The relative resource name of the web app, in the format: ```
 //     projects/{project_number}/apps/{app_id} ``` If necessary, the
 //     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeRecaptchaEnterpriseToken(appid string, googlefirebaseappcheckv1exchangerecaptchaenterprisetokenrequest *GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest) *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall {
 	c := &ProjectsAppsExchangeRecaptchaEnterpriseTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2836,23 +2246,21 @@ func (r *ProjectsAppsService) ExchangeRecaptchaEnterpriseToken(appid string, goo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall) Fields(s ...googleapi.Field) *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall) Context(ctx context.Context) *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2861,18 +2269,12 @@ func (c *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall) Header() http.Header 
 }
 
 func (c *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangerecaptchaenterprisetokenrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangeRecaptchaEnterpriseToken")
@@ -2889,13 +2291,11 @@ func (c *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall) doRequest(alt string)
 }
 
 // Do executes the "firebaseappcheck.projects.apps.exchangeRecaptchaEnterpriseToken" call.
-// Exactly one of *GoogleFirebaseAppcheckV1AppCheckToken or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleFirebaseAppcheckV1AppCheckToken.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppCheckToken, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2926,39 +2326,7 @@ func (c *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Validates a [reCAPTCHA Enterprise response token](https://cloud.google.com/recaptcha-enterprise/docs/create-assessment#retrieve_token). If valid, returns an AppCheckToken.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:exchangeRecaptchaEnterpriseToken",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.exchangeRecaptchaEnterpriseToken",
-	//   "parameterOrder": [
-	//     "app"
-	//   ],
-	//   "parameters": {
-	//     "app": {
-	//       "description": "Required. The relative resource name of the web app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+app}:exchangeRecaptchaEnterpriseToken",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1AppCheckToken"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.exchangeRecaptchaV3Token":
 
 type ProjectsAppsExchangeRecaptchaV3TokenCall struct {
 	s                                                       *Service
@@ -2970,14 +2338,14 @@ type ProjectsAppsExchangeRecaptchaV3TokenCall struct {
 }
 
 // ExchangeRecaptchaV3Token: Validates a reCAPTCHA v3 response token
-// (https://developers.google.com/recaptcha/docs/v3). If valid, returns
-// an AppCheckToken.
+// (https://developers.google.com/recaptcha/docs/v3). If valid, returns an
+// AppCheckToken.
 //
 //   - app: The relative resource name of the web app, in the format: ```
 //     projects/{project_number}/apps/{app_id} ``` If necessary, the
 //     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeRecaptchaV3Token(appid string, googlefirebaseappcheckv1exchangerecaptchav3tokenrequest *GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest) *ProjectsAppsExchangeRecaptchaV3TokenCall {
 	c := &ProjectsAppsExchangeRecaptchaV3TokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2986,23 +2354,21 @@ func (r *ProjectsAppsService) ExchangeRecaptchaV3Token(appid string, googlefireb
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsExchangeRecaptchaV3TokenCall) Fields(s ...googleapi.Field) *ProjectsAppsExchangeRecaptchaV3TokenCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsExchangeRecaptchaV3TokenCall) Context(ctx context.Context) *ProjectsAppsExchangeRecaptchaV3TokenCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsExchangeRecaptchaV3TokenCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3011,18 +2377,12 @@ func (c *ProjectsAppsExchangeRecaptchaV3TokenCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsExchangeRecaptchaV3TokenCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangerecaptchav3tokenrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangeRecaptchaV3Token")
@@ -3039,13 +2399,11 @@ func (c *ProjectsAppsExchangeRecaptchaV3TokenCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "firebaseappcheck.projects.apps.exchangeRecaptchaV3Token" call.
-// Exactly one of *GoogleFirebaseAppcheckV1AppCheckToken or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleFirebaseAppcheckV1AppCheckToken.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsExchangeRecaptchaV3TokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppCheckToken, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3076,39 +2434,7 @@ func (c *ProjectsAppsExchangeRecaptchaV3TokenCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Validates a [reCAPTCHA v3 response token](https://developers.google.com/recaptcha/docs/v3). If valid, returns an AppCheckToken.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:exchangeRecaptchaV3Token",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.exchangeRecaptchaV3Token",
-	//   "parameterOrder": [
-	//     "app"
-	//   ],
-	//   "parameters": {
-	//     "app": {
-	//       "description": "Required. The relative resource name of the web app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+app}:exchangeRecaptchaV3Token",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1AppCheckToken"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.exchangeSafetyNetToken":
 
 type ProjectsAppsExchangeSafetyNetTokenCall struct {
 	s                                                     *Service
@@ -3123,11 +2449,11 @@ type ProjectsAppsExchangeSafetyNetTokenCall struct {
 // (https://developer.android.com/training/safetynet/attestation#request-attestation-step).
 // If valid, returns an AppCheckToken.
 //
-//   - app: The relative resource name of the Android app, in the format:
-//     ``` projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   - app: The relative resource name of the Android app, in the format: ```
+//     projects/{project_number}/apps/{app_id} ``` If necessary, the
 //     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeSafetyNetToken(appid string, googlefirebaseappcheckv1exchangesafetynettokenrequest *GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest) *ProjectsAppsExchangeSafetyNetTokenCall {
 	c := &ProjectsAppsExchangeSafetyNetTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3136,23 +2462,21 @@ func (r *ProjectsAppsService) ExchangeSafetyNetToken(appid string, googlefirebas
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsExchangeSafetyNetTokenCall) Fields(s ...googleapi.Field) *ProjectsAppsExchangeSafetyNetTokenCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsExchangeSafetyNetTokenCall) Context(ctx context.Context) *ProjectsAppsExchangeSafetyNetTokenCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsExchangeSafetyNetTokenCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3161,18 +2485,12 @@ func (c *ProjectsAppsExchangeSafetyNetTokenCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsExchangeSafetyNetTokenCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangesafetynettokenrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangeSafetyNetToken")
@@ -3189,13 +2507,11 @@ func (c *ProjectsAppsExchangeSafetyNetTokenCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "firebaseappcheck.projects.apps.exchangeSafetyNetToken" call.
-// Exactly one of *GoogleFirebaseAppcheckV1AppCheckToken or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleFirebaseAppcheckV1AppCheckToken.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsExchangeSafetyNetTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppCheckToken, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3226,40 +2542,7 @@ func (c *ProjectsAppsExchangeSafetyNetTokenCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Validates a [SafetyNet token](https://developer.android.com/training/safetynet/attestation#request-attestation-step). If valid, returns an AppCheckToken.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:exchangeSafetyNetToken",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.exchangeSafetyNetToken",
-	//   "parameterOrder": [
-	//     "app"
-	//   ],
-	//   "parameters": {
-	//     "app": {
-	//       "description": "Required. The relative resource name of the Android app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+app}:exchangeSafetyNetToken",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1AppCheckToken"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.generateAppAttestChallenge":
 
 type ProjectsAppsGenerateAppAttestChallengeCall struct {
 	s                                                         *Service
@@ -3271,15 +2554,15 @@ type ProjectsAppsGenerateAppAttestChallengeCall struct {
 }
 
 // GenerateAppAttestChallenge: Generates a challenge that protects the
-// integrity of an immediately following call to
-// ExchangeAppAttestAttestation or ExchangeAppAttestAssertion. A
-// challenge should not be reused for multiple calls.
+// integrity of an immediately following call to ExchangeAppAttestAttestation
+// or ExchangeAppAttestAssertion. A challenge should not be reused for multiple
+// calls.
 //
 //   - app: The relative resource name of the iOS app, in the format: ```
 //     projects/{project_number}/apps/{app_id} ``` If necessary, the
 //     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) GenerateAppAttestChallenge(appid string, googlefirebaseappcheckv1generateappattestchallengerequest *GoogleFirebaseAppcheckV1GenerateAppAttestChallengeRequest) *ProjectsAppsGenerateAppAttestChallengeCall {
 	c := &ProjectsAppsGenerateAppAttestChallengeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3288,23 +2571,21 @@ func (r *ProjectsAppsService) GenerateAppAttestChallenge(appid string, googlefir
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsGenerateAppAttestChallengeCall) Fields(s ...googleapi.Field) *ProjectsAppsGenerateAppAttestChallengeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsGenerateAppAttestChallengeCall) Context(ctx context.Context) *ProjectsAppsGenerateAppAttestChallengeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsGenerateAppAttestChallengeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3313,18 +2594,12 @@ func (c *ProjectsAppsGenerateAppAttestChallengeCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsGenerateAppAttestChallengeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1generateappattestchallengerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:generateAppAttestChallenge")
@@ -3341,15 +2616,11 @@ func (c *ProjectsAppsGenerateAppAttestChallengeCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "firebaseappcheck.projects.apps.generateAppAttestChallenge" call.
-// Exactly one of
-// *GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAppsGenerateAppAttestChallengeCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3380,39 +2651,7 @@ func (c *ProjectsAppsGenerateAppAttestChallengeCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Generates a challenge that protects the integrity of an immediately following call to ExchangeAppAttestAttestation or ExchangeAppAttestAssertion. A challenge should not be reused for multiple calls.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:generateAppAttestChallenge",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.generateAppAttestChallenge",
-	//   "parameterOrder": [
-	//     "app"
-	//   ],
-	//   "parameters": {
-	//     "app": {
-	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+app}:generateAppAttestChallenge",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1GenerateAppAttestChallengeRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.generatePlayIntegrityChallenge":
 
 type ProjectsAppsGeneratePlayIntegrityChallengeCall struct {
 	s                                                             *Service
@@ -3423,18 +2662,17 @@ type ProjectsAppsGeneratePlayIntegrityChallengeCall struct {
 	header_                                                       http.Header
 }
 
-// GeneratePlayIntegrityChallenge: Generates a challenge that protects
-// the integrity of an immediately following integrity verdict request
-// to the Play Integrity API. The next call to
-// ExchangePlayIntegrityToken using the resulting integrity token will
-// verify the presence and validity of the challenge. A challenge should
-// not be reused for multiple calls.
+// GeneratePlayIntegrityChallenge: Generates a challenge that protects the
+// integrity of an immediately following integrity verdict request to the Play
+// Integrity API. The next call to ExchangePlayIntegrityToken using the
+// resulting integrity token will verify the presence and validity of the
+// challenge. A challenge should not be reused for multiple calls.
 //
 //   - app: The relative resource name of the app, in the format: ```
 //     projects/{project_number}/apps/{app_id} ``` If necessary, the
 //     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) GeneratePlayIntegrityChallenge(appid string, googlefirebaseappcheckv1generateplayintegritychallengerequest *GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeRequest) *ProjectsAppsGeneratePlayIntegrityChallengeCall {
 	c := &ProjectsAppsGeneratePlayIntegrityChallengeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3443,23 +2681,21 @@ func (r *ProjectsAppsService) GeneratePlayIntegrityChallenge(appid string, googl
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) Fields(s ...googleapi.Field) *ProjectsAppsGeneratePlayIntegrityChallengeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) Context(ctx context.Context) *ProjectsAppsGeneratePlayIntegrityChallengeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3468,18 +2704,12 @@ func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1generateplayintegritychallengerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:generatePlayIntegrityChallenge")
@@ -3496,15 +2726,11 @@ func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) doRequest(alt string) (
 }
 
 // Do executes the "firebaseappcheck.projects.apps.generatePlayIntegrityChallenge" call.
-// Exactly one of
-// *GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse.Server
-// Response.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3535,39 +2761,7 @@ func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Generates a challenge that protects the integrity of an immediately following integrity verdict request to the Play Integrity API. The next call to ExchangePlayIntegrityToken using the resulting integrity token will verify the presence and validity of the challenge. A challenge should not be reused for multiple calls.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:generatePlayIntegrityChallenge",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.generatePlayIntegrityChallenge",
-	//   "parameterOrder": [
-	//     "app"
-	//   ],
-	//   "parameters": {
-	//     "app": {
-	//       "description": "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+app}:generatePlayIntegrityChallenge",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.appAttestConfig.batchGet":
 
 type ProjectsAppsAppAttestConfigBatchGetCall struct {
 	s            *Service
@@ -3578,56 +2772,52 @@ type ProjectsAppsAppAttestConfigBatchGetCall struct {
 	header_      http.Header
 }
 
-// BatchGet: Atomically gets the AppAttestConfigs for the specified list
-// of apps.
+// BatchGet: Atomically gets the AppAttestConfigs for the specified list of
+// apps.
 //
-//   - parent: The parent project name shared by all AppAttestConfigs
-//     being retrieved, in the format ``` projects/{project_number} ```
-//     The parent collection in the `name` field of any resource being
-//     retrieved must match this field, or the entire batch fails.
+//   - parent: The parent project name shared by all AppAttestConfigs being
+//     retrieved, in the format ``` projects/{project_number} ``` The parent
+//     collection in the `name` field of any resource being retrieved must match
+//     this field, or the entire batch fails.
 func (r *ProjectsAppsAppAttestConfigService) BatchGet(parent string) *ProjectsAppsAppAttestConfigBatchGetCall {
 	c := &ProjectsAppsAppAttestConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Names sets the optional parameter "names": Required. The relative
-// resource names of the AppAttestConfigs to retrieve, in the format ```
-// projects/{project_number}/apps/{app_id}/appAttestConfig ``` A maximum
-// of 100 objects can be retrieved in a batch.
+// Names sets the optional parameter "names": Required. The relative resource
+// names of the AppAttestConfigs to retrieve, in the format ```
+// projects/{project_number}/apps/{app_id}/appAttestConfig ``` A maximum of 100
+// objects can be retrieved in a batch.
 func (c *ProjectsAppsAppAttestConfigBatchGetCall) Names(names ...string) *ProjectsAppsAppAttestConfigBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsAppAttestConfigBatchGetCall) Fields(s ...googleapi.Field) *ProjectsAppsAppAttestConfigBatchGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsAppAttestConfigBatchGetCall) IfNoneMatch(entityTag string) *ProjectsAppsAppAttestConfigBatchGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsAppAttestConfigBatchGetCall) Context(ctx context.Context) *ProjectsAppsAppAttestConfigBatchGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsAppAttestConfigBatchGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3636,12 +2826,7 @@ func (c *ProjectsAppsAppAttestConfigBatchGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsAppAttestConfigBatchGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3662,15 +2847,11 @@ func (c *ProjectsAppsAppAttestConfigBatchGetCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "firebaseappcheck.projects.apps.appAttestConfig.batchGet" call.
-// Exactly one of
-// *GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse.ServerRespon
-// se.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAppsAppAttestConfigBatchGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3701,42 +2882,7 @@ func (c *ProjectsAppsAppAttestConfigBatchGetCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Atomically gets the AppAttestConfigs for the specified list of apps.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/-/appAttestConfig:batchGet",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.appAttestConfig.batchGet",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "names": {
-	//       "description": "Required. The relative resource names of the AppAttestConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/appAttestConfig ``` A maximum of 100 objects can be retrieved in a batch.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent project name shared by all AppAttestConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/apps/-/appAttestConfig:batchGet",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.appAttestConfig.get":
 
 type ProjectsAppsAppAttestConfigGetCall struct {
 	s            *Service
@@ -3749,9 +2895,8 @@ type ProjectsAppsAppAttestConfigGetCall struct {
 
 // Get: Gets the AppAttestConfig for the specified app.
 //
-//   - name: The relative resource name of the AppAttestConfig, in the
-//     format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig
-//     ```.
+//   - name: The relative resource name of the AppAttestConfig, in the format:
+//     ``` projects/{project_number}/apps/{app_id}/appAttestConfig ```.
 func (r *ProjectsAppsAppAttestConfigService) Get(name string) *ProjectsAppsAppAttestConfigGetCall {
 	c := &ProjectsAppsAppAttestConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3759,33 +2904,29 @@ func (r *ProjectsAppsAppAttestConfigService) Get(name string) *ProjectsAppsAppAt
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsAppAttestConfigGetCall) Fields(s ...googleapi.Field) *ProjectsAppsAppAttestConfigGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsAppAttestConfigGetCall) IfNoneMatch(entityTag string) *ProjectsAppsAppAttestConfigGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsAppAttestConfigGetCall) Context(ctx context.Context) *ProjectsAppsAppAttestConfigGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsAppAttestConfigGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3794,12 +2935,7 @@ func (c *ProjectsAppsAppAttestConfigGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsAppAttestConfigGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3820,13 +2956,11 @@ func (c *ProjectsAppsAppAttestConfigGetCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "firebaseappcheck.projects.apps.appAttestConfig.get" call.
-// Exactly one of *GoogleFirebaseAppcheckV1AppAttestConfig or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleFirebaseAppcheckV1AppAttestConfig.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1AppAttestConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsAppAttestConfigGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppAttestConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3857,36 +2991,7 @@ func (c *ProjectsAppsAppAttestConfigGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the AppAttestConfig for the specified app.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/appAttestConfig",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.appAttestConfig.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the AppAttestConfig, in the format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/appAttestConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1AppAttestConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.appAttestConfig.patch":
 
 type ProjectsAppsAppAttestConfigPatchCall struct {
 	s                                       *Service
@@ -3898,12 +3003,12 @@ type ProjectsAppsAppAttestConfigPatchCall struct {
 }
 
 // Patch: Updates the AppAttestConfig for the specified app. While this
-// configuration is incomplete or invalid, the app will be unable to
-// exchange AppAttest tokens for App Check tokens.
+// configuration is incomplete or invalid, the app will be unable to exchange
+// AppAttest tokens for App Check tokens.
 //
-//   - name: The relative resource name of the App Attest configuration
-//     object, in the format: ```
-//     projects/{project_number}/apps/{app_id}/appAttestConfig ```.
+//   - name: The relative resource name of the App Attest configuration object,
+//     in the format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig
+//     ```.
 func (r *ProjectsAppsAppAttestConfigService) Patch(name string, googlefirebaseappcheckv1appattestconfig *GoogleFirebaseAppcheckV1AppAttestConfig) *ProjectsAppsAppAttestConfigPatchCall {
 	c := &ProjectsAppsAppAttestConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3912,31 +3017,29 @@ func (r *ProjectsAppsAppAttestConfigService) Patch(name string, googlefirebaseap
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the AppAttestConfig Gets
-// to update. Example: `token_ttl`.
+// comma-separated list of names of fields in the AppAttestConfig to update.
+// Example: `token_ttl`.
 func (c *ProjectsAppsAppAttestConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsAppAttestConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsAppAttestConfigPatchCall) Fields(s ...googleapi.Field) *ProjectsAppsAppAttestConfigPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsAppAttestConfigPatchCall) Context(ctx context.Context) *ProjectsAppsAppAttestConfigPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsAppAttestConfigPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3945,18 +3048,12 @@ func (c *ProjectsAppsAppAttestConfigPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsAppAttestConfigPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1appattestconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -3973,13 +3070,11 @@ func (c *ProjectsAppsAppAttestConfigPatchCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "firebaseappcheck.projects.apps.appAttestConfig.patch" call.
-// Exactly one of *GoogleFirebaseAppcheckV1AppAttestConfig or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleFirebaseAppcheckV1AppAttestConfig.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1AppAttestConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsAppAttestConfigPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppAttestConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4010,45 +3105,7 @@ func (c *ProjectsAppsAppAttestConfigPatchCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the AppAttestConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange AppAttest tokens for App Check tokens.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/appAttestConfig",
-	//   "httpMethod": "PATCH",
-	//   "id": "firebaseappcheck.projects.apps.appAttestConfig.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the App Attest configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/appAttestConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the AppAttestConfig Gets to update. Example: `token_ttl`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1AppAttestConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1AppAttestConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.debugTokens.create":
 
 type ProjectsAppsDebugTokensCreateCall struct {
 	s                                  *Service
@@ -4060,10 +3117,9 @@ type ProjectsAppsDebugTokensCreateCall struct {
 }
 
 // Create: Creates a new DebugToken for the specified app. For security
-// reasons, after the creation operation completes, the `token` field
-// cannot be updated or retrieved, but you can revoke the debug token
-// using DeleteDebugToken. Each app can have a maximum of 20 debug
-// tokens.
+// reasons, after the creation operation completes, the `token` field cannot be
+// updated or retrieved, but you can revoke the debug token using
+// DeleteDebugToken. Each app can have a maximum of 20 debug tokens.
 //
 //   - parent: The relative resource name of the parent app in which the
 //     specified DebugToken will be created, in the format: ```
@@ -4076,23 +3132,21 @@ func (r *ProjectsAppsDebugTokensService) Create(parent string, googlefirebaseapp
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsDebugTokensCreateCall) Fields(s ...googleapi.Field) *ProjectsAppsDebugTokensCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsDebugTokensCreateCall) Context(ctx context.Context) *ProjectsAppsDebugTokensCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsDebugTokensCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4101,18 +3155,12 @@ func (c *ProjectsAppsDebugTokensCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsDebugTokensCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1debugtoken)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/debugTokens")
@@ -4129,13 +3177,11 @@ func (c *ProjectsAppsDebugTokensCreateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "firebaseappcheck.projects.apps.debugTokens.create" call.
-// Exactly one of *GoogleFirebaseAppcheckV1DebugToken or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleFirebaseAppcheckV1DebugToken.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1DebugToken.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsDebugTokensCreateCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1DebugToken, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4166,39 +3212,7 @@ func (c *ProjectsAppsDebugTokensCreateCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new DebugToken for the specified app. For security reasons, after the creation operation completes, the `token` field cannot be updated or retrieved, but you can revoke the debug token using DeleteDebugToken. Each app can have a maximum of 20 debug tokens.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/debugTokens",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.apps.debugTokens.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the parent app in which the specified DebugToken will be created, in the format: ``` projects/{project_number}/apps/{app_id} ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/debugTokens",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1DebugToken"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1DebugToken"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.debugTokens.delete":
 
 type ProjectsAppsDebugTokensDeleteCall struct {
 	s          *Service
@@ -4208,15 +3222,14 @@ type ProjectsAppsDebugTokensDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the specified DebugToken. A deleted debug token
-// cannot be used to exchange for an App Check token. Use this method
-// when you suspect the secret `token` has been compromised or when you
-// no longer need the debug token.
+// Delete: Deletes the specified DebugToken. A deleted debug token cannot be
+// used to exchange for an App Check token. Use this method when you suspect
+// the secret `token` has been compromised or when you no longer need the debug
+// token.
 //
-//   - name: The relative resource name of the DebugToken to delete, in
-//     the format: ```
-//     projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id}
-//     ```.
+//   - name: The relative resource name of the DebugToken to delete, in the
+//     format: ```
+//     projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```.
 func (r *ProjectsAppsDebugTokensService) Delete(name string) *ProjectsAppsDebugTokensDeleteCall {
 	c := &ProjectsAppsDebugTokensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4224,23 +3237,21 @@ func (r *ProjectsAppsDebugTokensService) Delete(name string) *ProjectsAppsDebugT
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsDebugTokensDeleteCall) Fields(s ...googleapi.Field) *ProjectsAppsDebugTokensDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsDebugTokensDeleteCall) Context(ctx context.Context) *ProjectsAppsDebugTokensDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsDebugTokensDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4249,12 +3260,7 @@ func (c *ProjectsAppsDebugTokensDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsDebugTokensDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4272,12 +3278,11 @@ func (c *ProjectsAppsDebugTokensDeleteCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "firebaseappcheck.projects.apps.debugTokens.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsAppsDebugTokensDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4308,36 +3313,7 @@ func (c *ProjectsAppsDebugTokensDeleteCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the specified DebugToken. A deleted debug token cannot be used to exchange for an App Check token. Use this method when you suspect the secret `token` has been compromised or when you no longer need the debug token.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "firebaseappcheck.projects.apps.debugTokens.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the DebugToken to delete, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/debugTokens/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.debugTokens.get":
 
 type ProjectsAppsDebugTokensGetCall struct {
 	s            *Service
@@ -4348,13 +3324,11 @@ type ProjectsAppsDebugTokensGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified DebugToken. For security reasons, the `token`
-// field is never populated in the response.
+// Get: Gets the specified DebugToken. For security reasons, the `token` field
+// is never populated in the response.
 //
-//   - name: The relative resource name of the debug token, in the format:
-//     ```
-//     projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id}
-//     ```.
+//   - name: The relative resource name of the debug token, in the format: ```
+//     projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```.
 func (r *ProjectsAppsDebugTokensService) Get(name string) *ProjectsAppsDebugTokensGetCall {
 	c := &ProjectsAppsDebugTokensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4362,33 +3336,29 @@ func (r *ProjectsAppsDebugTokensService) Get(name string) *ProjectsAppsDebugToke
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsDebugTokensGetCall) Fields(s ...googleapi.Field) *ProjectsAppsDebugTokensGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsDebugTokensGetCall) IfNoneMatch(entityTag string) *ProjectsAppsDebugTokensGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsDebugTokensGetCall) Context(ctx context.Context) *ProjectsAppsDebugTokensGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsDebugTokensGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4397,12 +3367,7 @@ func (c *ProjectsAppsDebugTokensGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsDebugTokensGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4423,13 +3388,11 @@ func (c *ProjectsAppsDebugTokensGetCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "firebaseappcheck.projects.apps.debugTokens.get" call.
-// Exactly one of *GoogleFirebaseAppcheckV1DebugToken or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleFirebaseAppcheckV1DebugToken.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1DebugToken.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsDebugTokensGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1DebugToken, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4460,36 +3423,7 @@ func (c *ProjectsAppsDebugTokensGetCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the specified DebugToken. For security reasons, the `token` field is never populated in the response.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.debugTokens.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the debug token, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/debugTokens/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1DebugToken"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.debugTokens.list":
 
 type ProjectsAppsDebugTokensListCall struct {
 	s            *Service
@@ -4500,11 +3434,11 @@ type ProjectsAppsDebugTokensListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all DebugTokens for the specified app. For security
-// reasons, the `token` field is never populated in the response.
+// List: Lists all DebugTokens for the specified app. For security reasons, the
+// `token` field is never populated in the response.
 //
-//   - parent: The relative resource name of the parent app for which to
-//     list each associated DebugToken, in the format: ```
+//   - parent: The relative resource name of the parent app for which to list
+//     each associated DebugToken, in the format: ```
 //     projects/{project_number}/apps/{app_id} ```.
 func (r *ProjectsAppsDebugTokensService) List(parent string) *ProjectsAppsDebugTokensListCall {
 	c := &ProjectsAppsDebugTokensListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4512,55 +3446,51 @@ func (r *ProjectsAppsDebugTokensService) List(parent string) *ProjectsAppsDebugT
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of DebugTokens to return in the response. Note that an app can have
-// at most 20 debug tokens. The server may return fewer than this at its
-// own discretion. If no value is specified (or too large a value is
-// specified), the server will impose its own limit.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// DebugTokens to return in the response. Note that an app can have at most 20
+// debug tokens. The server may return fewer than this at its own discretion.
+// If no value is specified (or too large a value is specified), the server
+// will impose its own limit.
 func (c *ProjectsAppsDebugTokensListCall) PageSize(pageSize int64) *ProjectsAppsDebugTokensListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token returned
-// from a previous call to ListDebugTokens indicating where in the set
-// of DebugTokens to resume listing. Provide this to retrieve the
-// subsequent page. When paginating, all other parameters provided to
-// ListDebugTokens must match the call that provided the page token; if
-// they do not match, the result is undefined.
+// PageToken sets the optional parameter "pageToken": Token returned from a
+// previous call to ListDebugTokens indicating where in the set of DebugTokens
+// to resume listing. Provide this to retrieve the subsequent page. When
+// paginating, all other parameters provided to ListDebugTokens must match the
+// call that provided the page token; if they do not match, the result is
+// undefined.
 func (c *ProjectsAppsDebugTokensListCall) PageToken(pageToken string) *ProjectsAppsDebugTokensListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsDebugTokensListCall) Fields(s ...googleapi.Field) *ProjectsAppsDebugTokensListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsDebugTokensListCall) IfNoneMatch(entityTag string) *ProjectsAppsDebugTokensListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsDebugTokensListCall) Context(ctx context.Context) *ProjectsAppsDebugTokensListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsDebugTokensListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4569,12 +3499,7 @@ func (c *ProjectsAppsDebugTokensListCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsDebugTokensListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4595,16 +3520,11 @@ func (c *ProjectsAppsDebugTokensListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "firebaseappcheck.projects.apps.debugTokens.list" call.
-// Exactly one of *GoogleFirebaseAppcheckV1ListDebugTokensResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1ListDebugTokensResponse.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1ListDebugTokensResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsDebugTokensListCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1ListDebugTokensResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4635,44 +3555,6 @@ func (c *ProjectsAppsDebugTokensListCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all DebugTokens for the specified app. For security reasons, the `token` field is never populated in the response.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/debugTokens",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.debugTokens.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of DebugTokens to return in the response. Note that an app can have at most 20 debug tokens. The server may return fewer than this at its own discretion. If no value is specified (or too large a value is specified), the server will impose its own limit.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token returned from a previous call to ListDebugTokens indicating where in the set of DebugTokens to resume listing. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListDebugTokens must match the call that provided the page token; if they do not match, the result is undefined.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the parent app for which to list each associated DebugToken, in the format: ``` projects/{project_number}/apps/{app_id} ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/debugTokens",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ListDebugTokensResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4680,7 +3562,7 @@ func (c *ProjectsAppsDebugTokensListCall) Do(opts ...googleapi.CallOption) (*Goo
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsAppsDebugTokensListCall) Pages(ctx context.Context, f func(*GoogleFirebaseAppcheckV1ListDebugTokensResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4696,8 +3578,6 @@ func (c *ProjectsAppsDebugTokensListCall) Pages(ctx context.Context, f func(*Goo
 	}
 }
 
-// method id "firebaseappcheck.projects.apps.debugTokens.patch":
-
 type ProjectsAppsDebugTokensPatchCall struct {
 	s                                  *Service
 	name                               string
@@ -4707,14 +3587,12 @@ type ProjectsAppsDebugTokensPatchCall struct {
 	header_                            http.Header
 }
 
-// Patch: Updates the specified DebugToken. For security reasons, the
-// `token` field cannot be updated, nor will it be populated in the
-// response, but you can revoke the debug token using DeleteDebugToken.
+// Patch: Updates the specified DebugToken. For security reasons, the `token`
+// field cannot be updated, nor will it be populated in the response, but you
+// can revoke the debug token using DeleteDebugToken.
 //
-//   - name: The relative resource name of the debug token, in the format:
-//     ```
-//     projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id}
-//     ```.
+//   - name: The relative resource name of the debug token, in the format: ```
+//     projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```.
 func (r *ProjectsAppsDebugTokensService) Patch(name string, googlefirebaseappcheckv1debugtoken *GoogleFirebaseAppcheckV1DebugToken) *ProjectsAppsDebugTokensPatchCall {
 	c := &ProjectsAppsDebugTokensPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4731,23 +3609,21 @@ func (c *ProjectsAppsDebugTokensPatchCall) UpdateMask(updateMask string) *Projec
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsDebugTokensPatchCall) Fields(s ...googleapi.Field) *ProjectsAppsDebugTokensPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsDebugTokensPatchCall) Context(ctx context.Context) *ProjectsAppsDebugTokensPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsDebugTokensPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4756,18 +3632,12 @@ func (c *ProjectsAppsDebugTokensPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsDebugTokensPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1debugtoken)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -4784,13 +3654,11 @@ func (c *ProjectsAppsDebugTokensPatchCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "firebaseappcheck.projects.apps.debugTokens.patch" call.
-// Exactly one of *GoogleFirebaseAppcheckV1DebugToken or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleFirebaseAppcheckV1DebugToken.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1DebugToken.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsDebugTokensPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1DebugToken, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4821,45 +3689,7 @@ func (c *ProjectsAppsDebugTokensPatchCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the specified DebugToken. For security reasons, the `token` field cannot be updated, nor will it be populated in the response, but you can revoke the debug token using DeleteDebugToken.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "firebaseappcheck.projects.apps.debugTokens.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the debug token, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/debugTokens/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the DebugToken to update. Example: `display_name`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1DebugToken"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1DebugToken"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.deviceCheckConfig.batchGet":
 
 type ProjectsAppsDeviceCheckConfigBatchGetCall struct {
 	s            *Service
@@ -4870,57 +3700,53 @@ type ProjectsAppsDeviceCheckConfigBatchGetCall struct {
 	header_      http.Header
 }
 
-// BatchGet: Atomically gets the DeviceCheckConfigs for the specified
-// list of apps. For security reasons, the `private_key` field is never
-// populated in the response.
+// BatchGet: Atomically gets the DeviceCheckConfigs for the specified list of
+// apps. For security reasons, the `private_key` field is never populated in
+// the response.
 //
-//   - parent: The parent project name shared by all DeviceCheckConfigs
-//     being retrieved, in the format ``` projects/{project_number} ```
-//     The parent collection in the `name` field of any resource being
-//     retrieved must match this field, or the entire batch fails.
+//   - parent: The parent project name shared by all DeviceCheckConfigs being
+//     retrieved, in the format ``` projects/{project_number} ``` The parent
+//     collection in the `name` field of any resource being retrieved must match
+//     this field, or the entire batch fails.
 func (r *ProjectsAppsDeviceCheckConfigService) BatchGet(parent string) *ProjectsAppsDeviceCheckConfigBatchGetCall {
 	c := &ProjectsAppsDeviceCheckConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Names sets the optional parameter "names": Required. The relative
-// resource names of the DeviceCheckConfigs to retrieve, in the format
-// ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ``` A
-// maximum of 100 objects can be retrieved in a batch.
+// Names sets the optional parameter "names": Required. The relative resource
+// names of the DeviceCheckConfigs to retrieve, in the format ```
+// projects/{project_number}/apps/{app_id}/deviceCheckConfig ``` A maximum of
+// 100 objects can be retrieved in a batch.
 func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) Names(names ...string) *ProjectsAppsDeviceCheckConfigBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) Fields(s ...googleapi.Field) *ProjectsAppsDeviceCheckConfigBatchGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) IfNoneMatch(entityTag string) *ProjectsAppsDeviceCheckConfigBatchGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) Context(ctx context.Context) *ProjectsAppsDeviceCheckConfigBatchGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4929,12 +3755,7 @@ func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4955,15 +3776,11 @@ func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) doRequest(alt string) (*http
 }
 
 // Do executes the "firebaseappcheck.projects.apps.deviceCheckConfig.batchGet" call.
-// Exactly one of
-// *GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4994,42 +3811,7 @@ func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Atomically gets the DeviceCheckConfigs for the specified list of apps. For security reasons, the `private_key` field is never populated in the response.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/-/deviceCheckConfig:batchGet",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.deviceCheckConfig.batchGet",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "names": {
-	//       "description": "Required. The relative resource names of the DeviceCheckConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ``` A maximum of 100 objects can be retrieved in a batch.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent project name shared by all DeviceCheckConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/apps/-/deviceCheckConfig:batchGet",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.deviceCheckConfig.get":
 
 type ProjectsAppsDeviceCheckConfigGetCall struct {
 	s            *Service
@@ -5040,12 +3822,11 @@ type ProjectsAppsDeviceCheckConfigGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the DeviceCheckConfig for the specified app. For security
-// reasons, the `private_key` field is never populated in the response.
+// Get: Gets the DeviceCheckConfig for the specified app. For security reasons,
+// the `private_key` field is never populated in the response.
 //
-//   - name: The relative resource name of the DeviceCheckConfig, in the
-//     format: ```
-//     projects/{project_number}/apps/{app_id}/deviceCheckConfig ```.
+//   - name: The relative resource name of the DeviceCheckConfig, in the format:
+//     ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ```.
 func (r *ProjectsAppsDeviceCheckConfigService) Get(name string) *ProjectsAppsDeviceCheckConfigGetCall {
 	c := &ProjectsAppsDeviceCheckConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5053,33 +3834,29 @@ func (r *ProjectsAppsDeviceCheckConfigService) Get(name string) *ProjectsAppsDev
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsDeviceCheckConfigGetCall) Fields(s ...googleapi.Field) *ProjectsAppsDeviceCheckConfigGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsDeviceCheckConfigGetCall) IfNoneMatch(entityTag string) *ProjectsAppsDeviceCheckConfigGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsDeviceCheckConfigGetCall) Context(ctx context.Context) *ProjectsAppsDeviceCheckConfigGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsDeviceCheckConfigGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5088,12 +3865,7 @@ func (c *ProjectsAppsDeviceCheckConfigGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsDeviceCheckConfigGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5114,14 +3886,11 @@ func (c *ProjectsAppsDeviceCheckConfigGetCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "firebaseappcheck.projects.apps.deviceCheckConfig.get" call.
-// Exactly one of *GoogleFirebaseAppcheckV1DeviceCheckConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1DeviceCheckConfig.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1DeviceCheckConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsDeviceCheckConfigGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1DeviceCheckConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5152,36 +3921,7 @@ func (c *ProjectsAppsDeviceCheckConfigGetCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the DeviceCheckConfig for the specified app. For security reasons, the `private_key` field is never populated in the response.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/deviceCheckConfig",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.deviceCheckConfig.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the DeviceCheckConfig, in the format: ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/deviceCheckConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1DeviceCheckConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.deviceCheckConfig.patch":
 
 type ProjectsAppsDeviceCheckConfigPatchCall struct {
 	s                                         *Service
@@ -5192,13 +3932,13 @@ type ProjectsAppsDeviceCheckConfigPatchCall struct {
 	header_                                   http.Header
 }
 
-// Patch: Updates the DeviceCheckConfig for the specified app. While
-// this configuration is incomplete or invalid, the app will be unable
-// to exchange DeviceCheck tokens for App Check tokens. For security
-// reasons, the `private_key` field is never populated in the response.
+// Patch: Updates the DeviceCheckConfig for the specified app. While this
+// configuration is incomplete or invalid, the app will be unable to exchange
+// DeviceCheck tokens for App Check tokens. For security reasons, the
+// `private_key` field is never populated in the response.
 //
-//   - name: The relative resource name of the DeviceCheck configuration
-//     object, in the format: ```
+//   - name: The relative resource name of the DeviceCheck configuration object,
+//     in the format: ```
 //     projects/{project_number}/apps/{app_id}/deviceCheckConfig ```.
 func (r *ProjectsAppsDeviceCheckConfigService) Patch(name string, googlefirebaseappcheckv1devicecheckconfig *GoogleFirebaseAppcheckV1DeviceCheckConfig) *ProjectsAppsDeviceCheckConfigPatchCall {
 	c := &ProjectsAppsDeviceCheckConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5208,31 +3948,29 @@ func (r *ProjectsAppsDeviceCheckConfigService) Patch(name string, googlefirebase
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the DeviceCheckConfig Gets
-// to update. Example: `key_id,private_key`.
+// comma-separated list of names of fields in the DeviceCheckConfig to update.
+// Example: `key_id,private_key`.
 func (c *ProjectsAppsDeviceCheckConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsDeviceCheckConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsDeviceCheckConfigPatchCall) Fields(s ...googleapi.Field) *ProjectsAppsDeviceCheckConfigPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsDeviceCheckConfigPatchCall) Context(ctx context.Context) *ProjectsAppsDeviceCheckConfigPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsDeviceCheckConfigPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5241,18 +3979,12 @@ func (c *ProjectsAppsDeviceCheckConfigPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsDeviceCheckConfigPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1devicecheckconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -5269,14 +4001,11 @@ func (c *ProjectsAppsDeviceCheckConfigPatchCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "firebaseappcheck.projects.apps.deviceCheckConfig.patch" call.
-// Exactly one of *GoogleFirebaseAppcheckV1DeviceCheckConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1DeviceCheckConfig.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1DeviceCheckConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsDeviceCheckConfigPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1DeviceCheckConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5307,45 +4036,7 @@ func (c *ProjectsAppsDeviceCheckConfigPatchCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the DeviceCheckConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange DeviceCheck tokens for App Check tokens. For security reasons, the `private_key` field is never populated in the response.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/deviceCheckConfig",
-	//   "httpMethod": "PATCH",
-	//   "id": "firebaseappcheck.projects.apps.deviceCheckConfig.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the DeviceCheck configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/deviceCheckConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the DeviceCheckConfig Gets to update. Example: `key_id,private_key`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1DeviceCheckConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1DeviceCheckConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.playIntegrityConfig.batchGet":
 
 type ProjectsAppsPlayIntegrityConfigBatchGetCall struct {
 	s            *Service
@@ -5356,56 +4047,52 @@ type ProjectsAppsPlayIntegrityConfigBatchGetCall struct {
 	header_      http.Header
 }
 
-// BatchGet: Atomically gets the PlayIntegrityConfigs for the specified
-// list of apps.
+// BatchGet: Atomically gets the PlayIntegrityConfigs for the specified list of
+// apps.
 //
-//   - parent: The parent project name shared by all PlayIntegrityConfigs
-//     being retrieved, in the format ``` projects/{project_number} ```
-//     The parent collection in the `name` field of any resource being
-//     retrieved must match this field, or the entire batch fails.
+//   - parent: The parent project name shared by all PlayIntegrityConfigs being
+//     retrieved, in the format ``` projects/{project_number} ``` The parent
+//     collection in the `name` field of any resource being retrieved must match
+//     this field, or the entire batch fails.
 func (r *ProjectsAppsPlayIntegrityConfigService) BatchGet(parent string) *ProjectsAppsPlayIntegrityConfigBatchGetCall {
 	c := &ProjectsAppsPlayIntegrityConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Names sets the optional parameter "names": Required. The relative
-// resource names of the PlayIntegrityConfigs to retrieve, in the format
-// ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ``` A
-// maximum of 100 objects can be retrieved in a batch.
+// Names sets the optional parameter "names": Required. The relative resource
+// names of the PlayIntegrityConfigs to retrieve, in the format ```
+// projects/{project_number}/apps/{app_id}/playIntegrityConfig ``` A maximum of
+// 100 objects can be retrieved in a batch.
 func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) Names(names ...string) *ProjectsAppsPlayIntegrityConfigBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) Fields(s ...googleapi.Field) *ProjectsAppsPlayIntegrityConfigBatchGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) IfNoneMatch(entityTag string) *ProjectsAppsPlayIntegrityConfigBatchGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) Context(ctx context.Context) *ProjectsAppsPlayIntegrityConfigBatchGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5414,12 +4101,7 @@ func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5440,15 +4122,11 @@ func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "firebaseappcheck.projects.apps.playIntegrityConfig.batchGet" call.
-// Exactly one of
-// *GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5479,42 +4157,7 @@ func (c *ProjectsAppsPlayIntegrityConfigBatchGetCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Atomically gets the PlayIntegrityConfigs for the specified list of apps.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/-/playIntegrityConfig:batchGet",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.playIntegrityConfig.batchGet",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "names": {
-	//       "description": "Required. The relative resource names of the PlayIntegrityConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ``` A maximum of 100 objects can be retrieved in a batch.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent project name shared by all PlayIntegrityConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/apps/-/playIntegrityConfig:batchGet",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.playIntegrityConfig.get":
 
 type ProjectsAppsPlayIntegrityConfigGetCall struct {
 	s            *Service
@@ -5528,8 +4171,8 @@ type ProjectsAppsPlayIntegrityConfigGetCall struct {
 // Get: Gets the PlayIntegrityConfig for the specified app.
 //
 //   - name: The relative resource name of the PlayIntegrityConfig, in the
-//     format: ```
-//     projects/{project_number}/apps/{app_id}/playIntegrityConfig ```.
+//     format: ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig
+//     ```.
 func (r *ProjectsAppsPlayIntegrityConfigService) Get(name string) *ProjectsAppsPlayIntegrityConfigGetCall {
 	c := &ProjectsAppsPlayIntegrityConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5537,33 +4180,29 @@ func (r *ProjectsAppsPlayIntegrityConfigService) Get(name string) *ProjectsAppsP
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsPlayIntegrityConfigGetCall) Fields(s ...googleapi.Field) *ProjectsAppsPlayIntegrityConfigGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsPlayIntegrityConfigGetCall) IfNoneMatch(entityTag string) *ProjectsAppsPlayIntegrityConfigGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsPlayIntegrityConfigGetCall) Context(ctx context.Context) *ProjectsAppsPlayIntegrityConfigGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsPlayIntegrityConfigGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5572,12 +4211,7 @@ func (c *ProjectsAppsPlayIntegrityConfigGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsPlayIntegrityConfigGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5598,14 +4232,11 @@ func (c *ProjectsAppsPlayIntegrityConfigGetCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "firebaseappcheck.projects.apps.playIntegrityConfig.get" call.
-// Exactly one of *GoogleFirebaseAppcheckV1PlayIntegrityConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1PlayIntegrityConfig.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1PlayIntegrityConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsPlayIntegrityConfigGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1PlayIntegrityConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5636,36 +4267,7 @@ func (c *ProjectsAppsPlayIntegrityConfigGetCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the PlayIntegrityConfig for the specified app.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/playIntegrityConfig",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.playIntegrityConfig.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the PlayIntegrityConfig, in the format: ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/playIntegrityConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1PlayIntegrityConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.playIntegrityConfig.patch":
 
 type ProjectsAppsPlayIntegrityConfigPatchCall struct {
 	s                                           *Service
@@ -5676,12 +4278,12 @@ type ProjectsAppsPlayIntegrityConfigPatchCall struct {
 	header_                                     http.Header
 }
 
-// Patch: Updates the PlayIntegrityConfig for the specified app. While
-// this configuration is incomplete or invalid, the app will be unable
-// to exchange Play Integrity tokens for App Check tokens.
+// Patch: Updates the PlayIntegrityConfig for the specified app. While this
+// configuration is incomplete or invalid, the app will be unable to exchange
+// Play Integrity tokens for App Check tokens.
 //
-//   - name: The relative resource name of the Play Integrity
-//     configuration object, in the format: ```
+//   - name: The relative resource name of the Play Integrity configuration
+//     object, in the format: ```
 //     projects/{project_number}/apps/{app_id}/playIntegrityConfig ```.
 func (r *ProjectsAppsPlayIntegrityConfigService) Patch(name string, googlefirebaseappcheckv1playintegrityconfig *GoogleFirebaseAppcheckV1PlayIntegrityConfig) *ProjectsAppsPlayIntegrityConfigPatchCall {
 	c := &ProjectsAppsPlayIntegrityConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5691,31 +4293,29 @@ func (r *ProjectsAppsPlayIntegrityConfigService) Patch(name string, googlefireba
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the PlayIntegrityConfig
-// Gets to update. Example: `token_ttl`.
+// comma-separated list of names of fields in the PlayIntegrityConfig to
+// update. Example: `token_ttl`.
 func (c *ProjectsAppsPlayIntegrityConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsPlayIntegrityConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsPlayIntegrityConfigPatchCall) Fields(s ...googleapi.Field) *ProjectsAppsPlayIntegrityConfigPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsPlayIntegrityConfigPatchCall) Context(ctx context.Context) *ProjectsAppsPlayIntegrityConfigPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsPlayIntegrityConfigPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5724,18 +4324,12 @@ func (c *ProjectsAppsPlayIntegrityConfigPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsPlayIntegrityConfigPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1playintegrityconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -5752,14 +4346,11 @@ func (c *ProjectsAppsPlayIntegrityConfigPatchCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "firebaseappcheck.projects.apps.playIntegrityConfig.patch" call.
-// Exactly one of *GoogleFirebaseAppcheckV1PlayIntegrityConfig or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1PlayIntegrityConfig.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1PlayIntegrityConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsPlayIntegrityConfigPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1PlayIntegrityConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5790,45 +4381,7 @@ func (c *ProjectsAppsPlayIntegrityConfigPatchCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the PlayIntegrityConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange Play Integrity tokens for App Check tokens.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/playIntegrityConfig",
-	//   "httpMethod": "PATCH",
-	//   "id": "firebaseappcheck.projects.apps.playIntegrityConfig.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the Play Integrity configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/playIntegrityConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the PlayIntegrityConfig Gets to update. Example: `token_ttl`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1PlayIntegrityConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1PlayIntegrityConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.batchGet":
 
 type ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall struct {
 	s            *Service
@@ -5839,58 +4392,52 @@ type ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall struct {
 	header_      http.Header
 }
 
-// BatchGet: Atomically gets the RecaptchaEnterpriseConfigs for the
-// specified list of apps.
+// BatchGet: Atomically gets the RecaptchaEnterpriseConfigs for the specified
+// list of apps.
 //
-//   - parent: The parent project name shared by all
-//     RecaptchaEnterpriseConfigs being retrieved, in the format ```
-//     projects/{project_number} ``` The parent collection in the `name`
-//     field of any resource being retrieved must match this field, or the
-//     entire batch fails.
+//   - parent: The parent project name shared by all RecaptchaEnterpriseConfigs
+//     being retrieved, in the format ``` projects/{project_number} ``` The
+//     parent collection in the `name` field of any resource being retrieved must
+//     match this field, or the entire batch fails.
 func (r *ProjectsAppsRecaptchaEnterpriseConfigService) BatchGet(parent string) *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall {
 	c := &ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Names sets the optional parameter "names": Required. The relative
-// resource names of the RecaptchaEnterpriseConfigs to retrieve, in the
-// format: ```
-// projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```
-// A maximum of 100 objects can be retrieved in a batch.
+// Names sets the optional parameter "names": Required. The relative resource
+// names of the RecaptchaEnterpriseConfigs to retrieve, in the format: ```
+// projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ``` A
+// maximum of 100 objects can be retrieved in a batch.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) Names(names ...string) *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) Fields(s ...googleapi.Field) *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) IfNoneMatch(entityTag string) *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) Context(ctx context.Context) *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5899,12 +4446,7 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) Header() http.Header
 }
 
 func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5925,15 +4467,11 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) doRequest(alt string
 }
 
 // Do executes the "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.batchGet" call.
-// Exactly one of
-// *GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse.Se
-// rverResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse.ServerRes
+// ponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5964,42 +4502,7 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Atomically gets the RecaptchaEnterpriseConfigs for the specified list of apps.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/-/recaptchaEnterpriseConfig:batchGet",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.batchGet",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "names": {
-	//       "description": "Required. The relative resource names of the RecaptchaEnterpriseConfigs to retrieve, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ``` A maximum of 100 objects can be retrieved in a batch.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent project name shared by all RecaptchaEnterpriseConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/apps/-/recaptchaEnterpriseConfig:batchGet",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.get":
 
 type ProjectsAppsRecaptchaEnterpriseConfigGetCall struct {
 	s            *Service
@@ -6012,10 +4515,9 @@ type ProjectsAppsRecaptchaEnterpriseConfigGetCall struct {
 
 // Get: Gets the RecaptchaEnterpriseConfig for the specified app.
 //
-//   - name: The relative resource name of the RecaptchaEnterpriseConfig,
-//     in the format: ```
-//     projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig
-//     ```.
+//   - name: The relative resource name of the RecaptchaEnterpriseConfig, in the
+//     format: ```
+//     projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```.
 func (r *ProjectsAppsRecaptchaEnterpriseConfigService) Get(name string) *ProjectsAppsRecaptchaEnterpriseConfigGetCall {
 	c := &ProjectsAppsRecaptchaEnterpriseConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6023,33 +4525,29 @@ func (r *ProjectsAppsRecaptchaEnterpriseConfigService) Get(name string) *Project
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigGetCall) Fields(s ...googleapi.Field) *ProjectsAppsRecaptchaEnterpriseConfigGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigGetCall) IfNoneMatch(entityTag string) *ProjectsAppsRecaptchaEnterpriseConfigGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigGetCall) Context(ctx context.Context) *ProjectsAppsRecaptchaEnterpriseConfigGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6058,12 +4556,7 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsRecaptchaEnterpriseConfigGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6084,14 +4577,11 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigGetCall) doRequest(alt string) (*h
 }
 
 // Do executes the "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.get" call.
-// Exactly one of *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6122,36 +4612,7 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigGetCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the RecaptchaEnterpriseConfig for the specified app.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/recaptchaEnterpriseConfig",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the RecaptchaEnterpriseConfig, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/recaptchaEnterpriseConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.patch":
 
 type ProjectsAppsRecaptchaEnterpriseConfigPatchCall struct {
 	s                                                 *Service
@@ -6162,14 +4623,13 @@ type ProjectsAppsRecaptchaEnterpriseConfigPatchCall struct {
 	header_                                           http.Header
 }
 
-// Patch: Updates the RecaptchaEnterpriseConfig for the specified app.
-// While this configuration is incomplete or invalid, the app will be
-// unable to exchange reCAPTCHA Enterprise tokens for App Check tokens.
+// Patch: Updates the RecaptchaEnterpriseConfig for the specified app. While
+// this configuration is incomplete or invalid, the app will be unable to
+// exchange reCAPTCHA Enterprise tokens for App Check tokens.
 //
-//   - name: The relative resource name of the reCAPTCHA Enterprise
-//     configuration object, in the format: ```
-//     projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig
-//     ```.
+//   - name: The relative resource name of the reCAPTCHA Enterprise configuration
+//     object, in the format: ```
+//     projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```.
 func (r *ProjectsAppsRecaptchaEnterpriseConfigService) Patch(name string, googlefirebaseappcheckv1recaptchaenterpriseconfig *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig) *ProjectsAppsRecaptchaEnterpriseConfigPatchCall {
 	c := &ProjectsAppsRecaptchaEnterpriseConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6178,31 +4638,29 @@ func (r *ProjectsAppsRecaptchaEnterpriseConfigService) Patch(name string, google
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the
-// RecaptchaEnterpriseConfig to update. Example: `site_key`.
+// comma-separated list of names of fields in the RecaptchaEnterpriseConfig to
+// update. Example: `site_key`.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsRecaptchaEnterpriseConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigPatchCall) Fields(s ...googleapi.Field) *ProjectsAppsRecaptchaEnterpriseConfigPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigPatchCall) Context(ctx context.Context) *ProjectsAppsRecaptchaEnterpriseConfigPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6211,18 +4669,12 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsRecaptchaEnterpriseConfigPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1recaptchaenterpriseconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -6239,14 +4691,11 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigPatchCall) doRequest(alt string) (
 }
 
 // Do executes the "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.patch" call.
-// Exactly one of *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsRecaptchaEnterpriseConfigPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6277,45 +4726,7 @@ func (c *ProjectsAppsRecaptchaEnterpriseConfigPatchCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the RecaptchaEnterpriseConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA Enterprise tokens for App Check tokens.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/recaptchaEnterpriseConfig",
-	//   "httpMethod": "PATCH",
-	//   "id": "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the reCAPTCHA Enterprise configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/recaptchaEnterpriseConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the RecaptchaEnterpriseConfig to update. Example: `site_key`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.recaptchaV3Config.batchGet":
 
 type ProjectsAppsRecaptchaV3ConfigBatchGetCall struct {
 	s            *Service
@@ -6326,57 +4737,53 @@ type ProjectsAppsRecaptchaV3ConfigBatchGetCall struct {
 	header_      http.Header
 }
 
-// BatchGet: Atomically gets the RecaptchaV3Configs for the specified
-// list of apps. For security reasons, the `site_secret` field is never
-// populated in the response.
+// BatchGet: Atomically gets the RecaptchaV3Configs for the specified list of
+// apps. For security reasons, the `site_secret` field is never populated in
+// the response.
 //
-//   - parent: The parent project name shared by all RecaptchaV3Configs
-//     being retrieved, in the format ``` projects/{project_number} ```
-//     The parent collection in the `name` field of any resource being
-//     retrieved must match this field, or the entire batch fails.
+//   - parent: The parent project name shared by all RecaptchaV3Configs being
+//     retrieved, in the format ``` projects/{project_number} ``` The parent
+//     collection in the `name` field of any resource being retrieved must match
+//     this field, or the entire batch fails.
 func (r *ProjectsAppsRecaptchaV3ConfigService) BatchGet(parent string) *ProjectsAppsRecaptchaV3ConfigBatchGetCall {
 	c := &ProjectsAppsRecaptchaV3ConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Names sets the optional parameter "names": Required. The relative
-// resource names of the RecaptchaV3Configs to retrieve, in the format:
-// ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ``` A
-// maximum of 100 objects can be retrieved in a batch.
+// Names sets the optional parameter "names": Required. The relative resource
+// names of the RecaptchaV3Configs to retrieve, in the format: ```
+// projects/{project_number}/apps/{app_id}/recaptchaV3Config ``` A maximum of
+// 100 objects can be retrieved in a batch.
 func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) Names(names ...string) *ProjectsAppsRecaptchaV3ConfigBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) Fields(s ...googleapi.Field) *ProjectsAppsRecaptchaV3ConfigBatchGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) IfNoneMatch(entityTag string) *ProjectsAppsRecaptchaV3ConfigBatchGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) Context(ctx context.Context) *ProjectsAppsRecaptchaV3ConfigBatchGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6385,12 +4792,7 @@ func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6411,15 +4813,11 @@ func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) doRequest(alt string) (*http
 }
 
 // Do executes the "firebaseappcheck.projects.apps.recaptchaV3Config.batchGet" call.
-// Exactly one of
-// *GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6450,42 +4848,7 @@ func (c *ProjectsAppsRecaptchaV3ConfigBatchGetCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Atomically gets the RecaptchaV3Configs for the specified list of apps. For security reasons, the `site_secret` field is never populated in the response.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/-/recaptchaV3Config:batchGet",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.recaptchaV3Config.batchGet",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "names": {
-	//       "description": "Required. The relative resource names of the RecaptchaV3Configs to retrieve, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ``` A maximum of 100 objects can be retrieved in a batch.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent project name shared by all RecaptchaV3Configs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/apps/-/recaptchaV3Config:batchGet",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.recaptchaV3Config.get":
 
 type ProjectsAppsRecaptchaV3ConfigGetCall struct {
 	s            *Service
@@ -6496,12 +4859,11 @@ type ProjectsAppsRecaptchaV3ConfigGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the RecaptchaV3Config for the specified app. For security
-// reasons, the `site_secret` field is never populated in the response.
+// Get: Gets the RecaptchaV3Config for the specified app. For security reasons,
+// the `site_secret` field is never populated in the response.
 //
-//   - name: The relative resource name of the RecaptchaV3Config, in the
-//     format: ```
-//     projects/{project_number}/apps/{app_id}/recaptchaV3Config ```.
+//   - name: The relative resource name of the RecaptchaV3Config, in the format:
+//     ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ```.
 func (r *ProjectsAppsRecaptchaV3ConfigService) Get(name string) *ProjectsAppsRecaptchaV3ConfigGetCall {
 	c := &ProjectsAppsRecaptchaV3ConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6509,33 +4871,29 @@ func (r *ProjectsAppsRecaptchaV3ConfigService) Get(name string) *ProjectsAppsRec
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsRecaptchaV3ConfigGetCall) Fields(s ...googleapi.Field) *ProjectsAppsRecaptchaV3ConfigGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsRecaptchaV3ConfigGetCall) IfNoneMatch(entityTag string) *ProjectsAppsRecaptchaV3ConfigGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsRecaptchaV3ConfigGetCall) Context(ctx context.Context) *ProjectsAppsRecaptchaV3ConfigGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsRecaptchaV3ConfigGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6544,12 +4902,7 @@ func (c *ProjectsAppsRecaptchaV3ConfigGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsRecaptchaV3ConfigGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6570,14 +4923,11 @@ func (c *ProjectsAppsRecaptchaV3ConfigGetCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "firebaseappcheck.projects.apps.recaptchaV3Config.get" call.
-// Exactly one of *GoogleFirebaseAppcheckV1RecaptchaV3Config or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1RecaptchaV3Config.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1RecaptchaV3Config.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsRecaptchaV3ConfigGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1RecaptchaV3Config, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6608,36 +4958,7 @@ func (c *ProjectsAppsRecaptchaV3ConfigGetCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the RecaptchaV3Config for the specified app. For security reasons, the `site_secret` field is never populated in the response.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/recaptchaV3Config",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.recaptchaV3Config.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the RecaptchaV3Config, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/recaptchaV3Config$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1RecaptchaV3Config"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.recaptchaV3Config.patch":
 
 type ProjectsAppsRecaptchaV3ConfigPatchCall struct {
 	s                                         *Service
@@ -6648,13 +4969,13 @@ type ProjectsAppsRecaptchaV3ConfigPatchCall struct {
 	header_                                   http.Header
 }
 
-// Patch: Updates the RecaptchaV3Config for the specified app. While
-// this configuration is incomplete or invalid, the app will be unable
-// to exchange reCAPTCHA tokens for App Check tokens. For security
-// reasons, the `site_secret` field is never populated in the response.
+// Patch: Updates the RecaptchaV3Config for the specified app. While this
+// configuration is incomplete or invalid, the app will be unable to exchange
+// reCAPTCHA tokens for App Check tokens. For security reasons, the
+// `site_secret` field is never populated in the response.
 //
-//   - name: The relative resource name of the reCAPTCHA v3 configuration
-//     object, in the format: ```
+//   - name: The relative resource name of the reCAPTCHA v3 configuration object,
+//     in the format: ```
 //     projects/{project_number}/apps/{app_id}/recaptchaV3Config ```.
 func (r *ProjectsAppsRecaptchaV3ConfigService) Patch(name string, googlefirebaseappcheckv1recaptchav3config *GoogleFirebaseAppcheckV1RecaptchaV3Config) *ProjectsAppsRecaptchaV3ConfigPatchCall {
 	c := &ProjectsAppsRecaptchaV3ConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6664,31 +4985,29 @@ func (r *ProjectsAppsRecaptchaV3ConfigService) Patch(name string, googlefirebase
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the RecaptchaV3Config to
-// update. Example: `site_secret`.
+// comma-separated list of names of fields in the RecaptchaV3Config to update.
+// Example: `site_secret`.
 func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsRecaptchaV3ConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) Fields(s ...googleapi.Field) *ProjectsAppsRecaptchaV3ConfigPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) Context(ctx context.Context) *ProjectsAppsRecaptchaV3ConfigPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6697,18 +5016,12 @@ func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1recaptchav3config)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -6725,14 +5038,11 @@ func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "firebaseappcheck.projects.apps.recaptchaV3Config.patch" call.
-// Exactly one of *GoogleFirebaseAppcheckV1RecaptchaV3Config or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1RecaptchaV3Config.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1RecaptchaV3Config.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1RecaptchaV3Config, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6763,45 +5073,7 @@ func (c *ProjectsAppsRecaptchaV3ConfigPatchCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the RecaptchaV3Config for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/recaptchaV3Config",
-	//   "httpMethod": "PATCH",
-	//   "id": "firebaseappcheck.projects.apps.recaptchaV3Config.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/recaptchaV3Config$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the RecaptchaV3Config to update. Example: `site_secret`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1RecaptchaV3Config"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1RecaptchaV3Config"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.safetyNetConfig.batchGet":
 
 type ProjectsAppsSafetyNetConfigBatchGetCall struct {
 	s            *Service
@@ -6812,56 +5084,52 @@ type ProjectsAppsSafetyNetConfigBatchGetCall struct {
 	header_      http.Header
 }
 
-// BatchGet: Atomically gets the SafetyNetConfigs for the specified list
-// of apps.
+// BatchGet: Atomically gets the SafetyNetConfigs for the specified list of
+// apps.
 //
-//   - parent: The parent project name shared by all SafetyNetConfigs
-//     being retrieved, in the format ``` projects/{project_number} ```
-//     The parent collection in the `name` field of any resource being
-//     retrieved must match this field, or the entire batch fails.
+//   - parent: The parent project name shared by all SafetyNetConfigs being
+//     retrieved, in the format ``` projects/{project_number} ``` The parent
+//     collection in the `name` field of any resource being retrieved must match
+//     this field, or the entire batch fails.
 func (r *ProjectsAppsSafetyNetConfigService) BatchGet(parent string) *ProjectsAppsSafetyNetConfigBatchGetCall {
 	c := &ProjectsAppsSafetyNetConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Names sets the optional parameter "names": Required. The relative
-// resource names of the SafetyNetConfigs to retrieve, in the format ```
-// projects/{project_number}/apps/{app_id}/safetyNetConfig ``` A maximum
-// of 100 objects can be retrieved in a batch.
+// Names sets the optional parameter "names": Required. The relative resource
+// names of the SafetyNetConfigs to retrieve, in the format ```
+// projects/{project_number}/apps/{app_id}/safetyNetConfig ``` A maximum of 100
+// objects can be retrieved in a batch.
 func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Names(names ...string) *ProjectsAppsSafetyNetConfigBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Fields(s ...googleapi.Field) *ProjectsAppsSafetyNetConfigBatchGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsSafetyNetConfigBatchGetCall) IfNoneMatch(entityTag string) *ProjectsAppsSafetyNetConfigBatchGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Context(ctx context.Context) *ProjectsAppsSafetyNetConfigBatchGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6870,12 +5138,7 @@ func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsSafetyNetConfigBatchGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6896,15 +5159,11 @@ func (c *ProjectsAppsSafetyNetConfigBatchGetCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "firebaseappcheck.projects.apps.safetyNetConfig.batchGet" call.
-// Exactly one of
-// *GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse.ServerRespon
-// se.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6935,43 +5194,7 @@ func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Atomically gets the SafetyNetConfigs for the specified list of apps.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/-/safetyNetConfig:batchGet",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.safetyNetConfig.batchGet",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "names": {
-	//       "description": "Required. The relative resource names of the SafetyNetConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ``` A maximum of 100 objects can be retrieved in a batch.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent project name shared by all SafetyNetConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/apps/-/safetyNetConfig:batchGet",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.safetyNetConfig.get":
 
 type ProjectsAppsSafetyNetConfigGetCall struct {
 	s            *Service
@@ -6984,9 +5207,8 @@ type ProjectsAppsSafetyNetConfigGetCall struct {
 
 // Get: Gets the SafetyNetConfig for the specified app.
 //
-//   - name: The relative resource name of the SafetyNetConfig, in the
-//     format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig
-//     ```.
+//   - name: The relative resource name of the SafetyNetConfig, in the format:
+//     ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ```.
 func (r *ProjectsAppsSafetyNetConfigService) Get(name string) *ProjectsAppsSafetyNetConfigGetCall {
 	c := &ProjectsAppsSafetyNetConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6994,33 +5216,29 @@ func (r *ProjectsAppsSafetyNetConfigService) Get(name string) *ProjectsAppsSafet
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsSafetyNetConfigGetCall) Fields(s ...googleapi.Field) *ProjectsAppsSafetyNetConfigGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAppsSafetyNetConfigGetCall) IfNoneMatch(entityTag string) *ProjectsAppsSafetyNetConfigGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsSafetyNetConfigGetCall) Context(ctx context.Context) *ProjectsAppsSafetyNetConfigGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsSafetyNetConfigGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7029,12 +5247,7 @@ func (c *ProjectsAppsSafetyNetConfigGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsSafetyNetConfigGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7055,13 +5268,11 @@ func (c *ProjectsAppsSafetyNetConfigGetCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "firebaseappcheck.projects.apps.safetyNetConfig.get" call.
-// Exactly one of *GoogleFirebaseAppcheckV1SafetyNetConfig or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleFirebaseAppcheckV1SafetyNetConfig.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1SafetyNetConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsSafetyNetConfigGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1SafetyNetConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7092,37 +5303,7 @@ func (c *ProjectsAppsSafetyNetConfigGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Gets the SafetyNetConfig for the specified app.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/safetyNetConfig",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.apps.safetyNetConfig.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the SafetyNetConfig, in the format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/safetyNetConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1SafetyNetConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.apps.safetyNetConfig.patch":
 
 type ProjectsAppsSafetyNetConfigPatchCall struct {
 	s                                       *Service
@@ -7134,12 +5315,12 @@ type ProjectsAppsSafetyNetConfigPatchCall struct {
 }
 
 // Patch: Updates the SafetyNetConfig for the specified app. While this
-// configuration is incomplete or invalid, the app will be unable to
-// exchange SafetyNet tokens for App Check tokens.
+// configuration is incomplete or invalid, the app will be unable to exchange
+// SafetyNet tokens for App Check tokens.
 //
-//   - name: The relative resource name of the SafetyNet configuration
-//     object, in the format: ```
-//     projects/{project_number}/apps/{app_id}/safetyNetConfig ```.
+//   - name: The relative resource name of the SafetyNet configuration object, in
+//     the format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig
+//     ```.
 func (r *ProjectsAppsSafetyNetConfigService) Patch(name string, googlefirebaseappcheckv1safetynetconfig *GoogleFirebaseAppcheckV1SafetyNetConfig) *ProjectsAppsSafetyNetConfigPatchCall {
 	c := &ProjectsAppsSafetyNetConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7148,31 +5329,29 @@ func (r *ProjectsAppsSafetyNetConfigService) Patch(name string, googlefirebaseap
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the SafetyNetConfig Gets
-// to update. Example: `token_ttl`.
+// comma-separated list of names of fields in the SafetyNetConfig to update.
+// Example: `token_ttl`.
 func (c *ProjectsAppsSafetyNetConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsSafetyNetConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAppsSafetyNetConfigPatchCall) Fields(s ...googleapi.Field) *ProjectsAppsSafetyNetConfigPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAppsSafetyNetConfigPatchCall) Context(ctx context.Context) *ProjectsAppsSafetyNetConfigPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAppsSafetyNetConfigPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7181,18 +5360,12 @@ func (c *ProjectsAppsSafetyNetConfigPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsAppsSafetyNetConfigPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1safetynetconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -7209,13 +5382,11 @@ func (c *ProjectsAppsSafetyNetConfigPatchCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "firebaseappcheck.projects.apps.safetyNetConfig.patch" call.
-// Exactly one of *GoogleFirebaseAppcheckV1SafetyNetConfig or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleFirebaseAppcheckV1SafetyNetConfig.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1SafetyNetConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAppsSafetyNetConfigPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1SafetyNetConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7246,46 +5417,7 @@ func (c *ProjectsAppsSafetyNetConfigPatchCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Updates the SafetyNetConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange SafetyNet tokens for App Check tokens.",
-	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/safetyNetConfig",
-	//   "httpMethod": "PATCH",
-	//   "id": "firebaseappcheck.projects.apps.safetyNetConfig.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the SafetyNet configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/apps/[^/]+/safetyNetConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the SafetyNetConfig Gets to update. Example: `token_ttl`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1SafetyNetConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1SafetyNetConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.services.batchUpdate":
 
 type ProjectsServicesBatchUpdateCall struct {
 	s                                                  *Service
@@ -7298,11 +5430,10 @@ type ProjectsServicesBatchUpdateCall struct {
 
 // BatchUpdate: Atomically updates the specified Service configurations.
 //
-//   - parent: The parent project name shared by all Service
-//     configurations being updated, in the format ```
-//     projects/{project_number} ``` The parent collection in the `name`
-//     field of any resource being updated must match this field, or the
-//     entire batch fails.
+//   - parent: The parent project name shared by all Service configurations being
+//     updated, in the format ``` projects/{project_number} ``` The parent
+//     collection in the `name` field of any resource being updated must match
+//     this field, or the entire batch fails.
 func (r *ProjectsServicesService) BatchUpdate(parent string, googlefirebaseappcheckv1batchupdateservicesrequest *GoogleFirebaseAppcheckV1BatchUpdateServicesRequest) *ProjectsServicesBatchUpdateCall {
 	c := &ProjectsServicesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7311,23 +5442,21 @@ func (r *ProjectsServicesService) BatchUpdate(parent string, googlefirebaseappch
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsServicesBatchUpdateCall) Fields(s ...googleapi.Field) *ProjectsServicesBatchUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsServicesBatchUpdateCall) Context(ctx context.Context) *ProjectsServicesBatchUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsServicesBatchUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7336,18 +5465,12 @@ func (c *ProjectsServicesBatchUpdateCall) Header() http.Header {
 }
 
 func (c *ProjectsServicesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1batchupdateservicesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/services:batchUpdate")
@@ -7364,14 +5487,11 @@ func (c *ProjectsServicesBatchUpdateCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "firebaseappcheck.projects.services.batchUpdate" call.
-// Exactly one of *GoogleFirebaseAppcheckV1BatchUpdateServicesResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleFirebaseAppcheckV1BatchUpdateServicesResponse.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1BatchUpdateServicesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsServicesBatchUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1BatchUpdateServicesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7402,39 +5522,7 @@ func (c *ProjectsServicesBatchUpdateCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Atomically updates the specified Service configurations.",
-	//   "flatPath": "v1/projects/{projectsId}/services:batchUpdate",
-	//   "httpMethod": "POST",
-	//   "id": "firebaseappcheck.projects.services.batchUpdate",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent project name shared by all Service configurations being updated, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being updated must match this field, or the entire batch fails.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/services:batchUpdate",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1BatchUpdateServicesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1BatchUpdateServicesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.services.get":
 
 type ProjectsServicesGetCall struct {
 	s            *Service
@@ -7448,12 +5536,11 @@ type ProjectsServicesGetCall struct {
 // Get: Gets the Service configuration for the specified service name.
 //
 //   - name: The relative resource name of the Service to retrieve, in the
-//     format: ``` projects/{project_number}/services/{service_id} ```
-//     Note that the `service_id` element must be a supported service ID.
-//     Currently, the following service IDs are supported: *
-//     `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
-//     `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
-//     `firestore.googleapis.com` (Cloud Firestore).
+//     format: ``` projects/{project_number}/services/{service_id} ``` Note that
+//     the `service_id` element must be a supported service ID. Currently, the
+//     following service IDs are supported: * `firebasestorage.googleapis.com`
+//     (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase
+//     Realtime Database) * `firestore.googleapis.com` (Cloud Firestore).
 func (r *ProjectsServicesService) Get(name string) *ProjectsServicesGetCall {
 	c := &ProjectsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7461,33 +5548,29 @@ func (r *ProjectsServicesService) Get(name string) *ProjectsServicesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsServicesGetCall) Fields(s ...googleapi.Field) *ProjectsServicesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsServicesGetCall) IfNoneMatch(entityTag string) *ProjectsServicesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsServicesGetCall) Context(ctx context.Context) *ProjectsServicesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsServicesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7496,12 +5579,7 @@ func (c *ProjectsServicesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsServicesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7522,12 +5600,11 @@ func (c *ProjectsServicesGetCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "firebaseappcheck.projects.services.get" call.
-// Exactly one of *GoogleFirebaseAppcheckV1Service or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleFirebaseAppcheckV1Service.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1Service.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsServicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1Service, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7558,36 +5635,7 @@ func (c *ProjectsServicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFireb
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the Service configuration for the specified service name.",
-	//   "flatPath": "v1/projects/{projectsId}/services/{servicesId}",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.services.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the Service to retrieve, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore)",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1Service"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaseappcheck.projects.services.list":
 
 type ProjectsServicesListCall struct {
 	s            *Service
@@ -7598,68 +5646,63 @@ type ProjectsServicesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all Service configurations for the specified project.
-// Only Services which were explicitly configured using UpdateService or
+// List: Lists all Service configurations for the specified project. Only
+// Services which were explicitly configured using UpdateService or
 // BatchUpdateServices will be returned.
 //
-//   - parent: The relative resource name of the parent project for which
-//     to list each associated Service, in the format: ```
-//     projects/{project_number} ```.
+//   - parent: The relative resource name of the parent project for which to list
+//     each associated Service, in the format: ``` projects/{project_number} ```.
 func (r *ProjectsServicesService) List(parent string) *ProjectsServicesListCall {
 	c := &ProjectsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of Services to return in the response. Only explicitly configured
-// services are returned. The server may return fewer than this at its
-// own discretion. If no value is specified (or too large a value is
-// specified), the server will impose its own limit.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// Services to return in the response. Only explicitly configured services are
+// returned. The server may return fewer than this at its own discretion. If no
+// value is specified (or too large a value is specified), the server will
+// impose its own limit.
 func (c *ProjectsServicesListCall) PageSize(pageSize int64) *ProjectsServicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token returned
-// from a previous call to ListServices indicating where in the set of
-// Services to resume listing. Provide this to retrieve the subsequent
-// page. When paginating, all other parameters provided to ListServices
-// must match the call that provided the page token; if they do not
-// match, the result is undefined.
+// PageToken sets the optional parameter "pageToken": Token returned from a
+// previous call to ListServices indicating where in the set of Services to
+// resume listing. Provide this to retrieve the subsequent page. When
+// paginating, all other parameters provided to ListServices must match the
+// call that provided the page token; if they do not match, the result is
+// undefined.
 func (c *ProjectsServicesListCall) PageToken(pageToken string) *ProjectsServicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsServicesListCall) Fields(s ...googleapi.Field) *ProjectsServicesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsServicesListCall) IfNoneMatch(entityTag string) *ProjectsServicesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsServicesListCall) Context(ctx context.Context) *ProjectsServicesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsServicesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7668,12 +5711,7 @@ func (c *ProjectsServicesListCall) Header() http.Header {
 }
 
 func (c *ProjectsServicesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7694,14 +5732,11 @@ func (c *ProjectsServicesListCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "firebaseappcheck.projects.services.list" call.
-// Exactly one of *GoogleFirebaseAppcheckV1ListServicesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirebaseAppcheckV1ListServicesResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1ListServicesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsServicesListCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1ListServicesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7732,44 +5767,6 @@ func (c *ProjectsServicesListCall) Do(opts ...googleapi.CallOption) (*GoogleFire
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all Service configurations for the specified project. Only Services which were explicitly configured using UpdateService or BatchUpdateServices will be returned.",
-	//   "flatPath": "v1/projects/{projectsId}/services",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseappcheck.projects.services.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of Services to return in the response. Only explicitly configured services are returned. The server may return fewer than this at its own discretion. If no value is specified (or too large a value is specified), the server will impose its own limit.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token returned from a previous call to ListServices indicating where in the set of Services to resume listing. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListServices must match the call that provided the page token; if they do not match, the result is undefined.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the parent project for which to list each associated Service, in the format: ``` projects/{project_number} ```",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/services",
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1ListServicesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7777,7 +5774,7 @@ func (c *ProjectsServicesListCall) Do(opts ...googleapi.CallOption) (*GoogleFire
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsServicesListCall) Pages(ctx context.Context, f func(*GoogleFirebaseAppcheckV1ListServicesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7793,8 +5790,6 @@ func (c *ProjectsServicesListCall) Pages(ctx context.Context, f func(*GoogleFire
 	}
 }
 
-// method id "firebaseappcheck.projects.services.patch":
-
 type ProjectsServicesPatchCall struct {
 	s                               *Service
 	name                            string
@@ -7806,11 +5801,10 @@ type ProjectsServicesPatchCall struct {
 
 // Patch: Updates the specified Service configuration.
 //
-//   - name: The relative resource name of the service configuration
-//     object, in the format: ```
-//     projects/{project_number}/services/{service_id} ``` Note that the
-//     `service_id` element must be a supported service ID. Currently, the
-//     following service IDs are supported: *
+//   - name: The relative resource name of the service configuration object, in
+//     the format: ``` projects/{project_number}/services/{service_id} ``` Note
+//     that the `service_id` element must be a supported service ID. Currently,
+//     the following service IDs are supported: *
 //     `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
 //     `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
 //     `firestore.googleapis.com` (Cloud Firestore).
@@ -7822,31 +5816,29 @@ func (r *ProjectsServicesService) Patch(name string, googlefirebaseappcheckv1ser
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the Service to update.
-// Example: `enforcement_mode`.
+// comma-separated list of names of fields in the Service to update. Example:
+// `enforcement_mode`.
 func (c *ProjectsServicesPatchCall) UpdateMask(updateMask string) *ProjectsServicesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsServicesPatchCall) Fields(s ...googleapi.Field) *ProjectsServicesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsServicesPatchCall) Context(ctx context.Context) *ProjectsServicesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsServicesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7855,18 +5847,12 @@ func (c *ProjectsServicesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1service)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -7883,12 +5869,11 @@ func (c *ProjectsServicesPatchCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "firebaseappcheck.projects.services.patch" call.
-// Exactly one of *GoogleFirebaseAppcheckV1Service or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleFirebaseAppcheckV1Service.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1Service.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsServicesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1Service, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7919,40 +5904,4 @@ func (c *ProjectsServicesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFir
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the specified Service configuration.",
-	//   "flatPath": "v1/projects/{projectsId}/services/{servicesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "firebaseappcheck.projects.services.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the service configuration object, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore)",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the Service to update. Example: `enforcement_mode`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleFirebaseAppcheckV1Service"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFirebaseAppcheckV1Service"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }

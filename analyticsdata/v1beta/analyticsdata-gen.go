@@ -188,7 +188,6 @@ type PropertiesAudienceExportsService struct {
 type ActiveMetricRestriction struct {
 	// MetricName: The name of the restricted metric.
 	MetricName string `json:"metricName,omitempty"`
-
 	// RestrictedMetricTypes: The reason for this metric's restriction.
 	//
 	// Possible values:
@@ -196,78 +195,60 @@ type ActiveMetricRestriction struct {
 	//   "COST_DATA" - Cost metrics such as `adCost`.
 	//   "REVENUE_DATA" - Revenue metrics such as `purchaseRevenue`.
 	RestrictedMetricTypes []string `json:"restrictedMetricTypes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MetricName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MetricName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MetricName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ActiveMetricRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod ActiveMetricRestriction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AudienceExport: An audience export is a list of users in an audience
-// at the time of the list's creation. One audience may have multiple
-// audience exports created for different days.
+// AudienceExport: An audience export is a list of users in an audience at the
+// time of the list's creation. One audience may have multiple audience exports
+// created for different days.
 type AudienceExport struct {
 	// Audience: Required. The audience resource name. This resource name
-	// identifies the audience being listed and is shared between the
-	// Analytics Data & Admin APIs. Format:
-	// `properties/{property}/audiences/{audience}`
+	// identifies the audience being listed and is shared between the Analytics
+	// Data & Admin APIs. Format: `properties/{property}/audiences/{audience}`
 	Audience string `json:"audience,omitempty"`
-
-	// AudienceDisplayName: Output only. The descriptive display name for
-	// this audience. For example, "Purchasers".
+	// AudienceDisplayName: Output only. The descriptive display name for this
+	// audience. For example, "Purchasers".
 	AudienceDisplayName string `json:"audienceDisplayName,omitempty"`
-
-	// BeginCreatingTime: Output only. The time when CreateAudienceExport
-	// was called and the AudienceExport began the `CREATING` state.
+	// BeginCreatingTime: Output only. The time when CreateAudienceExport was
+	// called and the AudienceExport began the `CREATING` state.
 	BeginCreatingTime string `json:"beginCreatingTime,omitempty"`
-
-	// CreationQuotaTokensCharged: Output only. The total quota tokens
-	// charged during creation of the AudienceExport. Because this token
-	// count is based on activity from the `CREATING` state, this tokens
-	// charged will be fixed once an AudienceExport enters the `ACTIVE` or
-	// `FAILED` states.
+	// CreationQuotaTokensCharged: Output only. The total quota tokens charged
+	// during creation of the AudienceExport. Because this token count is based on
+	// activity from the `CREATING` state, this tokens charged will be fixed once
+	// an AudienceExport enters the `ACTIVE` or `FAILED` states.
 	CreationQuotaTokensCharged int64 `json:"creationQuotaTokensCharged,omitempty"`
-
-	// Dimensions: Required. The dimensions requested and displayed in the
-	// query response.
+	// Dimensions: Required. The dimensions requested and displayed in the query
+	// response.
 	Dimensions []*V1betaAudienceDimension `json:"dimensions,omitempty"`
-
-	// ErrorMessage: Output only. Error message is populated when an
-	// audience export fails during creation. A common reason for such a
-	// failure is quota exhaustion.
+	// ErrorMessage: Output only. Error message is populated when an audience
+	// export fails during creation. A common reason for such a failure is quota
+	// exhaustion.
 	ErrorMessage string `json:"errorMessage,omitempty"`
-
-	// Name: Output only. Identifier. The audience export resource name
-	// assigned during creation. This resource name identifies this
-	// `AudienceExport`. Format:
-	// `properties/{property}/audienceExports/{audience_export}`
+	// Name: Output only. Identifier. The audience export resource name assigned
+	// during creation. This resource name identifies this `AudienceExport`.
+	// Format: `properties/{property}/audienceExports/{audience_export}`
 	Name string `json:"name,omitempty"`
-
-	// PercentageCompleted: Output only. The percentage completed for this
-	// audience export ranging between 0 to 100.
+	// PercentageCompleted: Output only. The percentage completed for this audience
+	// export ranging between 0 to 100.
 	PercentageCompleted float64 `json:"percentageCompleted,omitempty"`
-
 	// RowCount: Output only. The total number of rows in the AudienceExport
 	// result.
 	RowCount int64 `json:"rowCount,omitempty"`
-
 	// State: Output only. The current state for this AudienceExport.
 	//
 	// Possible values:
@@ -275,39 +256,31 @@ type AudienceExport struct {
 	//   "CREATING" - The AudienceExport is currently creating and will be
 	// available in the future. Creating occurs immediately after the
 	// CreateAudienceExport call.
-	//   "ACTIVE" - The AudienceExport is fully created and ready for
-	// querying. An AudienceExport is updated to active asynchronously from
-	// a request; this occurs some time (for example 15 minutes) after the
-	// initial create call.
-	//   "FAILED" - The AudienceExport failed to be created. It is possible
-	// that re-requesting this audience export will succeed.
+	//   "ACTIVE" - The AudienceExport is fully created and ready for querying. An
+	// AudienceExport is updated to active asynchronously from a request; this
+	// occurs some time (for example 15 minutes) after the initial create call.
+	//   "FAILED" - The AudienceExport failed to be created. It is possible that
+	// re-requesting this audience export will succeed.
 	State string `json:"state,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Audience") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Audience") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Audience") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AudienceExport) MarshalJSON() ([]byte, error) {
 	type NoMethod AudienceExport
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AudienceExport) UnmarshalJSON(data []byte) error {
@@ -328,262 +301,206 @@ func (s *AudienceExport) UnmarshalJSON(data []byte) error {
 type AudienceListMetadata struct {
 }
 
-// BatchRunPivotReportsRequest: The batch request containing multiple
-// pivot report requests.
+// BatchRunPivotReportsRequest: The batch request containing multiple pivot
+// report requests.
 type BatchRunPivotReportsRequest struct {
-	// Requests: Individual requests. Each request has a separate pivot
-	// report response. Each batch request is allowed up to 5 requests.
+	// Requests: Individual requests. Each request has a separate pivot report
+	// response. Each batch request is allowed up to 5 requests.
 	Requests []*RunPivotReportRequest `json:"requests,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Requests") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchRunPivotReportsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchRunPivotReportsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchRunPivotReportsResponse: The batch response containing multiple
-// pivot reports.
+// BatchRunPivotReportsResponse: The batch response containing multiple pivot
+// reports.
 type BatchRunPivotReportsResponse struct {
-	// Kind: Identifies what kind of resource this message is. This `kind`
-	// is always the fixed string "analyticsData#batchRunPivotReports".
-	// Useful to distinguish between response types in JSON.
+	// Kind: Identifies what kind of resource this message is. This `kind` is
+	// always the fixed string "analyticsData#batchRunPivotReports". Useful to
+	// distinguish between response types in JSON.
 	Kind string `json:"kind,omitempty"`
-
-	// PivotReports: Individual responses. Each response has a separate
-	// pivot report request.
+	// PivotReports: Individual responses. Each response has a separate pivot
+	// report request.
 	PivotReports []*RunPivotReportResponse `json:"pivotReports,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchRunPivotReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchRunPivotReportsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchRunReportsRequest: The batch request containing multiple report
 // requests.
 type BatchRunReportsRequest struct {
-	// Requests: Individual requests. Each request has a separate report
-	// response. Each batch request is allowed up to 5 requests.
+	// Requests: Individual requests. Each request has a separate report response.
+	// Each batch request is allowed up to 5 requests.
 	Requests []*RunReportRequest `json:"requests,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Requests") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchRunReportsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchRunReportsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchRunReportsResponse: The batch response containing multiple
-// reports.
+// BatchRunReportsResponse: The batch response containing multiple reports.
 type BatchRunReportsResponse struct {
-	// Kind: Identifies what kind of resource this message is. This `kind`
-	// is always the fixed string "analyticsData#batchRunReports". Useful to
+	// Kind: Identifies what kind of resource this message is. This `kind` is
+	// always the fixed string "analyticsData#batchRunReports". Useful to
 	// distinguish between response types in JSON.
 	Kind string `json:"kind,omitempty"`
-
-	// Reports: Individual responses. Each response has a separate report
-	// request.
+	// Reports: Individual responses. Each response has a separate report request.
 	Reports []*RunReportResponse `json:"reports,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchRunReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchRunReportsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BetweenFilter: To express that the result needs to be between two
-// numbers (inclusive).
+// BetweenFilter: To express that the result needs to be between two numbers
+// (inclusive).
 type BetweenFilter struct {
 	// FromValue: Begins with this number.
 	FromValue *NumericValue `json:"fromValue,omitempty"`
-
 	// ToValue: Ends with this number.
 	ToValue *NumericValue `json:"toValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FromValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FromValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FromValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BetweenFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod BetweenFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CaseExpression: Used to convert a dimension value to a single case.
 type CaseExpression struct {
-	// DimensionName: Name of a dimension. The name must refer back to a
-	// name in dimensions field of the request.
+	// DimensionName: Name of a dimension. The name must refer back to a name in
+	// dimensions field of the request.
 	DimensionName string `json:"dimensionName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DimensionName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CaseExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod CaseExpression
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CheckCompatibilityRequest: The request for compatibility information
-// for a report's dimensions and metrics. Check compatibility provides a
-// preview of the compatibility of a report; fields shared with the
-// `runReport` request should be the same values as in your `runReport`
-// request.
+// CheckCompatibilityRequest: The request for compatibility information for a
+// report's dimensions and metrics. Check compatibility provides a preview of
+// the compatibility of a report; fields shared with the `runReport` request
+// should be the same values as in your `runReport` request.
 type CheckCompatibilityRequest struct {
-	// CompatibilityFilter: Filters the dimensions and metrics in the
-	// response to just this compatibility. Commonly used as
-	// `”compatibilityFilter”: “COMPATIBLE”` to only return
-	// compatible dimensions & metrics.
+	// CompatibilityFilter: Filters the dimensions and metrics in the response to
+	// just this compatibility. Commonly used as `”compatibilityFilter”:
+	// “COMPATIBLE”` to only return compatible dimensions & metrics.
 	//
 	// Possible values:
 	//   "COMPATIBILITY_UNSPECIFIED" - Unspecified compatibility.
-	//   "COMPATIBLE" - The dimension or metric is compatible. This
-	// dimension or metric can be successfully added to a report.
-	//   "INCOMPATIBLE" - The dimension or metric is incompatible. This
-	// dimension or metric cannot be successfully added to a report.
+	//   "COMPATIBLE" - The dimension or metric is compatible. This dimension or
+	// metric can be successfully added to a report.
+	//   "INCOMPATIBLE" - The dimension or metric is incompatible. This dimension
+	// or metric cannot be successfully added to a report.
 	CompatibilityFilter string `json:"compatibilityFilter,omitempty"`
-
-	// DimensionFilter: The filter clause of dimensions. `dimensionFilter`
-	// should be the same value as in your `runReport` request.
+	// DimensionFilter: The filter clause of dimensions. `dimensionFilter` should
+	// be the same value as in your `runReport` request.
 	DimensionFilter *FilterExpression `json:"dimensionFilter,omitempty"`
-
-	// Dimensions: The dimensions in this report. `dimensions` should be the
-	// same value as in your `runReport` request.
-	Dimensions []*Dimension `json:"dimensions,omitempty"`
-
-	// MetricFilter: The filter clause of metrics. `metricFilter` should be
-	// the same value as in your `runReport` request
-	MetricFilter *FilterExpression `json:"metricFilter,omitempty"`
-
-	// Metrics: The metrics in this report. `metrics` should be the same
+	// Dimensions: The dimensions in this report. `dimensions` should be the same
 	// value as in your `runReport` request.
+	Dimensions []*Dimension `json:"dimensions,omitempty"`
+	// MetricFilter: The filter clause of metrics. `metricFilter` should be the
+	// same value as in your `runReport` request
+	MetricFilter *FilterExpression `json:"metricFilter,omitempty"`
+	// Metrics: The metrics in this report. `metrics` should be the same value as
+	// in your `runReport` request.
 	Metrics []*Metric `json:"metrics,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CompatibilityFilter")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CompatibilityFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompatibilityFilter") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CompatibilityFilter") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CheckCompatibilityRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckCompatibilityRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CheckCompatibilityResponse: The compatibility response with the
@@ -591,1198 +508,944 @@ func (s *CheckCompatibilityRequest) MarshalJSON() ([]byte, error) {
 type CheckCompatibilityResponse struct {
 	// DimensionCompatibilities: The compatibility of each dimension.
 	DimensionCompatibilities []*DimensionCompatibility `json:"dimensionCompatibilities,omitempty"`
-
 	// MetricCompatibilities: The compatibility of each metric.
 	MetricCompatibilities []*MetricCompatibility `json:"metricCompatibilities,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DimensionCompatibilities") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DimensionCompatibilities")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionCompatibilities")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionCompatibilities") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CheckCompatibilityResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckCompatibilityResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Cohort: Defines a cohort selection criteria. A cohort is a group of
-// users who share a common characteristic. For example, users with the
-// same `firstSessionDate` belong to the same cohort.
+// Cohort: Defines a cohort selection criteria. A cohort is a group of users
+// who share a common characteristic. For example, users with the same
+// `firstSessionDate` belong to the same cohort.
 type Cohort struct {
-	// DateRange: The cohort selects users whose first touch date is between
-	// start date and end date defined in the `dateRange`. This `dateRange`
-	// does not specify the full date range of event data that is present in
-	// a cohort report. In a cohort report, this `dateRange` is extended by
-	// the granularity and offset present in the `cohortsRange`; event data
-	// for the extended reporting date range is present in a cohort report.
-	// In a cohort request, this `dateRange` is required and the
-	// `dateRanges` in the `RunReportRequest` or `RunPivotReportRequest`
-	// must be unspecified. This `dateRange` should generally be aligned
-	// with the cohort's granularity. If `CohortsRange` uses daily
-	// granularity, this `dateRange` can be a single day. If `CohortsRange`
-	// uses weekly granularity, this `dateRange` can be aligned to a week
-	// boundary, starting at Sunday and ending Saturday. If `CohortsRange`
-	// uses monthly granularity, this `dateRange` can be aligned to a month,
-	// starting at the first and ending on the last day of the month.
+	// DateRange: The cohort selects users whose first touch date is between start
+	// date and end date defined in the `dateRange`. This `dateRange` does not
+	// specify the full date range of event data that is present in a cohort
+	// report. In a cohort report, this `dateRange` is extended by the granularity
+	// and offset present in the `cohortsRange`; event data for the extended
+	// reporting date range is present in a cohort report. In a cohort request,
+	// this `dateRange` is required and the `dateRanges` in the `RunReportRequest`
+	// or `RunPivotReportRequest` must be unspecified. This `dateRange` should
+	// generally be aligned with the cohort's granularity. If `CohortsRange` uses
+	// daily granularity, this `dateRange` can be a single day. If `CohortsRange`
+	// uses weekly granularity, this `dateRange` can be aligned to a week boundary,
+	// starting at Sunday and ending Saturday. If `CohortsRange` uses monthly
+	// granularity, this `dateRange` can be aligned to a month, starting at the
+	// first and ending on the last day of the month.
 	DateRange *DateRange `json:"dateRange,omitempty"`
-
 	// Dimension: Dimension used by the cohort. Required and only supports
 	// `firstSessionDate`.
 	Dimension string `json:"dimension,omitempty"`
-
-	// Name: Assigns a name to this cohort. The dimension `cohort` is valued
-	// to this name in a report response. If set, cannot begin with
-	// `cohort_` or `RESERVED_`. If not set, cohorts are named by their zero
-	// based index `cohort_0`, `cohort_1`, etc.
+	// Name: Assigns a name to this cohort. The dimension `cohort` is valued to
+	// this name in a report response. If set, cannot begin with `cohort_` or
+	// `RESERVED_`. If not set, cohorts are named by their zero based index
+	// `cohort_0`, `cohort_1`, etc.
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DateRange") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DateRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Cohort) MarshalJSON() ([]byte, error) {
 	type NoMethod Cohort
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CohortReportSettings: Optional settings of a cohort report.
 type CohortReportSettings struct {
-	// Accumulate: If true, accumulates the result from first touch day to
-	// the end day. Not supported in `RunReportRequest`.
+	// Accumulate: If true, accumulates the result from first touch day to the end
+	// day. Not supported in `RunReportRequest`.
 	Accumulate bool `json:"accumulate,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Accumulate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Accumulate") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Accumulate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CohortReportSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod CohortReportSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CohortSpec: The specification of cohorts for a cohort report. Cohort
-// reports create a time series of user retention for the cohort. For
-// example, you could select the cohort of users that were acquired in
-// the first week of September and follow that cohort for the next six
-// weeks. Selecting the users acquired in the first week of September
-// cohort is specified in the `cohort` object. Following that cohort for
-// the next six weeks is specified in the `cohortsRange` object. For
-// examples, see Cohort Report Examples
+// CohortSpec: The specification of cohorts for a cohort report. Cohort reports
+// create a time series of user retention for the cohort. For example, you
+// could select the cohort of users that were acquired in the first week of
+// September and follow that cohort for the next six weeks. Selecting the users
+// acquired in the first week of September cohort is specified in the `cohort`
+// object. Following that cohort for the next six weeks is specified in the
+// `cohortsRange` object. For examples, see Cohort Report Examples
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/advanced#cohort_report_examples).
-// The report response could show a weekly time series where say your
-// app has retained 60% of this cohort after three weeks and 25% of this
-// cohort after six weeks. These two percentages can be calculated by
-// the metric `cohortActiveUsers/cohortTotalUsers` and will be separate
-// rows in the report.
+// The report response could show a weekly time series where say your app has
+// retained 60% of this cohort after three weeks and 25% of this cohort after
+// six weeks. These two percentages can be calculated by the metric
+// `cohortActiveUsers/cohortTotalUsers` and will be separate rows in the
+// report.
 type CohortSpec struct {
 	// CohortReportSettings: Optional settings for a cohort report.
 	CohortReportSettings *CohortReportSettings `json:"cohortReportSettings,omitempty"`
-
-	// Cohorts: Defines the selection criteria to group users into cohorts.
-	// Most cohort reports define only a single cohort. If multiple cohorts
-	// are specified, each cohort can be recognized in the report by their
-	// name.
+	// Cohorts: Defines the selection criteria to group users into cohorts. Most
+	// cohort reports define only a single cohort. If multiple cohorts are
+	// specified, each cohort can be recognized in the report by their name.
 	Cohorts []*Cohort `json:"cohorts,omitempty"`
-
-	// CohortsRange: Cohort reports follow cohorts over an extended
-	// reporting date range. This range specifies an offset duration to
-	// follow the cohorts over.
+	// CohortsRange: Cohort reports follow cohorts over an extended reporting date
+	// range. This range specifies an offset duration to follow the cohorts over.
 	CohortsRange *CohortsRange `json:"cohortsRange,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CohortReportSettings") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CohortReportSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CohortReportSettings") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CohortReportSettings") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CohortSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod CohortSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CohortsRange: Configures the extended reporting date range for a
-// cohort report. Specifies an offset duration to follow the cohorts
-// over.
+// CohortsRange: Configures the extended reporting date range for a cohort
+// report. Specifies an offset duration to follow the cohorts over.
 type CohortsRange struct {
-	// EndOffset: Required. `endOffset` specifies the end date of the
-	// extended reporting date range for a cohort report. `endOffset` can be
-	// any positive integer but is commonly set to 5 to 10 so that reports
-	// contain data on the cohort for the next several granularity time
-	// periods. If `granularity` is `DAILY`, the `endDate` of the extended
-	// reporting date range is `endDate` of the cohort plus `endOffset`
-	// days. If `granularity` is `WEEKLY`, the `endDate` of the extended
-	// reporting date range is `endDate` of the cohort plus `endOffset * 7`
-	// days. If `granularity` is `MONTHLY`, the `endDate` of the extended
-	// reporting date range is `endDate` of the cohort plus `endOffset * 30`
-	// days.
+	// EndOffset: Required. `endOffset` specifies the end date of the extended
+	// reporting date range for a cohort report. `endOffset` can be any positive
+	// integer but is commonly set to 5 to 10 so that reports contain data on the
+	// cohort for the next several granularity time periods. If `granularity` is
+	// `DAILY`, the `endDate` of the extended reporting date range is `endDate` of
+	// the cohort plus `endOffset` days. If `granularity` is `WEEKLY`, the
+	// `endDate` of the extended reporting date range is `endDate` of the cohort
+	// plus `endOffset * 7` days. If `granularity` is `MONTHLY`, the `endDate` of
+	// the extended reporting date range is `endDate` of the cohort plus `endOffset
+	// * 30` days.
 	EndOffset int64 `json:"endOffset,omitempty"`
-
-	// Granularity: Required. The granularity used to interpret the
-	// `startOffset` and `endOffset` for the extended reporting date range
-	// for a cohort report.
+	// Granularity: Required. The granularity used to interpret the `startOffset`
+	// and `endOffset` for the extended reporting date range for a cohort report.
 	//
 	// Possible values:
 	//   "GRANULARITY_UNSPECIFIED" - Should never be specified.
-	//   "DAILY" - Daily granularity. Commonly used if the cohort's
-	// `dateRange` is a single day and the request contains `cohortNthDay`.
-	//   "WEEKLY" - Weekly granularity. Commonly used if the cohort's
-	// `dateRange` is a week in duration (starting on Sunday and ending on
-	// Saturday) and the request contains `cohortNthWeek`.
-	//   "MONTHLY" - Monthly granularity. Commonly used if the cohort's
-	// `dateRange` is a month in duration and the request contains
-	// `cohortNthMonth`.
+	//   "DAILY" - Daily granularity. Commonly used if the cohort's `dateRange` is
+	// a single day and the request contains `cohortNthDay`.
+	//   "WEEKLY" - Weekly granularity. Commonly used if the cohort's `dateRange`
+	// is a week in duration (starting on Sunday and ending on Saturday) and the
+	// request contains `cohortNthWeek`.
+	//   "MONTHLY" - Monthly granularity. Commonly used if the cohort's `dateRange`
+	// is a month in duration and the request contains `cohortNthMonth`.
 	Granularity string `json:"granularity,omitempty"`
-
 	// StartOffset: `startOffset` specifies the start date of the extended
-	// reporting date range for a cohort report. `startOffset` is commonly
-	// set to 0 so that reports contain data from the acquisition of the
-	// cohort forward. If `granularity` is `DAILY`, the `startDate` of the
-	// extended reporting date range is `startDate` of the cohort plus
-	// `startOffset` days. If `granularity` is `WEEKLY`, the `startDate` of
-	// the extended reporting date range is `startDate` of the cohort plus
-	// `startOffset * 7` days. If `granularity` is `MONTHLY`, the
-	// `startDate` of the extended reporting date range is `startDate` of
-	// the cohort plus `startOffset * 30` days.
+	// reporting date range for a cohort report. `startOffset` is commonly set to 0
+	// so that reports contain data from the acquisition of the cohort forward. If
+	// `granularity` is `DAILY`, the `startDate` of the extended reporting date
+	// range is `startDate` of the cohort plus `startOffset` days. If `granularity`
+	// is `WEEKLY`, the `startDate` of the extended reporting date range is
+	// `startDate` of the cohort plus `startOffset * 7` days. If `granularity` is
+	// `MONTHLY`, the `startDate` of the extended reporting date range is
+	// `startDate` of the cohort plus `startOffset * 30` days.
 	StartOffset int64 `json:"startOffset,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EndOffset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndOffset") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndOffset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CohortsRange) MarshalJSON() ([]byte, error) {
 	type NoMethod CohortsRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ConcatenateExpression: Used to combine dimension values to a single
 // dimension.
 type ConcatenateExpression struct {
-	// Delimiter: The delimiter placed between dimension names. Delimiters
-	// are often single characters such as "|" or "," but can be longer
-	// strings. If a dimension value contains the delimiter, both will be
-	// present in response with no distinction. For example if dimension 1
-	// value = "US,FR", dimension 2 value = "JP", and delimiter = ",", then
-	// the response will contain "US,FR,JP".
+	// Delimiter: The delimiter placed between dimension names. Delimiters are
+	// often single characters such as "|" or "," but can be longer strings. If a
+	// dimension value contains the delimiter, both will be present in response
+	// with no distinction. For example if dimension 1 value = "US,FR", dimension 2
+	// value = "JP", and delimiter = ",", then the response will contain
+	// "US,FR,JP".
 	Delimiter string `json:"delimiter,omitempty"`
-
-	// DimensionNames: Names of dimensions. The names must refer back to
-	// names in the dimensions field of the request.
+	// DimensionNames: Names of dimensions. The names must refer back to names in
+	// the dimensions field of the request.
 	DimensionNames []string `json:"dimensionNames,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Delimiter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Delimiter") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Delimiter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ConcatenateExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod ConcatenateExpression
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DateRange: A contiguous set of days: `startDate`, `startDate + 1`,
-// ..., `endDate`. Requests are allowed up to 4 date ranges.
+// DateRange: A contiguous set of days: `startDate`, `startDate + 1`, ...,
+// `endDate`. Requests are allowed up to 4 date ranges.
 type DateRange struct {
-	// EndDate: The inclusive end date for the query in the format
-	// `YYYY-MM-DD`. Cannot be before `start_date`. The format `NdaysAgo`,
-	// `yesterday`, or `today` is also accepted, and in that case, the date
-	// is inferred based on the property's reporting time zone.
+	// EndDate: The inclusive end date for the query in the format `YYYY-MM-DD`.
+	// Cannot be before `start_date`. The format `NdaysAgo`, `yesterday`, or
+	// `today` is also accepted, and in that case, the date is inferred based on
+	// the property's reporting time zone.
 	EndDate string `json:"endDate,omitempty"`
-
-	// Name: Assigns a name to this date range. The dimension `dateRange` is
-	// valued to this name in a report response. If set, cannot begin with
-	// `date_range_` or `RESERVED_`. If not set, date ranges are named by
-	// their zero based index in the request: `date_range_0`,
-	// `date_range_1`, etc.
+	// Name: Assigns a name to this date range. The dimension `dateRange` is valued
+	// to this name in a report response. If set, cannot begin with `date_range_`
+	// or `RESERVED_`. If not set, date ranges are named by their zero based index
+	// in the request: `date_range_0`, `date_range_1`, etc.
 	Name string `json:"name,omitempty"`
-
 	// StartDate: The inclusive start date for the query in the format
 	// `YYYY-MM-DD`. Cannot be after `end_date`. The format `NdaysAgo`,
-	// `yesterday`, or `today` is also accepted, and in that case, the date
-	// is inferred based on the property's reporting time zone.
+	// `yesterday`, or `today` is also accepted, and in that case, the date is
+	// inferred based on the property's reporting time zone.
 	StartDate string `json:"startDate,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndDate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndDate") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DateRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Dimension: Dimensions are attributes of your data. For example, the
-// dimension city indicates the city from which an event originates.
-// Dimension values in report responses are strings; for example, the
-// city could be "Paris" or "New York". Requests are allowed up to 9
-// dimensions.
+// dimension city indicates the city from which an event originates. Dimension
+// values in report responses are strings; for example, the city could be
+// "Paris" or "New York". Requests are allowed up to 9 dimensions.
 type Dimension struct {
-	// DimensionExpression: One dimension can be the result of an expression
-	// of multiple dimensions. For example, dimension "country, city":
+	// DimensionExpression: One dimension can be the result of an expression of
+	// multiple dimensions. For example, dimension "country, city":
 	// concatenate(country, ", ", city).
 	DimensionExpression *DimensionExpression `json:"dimensionExpression,omitempty"`
-
 	// Name: The name of the dimension. See the API Dimensions
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#dimensions)
-	// for the list of dimension names supported by core reporting methods
-	// such as `runReport` and `batchRunReports`. See Realtime Dimensions
+	// for the list of dimension names supported by core reporting methods such as
+	// `runReport` and `batchRunReports`. See Realtime Dimensions
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema#dimensions)
-	// for the list of dimension names supported by the `runRealtimeReport`
-	// method. See Funnel Dimensions
+	// for the list of dimension names supported by the `runRealtimeReport` method.
+	// See Funnel Dimensions
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/exploration-api-schema#dimensions)
-	// for the list of dimension names supported by the `runFunnelReport`
-	// method. If `dimensionExpression` is specified, `name` can be any
-	// string that you would like within the allowed character set. For
-	// example if a `dimensionExpression` concatenates `country` and `city`,
-	// you could call that dimension `countryAndCity`. Dimension names that
-	// you choose must match the regular expression `^[a-zA-Z0-9_]$`.
-	// Dimensions are referenced by `name` in `dimensionFilter`, `orderBys`,
-	// `dimensionExpression`, and `pivots`.
+	// for the list of dimension names supported by the `runFunnelReport` method.
+	// If `dimensionExpression` is specified, `name` can be any string that you
+	// would like within the allowed character set. For example if a
+	// `dimensionExpression` concatenates `country` and `city`, you could call that
+	// dimension `countryAndCity`. Dimension names that you choose must match the
+	// regular expression `^[a-zA-Z0-9_]$`. Dimensions are referenced by `name` in
+	// `dimensionFilter`, `orderBys`, `dimensionExpression`, and `pivots`.
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DimensionExpression")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DimensionExpression") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionExpression") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionExpression") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Dimension) MarshalJSON() ([]byte, error) {
 	type NoMethod Dimension
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DimensionCompatibility: The compatibility for a single dimension.
 type DimensionCompatibility struct {
-	// Compatibility: The compatibility of this dimension. If the
-	// compatibility is COMPATIBLE, this dimension can be successfully added
-	// to the report.
+	// Compatibility: The compatibility of this dimension. If the compatibility is
+	// COMPATIBLE, this dimension can be successfully added to the report.
 	//
 	// Possible values:
 	//   "COMPATIBILITY_UNSPECIFIED" - Unspecified compatibility.
-	//   "COMPATIBLE" - The dimension or metric is compatible. This
-	// dimension or metric can be successfully added to a report.
-	//   "INCOMPATIBLE" - The dimension or metric is incompatible. This
-	// dimension or metric cannot be successfully added to a report.
+	//   "COMPATIBLE" - The dimension or metric is compatible. This dimension or
+	// metric can be successfully added to a report.
+	//   "INCOMPATIBLE" - The dimension or metric is incompatible. This dimension
+	// or metric cannot be successfully added to a report.
 	Compatibility string `json:"compatibility,omitempty"`
-
-	// DimensionMetadata: The dimension metadata contains the API name for
-	// this compatibility information. The dimension metadata also contains
-	// other helpful information like the UI name and description.
+	// DimensionMetadata: The dimension metadata contains the API name for this
+	// compatibility information. The dimension metadata also contains other
+	// helpful information like the UI name and description.
 	DimensionMetadata *DimensionMetadata `json:"dimensionMetadata,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Compatibility") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Compatibility") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Compatibility") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DimensionCompatibility) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionCompatibility
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DimensionExpression: Used to express a dimension which is the result
-// of a formula of multiple dimensions. Example usages: 1)
-// lower_case(dimension) 2) concatenate(dimension1, symbol, dimension2).
+// DimensionExpression: Used to express a dimension which is the result of a
+// formula of multiple dimensions. Example usages: 1) lower_case(dimension) 2)
+// concatenate(dimension1, symbol, dimension2).
 type DimensionExpression struct {
-	// Concatenate: Used to combine dimension values to a single dimension.
-	// For example, dimension "country, city": concatenate(country, ", ",
-	// city).
+	// Concatenate: Used to combine dimension values to a single dimension. For
+	// example, dimension "country, city": concatenate(country, ", ", city).
 	Concatenate *ConcatenateExpression `json:"concatenate,omitempty"`
-
 	// LowerCase: Used to convert a dimension value to lower case.
 	LowerCase *CaseExpression `json:"lowerCase,omitempty"`
-
 	// UpperCase: Used to convert a dimension value to upper case.
 	UpperCase *CaseExpression `json:"upperCase,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Concatenate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Concatenate") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Concatenate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DimensionExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionExpression
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DimensionHeader: Describes a dimension column in the report.
-// Dimensions requested in a report produce column entries within rows
-// and DimensionHeaders. However, dimensions used exclusively within
-// filters or expressions do not produce columns in a report;
-// correspondingly, those dimensions do not produce headers.
+// DimensionHeader: Describes a dimension column in the report. Dimensions
+// requested in a report produce column entries within rows and
+// DimensionHeaders. However, dimensions used exclusively within filters or
+// expressions do not produce columns in a report; correspondingly, those
+// dimensions do not produce headers.
 type DimensionHeader struct {
 	// Name: The dimension's name.
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DimensionHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DimensionMetadata: Explains a dimension.
 type DimensionMetadata struct {
-	// ApiName: This dimension's name. Useable in Dimension (#Dimension)'s
-	// `name`. For example, `eventName`.
+	// ApiName: This dimension's name. Useable in Dimension (#Dimension)'s `name`.
+	// For example, `eventName`.
 	ApiName string `json:"apiName,omitempty"`
-
-	// Category: The display name of the category that this dimension
-	// belongs to. Similar dimensions and metrics are categorized together.
+	// Category: The display name of the category that this dimension belongs to.
+	// Similar dimensions and metrics are categorized together.
 	Category string `json:"category,omitempty"`
-
-	// CustomDefinition: True if the dimension is custom to this property.
-	// This includes user, event, & item scoped custom dimensions; to learn
-	// more about custom dimensions, see
-	// https://support.google.com/analytics/answer/14240153. This also
-	// include custom channel groups; to learn more about custom channel
+	// CustomDefinition: True if the dimension is custom to this property. This
+	// includes user, event, & item scoped custom dimensions; to learn more about
+	// custom dimensions, see https://support.google.com/analytics/answer/14240153.
+	// This also include custom channel groups; to learn more about custom channel
 	// groups, see https://support.google.com/analytics/answer/13051316.
 	CustomDefinition bool `json:"customDefinition,omitempty"`
-
-	// DeprecatedApiNames: Still usable but deprecated names for this
-	// dimension. If populated, this dimension is available by either
-	// `apiName` or one of `deprecatedApiNames` for a period of time. After
-	// the deprecation period, the dimension will be available only by
-	// `apiName`.
+	// DeprecatedApiNames: Still usable but deprecated names for this dimension. If
+	// populated, this dimension is available by either `apiName` or one of
+	// `deprecatedApiNames` for a period of time. After the deprecation period, the
+	// dimension will be available only by `apiName`.
 	DeprecatedApiNames []string `json:"deprecatedApiNames,omitempty"`
-
-	// Description: Description of how this dimension is used and
-	// calculated.
+	// Description: Description of how this dimension is used and calculated.
 	Description string `json:"description,omitempty"`
-
-	// UiName: This dimension's name within the Google Analytics user
-	// interface. For example, `Event name`.
+	// UiName: This dimension's name within the Google Analytics user interface.
+	// For example, `Event name`.
 	UiName string `json:"uiName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ApiName") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApiName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DimensionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DimensionOrderBy: Sorts by dimension values.
 type DimensionOrderBy struct {
 	// DimensionName: A dimension name in the request to order by.
 	DimensionName string `json:"dimensionName,omitempty"`
-
 	// OrderType: Controls the rule for dimension value ordering.
 	//
 	// Possible values:
 	//   "ORDER_TYPE_UNSPECIFIED" - Unspecified.
-	//   "ALPHANUMERIC" - Alphanumeric sort by Unicode code point. For
-	// example, "2" < "A" < "X" < "b" < "z".
-	//   "CASE_INSENSITIVE_ALPHANUMERIC" - Case insensitive alphanumeric
-	// sort by lower case Unicode code point. For example, "2" < "A" < "b" <
-	// "X" < "z".
-	//   "NUMERIC" - Dimension values are converted to numbers before
-	// sorting. For example in NUMERIC sort, "25" < "100", and in
-	// `ALPHANUMERIC` sort, "100" < "25". Non-numeric dimension values all
-	// have equal ordering value below all numeric values.
+	//   "ALPHANUMERIC" - Alphanumeric sort by Unicode code point. For example, "2"
+	// < "A" < "X" < "b" < "z".
+	//   "CASE_INSENSITIVE_ALPHANUMERIC" - Case insensitive alphanumeric sort by
+	// lower case Unicode code point. For example, "2" < "A" < "b" < "X" < "z".
+	//   "NUMERIC" - Dimension values are converted to numbers before sorting. For
+	// example in NUMERIC sort, "25" < "100", and in `ALPHANUMERIC` sort, "100" <
+	// "25". Non-numeric dimension values all have equal ordering value below all
+	// numeric values.
 	OrderType string `json:"orderType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DimensionName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DimensionOrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionOrderBy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DimensionValue: The value of a dimension.
 type DimensionValue struct {
 	// Value: Value as a string if the dimension type is a string.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DimensionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Filter: An expression to filter dimension or metric values.
 type Filter struct {
 	// BetweenFilter: A filter for two values.
 	BetweenFilter *BetweenFilter `json:"betweenFilter,omitempty"`
-
-	// FieldName: The dimension name or metric name. In most methods,
-	// dimensions & metrics can be used for the first time in this field.
-	// However in a RunPivotReportRequest, this field must be additionally
-	// specified by name in the RunPivotReportRequest's dimensions or
-	// metrics.
+	// FieldName: The dimension name or metric name. In most methods, dimensions &
+	// metrics can be used for the first time in this field. However in a
+	// RunPivotReportRequest, this field must be additionally specified by name in
+	// the RunPivotReportRequest's dimensions or metrics.
 	FieldName string `json:"fieldName,omitempty"`
-
 	// InListFilter: A filter for in list values.
 	InListFilter *InListFilter `json:"inListFilter,omitempty"`
-
 	// NumericFilter: A filter for numeric or date values.
 	NumericFilter *NumericFilter `json:"numericFilter,omitempty"`
-
 	// StringFilter: Strings related filter.
 	StringFilter *StringFilter `json:"stringFilter,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BetweenFilter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BetweenFilter") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BetweenFilter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Filter) MarshalJSON() ([]byte, error) {
 	type NoMethod Filter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// FilterExpression: To express dimension or metric filters. The fields
-// in the same FilterExpression need to be either all dimensions or all
-// metrics.
+// FilterExpression: To express dimension or metric filters. The fields in the
+// same FilterExpression need to be either all dimensions or all metrics.
 type FilterExpression struct {
-	// AndGroup: The FilterExpressions in and_group have an AND
-	// relationship.
+	// AndGroup: The FilterExpressions in and_group have an AND relationship.
 	AndGroup *FilterExpressionList `json:"andGroup,omitempty"`
-
 	// Filter: A primitive filter. In the same FilterExpression, all of the
 	// filter's field names need to be either all dimensions or all metrics.
 	Filter *Filter `json:"filter,omitempty"`
-
 	// NotExpression: The FilterExpression is NOT of not_expression.
 	NotExpression *FilterExpression `json:"notExpression,omitempty"`
-
 	// OrGroup: The FilterExpressions in or_group have an OR relationship.
 	OrGroup *FilterExpressionList `json:"orGroup,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AndGroup") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AndGroup") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AndGroup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FilterExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterExpression
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterExpressionList: A list of filter expressions.
 type FilterExpressionList struct {
 	// Expressions: A list of filter expressions.
 	Expressions []*FilterExpression `json:"expressions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Expressions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Expressions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Expressions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FilterExpressionList) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterExpressionList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // InListFilter: The result needs to be in a list of string values.
 type InListFilter struct {
 	// CaseSensitive: If true, the string value is case sensitive.
 	CaseSensitive bool `json:"caseSensitive,omitempty"`
-
 	// Values: The list of string values. Must be non-empty.
 	Values []string `json:"values,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CaseSensitive") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *InListFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod InListFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListAudienceExportsResponse: A list of all audience exports for a
-// property.
+// ListAudienceExportsResponse: A list of all audience exports for a property.
 type ListAudienceExportsResponse struct {
 	// AudienceExports: Each audience export for a property.
 	AudienceExports []*AudienceExport `json:"audienceExports,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AudienceExports") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AudienceExports") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AudienceExports") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAudienceExportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAudienceExportsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Metadata: The dimensions, metrics and comparisons currently accepted
-// in reporting methods.
+// Metadata: The dimensions, metrics and comparisons currently accepted in
+// reporting methods.
 type Metadata struct {
 	// Dimensions: The dimension descriptions.
 	Dimensions []*DimensionMetadata `json:"dimensions,omitempty"`
-
 	// Metrics: The metric descriptions.
 	Metrics []*MetricMetadata `json:"metrics,omitempty"`
-
 	// Name: Resource name of this metadata.
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Metadata) MarshalJSON() ([]byte, error) {
 	type NoMethod Metadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Metric: The quantitative measurements of a report. For example, the
-// metric `eventCount` is the total number of events. Requests are
-// allowed up to 10 metrics.
+// Metric: The quantitative measurements of a report. For example, the metric
+// `eventCount` is the total number of events. Requests are allowed up to 10
+// metrics.
 type Metric struct {
-	// Expression: A mathematical expression for derived metrics. For
-	// example, the metric Event count per user is `eventCount/totalUsers`.
+	// Expression: A mathematical expression for derived metrics. For example, the
+	// metric Event count per user is `eventCount/totalUsers`.
 	Expression string `json:"expression,omitempty"`
-
-	// Invisible: Indicates if a metric is invisible in the report response.
-	// If a metric is invisible, the metric will not produce a column in the
-	// response, but can be used in `metricFilter`, `orderBys`, or a metric
-	// `expression`.
+	// Invisible: Indicates if a metric is invisible in the report response. If a
+	// metric is invisible, the metric will not produce a column in the response,
+	// but can be used in `metricFilter`, `orderBys`, or a metric `expression`.
 	Invisible bool `json:"invisible,omitempty"`
-
 	// Name: The name of the metric. See the API Metrics
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#metrics)
-	// for the list of metric names supported by core reporting methods such
-	// as `runReport` and `batchRunReports`. See Realtime Metrics
+	// for the list of metric names supported by core reporting methods such as
+	// `runReport` and `batchRunReports`. See Realtime Metrics
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema#metrics)
-	// for the list of metric names supported by the `runRealtimeReport`
-	// method. See Funnel Metrics
+	// for the list of metric names supported by the `runRealtimeReport` method.
+	// See Funnel Metrics
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/exploration-api-schema#metrics)
-	// for the list of metric names supported by the `runFunnelReport`
-	// method. If `expression` is specified, `name` can be any string that
-	// you would like within the allowed character set. For example if
-	// `expression` is `screenPageViews/sessions`, you could call that
-	// metric's name = `viewsPerSession`. Metric names that you choose must
-	// match the regular expression `^[a-zA-Z0-9_]$`. Metrics are referenced
-	// by `name` in `metricFilter`, `orderBys`, and metric `expression`.
+	// for the list of metric names supported by the `runFunnelReport` method. If
+	// `expression` is specified, `name` can be any string that you would like
+	// within the allowed character set. For example if `expression` is
+	// `screenPageViews/sessions`, you could call that metric's name =
+	// `viewsPerSession`. Metric names that you choose must match the regular
+	// expression `^[a-zA-Z0-9_]$`. Metrics are referenced by `name` in
+	// `metricFilter`, `orderBys`, and metric `expression`.
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Expression") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Expression") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Expression") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Metric) MarshalJSON() ([]byte, error) {
 	type NoMethod Metric
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricCompatibility: The compatibility for a single metric.
 type MetricCompatibility struct {
-	// Compatibility: The compatibility of this metric. If the compatibility
-	// is COMPATIBLE, this metric can be successfully added to the report.
+	// Compatibility: The compatibility of this metric. If the compatibility is
+	// COMPATIBLE, this metric can be successfully added to the report.
 	//
 	// Possible values:
 	//   "COMPATIBILITY_UNSPECIFIED" - Unspecified compatibility.
-	//   "COMPATIBLE" - The dimension or metric is compatible. This
-	// dimension or metric can be successfully added to a report.
-	//   "INCOMPATIBLE" - The dimension or metric is incompatible. This
-	// dimension or metric cannot be successfully added to a report.
+	//   "COMPATIBLE" - The dimension or metric is compatible. This dimension or
+	// metric can be successfully added to a report.
+	//   "INCOMPATIBLE" - The dimension or metric is incompatible. This dimension
+	// or metric cannot be successfully added to a report.
 	Compatibility string `json:"compatibility,omitempty"`
-
 	// MetricMetadata: The metric metadata contains the API name for this
-	// compatibility information. The metric metadata also contains other
-	// helpful information like the UI name and description.
+	// compatibility information. The metric metadata also contains other helpful
+	// information like the UI name and description.
 	MetricMetadata *MetricMetadata `json:"metricMetadata,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Compatibility") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Compatibility") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Compatibility") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MetricCompatibility) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricCompatibility
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MetricHeader: Describes a metric column in the report. Visible
-// metrics requested in a report produce column entries within rows and
-// MetricHeaders. However, metrics used exclusively within filters or
-// expressions do not produce columns in a report; correspondingly,
-// those metrics do not produce headers.
+// MetricHeader: Describes a metric column in the report. Visible metrics
+// requested in a report produce column entries within rows and MetricHeaders.
+// However, metrics used exclusively within filters or expressions do not
+// produce columns in a report; correspondingly, those metrics do not produce
+// headers.
 type MetricHeader struct {
 	// Name: The metric's name.
 	Name string `json:"name,omitempty"`
-
 	// Type: The metric's data type.
 	//
 	// Possible values:
 	//   "METRIC_TYPE_UNSPECIFIED" - Unspecified type.
 	//   "TYPE_INTEGER" - Integer type.
 	//   "TYPE_FLOAT" - Floating point type.
-	//   "TYPE_SECONDS" - A duration of seconds; a special floating point
+	//   "TYPE_SECONDS" - A duration of seconds; a special floating point type.
+	//   "TYPE_MILLISECONDS" - A duration in milliseconds; a special floating point
 	// type.
-	//   "TYPE_MILLISECONDS" - A duration in milliseconds; a special
-	// floating point type.
-	//   "TYPE_MINUTES" - A duration in minutes; a special floating point
-	// type.
+	//   "TYPE_MINUTES" - A duration in minutes; a special floating point type.
 	//   "TYPE_HOURS" - A duration in hours; a special floating point type.
-	//   "TYPE_STANDARD" - A custom metric of standard type; a special
-	// floating point type.
-	//   "TYPE_CURRENCY" - An amount of money; a special floating point
-	// type.
+	//   "TYPE_STANDARD" - A custom metric of standard type; a special floating
+	// point type.
+	//   "TYPE_CURRENCY" - An amount of money; a special floating point type.
 	//   "TYPE_FEET" - A length in feet; a special floating point type.
 	//   "TYPE_MILES" - A length in miles; a special floating point type.
 	//   "TYPE_METERS" - A length in meters; a special floating point type.
-	//   "TYPE_KILOMETERS" - A length in kilometers; a special floating
-	// point type.
+	//   "TYPE_KILOMETERS" - A length in kilometers; a special floating point type.
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MetricHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricMetadata: Explains a metric.
 type MetricMetadata struct {
-	// ApiName: A metric name. Useable in Metric (#Metric)'s `name`. For
-	// example, `eventCount`.
+	// ApiName: A metric name. Useable in Metric (#Metric)'s `name`. For example,
+	// `eventCount`.
 	ApiName string `json:"apiName,omitempty"`
-
-	// BlockedReasons: If reasons are specified, your access is blocked to
-	// this metric for this property. API requests from you to this property
-	// for this metric will succeed; however, the report will contain only
-	// zeros for this metric. API requests with metric filters on blocked
-	// metrics will fail. If reasons are empty, you have access to this
-	// metric. To learn more, see Access and data-restriction management
+	// BlockedReasons: If reasons are specified, your access is blocked to this
+	// metric for this property. API requests from you to this property for this
+	// metric will succeed; however, the report will contain only zeros for this
+	// metric. API requests with metric filters on blocked metrics will fail. If
+	// reasons are empty, you have access to this metric. To learn more, see Access
+	// and data-restriction management
 	// (https://support.google.com/analytics/answer/10851388).
 	//
 	// Possible values:
-	//   "BLOCKED_REASON_UNSPECIFIED" - Will never be specified in API
-	// response.
-	//   "NO_REVENUE_METRICS" - If present, your access is blocked to
-	// revenue related metrics for this property, and this metric is revenue
-	// related.
-	//   "NO_COST_METRICS" - If present, your access is blocked to cost
-	// related metrics for this property, and this metric is cost related.
+	//   "BLOCKED_REASON_UNSPECIFIED" - Will never be specified in API response.
+	//   "NO_REVENUE_METRICS" - If present, your access is blocked to revenue
+	// related metrics for this property, and this metric is revenue related.
+	//   "NO_COST_METRICS" - If present, your access is blocked to cost related
+	// metrics for this property, and this metric is cost related.
 	BlockedReasons []string `json:"blockedReasons,omitempty"`
-
-	// Category: The display name of the category that this metrics belongs
-	// to. Similar dimensions and metrics are categorized together.
+	// Category: The display name of the category that this metrics belongs to.
+	// Similar dimensions and metrics are categorized together.
 	Category string `json:"category,omitempty"`
-
-	// CustomDefinition: True if the metric is a custom metric for this
-	// property.
+	// CustomDefinition: True if the metric is a custom metric for this property.
 	CustomDefinition bool `json:"customDefinition,omitempty"`
-
-	// DeprecatedApiNames: Still usable but deprecated names for this
-	// metric. If populated, this metric is available by either `apiName` or
-	// one of `deprecatedApiNames` for a period of time. After the
-	// deprecation period, the metric will be available only by `apiName`.
+	// DeprecatedApiNames: Still usable but deprecated names for this metric. If
+	// populated, this metric is available by either `apiName` or one of
+	// `deprecatedApiNames` for a period of time. After the deprecation period, the
+	// metric will be available only by `apiName`.
 	DeprecatedApiNames []string `json:"deprecatedApiNames,omitempty"`
-
 	// Description: Description of how this metric is used and calculated.
 	Description string `json:"description,omitempty"`
-
-	// Expression: The mathematical expression for this derived metric. Can
-	// be used in Metric (#Metric)'s `expression` field for equivalent
-	// reports. Most metrics are not expressions, and for non-expressions,
-	// this field is empty.
+	// Expression: The mathematical expression for this derived metric. Can be used
+	// in Metric (#Metric)'s `expression` field for equivalent reports. Most
+	// metrics are not expressions, and for non-expressions, this field is empty.
 	Expression string `json:"expression,omitempty"`
-
 	// Type: The type of this metric.
 	//
 	// Possible values:
 	//   "METRIC_TYPE_UNSPECIFIED" - Unspecified type.
 	//   "TYPE_INTEGER" - Integer type.
 	//   "TYPE_FLOAT" - Floating point type.
-	//   "TYPE_SECONDS" - A duration of seconds; a special floating point
+	//   "TYPE_SECONDS" - A duration of seconds; a special floating point type.
+	//   "TYPE_MILLISECONDS" - A duration in milliseconds; a special floating point
 	// type.
-	//   "TYPE_MILLISECONDS" - A duration in milliseconds; a special
-	// floating point type.
-	//   "TYPE_MINUTES" - A duration in minutes; a special floating point
-	// type.
+	//   "TYPE_MINUTES" - A duration in minutes; a special floating point type.
 	//   "TYPE_HOURS" - A duration in hours; a special floating point type.
-	//   "TYPE_STANDARD" - A custom metric of standard type; a special
-	// floating point type.
-	//   "TYPE_CURRENCY" - An amount of money; a special floating point
-	// type.
+	//   "TYPE_STANDARD" - A custom metric of standard type; a special floating
+	// point type.
+	//   "TYPE_CURRENCY" - An amount of money; a special floating point type.
 	//   "TYPE_FEET" - A length in feet; a special floating point type.
 	//   "TYPE_MILES" - A length in miles; a special floating point type.
 	//   "TYPE_METERS" - A length in meters; a special floating point type.
-	//   "TYPE_KILOMETERS" - A length in kilometers; a special floating
-	// point type.
+	//   "TYPE_KILOMETERS" - A length in kilometers; a special floating point type.
 	Type string `json:"type,omitempty"`
-
-	// UiName: This metric's name within the Google Analytics user
-	// interface. For example, `Event count`.
+	// UiName: This metric's name within the Google Analytics user interface. For
+	// example, `Event count`.
 	UiName string `json:"uiName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ApiName") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApiName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MetricMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricOrderBy: Sorts by metric values.
 type MetricOrderBy struct {
 	// MetricName: A metric name in the request to order by.
 	MetricName string `json:"metricName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MetricName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MetricName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MetricName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MetricOrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricOrderBy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricValue: The value of a metric.
 type MetricValue struct {
 	// Value: Measurement value. See MetricHeader for type.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MinuteRange: A contiguous set of minutes: `startMinutesAgo`,
-// `startMinutesAgo + 1`, ..., `endMinutesAgo`. Requests are allowed up
-// to 2 minute ranges.
+// `startMinutesAgo + 1`, ..., `endMinutesAgo`. Requests are allowed up to 2
+// minute ranges.
 type MinuteRange struct {
-	// EndMinutesAgo: The inclusive end minute for the query as a number of
-	// minutes before now. Cannot be before `startMinutesAgo`. For example,
-	// "endMinutesAgo": 15` specifies the report should include event data
-	// from prior to 15 minutes ago. If unspecified, `endMinutesAgo` is
-	// defaulted to 0. Standard Analytics properties can request any minute
-	// in the last 30 minutes of event data (`endMinutesAgo <= 29`), and 360
-	// Analytics properties can request any minute in the last 60 minutes of
-	// event data (`endMinutesAgo <= 59`).
+	// EndMinutesAgo: The inclusive end minute for the query as a number of minutes
+	// before now. Cannot be before `startMinutesAgo`. For example,
+	// "endMinutesAgo": 15` specifies the report should include event data from
+	// prior to 15 minutes ago. If unspecified, `endMinutesAgo` is defaulted to 0.
+	// Standard Analytics properties can request any minute in the last 30 minutes
+	// of event data (`endMinutesAgo <= 29`), and 360 Analytics properties can
+	// request any minute in the last 60 minutes of event data (`endMinutesAgo <=
+	// 59`).
 	EndMinutesAgo int64 `json:"endMinutesAgo,omitempty"`
-
-	// Name: Assigns a name to this minute range. The dimension `dateRange`
-	// is valued to this name in a report response. If set, cannot begin
-	// with `date_range_` or `RESERVED_`. If not set, minute ranges are
-	// named by their zero based index in the request: `date_range_0`,
-	// `date_range_1`, etc.
+	// Name: Assigns a name to this minute range. The dimension `dateRange` is
+	// valued to this name in a report response. If set, cannot begin with
+	// `date_range_` or `RESERVED_`. If not set, minute ranges are named by their
+	// zero based index in the request: `date_range_0`, `date_range_1`, etc.
 	Name string `json:"name,omitempty"`
-
-	// StartMinutesAgo: The inclusive start minute for the query as a number
-	// of minutes before now. For example, "startMinutesAgo": 29` specifies
-	// the report should include event data from 29 minutes ago and after.
-	// Cannot be after `endMinutesAgo`. If unspecified, `startMinutesAgo` is
-	// defaulted to 29. Standard Analytics properties can request up to the
-	// last 30 minutes of event data (`startMinutesAgo <= 29`), and 360
-	// Analytics properties can request up to the last 60 minutes of event
-	// data (`startMinutesAgo <= 59`).
+	// StartMinutesAgo: The inclusive start minute for the query as a number of
+	// minutes before now. For example, "startMinutesAgo": 29` specifies the
+	// report should include event data from 29 minutes ago and after. Cannot be
+	// after `endMinutesAgo`. If unspecified, `startMinutesAgo` is defaulted to 29.
+	// Standard Analytics properties can request up to the last 30 minutes of event
+	// data (`startMinutesAgo <= 29`), and 360 Analytics properties can request up
+	// to the last 60 minutes of event data (`startMinutesAgo <= 59`).
 	StartMinutesAgo int64 `json:"startMinutesAgo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EndMinutesAgo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndMinutesAgo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndMinutesAgo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MinuteRange) MarshalJSON() ([]byte, error) {
 	type NoMethod MinuteRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // NumericFilter: Filters for numeric or date values.
@@ -1797,62 +1460,48 @@ type NumericFilter struct {
 	//   "GREATER_THAN" - Greater than
 	//   "GREATER_THAN_OR_EQUAL" - Greater than or equal
 	Operation string `json:"operation,omitempty"`
-
 	// Value: A numeric value or a date value.
 	Value *NumericValue `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Operation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Operation") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Operation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *NumericFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod NumericFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // NumericValue: To represent a number.
 type NumericValue struct {
 	// DoubleValue: Double value
 	DoubleValue float64 `json:"doubleValue,omitempty"`
-
 	// Int64Value: Integer value
 	Int64Value int64 `json:"int64Value,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DoubleValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DoubleValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *NumericValue) MarshalJSON() ([]byte, error) {
 	type NoMethod NumericValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *NumericValue) UnmarshalJSON(data []byte) error {
@@ -1869,127 +1518,100 @@ func (s *NumericValue) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Operation: This resource represents a long-running operation that is
-// the result of a network API call.
+// Operation: This resource represents a long-running operation that is the
+// result of a network API call.
 type Operation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If `true`, the operation is completed, and either `error`
-	// or `response` is available.
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *Status `json:"error,omitempty"`
-
 	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should be a resource name ending with
-	// `operations/{unique_id}`.
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal, successful response of the operation. If the
-	// original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// OrderBy: Order bys define how rows will be sorted in the response.
-// For example, ordering rows by descending event count is one ordering,
-// and ordering rows by the event name string is a different ordering.
+// OrderBy: Order bys define how rows will be sorted in the response. For
+// example, ordering rows by descending event count is one ordering, and
+// ordering rows by the event name string is a different ordering.
 type OrderBy struct {
 	// Desc: If true, sorts by descending order.
 	Desc bool `json:"desc,omitempty"`
-
 	// Dimension: Sorts results by a dimension's values.
 	Dimension *DimensionOrderBy `json:"dimension,omitempty"`
-
 	// Metric: Sorts results by a metric's values.
 	Metric *MetricOrderBy `json:"metric,omitempty"`
-
-	// Pivot: Sorts results by a metric's values within a pivot column
-	// group.
+	// Pivot: Sorts results by a metric's values within a pivot column group.
 	Pivot *PivotOrderBy `json:"pivot,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Desc") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Desc") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Desc") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Desc") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *OrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod OrderBy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Pivot: Describes the visible dimension columns and rows in the report
 // response.
 type Pivot struct {
-	// FieldNames: Dimension names for visible columns in the report
-	// response. Including "dateRange" produces a date range column; for
-	// each row in the response, dimension values in the date range column
-	// will indicate the corresponding date range from the request.
+	// FieldNames: Dimension names for visible columns in the report response.
+	// Including "dateRange" produces a date range column; for each row in the
+	// response, dimension values in the date range column will indicate the
+	// corresponding date range from the request.
 	FieldNames []string `json:"fieldNames,omitempty"`
-
-	// Limit: The number of unique combinations of dimension values to
-	// return in this pivot. The `limit` parameter is required. A `limit` of
-	// 10,000 is common for single pivot requests. The product of the
-	// `limit` for each `pivot` in a `RunPivotReportRequest` must not exceed
-	// 250,000. For example, a two pivot request with `limit: 1000` in each
-	// pivot will fail because the product is `1,000,000`.
+	// Limit: The number of unique combinations of dimension values to return in
+	// this pivot. The `limit` parameter is required. A `limit` of 10,000 is common
+	// for single pivot requests. The product of the `limit` for each `pivot` in a
+	// `RunPivotReportRequest` must not exceed 250,000. For example, a two pivot
+	// request with `limit: 1000` in each pivot will fail because the product is
+	// `1,000,000`.
 	Limit int64 `json:"limit,omitempty,string"`
-
-	// MetricAggregations: Aggregate the metrics by dimensions in this pivot
-	// using the specified metric_aggregations.
+	// MetricAggregations: Aggregate the metrics by dimensions in this pivot using
+	// the specified metric_aggregations.
 	//
 	// Possible values:
 	//   "METRIC_AGGREGATION_UNSPECIFIED" - Unspecified operator.
@@ -1998,69 +1620,52 @@ type Pivot struct {
 	//   "MAXIMUM" - Maximum operator.
 	//   "COUNT" - Count operator.
 	MetricAggregations []string `json:"metricAggregations,omitempty"`
-
-	// Offset: The row count of the start row. The first row is counted as
-	// row 0.
+	// Offset: The row count of the start row. The first row is counted as row 0.
 	Offset int64 `json:"offset,omitempty,string"`
-
-	// OrderBys: Specifies how dimensions are ordered in the pivot. In the
-	// first Pivot, the OrderBys determine Row and PivotDimensionHeader
-	// ordering; in subsequent Pivots, the OrderBys determine only
-	// PivotDimensionHeader ordering. Dimensions specified in these OrderBys
-	// must be a subset of Pivot.field_names.
+	// OrderBys: Specifies how dimensions are ordered in the pivot. In the first
+	// Pivot, the OrderBys determine Row and PivotDimensionHeader ordering; in
+	// subsequent Pivots, the OrderBys determine only PivotDimensionHeader
+	// ordering. Dimensions specified in these OrderBys must be a subset of
+	// Pivot.field_names.
 	OrderBys []*OrderBy `json:"orderBys,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FieldNames") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FieldNames") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FieldNames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Pivot) MarshalJSON() ([]byte, error) {
 	type NoMethod Pivot
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PivotDimensionHeader: Summarizes dimension values from a row for this
-// pivot.
+// PivotDimensionHeader: Summarizes dimension values from a row for this pivot.
 type PivotDimensionHeader struct {
 	// DimensionValues: Values of multiple dimensions in a pivot.
 	DimensionValues []*DimensionValue `json:"dimensionValues,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionValues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionValues") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionValues") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PivotDimensionHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotDimensionHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotHeader: Dimensions' values in a single pivot.
@@ -2068,623 +1673,485 @@ type PivotHeader struct {
 	// PivotDimensionHeaders: The size is the same as the cardinality of the
 	// corresponding dimension combinations.
 	PivotDimensionHeaders []*PivotDimensionHeader `json:"pivotDimensionHeaders,omitempty"`
-
-	// RowCount: The cardinality of the pivot. The total number of rows for
-	// this pivot's fields regardless of how the parameters `offset` and
-	// `limit` are specified in the request.
+	// RowCount: The cardinality of the pivot. The total number of rows for this
+	// pivot's fields regardless of how the parameters `offset` and `limit` are
+	// specified in the request.
 	RowCount int64 `json:"rowCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "PivotDimensionHeaders") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "PivotDimensionHeaders") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "PivotDimensionHeaders") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PivotHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotOrderBy: Sorts by a pivot column group.
 type PivotOrderBy struct {
-	// MetricName: In the response to order by, order rows by this column.
-	// Must be a metric name from the request.
+	// MetricName: In the response to order by, order rows by this column. Must be
+	// a metric name from the request.
 	MetricName string `json:"metricName,omitempty"`
-
 	// PivotSelections: Used to select a dimension name and value pivot. If
-	// multiple pivot selections are given, the sort occurs on rows where
-	// all pivot selection dimension name and value pairs match the row's
-	// dimension name and value pair.
+	// multiple pivot selections are given, the sort occurs on rows where all pivot
+	// selection dimension name and value pairs match the row's dimension name and
+	// value pair.
 	PivotSelections []*PivotSelection `json:"pivotSelections,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MetricName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MetricName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MetricName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PivotOrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotOrderBy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotSelection: A pair of dimension names and values. Rows with this
-// dimension pivot pair are ordered by the metric's value. For example
-// if pivots = {{"browser", "Chrome"}} and metric_name = "Sessions",
-// then the rows will be sorted based on Sessions in Chrome.
-// ---------|----------|----------------|----------|---------------- |
-// Chrome | Chrome | Safari | Safari
-// ---------|----------|----------------|----------|----------------
-// Country | Sessions | Pages/Sessions | Sessions | Pages/Sessions
-// ---------|----------|----------------|----------|---------------- US
-// | 2 | 2 | 3 | 1
-// ---------|----------|----------------|----------|----------------
+// dimension pivot pair are ordered by the metric's value. For example if
+// pivots = {{"browser", "Chrome"}} and metric_name = "Sessions", then the rows
+// will be sorted based on Sessions in Chrome.
+// ---------|----------|----------------|----------|---------------- | Chrome |
+// Chrome | Safari | Safari
+// ---------|----------|----------------|----------|---------------- Country |
+// Sessions | Pages/Sessions | Sessions | Pages/Sessions
+// ---------|----------|----------------|----------|---------------- US | 2 | 2
+// | 3 | 1 ---------|----------|----------------|----------|----------------
 // Canada | 3 | 1 | 4 | 1
 // ---------|----------|----------------|----------|----------------
 type PivotSelection struct {
 	// DimensionName: Must be a dimension name from the request.
 	DimensionName string `json:"dimensionName,omitempty"`
-
 	// DimensionValue: Order by only when the named dimension is this value.
 	DimensionValue string `json:"dimensionValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DimensionName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PivotSelection) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotSelection
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PropertyQuota: Current state of all quotas for this Analytics
-// Property. If any quota for a property is exhausted, all requests to
-// that property will return Resource Exhausted errors.
+// PropertyQuota: Current state of all quotas for this Analytics Property. If
+// any quota for a property is exhausted, all requests to that property will
+// return Resource Exhausted errors.
 type PropertyQuota struct {
 	// ConcurrentRequests: Standard Analytics Properties can send up to 10
-	// concurrent requests; Analytics 360 Properties can use up to 50
-	// concurrent requests.
-	ConcurrentRequests *QuotaStatus `json:"concurrentRequests,omitempty"`
-
-	// PotentiallyThresholdedRequestsPerHour: Analytics Properties can send
-	// up to 120 requests with potentially thresholded dimensions per hour.
-	// In a batch request, each report request is individually counted for
-	// this quota if the request contains potentially thresholded
-	// dimensions.
-	PotentiallyThresholdedRequestsPerHour *QuotaStatus `json:"potentiallyThresholdedRequestsPerHour,omitempty"`
-
-	// ServerErrorsPerProjectPerHour: Standard Analytics Properties and
-	// cloud project pairs can have up to 10 server errors per hour;
-	// Analytics 360 Properties and cloud project pairs can have up to 50
-	// server errors per hour.
-	ServerErrorsPerProjectPerHour *QuotaStatus `json:"serverErrorsPerProjectPerHour,omitempty"`
-
-	// TokensPerDay: Standard Analytics Properties can use up to 200,000
-	// tokens per day; Analytics 360 Properties can use 2,000,000 tokens per
-	// day. Most requests consume fewer than 10 tokens.
-	TokensPerDay *QuotaStatus `json:"tokensPerDay,omitempty"`
-
-	// TokensPerHour: Standard Analytics Properties can use up to 40,000
-	// tokens per hour; Analytics 360 Properties can use 400,000 tokens per
-	// hour. An API request consumes a single number of tokens, and that
-	// number is deducted from all of the hourly, daily, and per project
-	// hourly quotas.
-	TokensPerHour *QuotaStatus `json:"tokensPerHour,omitempty"`
-
-	// TokensPerProjectPerHour: Analytics Properties can use up to 35% of
-	// their tokens per project per hour. This amounts to standard Analytics
-	// Properties can use up to 14,000 tokens per project per hour, and
-	// Analytics 360 Properties can use 140,000 tokens per project per hour.
-	// An API request consumes a single number of tokens, and that number is
-	// deducted from all of the hourly, daily, and per project hourly
-	// quotas.
-	TokensPerProjectPerHour *QuotaStatus `json:"tokensPerProjectPerHour,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConcurrentRequests")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConcurrentRequests") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
+	// concurrent requests; Analytics 360 Properties can use up to 50 concurrent
 	// requests.
+	ConcurrentRequests *QuotaStatus `json:"concurrentRequests,omitempty"`
+	// PotentiallyThresholdedRequestsPerHour: Analytics Properties can send up to
+	// 120 requests with potentially thresholded dimensions per hour. In a batch
+	// request, each report request is individually counted for this quota if the
+	// request contains potentially thresholded dimensions.
+	PotentiallyThresholdedRequestsPerHour *QuotaStatus `json:"potentiallyThresholdedRequestsPerHour,omitempty"`
+	// ServerErrorsPerProjectPerHour: Standard Analytics Properties and cloud
+	// project pairs can have up to 10 server errors per hour; Analytics 360
+	// Properties and cloud project pairs can have up to 50 server errors per hour.
+	ServerErrorsPerProjectPerHour *QuotaStatus `json:"serverErrorsPerProjectPerHour,omitempty"`
+	// TokensPerDay: Standard Analytics Properties can use up to 200,000 tokens per
+	// day; Analytics 360 Properties can use 2,000,000 tokens per day. Most
+	// requests consume fewer than 10 tokens.
+	TokensPerDay *QuotaStatus `json:"tokensPerDay,omitempty"`
+	// TokensPerHour: Standard Analytics Properties can use up to 40,000 tokens per
+	// hour; Analytics 360 Properties can use 400,000 tokens per hour. An API
+	// request consumes a single number of tokens, and that number is deducted from
+	// all of the hourly, daily, and per project hourly quotas.
+	TokensPerHour *QuotaStatus `json:"tokensPerHour,omitempty"`
+	// TokensPerProjectPerHour: Analytics Properties can use up to 35% of their
+	// tokens per project per hour. This amounts to standard Analytics Properties
+	// can use up to 14,000 tokens per project per hour, and Analytics 360
+	// Properties can use 140,000 tokens per project per hour. An API request
+	// consumes a single number of tokens, and that number is deducted from all of
+	// the hourly, daily, and per project hourly quotas.
+	TokensPerProjectPerHour *QuotaStatus `json:"tokensPerProjectPerHour,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConcurrentRequests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConcurrentRequests") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PropertyQuota) MarshalJSON() ([]byte, error) {
 	type NoMethod PropertyQuota
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// QueryAudienceExportRequest: A request to list users in an audience
-// export.
+// QueryAudienceExportRequest: A request to list users in an audience export.
 type QueryAudienceExportRequest struct {
-	// Limit: Optional. The number of rows to return. If unspecified, 10,000
-	// rows are returned. The API returns a maximum of 250,000 rows per
-	// request, no matter how many you ask for. `limit` must be positive.
-	// The API can also return fewer rows than the requested `limit`, if
-	// there aren't as many dimension values as the `limit`. To learn more
-	// about this pagination parameter, see Pagination
+	// Limit: Optional. The number of rows to return. If unspecified, 10,000 rows
+	// are returned. The API returns a maximum of 250,000 rows per request, no
+	// matter how many you ask for. `limit` must be positive. The API can also
+	// return fewer rows than the requested `limit`, if there aren't as many
+	// dimension values as the `limit`. To learn more about this pagination
+	// parameter, see Pagination
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Limit int64 `json:"limit,omitempty,string"`
-
-	// Offset: Optional. The row count of the start row. The first row is
-	// counted as row 0. When paging, the first request does not specify
-	// offset; or equivalently, sets offset to 0; the first request returns
-	// the first `limit` of rows. The second request sets offset to the
-	// `limit` of the first request; the second request returns the second
-	// `limit` of rows. To learn more about this pagination parameter, see
-	// Pagination
+	// Offset: Optional. The row count of the start row. The first row is counted
+	// as row 0. When paging, the first request does not specify offset; or
+	// equivalently, sets offset to 0; the first request returns the first `limit`
+	// of rows. The second request sets offset to the `limit` of the first request;
+	// the second request returns the second `limit` of rows. To learn more about
+	// this pagination parameter, see Pagination
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Offset int64 `json:"offset,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Limit") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Limit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Limit") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QueryAudienceExportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryAudienceExportRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryAudienceExportResponse: A list of users in an audience export.
 type QueryAudienceExportResponse struct {
-	// AudienceExport: Configuration data about AudienceExport being
-	// queried. Returned to help interpret the audience rows in this
-	// response. For example, the dimensions in this AudienceExport
-	// correspond to the columns in the AudienceRows.
+	// AudienceExport: Configuration data about AudienceExport being queried.
+	// Returned to help interpret the audience rows in this response. For example,
+	// the dimensions in this AudienceExport correspond to the columns in the
+	// AudienceRows.
 	AudienceExport *AudienceExport `json:"audienceExport,omitempty"`
-
-	// AudienceRows: Rows for each user in an audience export. The number of
-	// rows in this response will be less than or equal to request's page
-	// size.
+	// AudienceRows: Rows for each user in an audience export. The number of rows
+	// in this response will be less than or equal to request's page size.
 	AudienceRows []*V1betaAudienceRow `json:"audienceRows,omitempty"`
-
-	// RowCount: The total number of rows in the AudienceExport result.
-	// `rowCount` is independent of the number of rows returned in the
-	// response, the `limit` request parameter, and the `offset` request
-	// parameter. For example if a query returns 175 rows and includes
-	// `limit` of 50 in the API request, the response will contain
-	// `rowCount` of 175 but only 50 rows. To learn more about this
-	// pagination parameter, see Pagination
+	// RowCount: The total number of rows in the AudienceExport result. `rowCount`
+	// is independent of the number of rows returned in the response, the `limit`
+	// request parameter, and the `offset` request parameter. For example if a
+	// query returns 175 rows and includes `limit` of 50 in the API request, the
+	// response will contain `rowCount` of 175 but only 50 rows. To learn more
+	// about this pagination parameter, see Pagination
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	RowCount int64 `json:"rowCount,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AudienceExport") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AudienceExport") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AudienceExport") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QueryAudienceExportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryAudienceExportResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // QuotaStatus: Current state for a particular quota group.
 type QuotaStatus struct {
 	// Consumed: Quota consumed by this request.
 	Consumed int64 `json:"consumed,omitempty"`
-
 	// Remaining: Quota remaining after this request.
 	Remaining int64 `json:"remaining,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Consumed") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Consumed") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Consumed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QuotaStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod QuotaStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ResponseMetaData: Response's metadata carrying additional information
-// about the report content.
+// ResponseMetaData: Response's metadata carrying additional information about
+// the report content.
 type ResponseMetaData struct {
-	// CurrencyCode: The currency code used in this report. Intended to be
-	// used in formatting currency metrics like `purchaseRevenue` for
-	// visualization. If currency_code was specified in the request, this
-	// response parameter will echo the request parameter; otherwise, this
-	// response parameter is the property's current currency_code. Currency
-	// codes are string encodings of currency types from the ISO 4217
-	// standard (https://en.wikipedia.org/wiki/ISO_4217); for example "USD",
-	// "EUR", "JPY". To learn more, see
-	// https://support.google.com/analytics/answer/9796179.
+	// CurrencyCode: The currency code used in this report. Intended to be used in
+	// formatting currency metrics like `purchaseRevenue` for visualization. If
+	// currency_code was specified in the request, this response parameter will
+	// echo the request parameter; otherwise, this response parameter is the
+	// property's current currency_code. Currency codes are string encodings of
+	// currency types from the ISO 4217 standard
+	// (https://en.wikipedia.org/wiki/ISO_4217); for example "USD", "EUR", "JPY".
+	// To learn more, see https://support.google.com/analytics/answer/9796179.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// DataLossFromOtherRow: If true, indicates some buckets of dimension
 	// combinations are rolled into "(other)" row. This can happen for high
 	// cardinality reports. The metadata parameter dataLossFromOtherRow is
 	// populated based on the aggregated data table used in the report. The
-	// parameter will be accurately populated regardless of the filters and
-	// limits in the report. For example, the (other) row could be dropped
-	// from the report because the request contains a filter on
-	// sessionSource = google. This parameter will still be populated if
-	// data loss from other row was present in the input aggregate data used
-	// to generate this report. To learn more, see About the (other) row and
-	// data sampling
+	// parameter will be accurately populated regardless of the filters and limits
+	// in the report. For example, the (other) row could be dropped from the report
+	// because the request contains a filter on sessionSource = google. This
+	// parameter will still be populated if data loss from other row was present in
+	// the input aggregate data used to generate this report. To learn more, see
+	// About the (other) row and data sampling
 	// (https://support.google.com/analytics/answer/13208658#reports).
 	DataLossFromOtherRow bool `json:"dataLossFromOtherRow,omitempty"`
-
-	// EmptyReason: If empty reason is specified, the report is empty for
-	// this reason.
+	// EmptyReason: If empty reason is specified, the report is empty for this
+	// reason.
 	EmptyReason string `json:"emptyReason,omitempty"`
-
 	// SamplingMetadatas: If this report results is sampled
-	// (https://support.google.com/analytics/answer/13331292), this
-	// describes the percentage of events used in this report. One
-	// `samplingMetadatas` is populated for each date range. Each
-	// `samplingMetadatas` corresponds to a date range in order that date
-	// ranges were specified in the request. However if the results are not
-	// sampled, this field will not be defined.
+	// (https://support.google.com/analytics/answer/13331292), this describes the
+	// percentage of events used in this report. One `samplingMetadatas` is
+	// populated for each date range. Each `samplingMetadatas` corresponds to a
+	// date range in order that date ranges were specified in the request. However
+	// if the results are not sampled, this field will not be defined.
 	SamplingMetadatas []*SamplingMetadata `json:"samplingMetadatas,omitempty"`
-
 	// SchemaRestrictionResponse: Describes the schema restrictions actively
 	// enforced in creating this report. To learn more, see Access and
 	// data-restriction management
 	// (https://support.google.com/analytics/answer/10851388).
 	SchemaRestrictionResponse *SchemaRestrictionResponse `json:"schemaRestrictionResponse,omitempty"`
-
-	// SubjectToThresholding: If `subjectToThresholding` is true, this
-	// report is subject to thresholding and only returns data that meets
-	// the minimum aggregation thresholds. It is possible for a request to
-	// be subject to thresholding thresholding and no data is absent from
-	// the report, and this happens when all data is above the thresholds.
-	// To learn more, see Data thresholds
-	// (https://support.google.com/analytics/answer/9383630).
+	// SubjectToThresholding: If `subjectToThresholding` is true, this report is
+	// subject to thresholding and only returns data that meets the minimum
+	// aggregation thresholds. It is possible for a request to be subject to
+	// thresholding thresholding and no data is absent from the report, and this
+	// happens when all data is above the thresholds. To learn more, see Data
+	// thresholds (https://support.google.com/analytics/answer/9383630).
 	SubjectToThresholding bool `json:"subjectToThresholding,omitempty"`
-
-	// TimeZone: The property's current timezone. Intended to be used to
-	// interpret time-based dimensions like `hour` and `minute`. Formatted
-	// as strings from the IANA Time Zone database
-	// (https://www.iana.org/time-zones); for example "America/New_York" or
-	// "Asia/Tokyo".
+	// TimeZone: The property's current timezone. Intended to be used to interpret
+	// time-based dimensions like `hour` and `minute`. Formatted as strings from
+	// the IANA Time Zone database (https://www.iana.org/time-zones); for example
+	// "America/New_York" or "Asia/Tokyo".
 	TimeZone string `json:"timeZone,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ResponseMetaData) MarshalJSON() ([]byte, error) {
 	type NoMethod ResponseMetaData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Row: Report data for each row. For example if RunReportRequest
-// contains: ```none "dimensions": [ { "name": "eventName" }, { "name":
-// "countryId" } ], "metrics": [ { "name": "eventCount" } ] ``` One row
-// with 'in_app_purchase' as the eventName, 'JP' as the countryId, and
-// 15 as the eventCount, would be: ```none "dimensionValues": [ {
-// "value": "in_app_purchase" }, { "value": "JP" } ], "metricValues": [
-// { "value": "15" } ] ```
+// Row: Report data for each row. For example if RunReportRequest contains:
+// ```none "dimensions": [ { "name": "eventName" }, { "name": "countryId" } ],
+// "metrics": [ { "name": "eventCount" } ] ``` One row with 'in_app_purchase'
+// as the eventName, 'JP' as the countryId, and 15 as the eventCount, would be:
+// ```none "dimensionValues": [ { "value": "in_app_purchase" }, { "value": "JP"
+// } ], "metricValues": [ { "value": "15" } ] ```
 type Row struct {
-	// DimensionValues: List of requested dimension values. In a
-	// PivotReport, dimension_values are only listed for dimensions included
-	// in a pivot.
+	// DimensionValues: List of requested dimension values. In a PivotReport,
+	// dimension_values are only listed for dimensions included in a pivot.
 	DimensionValues []*DimensionValue `json:"dimensionValues,omitempty"`
-
 	// MetricValues: List of requested visible metric values.
 	MetricValues []*MetricValue `json:"metricValues,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionValues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionValues") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionValues") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Row) MarshalJSON() ([]byte, error) {
 	type NoMethod Row
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RunPivotReportRequest: The request to generate a pivot report.
 type RunPivotReportRequest struct {
-	// CohortSpec: Cohort group associated with this request. If there is a
-	// cohort group in the request the 'cohort' dimension must be present.
+	// CohortSpec: Cohort group associated with this request. If there is a cohort
+	// group in the request the 'cohort' dimension must be present.
 	CohortSpec *CohortSpec `json:"cohortSpec,omitempty"`
-
-	// CurrencyCode: A currency code in ISO4217 format, such as "AED",
-	// "USD", "JPY". If the field is empty, the report uses the property's
-	// default currency.
+	// CurrencyCode: A currency code in ISO4217 format, such as "AED", "USD",
+	// "JPY". If the field is empty, the report uses the property's default
+	// currency.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// DateRanges: The date range to retrieve event data for the report. If
-	// multiple date ranges are specified, event data from each date range
-	// is used in the report. A special dimension with field name
-	// "dateRange" can be included in a Pivot's field names; if included,
-	// the report compares between date ranges. In a cohort request, this
-	// `dateRanges` must be unspecified.
+	// multiple date ranges are specified, event data from each date range is used
+	// in the report. A special dimension with field name "dateRange" can be
+	// included in a Pivot's field names; if included, the report compares between
+	// date ranges. In a cohort request, this `dateRanges` must be unspecified.
 	DateRanges []*DateRange `json:"dateRanges,omitempty"`
-
 	// DimensionFilter: The filter clause of dimensions. Dimensions must be
-	// requested to be used in this filter. Metrics cannot be used in this
-	// filter.
+	// requested to be used in this filter. Metrics cannot be used in this filter.
 	DimensionFilter *FilterExpression `json:"dimensionFilter,omitempty"`
-
-	// Dimensions: The dimensions requested. All defined dimensions must be
-	// used by one of the following: dimension_expression, dimension_filter,
-	// pivots, order_bys.
+	// Dimensions: The dimensions requested. All defined dimensions must be used by
+	// one of the following: dimension_expression, dimension_filter, pivots,
+	// order_bys.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
-
-	// KeepEmptyRows: If false or unspecified, each row with all metrics
-	// equal to 0 will not be returned. If true, these rows will be returned
-	// if they are not separately removed by a filter. Regardless of this
-	// `keep_empty_rows` setting, only data recorded by the Google Analytics
-	// (GA4) property can be displayed in a report. For example if a
-	// property never logs a `purchase` event, then a query for the
-	// `eventName` dimension and `eventCount` metric will not have a row
-	// eventName: "purchase" and eventCount: 0.
+	// KeepEmptyRows: If false or unspecified, each row with all metrics equal to 0
+	// will not be returned. If true, these rows will be returned if they are not
+	// separately removed by a filter. Regardless of this `keep_empty_rows`
+	// setting, only data recorded by the Google Analytics (GA4) property can be
+	// displayed in a report. For example if a property never logs a `purchase`
+	// event, then a query for the `eventName` dimension and `eventCount` metric
+	// will not have a row eventName: "purchase" and eventCount: 0.
 	KeepEmptyRows bool `json:"keepEmptyRows,omitempty"`
-
-	// MetricFilter: The filter clause of metrics. Applied at post
-	// aggregation phase, similar to SQL having-clause. Metrics must be
-	// requested to be used in this filter. Dimensions cannot be used in
-	// this filter.
+	// MetricFilter: The filter clause of metrics. Applied at post aggregation
+	// phase, similar to SQL having-clause. Metrics must be requested to be used in
+	// this filter. Dimensions cannot be used in this filter.
 	MetricFilter *FilterExpression `json:"metricFilter,omitempty"`
-
-	// Metrics: The metrics requested, at least one metric needs to be
-	// specified. All defined metrics must be used by one of the following:
-	// metric_expression, metric_filter, order_bys.
+	// Metrics: The metrics requested, at least one metric needs to be specified.
+	// All defined metrics must be used by one of the following: metric_expression,
+	// metric_filter, order_bys.
 	Metrics []*Metric `json:"metrics,omitempty"`
-
-	// Pivots: Describes the visual format of the report's dimensions in
-	// columns or rows. The union of the fieldNames (dimension names) in all
-	// pivots must be a subset of dimension names defined in Dimensions. No
-	// two pivots can share a dimension. A dimension is only visible if it
-	// appears in a pivot.
+	// Pivots: Describes the visual format of the report's dimensions in columns or
+	// rows. The union of the fieldNames (dimension names) in all pivots must be a
+	// subset of dimension names defined in Dimensions. No two pivots can share a
+	// dimension. A dimension is only visible if it appears in a pivot.
 	Pivots []*Pivot `json:"pivots,omitempty"`
-
 	// Property: A Google Analytics GA4 property identifier whose events are
-	// tracked. Specified in the URL path and not the body. To learn more,
-	// see where to find your Property ID
+	// tracked. Specified in the URL path and not the body. To learn more, see
+	// where to find your Property ID
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 	// Within a batch request, this property should either be unspecified or
 	// consistent with the batch-level property. Example: properties/1234
 	Property string `json:"property,omitempty"`
-
-	// ReturnPropertyQuota: Toggles whether to return the current state of
-	// this Analytics Property's quota. Quota is returned in PropertyQuota
+	// ReturnPropertyQuota: Toggles whether to return the current state of this
+	// Analytics Property's quota. Quota is returned in PropertyQuota
 	// (#PropertyQuota).
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CohortSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CohortSpec") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CohortSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RunPivotReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunPivotReportRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RunPivotReportResponse: The response pivot report table corresponding
-// to a pivot request.
+// RunPivotReportResponse: The response pivot report table corresponding to a
+// pivot request.
 type RunPivotReportResponse struct {
 	// Aggregates: Aggregation of metric values. Can be totals, minimums, or
 	// maximums. The returned aggregations are controlled by the
-	// metric_aggregations in the pivot. The type of aggregation returned in
-	// each row is shown by the dimension_values which are set to
-	// "RESERVED_".
+	// metric_aggregations in the pivot. The type of aggregation returned in each
+	// row is shown by the dimension_values which are set to "RESERVED_".
 	Aggregates []*Row `json:"aggregates,omitempty"`
-
 	// DimensionHeaders: Describes dimension columns. The number of
-	// DimensionHeaders and ordering of DimensionHeaders matches the
-	// dimensions present in rows.
+	// DimensionHeaders and ordering of DimensionHeaders matches the dimensions
+	// present in rows.
 	DimensionHeaders []*DimensionHeader `json:"dimensionHeaders,omitempty"`
-
-	// Kind: Identifies what kind of resource this message is. This `kind`
-	// is always the fixed string "analyticsData#runPivotReport". Useful to
+	// Kind: Identifies what kind of resource this message is. This `kind` is
+	// always the fixed string "analyticsData#runPivotReport". Useful to
 	// distinguish between response types in JSON.
 	Kind string `json:"kind,omitempty"`
-
 	// Metadata: Metadata for the report.
 	Metadata *ResponseMetaData `json:"metadata,omitempty"`
-
-	// MetricHeaders: Describes metric columns. The number of MetricHeaders
-	// and ordering of MetricHeaders matches the metrics present in rows.
+	// MetricHeaders: Describes metric columns. The number of MetricHeaders and
+	// ordering of MetricHeaders matches the metrics present in rows.
 	MetricHeaders []*MetricHeader `json:"metricHeaders,omitempty"`
-
-	// PivotHeaders: Summarizes the columns and rows created by a pivot.
-	// Each pivot in the request produces one header in the response. If we
-	// have a request like this: "pivots": [{ "fieldNames": ["country",
-	// "city"] }, { "fieldNames": "eventName" }] We will have the following
-	// `pivotHeaders` in the response: "pivotHeaders" : [{
-	// "dimensionHeaders": [{ "dimensionValues": [ { "value": "United
-	// Kingdom" }, { "value": "London" } ] }, { "dimensionValues": [ {
-	// "value": "Japan" }, { "value": "Osaka" } ] }] }, {
-	// "dimensionHeaders": [{ "dimensionValues": [{ "value": "session_start"
-	// }] }, { "dimensionValues": [{ "value": "scroll" }] }] }]
+	// PivotHeaders: Summarizes the columns and rows created by a pivot. Each pivot
+	// in the request produces one header in the response. If we have a request
+	// like this: "pivots": [{ "fieldNames": ["country", "city"] }, { "fieldNames":
+	// "eventName" }] We will have the following `pivotHeaders` in the response:
+	// "pivotHeaders" : [{ "dimensionHeaders": [{ "dimensionValues": [ { "value":
+	// "United Kingdom" }, { "value": "London" } ] }, { "dimensionValues": [ {
+	// "value": "Japan" }, { "value": "Osaka" } ] }] }, { "dimensionHeaders": [{
+	// "dimensionValues": [{ "value": "session_start" }] }, { "dimensionValues": [{
+	// "value": "scroll" }] }] }]
 	PivotHeaders []*PivotHeader `json:"pivotHeaders,omitempty"`
-
-	// PropertyQuota: This Analytics Property's quota state including this
-	// request.
+	// PropertyQuota: This Analytics Property's quota state including this request.
 	PropertyQuota *PropertyQuota `json:"propertyQuota,omitempty"`
-
-	// Rows: Rows of dimension value combinations and metric values in the
-	// report.
+	// Rows: Rows of dimension value combinations and metric values in the report.
 	Rows []*Row `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Aggregates") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Aggregates") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Aggregates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RunPivotReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunPivotReportResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RunRealtimeReportRequest: The request to generate a realtime report.
 type RunRealtimeReportRequest struct {
-	// DimensionFilter: The filter clause of dimensions. Metrics cannot be
-	// used in this filter.
+	// DimensionFilter: The filter clause of dimensions. Metrics cannot be used in
+	// this filter.
 	DimensionFilter *FilterExpression `json:"dimensionFilter,omitempty"`
-
 	// Dimensions: The dimensions requested and displayed.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
-
 	// Limit: The number of rows to return. If unspecified, 10,000 rows are
-	// returned. The API returns a maximum of 250,000 rows per request, no
-	// matter how many you ask for. `limit` must be positive. The API can
-	// also return fewer rows than the requested `limit`, if there aren't as
-	// many dimension values as the `limit`. For instance, there are fewer
-	// than 300 possible values for the dimension `country`, so when
-	// reporting on only `country`, you can't get more than 300 rows, even
-	// if you set `limit` to a higher value.
+	// returned. The API returns a maximum of 250,000 rows per request, no matter
+	// how many you ask for. `limit` must be positive. The API can also return
+	// fewer rows than the requested `limit`, if there aren't as many dimension
+	// values as the `limit`. For instance, there are fewer than 300 possible
+	// values for the dimension `country`, so when reporting on only `country`, you
+	// can't get more than 300 rows, even if you set `limit` to a higher value.
 	Limit int64 `json:"limit,omitempty,string"`
-
-	// MetricAggregations: Aggregation of metrics. Aggregated metric values
-	// will be shown in rows where the dimension_values are set to
+	// MetricAggregations: Aggregation of metrics. Aggregated metric values will be
+	// shown in rows where the dimension_values are set to
 	// "RESERVED_(MetricAggregation)".
 	//
 	// Possible values:
@@ -2694,176 +2161,136 @@ type RunRealtimeReportRequest struct {
 	//   "MAXIMUM" - Maximum operator.
 	//   "COUNT" - Count operator.
 	MetricAggregations []string `json:"metricAggregations,omitempty"`
-
-	// MetricFilter: The filter clause of metrics. Applied at post
-	// aggregation phase, similar to SQL having-clause. Dimensions cannot be
-	// used in this filter.
+	// MetricFilter: The filter clause of metrics. Applied at post aggregation
+	// phase, similar to SQL having-clause. Dimensions cannot be used in this
+	// filter.
 	MetricFilter *FilterExpression `json:"metricFilter,omitempty"`
-
 	// Metrics: The metrics requested and displayed.
 	Metrics []*Metric `json:"metrics,omitempty"`
-
-	// MinuteRanges: The minute ranges of event data to read. If
-	// unspecified, one minute range for the last 30 minutes will be used.
-	// If multiple minute ranges are requested, each response row will
-	// contain a zero based minute range index. If two minute ranges
-	// overlap, the event data for the overlapping minutes is included in
-	// the response rows for both minute ranges.
+	// MinuteRanges: The minute ranges of event data to read. If unspecified, one
+	// minute range for the last 30 minutes will be used. If multiple minute ranges
+	// are requested, each response row will contain a zero based minute range
+	// index. If two minute ranges overlap, the event data for the overlapping
+	// minutes is included in the response rows for both minute ranges.
 	MinuteRanges []*MinuteRange `json:"minuteRanges,omitempty"`
-
 	// OrderBys: Specifies how rows are ordered in the response.
 	OrderBys []*OrderBy `json:"orderBys,omitempty"`
-
-	// ReturnPropertyQuota: Toggles whether to return the current state of
-	// this Analytics Property's Realtime quota. Quota is returned in
-	// PropertyQuota (#PropertyQuota).
+	// ReturnPropertyQuota: Toggles whether to return the current state of this
+	// Analytics Property's Realtime quota. Quota is returned in PropertyQuota
+	// (#PropertyQuota).
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionFilter") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionFilter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RunRealtimeReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunRealtimeReportRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RunRealtimeReportResponse: The response realtime report table
-// corresponding to a request.
+// RunRealtimeReportResponse: The response realtime report table corresponding
+// to a request.
 type RunRealtimeReportResponse struct {
 	// DimensionHeaders: Describes dimension columns. The number of
-	// DimensionHeaders and ordering of DimensionHeaders matches the
-	// dimensions present in rows.
+	// DimensionHeaders and ordering of DimensionHeaders matches the dimensions
+	// present in rows.
 	DimensionHeaders []*DimensionHeader `json:"dimensionHeaders,omitempty"`
-
-	// Kind: Identifies what kind of resource this message is. This `kind`
-	// is always the fixed string "analyticsData#runRealtimeReport". Useful
-	// to distinguish between response types in JSON.
+	// Kind: Identifies what kind of resource this message is. This `kind` is
+	// always the fixed string "analyticsData#runRealtimeReport". Useful to
+	// distinguish between response types in JSON.
 	Kind string `json:"kind,omitempty"`
-
 	// Maximums: If requested, the maximum values of metrics.
 	Maximums []*Row `json:"maximums,omitempty"`
-
-	// MetricHeaders: Describes metric columns. The number of MetricHeaders
-	// and ordering of MetricHeaders matches the metrics present in rows.
+	// MetricHeaders: Describes metric columns. The number of MetricHeaders and
+	// ordering of MetricHeaders matches the metrics present in rows.
 	MetricHeaders []*MetricHeader `json:"metricHeaders,omitempty"`
-
 	// Minimums: If requested, the minimum values of metrics.
 	Minimums []*Row `json:"minimums,omitempty"`
-
-	// PropertyQuota: This Analytics Property's Realtime quota state
-	// including this request.
+	// PropertyQuota: This Analytics Property's Realtime quota state including this
+	// request.
 	PropertyQuota *PropertyQuota `json:"propertyQuota,omitempty"`
-
 	// RowCount: The total number of rows in the query result. `rowCount` is
-	// independent of the number of rows returned in the response and the
-	// `limit` request parameter. For example if a query returns 175 rows
-	// and includes `limit` of 50 in the API request, the response will
-	// contain `rowCount` of 175 but only 50 rows.
+	// independent of the number of rows returned in the response and the `limit`
+	// request parameter. For example if a query returns 175 rows and includes
+	// `limit` of 50 in the API request, the response will contain `rowCount` of
+	// 175 but only 50 rows.
 	RowCount int64 `json:"rowCount,omitempty"`
-
-	// Rows: Rows of dimension value combinations and metric values in the
-	// report.
+	// Rows: Rows of dimension value combinations and metric values in the report.
 	Rows []*Row `json:"rows,omitempty"`
-
 	// Totals: If requested, the totaled values of metrics.
 	Totals []*Row `json:"totals,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionHeaders") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionHeaders") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionHeaders") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RunRealtimeReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunRealtimeReportResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RunReportRequest: The request to generate a report.
 type RunReportRequest struct {
-	// CohortSpec: Cohort group associated with this request. If there is a
-	// cohort group in the request the 'cohort' dimension must be present.
+	// CohortSpec: Cohort group associated with this request. If there is a cohort
+	// group in the request the 'cohort' dimension must be present.
 	CohortSpec *CohortSpec `json:"cohortSpec,omitempty"`
-
-	// CurrencyCode: A currency code in ISO4217 format, such as "AED",
-	// "USD", "JPY". If the field is empty, the report uses the property's
-	// default currency.
+	// CurrencyCode: A currency code in ISO4217 format, such as "AED", "USD",
+	// "JPY". If the field is empty, the report uses the property's default
+	// currency.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// DateRanges: Date ranges of data to read. If multiple date ranges are
-	// requested, each response row will contain a zero based date range
-	// index. If two date ranges overlap, the event data for the overlapping
-	// days is included in the response rows for both date ranges. In a
-	// cohort request, this `dateRanges` must be unspecified.
+	// requested, each response row will contain a zero based date range index. If
+	// two date ranges overlap, the event data for the overlapping days is included
+	// in the response rows for both date ranges. In a cohort request, this
+	// `dateRanges` must be unspecified.
 	DateRanges []*DateRange `json:"dateRanges,omitempty"`
-
-	// DimensionFilter: Dimension filters let you ask for only specific
-	// dimension values in the report. To learn more, see Fundamentals of
-	// Dimension Filters
+	// DimensionFilter: Dimension filters let you ask for only specific dimension
+	// values in the report. To learn more, see Fundamentals of Dimension Filters
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#dimension_filters)
 	// for examples. Metrics cannot be used in this filter.
 	DimensionFilter *FilterExpression `json:"dimensionFilter,omitempty"`
-
 	// Dimensions: The dimensions requested and displayed.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
-
-	// KeepEmptyRows: If false or unspecified, each row with all metrics
-	// equal to 0 will not be returned. If true, these rows will be returned
-	// if they are not separately removed by a filter. Regardless of this
-	// `keep_empty_rows` setting, only data recorded by the Google Analytics
-	// (GA4) property can be displayed in a report. For example if a
-	// property never logs a `purchase` event, then a query for the
-	// `eventName` dimension and `eventCount` metric will not have a row
-	// eventName: "purchase" and eventCount: 0.
+	// KeepEmptyRows: If false or unspecified, each row with all metrics equal to 0
+	// will not be returned. If true, these rows will be returned if they are not
+	// separately removed by a filter. Regardless of this `keep_empty_rows`
+	// setting, only data recorded by the Google Analytics (GA4) property can be
+	// displayed in a report. For example if a property never logs a `purchase`
+	// event, then a query for the `eventName` dimension and `eventCount` metric
+	// will not have a row eventName: "purchase" and eventCount: 0.
 	KeepEmptyRows bool `json:"keepEmptyRows,omitempty"`
-
 	// Limit: The number of rows to return. If unspecified, 10,000 rows are
-	// returned. The API returns a maximum of 250,000 rows per request, no
-	// matter how many you ask for. `limit` must be positive. The API can
-	// also return fewer rows than the requested `limit`, if there aren't as
-	// many dimension values as the `limit`. For instance, there are fewer
-	// than 300 possible values for the dimension `country`, so when
-	// reporting on only `country`, you can't get more than 300 rows, even
-	// if you set `limit` to a higher value. To learn more about this
-	// pagination parameter, see Pagination
+	// returned. The API returns a maximum of 250,000 rows per request, no matter
+	// how many you ask for. `limit` must be positive. The API can also return
+	// fewer rows than the requested `limit`, if there aren't as many dimension
+	// values as the `limit`. For instance, there are fewer than 300 possible
+	// values for the dimension `country`, so when reporting on only `country`, you
+	// can't get more than 300 rows, even if you set `limit` to a higher value. To
+	// learn more about this pagination parameter, see Pagination
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Limit int64 `json:"limit,omitempty,string"`
-
-	// MetricAggregations: Aggregation of metrics. Aggregated metric values
-	// will be shown in rows where the dimension_values are set to
+	// MetricAggregations: Aggregation of metrics. Aggregated metric values will be
+	// shown in rows where the dimension_values are set to
 	// "RESERVED_(MetricAggregation)".
 	//
 	// Possible values:
@@ -2873,266 +2300,205 @@ type RunReportRequest struct {
 	//   "MAXIMUM" - Maximum operator.
 	//   "COUNT" - Count operator.
 	MetricAggregations []string `json:"metricAggregations,omitempty"`
-
-	// MetricFilter: The filter clause of metrics. Applied after aggregating
-	// the report's rows, similar to SQL having-clause. Dimensions cannot be
-	// used in this filter.
+	// MetricFilter: The filter clause of metrics. Applied after aggregating the
+	// report's rows, similar to SQL having-clause. Dimensions cannot be used in
+	// this filter.
 	MetricFilter *FilterExpression `json:"metricFilter,omitempty"`
-
 	// Metrics: The metrics requested and displayed.
 	Metrics []*Metric `json:"metrics,omitempty"`
-
-	// Offset: The row count of the start row. The first row is counted as
-	// row 0. When paging, the first request does not specify offset; or
-	// equivalently, sets offset to 0; the first request returns the first
-	// `limit` of rows. The second request sets offset to the `limit` of the
-	// first request; the second request returns the second `limit` of rows.
-	// To learn more about this pagination parameter, see Pagination
+	// Offset: The row count of the start row. The first row is counted as row 0.
+	// When paging, the first request does not specify offset; or equivalently,
+	// sets offset to 0; the first request returns the first `limit` of rows. The
+	// second request sets offset to the `limit` of the first request; the second
+	// request returns the second `limit` of rows. To learn more about this
+	// pagination parameter, see Pagination
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Offset int64 `json:"offset,omitempty,string"`
-
 	// OrderBys: Specifies how rows are ordered in the response.
 	OrderBys []*OrderBy `json:"orderBys,omitempty"`
-
 	// Property: A Google Analytics GA4 property identifier whose events are
-	// tracked. Specified in the URL path and not the body. To learn more,
-	// see where to find your Property ID
+	// tracked. Specified in the URL path and not the body. To learn more, see
+	// where to find your Property ID
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 	// Within a batch request, this property should either be unspecified or
 	// consistent with the batch-level property. Example: properties/1234
 	Property string `json:"property,omitempty"`
-
-	// ReturnPropertyQuota: Toggles whether to return the current state of
-	// this Analytics Property's quota. Quota is returned in PropertyQuota
+	// ReturnPropertyQuota: Toggles whether to return the current state of this
+	// Analytics Property's quota. Quota is returned in PropertyQuota
 	// (#PropertyQuota).
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CohortSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CohortSpec") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CohortSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RunReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunReportRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RunReportResponse: The response report table corresponding to a
-// request.
+// RunReportResponse: The response report table corresponding to a request.
 type RunReportResponse struct {
 	// DimensionHeaders: Describes dimension columns. The number of
-	// DimensionHeaders and ordering of DimensionHeaders matches the
-	// dimensions present in rows.
+	// DimensionHeaders and ordering of DimensionHeaders matches the dimensions
+	// present in rows.
 	DimensionHeaders []*DimensionHeader `json:"dimensionHeaders,omitempty"`
-
-	// Kind: Identifies what kind of resource this message is. This `kind`
-	// is always the fixed string "analyticsData#runReport". Useful to
-	// distinguish between response types in JSON.
+	// Kind: Identifies what kind of resource this message is. This `kind` is
+	// always the fixed string "analyticsData#runReport". Useful to distinguish
+	// between response types in JSON.
 	Kind string `json:"kind,omitempty"`
-
 	// Maximums: If requested, the maximum values of metrics.
 	Maximums []*Row `json:"maximums,omitempty"`
-
 	// Metadata: Metadata for the report.
 	Metadata *ResponseMetaData `json:"metadata,omitempty"`
-
-	// MetricHeaders: Describes metric columns. The number of MetricHeaders
-	// and ordering of MetricHeaders matches the metrics present in rows.
+	// MetricHeaders: Describes metric columns. The number of MetricHeaders and
+	// ordering of MetricHeaders matches the metrics present in rows.
 	MetricHeaders []*MetricHeader `json:"metricHeaders,omitempty"`
-
 	// Minimums: If requested, the minimum values of metrics.
 	Minimums []*Row `json:"minimums,omitempty"`
-
-	// PropertyQuota: This Analytics Property's quota state including this
-	// request.
+	// PropertyQuota: This Analytics Property's quota state including this request.
 	PropertyQuota *PropertyQuota `json:"propertyQuota,omitempty"`
-
 	// RowCount: The total number of rows in the query result. `rowCount` is
-	// independent of the number of rows returned in the response, the
-	// `limit` request parameter, and the `offset` request parameter. For
-	// example if a query returns 175 rows and includes `limit` of 50 in the
-	// API request, the response will contain `rowCount` of 175 but only 50
-	// rows. To learn more about this pagination parameter, see Pagination
+	// independent of the number of rows returned in the response, the `limit`
+	// request parameter, and the `offset` request parameter. For example if a
+	// query returns 175 rows and includes `limit` of 50 in the API request, the
+	// response will contain `rowCount` of 175 but only 50 rows. To learn more
+	// about this pagination parameter, see Pagination
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	RowCount int64 `json:"rowCount,omitempty"`
-
-	// Rows: Rows of dimension value combinations and metric values in the
-	// report.
+	// Rows: Rows of dimension value combinations and metric values in the report.
 	Rows []*Row `json:"rows,omitempty"`
-
 	// Totals: If requested, the totaled values of metrics.
 	Totals []*Row `json:"totals,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionHeaders") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionHeaders") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionHeaders") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RunReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunReportResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SamplingMetadata: If this report results is sampled
-// (https://support.google.com/analytics/answer/13331292), this
-// describes the percentage of events used in this report. Sampling is
-// the practice of analyzing a subset of all data in order to uncover
-// the meaningful information in the larger data set.
+// (https://support.google.com/analytics/answer/13331292), this describes the
+// percentage of events used in this report. Sampling is the practice of
+// analyzing a subset of all data in order to uncover the meaningful
+// information in the larger data set.
 type SamplingMetadata struct {
-	// SamplesReadCount: The total number of events read in this sampled
-	// report for a date range. This is the size of the subset this
-	// property's data that was analyzed in this report.
+	// SamplesReadCount: The total number of events read in this sampled report for
+	// a date range. This is the size of the subset this property's data that was
+	// analyzed in this report.
 	SamplesReadCount int64 `json:"samplesReadCount,omitempty,string"`
-
-	// SamplingSpaceSize: The total number of events present in this
-	// property's data that could have been analyzed in this report for a
-	// date range. Sampling uncovers the meaningful information about the
-	// larger data set, and this is the size of the larger data set. To
-	// calculate the percentage of available data that was used in this
-	// report, compute `samplesReadCount/samplingSpaceSize`.
+	// SamplingSpaceSize: The total number of events present in this property's
+	// data that could have been analyzed in this report for a date range. Sampling
+	// uncovers the meaningful information about the larger data set, and this is
+	// the size of the larger data set. To calculate the percentage of available
+	// data that was used in this report, compute
+	// `samplesReadCount/samplingSpaceSize`.
 	SamplingSpaceSize int64 `json:"samplingSpaceSize,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "SamplesReadCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SamplesReadCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "SamplesReadCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SamplingMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SamplingMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SchemaRestrictionResponse: The schema restrictions actively enforced
-// in creating this report. To learn more, see Access and
-// data-restriction management
-// (https://support.google.com/analytics/answer/10851388).
+// SchemaRestrictionResponse: The schema restrictions actively enforced in
+// creating this report. To learn more, see Access and data-restriction
+// management (https://support.google.com/analytics/answer/10851388).
 type SchemaRestrictionResponse struct {
-	// ActiveMetricRestrictions: All restrictions actively enforced in
-	// creating the report. For example, `purchaseRevenue` always has the
-	// restriction type `REVENUE_DATA`. However, this active response
-	// restriction is only populated if the user's custom role disallows
-	// access to `REVENUE_DATA`.
+	// ActiveMetricRestrictions: All restrictions actively enforced in creating the
+	// report. For example, `purchaseRevenue` always has the restriction type
+	// `REVENUE_DATA`. However, this active response restriction is only populated
+	// if the user's custom role disallows access to `REVENUE_DATA`.
 	ActiveMetricRestrictions []*ActiveMetricRestriction `json:"activeMetricRestrictions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ActiveMetricRestrictions") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ActiveMetricRestrictions")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActiveMetricRestrictions")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ActiveMetricRestrictions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SchemaRestrictionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SchemaRestrictionResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Status: The `Status` type defines a logical error model that is
-// suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // StringFilter: The filter for string
 type StringFilter struct {
 	// CaseSensitive: If true, the string value is case sensitive.
 	CaseSensitive bool `json:"caseSensitive,omitempty"`
-
 	// MatchType: The match type for this filter.
 	//
 	// Possible values:
@@ -3141,40 +2507,33 @@ type StringFilter struct {
 	//   "BEGINS_WITH" - Begins with the string value.
 	//   "ENDS_WITH" - Ends with the string value.
 	//   "CONTAINS" - Contains the string value.
-	//   "FULL_REGEXP" - Full match for the regular expression with the
+	//   "FULL_REGEXP" - Full match for the regular expression with the string
+	// value.
+	//   "PARTIAL_REGEXP" - Partial match for the regular expression with the
 	// string value.
-	//   "PARTIAL_REGEXP" - Partial match for the regular expression with
-	// the string value.
 	MatchType string `json:"matchType,omitempty"`
-
 	// Value: The string value used for the matching.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CaseSensitive") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StringFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod StringFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// V1betaAudienceDimension: An audience dimension is a user attribute.
-// Specific user attributed are requested and then later returned in the
+// V1betaAudienceDimension: An audience dimension is a user attribute. Specific
+// user attributed are requested and then later returned in the
 // `QueryAudienceExportResponse`.
 type V1betaAudienceDimension struct {
 	// DimensionName: Optional. The API name of the dimension. See the API
@@ -3182,91 +2541,68 @@ type V1betaAudienceDimension struct {
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-api-schema#dimensions)
 	// for the list of dimension names.
 	DimensionName string `json:"dimensionName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DimensionName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *V1betaAudienceDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod V1betaAudienceDimension
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // V1betaAudienceDimensionValue: The value of a dimension.
 type V1betaAudienceDimensionValue struct {
 	// Value: Value as a string if the dimension type is a string.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *V1betaAudienceDimensionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod V1betaAudienceDimensionValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// V1betaAudienceRow: Dimension value attributes for the audience user
-// row.
+// V1betaAudienceRow: Dimension value attributes for the audience user row.
 type V1betaAudienceRow struct {
-	// DimensionValues: Each dimension value attribute for an audience user.
-	// One dimension value will be added for each dimension column
-	// requested.
+	// DimensionValues: Each dimension value attribute for an audience user. One
+	// dimension value will be added for each dimension column requested.
 	DimensionValues []*V1betaAudienceDimensionValue `json:"dimensionValues,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionValues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionValues") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionValues") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *V1betaAudienceRow) MarshalJSON() ([]byte, error) {
 	type NoMethod V1betaAudienceRow
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "analyticsdata.properties.batchRunPivotReports":
 
 type PropertiesBatchRunPivotReportsCall struct {
 	s                           *Service
@@ -3277,16 +2613,16 @@ type PropertiesBatchRunPivotReportsCall struct {
 	header_                     http.Header
 }
 
-// BatchRunPivotReports: Returns multiple pivot reports in a batch. All
-// reports must be for the same GA4 Property.
+// BatchRunPivotReports: Returns multiple pivot reports in a batch. All reports
+// must be for the same GA4 Property.
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. Specified in the URL path and not the body. To learn
-//     more, see where to find your Property ID
+//   - property: A Google Analytics GA4 property identifier whose events are
+//     tracked. Specified in the URL path and not the body. To learn more, see
+//     where to find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     This property must be specified for the batch. The property within
-//     RunPivotReportRequest may either be unspecified or consistent with
-//     this property. Example: properties/1234.
+//     RunPivotReportRequest may either be unspecified or consistent with this
+//     property. Example: properties/1234.
 func (r *PropertiesService) BatchRunPivotReports(propertyid string, batchrunpivotreportsrequest *BatchRunPivotReportsRequest) *PropertiesBatchRunPivotReportsCall {
 	c := &PropertiesBatchRunPivotReportsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -3295,23 +2631,21 @@ func (r *PropertiesService) BatchRunPivotReports(propertyid string, batchrunpivo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesBatchRunPivotReportsCall) Fields(s ...googleapi.Field) *PropertiesBatchRunPivotReportsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesBatchRunPivotReportsCall) Context(ctx context.Context) *PropertiesBatchRunPivotReportsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesBatchRunPivotReportsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3320,18 +2654,12 @@ func (c *PropertiesBatchRunPivotReportsCall) Header() http.Header {
 }
 
 func (c *PropertiesBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchrunpivotreportsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+property}:batchRunPivotReports")
@@ -3348,12 +2676,11 @@ func (c *PropertiesBatchRunPivotReportsCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "analyticsdata.properties.batchRunPivotReports" call.
-// Exactly one of *BatchRunPivotReportsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *BatchRunPivotReportsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchRunPivotReportsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesBatchRunPivotReportsCall) Do(opts ...googleapi.CallOption) (*BatchRunPivotReportsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3384,39 +2711,7 @@ func (c *PropertiesBatchRunPivotReportsCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns multiple pivot reports in a batch. All reports must be for the same GA4 Property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}:batchRunPivotReports",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsdata.properties.batchRunPivotReports",
-	//   "parameterOrder": [
-	//     "property"
-	//   ],
-	//   "parameters": {
-	//     "property": {
-	//       "description": "A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/devguides/reporting/data/v1/property-id). This property must be specified for the batch. The property within RunPivotReportRequest may either be unspecified or consistent with this property. Example: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+property}:batchRunPivotReports",
-	//   "request": {
-	//     "$ref": "BatchRunPivotReportsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "BatchRunPivotReportsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsdata.properties.batchRunReports":
 
 type PropertiesBatchRunReportsCall struct {
 	s                      *Service
@@ -3427,12 +2722,12 @@ type PropertiesBatchRunReportsCall struct {
 	header_                http.Header
 }
 
-// BatchRunReports: Returns multiple reports in a batch. All reports
-// must be for the same GA4 Property.
+// BatchRunReports: Returns multiple reports in a batch. All reports must be
+// for the same GA4 Property.
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. Specified in the URL path and not the body. To learn
-//     more, see where to find your Property ID
+//   - property: A Google Analytics GA4 property identifier whose events are
+//     tracked. Specified in the URL path and not the body. To learn more, see
+//     where to find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     This property must be specified for the batch. The property within
 //     RunReportRequest may either be unspecified or consistent with this
@@ -3445,23 +2740,21 @@ func (r *PropertiesService) BatchRunReports(propertyid string, batchrunreportsre
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesBatchRunReportsCall) Fields(s ...googleapi.Field) *PropertiesBatchRunReportsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesBatchRunReportsCall) Context(ctx context.Context) *PropertiesBatchRunReportsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesBatchRunReportsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3470,18 +2763,12 @@ func (c *PropertiesBatchRunReportsCall) Header() http.Header {
 }
 
 func (c *PropertiesBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchrunreportsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+property}:batchRunReports")
@@ -3498,12 +2785,11 @@ func (c *PropertiesBatchRunReportsCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "analyticsdata.properties.batchRunReports" call.
-// Exactly one of *BatchRunReportsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *BatchRunReportsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesBatchRunReportsCall) Do(opts ...googleapi.CallOption) (*BatchRunReportsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3534,39 +2820,7 @@ func (c *PropertiesBatchRunReportsCall) Do(opts ...googleapi.CallOption) (*Batch
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns multiple reports in a batch. All reports must be for the same GA4 Property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}:batchRunReports",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsdata.properties.batchRunReports",
-	//   "parameterOrder": [
-	//     "property"
-	//   ],
-	//   "parameters": {
-	//     "property": {
-	//       "description": "A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/devguides/reporting/data/v1/property-id). This property must be specified for the batch. The property within RunReportRequest may either be unspecified or consistent with this property. Example: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+property}:batchRunReports",
-	//   "request": {
-	//     "$ref": "BatchRunReportsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "BatchRunReportsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsdata.properties.checkCompatibility":
 
 type PropertiesCheckCompatibilityCall struct {
 	s                         *Service
@@ -3577,18 +2831,17 @@ type PropertiesCheckCompatibilityCall struct {
 	header_                   http.Header
 }
 
-// CheckCompatibility: This compatibility method lists dimensions and
-// metrics that can be added to a report request and maintain
-// compatibility. This method fails if the request's dimensions and
-// metrics are incompatible. In Google Analytics, reports fail if they
-// request incompatible dimensions and/or metrics; in that case, you
-// will need to remove dimensions and/or metrics from the incompatible
-// report until the report is compatible. The Realtime and Core reports
-// have different compatibility rules. This method checks compatibility
-// for Core reports.
+// CheckCompatibility: This compatibility method lists dimensions and metrics
+// that can be added to a report request and maintain compatibility. This
+// method fails if the request's dimensions and metrics are incompatible. In
+// Google Analytics, reports fail if they request incompatible dimensions
+// and/or metrics; in that case, you will need to remove dimensions and/or
+// metrics from the incompatible report until the report is compatible. The
+// Realtime and Core reports have different compatibility rules. This method
+// checks compatibility for Core reports.
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. To learn more, see where to find your Property ID
+//   - property: A Google Analytics GA4 property identifier whose events are
+//     tracked. To learn more, see where to find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     `property` should be the same value as in your `runReport` request.
 //     Example: properties/1234.
@@ -3600,23 +2853,21 @@ func (r *PropertiesService) CheckCompatibility(propertyid string, checkcompatibi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCheckCompatibilityCall) Fields(s ...googleapi.Field) *PropertiesCheckCompatibilityCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCheckCompatibilityCall) Context(ctx context.Context) *PropertiesCheckCompatibilityCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCheckCompatibilityCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3625,18 +2876,12 @@ func (c *PropertiesCheckCompatibilityCall) Header() http.Header {
 }
 
 func (c *PropertiesCheckCompatibilityCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.checkcompatibilityrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+property}:checkCompatibility")
@@ -3653,12 +2898,11 @@ func (c *PropertiesCheckCompatibilityCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "analyticsdata.properties.checkCompatibility" call.
-// Exactly one of *CheckCompatibilityResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *CheckCompatibilityResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *CheckCompatibilityResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesCheckCompatibilityCall) Do(opts ...googleapi.CallOption) (*CheckCompatibilityResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3689,39 +2933,7 @@ func (c *PropertiesCheckCompatibilityCall) Do(opts ...googleapi.CallOption) (*Ch
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "This compatibility method lists dimensions and metrics that can be added to a report request and maintain compatibility. This method fails if the request's dimensions and metrics are incompatible. In Google Analytics, reports fail if they request incompatible dimensions and/or metrics; in that case, you will need to remove dimensions and/or metrics from the incompatible report until the report is compatible. The Realtime and Core reports have different compatibility rules. This method checks compatibility for Core reports.",
-	//   "flatPath": "v1beta/properties/{propertiesId}:checkCompatibility",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsdata.properties.checkCompatibility",
-	//   "parameterOrder": [
-	//     "property"
-	//   ],
-	//   "parameters": {
-	//     "property": {
-	//       "description": "A Google Analytics GA4 property identifier whose events are tracked. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/devguides/reporting/data/v1/property-id). `property` should be the same value as in your `runReport` request. Example: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+property}:checkCompatibility",
-	//   "request": {
-	//     "$ref": "CheckCompatibilityRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "CheckCompatibilityResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsdata.properties.getMetadata":
 
 type PropertiesGetMetadataCall struct {
 	s            *Service
@@ -3733,24 +2945,23 @@ type PropertiesGetMetadataCall struct {
 }
 
 // GetMetadata: Returns metadata for dimensions and metrics available in
-// reporting methods. Used to explore the dimensions and metrics. In
-// this method, a Google Analytics GA4 Property Identifier is specified
-// in the request, and the metadata response includes Custom dimensions
-// and metrics as well as Universal metadata. For example if a custom
-// metric with parameter name `levels_unlocked` is registered to a
-// property, the Metadata response will contain
-// `customEvent:levels_unlocked`. Universal metadata are dimensions and
-// metrics applicable to any property such as `country` and
+// reporting methods. Used to explore the dimensions and metrics. In this
+// method, a Google Analytics GA4 Property Identifier is specified in the
+// request, and the metadata response includes Custom dimensions and metrics as
+// well as Universal metadata. For example if a custom metric with parameter
+// name `levels_unlocked` is registered to a property, the Metadata response
+// will contain `customEvent:levels_unlocked`. Universal metadata are
+// dimensions and metrics applicable to any property such as `country` and
 // `totalUsers`.
 //
-//   - name: The resource name of the metadata to retrieve. This name
-//     field is specified in the URL path and not URL parameters. Property
-//     is a numeric Google Analytics GA4 Property identifier. To learn
-//     more, see where to find your Property ID
+//   - name: The resource name of the metadata to retrieve. This name field is
+//     specified in the URL path and not URL parameters. Property is a numeric
+//     Google Analytics GA4 Property identifier. To learn more, see where to find
+//     your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-//     Example: properties/1234/metadata Set the Property ID to 0 for
-//     dimensions and metrics common to all properties. In this special
-//     mode, this method will not return custom dimensions and metrics.
+//     Example: properties/1234/metadata Set the Property ID to 0 for dimensions
+//     and metrics common to all properties. In this special mode, this method
+//     will not return custom dimensions and metrics.
 func (r *PropertiesService) GetMetadata(nameid string) *PropertiesGetMetadataCall {
 	c := &PropertiesGetMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -3758,33 +2969,29 @@ func (r *PropertiesService) GetMetadata(nameid string) *PropertiesGetMetadataCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesGetMetadataCall) Fields(s ...googleapi.Field) *PropertiesGetMetadataCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesGetMetadataCall) IfNoneMatch(entityTag string) *PropertiesGetMetadataCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesGetMetadataCall) Context(ctx context.Context) *PropertiesGetMetadataCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesGetMetadataCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3793,12 +3000,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 }
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3819,12 +3021,10 @@ func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "analyticsdata.properties.getMetadata" call.
-// Exactly one of *Metadata or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Metadata.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Metadata.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PropertiesGetMetadataCall) Do(opts ...googleapi.CallOption) (*Metadata, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3855,36 +3055,7 @@ func (c *PropertiesGetMetadataCall) Do(opts ...googleapi.CallOption) (*Metadata,
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns metadata for dimensions and metrics available in reporting methods. Used to explore the dimensions and metrics. In this method, a Google Analytics GA4 Property Identifier is specified in the request, and the metadata response includes Custom dimensions and metrics as well as Universal metadata. For example if a custom metric with parameter name `levels_unlocked` is registered to a property, the Metadata response will contain `customEvent:levels_unlocked`. Universal metadata are dimensions and metrics applicable to any property such as `country` and `totalUsers`.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/metadata",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsdata.properties.getMetadata",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the metadata to retrieve. This name field is specified in the URL path and not URL parameters. Property is a numeric Google Analytics GA4 Property identifier. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/devguides/reporting/data/v1/property-id). Example: properties/1234/metadata Set the Property ID to 0 for dimensions and metrics common to all properties. In this special mode, this method will not return custom dimensions and metrics.",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/metadata$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "Metadata"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsdata.properties.runPivotReport":
 
 type PropertiesRunPivotReportCall struct {
 	s                     *Service
@@ -3895,19 +3066,18 @@ type PropertiesRunPivotReportCall struct {
 	header_               http.Header
 }
 
-// RunPivotReport: Returns a customized pivot report of your Google
-// Analytics event data. Pivot reports are more advanced and expressive
-// formats than regular reports. In a pivot report, dimensions are only
-// visible if they are included in a pivot. Multiple pivots can be
-// specified to further dissect your data.
+// RunPivotReport: Returns a customized pivot report of your Google Analytics
+// event data. Pivot reports are more advanced and expressive formats than
+// regular reports. In a pivot report, dimensions are only visible if they are
+// included in a pivot. Multiple pivots can be specified to further dissect
+// your data.
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. Specified in the URL path and not the body. To learn
-//     more, see where to find your Property ID
+//   - property: A Google Analytics GA4 property identifier whose events are
+//     tracked. Specified in the URL path and not the body. To learn more, see
+//     where to find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-//     Within a batch request, this property should either be unspecified
-//     or consistent with the batch-level property. Example:
-//     properties/1234.
+//     Within a batch request, this property should either be unspecified or
+//     consistent with the batch-level property. Example: properties/1234.
 func (r *PropertiesService) RunPivotReport(propertyid string, runpivotreportrequest *RunPivotReportRequest) *PropertiesRunPivotReportCall {
 	c := &PropertiesRunPivotReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -3916,23 +3086,21 @@ func (r *PropertiesService) RunPivotReport(propertyid string, runpivotreportrequ
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesRunPivotReportCall) Fields(s ...googleapi.Field) *PropertiesRunPivotReportCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesRunPivotReportCall) Context(ctx context.Context) *PropertiesRunPivotReportCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesRunPivotReportCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3941,18 +3109,12 @@ func (c *PropertiesRunPivotReportCall) Header() http.Header {
 }
 
 func (c *PropertiesRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runpivotreportrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+property}:runPivotReport")
@@ -3969,12 +3131,11 @@ func (c *PropertiesRunPivotReportCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "analyticsdata.properties.runPivotReport" call.
-// Exactly one of *RunPivotReportResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *RunPivotReportResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *RunPivotReportResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PropertiesRunPivotReportCall) Do(opts ...googleapi.CallOption) (*RunPivotReportResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4005,39 +3166,7 @@ func (c *PropertiesRunPivotReportCall) Do(opts ...googleapi.CallOption) (*RunPiv
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a customized pivot report of your Google Analytics event data. Pivot reports are more advanced and expressive formats than regular reports. In a pivot report, dimensions are only visible if they are included in a pivot. Multiple pivots can be specified to further dissect your data.",
-	//   "flatPath": "v1beta/properties/{propertiesId}:runPivotReport",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsdata.properties.runPivotReport",
-	//   "parameterOrder": [
-	//     "property"
-	//   ],
-	//   "parameters": {
-	//     "property": {
-	//       "description": "A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/devguides/reporting/data/v1/property-id). Within a batch request, this property should either be unspecified or consistent with the batch-level property. Example: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+property}:runPivotReport",
-	//   "request": {
-	//     "$ref": "RunPivotReportRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RunPivotReportResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsdata.properties.runRealtimeReport":
 
 type PropertiesRunRealtimeReportCall struct {
 	s                        *Service
@@ -4048,18 +3177,18 @@ type PropertiesRunRealtimeReportCall struct {
 	header_                  http.Header
 }
 
-// RunRealtimeReport: Returns a customized report of realtime event data
-// for your property. Events appear in realtime reports seconds after
-// they have been sent to the Google Analytics. Realtime reports show
-// events and usage data for the periods of time ranging from the
-// present moment to 30 minutes ago (up to 60 minutes for Google
-// Analytics 360 properties). For a guide to constructing realtime
-// requests & understanding responses, see Creating a Realtime Report
+// RunRealtimeReport: Returns a customized report of realtime event data for
+// your property. Events appear in realtime reports seconds after they have
+// been sent to the Google Analytics. Realtime reports show events and usage
+// data for the periods of time ranging from the present moment to 30 minutes
+// ago (up to 60 minutes for Google Analytics 360 properties). For a guide to
+// constructing realtime requests & understanding responses, see Creating a
+// Realtime Report
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics).
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. Specified in the URL path and not the body. To learn
-//     more, see where to find your Property ID
+//   - property: A Google Analytics GA4 property identifier whose events are
+//     tracked. Specified in the URL path and not the body. To learn more, see
+//     where to find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     Example: properties/1234.
 func (r *PropertiesService) RunRealtimeReport(propertyid string, runrealtimereportrequest *RunRealtimeReportRequest) *PropertiesRunRealtimeReportCall {
@@ -4070,23 +3199,21 @@ func (r *PropertiesService) RunRealtimeReport(propertyid string, runrealtimerepo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesRunRealtimeReportCall) Fields(s ...googleapi.Field) *PropertiesRunRealtimeReportCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesRunRealtimeReportCall) Context(ctx context.Context) *PropertiesRunRealtimeReportCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4095,18 +3222,12 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 }
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runrealtimereportrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+property}:runRealtimeReport")
@@ -4123,12 +3244,11 @@ func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "analyticsdata.properties.runRealtimeReport" call.
-// Exactly one of *RunRealtimeReportResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *RunRealtimeReportResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *RunRealtimeReportResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesRunRealtimeReportCall) Do(opts ...googleapi.CallOption) (*RunRealtimeReportResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4159,39 +3279,7 @@ func (c *PropertiesRunRealtimeReportCall) Do(opts ...googleapi.CallOption) (*Run
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a customized report of realtime event data for your property. Events appear in realtime reports seconds after they have been sent to the Google Analytics. Realtime reports show events and usage data for the periods of time ranging from the present moment to 30 minutes ago (up to 60 minutes for Google Analytics 360 properties). For a guide to constructing realtime requests \u0026 understanding responses, see [Creating a Realtime Report](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics).",
-	//   "flatPath": "v1beta/properties/{propertiesId}:runRealtimeReport",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsdata.properties.runRealtimeReport",
-	//   "parameterOrder": [
-	//     "property"
-	//   ],
-	//   "parameters": {
-	//     "property": {
-	//       "description": "A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/devguides/reporting/data/v1/property-id). Example: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+property}:runRealtimeReport",
-	//   "request": {
-	//     "$ref": "RunRealtimeReportRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RunRealtimeReportResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsdata.properties.runReport":
 
 type PropertiesRunReportCall struct {
 	s                *Service
@@ -4202,24 +3290,22 @@ type PropertiesRunReportCall struct {
 	header_          http.Header
 }
 
-// RunReport: Returns a customized report of your Google Analytics event
-// data. Reports contain statistics derived from data collected by the
-// Google Analytics tracking code. The data returned from the API is as
-// a table with columns for the requested dimensions and metrics.
-// Metrics are individual measurements of user activity on your
-// property, such as active users or event count. Dimensions break down
-// metrics across some common criteria, such as country or event name.
-// For a guide to constructing requests & understanding responses, see
-// Creating a Report
+// RunReport: Returns a customized report of your Google Analytics event data.
+// Reports contain statistics derived from data collected by the Google
+// Analytics tracking code. The data returned from the API is as a table with
+// columns for the requested dimensions and metrics. Metrics are individual
+// measurements of user activity on your property, such as active users or
+// event count. Dimensions break down metrics across some common criteria, such
+// as country or event name. For a guide to constructing requests &
+// understanding responses, see Creating a Report
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/basics).
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. Specified in the URL path and not the body. To learn
-//     more, see where to find your Property ID
+//   - property: A Google Analytics GA4 property identifier whose events are
+//     tracked. Specified in the URL path and not the body. To learn more, see
+//     where to find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-//     Within a batch request, this property should either be unspecified
-//     or consistent with the batch-level property. Example:
-//     properties/1234.
+//     Within a batch request, this property should either be unspecified or
+//     consistent with the batch-level property. Example: properties/1234.
 func (r *PropertiesService) RunReport(propertyid string, runreportrequest *RunReportRequest) *PropertiesRunReportCall {
 	c := &PropertiesRunReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -4228,23 +3314,21 @@ func (r *PropertiesService) RunReport(propertyid string, runreportrequest *RunRe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesRunReportCall) Fields(s ...googleapi.Field) *PropertiesRunReportCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesRunReportCall) Context(ctx context.Context) *PropertiesRunReportCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesRunReportCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4253,18 +3337,12 @@ func (c *PropertiesRunReportCall) Header() http.Header {
 }
 
 func (c *PropertiesRunReportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runreportrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+property}:runReport")
@@ -4281,12 +3359,11 @@ func (c *PropertiesRunReportCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "analyticsdata.properties.runReport" call.
-// Exactly one of *RunReportResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *RunReportResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *RunReportResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PropertiesRunReportCall) Do(opts ...googleapi.CallOption) (*RunReportResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4317,39 +3394,7 @@ func (c *PropertiesRunReportCall) Do(opts ...googleapi.CallOption) (*RunReportRe
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a customized report of your Google Analytics event data. Reports contain statistics derived from data collected by the Google Analytics tracking code. The data returned from the API is as a table with columns for the requested dimensions and metrics. Metrics are individual measurements of user activity on your property, such as active users or event count. Dimensions break down metrics across some common criteria, such as country or event name. For a guide to constructing requests \u0026 understanding responses, see [Creating a Report](https://developers.google.com/analytics/devguides/reporting/data/v1/basics).",
-	//   "flatPath": "v1beta/properties/{propertiesId}:runReport",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsdata.properties.runReport",
-	//   "parameterOrder": [
-	//     "property"
-	//   ],
-	//   "parameters": {
-	//     "property": {
-	//       "description": "A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/devguides/reporting/data/v1/property-id). Within a batch request, this property should either be unspecified or consistent with the batch-level property. Example: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+property}:runReport",
-	//   "request": {
-	//     "$ref": "RunReportRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RunReportResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsdata.properties.audienceExports.create":
 
 type PropertiesAudienceExportsCreateCall struct {
 	s              *Service
@@ -4360,30 +3405,28 @@ type PropertiesAudienceExportsCreateCall struct {
 	header_        http.Header
 }
 
-// Create: Creates an audience export for later retrieval. This method
-// quickly returns the audience export's resource name and initiates a
-// long running asynchronous request to form an audience export. To
-// export the users in an audience export, first create the audience
-// export through this method and then send the audience resource name
-// to the `QueryAudienceExport` method. See Creating an Audience Export
+// Create: Creates an audience export for later retrieval. This method quickly
+// returns the audience export's resource name and initiates a long running
+// asynchronous request to form an audience export. To export the users in an
+// audience export, first create the audience export through this method and
+// then send the audience resource name to the `QueryAudienceExport` method.
+// See Creating an Audience Export
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics)
-// for an introduction to Audience Exports with examples. An audience
-// export is a snapshot of the users currently in the audience at the
-// time of audience export creation. Creating audience exports for one
-// audience on different days will return different results as users
-// enter and exit the audience. Audiences in Google Analytics 4 allow
-// you to segment your users in the ways that are important to your
-// business. To learn more, see
+// for an introduction to Audience Exports with examples. An audience export is
+// a snapshot of the users currently in the audience at the time of audience
+// export creation. Creating audience exports for one audience on different
+// days will return different results as users enter and exit the audience.
+// Audiences in Google Analytics 4 allow you to segment your users in the ways
+// that are important to your business. To learn more, see
 // https://support.google.com/analytics/answer/9267572. Audience exports
-// contain the users in each audience. Audience Export APIs have some
-// methods at alpha and other methods at beta stability. The intention
-// is to advance methods to beta stability after some feedback and
-// adoption. To give your feedback on this API, complete the Google
-// Analytics Audience Export API Feedback
-// (https://forms.gle/EeA5u5LW6PEggtCEA) form.
+// contain the users in each audience. Audience Export APIs have some methods
+// at alpha and other methods at beta stability. The intention is to advance
+// methods to beta stability after some feedback and adoption. To give your
+// feedback on this API, complete the Google Analytics Audience Export API
+// Feedback (https://forms.gle/EeA5u5LW6PEggtCEA) form.
 //
-//   - parent: The parent resource where this audience export will be
-//     created. Format: `properties/{property}`.
+//   - parent: The parent resource where this audience export will be created.
+//     Format: `properties/{property}`.
 func (r *PropertiesAudienceExportsService) Create(parent string, audienceexport *AudienceExport) *PropertiesAudienceExportsCreateCall {
 	c := &PropertiesAudienceExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4392,23 +3435,21 @@ func (r *PropertiesAudienceExportsService) Create(parent string, audienceexport 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesAudienceExportsCreateCall) Fields(s ...googleapi.Field) *PropertiesAudienceExportsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesAudienceExportsCreateCall) Context(ctx context.Context) *PropertiesAudienceExportsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesAudienceExportsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4417,18 +3458,12 @@ func (c *PropertiesAudienceExportsCreateCall) Header() http.Header {
 }
 
 func (c *PropertiesAudienceExportsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.audienceexport)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/audienceExports")
@@ -4445,12 +3480,10 @@ func (c *PropertiesAudienceExportsCreateCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "analyticsdata.properties.audienceExports.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PropertiesAudienceExportsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4481,39 +3514,7 @@ func (c *PropertiesAudienceExportsCreateCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an audience export for later retrieval. This method quickly returns the audience export's resource name and initiates a long running asynchronous request to form an audience export. To export the users in an audience export, first create the audience export through this method and then send the audience resource name to the `QueryAudienceExport` method. See [Creating an Audience Export](https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics) for an introduction to Audience Exports with examples. An audience export is a snapshot of the users currently in the audience at the time of audience export creation. Creating audience exports for one audience on different days will return different results as users enter and exit the audience. Audiences in Google Analytics 4 allow you to segment your users in the ways that are important to your business. To learn more, see https://support.google.com/analytics/answer/9267572. Audience exports contain the users in each audience. Audience Export APIs have some methods at alpha and other methods at beta stability. The intention is to advance methods to beta stability after some feedback and adoption. To give your feedback on this API, complete the [Google Analytics Audience Export API Feedback](https://forms.gle/EeA5u5LW6PEggtCEA) form.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/audienceExports",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsdata.properties.audienceExports.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this audience export will be created. Format: `properties/{property}`",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/audienceExports",
-	//   "request": {
-	//     "$ref": "AudienceExport"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsdata.properties.audienceExports.get":
 
 type PropertiesAudienceExportsGetCall struct {
 	s            *Service
@@ -4524,16 +3525,15 @@ type PropertiesAudienceExportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets configuration metadata about a specific audience export.
-// This method can be used to understand an audience export after it has
-// been created. See Creating an Audience Export
+// Get: Gets configuration metadata about a specific audience export. This
+// method can be used to understand an audience export after it has been
+// created. See Creating an Audience Export
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics)
-// for an introduction to Audience Exports with examples. Audience
-// Export APIs have some methods at alpha and other methods at beta
-// stability. The intention is to advance methods to beta stability
-// after some feedback and adoption. To give your feedback on this API,
-// complete the Google Analytics Audience Export API Feedback
-// (https://forms.gle/EeA5u5LW6PEggtCEA) form.
+// for an introduction to Audience Exports with examples. Audience Export APIs
+// have some methods at alpha and other methods at beta stability. The
+// intention is to advance methods to beta stability after some feedback and
+// adoption. To give your feedback on this API, complete the Google Analytics
+// Audience Export API Feedback (https://forms.gle/EeA5u5LW6PEggtCEA) form.
 //
 //   - name: The audience export resource name. Format:
 //     `properties/{property}/audienceExports/{audience_export}`.
@@ -4544,33 +3544,29 @@ func (r *PropertiesAudienceExportsService) Get(name string) *PropertiesAudienceE
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesAudienceExportsGetCall) Fields(s ...googleapi.Field) *PropertiesAudienceExportsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesAudienceExportsGetCall) IfNoneMatch(entityTag string) *PropertiesAudienceExportsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesAudienceExportsGetCall) Context(ctx context.Context) *PropertiesAudienceExportsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesAudienceExportsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4579,12 +3575,7 @@ func (c *PropertiesAudienceExportsGetCall) Header() http.Header {
 }
 
 func (c *PropertiesAudienceExportsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4605,12 +3596,10 @@ func (c *PropertiesAudienceExportsGetCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "analyticsdata.properties.audienceExports.get" call.
-// Exactly one of *AudienceExport or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *AudienceExport.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *AudienceExport.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PropertiesAudienceExportsGetCall) Do(opts ...googleapi.CallOption) (*AudienceExport, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4641,36 +3630,7 @@ func (c *PropertiesAudienceExportsGetCall) Do(opts ...googleapi.CallOption) (*Au
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets configuration metadata about a specific audience export. This method can be used to understand an audience export after it has been created. See [Creating an Audience Export](https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics) for an introduction to Audience Exports with examples. Audience Export APIs have some methods at alpha and other methods at beta stability. The intention is to advance methods to beta stability after some feedback and adoption. To give your feedback on this API, complete the [Google Analytics Audience Export API Feedback](https://forms.gle/EeA5u5LW6PEggtCEA) form.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/audienceExports/{audienceExportsId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsdata.properties.audienceExports.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The audience export resource name. Format: `properties/{property}/audienceExports/{audience_export}`",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/audienceExports/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "AudienceExport"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsdata.properties.audienceExports.list":
 
 type PropertiesAudienceExportsListCall struct {
 	s            *Service
@@ -4681,76 +3641,68 @@ type PropertiesAudienceExportsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all audience exports for a property. This method can be
-// used for you to find and reuse existing audience exports rather than
-// creating unnecessary new audience exports. The same audience can have
-// multiple audience exports that represent the export of users that
-// were in an audience on different days. See Creating an Audience
-// Export
+// List: Lists all audience exports for a property. This method can be used for
+// you to find and reuse existing audience exports rather than creating
+// unnecessary new audience exports. The same audience can have multiple
+// audience exports that represent the export of users that were in an audience
+// on different days. See Creating an Audience Export
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics)
-// for an introduction to Audience Exports with examples. Audience
-// Export APIs have some methods at alpha and other methods at beta
-// stability. The intention is to advance methods to beta stability
-// after some feedback and adoption. To give your feedback on this API,
-// complete the Google Analytics Audience Export API Feedback
-// (https://forms.gle/EeA5u5LW6PEggtCEA) form.
+// for an introduction to Audience Exports with examples. Audience Export APIs
+// have some methods at alpha and other methods at beta stability. The
+// intention is to advance methods to beta stability after some feedback and
+// adoption. To give your feedback on this API, complete the Google Analytics
+// Audience Export API Feedback (https://forms.gle/EeA5u5LW6PEggtCEA) form.
 //
-//   - parent: All audience exports for this property will be listed in
-//     the response. Format: `properties/{property}`.
+//   - parent: All audience exports for this property will be listed in the
+//     response. Format: `properties/{property}`.
 func (r *PropertiesAudienceExportsService) List(parent string) *PropertiesAudienceExportsListCall {
 	c := &PropertiesAudienceExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of audience exports to return. The service may return fewer than this
-// value. If unspecified, at most 200 audience exports will be returned.
-// The maximum value is 1000 (higher values will be coerced to the
-// maximum).
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// audience exports to return. The service may return fewer than this value. If
+// unspecified, at most 200 audience exports will be returned. The maximum
+// value is 1000 (higher values will be coerced to the maximum).
 func (c *PropertiesAudienceExportsListCall) PageSize(pageSize int64) *PropertiesAudienceExportsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListAudienceExports` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListAudienceExports` must match the call that provided
-// the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAudienceExports` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListAudienceExports` must match the call that provided the page token.
 func (c *PropertiesAudienceExportsListCall) PageToken(pageToken string) *PropertiesAudienceExportsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesAudienceExportsListCall) Fields(s ...googleapi.Field) *PropertiesAudienceExportsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesAudienceExportsListCall) IfNoneMatch(entityTag string) *PropertiesAudienceExportsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesAudienceExportsListCall) Context(ctx context.Context) *PropertiesAudienceExportsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesAudienceExportsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4759,12 +3711,7 @@ func (c *PropertiesAudienceExportsListCall) Header() http.Header {
 }
 
 func (c *PropertiesAudienceExportsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4785,12 +3732,11 @@ func (c *PropertiesAudienceExportsListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "analyticsdata.properties.audienceExports.list" call.
-// Exactly one of *ListAudienceExportsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListAudienceExportsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListAudienceExportsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesAudienceExportsListCall) Do(opts ...googleapi.CallOption) (*ListAudienceExportsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4821,44 +3767,6 @@ func (c *PropertiesAudienceExportsListCall) Do(opts ...googleapi.CallOption) (*L
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all audience exports for a property. This method can be used for you to find and reuse existing audience exports rather than creating unnecessary new audience exports. The same audience can have multiple audience exports that represent the export of users that were in an audience on different days. See [Creating an Audience Export](https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics) for an introduction to Audience Exports with examples. Audience Export APIs have some methods at alpha and other methods at beta stability. The intention is to advance methods to beta stability after some feedback and adoption. To give your feedback on this API, complete the [Google Analytics Audience Export API Feedback](https://forms.gle/EeA5u5LW6PEggtCEA) form.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/audienceExports",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsdata.properties.audienceExports.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of audience exports to return. The service may return fewer than this value. If unspecified, at most 200 audience exports will be returned. The maximum value is 1000 (higher values will be coerced to the maximum).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListAudienceExports` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAudienceExports` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. All audience exports for this property will be listed in the response. Format: `properties/{property}`",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/audienceExports",
-	//   "response": {
-	//     "$ref": "ListAudienceExportsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4866,7 +3774,7 @@ func (c *PropertiesAudienceExportsListCall) Do(opts ...googleapi.CallOption) (*L
 // The provided context supersedes any context provided to the Context method.
 func (c *PropertiesAudienceExportsListCall) Pages(ctx context.Context, f func(*ListAudienceExportsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4882,8 +3790,6 @@ func (c *PropertiesAudienceExportsListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
-// method id "analyticsdata.properties.audienceExports.query":
-
 type PropertiesAudienceExportsQueryCall struct {
 	s                          *Service
 	name                       string
@@ -4893,25 +3799,23 @@ type PropertiesAudienceExportsQueryCall struct {
 	header_                    http.Header
 }
 
-// Query: Retrieves an audience export of users. After creating an
-// audience, the users are not immediately available for exporting.
-// First, a request to `CreateAudienceExport` is necessary to create an
-// audience export of users, and then second, this method is used to
-// retrieve the users in the audience export. See Creating an Audience
-// Export
+// Query: Retrieves an audience export of users. After creating an audience,
+// the users are not immediately available for exporting. First, a request to
+// `CreateAudienceExport` is necessary to create an audience export of users,
+// and then second, this method is used to retrieve the users in the audience
+// export. See Creating an Audience Export
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics)
-// for an introduction to Audience Exports with examples. Audiences in
-// Google Analytics 4 allow you to segment your users in the ways that
-// are important to your business. To learn more, see
-// https://support.google.com/analytics/answer/9267572. Audience Export
-// APIs have some methods at alpha and other methods at beta stability.
-// The intention is to advance methods to beta stability after some
-// feedback and adoption. To give your feedback on this API, complete
-// the Google Analytics Audience Export API Feedback
-// (https://forms.gle/EeA5u5LW6PEggtCEA) form.
+// for an introduction to Audience Exports with examples. Audiences in Google
+// Analytics 4 allow you to segment your users in the ways that are important
+// to your business. To learn more, see
+// https://support.google.com/analytics/answer/9267572. Audience Export APIs
+// have some methods at alpha and other methods at beta stability. The
+// intention is to advance methods to beta stability after some feedback and
+// adoption. To give your feedback on this API, complete the Google Analytics
+// Audience Export API Feedback (https://forms.gle/EeA5u5LW6PEggtCEA) form.
 //
-//   - name: The name of the audience export to retrieve users from.
-//     Format: `properties/{property}/audienceExports/{audience_export}`.
+//   - name: The name of the audience export to retrieve users from. Format:
+//     `properties/{property}/audienceExports/{audience_export}`.
 func (r *PropertiesAudienceExportsService) Query(name string, queryaudienceexportrequest *QueryAudienceExportRequest) *PropertiesAudienceExportsQueryCall {
 	c := &PropertiesAudienceExportsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4920,23 +3824,21 @@ func (r *PropertiesAudienceExportsService) Query(name string, queryaudienceexpor
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesAudienceExportsQueryCall) Fields(s ...googleapi.Field) *PropertiesAudienceExportsQueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesAudienceExportsQueryCall) Context(ctx context.Context) *PropertiesAudienceExportsQueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesAudienceExportsQueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4945,18 +3847,12 @@ func (c *PropertiesAudienceExportsQueryCall) Header() http.Header {
 }
 
 func (c *PropertiesAudienceExportsQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryaudienceexportrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:query")
@@ -4973,12 +3869,11 @@ func (c *PropertiesAudienceExportsQueryCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "analyticsdata.properties.audienceExports.query" call.
-// Exactly one of *QueryAudienceExportResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *QueryAudienceExportResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *QueryAudienceExportResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesAudienceExportsQueryCall) Do(opts ...googleapi.CallOption) (*QueryAudienceExportResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5009,34 +3904,4 @@ func (c *PropertiesAudienceExportsQueryCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves an audience export of users. After creating an audience, the users are not immediately available for exporting. First, a request to `CreateAudienceExport` is necessary to create an audience export of users, and then second, this method is used to retrieve the users in the audience export. See [Creating an Audience Export](https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics) for an introduction to Audience Exports with examples. Audiences in Google Analytics 4 allow you to segment your users in the ways that are important to your business. To learn more, see https://support.google.com/analytics/answer/9267572. Audience Export APIs have some methods at alpha and other methods at beta stability. The intention is to advance methods to beta stability after some feedback and adoption. To give your feedback on this API, complete the [Google Analytics Audience Export API Feedback](https://forms.gle/EeA5u5LW6PEggtCEA) form.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/audienceExports/{audienceExportsId}:query",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsdata.properties.audienceExports.query",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the audience export to retrieve users from. Format: `properties/{property}/audienceExports/{audience_export}`",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/audienceExports/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}:query",
-	//   "request": {
-	//     "$ref": "QueryAudienceExportRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "QueryAudienceExportResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }

@@ -102,8 +102,8 @@ const mtlsBasePath = "https://pubsub.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and manage Pub/Sub topics and subscriptions
@@ -188,574 +188,446 @@ type TopicsService struct {
 
 // AcknowledgeRequest: Request for the Acknowledge method.
 type AcknowledgeRequest struct {
-	// AckId: The acknowledgment ID for the message being acknowledged. This
-	// was returned by the Pub/Sub system in the Pull response.
+	// AckId: The acknowledgment ID for the message being acknowledged. This was
+	// returned by the Pub/Sub system in the Pull response.
 	AckId []string `json:"ackId,omitempty"`
-
 	// Subscription: The subscription whose message is being acknowledged.
 	Subscription string `json:"subscription,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AckId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AckId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "AckId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AcknowledgeRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Empty: An empty message that you can re-use to avoid defining
-// duplicated empty messages in your project. A typical example is to
-// use it as argument or the return value of a service API. For
-// instance: service Foo { rpc Bar (proto2.Empty) returns (proto2.Empty)
-// { }; }; BEGIN GOOGLE-INTERNAL The difference between this one and
-// net/rpc/empty-message.proto is that 1) The generated message here is
-// in proto2 C++ API. 2) The proto2.Empty has minimum dependencies (no
-// message_set or net/rpc dependencies) END GOOGLE-INTERNAL
+// Empty: An empty message that you can re-use to avoid defining duplicated
+// empty messages in your project. A typical example is to use it as argument
+// or the return value of a service API. For instance: service Foo { rpc Bar
+// (proto2.Empty) returns (proto2.Empty) { }; }; BEGIN GOOGLE-INTERNAL The
+// difference between this one and net/rpc/empty-message.proto is that 1) The
+// generated message here is in proto2 C++ API. 2) The proto2.Empty has minimum
+// dependencies (no message_set or net/rpc dependencies) END GOOGLE-INTERNAL
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
 // Label: A key-value pair applied to a given object.
 type Label struct {
-	// Key: The key of a label is a syntactically valid URL (as per RFC
-	// 1738) with the "scheme" and initial slashes omitted and with the
-	// additional restrictions noted below. Each key should be globally
-	// unique. The "host" portion is called the "namespace" and is not
-	// necessarily resolvable to a network endpoint. Instead, the namespace
-	// indicates what system or entity defines the semantics of the label.
-	// Namespaces do not restrict the set of objects to which a label may be
-	// associated. Keys are defined by the following grammar: key = hostname
-	// "/" kpath kpath = ksegment *[ "/" ksegment ] ksegment = alphadigit |
-	// *[ alphadigit | "-" | "_" | "." ] where "hostname" and "alphadigit"
-	// are defined as in RFC 1738. Example key: spanner.google.com/universe
+	// Key: The key of a label is a syntactically valid URL (as per RFC 1738) with
+	// the "scheme" and initial slashes omitted and with the additional
+	// restrictions noted below. Each key should be globally unique. The "host"
+	// portion is called the "namespace" and is not necessarily resolvable to a
+	// network endpoint. Instead, the namespace indicates what system or entity
+	// defines the semantics of the label. Namespaces do not restrict the set of
+	// objects to which a label may be associated. Keys are defined by the
+	// following grammar: key = hostname "/" kpath kpath = ksegment *[ "/" ksegment
+	// ] ksegment = alphadigit | *[ alphadigit | "-" | "_" | "." ] where "hostname"
+	// and "alphadigit" are defined as in RFC 1738. Example key:
+	// spanner.google.com/universe
 	Key string `json:"key,omitempty"`
-
 	// NumValue: An integer value.
 	NumValue int64 `json:"numValue,omitempty,string"`
-
 	// StrValue: A string value.
 	StrValue string `json:"strValue,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Label) MarshalJSON() ([]byte, error) {
 	type NoMethod Label
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSubscriptionsResponse: Response for the ListSubscriptions method.
 type ListSubscriptionsResponse struct {
-	// NextPageToken: If not empty, indicates that there are more
-	// subscriptions that match the request and this value should be passed
-	// to the next ListSubscriptionsRequest to continue.
+	// NextPageToken: If not empty, indicates that there are more subscriptions
+	// that match the request and this value should be passed to the next
+	// ListSubscriptionsRequest to continue.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Subscription: The subscriptions that match the request.
 	Subscription []*Subscription `json:"subscription,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubscriptionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTopicsResponse: Response for the ListTopics method.
 type ListTopicsResponse struct {
-	// NextPageToken: If not empty, indicates that there are more topics
-	// that match the request, and this value should be passed to the next
-	// ListTopicsRequest to continue.
+	// NextPageToken: If not empty, indicates that there are more topics that match
+	// the request, and this value should be passed to the next ListTopicsRequest
+	// to continue.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Topic: The resulting topics.
 	Topic []*Topic `json:"topic,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTopicsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTopicsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
 type ModifyAckDeadlineRequest struct {
-	// AckDeadlineSeconds: The new ack deadline with respect to the time
-	// this request was sent to the Pub/Sub system. Must be >= 0. For
-	// example, if the value is 10, the new ack deadline will expire 10
-	// seconds after the ModifyAckDeadline call was made. Specifying zero
-	// may immediately make the message available for another pull request.
+	// AckDeadlineSeconds: The new ack deadline with respect to the time this
+	// request was sent to the Pub/Sub system. Must be >= 0. For example, if the
+	// value is 10, the new ack deadline will expire 10 seconds after the
+	// ModifyAckDeadline call was made. Specifying zero may immediately make the
+	// message available for another pull request.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
-
-	// AckId: The acknowledgment ID. Either this or ack_ids must be
-	// populated, not both.
+	// AckId: The acknowledgment ID. Either this or ack_ids must be populated, not
+	// both.
 	AckId string `json:"ackId,omitempty"`
-
-	// AckIds: List of acknowledgment IDs. Either this field or ack_id
-	// should be populated, not both.
+	// AckIds: List of acknowledgment IDs. Either this field or ack_id should be
+	// populated, not both.
 	AckIds []string `json:"ackIds,omitempty"`
-
-	// Subscription: Next Index: 5 The name of the subscription from which
-	// messages are being pulled.
+	// Subscription: Next Index: 5 The name of the subscription from which messages
+	// are being pulled.
 	Subscription string `json:"subscription,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AckDeadlineSeconds") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AckDeadlineSeconds") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyAckDeadlineRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyPushConfigRequest: Request for the ModifyPushConfig method.
 type ModifyPushConfigRequest struct {
-	// PushConfig: An empty push_config indicates that the Pub/Sub system
-	// should pause pushing messages from the given subscription.
+	// PushConfig: An empty push_config indicates that the Pub/Sub system should
+	// pause pushing messages from the given subscription.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
-
 	// Subscription: The name of the subscription.
 	Subscription string `json:"subscription,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PushConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PushConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PushConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyPushConfigRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishBatchRequest: Request for the PublishBatch method.
 type PublishBatchRequest struct {
 	// Messages: The messages to publish.
 	Messages []*PubsubMessage `json:"messages,omitempty"`
-
 	// Topic: The messages in the request will be published on this topic.
 	Topic string `json:"topic,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Messages") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Messages") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Messages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PublishBatchRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishBatchRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishBatchResponse: Response for the PublishBatch method.
 type PublishBatchResponse struct {
-	// MessageIds: The server-assigned ID of each published message, in the
-	// same order as the messages in the request. IDs are guaranteed to be
-	// unique within the topic.
+	// MessageIds: The server-assigned ID of each published message, in the same
+	// order as the messages in the request. IDs are guaranteed to be unique within
+	// the topic.
 	MessageIds []string `json:"messageIds,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "MessageIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MessageIds") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MessageIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PublishBatchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishBatchResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishRequest: Request for the Publish method.
 type PublishRequest struct {
 	// Message: The message to publish.
 	Message *PubsubMessage `json:"message,omitempty"`
-
 	// Topic: The message in the request will be published on this topic.
 	Topic string `json:"topic,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Message") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Message") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PublishRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PubsubEvent: An event indicating a received message or truncation
-// event.
+// PubsubEvent: An event indicating a received message or truncation event.
 type PubsubEvent struct {
-	// Deleted: Indicates that this subscription has been deleted. (Note
-	// that pull subscribers will always receive NOT_FOUND in response in
-	// their pull request on the subscription, rather than seeing this
-	// boolean.)
+	// Deleted: Indicates that this subscription has been deleted. (Note that pull
+	// subscribers will always receive NOT_FOUND in response in their pull request
+	// on the subscription, rather than seeing this boolean.)
 	Deleted bool `json:"deleted,omitempty"`
-
 	// Message: A received message.
 	Message *PubsubMessage `json:"message,omitempty"`
-
 	// Subscription: The subscription that received the event.
 	Subscription string `json:"subscription,omitempty"`
-
 	// Truncated: Indicates that this subscription has been truncated.
 	Truncated bool `json:"truncated,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Deleted") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Deleted") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Deleted") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Deleted") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PubsubEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PubsubMessage: A message data and its labels.
 type PubsubMessage struct {
 	// Data: The message payload.
 	Data string `json:"data,omitempty"`
-
-	// Label: Optional list of labels for this message. Keys in this
-	// collection must be unique.
+	// Label: Optional list of labels for this message. Keys in this collection
+	// must be unique.
 	Label []*Label `json:"label,omitempty"`
-
-	// MessageId: ID of this message assigned by the server at publication
-	// time. Guaranteed to be unique within the topic. This value may be
-	// read by a subscriber that receives a PubsubMessage via a Pull call or
-	// a push delivery. It must not be populated by a publisher in a Publish
-	// call.
+	// MessageId: ID of this message assigned by the server at publication time.
+	// Guaranteed to be unique within the topic. This value may be read by a
+	// subscriber that receives a PubsubMessage via a Pull call or a push delivery.
+	// It must not be populated by a publisher in a Publish call.
 	MessageId string `json:"messageId,omitempty"`
-
 	// PublishTime: The time at which the message was published. The time is
 	// milliseconds since the UNIX epoch.
 	PublishTime int64 `json:"publishTime,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Data") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Data") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubMessage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PullBatchRequest: Request for the PullBatch method.
 type PullBatchRequest struct {
-	// MaxEvents: The maximum number of PubsubEvents returned for this
-	// request. The Pub/Sub system may return fewer than the number of
-	// events specified.
+	// MaxEvents: The maximum number of PubsubEvents returned for this request. The
+	// Pub/Sub system may return fewer than the number of events specified.
 	MaxEvents int64 `json:"maxEvents,omitempty"`
-
-	// ReturnImmediately: If this is specified as true the system will
-	// respond immediately even if it is not able to return a message in the
-	// Pull response. Otherwise the system is allowed to wait until at least
-	// one message is available rather than returning no messages. The
-	// client may cancel the request if it does not wish to wait any longer
-	// for the response.
+	// ReturnImmediately: If this is specified as true the system will respond
+	// immediately even if it is not able to return a message in the Pull response.
+	// Otherwise the system is allowed to wait until at least one message is
+	// available rather than returning no messages. The client may cancel the
+	// request if it does not wish to wait any longer for the response.
 	ReturnImmediately bool `json:"returnImmediately,omitempty"`
-
 	// Subscription: The subscription from which messages should be pulled.
 	Subscription string `json:"subscription,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MaxEvents") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MaxEvents") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MaxEvents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PullBatchRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PullBatchRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PullBatchResponse: Response for the PullBatch method.
 type PullBatchResponse struct {
-	// PullResponses: Received Pub/Sub messages or status events. The
-	// Pub/Sub system will return zero messages if there are no more
-	// messages available in the backlog. The Pub/Sub system may return
-	// fewer than the max_events requested even if there are more messages
-	// available in the backlog.
+	// PullResponses: Received Pub/Sub messages or status events. The Pub/Sub
+	// system will return zero messages if there are no more messages available in
+	// the backlog. The Pub/Sub system may return fewer than the max_events
+	// requested even if there are more messages available in the backlog.
 	PullResponses []*PullResponse `json:"pullResponses,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "PullResponses") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PullResponses") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PullResponses") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PullBatchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PullBatchResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PullRequest: Request for the Pull method.
 type PullRequest struct {
-	// ReturnImmediately: If this is specified as true the system will
-	// respond immediately even if it is not able to return a message in the
-	// Pull response. Otherwise the system is allowed to wait until at least
-	// one message is available rather than returning FAILED_PRECONDITION.
-	// The client may cancel the request if it does not wish to wait any
-	// longer for the response.
+	// ReturnImmediately: If this is specified as true the system will respond
+	// immediately even if it is not able to return a message in the Pull response.
+	// Otherwise the system is allowed to wait until at least one message is
+	// available rather than returning FAILED_PRECONDITION. The client may cancel
+	// the request if it does not wish to wait any longer for the response.
 	ReturnImmediately bool `json:"returnImmediately,omitempty"`
-
 	// Subscription: The subscription from which a message should be pulled.
 	Subscription string `json:"subscription,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ReturnImmediately")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ReturnImmediately") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReturnImmediately") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ReturnImmediately") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PullRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PullRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PullResponse: Either a PubsubMessage or a truncation event. One of
-// these two must be populated.
+// PullResponse: Either a PubsubMessage or a truncation event. One of these two
+// must be populated.
 type PullResponse struct {
-	// AckId: This ID must be used to acknowledge the received event or
-	// message.
+	// AckId: This ID must be used to acknowledge the received event or message.
 	AckId string `json:"ackId,omitempty"`
-
 	// PubsubEvent: A pubsub message or truncation event.
 	PubsubEvent *PubsubEvent `json:"pubsubEvent,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AckId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AckId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "AckId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PullResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PullResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PushConfig: Configuration for a push delivery endpoint.
@@ -764,87 +636,68 @@ type PushConfig struct {
 	// pushed. For example, a Webhook endpoint might use
 	// "https://example.com/push".
 	PushEndpoint string `json:"pushEndpoint,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PushEndpoint") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PushEndpoint") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PushEndpoint") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PushConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PushConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: A subscription resource.
 type Subscription struct {
-	// AckDeadlineSeconds: For either push or pull delivery, the value is
-	// the maximum time after a subscriber receives a message before the
-	// subscriber should acknowledge or Nack the message. If the Ack
-	// deadline for a message passes without an Ack or a Nack, the Pub/Sub
-	// system will eventually redeliver the message. If a subscriber
-	// acknowledges after the deadline, the Pub/Sub system may accept the
-	// Ack, but it is possible that the message has been already delivered
-	// again. Multiple Acks to the message are allowed and will succeed. For
-	// push delivery, this value is used to set the request timeout for the
-	// call to the push endpoint. For pull delivery, this value is used as
-	// the initial value for the Ack deadline. It may be overridden for each
-	// message using its corresponding ack_id with ModifyAckDeadline. While
-	// a message is outstanding (i.e. it has been delivered to a pull
-	// subscriber and the subscriber has not yet Acked or Nacked), the
-	// Pub/Sub system will not deliver that message to another pull
-	// subscriber (on a best-effort basis).
+	// AckDeadlineSeconds: For either push or pull delivery, the value is the
+	// maximum time after a subscriber receives a message before the subscriber
+	// should acknowledge or Nack the message. If the Ack deadline for a message
+	// passes without an Ack or a Nack, the Pub/Sub system will eventually
+	// redeliver the message. If a subscriber acknowledges after the deadline, the
+	// Pub/Sub system may accept the Ack, but it is possible that the message has
+	// been already delivered again. Multiple Acks to the message are allowed and
+	// will succeed. For push delivery, this value is used to set the request
+	// timeout for the call to the push endpoint. For pull delivery, this value is
+	// used as the initial value for the Ack deadline. It may be overridden for
+	// each message using its corresponding ack_id with ModifyAckDeadline. While a
+	// message is outstanding (i.e. it has been delivered to a pull subscriber and
+	// the subscriber has not yet Acked or Nacked), the Pub/Sub system will not
+	// deliver that message to another pull subscriber (on a best-effort basis).
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
-
 	// Name: Name of the subscription.
 	Name string `json:"name,omitempty"`
-
-	// PushConfig: If push delivery is used with this subscription, this
-	// field is used to configure it.
+	// PushConfig: If push delivery is used with this subscription, this field is
+	// used to configure it.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
-
-	// Topic: The name of the topic from which this subscription is
-	// receiving messages.
+	// Topic: The name of the topic from which this subscription is receiving
+	// messages.
 	Topic string `json:"topic,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AckDeadlineSeconds") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AckDeadlineSeconds") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Topic: A topic resource.
@@ -852,34 +705,25 @@ type Topic struct {
 	// Name: Name of the topic.
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Topic) MarshalJSON() ([]byte, error) {
 	type NoMethod Topic
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "pubsub.subscriptions.acknowledge":
 
 type SubscriptionsAcknowledgeCall struct {
 	s                  *Service
@@ -889,12 +733,11 @@ type SubscriptionsAcknowledgeCall struct {
 	header_            http.Header
 }
 
-// Acknowledge: Acknowledges a particular received message: the Pub/Sub
-// system can remove the given message from the subscription.
-// Acknowledging a message whose Ack deadline has expired may succeed,
-// but the message could have been already redelivered. Acknowledging a
-// message more than once will not result in an error. This is only used
-// for messages received via pull.
+// Acknowledge: Acknowledges a particular received message: the Pub/Sub system
+// can remove the given message from the subscription. Acknowledging a message
+// whose Ack deadline has expired may succeed, but the message could have been
+// already redelivered. Acknowledging a message more than once will not result
+// in an error. This is only used for messages received via pull.
 func (r *SubscriptionsService) Acknowledge(acknowledgerequest *AcknowledgeRequest) *SubscriptionsAcknowledgeCall {
 	c := &SubscriptionsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.acknowledgerequest = acknowledgerequest
@@ -902,23 +745,21 @@ func (r *SubscriptionsService) Acknowledge(acknowledgerequest *AcknowledgeReques
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsAcknowledgeCall) Fields(s ...googleapi.Field) *SubscriptionsAcknowledgeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsAcknowledgeCall) Context(ctx context.Context) *SubscriptionsAcknowledgeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsAcknowledgeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -927,18 +768,12 @@ func (c *SubscriptionsAcknowledgeCall) Header() http.Header {
 }
 
 func (c *SubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.acknowledgerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1a/subscriptions/acknowledge")
@@ -952,12 +787,10 @@ func (c *SubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "pubsub.subscriptions.acknowledge" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsAcknowledgeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -988,29 +821,7 @@ func (c *SubscriptionsAcknowledgeCall) Do(opts ...googleapi.CallOption) (*Empty,
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Acknowledges a particular received message: the Pub/Sub system can remove the given message from the subscription. Acknowledging a message whose Ack deadline has expired may succeed, but the message could have been already redelivered. Acknowledging a message more than once will not result in an error. This is only used for messages received via pull.",
-	//   "flatPath": "v1beta1a/subscriptions/acknowledge",
-	//   "httpMethod": "POST",
-	//   "id": "pubsub.subscriptions.acknowledge",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta1a/subscriptions/acknowledge",
-	//   "request": {
-	//     "$ref": "AcknowledgeRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.subscriptions.create":
 
 type SubscriptionsCreateCall struct {
 	s            *Service
@@ -1020,12 +831,11 @@ type SubscriptionsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a subscription on a given topic for a given
-// subscriber. If the subscription already exists, returns
-// ALREADY_EXISTS. If the corresponding topic doesn't exist, returns
-// NOT_FOUND. If the name is not provided in the request, the server
-// will assign a random name for this subscription on the same project
-// as the topic.
+// Create: Creates a subscription on a given topic for a given subscriber. If
+// the subscription already exists, returns ALREADY_EXISTS. If the
+// corresponding topic doesn't exist, returns NOT_FOUND. If the name is not
+// provided in the request, the server will assign a random name for this
+// subscription on the same project as the topic.
 func (r *SubscriptionsService) Create(subscription *Subscription) *SubscriptionsCreateCall {
 	c := &SubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -1033,23 +843,21 @@ func (r *SubscriptionsService) Create(subscription *Subscription) *Subscriptions
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsCreateCall) Fields(s ...googleapi.Field) *SubscriptionsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsCreateCall) Context(ctx context.Context) *SubscriptionsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1058,18 +866,12 @@ func (c *SubscriptionsCreateCall) Header() http.Header {
 }
 
 func (c *SubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1a/subscriptions")
@@ -1083,12 +885,10 @@ func (c *SubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "pubsub.subscriptions.create" call.
-// Exactly one of *Subscription or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscription.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1119,29 +919,7 @@ func (c *SubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Subscriptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a subscription on a given topic for a given subscriber. If the subscription already exists, returns ALREADY_EXISTS. If the corresponding topic doesn't exist, returns NOT_FOUND. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic.",
-	//   "flatPath": "v1beta1a/subscriptions",
-	//   "httpMethod": "POST",
-	//   "id": "pubsub.subscriptions.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta1a/subscriptions",
-	//   "request": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "response": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.subscriptions.delete":
 
 type SubscriptionsDeleteCall struct {
 	s            *Service
@@ -1152,8 +930,8 @@ type SubscriptionsDeleteCall struct {
 }
 
 // Delete: Deletes an existing subscription. All pending messages in the
-// subscription are immediately dropped. Calls to Pull after deletion
-// will return NOT_FOUND.
+// subscription are immediately dropped. Calls to Pull after deletion will
+// return NOT_FOUND.
 //
 // - subscription: The subscription to delete.
 func (r *SubscriptionsService) Delete(subscription string) *SubscriptionsDeleteCall {
@@ -1163,23 +941,21 @@ func (r *SubscriptionsService) Delete(subscription string) *SubscriptionsDeleteC
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsDeleteCall) Context(ctx context.Context) *SubscriptionsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1188,12 +964,7 @@ func (c *SubscriptionsDeleteCall) Header() http.Header {
 }
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1211,12 +982,10 @@ func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "pubsub.subscriptions.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1247,36 +1016,7 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an existing subscription. All pending messages in the subscription are immediately dropped. Calls to Pull after deletion will return NOT_FOUND.",
-	//   "flatPath": "v1beta1a/subscriptions/{subscriptionsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "pubsub.subscriptions.delete",
-	//   "parameterOrder": [
-	//     "subscription"
-	//   ],
-	//   "parameters": {
-	//     "subscription": {
-	//       "description": "The subscription to delete.",
-	//       "location": "path",
-	//       "pattern": "^.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1a/subscriptions/{+subscription}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.subscriptions.get":
 
 type SubscriptionsGetCall struct {
 	s            *Service
@@ -1297,33 +1037,29 @@ func (r *SubscriptionsService) Get(subscription string) *SubscriptionsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsGetCall) Fields(s ...googleapi.Field) *SubscriptionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SubscriptionsGetCall) IfNoneMatch(entityTag string) *SubscriptionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsGetCall) Context(ctx context.Context) *SubscriptionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1332,12 +1068,7 @@ func (c *SubscriptionsGetCall) Header() http.Header {
 }
 
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1358,12 +1089,10 @@ func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "pubsub.subscriptions.get" call.
-// Exactly one of *Subscription or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscription.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1394,36 +1123,7 @@ func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the configuration details of a subscription.",
-	//   "flatPath": "v1beta1a/subscriptions/{subscriptionsId}",
-	//   "httpMethod": "GET",
-	//   "id": "pubsub.subscriptions.get",
-	//   "parameterOrder": [
-	//     "subscription"
-	//   ],
-	//   "parameters": {
-	//     "subscription": {
-	//       "description": "The name of the subscription to get.",
-	//       "location": "path",
-	//       "pattern": "^.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1a/subscriptions/{+subscription}",
-	//   "response": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.subscriptions.list":
 
 type SubscriptionsListCall struct {
 	s            *Service
@@ -1439,55 +1139,50 @@ func (r *SubscriptionsService) List() *SubscriptionsListCall {
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of subscriptions to return.
+// MaxResults sets the optional parameter "maxResults": Maximum number of
+// subscriptions to return.
 func (c *SubscriptionsListCall) MaxResults(maxResults int64) *SubscriptionsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value obtained
-// in the last ListSubscriptionsResponse for continuation.
+// PageToken sets the optional parameter "pageToken": The value obtained in the
+// last ListSubscriptionsResponse for continuation.
 func (c *SubscriptionsListCall) PageToken(pageToken string) *SubscriptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Query sets the optional parameter "query": A valid label query
-// expression.
+// Query sets the optional parameter "query": A valid label query expression.
 func (c *SubscriptionsListCall) Query(query string) *SubscriptionsListCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SubscriptionsListCall) IfNoneMatch(entityTag string) *SubscriptionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsListCall) Context(ctx context.Context) *SubscriptionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1496,12 +1191,7 @@ func (c *SubscriptionsListCall) Header() http.Header {
 }
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1519,12 +1209,11 @@ func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "pubsub.subscriptions.list" call.
-// Exactly one of *ListSubscriptionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListSubscriptionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListSubscriptionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSubscriptionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1555,40 +1244,6 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSubscript
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists matching subscriptions.",
-	//   "flatPath": "v1beta1a/subscriptions",
-	//   "httpMethod": "GET",
-	//   "id": "pubsub.subscriptions.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "maxResults": {
-	//       "description": "Maximum number of subscriptions to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value obtained in the last ListSubscriptionsResponse for continuation.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "A valid label query expression.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1a/subscriptions",
-	//   "response": {
-	//     "$ref": "ListSubscriptionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1596,7 +1251,7 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSubscript
 // The provided context supersedes any context provided to the Context method.
 func (c *SubscriptionsListCall) Pages(ctx context.Context, f func(*ListSubscriptionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1612,8 +1267,6 @@ func (c *SubscriptionsListCall) Pages(ctx context.Context, f func(*ListSubscript
 	}
 }
 
-// method id "pubsub.subscriptions.modifyAckDeadline":
-
 type SubscriptionsModifyAckDeadlineCall struct {
 	s                        *Service
 	modifyackdeadlinerequest *ModifyAckDeadlineRequest
@@ -1622,8 +1275,8 @@ type SubscriptionsModifyAckDeadlineCall struct {
 	header_                  http.Header
 }
 
-// ModifyAckDeadline: Modifies the Ack deadline for a message received
-// from a pull request.
+// ModifyAckDeadline: Modifies the Ack deadline for a message received from a
+// pull request.
 func (r *SubscriptionsService) ModifyAckDeadline(modifyackdeadlinerequest *ModifyAckDeadlineRequest) *SubscriptionsModifyAckDeadlineCall {
 	c := &SubscriptionsModifyAckDeadlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.modifyackdeadlinerequest = modifyackdeadlinerequest
@@ -1631,23 +1284,21 @@ func (r *SubscriptionsService) ModifyAckDeadline(modifyackdeadlinerequest *Modif
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsModifyAckDeadlineCall) Fields(s ...googleapi.Field) *SubscriptionsModifyAckDeadlineCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsModifyAckDeadlineCall) Context(ctx context.Context) *SubscriptionsModifyAckDeadlineCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsModifyAckDeadlineCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1656,18 +1307,12 @@ func (c *SubscriptionsModifyAckDeadlineCall) Header() http.Header {
 }
 
 func (c *SubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifyackdeadlinerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1a/subscriptions/modifyAckDeadline")
@@ -1681,12 +1326,10 @@ func (c *SubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "pubsub.subscriptions.modifyAckDeadline" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsModifyAckDeadlineCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1717,29 +1360,7 @@ func (c *SubscriptionsModifyAckDeadlineCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modifies the Ack deadline for a message received from a pull request.",
-	//   "flatPath": "v1beta1a/subscriptions/modifyAckDeadline",
-	//   "httpMethod": "POST",
-	//   "id": "pubsub.subscriptions.modifyAckDeadline",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta1a/subscriptions/modifyAckDeadline",
-	//   "request": {
-	//     "$ref": "ModifyAckDeadlineRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.subscriptions.modifyPushConfig":
 
 type SubscriptionsModifyPushConfigCall struct {
 	s                       *Service
@@ -1749,11 +1370,11 @@ type SubscriptionsModifyPushConfigCall struct {
 	header_                 http.Header
 }
 
-// ModifyPushConfig: Modifies the PushConfig for a specified
-// subscription. This method can be used to suspend the flow of messages
-// to an endpoint by clearing the PushConfig field in the request.
-// Messages will be accumulated for delivery even if no push
-// configuration is defined or while the configuration is modified.
+// ModifyPushConfig: Modifies the PushConfig for a specified subscription. This
+// method can be used to suspend the flow of messages to an endpoint by
+// clearing the PushConfig field in the request. Messages will be accumulated
+// for delivery even if no push configuration is defined or while the
+// configuration is modified.
 func (r *SubscriptionsService) ModifyPushConfig(modifypushconfigrequest *ModifyPushConfigRequest) *SubscriptionsModifyPushConfigCall {
 	c := &SubscriptionsModifyPushConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.modifypushconfigrequest = modifypushconfigrequest
@@ -1761,23 +1382,21 @@ func (r *SubscriptionsService) ModifyPushConfig(modifypushconfigrequest *ModifyP
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsModifyPushConfigCall) Fields(s ...googleapi.Field) *SubscriptionsModifyPushConfigCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsModifyPushConfigCall) Context(ctx context.Context) *SubscriptionsModifyPushConfigCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsModifyPushConfigCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1786,18 +1405,12 @@ func (c *SubscriptionsModifyPushConfigCall) Header() http.Header {
 }
 
 func (c *SubscriptionsModifyPushConfigCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifypushconfigrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1a/subscriptions/modifyPushConfig")
@@ -1811,12 +1424,10 @@ func (c *SubscriptionsModifyPushConfigCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "pubsub.subscriptions.modifyPushConfig" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsModifyPushConfigCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1847,29 +1458,7 @@ func (c *SubscriptionsModifyPushConfigCall) Do(opts ...googleapi.CallOption) (*E
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modifies the PushConfig for a specified subscription. This method can be used to suspend the flow of messages to an endpoint by clearing the PushConfig field in the request. Messages will be accumulated for delivery even if no push configuration is defined or while the configuration is modified.",
-	//   "flatPath": "v1beta1a/subscriptions/modifyPushConfig",
-	//   "httpMethod": "POST",
-	//   "id": "pubsub.subscriptions.modifyPushConfig",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta1a/subscriptions/modifyPushConfig",
-	//   "request": {
-	//     "$ref": "ModifyPushConfigRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.subscriptions.pull":
 
 type SubscriptionsPullCall struct {
 	s           *Service
@@ -1879,11 +1468,11 @@ type SubscriptionsPullCall struct {
 	header_     http.Header
 }
 
-// Pull: Pulls a single message from the server. If return_immediately
-// is true, and no messages are available in the subscription, this
-// method returns FAILED_PRECONDITION. The system is free to return an
-// UNAVAILABLE error if no messages are available in a reasonable amount
-// of time (to reduce system load).
+// Pull: Pulls a single message from the server. If return_immediately is true,
+// and no messages are available in the subscription, this method returns
+// FAILED_PRECONDITION. The system is free to return an UNAVAILABLE error if no
+// messages are available in a reasonable amount of time (to reduce system
+// load).
 func (r *SubscriptionsService) Pull(pullrequest *PullRequest) *SubscriptionsPullCall {
 	c := &SubscriptionsPullCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pullrequest = pullrequest
@@ -1891,23 +1480,21 @@ func (r *SubscriptionsService) Pull(pullrequest *PullRequest) *SubscriptionsPull
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsPullCall) Fields(s ...googleapi.Field) *SubscriptionsPullCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsPullCall) Context(ctx context.Context) *SubscriptionsPullCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsPullCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1916,18 +1503,12 @@ func (c *SubscriptionsPullCall) Header() http.Header {
 }
 
 func (c *SubscriptionsPullCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pullrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1a/subscriptions/pull")
@@ -1941,12 +1522,10 @@ func (c *SubscriptionsPullCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "pubsub.subscriptions.pull" call.
-// Exactly one of *PullResponse or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *PullResponse.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PullResponse.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsPullCall) Do(opts ...googleapi.CallOption) (*PullResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1977,29 +1556,7 @@ func (c *SubscriptionsPullCall) Do(opts ...googleapi.CallOption) (*PullResponse,
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Pulls a single message from the server. If return_immediately is true, and no messages are available in the subscription, this method returns FAILED_PRECONDITION. The system is free to return an UNAVAILABLE error if no messages are available in a reasonable amount of time (to reduce system load).",
-	//   "flatPath": "v1beta1a/subscriptions/pull",
-	//   "httpMethod": "POST",
-	//   "id": "pubsub.subscriptions.pull",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta1a/subscriptions/pull",
-	//   "request": {
-	//     "$ref": "PullRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "PullResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.subscriptions.pullBatch":
 
 type SubscriptionsPullBatchCall struct {
 	s                *Service
@@ -2009,10 +1566,10 @@ type SubscriptionsPullBatchCall struct {
 	header_          http.Header
 }
 
-// PullBatch: Pulls messages from the server. Returns an empty list if
-// there are no messages available in the backlog. The system is free to
-// return UNAVAILABLE if there are too many pull requests outstanding
-// for the given subscription.
+// PullBatch: Pulls messages from the server. Returns an empty list if there
+// are no messages available in the backlog. The system is free to return
+// UNAVAILABLE if there are too many pull requests outstanding for the given
+// subscription.
 func (r *SubscriptionsService) PullBatch(pullbatchrequest *PullBatchRequest) *SubscriptionsPullBatchCall {
 	c := &SubscriptionsPullBatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pullbatchrequest = pullbatchrequest
@@ -2020,23 +1577,21 @@ func (r *SubscriptionsService) PullBatch(pullbatchrequest *PullBatchRequest) *Su
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsPullBatchCall) Fields(s ...googleapi.Field) *SubscriptionsPullBatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsPullBatchCall) Context(ctx context.Context) *SubscriptionsPullBatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsPullBatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2045,18 +1600,12 @@ func (c *SubscriptionsPullBatchCall) Header() http.Header {
 }
 
 func (c *SubscriptionsPullBatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pullbatchrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1a/subscriptions/pullBatch")
@@ -2070,12 +1619,11 @@ func (c *SubscriptionsPullBatchCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "pubsub.subscriptions.pullBatch" call.
-// Exactly one of *PullBatchResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *PullBatchResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PullBatchResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *SubscriptionsPullBatchCall) Do(opts ...googleapi.CallOption) (*PullBatchResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2106,29 +1654,7 @@ func (c *SubscriptionsPullBatchCall) Do(opts ...googleapi.CallOption) (*PullBatc
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The system is free to return UNAVAILABLE if there are too many pull requests outstanding for the given subscription.",
-	//   "flatPath": "v1beta1a/subscriptions/pullBatch",
-	//   "httpMethod": "POST",
-	//   "id": "pubsub.subscriptions.pullBatch",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta1a/subscriptions/pullBatch",
-	//   "request": {
-	//     "$ref": "PullBatchRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "PullBatchResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.topics.create":
 
 type TopicsCreateCall struct {
 	s          *Service
@@ -2146,23 +1672,21 @@ func (r *TopicsService) Create(topic *Topic) *TopicsCreateCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TopicsCreateCall) Fields(s ...googleapi.Field) *TopicsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TopicsCreateCall) Context(ctx context.Context) *TopicsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TopicsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2171,18 +1695,12 @@ func (c *TopicsCreateCall) Header() http.Header {
 }
 
 func (c *TopicsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.topic)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1a/topics")
@@ -2196,12 +1714,10 @@ func (c *TopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "pubsub.topics.create" call.
-// Exactly one of *Topic or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Topic.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Topic.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2232,29 +1748,7 @@ func (c *TopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates the given topic with the given name.",
-	//   "flatPath": "v1beta1a/topics",
-	//   "httpMethod": "POST",
-	//   "id": "pubsub.topics.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta1a/topics",
-	//   "request": {
-	//     "$ref": "Topic"
-	//   },
-	//   "response": {
-	//     "$ref": "Topic"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.topics.delete":
 
 type TopicsDeleteCall struct {
 	s          *Service
@@ -2264,9 +1758,9 @@ type TopicsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the topic with the given name. Returns NOT_FOUND if
-// the topic does not exist. After a topic is deleted, a new topic may
-// be created with the same name.
+// Delete: Deletes the topic with the given name. Returns NOT_FOUND if the
+// topic does not exist. After a topic is deleted, a new topic may be created
+// with the same name.
 //
 // - topic: Name of the topic to delete.
 func (r *TopicsService) Delete(topic string) *TopicsDeleteCall {
@@ -2276,23 +1770,21 @@ func (r *TopicsService) Delete(topic string) *TopicsDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TopicsDeleteCall) Fields(s ...googleapi.Field) *TopicsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TopicsDeleteCall) Context(ctx context.Context) *TopicsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TopicsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2301,12 +1793,7 @@ func (c *TopicsDeleteCall) Header() http.Header {
 }
 
 func (c *TopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2324,12 +1811,10 @@ func (c *TopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "pubsub.topics.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TopicsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2360,36 +1845,7 @@ func (c *TopicsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name.",
-	//   "flatPath": "v1beta1a/topics/{topicsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "pubsub.topics.delete",
-	//   "parameterOrder": [
-	//     "topic"
-	//   ],
-	//   "parameters": {
-	//     "topic": {
-	//       "description": "Name of the topic to delete.",
-	//       "location": "path",
-	//       "pattern": "^.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1a/topics/{+topic}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.topics.get":
 
 type TopicsGetCall struct {
 	s            *Service
@@ -2400,10 +1856,9 @@ type TopicsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the configuration of a topic. Since the topic only has the
-// name attribute, this method is only useful to check the existence of
-// a topic. If other attributes are added in the future, they will be
-// returned here.
+// Get: Gets the configuration of a topic. Since the topic only has the name
+// attribute, this method is only useful to check the existence of a topic. If
+// other attributes are added in the future, they will be returned here.
 //
 // - topic: The name of the topic to get.
 func (r *TopicsService) Get(topic string) *TopicsGetCall {
@@ -2413,33 +1868,29 @@ func (r *TopicsService) Get(topic string) *TopicsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TopicsGetCall) Fields(s ...googleapi.Field) *TopicsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TopicsGetCall) IfNoneMatch(entityTag string) *TopicsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TopicsGetCall) Context(ctx context.Context) *TopicsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TopicsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2448,12 +1899,7 @@ func (c *TopicsGetCall) Header() http.Header {
 }
 
 func (c *TopicsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2474,12 +1920,10 @@ func (c *TopicsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "pubsub.topics.get" call.
-// Exactly one of *Topic or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Topic.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Topic.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TopicsGetCall) Do(opts ...googleapi.CallOption) (*Topic, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2510,36 +1954,7 @@ func (c *TopicsGetCall) Do(opts ...googleapi.CallOption) (*Topic, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the configuration of a topic. Since the topic only has the name attribute, this method is only useful to check the existence of a topic. If other attributes are added in the future, they will be returned here.",
-	//   "flatPath": "v1beta1a/topics/{topicsId}",
-	//   "httpMethod": "GET",
-	//   "id": "pubsub.topics.get",
-	//   "parameterOrder": [
-	//     "topic"
-	//   ],
-	//   "parameters": {
-	//     "topic": {
-	//       "description": "The name of the topic to get.",
-	//       "location": "path",
-	//       "pattern": "^.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1a/topics/{+topic}",
-	//   "response": {
-	//     "$ref": "Topic"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.topics.list":
 
 type TopicsListCall struct {
 	s            *Service
@@ -2555,55 +1970,50 @@ func (r *TopicsService) List() *TopicsListCall {
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of topics to return.
+// MaxResults sets the optional parameter "maxResults": Maximum number of
+// topics to return.
 func (c *TopicsListCall) MaxResults(maxResults int64) *TopicsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value obtained
-// in the last ListTopicsResponse for continuation.
+// PageToken sets the optional parameter "pageToken": The value obtained in the
+// last ListTopicsResponse for continuation.
 func (c *TopicsListCall) PageToken(pageToken string) *TopicsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Query sets the optional parameter "query": A valid label query
-// expression.
+// Query sets the optional parameter "query": A valid label query expression.
 func (c *TopicsListCall) Query(query string) *TopicsListCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TopicsListCall) Fields(s ...googleapi.Field) *TopicsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TopicsListCall) IfNoneMatch(entityTag string) *TopicsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TopicsListCall) Context(ctx context.Context) *TopicsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TopicsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2612,12 +2022,7 @@ func (c *TopicsListCall) Header() http.Header {
 }
 
 func (c *TopicsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2635,12 +2040,11 @@ func (c *TopicsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "pubsub.topics.list" call.
-// Exactly one of *ListTopicsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListTopicsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTopicsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *TopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2671,40 +2075,6 @@ func (c *TopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicsResponse, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists matching topics.",
-	//   "flatPath": "v1beta1a/topics",
-	//   "httpMethod": "GET",
-	//   "id": "pubsub.topics.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "maxResults": {
-	//       "description": "Maximum number of topics to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value obtained in the last ListTopicsResponse for continuation.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "A valid label query expression.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1a/topics",
-	//   "response": {
-	//     "$ref": "ListTopicsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2712,7 +2082,7 @@ func (c *TopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicsResponse, 
 // The provided context supersedes any context provided to the Context method.
 func (c *TopicsListCall) Pages(ctx context.Context, f func(*ListTopicsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2728,8 +2098,6 @@ func (c *TopicsListCall) Pages(ctx context.Context, f func(*ListTopicsResponse) 
 	}
 }
 
-// method id "pubsub.topics.publish":
-
 type TopicsPublishCall struct {
 	s              *Service
 	publishrequest *PublishRequest
@@ -2738,8 +2106,8 @@ type TopicsPublishCall struct {
 	header_        http.Header
 }
 
-// Publish: Adds a message to the topic. Returns NOT_FOUND if the topic
-// does not exist.
+// Publish: Adds a message to the topic. Returns NOT_FOUND if the topic does
+// not exist.
 func (r *TopicsService) Publish(publishrequest *PublishRequest) *TopicsPublishCall {
 	c := &TopicsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.publishrequest = publishrequest
@@ -2747,23 +2115,21 @@ func (r *TopicsService) Publish(publishrequest *PublishRequest) *TopicsPublishCa
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TopicsPublishCall) Fields(s ...googleapi.Field) *TopicsPublishCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TopicsPublishCall) Context(ctx context.Context) *TopicsPublishCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TopicsPublishCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2772,18 +2138,12 @@ func (c *TopicsPublishCall) Header() http.Header {
 }
 
 func (c *TopicsPublishCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publishrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1a/topics/publish")
@@ -2797,12 +2157,10 @@ func (c *TopicsPublishCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "pubsub.topics.publish" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TopicsPublishCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2833,29 +2191,7 @@ func (c *TopicsPublishCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Adds a message to the topic. Returns NOT_FOUND if the topic does not exist.",
-	//   "flatPath": "v1beta1a/topics/publish",
-	//   "httpMethod": "POST",
-	//   "id": "pubsub.topics.publish",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta1a/topics/publish",
-	//   "request": {
-	//     "$ref": "PublishRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }
-
-// method id "pubsub.topics.publishBatch":
 
 type TopicsPublishBatchCall struct {
 	s                   *Service
@@ -2865,8 +2201,8 @@ type TopicsPublishBatchCall struct {
 	header_             http.Header
 }
 
-// PublishBatch: Adds one or more messages to the topic. Returns
-// NOT_FOUND if the topic does not exist.
+// PublishBatch: Adds one or more messages to the topic. Returns NOT_FOUND if
+// the topic does not exist.
 func (r *TopicsService) PublishBatch(publishbatchrequest *PublishBatchRequest) *TopicsPublishBatchCall {
 	c := &TopicsPublishBatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.publishbatchrequest = publishbatchrequest
@@ -2874,23 +2210,21 @@ func (r *TopicsService) PublishBatch(publishbatchrequest *PublishBatchRequest) *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TopicsPublishBatchCall) Fields(s ...googleapi.Field) *TopicsPublishBatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TopicsPublishBatchCall) Context(ctx context.Context) *TopicsPublishBatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TopicsPublishBatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2899,18 +2233,12 @@ func (c *TopicsPublishBatchCall) Header() http.Header {
 }
 
 func (c *TopicsPublishBatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publishbatchrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1a/topics/publishBatch")
@@ -2924,12 +2252,11 @@ func (c *TopicsPublishBatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "pubsub.topics.publishBatch" call.
-// Exactly one of *PublishBatchResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *PublishBatchResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PublishBatchResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *TopicsPublishBatchCall) Do(opts ...googleapi.CallOption) (*PublishBatchResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2960,24 +2287,4 @@ func (c *TopicsPublishBatchCall) Do(opts ...googleapi.CallOption) (*PublishBatch
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does not exist.",
-	//   "flatPath": "v1beta1a/topics/publishBatch",
-	//   "httpMethod": "POST",
-	//   "id": "pubsub.topics.publishBatch",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta1a/topics/publishBatch",
-	//   "request": {
-	//     "$ref": "PublishBatchRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "PublishBatchResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/pubsub"
-	//   ]
-	// }
-
 }

@@ -95,8 +95,8 @@ const mtlsBasePath = "https://certificatemanager.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -265,95 +265,76 @@ type AllowlistedCertificate struct {
 	// certificate can be up to 5k bytes, and must be a parseable X.509
 	// certificate.
 	PemCertificate string `json:"pemCertificate,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PemCertificate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PemCertificate") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PemCertificate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AllowlistedCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod AllowlistedCertificate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AuthorizationAttemptInfo: State of the latest attempt to authorize a
-// domain for certificate issuance.
+// AuthorizationAttemptInfo: State of the latest attempt to authorize a domain
+// for certificate issuance.
 type AuthorizationAttemptInfo struct {
-	// Details: Output only. Human readable explanation for reaching the
-	// state. Provided to help address the configuration issues. Not
-	// guaranteed to be stable. For programmatic access use FailureReason
-	// enum.
+	// Details: Output only. Human readable explanation for reaching the state.
+	// Provided to help address the configuration issues. Not guaranteed to be
+	// stable. For programmatic access use FailureReason enum.
 	Details string `json:"details,omitempty"`
-
 	// Domain: Domain name of the authorization attempt.
 	Domain string `json:"domain,omitempty"`
-
-	// FailureReason: Output only. Reason for failure of the authorization
-	// attempt for the domain.
+	// FailureReason: Output only. Reason for failure of the authorization attempt
+	// for the domain.
 	//
 	// Possible values:
 	//   "FAILURE_REASON_UNSPECIFIED" - FailureReason is unspecified.
 	//   "CONFIG" - There was a problem with the user's DNS or load balancer
 	// configuration for this domain.
-	//   "CAA" - Certificate issuance forbidden by an explicit CAA record
-	// for the domain or a failure to check CAA records for the domain.
-	//   "RATE_LIMITED" - Reached a CA or internal rate-limit for the
-	// domain, e.g. for certificates per top-level private domain.
+	//   "CAA" - Certificate issuance forbidden by an explicit CAA record for the
+	// domain or a failure to check CAA records for the domain.
+	//   "RATE_LIMITED" - Reached a CA or internal rate-limit for the domain, e.g.
+	// for certificates per top-level private domain.
 	FailureReason string `json:"failureReason,omitempty"`
-
-	// State: Output only. State of the domain for managed certificate
-	// issuance.
+	// State: Output only. State of the domain for managed certificate issuance.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - State is unspecified.
-	//   "AUTHORIZING" - Certificate provisioning for this domain is under
-	// way. Google Cloud will attempt to authorize the domain.
-	//   "AUTHORIZED" - A managed certificate can be provisioned, no issues
-	// for this domain.
-	//   "FAILED" - Attempt to authorize the domain failed. This prevents
-	// the Managed Certificate from being issued. See `failure_reason` and
-	// `details` fields for more information.
+	//   "AUTHORIZING" - Certificate provisioning for this domain is under way.
+	// Google Cloud will attempt to authorize the domain.
+	//   "AUTHORIZED" - A managed certificate can be provisioned, no issues for
+	// this domain.
+	//   "FAILED" - Attempt to authorize the domain failed. This prevents the
+	// Managed Certificate from being issued. See `failure_reason` and `details`
+	// fields for more information.
 	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Details") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Details") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AuthorizationAttemptInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthorizationAttemptInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CancelOperationRequest: The request message for
-// Operations.CancelOperation.
+// CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
 
@@ -361,310 +342,238 @@ type CancelOperationRequest struct {
 type Certificate struct {
 	// CreateTime: Output only. The creation timestamp of a Certificate.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Description: One or more paragraphs of text description of a
-	// certificate.
+	// Description: One or more paragraphs of text description of a certificate.
 	Description string `json:"description,omitempty"`
-
 	// ExpireTime: Output only. The expiry timestamp of a Certificate.
 	ExpireTime string `json:"expireTime,omitempty"`
-
 	// Labels: Set of labels associated with a Certificate.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// Managed: If set, contains configuration and state of a managed
-	// certificate.
+	// Managed: If set, contains configuration and state of a managed certificate.
 	Managed *ManagedCertificate `json:"managed,omitempty"`
-
-	// Name: A user-defined name of the certificate. Certificate names must
-	// be unique globally and match pattern
-	// `projects/*/locations/*/certificates/*`.
+	// Name: A user-defined name of the certificate. Certificate names must be
+	// unique globally and match pattern `projects/*/locations/*/certificates/*`.
 	Name string `json:"name,omitempty"`
-
 	// PemCertificate: Output only. The PEM-encoded certificate chain.
 	PemCertificate string `json:"pemCertificate,omitempty"`
-
-	// SanDnsnames: Output only. The list of Subject Alternative Names of
-	// dnsName type defined in the certificate (see RFC 5280 4.2.1.6).
-	// Managed certificates that haven't been provisioned yet have this
-	// field populated with a value of the managed.domains field.
+	// SanDnsnames: Output only. The list of Subject Alternative Names of dnsName
+	// type defined in the certificate (see RFC 5280 4.2.1.6). Managed certificates
+	// that haven't been provisioned yet have this field populated with a value of
+	// the managed.domains field.
 	SanDnsnames []string `json:"sanDnsnames,omitempty"`
-
 	// Scope: Immutable. The scope of the certificate.
 	//
 	// Possible values:
-	//   "DEFAULT" - Certificates with default scope are served from core
-	// Google data centers. If unsure, choose this option.
-	//   "EDGE_CACHE" - Certificates with scope EDGE_CACHE are
-	// special-purposed certificates, served from Edge Points of Presence.
-	// See https://cloud.google.com/vpc/docs/edge-locations.
-	//   "ALL_REGIONS" - Certificates with ALL_REGIONS scope are served from
-	// all Google Cloud regions. See
+	//   "DEFAULT" - Certificates with default scope are served from core Google
+	// data centers. If unsure, choose this option.
+	//   "EDGE_CACHE" - Certificates with scope EDGE_CACHE are special-purposed
+	// certificates, served from Edge Points of Presence. See
+	// https://cloud.google.com/vpc/docs/edge-locations.
+	//   "ALL_REGIONS" - Certificates with ALL_REGIONS scope are served from all
+	// Google Cloud regions. See
 	// https://cloud.google.com/compute/docs/regions-zones.
 	Scope string `json:"scope,omitempty"`
-
 	// SelfManaged: If set, defines data of a self-managed certificate.
 	SelfManaged *SelfManagedCertificate `json:"selfManaged,omitempty"`
-
 	// UpdateTime: Output only. The last update timestamp of a Certificate.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Certificate) MarshalJSON() ([]byte, error) {
 	type NoMethod Certificate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CertificateAuthorityConfig: The CA that issues the workload
-// certificate. It includes CA address, type, authentication to CA
-// service, etc.
+// CertificateAuthorityConfig: The CA that issues the workload certificate. It
+// includes CA address, type, authentication to CA service, etc.
 type CertificateAuthorityConfig struct {
 	// CertificateAuthorityServiceConfig: Defines a
 	// CertificateAuthorityServiceConfig.
 	CertificateAuthorityServiceConfig *CertificateAuthorityServiceConfig `json:"certificateAuthorityServiceConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "CertificateAuthorityServiceConfig") to unconditionally include in
-	// API requests. By default, fields with empty or default values are
-	// omitted from API requests. However, any non-pointer, non-interface
-	// field appearing in ForceSendFields will be sent to the server
-	// regardless of whether the field is empty or not. This may be used to
-	// include empty fields in Patch requests.
+	// "CertificateAuthorityServiceConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g.
-	// "CertificateAuthorityServiceConfig") to include in API requests with
-	// the JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// "CertificateAuthorityServiceConfig") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CertificateAuthorityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateAuthorityConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CertificateAuthorityServiceConfig: Contains information required to
-// contact CA service.
+// CertificateAuthorityServiceConfig: Contains information required to contact
+// CA service.
 type CertificateAuthorityServiceConfig struct {
-	// CaPool: Required. A CA pool resource used to issue a certificate. The
-	// CA pool string has a relative resource path following the form
+	// CaPool: Required. A CA pool resource used to issue a certificate. The CA
+	// pool string has a relative resource path following the form
 	// "projects/{project}/locations/{location}/caPools/{ca_pool}".
 	CaPool string `json:"caPool,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CaPool") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CaPool") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "CaPool") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CertificateAuthorityServiceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateAuthorityServiceConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CertificateIssuanceConfig: CertificateIssuanceConfig specifies how to
-// issue and manage a certificate.
+// CertificateIssuanceConfig: CertificateIssuanceConfig specifies how to issue
+// and manage a certificate.
 type CertificateIssuanceConfig struct {
 	// CertificateAuthorityConfig: Required. The CA that issues the workload
-	// certificate. It includes the CA address, type, authentication to CA
-	// service, etc.
+	// certificate. It includes the CA address, type, authentication to CA service,
+	// etc.
 	CertificateAuthorityConfig *CertificateAuthorityConfig `json:"certificateAuthorityConfig,omitempty"`
-
 	// CreateTime: Output only. The creation timestamp of a
 	// CertificateIssuanceConfig.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Description: One or more paragraphs of text description of a
 	// CertificateIssuanceConfig.
 	Description string `json:"description,omitempty"`
-
-	// KeyAlgorithm: Required. The key algorithm to use when generating the
-	// private key.
+	// KeyAlgorithm: Required. The key algorithm to use when generating the private
+	// key.
 	//
 	// Possible values:
 	//   "KEY_ALGORITHM_UNSPECIFIED" - Unspecified key algorithm.
 	//   "RSA_2048" - Specifies RSA with a 2048-bit modulus.
 	//   "ECDSA_P256" - Specifies ECDSA with curve P256.
 	KeyAlgorithm string `json:"keyAlgorithm,omitempty"`
-
 	// Labels: Set of labels associated with a CertificateIssuanceConfig.
 	Labels map[string]string `json:"labels,omitempty"`
-
 	// Lifetime: Required. Workload certificate lifetime requested.
 	Lifetime string `json:"lifetime,omitempty"`
-
 	// Name: A user-defined name of the certificate issuance config.
-	// CertificateIssuanceConfig names must be unique globally and match
-	// pattern `projects/*/locations/*/certificateIssuanceConfigs/*`.
+	// CertificateIssuanceConfig names must be unique globally and match pattern
+	// `projects/*/locations/*/certificateIssuanceConfigs/*`.
 	Name string `json:"name,omitempty"`
-
-	// RotationWindowPercentage: Required. Specifies the percentage of
-	// elapsed time of the certificate lifetime to wait before renewing the
-	// certificate. Must be a number between 1-99, inclusive.
+	// RotationWindowPercentage: Required. Specifies the percentage of elapsed time
+	// of the certificate lifetime to wait before renewing the certificate. Must be
+	// a number between 1-99, inclusive.
 	RotationWindowPercentage int64 `json:"rotationWindowPercentage,omitempty"`
-
 	// UpdateTime: Output only. The last update timestamp of a
 	// CertificateIssuanceConfig.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CertificateAuthorityConfig") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CertificateAuthorityConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "CertificateAuthorityConfig") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CertificateAuthorityConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CertificateIssuanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateIssuanceConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateMap: Defines a collection of certificate configurations.
 type CertificateMap struct {
 	// CreateTime: Output only. The creation timestamp of a Certificate Map.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Description: One or more paragraphs of text description of a
-	// certificate map.
+	// Description: One or more paragraphs of text description of a certificate
+	// map.
 	Description string `json:"description,omitempty"`
-
-	// GclbTargets: Output only. A list of GCLB targets that use this
-	// Certificate Map. A Target Proxy is only present on this list if it's
-	// attached to a Forwarding Rule.
+	// GclbTargets: Output only. A list of GCLB targets that use this Certificate
+	// Map. A Target Proxy is only present on this list if it's attached to a
+	// Forwarding Rule.
 	GclbTargets []*GclbTarget `json:"gclbTargets,omitempty"`
-
 	// Labels: Set of labels associated with a Certificate Map.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// Name: A user-defined name of the Certificate Map. Certificate Map
-	// names must be unique globally and match pattern
+	// Name: A user-defined name of the Certificate Map. Certificate Map names must
+	// be unique globally and match pattern
 	// `projects/*/locations/*/certificateMaps/*`.
 	Name string `json:"name,omitempty"`
-
 	// UpdateTime: Output only. The update timestamp of a Certificate Map.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CertificateMap) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateMap
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateMapEntry: Defines a certificate map entry.
 type CertificateMapEntry struct {
-	// Certificates: A set of Certificates defines for the given `hostname`.
-	// There can be defined up to four certificates in each Certificate Map
-	// Entry. Each certificate must match pattern
-	// `projects/*/locations/*/certificates/*`.
+	// Certificates: A set of Certificates defines for the given `hostname`. There
+	// can be defined up to four certificates in each Certificate Map Entry. Each
+	// certificate must match pattern `projects/*/locations/*/certificates/*`.
 	Certificates []string `json:"certificates,omitempty"`
-
-	// CreateTime: Output only. The creation timestamp of a Certificate Map
-	// Entry.
+	// CreateTime: Output only. The creation timestamp of a Certificate Map Entry.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Description: One or more paragraphs of text description of a
-	// certificate map entry.
+	// Description: One or more paragraphs of text description of a certificate map
+	// entry.
 	Description string `json:"description,omitempty"`
-
-	// Hostname: A Hostname (FQDN, e.g. `example.com`) or a wildcard
-	// hostname expression (`*.example.com`) for a set of hostnames with
-	// common suffix. Used as Server Name Indication (SNI) for selecting a
-	// proper certificate.
+	// Hostname: A Hostname (FQDN, e.g. `example.com`) or a wildcard hostname
+	// expression (`*.example.com`) for a set of hostnames with common suffix. Used
+	// as Server Name Indication (SNI) for selecting a proper certificate.
 	Hostname string `json:"hostname,omitempty"`
-
 	// Labels: Set of labels associated with a Certificate Map Entry.
 	Labels map[string]string `json:"labels,omitempty"`
-
 	// Matcher: A predefined matcher for particular cases, other than SNI
 	// selection.
 	//
 	// Possible values:
 	//   "MATCHER_UNSPECIFIED" - A matcher has't been recognized.
-	//   "PRIMARY" - A primary certificate that is served when SNI wasn't
-	// specified in the request or SNI couldn't be found in the map.
+	//   "PRIMARY" - A primary certificate that is served when SNI wasn't specified
+	// in the request or SNI couldn't be found in the map.
 	Matcher string `json:"matcher,omitempty"`
-
-	// Name: A user-defined name of the Certificate Map Entry. Certificate
-	// Map Entry names must be unique globally and match pattern
+	// Name: A user-defined name of the Certificate Map Entry. Certificate Map
+	// Entry names must be unique globally and match pattern
 	// `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
 	Name string `json:"name,omitempty"`
-
 	// State: Output only. A serving state of this Certificate Map Entry.
 	//
 	// Possible values:
@@ -673,643 +582,491 @@ type CertificateMapEntry struct {
 	//   "PENDING" - Update is in progress. Some frontends may serve this
 	// configuration.
 	State string `json:"state,omitempty"`
-
-	// UpdateTime: Output only. The update timestamp of a Certificate Map
-	// Entry.
+	// UpdateTime: Output only. The update timestamp of a Certificate Map Entry.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Certificates") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Certificates") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Certificates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CertificateMapEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateMapEntry
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DnsAuthorization: A DnsAuthorization resource describes a way to
-// perform domain authorization for certificate issuance.
+// DnsAuthorization: A DnsAuthorization resource describes a way to perform
+// domain authorization for certificate issuance.
 type DnsAuthorization struct {
-	// CreateTime: Output only. The creation timestamp of a
-	// DnsAuthorization.
+	// CreateTime: Output only. The creation timestamp of a DnsAuthorization.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Description: One or more paragraphs of text description of a
 	// DnsAuthorization.
 	Description string `json:"description,omitempty"`
-
-	// DnsResourceRecord: Output only. DNS Resource Record that needs to be
-	// added to DNS configuration.
+	// DnsResourceRecord: Output only. DNS Resource Record that needs to be added
+	// to DNS configuration.
 	DnsResourceRecord *DnsResourceRecord `json:"dnsResourceRecord,omitempty"`
-
 	// Domain: Required. Immutable. A domain that is being authorized. A
-	// DnsAuthorization resource covers a single domain and its wildcard,
-	// e.g. authorization for `example.com` can be used to issue
-	// certificates for `example.com` and `*.example.com`.
+	// DnsAuthorization resource covers a single domain and its wildcard, e.g.
+	// authorization for `example.com` can be used to issue certificates for
+	// `example.com` and `*.example.com`.
 	Domain string `json:"domain,omitempty"`
-
 	// Labels: Set of labels associated with a DnsAuthorization.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// Name: A user-defined name of the dns authorization. DnsAuthorization
-	// names must be unique globally and match pattern
+	// Name: A user-defined name of the dns authorization. DnsAuthorization names
+	// must be unique globally and match pattern
 	// `projects/*/locations/*/dnsAuthorizations/*`.
 	Name string `json:"name,omitempty"`
-
-	// Type: Immutable. Type of DnsAuthorization. If unset during resource
-	// creation the following default will be used: - in location global:
-	// FIXED_RECORD.
+	// Type: Immutable. Type of DnsAuthorization. If unset during resource creation
+	// the following default will be used: - in location global: FIXED_RECORD.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
-	//   "FIXED_RECORD" - FIXED_RECORD DNS authorization uses DNS-01
-	// validation method.
-	//   "PER_PROJECT_RECORD" - PER_PROJECT_RECORD DNS authorization allows
-	// for independent management of Google-managed certificates with DNS
-	// authorization across multiple projects.
+	//   "FIXED_RECORD" - FIXED_RECORD DNS authorization uses DNS-01 validation
+	// method.
+	//   "PER_PROJECT_RECORD" - PER_PROJECT_RECORD DNS authorization allows for
+	// independent management of Google-managed certificates with DNS authorization
+	// across multiple projects.
 	Type string `json:"type,omitempty"`
-
-	// UpdateTime: Output only. The last update timestamp of a
-	// DnsAuthorization.
+	// UpdateTime: Output only. The last update timestamp of a DnsAuthorization.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DnsAuthorization) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsAuthorization
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DnsResourceRecord: The structure describing the DNS Resource Record
-// that needs to be added to DNS configuration for the authorization to
-// be usable by certificate.
+// DnsResourceRecord: The structure describing the DNS Resource Record that
+// needs to be added to DNS configuration for the authorization to be usable by
+// certificate.
 type DnsResourceRecord struct {
 	// Data: Output only. Data of the DNS Resource Record.
 	Data string `json:"data,omitempty"`
-
-	// Name: Output only. Fully qualified name of the DNS Resource Record.
-	// e.g. `_acme-challenge.example.com`
+	// Name: Output only. Fully qualified name of the DNS Resource Record. e.g.
+	// `_acme-challenge.example.com`
 	Name string `json:"name,omitempty"`
-
-	// Type: Output only. Type of the DNS Resource Record. Currently always
-	// set to "CNAME".
+	// Type: Output only. Type of the DNS Resource Record. Currently always set to
+	// "CNAME".
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Data") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Data") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DnsResourceRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsResourceRecord
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
 // GclbTarget: Describes a Target Proxy that uses this Certificate Map.
 type GclbTarget struct {
-	// IpConfigs: Output only. IP configurations for this Target Proxy where
-	// the Certificate Map is serving.
+	// IpConfigs: Output only. IP configurations for this Target Proxy where the
+	// Certificate Map is serving.
 	IpConfigs []*IpConfig `json:"ipConfigs,omitempty"`
-
-	// TargetHttpsProxy: Output only. This field returns the resource name
-	// in the following format:
+	// TargetHttpsProxy: Output only. This field returns the resource name in the
+	// following format:
 	// `//compute.googleapis.com/projects/*/global/targetHttpsProxies/*`.
 	TargetHttpsProxy string `json:"targetHttpsProxy,omitempty"`
-
-	// TargetSslProxy: Output only. This field returns the resource name in
-	// the following format:
+	// TargetSslProxy: Output only. This field returns the resource name in the
+	// following format:
 	// `//compute.googleapis.com/projects/*/global/targetSslProxies/*`.
 	TargetSslProxy string `json:"targetSslProxy,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IpConfigs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IpConfigs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IpConfigs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GclbTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod GclbTarget
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // IntermediateCA: Defines an intermediate CA.
 type IntermediateCA struct {
-	// PemCertificate: PEM intermediate certificate used for building up
-	// paths for validation. Each certificate provided in PEM format may
-	// occupy up to 5kB.
+	// PemCertificate: PEM intermediate certificate used for building up paths for
+	// validation. Each certificate provided in PEM format may occupy up to 5kB.
 	PemCertificate string `json:"pemCertificate,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PemCertificate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PemCertificate") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PemCertificate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *IntermediateCA) MarshalJSON() ([]byte, error) {
 	type NoMethod IntermediateCA
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// IpConfig: Defines IP configuration where this Certificate Map is
-// serving.
+// IpConfig: Defines IP configuration where this Certificate Map is serving.
 type IpConfig struct {
 	// IpAddress: Output only. An external IP address.
 	IpAddress string `json:"ipAddress,omitempty"`
-
 	// Ports: Output only. Ports.
 	Ports []int64 `json:"ports,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IpAddress") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IpAddress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *IpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IpConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCertificateIssuanceConfigsResponse: Response for the
 // `ListCertificateIssuanceConfigs` method.
 type ListCertificateIssuanceConfigsResponse struct {
-	// CertificateIssuanceConfigs: A list of certificate configs for the
-	// parent resource.
+	// CertificateIssuanceConfigs: A list of certificate configs for the parent
+	// resource.
 	CertificateIssuanceConfigs []*CertificateIssuanceConfig `json:"certificateIssuanceConfigs,omitempty"`
-
-	// NextPageToken: If there might be more results than those appearing in
-	// this response, then `next_page_token` is included. To get the next
-	// set of results, call this method again using the value of
-	// `next_page_token` as `page_token`.
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CertificateIssuanceConfigs") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CertificateIssuanceConfigs")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "CertificateIssuanceConfigs") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CertificateIssuanceConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCertificateIssuanceConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCertificateIssuanceConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCertificateMapEntriesResponse: Response for the
 // `ListCertificateMapEntries` method.
 type ListCertificateMapEntriesResponse struct {
-	// CertificateMapEntries: A list of certificate map entries for the
-	// parent resource.
+	// CertificateMapEntries: A list of certificate map entries for the parent
+	// resource.
 	CertificateMapEntries []*CertificateMapEntry `json:"certificateMapEntries,omitempty"`
-
-	// NextPageToken: If there might be more results than those appearing in
-	// this response, then `next_page_token` is included. To get the next
-	// set of results, call this method again using the value of
-	// `next_page_token` as `page_token`.
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CertificateMapEntries") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CertificateMapEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "CertificateMapEntries") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCertificateMapEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCertificateMapEntriesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListCertificateMapsResponse: Response for the `ListCertificateMaps`
-// method.
+// ListCertificateMapsResponse: Response for the `ListCertificateMaps` method.
 type ListCertificateMapsResponse struct {
 	// CertificateMaps: A list of certificate maps for the parent resource.
 	CertificateMaps []*CertificateMap `json:"certificateMaps,omitempty"`
-
-	// NextPageToken: If there might be more results than those appearing in
-	// this response, then `next_page_token` is included. To get the next
-	// set of results, call this method again using the value of
-	// `next_page_token` as `page_token`.
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CertificateMaps") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CertificateMaps") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CertificateMaps") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCertificateMapsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCertificateMapsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCertificatesResponse: Response for the `ListCertificates` method.
 type ListCertificatesResponse struct {
 	// Certificates: A list of certificates for the parent resource.
 	Certificates []*Certificate `json:"certificates,omitempty"`
-
-	// NextPageToken: If there might be more results than those appearing in
-	// this response, then `next_page_token` is included. To get the next
-	// set of results, call this method again using the value of
-	// `next_page_token` as `page_token`.
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Unreachable: A list of locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Certificates") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Certificates") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Certificates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCertificatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCertificatesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListDnsAuthorizationsResponse: Response for the
-// `ListDnsAuthorizations` method.
+// ListDnsAuthorizationsResponse: Response for the `ListDnsAuthorizations`
+// method.
 type ListDnsAuthorizationsResponse struct {
-	// DnsAuthorizations: A list of dns authorizations for the parent
-	// resource.
+	// DnsAuthorizations: A list of dns authorizations for the parent resource.
 	DnsAuthorizations []*DnsAuthorization `json:"dnsAuthorizations,omitempty"`
-
-	// NextPageToken: If there might be more results than those appearing in
-	// this response, then `next_page_token` is included. To get the next
-	// set of results, call this method again using the value of
-	// `next_page_token` as `page_token`.
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "DnsAuthorizations")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DnsAuthorizations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DnsAuthorizations") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DnsAuthorizations") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListDnsAuthorizationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDnsAuthorizationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListLocationsResponse: The response message for
-// Locations.ListLocations.
+// ListLocationsResponse: The response message for Locations.ListLocations.
 type ListLocationsResponse struct {
-	// Locations: A list of locations that matches the specified filter in
-	// the request.
+	// Locations: A list of locations that matches the specified filter in the
+	// request.
 	Locations []*Location `json:"locations,omitempty"`
-
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Locations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Locations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Locations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListOperationsResponse: The response message for
-// Operations.ListOperations.
+// ListOperationsResponse: The response message for Operations.ListOperations.
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Operations: A list of operations that matches the specified filter in
-	// the request.
+	// Operations: A list of operations that matches the specified filter in the
+	// request.
 	Operations []*Operation `json:"operations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTrustConfigsResponse: Response for the `ListTrustConfigs` method.
 type ListTrustConfigsResponse struct {
-	// NextPageToken: If there might be more results than those appearing in
-	// this response, then `next_page_token` is included. To get the next
-	// set of results, call this method again using the value of
-	// `next_page_token` as `page_token`.
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// TrustConfigs: A list of TrustConfigs for the parent resource.
 	TrustConfigs []*TrustConfig `json:"trustConfigs,omitempty"`
-
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTrustConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTrustConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
-	// DisplayName: The friendly name for this location, typically a nearby
-	// city name. For example, "Tokyo".
+	// DisplayName: The friendly name for this location, typically a nearby city
+	// name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Labels: Cross-service attributes for the location. For example
 	// {"cloud.googleapis.com/region": "us-east1"}
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// LocationId: The canonical id for this location. For example:
-	// "us-east1".
+	// LocationId: The canonical id for this location. For example: "us-east1".
 	LocationId string `json:"locationId,omitempty"`
-
-	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given location.
+	// Metadata: Service-specific metadata. For example the available capacity at
+	// the given location.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
 	// Name: Resource name for the location, which may vary between
 	// implementations. For example:
 	// "projects/example-project/locations/us-east1"
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ManagedCertificate: Configuration and state of a Managed Certificate.
@@ -1317,441 +1074,335 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // automatically, for as long as it's authorized to do so.
 type ManagedCertificate struct {
 	// AuthorizationAttemptInfo: Output only. Detailed state of the latest
-	// authorization attempt for each domain specified for managed
-	// certificate resource.
+	// authorization attempt for each domain specified for managed certificate
+	// resource.
 	AuthorizationAttemptInfo []*AuthorizationAttemptInfo `json:"authorizationAttemptInfo,omitempty"`
-
 	// DnsAuthorizations: Immutable. Authorizations that will be used for
 	// performing domain authorization.
 	DnsAuthorizations []string `json:"dnsAuthorizations,omitempty"`
-
-	// Domains: Immutable. The domains for which a managed SSL certificate
-	// will be generated. Wildcard domains are only supported with DNS
-	// challenge resolution.
+	// Domains: Immutable. The domains for which a managed SSL certificate will be
+	// generated. Wildcard domains are only supported with DNS challenge
+	// resolution.
 	Domains []string `json:"domains,omitempty"`
-
-	// IssuanceConfig: Immutable. The resource name for a
-	// CertificateIssuanceConfig used to configure private PKI certificates
-	// in the format `projects/*/locations/*/certificateIssuanceConfigs/*`.
-	// If this field is not set, the certificates will instead be publicly
-	// signed as documented at
+	// IssuanceConfig: Immutable. The resource name for a CertificateIssuanceConfig
+	// used to configure private PKI certificates in the format
+	// `projects/*/locations/*/certificateIssuanceConfigs/*`. If this field is not
+	// set, the certificates will instead be publicly signed as documented at
 	// https://cloud.google.com/load-balancing/docs/ssl-certificates/google-managed-certs#caa.
 	IssuanceConfig string `json:"issuanceConfig,omitempty"`
-
-	// ProvisioningIssue: Output only. Information about issues with
-	// provisioning a Managed Certificate.
+	// ProvisioningIssue: Output only. Information about issues with provisioning a
+	// Managed Certificate.
 	ProvisioningIssue *ProvisioningIssue `json:"provisioningIssue,omitempty"`
-
 	// State: Output only. State of the managed certificate resource.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - State is unspecified.
-	//   "PROVISIONING" - Certificate Manager attempts to provision or renew
-	// the certificate. If the process takes longer than expected, consult
-	// the `provisioning_issue` field.
-	//   "FAILED" - Multiple certificate provisioning attempts failed and
-	// Certificate Manager gave up. To try again, delete and create a new
-	// managed Certificate resource. For details see the
+	//   "PROVISIONING" - Certificate Manager attempts to provision or renew the
+	// certificate. If the process takes longer than expected, consult the
 	// `provisioning_issue` field.
-	//   "ACTIVE" - The certificate management is working, and a certificate
-	// has been provisioned.
+	//   "FAILED" - Multiple certificate provisioning attempts failed and
+	// Certificate Manager gave up. To try again, delete and create a new managed
+	// Certificate resource. For details see the `provisioning_issue` field.
+	//   "ACTIVE" - The certificate management is working, and a certificate has
+	// been provisioned.
 	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AuthorizationAttemptInfo") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AuthorizationAttemptInfo")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuthorizationAttemptInfo")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AuthorizationAttemptInfo") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ManagedCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedCertificate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Operation: This resource represents a long-running operation that is
-// the result of a network API call.
+// Operation: This resource represents a long-running operation that is the
+// result of a network API call.
 type Operation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If `true`, the operation is completed, and either `error`
-	// or `response` is available.
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *Status `json:"error,omitempty"`
-
 	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should be a resource name ending with
-	// `operations/{unique_id}`.
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal, successful response of the operation. If the
-	// original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// OperationMetadata: Represents the metadata of the long-running
-// operation. Output only.
+// OperationMetadata: Represents the metadata of the long-running operation.
+// Output only.
 type OperationMetadata struct {
 	// ApiVersion: API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
-
 	// CreateTime: The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// EndTime: The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
-
 	// RequestedCancellation: Identifies whether the user has requested
 	// cancellation of the operation. Operations that have successfully been
-	// cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to `Code.CANCELLED`.
+	// cancelled have Operation.error value with a google.rpc.Status.code of 1,
+	// corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
-
 	// StatusMessage: Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
-
 	// Target: Server-defined resource path for the target of the operation.
 	Target string `json:"target,omitempty"`
-
 	// Verb: Name of the verb executed by the operation.
 	Verb string `json:"verb,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ProvisioningIssue: Information about issues with provisioning a
-// Managed Certificate.
+// ProvisioningIssue: Information about issues with provisioning a Managed
+// Certificate.
 type ProvisioningIssue struct {
-	// Details: Output only. Human readable explanation about the issue.
-	// Provided to help address the configuration issues. Not guaranteed to
-	// be stable. For programmatic access use Reason enum.
+	// Details: Output only. Human readable explanation about the issue. Provided
+	// to help address the configuration issues. Not guaranteed to be stable. For
+	// programmatic access use Reason enum.
 	Details string `json:"details,omitempty"`
-
 	// Reason: Output only. Reason for provisioning failures.
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Reason is unspecified.
-	//   "AUTHORIZATION_ISSUE" - Certificate provisioning failed due to an
-	// issue with one or more of the domains on the certificate. For details
-	// of which domains failed, consult the `authorization_attempt_info`
-	// field.
-	//   "RATE_LIMITED" - Exceeded Certificate Authority quotas or internal
-	// rate limits of the system. Provisioning may take longer to complete.
+	//   "AUTHORIZATION_ISSUE" - Certificate provisioning failed due to an issue
+	// with one or more of the domains on the certificate. For details of which
+	// domains failed, consult the `authorization_attempt_info` field.
+	//   "RATE_LIMITED" - Exceeded Certificate Authority quotas or internal rate
+	// limits of the system. Provisioning may take longer to complete.
 	Reason string `json:"reason,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Details") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Details") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ProvisioningIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod ProvisioningIssue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SelfManagedCertificate: Certificate data for a SelfManaged
-// Certificate. SelfManaged Certificates are uploaded by the user.
-// Updating such certificates before they expire remains the user's
-// responsibility.
+// SelfManagedCertificate: Certificate data for a SelfManaged Certificate.
+// SelfManaged Certificates are uploaded by the user. Updating such
+// certificates before they expire remains the user's responsibility.
 type SelfManagedCertificate struct {
 	// PemCertificate: Input only. The PEM-encoded certificate chain. Leaf
 	// certificate comes first, followed by intermediate ones if any.
 	PemCertificate string `json:"pemCertificate,omitempty"`
-
 	// PemPrivateKey: Input only. The PEM-encoded private key of the leaf
 	// certificate.
 	PemPrivateKey string `json:"pemPrivateKey,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PemCertificate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PemCertificate") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PemCertificate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SelfManagedCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod SelfManagedCertificate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Status: The `Status` type defines a logical error model that is
-// suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TrustAnchor: Defines a trust anchor.
 type TrustAnchor struct {
-	// PemCertificate: PEM root certificate of the PKI used for validation.
-	// Each certificate provided in PEM format may occupy up to 5kB.
+	// PemCertificate: PEM root certificate of the PKI used for validation. Each
+	// certificate provided in PEM format may occupy up to 5kB.
 	PemCertificate string `json:"pemCertificate,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PemCertificate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PemCertificate") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PemCertificate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TrustAnchor) MarshalJSON() ([]byte, error) {
 	type NoMethod TrustAnchor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TrustConfig: Defines a trust config.
 type TrustConfig struct {
-	// AllowlistedCertificates: Optional. A certificate matching an
-	// allowlisted certificate is always considered valid as long as the
-	// certificate is parseable, proof of private key possession is
-	// established, and constraints on the certificate’s SAN field are
-	// met.
+	// AllowlistedCertificates: Optional. A certificate matching an allowlisted
+	// certificate is always considered valid as long as the certificate is
+	// parseable, proof of private key possession is established, and constraints
+	// on the certificate's SAN field are met.
 	AllowlistedCertificates []*AllowlistedCertificate `json:"allowlistedCertificates,omitempty"`
-
 	// CreateTime: Output only. The creation timestamp of a TrustConfig.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Description: One or more paragraphs of text description of a
-	// TrustConfig.
+	// Description: One or more paragraphs of text description of a TrustConfig.
 	Description string `json:"description,omitempty"`
-
-	// Etag: This checksum is computed by the server based on the value of
-	// other fields, and may be sent on update and delete requests to ensure
-	// the client has an up-to-date value before proceeding.
+	// Etag: This checksum is computed by the server based on the value of other
+	// fields, and may be sent on update and delete requests to ensure the client
+	// has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-
 	// Labels: Set of labels associated with a TrustConfig.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// Name: A user-defined name of the trust config. TrustConfig names must
-	// be unique globally and match pattern
-	// `projects/*/locations/*/trustConfigs/*`.
+	// Name: A user-defined name of the trust config. TrustConfig names must be
+	// unique globally and match pattern `projects/*/locations/*/trustConfigs/*`.
 	Name string `json:"name,omitempty"`
-
-	// TrustStores: Set of trust stores to perform validation against. This
-	// field is supported when TrustConfig is configured with Load
-	// Balancers, currently not supported for SPIFFE certificate validation.
-	// Only one TrustStore specified is currently allowed.
+	// TrustStores: Set of trust stores to perform validation against. This field
+	// is supported when TrustConfig is configured with Load Balancers, currently
+	// not supported for SPIFFE certificate validation. Only one TrustStore
+	// specified is currently allowed.
 	TrustStores []*TrustStore `json:"trustStores,omitempty"`
-
 	// UpdateTime: Output only. The last update timestamp of a TrustConfig.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AllowlistedCertificates") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AllowlistedCertificates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowlistedCertificates")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AllowlistedCertificates") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TrustConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TrustConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TrustStore: Defines a trust store.
 type TrustStore struct {
-	// IntermediateCas: Set of intermediate CA certificates used for the
-	// path building phase of chain validation. The field is currently not
-	// supported if TrustConfig is used for the workload certificate
-	// feature.
+	// IntermediateCas: Set of intermediate CA certificates used for the path
+	// building phase of chain validation. The field is currently not supported if
+	// TrustConfig is used for the workload certificate feature.
 	IntermediateCas []*IntermediateCA `json:"intermediateCas,omitempty"`
-
-	// TrustAnchors: List of Trust Anchors to be used while performing
-	// validation against a given TrustStore.
+	// TrustAnchors: List of Trust Anchors to be used while performing validation
+	// against a given TrustStore.
 	TrustAnchors []*TrustAnchor `json:"trustAnchors,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IntermediateCas") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IntermediateCas") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "IntermediateCas") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TrustStore) MarshalJSON() ([]byte, error) {
 	type NoMethod TrustStore
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "certificatemanager.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
 	s            *Service
@@ -1772,33 +1423,29 @@ func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGetCall) Context(ctx context.Context) *ProjectsLocationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1807,12 +1454,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1833,12 +1475,10 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "certificatemanager.projects.locations.get" call.
-// Exactly one of *Location or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Location.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Location.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1869,35 +1509,7 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets information about a location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name for the location.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Location"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
 	s            *Service
@@ -1908,69 +1520,63 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this
-// service.
+// List: Lists information about the supported locations for this service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to narrow down
-// results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in
-// AIP-160 (https://google.aip.dev/160).
+// Filter sets the optional parameter "filter": A filter to narrow down results
+// to a preferred subset. The filtering language accepts strings like
+// "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service selects a default.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token
-// received from the `next_page_token` field in the response. Send that
-// page token to receive the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token received
+// from the `next_page_token` field in the response. Send that page token to
+// receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsListCall) Context(ctx context.Context) *ProjectsLocationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1979,12 +1585,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2005,12 +1606,11 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "certificatemanager.projects.locations.list" call.
-// Exactly one of *ListLocationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListLocationsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListLocationsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2041,48 +1641,6 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists information about the supported locations for this service.",
-	//   "flatPath": "v1/projects/{projectsId}/locations",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The resource that owns the locations collection, if applicable.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/locations",
-	//   "response": {
-	//     "$ref": "ListLocationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2090,7 +1648,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2106,8 +1664,6 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
-// method id "certificatemanager.projects.locations.certificateIssuanceConfigs.create":
-
 type ProjectsLocationsCertificateIssuanceConfigsCreateCall struct {
 	s                         *Service
 	parent                    string
@@ -2117,11 +1673,11 @@ type ProjectsLocationsCertificateIssuanceConfigsCreateCall struct {
 	header_                   http.Header
 }
 
-// Create: Creates a new CertificateIssuanceConfig in a given project
-// and location.
+// Create: Creates a new CertificateIssuanceConfig in a given project and
+// location.
 //
-//   - parent: The parent resource of the certificate issuance config.
-//     Must be in the format `projects/*/locations/*`.
+//   - parent: The parent resource of the certificate issuance config. Must be in
+//     the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateIssuanceConfigsService) Create(parent string, certificateissuanceconfig *CertificateIssuanceConfig) *ProjectsLocationsCertificateIssuanceConfigsCreateCall {
 	c := &ProjectsLocationsCertificateIssuanceConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2138,23 +1694,21 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsCreateCall) CertificateIssua
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateIssuanceConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateIssuanceConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateIssuanceConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsCertificateIssuanceConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateIssuanceConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2163,18 +1717,12 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsCreateCall) Header() http.He
 }
 
 func (c *ProjectsLocationsCertificateIssuanceConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.certificateissuanceconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/certificateIssuanceConfigs")
@@ -2191,12 +1739,10 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsCreateCall) doRequest(alt st
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateIssuanceConfigs.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateIssuanceConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2227,43 +1773,7 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsCreateCall) Do(opts ...googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new CertificateIssuanceConfig in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateIssuanceConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "certificatemanager.projects.locations.certificateIssuanceConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "certificateIssuanceConfigId": {
-	//       "description": "Required. A user-provided name of the certificate config.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource of the certificate issuance config. Must be in the format `projects/*/locations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/certificateIssuanceConfigs",
-	//   "request": {
-	//     "$ref": "CertificateIssuanceConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificateIssuanceConfigs.delete":
 
 type ProjectsLocationsCertificateIssuanceConfigsDeleteCall struct {
 	s          *Service
@@ -2275,9 +1785,8 @@ type ProjectsLocationsCertificateIssuanceConfigsDeleteCall struct {
 
 // Delete: Deletes a single CertificateIssuanceConfig.
 //
-//   - name: A name of the certificate issuance config to delete. Must be
-//     in the format
-//     `projects/*/locations/*/certificateIssuanceConfigs/*`.
+//   - name: A name of the certificate issuance config to delete. Must be in the
+//     format `projects/*/locations/*/certificateIssuanceConfigs/*`.
 func (r *ProjectsLocationsCertificateIssuanceConfigsService) Delete(name string) *ProjectsLocationsCertificateIssuanceConfigsDeleteCall {
 	c := &ProjectsLocationsCertificateIssuanceConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2285,23 +1794,21 @@ func (r *ProjectsLocationsCertificateIssuanceConfigsService) Delete(name string)
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateIssuanceConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateIssuanceConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateIssuanceConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCertificateIssuanceConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateIssuanceConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2310,12 +1817,7 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsDeleteCall) Header() http.He
 }
 
 func (c *ProjectsLocationsCertificateIssuanceConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2333,12 +1835,10 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsDeleteCall) doRequest(alt st
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateIssuanceConfigs.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateIssuanceConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2369,35 +1869,7 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsDeleteCall) Do(opts ...googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a single CertificateIssuanceConfig.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateIssuanceConfigs/{certificateIssuanceConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "certificatemanager.projects.locations.certificateIssuanceConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. A name of the certificate issuance config to delete. Must be in the format `projects/*/locations/*/certificateIssuanceConfigs/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificateIssuanceConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificateIssuanceConfigs.get":
 
 type ProjectsLocationsCertificateIssuanceConfigsGetCall struct {
 	s            *Service
@@ -2410,9 +1882,8 @@ type ProjectsLocationsCertificateIssuanceConfigsGetCall struct {
 
 // Get: Gets details of a single CertificateIssuanceConfig.
 //
-//   - name: A name of the certificate issuance config to describe. Must
-//     be in the format
-//     `projects/*/locations/*/certificateIssuanceConfigs/*`.
+//   - name: A name of the certificate issuance config to describe. Must be in
+//     the format `projects/*/locations/*/certificateIssuanceConfigs/*`.
 func (r *ProjectsLocationsCertificateIssuanceConfigsService) Get(name string) *ProjectsLocationsCertificateIssuanceConfigsGetCall {
 	c := &ProjectsLocationsCertificateIssuanceConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2420,33 +1891,29 @@ func (r *ProjectsLocationsCertificateIssuanceConfigsService) Get(name string) *P
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateIssuanceConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateIssuanceConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCertificateIssuanceConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCertificateIssuanceConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateIssuanceConfigsGetCall) Context(ctx context.Context) *ProjectsLocationsCertificateIssuanceConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateIssuanceConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2455,12 +1922,7 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsGetCall) Header() http.Heade
 }
 
 func (c *ProjectsLocationsCertificateIssuanceConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2481,12 +1943,11 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsGetCall) doRequest(alt strin
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateIssuanceConfigs.get" call.
-// Exactly one of *CertificateIssuanceConfig or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *CertificateIssuanceConfig.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *CertificateIssuanceConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateIssuanceConfigsGetCall) Do(opts ...googleapi.CallOption) (*CertificateIssuanceConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2517,35 +1978,7 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsGetCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets details of a single CertificateIssuanceConfig.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateIssuanceConfigs/{certificateIssuanceConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.certificateIssuanceConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. A name of the certificate issuance config to describe. Must be in the format `projects/*/locations/*/certificateIssuanceConfigs/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificateIssuanceConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "CertificateIssuanceConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificateIssuanceConfigs.list":
 
 type ProjectsLocationsCertificateIssuanceConfigsListCall struct {
 	s            *Service
@@ -2556,28 +1989,27 @@ type ProjectsLocationsCertificateIssuanceConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists CertificateIssuanceConfigs in a given project and
-// location.
+// List: Lists CertificateIssuanceConfigs in a given project and location.
 //
-//   - parent: The project and location from which the certificate should
-//     be listed, specified in the format `projects/*/locations/*`.
+//   - parent: The project and location from which the certificate should be
+//     listed, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateIssuanceConfigsService) List(parent string) *ProjectsLocationsCertificateIssuanceConfigsListCall {
 	c := &ProjectsLocationsCertificateIssuanceConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression to
-// restrict the Certificates Configs returned.
+// Filter sets the optional parameter "filter": Filter expression to restrict
+// the Certificates Configs returned.
 func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) Filter(filter string) *ProjectsLocationsCertificateIssuanceConfigsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": A list of Certificate
-// Config field names used to specify the order of the returned results.
-// The default sorting order is ascending. To specify descending order
-// for a field, add a suffix " desc".
+// OrderBy sets the optional parameter "orderBy": A list of Certificate Config
+// field names used to specify the order of the returned results. The default
+// sorting order is ascending. To specify descending order for a field, add a
+// suffix " desc".
 func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) OrderBy(orderBy string) *ProjectsLocationsCertificateIssuanceConfigsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -2590,43 +2022,39 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) PageSize(pageSize 
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListCertificateIssuanceConfigsResponse`. Indicates that
-// this is a continuation of a prior `ListCertificateIssuanceConfigs`
-// call, and that the system should return the next page of data.
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListCertificateIssuanceConfigsResponse`. Indicates that this is a
+// continuation of a prior `ListCertificateIssuanceConfigs` call, and that the
+// system should return the next page of data.
 func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) PageToken(pageToken string) *ProjectsLocationsCertificateIssuanceConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateIssuanceConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCertificateIssuanceConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) Context(ctx context.Context) *ProjectsLocationsCertificateIssuanceConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2635,12 +2063,7 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) Header() http.Head
 }
 
 func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2661,13 +2084,11 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) doRequest(alt stri
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateIssuanceConfigs.list" call.
-// Exactly one of *ListCertificateIssuanceConfigsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *ListCertificateIssuanceConfigsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCertificateIssuanceConfigsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) Do(opts ...googleapi.CallOption) (*ListCertificateIssuanceConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2698,53 +2119,6 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) Do(opts ...googlea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists CertificateIssuanceConfigs in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateIssuanceConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.certificateIssuanceConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Filter expression to restrict the Certificates Configs returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "A list of Certificate Config field names used to specify the order of the returned results. The default sorting order is ascending. To specify descending order for a field, add a suffix \" desc\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of certificate configs to return per call.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value returned by the last `ListCertificateIssuanceConfigsResponse`. Indicates that this is a continuation of a prior `ListCertificateIssuanceConfigs` call, and that the system should return the next page of data.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The project and location from which the certificate should be listed, specified in the format `projects/*/locations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/certificateIssuanceConfigs",
-	//   "response": {
-	//     "$ref": "ListCertificateIssuanceConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2752,7 +2126,7 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) Do(opts ...googlea
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) Pages(ctx context.Context, f func(*ListCertificateIssuanceConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2768,8 +2142,6 @@ func (c *ProjectsLocationsCertificateIssuanceConfigsListCall) Pages(ctx context.
 	}
 }
 
-// method id "certificatemanager.projects.locations.certificateMaps.create":
-
 type ProjectsLocationsCertificateMapsCreateCall struct {
 	s              *Service
 	parent         string
@@ -2781,8 +2153,8 @@ type ProjectsLocationsCertificateMapsCreateCall struct {
 
 // Create: Creates a new CertificateMap in a given project and location.
 //
-//   - parent: The parent resource of the certificate map. Must be in the
-//     format `projects/*/locations/*`.
+//   - parent: The parent resource of the certificate map. Must be in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateMapsService) Create(parent string, certificatemap *CertificateMap) *ProjectsLocationsCertificateMapsCreateCall {
 	c := &ProjectsLocationsCertificateMapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2790,31 +2162,29 @@ func (r *ProjectsLocationsCertificateMapsService) Create(parent string, certific
 	return c
 }
 
-// CertificateMapId sets the optional parameter "certificateMapId":
-// Required. A user-provided name of the certificate map.
+// CertificateMapId sets the optional parameter "certificateMapId": Required. A
+// user-provided name of the certificate map.
 func (c *ProjectsLocationsCertificateMapsCreateCall) CertificateMapId(certificateMapId string) *ProjectsLocationsCertificateMapsCreateCall {
 	c.urlParams_.Set("certificateMapId", certificateMapId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateMapsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateMapsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateMapsCreateCall) Context(ctx context.Context) *ProjectsLocationsCertificateMapsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateMapsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2823,18 +2193,12 @@ func (c *ProjectsLocationsCertificateMapsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCertificateMapsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.certificatemap)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/certificateMaps")
@@ -2851,12 +2215,10 @@ func (c *ProjectsLocationsCertificateMapsCreateCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateMaps.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateMapsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2887,43 +2249,7 @@ func (c *ProjectsLocationsCertificateMapsCreateCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new CertificateMap in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateMaps",
-	//   "httpMethod": "POST",
-	//   "id": "certificatemanager.projects.locations.certificateMaps.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "certificateMapId": {
-	//       "description": "Required. A user-provided name of the certificate map.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource of the certificate map. Must be in the format `projects/*/locations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/certificateMaps",
-	//   "request": {
-	//     "$ref": "CertificateMap"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificateMaps.delete":
 
 type ProjectsLocationsCertificateMapsDeleteCall struct {
 	s          *Service
@@ -2933,12 +2259,12 @@ type ProjectsLocationsCertificateMapsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single CertificateMap. A Certificate Map can't be
-// deleted if it contains Certificate Map Entries. Remove all the
-// entries from the map before calling this method.
+// Delete: Deletes a single CertificateMap. A Certificate Map can't be deleted
+// if it contains Certificate Map Entries. Remove all the entries from the map
+// before calling this method.
 //
-//   - name: A name of the certificate map to delete. Must be in the
-//     format `projects/*/locations/*/certificateMaps/*`.
+//   - name: A name of the certificate map to delete. Must be in the format
+//     `projects/*/locations/*/certificateMaps/*`.
 func (r *ProjectsLocationsCertificateMapsService) Delete(name string) *ProjectsLocationsCertificateMapsDeleteCall {
 	c := &ProjectsLocationsCertificateMapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2946,23 +2272,21 @@ func (r *ProjectsLocationsCertificateMapsService) Delete(name string) *ProjectsL
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateMapsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateMapsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateMapsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCertificateMapsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateMapsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2971,12 +2295,7 @@ func (c *ProjectsLocationsCertificateMapsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCertificateMapsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2994,12 +2313,10 @@ func (c *ProjectsLocationsCertificateMapsDeleteCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateMaps.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateMapsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3030,35 +2347,7 @@ func (c *ProjectsLocationsCertificateMapsDeleteCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a single CertificateMap. A Certificate Map can't be deleted if it contains Certificate Map Entries. Remove all the entries from the map before calling this method.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateMaps/{certificateMapsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "certificatemanager.projects.locations.certificateMaps.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. A name of the certificate map to delete. Must be in the format `projects/*/locations/*/certificateMaps/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificateMaps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificateMaps.get":
 
 type ProjectsLocationsCertificateMapsGetCall struct {
 	s            *Service
@@ -3071,8 +2360,8 @@ type ProjectsLocationsCertificateMapsGetCall struct {
 
 // Get: Gets details of a single CertificateMap.
 //
-//   - name: A name of the certificate map to describe. Must be in the
-//     format `projects/*/locations/*/certificateMaps/*`.
+//   - name: A name of the certificate map to describe. Must be in the format
+//     `projects/*/locations/*/certificateMaps/*`.
 func (r *ProjectsLocationsCertificateMapsService) Get(name string) *ProjectsLocationsCertificateMapsGetCall {
 	c := &ProjectsLocationsCertificateMapsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3080,33 +2369,29 @@ func (r *ProjectsLocationsCertificateMapsService) Get(name string) *ProjectsLoca
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateMapsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateMapsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCertificateMapsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCertificateMapsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateMapsGetCall) Context(ctx context.Context) *ProjectsLocationsCertificateMapsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateMapsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3115,12 +2400,7 @@ func (c *ProjectsLocationsCertificateMapsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCertificateMapsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3141,12 +2421,10 @@ func (c *ProjectsLocationsCertificateMapsGetCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateMaps.get" call.
-// Exactly one of *CertificateMap or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CertificateMap.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CertificateMap.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateMapsGetCall) Do(opts ...googleapi.CallOption) (*CertificateMap, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3177,35 +2455,7 @@ func (c *ProjectsLocationsCertificateMapsGetCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets details of a single CertificateMap.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateMaps/{certificateMapsId}",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.certificateMaps.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. A name of the certificate map to describe. Must be in the format `projects/*/locations/*/certificateMaps/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificateMaps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "CertificateMap"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificateMaps.list":
 
 type ProjectsLocationsCertificateMapsListCall struct {
 	s            *Service
@@ -3218,25 +2468,25 @@ type ProjectsLocationsCertificateMapsListCall struct {
 
 // List: Lists CertificateMaps in a given project and location.
 //
-//   - parent: The project and location from which the certificate maps
-//     should be listed, specified in the format `projects/*/locations/*`.
+//   - parent: The project and location from which the certificate maps should be
+//     listed, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateMapsService) List(parent string) *ProjectsLocationsCertificateMapsListCall {
 	c := &ProjectsLocationsCertificateMapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression to
-// restrict the Certificates Maps returned.
+// Filter sets the optional parameter "filter": Filter expression to restrict
+// the Certificates Maps returned.
 func (c *ProjectsLocationsCertificateMapsListCall) Filter(filter string) *ProjectsLocationsCertificateMapsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": A list of Certificate
-// Map field names used to specify the order of the returned results.
-// The default sorting order is ascending. To specify descending order
-// for a field, add a suffix " desc".
+// OrderBy sets the optional parameter "orderBy": A list of Certificate Map
+// field names used to specify the order of the returned results. The default
+// sorting order is ascending. To specify descending order for a field, add a
+// suffix " desc".
 func (c *ProjectsLocationsCertificateMapsListCall) OrderBy(orderBy string) *ProjectsLocationsCertificateMapsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -3249,43 +2499,39 @@ func (c *ProjectsLocationsCertificateMapsListCall) PageSize(pageSize int64) *Pro
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListCertificateMapsResponse`. Indicates that this is a
-// continuation of a prior `ListCertificateMaps` call, and that the
-// system should return the next page of data.
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListCertificateMapsResponse`. Indicates that this is a continuation of
+// a prior `ListCertificateMaps` call, and that the system should return the
+// next page of data.
 func (c *ProjectsLocationsCertificateMapsListCall) PageToken(pageToken string) *ProjectsLocationsCertificateMapsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateMapsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateMapsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCertificateMapsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCertificateMapsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateMapsListCall) Context(ctx context.Context) *ProjectsLocationsCertificateMapsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateMapsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3294,12 +2540,7 @@ func (c *ProjectsLocationsCertificateMapsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCertificateMapsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3320,12 +2561,11 @@ func (c *ProjectsLocationsCertificateMapsListCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateMaps.list" call.
-// Exactly one of *ListCertificateMapsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListCertificateMapsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListCertificateMapsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateMapsListCall) Do(opts ...googleapi.CallOption) (*ListCertificateMapsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3356,53 +2596,6 @@ func (c *ProjectsLocationsCertificateMapsListCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists CertificateMaps in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateMaps",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.certificateMaps.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Filter expression to restrict the Certificates Maps returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "A list of Certificate Map field names used to specify the order of the returned results. The default sorting order is ascending. To specify descending order for a field, add a suffix \" desc\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of certificate maps to return per call.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value returned by the last `ListCertificateMapsResponse`. Indicates that this is a continuation of a prior `ListCertificateMaps` call, and that the system should return the next page of data.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The project and location from which the certificate maps should be listed, specified in the format `projects/*/locations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/certificateMaps",
-	//   "response": {
-	//     "$ref": "ListCertificateMapsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3410,7 +2603,7 @@ func (c *ProjectsLocationsCertificateMapsListCall) Do(opts ...googleapi.CallOpti
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCertificateMapsListCall) Pages(ctx context.Context, f func(*ListCertificateMapsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3426,8 +2619,6 @@ func (c *ProjectsLocationsCertificateMapsListCall) Pages(ctx context.Context, f 
 	}
 }
 
-// method id "certificatemanager.projects.locations.certificateMaps.patch":
-
 type ProjectsLocationsCertificateMapsPatchCall struct {
 	s              *Service
 	name           string
@@ -3439,8 +2630,8 @@ type ProjectsLocationsCertificateMapsPatchCall struct {
 
 // Patch: Updates a CertificateMap.
 //
-//   - name: A user-defined name of the Certificate Map. Certificate Map
-//     names must be unique globally and match pattern
+//   - name: A user-defined name of the Certificate Map. Certificate Map names
+//     must be unique globally and match pattern
 //     `projects/*/locations/*/certificateMaps/*`.
 func (r *ProjectsLocationsCertificateMapsService) Patch(name string, certificatemap *CertificateMap) *ProjectsLocationsCertificateMapsPatchCall {
 	c := &ProjectsLocationsCertificateMapsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3449,9 +2640,8 @@ func (r *ProjectsLocationsCertificateMapsService) Patch(name string, certificate
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// update mask applies to the resource. For the `FieldMask` definition,
-// see
+// UpdateMask sets the optional parameter "updateMask": Required. The update
+// mask applies to the resource. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
 func (c *ProjectsLocationsCertificateMapsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCertificateMapsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -3459,23 +2649,21 @@ func (c *ProjectsLocationsCertificateMapsPatchCall) UpdateMask(updateMask string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateMapsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateMapsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateMapsPatchCall) Context(ctx context.Context) *ProjectsLocationsCertificateMapsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateMapsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3484,18 +2672,12 @@ func (c *ProjectsLocationsCertificateMapsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCertificateMapsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.certificatemap)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -3512,12 +2694,10 @@ func (c *ProjectsLocationsCertificateMapsPatchCall) doRequest(alt string) (*http
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateMaps.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateMapsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3548,44 +2728,7 @@ func (c *ProjectsLocationsCertificateMapsPatchCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a CertificateMap.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateMaps/{certificateMapsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "certificatemanager.projects.locations.certificateMaps.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "A user-defined name of the Certificate Map. Certificate Map names must be unique globally and match pattern `projects/*/locations/*/certificateMaps/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificateMaps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "CertificateMap"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.create":
 
 type ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall struct {
 	s                   *Service
@@ -3596,11 +2739,10 @@ type ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall struct {
 	header_             http.Header
 }
 
-// Create: Creates a new CertificateMapEntry in a given project and
-// location.
+// Create: Creates a new CertificateMapEntry in a given project and location.
 //
-//   - parent: The parent resource of the certificate map entry. Must be
-//     in the format `projects/*/locations/*/certificateMaps/*`.
+//   - parent: The parent resource of the certificate map entry. Must be in the
+//     format `projects/*/locations/*/certificateMaps/*`.
 func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Create(parent string, certificatemapentry *CertificateMapEntry) *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall {
 	c := &ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3608,32 +2750,29 @@ func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Create(pa
 	return c
 }
 
-// CertificateMapEntryId sets the optional parameter
-// "certificateMapEntryId": Required. A user-provided name of the
-// certificate map entry.
+// CertificateMapEntryId sets the optional parameter "certificateMapEntryId":
+// Required. A user-provided name of the certificate map entry.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall) CertificateMapEntryId(certificateMapEntryId string) *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall {
 	c.urlParams_.Set("certificateMapEntryId", certificateMapEntryId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall) Context(ctx context.Context) *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3642,18 +2781,12 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall) Header
 }
 
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.certificatemapentry)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/certificateMapEntries")
@@ -3670,12 +2803,10 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall) doRequ
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3706,43 +2837,7 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall) Do(opt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new CertificateMapEntry in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateMaps/{certificateMapsId}/certificateMapEntries",
-	//   "httpMethod": "POST",
-	//   "id": "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "certificateMapEntryId": {
-	//       "description": "Required. A user-provided name of the certificate map entry.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource of the certificate map entry. Must be in the format `projects/*/locations/*/certificateMaps/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificateMaps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/certificateMapEntries",
-	//   "request": {
-	//     "$ref": "CertificateMapEntry"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.delete":
 
 type ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall struct {
 	s          *Service
@@ -3754,8 +2849,7 @@ type ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall struct {
 
 // Delete: Deletes a single CertificateMapEntry.
 //
-//   - name: A name of the certificate map entry to delete. Must be in the
-//     format
+//   - name: A name of the certificate map entry to delete. Must be in the format
 //     `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
 func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Delete(name string) *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall {
 	c := &ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3764,23 +2858,21 @@ func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Delete(na
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall) Context(ctx context.Context) *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3789,12 +2881,7 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall) Header
 }
 
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3812,12 +2899,10 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall) doRequ
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3848,35 +2933,7 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall) Do(opt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a single CertificateMapEntry.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateMaps/{certificateMapsId}/certificateMapEntries/{certificateMapEntriesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. A name of the certificate map entry to delete. Must be in the format `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificateMaps/[^/]+/certificateMapEntries/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.get":
 
 type ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall struct {
 	s            *Service
@@ -3889,9 +2946,8 @@ type ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall struct {
 
 // Get: Gets details of a single CertificateMapEntry.
 //
-//   - name: A name of the certificate map entry to describe. Must be in
-//     the format
-//     `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
+//   - name: A name of the certificate map entry to describe. Must be in the
+//     format `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
 func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Get(name string) *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall {
 	c := &ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3899,33 +2955,29 @@ func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Get(name 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall) Context(ctx context.Context) *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3934,12 +2986,7 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall) Header() 
 }
 
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3960,12 +3007,11 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall) doRequest
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.get" call.
-// Exactly one of *CertificateMapEntry or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *CertificateMapEntry.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CertificateMapEntry.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall) Do(opts ...googleapi.CallOption) (*CertificateMapEntry, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3996,35 +3042,7 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall) Do(opts .
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets details of a single CertificateMapEntry.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateMaps/{certificateMapsId}/certificateMapEntries/{certificateMapEntriesId}",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. A name of the certificate map entry to describe. Must be in the format `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificateMaps/[^/]+/certificateMapEntries/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "CertificateMapEntry"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.list":
 
 type ProjectsLocationsCertificateMapsCertificateMapEntriesListCall struct {
 	s            *Service
@@ -4046,69 +3064,64 @@ func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) List(pare
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression to
-// restrict the returned Certificate Map Entries.
+// Filter sets the optional parameter "filter": Filter expression to restrict
+// the returned Certificate Map Entries.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) Filter(filter string) *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": A list of Certificate
-// Map Entry field names used to specify the order of the returned
-// results. The default sorting order is ascending. To specify
-// descending order for a field, add a suffix " desc".
+// OrderBy sets the optional parameter "orderBy": A list of Certificate Map
+// Entry field names used to specify the order of the returned results. The
+// default sorting order is ascending. To specify descending order for a field,
+// add a suffix " desc".
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) OrderBy(orderBy string) *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// certificate map entries to return. The service may return fewer than
-// this value. If unspecified, at most 50 certificate map entries will
-// be returned. The maximum value is 1000; values above 1000 will be
-// coerced to 1000.
+// certificate map entries to return. The service may return fewer than this
+// value. If unspecified, at most 50 certificate map entries will be returned.
+// The maximum value is 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) PageSize(pageSize int64) *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListCertificateMapEntriesResponse`. Indicates that this
-// is a continuation of a prior `ListCertificateMapEntries` call, and
-// that the system should return the next page of data.
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListCertificateMapEntriesResponse`. Indicates that this is a
+// continuation of a prior `ListCertificateMapEntries` call, and that the
+// system should return the next page of data.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) PageToken(pageToken string) *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) Context(ctx context.Context) *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4117,12 +3130,7 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) Header()
 }
 
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4143,13 +3151,11 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) doReques
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.list" call.
-// Exactly one of *ListCertificateMapEntriesResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListCertificateMapEntriesResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCertificateMapEntriesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) Do(opts ...googleapi.CallOption) (*ListCertificateMapEntriesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4180,53 +3186,6 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) Do(opts 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists CertificateMapEntries in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateMaps/{certificateMapsId}/certificateMapEntries",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Filter expression to restrict the returned Certificate Map Entries.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "A list of Certificate Map Entry field names used to specify the order of the returned results. The default sorting order is ascending. To specify descending order for a field, add a suffix \" desc\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of certificate map entries to return. The service may return fewer than this value. If unspecified, at most 50 certificate map entries will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value returned by the last `ListCertificateMapEntriesResponse`. Indicates that this is a continuation of a prior `ListCertificateMapEntries` call, and that the system should return the next page of data.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The project, location and certificate map from which the certificate map entries should be listed, specified in the format `projects/*/locations/*/certificateMaps/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificateMaps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/certificateMapEntries",
-	//   "response": {
-	//     "$ref": "ListCertificateMapEntriesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4234,7 +3193,7 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) Do(opts 
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) Pages(ctx context.Context, f func(*ListCertificateMapEntriesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4250,8 +3209,6 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall) Pages(ct
 	}
 }
 
-// method id "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.patch":
-
 type ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall struct {
 	s                   *Service
 	name                string
@@ -4263,8 +3220,8 @@ type ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall struct {
 
 // Patch: Updates a CertificateMapEntry.
 //
-//   - name: A user-defined name of the Certificate Map Entry. Certificate
-//     Map Entry names must be unique globally and match pattern
+//   - name: A user-defined name of the Certificate Map Entry. Certificate Map
+//     Entry names must be unique globally and match pattern
 //     `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
 func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Patch(name string, certificatemapentry *CertificateMapEntry) *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall {
 	c := &ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4273,9 +3230,8 @@ func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Patch(nam
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// update mask applies to the resource. For the `FieldMask` definition,
-// see
+// UpdateMask sets the optional parameter "updateMask": Required. The update
+// mask applies to the resource. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -4283,23 +3239,21 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall) UpdateM
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall) Context(ctx context.Context) *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4308,18 +3262,12 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall) Header(
 }
 
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.certificatemapentry)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -4336,12 +3284,10 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall) doReque
 }
 
 // Do executes the "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4372,44 +3318,7 @@ func (c *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall) Do(opts
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a CertificateMapEntry.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificateMaps/{certificateMapsId}/certificateMapEntries/{certificateMapEntriesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "certificatemanager.projects.locations.certificateMaps.certificateMapEntries.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "A user-defined name of the Certificate Map Entry. Certificate Map Entry names must be unique globally and match pattern `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificateMaps/[^/]+/certificateMapEntries/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "CertificateMapEntry"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificates.create":
 
 type ProjectsLocationsCertificatesCreateCall struct {
 	s           *Service
@@ -4422,8 +3331,8 @@ type ProjectsLocationsCertificatesCreateCall struct {
 
 // Create: Creates a new Certificate in a given project and location.
 //
-//   - parent: The parent resource of the certificate. Must be in the
-//     format `projects/*/locations/*`.
+//   - parent: The parent resource of the certificate. Must be in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificatesService) Create(parent string, certificate *Certificate) *ProjectsLocationsCertificatesCreateCall {
 	c := &ProjectsLocationsCertificatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4431,31 +3340,29 @@ func (r *ProjectsLocationsCertificatesService) Create(parent string, certificate
 	return c
 }
 
-// CertificateId sets the optional parameter "certificateId": Required.
-// A user-provided name of the certificate.
+// CertificateId sets the optional parameter "certificateId": Required. A
+// user-provided name of the certificate.
 func (c *ProjectsLocationsCertificatesCreateCall) CertificateId(certificateId string) *ProjectsLocationsCertificatesCreateCall {
 	c.urlParams_.Set("certificateId", certificateId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificatesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificatesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificatesCreateCall) Context(ctx context.Context) *ProjectsLocationsCertificatesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificatesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4464,18 +3371,12 @@ func (c *ProjectsLocationsCertificatesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCertificatesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.certificate)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/certificates")
@@ -4492,12 +3393,10 @@ func (c *ProjectsLocationsCertificatesCreateCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "certificatemanager.projects.locations.certificates.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificatesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4528,43 +3427,7 @@ func (c *ProjectsLocationsCertificatesCreateCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new Certificate in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificates",
-	//   "httpMethod": "POST",
-	//   "id": "certificatemanager.projects.locations.certificates.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "certificateId": {
-	//       "description": "Required. A user-provided name of the certificate.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource of the certificate. Must be in the format `projects/*/locations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/certificates",
-	//   "request": {
-	//     "$ref": "Certificate"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificates.delete":
 
 type ProjectsLocationsCertificatesDeleteCall struct {
 	s          *Service
@@ -4585,23 +3448,21 @@ func (r *ProjectsLocationsCertificatesService) Delete(name string) *ProjectsLoca
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificatesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificatesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificatesDeleteCall) Context(ctx context.Context) *ProjectsLocationsCertificatesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificatesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4610,12 +3471,7 @@ func (c *ProjectsLocationsCertificatesDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCertificatesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4633,12 +3489,10 @@ func (c *ProjectsLocationsCertificatesDeleteCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "certificatemanager.projects.locations.certificates.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificatesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4669,35 +3523,7 @@ func (c *ProjectsLocationsCertificatesDeleteCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a single Certificate.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificates/{certificatesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "certificatemanager.projects.locations.certificates.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. A name of the certificate to delete. Must be in the format `projects/*/locations/*/certificates/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificates.get":
 
 type ProjectsLocationsCertificatesGetCall struct {
 	s            *Service
@@ -4719,33 +3545,29 @@ func (r *ProjectsLocationsCertificatesService) Get(name string) *ProjectsLocatio
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificatesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificatesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCertificatesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCertificatesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificatesGetCall) Context(ctx context.Context) *ProjectsLocationsCertificatesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificatesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4754,12 +3576,7 @@ func (c *ProjectsLocationsCertificatesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCertificatesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4780,12 +3597,10 @@ func (c *ProjectsLocationsCertificatesGetCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "certificatemanager.projects.locations.certificates.get" call.
-// Exactly one of *Certificate or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Certificate.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Certificate.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificatesGetCall) Do(opts ...googleapi.CallOption) (*Certificate, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4816,35 +3631,7 @@ func (c *ProjectsLocationsCertificatesGetCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets details of a single Certificate.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificates/{certificatesId}",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.certificates.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. A name of the certificate to describe. Must be in the format `projects/*/locations/*/certificates/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Certificate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.certificates.list":
 
 type ProjectsLocationsCertificatesListCall struct {
 	s            *Service
@@ -4857,25 +3644,25 @@ type ProjectsLocationsCertificatesListCall struct {
 
 // List: Lists Certificates in a given project and location.
 //
-//   - parent: The project and location from which the certificate should
-//     be listed, specified in the format `projects/*/locations/*`.
+//   - parent: The project and location from which the certificate should be
+//     listed, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificatesService) List(parent string) *ProjectsLocationsCertificatesListCall {
 	c := &ProjectsLocationsCertificatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression to
-// restrict the Certificates returned.
+// Filter sets the optional parameter "filter": Filter expression to restrict
+// the Certificates returned.
 func (c *ProjectsLocationsCertificatesListCall) Filter(filter string) *ProjectsLocationsCertificatesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": A list of Certificate
-// field names used to specify the order of the returned results. The
-// default sorting order is ascending. To specify descending order for a
-// field, add a suffix " desc".
+// OrderBy sets the optional parameter "orderBy": A list of Certificate field
+// names used to specify the order of the returned results. The default sorting
+// order is ascending. To specify descending order for a field, add a suffix "
+// desc".
 func (c *ProjectsLocationsCertificatesListCall) OrderBy(orderBy string) *ProjectsLocationsCertificatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -4888,43 +3675,39 @@ func (c *ProjectsLocationsCertificatesListCall) PageSize(pageSize int64) *Projec
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListCertificatesResponse`. Indicates that this is a
-// continuation of a prior `ListCertificates` call, and that the system
-// should return the next page of data.
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListCertificatesResponse`. Indicates that this is a continuation of a
+// prior `ListCertificates` call, and that the system should return the next
+// page of data.
 func (c *ProjectsLocationsCertificatesListCall) PageToken(pageToken string) *ProjectsLocationsCertificatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificatesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificatesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCertificatesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCertificatesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificatesListCall) Context(ctx context.Context) *ProjectsLocationsCertificatesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificatesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4933,12 +3716,7 @@ func (c *ProjectsLocationsCertificatesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCertificatesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4959,12 +3737,11 @@ func (c *ProjectsLocationsCertificatesListCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "certificatemanager.projects.locations.certificates.list" call.
-// Exactly one of *ListCertificatesResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListCertificatesResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificatesListCall) Do(opts ...googleapi.CallOption) (*ListCertificatesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4995,53 +3772,6 @@ func (c *ProjectsLocationsCertificatesListCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists Certificates in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificates",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.certificates.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Filter expression to restrict the Certificates returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "A list of Certificate field names used to specify the order of the returned results. The default sorting order is ascending. To specify descending order for a field, add a suffix \" desc\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of certificates to return per call.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value returned by the last `ListCertificatesResponse`. Indicates that this is a continuation of a prior `ListCertificates` call, and that the system should return the next page of data.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The project and location from which the certificate should be listed, specified in the format `projects/*/locations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/certificates",
-	//   "response": {
-	//     "$ref": "ListCertificatesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5049,7 +3779,7 @@ func (c *ProjectsLocationsCertificatesListCall) Do(opts ...googleapi.CallOption)
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCertificatesListCall) Pages(ctx context.Context, f func(*ListCertificatesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5065,8 +3795,6 @@ func (c *ProjectsLocationsCertificatesListCall) Pages(ctx context.Context, f fun
 	}
 }
 
-// method id "certificatemanager.projects.locations.certificates.patch":
-
 type ProjectsLocationsCertificatesPatchCall struct {
 	s           *Service
 	name        string
@@ -5078,9 +3806,8 @@ type ProjectsLocationsCertificatesPatchCall struct {
 
 // Patch: Updates a Certificate.
 //
-//   - name: A user-defined name of the certificate. Certificate names
-//     must be unique globally and match pattern
-//     `projects/*/locations/*/certificates/*`.
+//   - name: A user-defined name of the certificate. Certificate names must be
+//     unique globally and match pattern `projects/*/locations/*/certificates/*`.
 func (r *ProjectsLocationsCertificatesService) Patch(name string, certificate *Certificate) *ProjectsLocationsCertificatesPatchCall {
 	c := &ProjectsLocationsCertificatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5088,9 +3815,8 @@ func (r *ProjectsLocationsCertificatesService) Patch(name string, certificate *C
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// update mask applies to the resource. For the `FieldMask` definition,
-// see
+// UpdateMask sets the optional parameter "updateMask": Required. The update
+// mask applies to the resource. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
 func (c *ProjectsLocationsCertificatesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCertificatesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -5098,23 +3824,21 @@ func (c *ProjectsLocationsCertificatesPatchCall) UpdateMask(updateMask string) *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCertificatesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCertificatesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCertificatesPatchCall) Context(ctx context.Context) *ProjectsLocationsCertificatesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCertificatesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5123,18 +3847,12 @@ func (c *ProjectsLocationsCertificatesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCertificatesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.certificate)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -5151,12 +3869,10 @@ func (c *ProjectsLocationsCertificatesPatchCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "certificatemanager.projects.locations.certificates.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCertificatesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5187,44 +3903,7 @@ func (c *ProjectsLocationsCertificatesPatchCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a Certificate.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/certificates/{certificatesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "certificatemanager.projects.locations.certificates.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "A user-defined name of the certificate. Certificate names must be unique globally and match pattern `projects/*/locations/*/certificates/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/certificates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "Certificate"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.dnsAuthorizations.create":
 
 type ProjectsLocationsDnsAuthorizationsCreateCall struct {
 	s                *Service
@@ -5235,11 +3914,10 @@ type ProjectsLocationsDnsAuthorizationsCreateCall struct {
 	header_          http.Header
 }
 
-// Create: Creates a new DnsAuthorization in a given project and
-// location.
+// Create: Creates a new DnsAuthorization in a given project and location.
 //
-//   - parent: The parent resource of the dns authorization. Must be in
-//     the format `projects/*/locations/*`.
+//   - parent: The parent resource of the dns authorization. Must be in the
+//     format `projects/*/locations/*`.
 func (r *ProjectsLocationsDnsAuthorizationsService) Create(parent string, dnsauthorization *DnsAuthorization) *ProjectsLocationsDnsAuthorizationsCreateCall {
 	c := &ProjectsLocationsDnsAuthorizationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5255,23 +3933,21 @@ func (c *ProjectsLocationsDnsAuthorizationsCreateCall) DnsAuthorizationId(dnsAut
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDnsAuthorizationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsAuthorizationsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDnsAuthorizationsCreateCall) Context(ctx context.Context) *ProjectsLocationsDnsAuthorizationsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDnsAuthorizationsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5280,18 +3956,12 @@ func (c *ProjectsLocationsDnsAuthorizationsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDnsAuthorizationsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dnsauthorization)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dnsAuthorizations")
@@ -5308,12 +3978,10 @@ func (c *ProjectsLocationsDnsAuthorizationsCreateCall) doRequest(alt string) (*h
 }
 
 // Do executes the "certificatemanager.projects.locations.dnsAuthorizations.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDnsAuthorizationsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5344,43 +4012,7 @@ func (c *ProjectsLocationsDnsAuthorizationsCreateCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new DnsAuthorization in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dnsAuthorizations",
-	//   "httpMethod": "POST",
-	//   "id": "certificatemanager.projects.locations.dnsAuthorizations.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "dnsAuthorizationId": {
-	//       "description": "Required. A user-provided name of the dns authorization.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource of the dns authorization. Must be in the format `projects/*/locations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/dnsAuthorizations",
-	//   "request": {
-	//     "$ref": "DnsAuthorization"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.dnsAuthorizations.delete":
 
 type ProjectsLocationsDnsAuthorizationsDeleteCall struct {
 	s          *Service
@@ -5392,8 +4024,8 @@ type ProjectsLocationsDnsAuthorizationsDeleteCall struct {
 
 // Delete: Deletes a single DnsAuthorization.
 //
-//   - name: A name of the dns authorization to delete. Must be in the
-//     format `projects/*/locations/*/dnsAuthorizations/*`.
+//   - name: A name of the dns authorization to delete. Must be in the format
+//     `projects/*/locations/*/dnsAuthorizations/*`.
 func (r *ProjectsLocationsDnsAuthorizationsService) Delete(name string) *ProjectsLocationsDnsAuthorizationsDeleteCall {
 	c := &ProjectsLocationsDnsAuthorizationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5401,23 +4033,21 @@ func (r *ProjectsLocationsDnsAuthorizationsService) Delete(name string) *Project
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDnsAuthorizationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsAuthorizationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDnsAuthorizationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDnsAuthorizationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDnsAuthorizationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5426,12 +4056,7 @@ func (c *ProjectsLocationsDnsAuthorizationsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDnsAuthorizationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5449,12 +4074,10 @@ func (c *ProjectsLocationsDnsAuthorizationsDeleteCall) doRequest(alt string) (*h
 }
 
 // Do executes the "certificatemanager.projects.locations.dnsAuthorizations.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDnsAuthorizationsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5485,35 +4108,7 @@ func (c *ProjectsLocationsDnsAuthorizationsDeleteCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a single DnsAuthorization.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dnsAuthorizations/{dnsAuthorizationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "certificatemanager.projects.locations.dnsAuthorizations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. A name of the dns authorization to delete. Must be in the format `projects/*/locations/*/dnsAuthorizations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/dnsAuthorizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.dnsAuthorizations.get":
 
 type ProjectsLocationsDnsAuthorizationsGetCall struct {
 	s            *Service
@@ -5526,8 +4121,8 @@ type ProjectsLocationsDnsAuthorizationsGetCall struct {
 
 // Get: Gets details of a single DnsAuthorization.
 //
-//   - name: A name of the dns authorization to describe. Must be in the
-//     format `projects/*/locations/*/dnsAuthorizations/*`.
+//   - name: A name of the dns authorization to describe. Must be in the format
+//     `projects/*/locations/*/dnsAuthorizations/*`.
 func (r *ProjectsLocationsDnsAuthorizationsService) Get(name string) *ProjectsLocationsDnsAuthorizationsGetCall {
 	c := &ProjectsLocationsDnsAuthorizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5535,33 +4130,29 @@ func (r *ProjectsLocationsDnsAuthorizationsService) Get(name string) *ProjectsLo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDnsAuthorizationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsAuthorizationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsDnsAuthorizationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDnsAuthorizationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDnsAuthorizationsGetCall) Context(ctx context.Context) *ProjectsLocationsDnsAuthorizationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDnsAuthorizationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5570,12 +4161,7 @@ func (c *ProjectsLocationsDnsAuthorizationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDnsAuthorizationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5596,12 +4182,11 @@ func (c *ProjectsLocationsDnsAuthorizationsGetCall) doRequest(alt string) (*http
 }
 
 // Do executes the "certificatemanager.projects.locations.dnsAuthorizations.get" call.
-// Exactly one of *DnsAuthorization or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DnsAuthorization.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DnsAuthorization.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsDnsAuthorizationsGetCall) Do(opts ...googleapi.CallOption) (*DnsAuthorization, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5632,35 +4217,7 @@ func (c *ProjectsLocationsDnsAuthorizationsGetCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets details of a single DnsAuthorization.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dnsAuthorizations/{dnsAuthorizationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.dnsAuthorizations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. A name of the dns authorization to describe. Must be in the format `projects/*/locations/*/dnsAuthorizations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/dnsAuthorizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "DnsAuthorization"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.dnsAuthorizations.list":
 
 type ProjectsLocationsDnsAuthorizationsListCall struct {
 	s            *Service
@@ -5673,74 +4230,70 @@ type ProjectsLocationsDnsAuthorizationsListCall struct {
 
 // List: Lists DnsAuthorizations in a given project and location.
 //
-//   - parent: The project and location from which the dns authorizations
-//     should be listed, specified in the format `projects/*/locations/*`.
+//   - parent: The project and location from which the dns authorizations should
+//     be listed, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsDnsAuthorizationsService) List(parent string) *ProjectsLocationsDnsAuthorizationsListCall {
 	c := &ProjectsLocationsDnsAuthorizationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression to
-// restrict the Dns Authorizations returned.
+// Filter sets the optional parameter "filter": Filter expression to restrict
+// the Dns Authorizations returned.
 func (c *ProjectsLocationsDnsAuthorizationsListCall) Filter(filter string) *ProjectsLocationsDnsAuthorizationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": A list of Dns
-// Authorization field names used to specify the order of the returned
-// results. The default sorting order is ascending. To specify
-// descending order for a field, add a suffix " desc".
+// OrderBy sets the optional parameter "orderBy": A list of Dns Authorization
+// field names used to specify the order of the returned results. The default
+// sorting order is ascending. To specify descending order for a field, add a
+// suffix " desc".
 func (c *ProjectsLocationsDnsAuthorizationsListCall) OrderBy(orderBy string) *ProjectsLocationsDnsAuthorizationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// dns authorizations to return per call.
+// PageSize sets the optional parameter "pageSize": Maximum number of dns
+// authorizations to return per call.
 func (c *ProjectsLocationsDnsAuthorizationsListCall) PageSize(pageSize int64) *ProjectsLocationsDnsAuthorizationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListDnsAuthorizationsResponse`. Indicates that this is a
-// continuation of a prior `ListDnsAuthorizations` call, and that the
-// system should return the next page of data.
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListDnsAuthorizationsResponse`. Indicates that this is a continuation
+// of a prior `ListDnsAuthorizations` call, and that the system should return
+// the next page of data.
 func (c *ProjectsLocationsDnsAuthorizationsListCall) PageToken(pageToken string) *ProjectsLocationsDnsAuthorizationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDnsAuthorizationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsAuthorizationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsDnsAuthorizationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDnsAuthorizationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDnsAuthorizationsListCall) Context(ctx context.Context) *ProjectsLocationsDnsAuthorizationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDnsAuthorizationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5749,12 +4302,7 @@ func (c *ProjectsLocationsDnsAuthorizationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDnsAuthorizationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5775,12 +4323,11 @@ func (c *ProjectsLocationsDnsAuthorizationsListCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "certificatemanager.projects.locations.dnsAuthorizations.list" call.
-// Exactly one of *ListDnsAuthorizationsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListDnsAuthorizationsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDnsAuthorizationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsDnsAuthorizationsListCall) Do(opts ...googleapi.CallOption) (*ListDnsAuthorizationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5811,53 +4358,6 @@ func (c *ProjectsLocationsDnsAuthorizationsListCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists DnsAuthorizations in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dnsAuthorizations",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.dnsAuthorizations.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Filter expression to restrict the Dns Authorizations returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "A list of Dns Authorization field names used to specify the order of the returned results. The default sorting order is ascending. To specify descending order for a field, add a suffix \" desc\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of dns authorizations to return per call.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value returned by the last `ListDnsAuthorizationsResponse`. Indicates that this is a continuation of a prior `ListDnsAuthorizations` call, and that the system should return the next page of data.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The project and location from which the dns authorizations should be listed, specified in the format `projects/*/locations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/dnsAuthorizations",
-	//   "response": {
-	//     "$ref": "ListDnsAuthorizationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5865,7 +4365,7 @@ func (c *ProjectsLocationsDnsAuthorizationsListCall) Do(opts ...googleapi.CallOp
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDnsAuthorizationsListCall) Pages(ctx context.Context, f func(*ListDnsAuthorizationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5881,8 +4381,6 @@ func (c *ProjectsLocationsDnsAuthorizationsListCall) Pages(ctx context.Context, 
 	}
 }
 
-// method id "certificatemanager.projects.locations.dnsAuthorizations.patch":
-
 type ProjectsLocationsDnsAuthorizationsPatchCall struct {
 	s                *Service
 	name             string
@@ -5894,8 +4392,8 @@ type ProjectsLocationsDnsAuthorizationsPatchCall struct {
 
 // Patch: Updates a DnsAuthorization.
 //
-//   - name: A user-defined name of the dns authorization.
-//     DnsAuthorization names must be unique globally and match pattern
+//   - name: A user-defined name of the dns authorization. DnsAuthorization names
+//     must be unique globally and match pattern
 //     `projects/*/locations/*/dnsAuthorizations/*`.
 func (r *ProjectsLocationsDnsAuthorizationsService) Patch(name string, dnsauthorization *DnsAuthorization) *ProjectsLocationsDnsAuthorizationsPatchCall {
 	c := &ProjectsLocationsDnsAuthorizationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5904,9 +4402,8 @@ func (r *ProjectsLocationsDnsAuthorizationsService) Patch(name string, dnsauthor
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// update mask applies to the resource. For the `FieldMask` definition,
-// see
+// UpdateMask sets the optional parameter "updateMask": Required. The update
+// mask applies to the resource. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
 func (c *ProjectsLocationsDnsAuthorizationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDnsAuthorizationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -5914,23 +4411,21 @@ func (c *ProjectsLocationsDnsAuthorizationsPatchCall) UpdateMask(updateMask stri
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDnsAuthorizationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsAuthorizationsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDnsAuthorizationsPatchCall) Context(ctx context.Context) *ProjectsLocationsDnsAuthorizationsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDnsAuthorizationsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5939,18 +4434,12 @@ func (c *ProjectsLocationsDnsAuthorizationsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDnsAuthorizationsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dnsauthorization)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -5967,12 +4456,10 @@ func (c *ProjectsLocationsDnsAuthorizationsPatchCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "certificatemanager.projects.locations.dnsAuthorizations.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDnsAuthorizationsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6003,44 +4490,7 @@ func (c *ProjectsLocationsDnsAuthorizationsPatchCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a DnsAuthorization.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dnsAuthorizations/{dnsAuthorizationsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "certificatemanager.projects.locations.dnsAuthorizations.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "A user-defined name of the dns authorization. DnsAuthorization names must be unique globally and match pattern `projects/*/locations/*/dnsAuthorizations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/dnsAuthorizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "DnsAuthorization"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.operations.cancel":
 
 type ProjectsLocationsOperationsCancelCall struct {
 	s                      *Service
@@ -6051,15 +4501,14 @@ type ProjectsLocationsOperationsCancelCall struct {
 	header_                http.Header
 }
 
-// Cancel: Starts asynchronous cancellation on a long-running operation.
-// The server makes a best effort to cancel the operation, but success
-// is not guaranteed. If the server doesn't support this method, it
-// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
-// Operations.GetOperation or other methods to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation. On successful cancellation, the operation is not
-// deleted; instead, it becomes an operation with an Operation.error
-// value with a google.rpc.Status.code of 1, corresponding to
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -6071,23 +4520,21 @@ func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperation
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsOperationsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6096,18 +4543,12 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
@@ -6124,12 +4565,10 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "certificatemanager.projects.locations.operations.cancel" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6160,38 +4599,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
-	//   "httpMethod": "POST",
-	//   "id": "certificatemanager.projects.locations.operations.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be cancelled.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:cancel",
-	//   "request": {
-	//     "$ref": "CancelOperationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.operations.delete":
 
 type ProjectsLocationsOperationsDeleteCall struct {
 	s          *Service
@@ -6201,10 +4609,10 @@ type ProjectsLocationsOperationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a long-running operation. This method indicates that
-// the client is no longer interested in the operation result. It does
-// not cancel the operation. If the server doesn't support this method,
-// it returns `google.rpc.Code.UNIMPLEMENTED`.
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`.
 //
 // - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
@@ -6214,23 +4622,21 @@ func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocati
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsOperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6239,12 +4645,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -6262,12 +4663,10 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "certificatemanager.projects.locations.operations.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6298,35 +4697,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "certificatemanager.projects.locations.operations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be deleted.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.operations.get":
 
 type ProjectsLocationsOperationsGetCall struct {
 	s            *Service
@@ -6337,9 +4708,9 @@ type ProjectsLocationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
 //
 // - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
@@ -6349,33 +4720,29 @@ func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocations
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6384,12 +4751,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6410,12 +4772,10 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "certificatemanager.projects.locations.operations.get" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6446,35 +4806,7 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.operations.list":
 
 type ProjectsLocationsOperationsListCall struct {
 	s            *Service
@@ -6485,9 +4817,8 @@ type ProjectsLocationsOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -6496,55 +4827,50 @@ func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocation
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": The standard list filter.
 func (c *ProjectsLocationsOperationsListCall) Filter(filter string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
 func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsListCall) Context(ctx context.Context) *ProjectsLocationsOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6553,12 +4879,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6579,12 +4900,11 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "certificatemanager.projects.locations.operations.list" call.
-// Exactly one of *ListOperationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListOperationsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOperationsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6615,48 +4935,6 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.operations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The standard list filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The standard list page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The standard list page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/operations",
-	//   "response": {
-	//     "$ref": "ListOperationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6664,7 +4942,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6680,8 +4958,6 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
-// method id "certificatemanager.projects.locations.trustConfigs.create":
-
 type ProjectsLocationsTrustConfigsCreateCall struct {
 	s           *Service
 	parent      string
@@ -6693,8 +4969,8 @@ type ProjectsLocationsTrustConfigsCreateCall struct {
 
 // Create: Creates a new TrustConfig in a given project and location.
 //
-//   - parent: The parent resource of the TrustConfig. Must be in the
-//     format `projects/*/locations/*`.
+//   - parent: The parent resource of the TrustConfig. Must be in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsTrustConfigsService) Create(parent string, trustconfig *TrustConfig) *ProjectsLocationsTrustConfigsCreateCall {
 	c := &ProjectsLocationsTrustConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6702,8 +4978,8 @@ func (r *ProjectsLocationsTrustConfigsService) Create(parent string, trustconfig
 	return c
 }
 
-// TrustConfigId sets the optional parameter "trustConfigId": Required.
-// A user-provided name of the TrustConfig. Must match the regexp
+// TrustConfigId sets the optional parameter "trustConfigId": Required. A
+// user-provided name of the TrustConfig. Must match the regexp
 // `[a-z0-9-]{1,63}`.
 func (c *ProjectsLocationsTrustConfigsCreateCall) TrustConfigId(trustConfigId string) *ProjectsLocationsTrustConfigsCreateCall {
 	c.urlParams_.Set("trustConfigId", trustConfigId)
@@ -6711,23 +4987,21 @@ func (c *ProjectsLocationsTrustConfigsCreateCall) TrustConfigId(trustConfigId st
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTrustConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsTrustConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTrustConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsTrustConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTrustConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6736,18 +5010,12 @@ func (c *ProjectsLocationsTrustConfigsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTrustConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trustconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/trustConfigs")
@@ -6764,12 +5032,10 @@ func (c *ProjectsLocationsTrustConfigsCreateCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "certificatemanager.projects.locations.trustConfigs.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsTrustConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6800,43 +5066,7 @@ func (c *ProjectsLocationsTrustConfigsCreateCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new TrustConfig in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/trustConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "certificatemanager.projects.locations.trustConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource of the TrustConfig. Must be in the format `projects/*/locations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "trustConfigId": {
-	//       "description": "Required. A user-provided name of the TrustConfig. Must match the regexp `[a-z0-9-]{1,63}`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/trustConfigs",
-	//   "request": {
-	//     "$ref": "TrustConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.trustConfigs.delete":
 
 type ProjectsLocationsTrustConfigsDeleteCall struct {
 	s          *Service
@@ -6857,32 +5087,30 @@ func (r *ProjectsLocationsTrustConfigsService) Delete(name string) *ProjectsLoca
 }
 
 // Etag sets the optional parameter "etag": The current etag of the
-// TrustConfig. If an etag is provided and does not match the current
-// etag of the resource, deletion will be blocked and an ABORTED error
-// will be returned.
+// TrustConfig. If an etag is provided and does not match the current etag of
+// the resource, deletion will be blocked and an ABORTED error will be
+// returned.
 func (c *ProjectsLocationsTrustConfigsDeleteCall) Etag(etag string) *ProjectsLocationsTrustConfigsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTrustConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsTrustConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTrustConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsTrustConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTrustConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6891,12 +5119,7 @@ func (c *ProjectsLocationsTrustConfigsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTrustConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -6914,12 +5137,10 @@ func (c *ProjectsLocationsTrustConfigsDeleteCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "certificatemanager.projects.locations.trustConfigs.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsTrustConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6950,40 +5171,7 @@ func (c *ProjectsLocationsTrustConfigsDeleteCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a single TrustConfig.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/trustConfigs/{trustConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "certificatemanager.projects.locations.trustConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "etag": {
-	//       "description": "The current etag of the TrustConfig. If an etag is provided and does not match the current etag of the resource, deletion will be blocked and an ABORTED error will be returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. A name of the TrustConfig to delete. Must be in the format `projects/*/locations/*/trustConfigs/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/trustConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.trustConfigs.get":
 
 type ProjectsLocationsTrustConfigsGetCall struct {
 	s            *Service
@@ -7005,33 +5193,29 @@ func (r *ProjectsLocationsTrustConfigsService) Get(name string) *ProjectsLocatio
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTrustConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsTrustConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsTrustConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsTrustConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTrustConfigsGetCall) Context(ctx context.Context) *ProjectsLocationsTrustConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTrustConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7040,12 +5224,7 @@ func (c *ProjectsLocationsTrustConfigsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTrustConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7066,12 +5245,10 @@ func (c *ProjectsLocationsTrustConfigsGetCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "certificatemanager.projects.locations.trustConfigs.get" call.
-// Exactly one of *TrustConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TrustConfig.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TrustConfig.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsTrustConfigsGetCall) Do(opts ...googleapi.CallOption) (*TrustConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7102,35 +5279,7 @@ func (c *ProjectsLocationsTrustConfigsGetCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets details of a single TrustConfig.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/trustConfigs/{trustConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.trustConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. A name of the TrustConfig to describe. Must be in the format `projects/*/locations/*/trustConfigs/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/trustConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "TrustConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "certificatemanager.projects.locations.trustConfigs.list":
 
 type ProjectsLocationsTrustConfigsListCall struct {
 	s            *Service
@@ -7143,25 +5292,25 @@ type ProjectsLocationsTrustConfigsListCall struct {
 
 // List: Lists TrustConfigs in a given project and location.
 //
-//   - parent: The project and location from which the TrustConfigs should
-//     be listed, specified in the format `projects/*/locations/*`.
+//   - parent: The project and location from which the TrustConfigs should be
+//     listed, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsTrustConfigsService) List(parent string) *ProjectsLocationsTrustConfigsListCall {
 	c := &ProjectsLocationsTrustConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression to
-// restrict the TrustConfigs returned.
+// Filter sets the optional parameter "filter": Filter expression to restrict
+// the TrustConfigs returned.
 func (c *ProjectsLocationsTrustConfigsListCall) Filter(filter string) *ProjectsLocationsTrustConfigsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": A list of TrustConfig
-// field names used to specify the order of the returned results. The
-// default sorting order is ascending. To specify descending order for a
-// field, add a suffix " desc".
+// OrderBy sets the optional parameter "orderBy": A list of TrustConfig field
+// names used to specify the order of the returned results. The default sorting
+// order is ascending. To specify descending order for a field, add a suffix "
+// desc".
 func (c *ProjectsLocationsTrustConfigsListCall) OrderBy(orderBy string) *ProjectsLocationsTrustConfigsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -7174,43 +5323,39 @@ func (c *ProjectsLocationsTrustConfigsListCall) PageSize(pageSize int64) *Projec
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListTrustConfigsResponse`. Indicates that this is a
-// continuation of a prior `ListTrustConfigs` call, and that the system
-// should return the next page of data.
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListTrustConfigsResponse`. Indicates that this is a continuation of a
+// prior `ListTrustConfigs` call, and that the system should return the next
+// page of data.
 func (c *ProjectsLocationsTrustConfigsListCall) PageToken(pageToken string) *ProjectsLocationsTrustConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTrustConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsTrustConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsTrustConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsTrustConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTrustConfigsListCall) Context(ctx context.Context) *ProjectsLocationsTrustConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTrustConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7219,12 +5364,7 @@ func (c *ProjectsLocationsTrustConfigsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTrustConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7245,12 +5385,11 @@ func (c *ProjectsLocationsTrustConfigsListCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "certificatemanager.projects.locations.trustConfigs.list" call.
-// Exactly one of *ListTrustConfigsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListTrustConfigsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsTrustConfigsListCall) Do(opts ...googleapi.CallOption) (*ListTrustConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7281,53 +5420,6 @@ func (c *ProjectsLocationsTrustConfigsListCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists TrustConfigs in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/trustConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "certificatemanager.projects.locations.trustConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Filter expression to restrict the TrustConfigs returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "A list of TrustConfig field names used to specify the order of the returned results. The default sorting order is ascending. To specify descending order for a field, add a suffix \" desc\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of TrustConfigs to return per call.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value returned by the last `ListTrustConfigsResponse`. Indicates that this is a continuation of a prior `ListTrustConfigs` call, and that the system should return the next page of data.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The project and location from which the TrustConfigs should be listed, specified in the format `projects/*/locations/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/trustConfigs",
-	//   "response": {
-	//     "$ref": "ListTrustConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7335,7 +5427,7 @@ func (c *ProjectsLocationsTrustConfigsListCall) Do(opts ...googleapi.CallOption)
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsTrustConfigsListCall) Pages(ctx context.Context, f func(*ListTrustConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7351,8 +5443,6 @@ func (c *ProjectsLocationsTrustConfigsListCall) Pages(ctx context.Context, f fun
 	}
 }
 
-// method id "certificatemanager.projects.locations.trustConfigs.patch":
-
 type ProjectsLocationsTrustConfigsPatchCall struct {
 	s           *Service
 	name        string
@@ -7364,9 +5454,8 @@ type ProjectsLocationsTrustConfigsPatchCall struct {
 
 // Patch: Updates a TrustConfig.
 //
-//   - name: A user-defined name of the trust config. TrustConfig names
-//     must be unique globally and match pattern
-//     `projects/*/locations/*/trustConfigs/*`.
+//   - name: A user-defined name of the trust config. TrustConfig names must be
+//     unique globally and match pattern `projects/*/locations/*/trustConfigs/*`.
 func (r *ProjectsLocationsTrustConfigsService) Patch(name string, trustconfig *TrustConfig) *ProjectsLocationsTrustConfigsPatchCall {
 	c := &ProjectsLocationsTrustConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7374,9 +5463,8 @@ func (r *ProjectsLocationsTrustConfigsService) Patch(name string, trustconfig *T
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// update mask applies to the resource. For the `FieldMask` definition,
-// see
+// UpdateMask sets the optional parameter "updateMask": Required. The update
+// mask applies to the resource. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
 func (c *ProjectsLocationsTrustConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTrustConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -7384,23 +5472,21 @@ func (c *ProjectsLocationsTrustConfigsPatchCall) UpdateMask(updateMask string) *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTrustConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsTrustConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTrustConfigsPatchCall) Context(ctx context.Context) *ProjectsLocationsTrustConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTrustConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7409,18 +5495,12 @@ func (c *ProjectsLocationsTrustConfigsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTrustConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trustconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -7437,12 +5517,10 @@ func (c *ProjectsLocationsTrustConfigsPatchCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "certificatemanager.projects.locations.trustConfigs.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsTrustConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7473,39 +5551,4 @@ func (c *ProjectsLocationsTrustConfigsPatchCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a TrustConfig.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/trustConfigs/{trustConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "certificatemanager.projects.locations.trustConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "A user-defined name of the trust config. TrustConfig names must be unique globally and match pattern `projects/*/locations/*/trustConfigs/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/trustConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "TrustConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

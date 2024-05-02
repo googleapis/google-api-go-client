@@ -164,47 +164,36 @@ type ChallengeService struct {
 
 // Challenge: Result message for VerifiedAccess.CreateChallenge.
 type Challenge struct {
-	// AlternativeChallenge: Challenge generated with the old signing key
-	// (this will only be present during key rotation)
+	// AlternativeChallenge: Challenge generated with the old signing key (this
+	// will only be present during key rotation)
 	AlternativeChallenge *SignedData `json:"alternativeChallenge,omitempty"`
-
 	// Challenge: Generated challenge
 	Challenge *SignedData `json:"challenge,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AlternativeChallenge") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AlternativeChallenge") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternativeChallenge") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AlternativeChallenge") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Challenge) MarshalJSON() ([]byte, error) {
 	type NoMethod Challenge
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
 }
 
@@ -212,128 +201,97 @@ type Empty struct {
 type SignedData struct {
 	// Data: The data to be signed.
 	Data string `json:"data,omitempty"`
-
 	// Signature: The signature of the data field.
 	Signature string `json:"signature,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Data") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Data") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SignedData) MarshalJSON() ([]byte, error) {
 	type NoMethod SignedData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyChallengeResponseRequest: signed ChallengeResponse
 type VerifyChallengeResponseRequest struct {
 	// ChallengeResponse: The generated response to the challenge
 	ChallengeResponse *SignedData `json:"challengeResponse,omitempty"`
-
-	// ExpectedIdentity: Service can optionally provide identity information
-	// about the device or user associated with the key. For an EMK, this
-	// value is the enrolled domain. For an EUK, this value is the user's
-	// email address. If present, this value will be checked against
-	// contents of the response, and verification will fail if there is no
-	// match.
+	// ExpectedIdentity: Service can optionally provide identity information about
+	// the device or user associated with the key. For an EMK, this value is the
+	// enrolled domain. For an EUK, this value is the user's email address. If
+	// present, this value will be checked against contents of the response, and
+	// verification will fail if there is no match.
 	ExpectedIdentity string `json:"expectedIdentity,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ChallengeResponse")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ChallengeResponse") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChallengeResponse") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ChallengeResponse") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VerifyChallengeResponseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyChallengeResponseRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyChallengeResponseResult: Result message for
 // VerifiedAccess.VerifyChallengeResponse.
 type VerifyChallengeResponseResult struct {
-	// AttestedDeviceId: Attested device id (ADID) of the device, read from
-	// the verified data.
+	// AttestedDeviceId: Attested device id (ADID) of the device, read from the
+	// verified data.
 	AttestedDeviceId string `json:"attestedDeviceId,omitempty"`
-
-	// DeviceEnrollmentId: Device enrollment id is returned in this field
-	// (for the machine response only).
+	// DeviceEnrollmentId: Device enrollment id is returned in this field (for the
+	// machine response only).
 	DeviceEnrollmentId string `json:"deviceEnrollmentId,omitempty"`
-
-	// DevicePermanentId: Device permanent id is returned in this field (for
-	// the machine response only).
+	// DevicePermanentId: Device permanent id is returned in this field (for the
+	// machine response only).
 	DevicePermanentId string `json:"devicePermanentId,omitempty"`
-
-	// SignedPublicKeyAndChallenge: Certificate Signing Request (in the
-	// SPKAC format, base64 encoded) is returned in this field. This field
-	// will be set only if device has included CSR in its challenge
-	// response. (the option to include CSR is now available for both user
-	// and machine responses)
+	// SignedPublicKeyAndChallenge: Certificate Signing Request (in the SPKAC
+	// format, base64 encoded) is returned in this field. This field will be set
+	// only if device has included CSR in its challenge response. (the option to
+	// include CSR is now available for both user and machine responses)
 	SignedPublicKeyAndChallenge string `json:"signedPublicKeyAndChallenge,omitempty"`
-
-	// VerificationOutput: For EMCert check, device permanent id is returned
-	// here. For EUCert check, signed_public_key_and_challenge [base64
-	// encoded] is returned if present, otherwise empty string is returned.
-	// This field is deprecated, please use device_permanent_id or
+	// VerificationOutput: For EMCert check, device permanent id is returned here.
+	// For EUCert check, signed_public_key_and_challenge [base64 encoded] is
+	// returned if present, otherwise empty string is returned. This field is
+	// deprecated, please use device_permanent_id or
 	// signed_public_key_and_challenge fields.
 	VerificationOutput string `json:"verificationOutput,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AttestedDeviceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttestedDeviceId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AttestedDeviceId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VerifyChallengeResponseResult) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyChallengeResponseResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "verifiedaccess.challenge.create":
 
 type ChallengeCreateCall struct {
 	s          *Service
@@ -351,23 +309,21 @@ func (r *ChallengeService) Create(empty *Empty) *ChallengeCreateCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ChallengeCreateCall) Fields(s ...googleapi.Field) *ChallengeCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ChallengeCreateCall) Context(ctx context.Context) *ChallengeCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ChallengeCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -376,18 +332,12 @@ func (c *ChallengeCreateCall) Header() http.Header {
 }
 
 func (c *ChallengeCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.empty)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/challenge")
@@ -401,12 +351,10 @@ func (c *ChallengeCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "verifiedaccess.challenge.create" call.
-// Exactly one of *Challenge or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Challenge.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Challenge.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ChallengeCreateCall) Do(opts ...googleapi.CallOption) (*Challenge, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -437,28 +385,7 @@ func (c *ChallengeCreateCall) Do(opts ...googleapi.CallOption) (*Challenge, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "CreateChallenge API",
-	//   "flatPath": "v1/challenge",
-	//   "httpMethod": "POST",
-	//   "id": "verifiedaccess.challenge.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/challenge",
-	//   "request": {
-	//     "$ref": "Empty"
-	//   },
-	//   "response": {
-	//     "$ref": "Challenge"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/verifiedaccess"
-	//   ]
-	// }
-
 }
-
-// method id "verifiedaccess.challenge.verify":
 
 type ChallengeVerifyCall struct {
 	s                              *Service
@@ -476,23 +403,21 @@ func (r *ChallengeService) Verify(verifychallengeresponserequest *VerifyChalleng
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ChallengeVerifyCall) Fields(s ...googleapi.Field) *ChallengeVerifyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ChallengeVerifyCall) Context(ctx context.Context) *ChallengeVerifyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ChallengeVerifyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -501,18 +426,12 @@ func (c *ChallengeVerifyCall) Header() http.Header {
 }
 
 func (c *ChallengeVerifyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.verifychallengeresponserequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/challenge:verify")
@@ -526,12 +445,11 @@ func (c *ChallengeVerifyCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "verifiedaccess.challenge.verify" call.
-// Exactly one of *VerifyChallengeResponseResult or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *VerifyChallengeResponseResult.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *VerifyChallengeResponseResult.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ChallengeVerifyCall) Do(opts ...googleapi.CallOption) (*VerifyChallengeResponseResult, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -562,23 +480,4 @@ func (c *ChallengeVerifyCall) Do(opts ...googleapi.CallOption) (*VerifyChallenge
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "VerifyChallengeResponse API",
-	//   "flatPath": "v1/challenge:verify",
-	//   "httpMethod": "POST",
-	//   "id": "verifiedaccess.challenge.verify",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/challenge:verify",
-	//   "request": {
-	//     "$ref": "VerifyChallengeResponseRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "VerifyChallengeResponseResult"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/verifiedaccess"
-	//   ]
-	// }
-
 }

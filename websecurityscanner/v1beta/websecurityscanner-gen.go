@@ -95,8 +95,8 @@ const mtlsBasePath = "https://websecurityscanner.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -227,170 +227,130 @@ type ProjectsScanConfigsScanRunsFindingsService struct {
 type Authentication struct {
 	// CustomAccount: Authentication using a custom account.
 	CustomAccount *CustomAccount `json:"customAccount,omitempty"`
-
 	// GoogleAccount: Authentication using a Google account.
 	GoogleAccount *GoogleAccount `json:"googleAccount,omitempty"`
-
 	// IapCredential: Authentication using Identity-Aware-Proxy (IAP).
 	IapCredential *IapCredential `json:"iapCredential,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CustomAccount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomAccount") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CustomAccount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Authentication) MarshalJSON() ([]byte, error) {
 	type NoMethod Authentication
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CrawledUrl: A CrawledUrl resource represents a URL that was crawled
-// during a ScanRun. Web Security Scanner Service crawls the web
-// applications, following all links within the scope of sites, to find
-// the URLs to test against.
+// CrawledUrl: A CrawledUrl resource represents a URL that was crawled during a
+// ScanRun. Web Security Scanner Service crawls the web applications, following
+// all links within the scope of sites, to find the URLs to test against.
 type CrawledUrl struct {
 	// Body: The body of the request that was used to visit the URL.
 	Body string `json:"body,omitempty"`
-
-	// HttpMethod: The http method of the request that was used to visit the
-	// URL, in uppercase.
+	// HttpMethod: The http method of the request that was used to visit the URL,
+	// in uppercase.
 	HttpMethod string `json:"httpMethod,omitempty"`
-
 	// Url: The URL that was crawled.
 	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Body") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Body") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CrawledUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod CrawledUrl
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomAccount: Describes authentication configuration that uses a
-// custom account.
+// CustomAccount: Describes authentication configuration that uses a custom
+// account.
 type CustomAccount struct {
 	// LoginUrl: Required. The login form URL of the website.
 	LoginUrl string `json:"loginUrl,omitempty"`
-
-	// Password: Required. Input only. The password of the custom account.
-	// The credential is stored encrypted and not returned in any response
-	// nor included in audit logs.
+	// Password: Required. Input only. The password of the custom account. The
+	// credential is stored encrypted and not returned in any response nor included
+	// in audit logs.
 	Password string `json:"password,omitempty"`
-
 	// Username: Required. The user name of the custom account.
 	Username string `json:"username,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LoginUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LoginUrl") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LoginUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CustomAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomAccount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Finding: A Finding resource represents a vulnerability instance
-// identified during a ScanRun.
+// Finding: A Finding resource represents a vulnerability instance identified
+// during a ScanRun.
 type Finding struct {
 	// Body: The body of the request that triggered the vulnerability.
 	Body string `json:"body,omitempty"`
-
 	// Description: The description of the vulnerability.
 	Description string `json:"description,omitempty"`
-
 	// FinalUrl: The URL where the browser lands when the vulnerability is
 	// detected.
 	FinalUrl string `json:"finalUrl,omitempty"`
-
-	// FindingType: The type of the Finding. Detailed and up-to-date
-	// information on findings can be found here:
+	// FindingType: The type of the Finding. Detailed and up-to-date information on
+	// findings can be found here:
 	// https://cloud.google.com/security-command-center/docs/how-to-remediate-web-security-scanner
 	FindingType string `json:"findingType,omitempty"`
-
-	// Form: An addon containing information reported for a vulnerability
-	// with an HTML form, if any.
+	// Form: An addon containing information reported for a vulnerability with an
+	// HTML form, if any.
 	Form *Form `json:"form,omitempty"`
-
 	// FrameUrl: If the vulnerability was originated from nested IFrame, the
 	// immediate parent IFrame is reported.
 	FrameUrl string `json:"frameUrl,omitempty"`
-
 	// FuzzedUrl: The URL produced by the server-side fuzzer and used in the
 	// request that triggered the vulnerability.
 	FuzzedUrl string `json:"fuzzedUrl,omitempty"`
-
-	// HttpMethod: The http method of the request that triggered the
-	// vulnerability, in uppercase.
+	// HttpMethod: The http method of the request that triggered the vulnerability,
+	// in uppercase.
 	HttpMethod string `json:"httpMethod,omitempty"`
-
-	// Name: The resource name of the Finding. The name follows the format
-	// of
-	// 'projects/{projectId}/scanConfigs/{scanConfigId}/scanruns/{scanRunId}/
-	// findings/{findingId}'. The finding IDs are generated by the system.
+	// Name: The resource name of the Finding. The name follows the format of
+	// 'projects/{projectId}/scanConfigs/{scanConfigId}/scanruns/{scanRunId}/finding
+	// s/{findingId}'. The finding IDs are generated by the system.
 	Name string `json:"name,omitempty"`
-
-	// OutdatedLibrary: An addon containing information about outdated
-	// libraries.
+	// OutdatedLibrary: An addon containing information about outdated libraries.
 	OutdatedLibrary *OutdatedLibrary `json:"outdatedLibrary,omitempty"`
-
-	// ReproductionUrl: The URL containing human-readable payload that user
-	// can leverage to reproduce the vulnerability.
+	// ReproductionUrl: The URL containing human-readable payload that user can
+	// leverage to reproduce the vulnerability.
 	ReproductionUrl string `json:"reproductionUrl,omitempty"`
-
 	// Severity: The severity level of the reported vulnerability.
 	//
 	// Possible values:
@@ -400,285 +360,220 @@ type Finding struct {
 	//   "MEDIUM" - Medium severity.
 	//   "LOW" - Low severity.
 	Severity string `json:"severity,omitempty"`
-
-	// TrackingId: The tracking ID uniquely identifies a vulnerability
-	// instance across multiple ScanRuns.
+	// TrackingId: The tracking ID uniquely identifies a vulnerability instance
+	// across multiple ScanRuns.
 	TrackingId string `json:"trackingId,omitempty"`
-
-	// ViolatingResource: An addon containing detailed information regarding
-	// any resource causing the vulnerability such as JavaScript sources,
-	// image, audio files, etc.
+	// ViolatingResource: An addon containing detailed information regarding any
+	// resource causing the vulnerability such as JavaScript sources, image, audio
+	// files, etc.
 	ViolatingResource *ViolatingResource `json:"violatingResource,omitempty"`
-
-	// VulnerableHeaders: An addon containing information about vulnerable
-	// or missing HTTP headers.
+	// VulnerableHeaders: An addon containing information about vulnerable or
+	// missing HTTP headers.
 	VulnerableHeaders *VulnerableHeaders `json:"vulnerableHeaders,omitempty"`
-
 	// VulnerableParameters: An addon containing information about request
 	// parameters which were found to be vulnerable.
 	VulnerableParameters *VulnerableParameters `json:"vulnerableParameters,omitempty"`
-
 	// Xss: An addon containing information reported for an XSS, if any.
 	Xss *Xss `json:"xss,omitempty"`
-
 	// Xxe: An addon containing information reported for an XXE, if any.
 	Xxe *Xxe `json:"xxe,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Body") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Body") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Finding) MarshalJSON() ([]byte, error) {
 	type NoMethod Finding
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// FindingTypeStats: A FindingTypeStats resource represents stats
-// regarding a specific FindingType of Findings under a given ScanRun.
+// FindingTypeStats: A FindingTypeStats resource represents stats regarding a
+// specific FindingType of Findings under a given ScanRun.
 type FindingTypeStats struct {
 	// FindingCount: The count of findings belonging to this finding type.
 	FindingCount int64 `json:"findingCount,omitempty"`
-
 	// FindingType: The finding type associated with the stats.
 	FindingType string `json:"findingType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FindingCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FindingCount") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FindingCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FindingTypeStats) MarshalJSON() ([]byte, error) {
 	type NoMethod FindingTypeStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Form: ! Information about a vulnerability with an HTML.
 type Form struct {
 	// ActionUri: ! The URI where to send the form when it's submitted.
 	ActionUri string `json:"actionUri,omitempty"`
-
 	// Fields: ! The names of form fields related to the vulnerability.
 	Fields []string `json:"fields,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ActionUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ActionUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Form) MarshalJSON() ([]byte, error) {
 	type NoMethod Form
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAccount: Describes authentication configuration that uses a
-// Google account.
+// GoogleAccount: Describes authentication configuration that uses a Google
+// account.
 type GoogleAccount struct {
-	// Password: Required. Input only. The password of the Google account.
-	// The credential is stored encrypted and not returned in any response
-	// nor included in audit logs.
+	// Password: Required. Input only. The password of the Google account. The
+	// credential is stored encrypted and not returned in any response nor included
+	// in audit logs.
 	Password string `json:"password,omitempty"`
-
 	// Username: Required. The user name of the Google account.
 	Username string `json:"username,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Password") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Password") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Password") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAccount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Header: Describes a HTTP Header.
 type Header struct {
 	// Name: Header name.
 	Name string `json:"name,omitempty"`
-
 	// Value: Header value.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Header) MarshalJSON() ([]byte, error) {
 	type NoMethod Header
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // IapCredential: Describes authentication configuration for
 // Identity-Aware-Proxy (IAP).
 type IapCredential struct {
 	// IapTestServiceAccountInfo: Authentication configuration when
-	// Web-Security-Scanner service account is added in Identity-Aware-Proxy
-	// (IAP) access policies.
+	// Web-Security-Scanner service account is added in Identity-Aware-Proxy (IAP)
+	// access policies.
 	IapTestServiceAccountInfo *IapTestServiceAccountInfo `json:"iapTestServiceAccountInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "IapTestServiceAccountInfo") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IapTestServiceAccountInfo")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "IapTestServiceAccountInfo") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IapTestServiceAccountInfo") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *IapCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod IapCredential
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// IapTestServiceAccountInfo: Describes authentication configuration
-// when Web-Security-Scanner service account is added in
-// Identity-Aware-Proxy (IAP) access policies.
+// IapTestServiceAccountInfo: Describes authentication configuration when
+// Web-Security-Scanner service account is added in Identity-Aware-Proxy (IAP)
+// access policies.
 type IapTestServiceAccountInfo struct {
-	// TargetAudienceClientId: Required. Describes OAuth2 Client ID of
-	// resources protected by Identity-Aware-Proxy(IAP).
+	// TargetAudienceClientId: Required. Describes OAuth2 Client ID of resources
+	// protected by Identity-Aware-Proxy(IAP).
 	TargetAudienceClientId string `json:"targetAudienceClientId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "TargetAudienceClientId") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "TargetAudienceClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TargetAudienceClientId")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "TargetAudienceClientId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *IapTestServiceAccountInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IapTestServiceAccountInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCrawledUrlsResponse: Response for the `ListCrawledUrls` method.
 type ListCrawledUrlsResponse struct {
 	// CrawledUrls: The list of CrawledUrls returned.
 	CrawledUrls []*CrawledUrl `json:"crawledUrls,omitempty"`
-
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CrawledUrls") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CrawledUrls") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CrawledUrls") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListCrawledUrlsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCrawledUrlsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFindingTypeStatsResponse: Response for the `ListFindingTypeStats`
@@ -687,225 +582,175 @@ type ListFindingTypeStatsResponse struct {
 	// FindingTypeStats: The list of FindingTypeStats returned.
 	FindingTypeStats []*FindingTypeStats `json:"findingTypeStats,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "FindingTypeStats") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FindingTypeStats") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FindingTypeStats") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListFindingTypeStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFindingTypeStatsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFindingsResponse: Response for the `ListFindings` method.
 type ListFindingsResponse struct {
 	// Findings: The list of Findings returned.
 	Findings []*Finding `json:"findings,omitempty"`
-
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Findings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Findings") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Findings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListFindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFindingsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListScanConfigsResponse: Response for the `ListScanConfigs` method.
 type ListScanConfigsResponse struct {
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// ScanConfigs: The list of ScanConfigs returned.
 	ScanConfigs []*ScanConfig `json:"scanConfigs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListScanConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListScanConfigsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListScanRunsResponse: Response for the `ListScanRuns` method.
 type ListScanRunsResponse struct {
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// ScanRuns: The list of ScanRuns returned.
 	ScanRuns []*ScanRun `json:"scanRuns,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListScanRunsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListScanRunsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // OutdatedLibrary: Information reported for an outdated library.
 type OutdatedLibrary struct {
-	// LearnMoreUrls: URLs to learn more information about the
-	// vulnerabilities in the library.
+	// LearnMoreUrls: URLs to learn more information about the vulnerabilities in
+	// the library.
 	LearnMoreUrls []string `json:"learnMoreUrls,omitempty"`
-
 	// LibraryName: The name of the outdated library.
 	LibraryName string `json:"libraryName,omitempty"`
-
 	// Version: The version number.
 	Version string `json:"version,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LearnMoreUrls") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LearnMoreUrls") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LearnMoreUrls") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *OutdatedLibrary) MarshalJSON() ([]byte, error) {
 	type NoMethod OutdatedLibrary
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ScanConfig: A ScanConfig resource contains the configurations to
-// launch a scan.
+// ScanConfig: A ScanConfig resource contains the configurations to launch a
+// scan.
 type ScanConfig struct {
-	// Authentication: The authentication configuration. If specified,
-	// service will use the authentication configuration during scanning.
+	// Authentication: The authentication configuration. If specified, service will
+	// use the authentication configuration during scanning.
 	Authentication *Authentication `json:"authentication,omitempty"`
-
 	// BlacklistPatterns: The excluded URL patterns as described in
 	// https://cloud.google.com/security-command-center/docs/how-to-use-web-security-scanner#excluding_urls
 	BlacklistPatterns []string `json:"blacklistPatterns,omitempty"`
-
-	// DisplayName: Required. The user provided display name of the
-	// ScanConfig.
+	// DisplayName: Required. The user provided display name of the ScanConfig.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// ExportToSecurityCommandCenter: Controls export of scan configurations
-	// and results to Security Command Center.
+	// ExportToSecurityCommandCenter: Controls export of scan configurations and
+	// results to Security Command Center.
 	//
 	// Possible values:
-	//   "EXPORT_TO_SECURITY_COMMAND_CENTER_UNSPECIFIED" - Use default,
-	// which is ENABLED.
+	//   "EXPORT_TO_SECURITY_COMMAND_CENTER_UNSPECIFIED" - Use default, which is
+	// ENABLED.
 	//   "ENABLED" - Export results of this scan to Security Command Center.
 	//   "DISABLED" - Do not export results of this scan to Security Command
 	// Center.
 	ExportToSecurityCommandCenter string `json:"exportToSecurityCommandCenter,omitempty"`
-
-	// IgnoreHttpStatusErrors: Whether to keep scanning even if most
-	// requests return HTTP error codes.
+	// IgnoreHttpStatusErrors: Whether to keep scanning even if most requests
+	// return HTTP error codes.
 	IgnoreHttpStatusErrors bool `json:"ignoreHttpStatusErrors,omitempty"`
-
 	// LatestRun: Latest ScanRun if available.
 	LatestRun *ScanRun `json:"latestRun,omitempty"`
-
-	// ManagedScan: Whether the scan config is managed by Web Security
-	// Scanner, output only.
+	// ManagedScan: Whether the scan config is managed by Web Security Scanner,
+	// output only.
 	ManagedScan bool `json:"managedScan,omitempty"`
-
-	// MaxQps: The maximum QPS during scanning. A valid value ranges from 5
-	// to 20 inclusively. If the field is unspecified or its value is set 0,
-	// server will default to 15. Other values outside of [5, 20] range will
-	// be rejected with INVALID_ARGUMENT error.
+	// MaxQps: The maximum QPS during scanning. A valid value ranges from 5 to 20
+	// inclusively. If the field is unspecified or its value is set 0, server will
+	// default to 15. Other values outside of [5, 20] range will be rejected with
+	// INVALID_ARGUMENT error.
 	MaxQps int64 `json:"maxQps,omitempty"`
-
-	// Name: The resource name of the ScanConfig. The name follows the
-	// format of 'projects/{projectId}/scanConfigs/{scanConfigId}'. The
-	// ScanConfig IDs are generated by the system.
+	// Name: The resource name of the ScanConfig. The name follows the format of
+	// 'projects/{projectId}/scanConfigs/{scanConfigId}'. The ScanConfig IDs are
+	// generated by the system.
 	Name string `json:"name,omitempty"`
-
 	// RiskLevel: The risk level selected for the scan
 	//
 	// Possible values:
@@ -913,293 +758,238 @@ type ScanConfig struct {
 	//   "NORMAL" - Normal scanning (Recommended)
 	//   "LOW" - Lower impact scanning
 	RiskLevel string `json:"riskLevel,omitempty"`
-
 	// Schedule: The schedule of the ScanConfig.
 	Schedule *Schedule `json:"schedule,omitempty"`
-
-	// StartingUrls: Required. The starting URLs from which the scanner
-	// finds site pages.
+	// StartingUrls: Required. The starting URLs from which the scanner finds site
+	// pages.
 	StartingUrls []string `json:"startingUrls,omitempty"`
-
-	// StaticIpScan: Whether the scan configuration has enabled static IP
-	// address scan feature. If enabled, the scanner will access
-	// applications from static IP addresses.
+	// StaticIpScan: Whether the scan configuration has enabled static IP address
+	// scan feature. If enabled, the scanner will access applications from static
+	// IP addresses.
 	StaticIpScan bool `json:"staticIpScan,omitempty"`
-
-	// TargetPlatforms: Set of Google Cloud platforms targeted by the scan.
-	// If empty, APP_ENGINE will be used as a default.
+	// TargetPlatforms: Set of Google Cloud platforms targeted by the scan. If
+	// empty, APP_ENGINE will be used as a default.
 	//
 	// Possible values:
-	//   "TARGET_PLATFORM_UNSPECIFIED" - The target platform is unknown.
-	// Requests with this enum value will be rejected with INVALID_ARGUMENT
-	// error.
+	//   "TARGET_PLATFORM_UNSPECIFIED" - The target platform is unknown. Requests
+	// with this enum value will be rejected with INVALID_ARGUMENT error.
 	//   "APP_ENGINE" - Google App Engine service.
 	//   "COMPUTE" - Google Compute Engine service.
 	//   "CLOUD_RUN" - Google Cloud Run service.
 	//   "CLOUD_FUNCTIONS" - Google Cloud Function service.
 	TargetPlatforms []string `json:"targetPlatforms,omitempty"`
-
 	// UserAgent: The user agent used during scanning.
 	//
 	// Possible values:
-	//   "USER_AGENT_UNSPECIFIED" - The user agent is unknown. Service will
-	// default to CHROME_LINUX.
+	//   "USER_AGENT_UNSPECIFIED" - The user agent is unknown. Service will default
+	// to CHROME_LINUX.
 	//   "CHROME_LINUX" - Chrome on Linux. This is the service default if
 	// unspecified.
 	//   "CHROME_ANDROID" - Chrome on Android.
 	//   "SAFARI_IPHONE" - Safari on IPhone.
 	UserAgent string `json:"userAgent,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Authentication") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Authentication") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Authentication") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScanConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ScanConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ScanConfigError: Defines a custom error message used by
-// CreateScanConfig and UpdateScanConfig APIs when scan configuration
-// validation fails. It is also reported as part of a ScanRunErrorTrace
-// message if scan validation fails due to a scan configuration error.
+// ScanConfigError: Defines a custom error message used by CreateScanConfig and
+// UpdateScanConfig APIs when scan configuration validation fails. It is also
+// reported as part of a ScanRunErrorTrace message if scan validation fails due
+// to a scan configuration error.
 type ScanConfigError struct {
 	// Code: Indicates the reason code for a configuration failure.
 	//
 	// Possible values:
 	//   "CODE_UNSPECIFIED" - There is no error.
 	//   "OK" - There is no error.
-	//   "INTERNAL_ERROR" - Indicates an internal server error. Please DO
-	// NOT USE THIS ERROR CODE unless the root cause is truly unknown.
-	//   "APPENGINE_API_BACKEND_ERROR" - One of the seed URLs is an App
-	// Engine URL but we cannot validate the scan settings due to an App
-	// Engine API backend error.
-	//   "APPENGINE_API_NOT_ACCESSIBLE" - One of the seed URLs is an App
-	// Engine URL but we cannot access the App Engine API to validate scan
-	// settings.
-	//   "APPENGINE_DEFAULT_HOST_MISSING" - One of the seed URLs is an App
-	// Engine URL but the Default Host of the App Engine is not set.
-	//   "CANNOT_USE_GOOGLE_COM_ACCOUNT" - Google corporate accounts can not
-	// be used for scanning.
-	//   "CANNOT_USE_OWNER_ACCOUNT" - The account of the scan creator can
-	// not be used for scanning.
-	//   "COMPUTE_API_BACKEND_ERROR" - This scan targets Compute Engine, but
-	// we cannot validate scan settings due to a Compute Engine API backend
+	//   "INTERNAL_ERROR" - Indicates an internal server error. Please DO NOT USE
+	// THIS ERROR CODE unless the root cause is truly unknown.
+	//   "APPENGINE_API_BACKEND_ERROR" - One of the seed URLs is an App Engine URL
+	// but we cannot validate the scan settings due to an App Engine API backend
 	// error.
-	//   "COMPUTE_API_NOT_ACCESSIBLE" - This scan targets Compute Engine,
-	// but we cannot access the Compute Engine API to validate the scan
-	// settings.
-	//   "CUSTOM_LOGIN_URL_DOES_NOT_BELONG_TO_CURRENT_PROJECT" - The Custom
-	// Login URL does not belong to the current project.
-	//   "CUSTOM_LOGIN_URL_MALFORMED" - The Custom Login URL is malformed
-	// (can not be parsed).
-	//   "CUSTOM_LOGIN_URL_MAPPED_TO_NON_ROUTABLE_ADDRESS" - The Custom
-	// Login URL is mapped to a non-routable IP address in DNS.
-	//   "CUSTOM_LOGIN_URL_MAPPED_TO_UNRESERVED_ADDRESS" - The Custom Login
-	// URL is mapped to an IP address which is not reserved for the current
-	// project.
-	//   "CUSTOM_LOGIN_URL_HAS_NON_ROUTABLE_IP_ADDRESS" - The Custom Login
-	// URL has a non-routable IP address.
-	//   "CUSTOM_LOGIN_URL_HAS_UNRESERVED_IP_ADDRESS" - The Custom Login URL
-	// has an IP address which is not reserved for the current project.
-	//   "DUPLICATE_SCAN_NAME" - Another scan with the same name
-	// (case-sensitive) already exists.
+	//   "APPENGINE_API_NOT_ACCESSIBLE" - One of the seed URLs is an App Engine URL
+	// but we cannot access the App Engine API to validate scan settings.
+	//   "APPENGINE_DEFAULT_HOST_MISSING" - One of the seed URLs is an App Engine
+	// URL but the Default Host of the App Engine is not set.
+	//   "CANNOT_USE_GOOGLE_COM_ACCOUNT" - Google corporate accounts can not be
+	// used for scanning.
+	//   "CANNOT_USE_OWNER_ACCOUNT" - The account of the scan creator can not be
+	// used for scanning.
+	//   "COMPUTE_API_BACKEND_ERROR" - This scan targets Compute Engine, but we
+	// cannot validate scan settings due to a Compute Engine API backend error.
+	//   "COMPUTE_API_NOT_ACCESSIBLE" - This scan targets Compute Engine, but we
+	// cannot access the Compute Engine API to validate the scan settings.
+	//   "CUSTOM_LOGIN_URL_DOES_NOT_BELONG_TO_CURRENT_PROJECT" - The Custom Login
+	// URL does not belong to the current project.
+	//   "CUSTOM_LOGIN_URL_MALFORMED" - The Custom Login URL is malformed (can not
+	// be parsed).
+	//   "CUSTOM_LOGIN_URL_MAPPED_TO_NON_ROUTABLE_ADDRESS" - The Custom Login URL
+	// is mapped to a non-routable IP address in DNS.
+	//   "CUSTOM_LOGIN_URL_MAPPED_TO_UNRESERVED_ADDRESS" - The Custom Login URL is
+	// mapped to an IP address which is not reserved for the current project.
+	//   "CUSTOM_LOGIN_URL_HAS_NON_ROUTABLE_IP_ADDRESS" - The Custom Login URL has
+	// a non-routable IP address.
+	//   "CUSTOM_LOGIN_URL_HAS_UNRESERVED_IP_ADDRESS" - The Custom Login URL has an
+	// IP address which is not reserved for the current project.
+	//   "DUPLICATE_SCAN_NAME" - Another scan with the same name (case-sensitive)
+	// already exists.
 	//   "INVALID_FIELD_VALUE" - A field is set to an invalid value.
 	//   "FAILED_TO_AUTHENTICATE_TO_TARGET" - There was an error trying to
 	// authenticate to the scan target.
-	//   "FINDING_TYPE_UNSPECIFIED" - Finding type value is not specified in
-	// the list findings request.
-	//   "FORBIDDEN_TO_SCAN_COMPUTE" - Scan targets Compute Engine, yet
-	// current project was not whitelisted for Google Compute Engine
-	// Scanning Alpha access.
-	//   "FORBIDDEN_UPDATE_TO_MANAGED_SCAN" - User tries to update managed
-	// scan
-	//   "MALFORMED_FILTER" - The supplied filter is malformed. For example,
-	// it can not be parsed, does not have a filter type in expression, or
-	// the same filter type appears more than once.
-	//   "MALFORMED_RESOURCE_NAME" - The supplied resource name is malformed
-	// (can not be parsed).
+	//   "FINDING_TYPE_UNSPECIFIED" - Finding type value is not specified in the
+	// list findings request.
+	//   "FORBIDDEN_TO_SCAN_COMPUTE" - Scan targets Compute Engine, yet current
+	// project was not whitelisted for Google Compute Engine Scanning Alpha access.
+	//   "FORBIDDEN_UPDATE_TO_MANAGED_SCAN" - User tries to update managed scan
+	//   "MALFORMED_FILTER" - The supplied filter is malformed. For example, it can
+	// not be parsed, does not have a filter type in expression, or the same filter
+	// type appears more than once.
+	//   "MALFORMED_RESOURCE_NAME" - The supplied resource name is malformed (can
+	// not be parsed).
 	//   "PROJECT_INACTIVE" - The current project is not in an active state.
 	//   "REQUIRED_FIELD" - A required field is not set.
-	//   "RESOURCE_NAME_INCONSISTENT" - Project id, scanconfig id, scanrun
-	// id, or finding id are not consistent with each other in resource
-	// name.
-	//   "SCAN_ALREADY_RUNNING" - The scan being requested to start is
-	// already running.
-	//   "SCAN_NOT_RUNNING" - The scan that was requested to be stopped is
-	// not running.
-	//   "SEED_URL_DOES_NOT_BELONG_TO_CURRENT_PROJECT" - One of the seed
-	// URLs does not belong to the current project.
-	//   "SEED_URL_MALFORMED" - One of the seed URLs is malformed (can not
-	// be parsed).
-	//   "SEED_URL_MAPPED_TO_NON_ROUTABLE_ADDRESS" - One of the seed URLs is
-	// mapped to a non-routable IP address in DNS.
-	//   "SEED_URL_MAPPED_TO_UNRESERVED_ADDRESS" - One of the seed URLs is
-	// mapped to an IP address which is not reserved for the current
-	// project.
+	//   "RESOURCE_NAME_INCONSISTENT" - Project id, scanconfig id, scanrun id, or
+	// finding id are not consistent with each other in resource name.
+	//   "SCAN_ALREADY_RUNNING" - The scan being requested to start is already
+	// running.
+	//   "SCAN_NOT_RUNNING" - The scan that was requested to be stopped is not
+	// running.
+	//   "SEED_URL_DOES_NOT_BELONG_TO_CURRENT_PROJECT" - One of the seed URLs does
+	// not belong to the current project.
+	//   "SEED_URL_MALFORMED" - One of the seed URLs is malformed (can not be
+	// parsed).
+	//   "SEED_URL_MAPPED_TO_NON_ROUTABLE_ADDRESS" - One of the seed URLs is mapped
+	// to a non-routable IP address in DNS.
+	//   "SEED_URL_MAPPED_TO_UNRESERVED_ADDRESS" - One of the seed URLs is mapped
+	// to an IP address which is not reserved for the current project.
 	//   "SEED_URL_HAS_NON_ROUTABLE_IP_ADDRESS" - One of the seed URLs has
 	// on-routable IP address.
-	//   "SEED_URL_HAS_UNRESERVED_IP_ADDRESS" - One of the seed URLs has an
-	// IP address that is not reserved for the current project.
+	//   "SEED_URL_HAS_UNRESERVED_IP_ADDRESS" - One of the seed URLs has an IP
+	// address that is not reserved for the current project.
 	//   "SERVICE_ACCOUNT_NOT_CONFIGURED" - The Web Security Scanner service
 	// account is not configured under the project.
-	//   "TOO_MANY_SCANS" - A project has reached the maximum number of
-	// scans.
-	//   "UNABLE_TO_RESOLVE_PROJECT_INFO" - Resolving the details of the
-	// current project fails.
-	//   "UNSUPPORTED_BLACKLIST_PATTERN_FORMAT" - One or more blacklist
-	// patterns were in the wrong format.
+	//   "TOO_MANY_SCANS" - A project has reached the maximum number of scans.
+	//   "UNABLE_TO_RESOLVE_PROJECT_INFO" - Resolving the details of the current
+	// project fails.
+	//   "UNSUPPORTED_BLACKLIST_PATTERN_FORMAT" - One or more blacklist patterns
+	// were in the wrong format.
 	//   "UNSUPPORTED_FILTER" - The supplied filter is not supported.
-	//   "UNSUPPORTED_FINDING_TYPE" - The supplied finding type is not
-	// supported. For example, we do not provide findings of the given
-	// finding type.
-	//   "UNSUPPORTED_URL_SCHEME" - The URL scheme of one or more of the
-	// supplied URLs is not supported.
-	//   "CLOUD_ASSET_INVENTORY_ASSET_NOT_FOUND" - CAI is not able to list
-	// assets.
+	//   "UNSUPPORTED_FINDING_TYPE" - The supplied finding type is not supported.
+	// For example, we do not provide findings of the given finding type.
+	//   "UNSUPPORTED_URL_SCHEME" - The URL scheme of one or more of the supplied
+	// URLs is not supported.
+	//   "CLOUD_ASSET_INVENTORY_ASSET_NOT_FOUND" - CAI is not able to list assets.
 	Code string `json:"code,omitempty"`
-
-	// FieldName: Indicates the full name of the ScanConfig field that
-	// triggers this error, for example "scan_config.max_qps". This field is
-	// provided for troubleshooting purposes only and its actual value can
-	// change in the future.
+	// FieldName: Indicates the full name of the ScanConfig field that triggers
+	// this error, for example "scan_config.max_qps". This field is provided for
+	// troubleshooting purposes only and its actual value can change in the future.
 	FieldName string `json:"fieldName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScanConfigError) MarshalJSON() ([]byte, error) {
 	type NoMethod ScanConfigError
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ScanRun: A ScanRun is a output-only resource representing an actual
-// run of the scan. Next id: 12
+// ScanRun: A ScanRun is a output-only resource representing an actual run of
+// the scan. Next id: 12
 type ScanRun struct {
-	// EndTime: The time at which the ScanRun reached termination state -
-	// that the ScanRun is either finished or stopped by user.
+	// EndTime: The time at which the ScanRun reached termination state - that the
+	// ScanRun is either finished or stopped by user.
 	EndTime string `json:"endTime,omitempty"`
-
-	// ErrorTrace: If result_state is an ERROR, this field provides the
-	// primary reason for scan's termination and more details, if such are
-	// available.
+	// ErrorTrace: If result_state is an ERROR, this field provides the primary
+	// reason for scan's termination and more details, if such are available.
 	ErrorTrace *ScanRunErrorTrace `json:"errorTrace,omitempty"`
-
 	// ExecutionState: The execution state of the ScanRun.
 	//
 	// Possible values:
-	//   "EXECUTION_STATE_UNSPECIFIED" - Represents an invalid state caused
-	// by internal server error. This value should never be returned.
+	//   "EXECUTION_STATE_UNSPECIFIED" - Represents an invalid state caused by
+	// internal server error. This value should never be returned.
 	//   "QUEUED" - The scan is waiting in the queue.
 	//   "SCANNING" - The scan is in progress.
 	//   "FINISHED" - The scan is either finished or stopped by user.
 	ExecutionState string `json:"executionState,omitempty"`
-
-	// HasVulnerabilities: Whether the scan run has found any
-	// vulnerabilities.
+	// HasVulnerabilities: Whether the scan run has found any vulnerabilities.
 	HasVulnerabilities bool `json:"hasVulnerabilities,omitempty"`
-
-	// Name: The resource name of the ScanRun. The name follows the format
-	// of
-	// 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'
-	// . The ScanRun IDs are generated by the system.
+	// Name: The resource name of the ScanRun. The name follows the format of
+	// 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'. The
+	// ScanRun IDs are generated by the system.
 	Name string `json:"name,omitempty"`
-
-	// ProgressPercent: The percentage of total completion ranging from 0 to
-	// 100. If the scan is in queue, the value is 0. If the scan is running,
-	// the value ranges from 0 to 100. If the scan is finished, the value is
-	// 100.
+	// ProgressPercent: The percentage of total completion ranging from 0 to 100.
+	// If the scan is in queue, the value is 0. If the scan is running, the value
+	// ranges from 0 to 100. If the scan is finished, the value is 100.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
-
-	// ResultState: The result state of the ScanRun. This field is only
-	// available after the execution state reaches "FINISHED".
+	// ResultState: The result state of the ScanRun. This field is only available
+	// after the execution state reaches "FINISHED".
 	//
 	// Possible values:
-	//   "RESULT_STATE_UNSPECIFIED" - Default value. This value is returned
-	// when the ScanRun is not yet finished.
+	//   "RESULT_STATE_UNSPECIFIED" - Default value. This value is returned when
+	// the ScanRun is not yet finished.
 	//   "SUCCESS" - The scan finished without errors.
 	//   "ERROR" - The scan finished with errors.
 	//   "KILLED" - The scan was terminated by user.
 	ResultState string `json:"resultState,omitempty"`
-
 	// StartTime: The time at which the ScanRun started.
 	StartTime string `json:"startTime,omitempty"`
-
-	// UrlsCrawledCount: The number of URLs crawled during this ScanRun. If
-	// the scan is in progress, the value represents the number of URLs
-	// crawled up to now.
+	// UrlsCrawledCount: The number of URLs crawled during this ScanRun. If the
+	// scan is in progress, the value represents the number of URLs crawled up to
+	// now.
 	UrlsCrawledCount int64 `json:"urlsCrawledCount,omitempty,string"`
-
-	// UrlsTestedCount: The number of URLs tested during this ScanRun. If
-	// the scan is in progress, the value represents the number of URLs
-	// tested up to now. The number of URLs tested is usually larger than
-	// the number URLS crawled because typically a crawled URL is tested
-	// with multiple test payloads.
+	// UrlsTestedCount: The number of URLs tested during this ScanRun. If the scan
+	// is in progress, the value represents the number of URLs tested up to now.
+	// The number of URLs tested is usually larger than the number URLS crawled
+	// because typically a crawled URL is tested with multiple test payloads.
 	UrlsTestedCount int64 `json:"urlsTestedCount,omitempty,string"`
-
-	// WarningTraces: A list of warnings, if such are encountered during
-	// this scan run.
+	// WarningTraces: A list of warnings, if such are encountered during this scan
+	// run.
 	WarningTraces []*ScanRunWarningTrace `json:"warningTraces,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScanRun) MarshalJSON() ([]byte, error) {
 	type NoMethod ScanRun
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ScanRunErrorTrace: Output only. Defines an error trace message for a
@@ -1209,63 +999,54 @@ type ScanRunErrorTrace struct {
 	//
 	// Possible values:
 	//   "CODE_UNSPECIFIED" - Default value is never used.
-	//   "INTERNAL_ERROR" - Indicates that the scan run failed due to an
-	// internal server error.
-	//   "SCAN_CONFIG_ISSUE" - Indicates a scan configuration error, usually
-	// due to outdated ScanConfig settings, such as starting_urls or the DNS
+	//   "INTERNAL_ERROR" - Indicates that the scan run failed due to an internal
+	// server error.
+	//   "SCAN_CONFIG_ISSUE" - Indicates a scan configuration error, usually due to
+	// outdated ScanConfig settings, such as starting_urls or the DNS
 	// configuration.
-	//   "AUTHENTICATION_CONFIG_ISSUE" - Indicates an authentication error,
-	// usually due to outdated ScanConfig authentication settings.
-	//   "TIMED_OUT_WHILE_SCANNING" - Indicates a scan operation timeout,
-	// usually caused by a very large site.
+	//   "AUTHENTICATION_CONFIG_ISSUE" - Indicates an authentication error, usually
+	// due to outdated ScanConfig authentication settings.
+	//   "TIMED_OUT_WHILE_SCANNING" - Indicates a scan operation timeout, usually
+	// caused by a very large site.
 	//   "TOO_MANY_REDIRECTS" - Indicates that a scan encountered excessive
-	// redirects, either to authentication or some other page outside of the
-	// scan scope.
-	//   "TOO_MANY_HTTP_ERRORS" - Indicates that a scan encountered numerous
-	// errors from the web site pages. When available,
-	// most_common_http_error_code field indicates the most common HTTP
-	// error code encountered during the scan.
-	//   "STARTING_URLS_CRAWL_HTTP_ERRORS" - Indicates that some of the
-	// starting web urls returned HTTP errors during the scan.
+	// redirects, either to authentication or some other page outside of the scan
+	// scope.
+	//   "TOO_MANY_HTTP_ERRORS" - Indicates that a scan encountered numerous errors
+	// from the web site pages. When available, most_common_http_error_code field
+	// indicates the most common HTTP error code encountered during the scan.
+	//   "STARTING_URLS_CRAWL_HTTP_ERRORS" - Indicates that some of the starting
+	// web urls returned HTTP errors during the scan.
 	Code string `json:"code,omitempty"`
-
-	// MostCommonHttpErrorCode: If the scan encounters TOO_MANY_HTTP_ERRORS,
-	// this field indicates the most common HTTP error code, if such is
-	// available. For example, if this code is 404, the scan has encountered
-	// too many NOT_FOUND responses.
+	// MostCommonHttpErrorCode: If the scan encounters TOO_MANY_HTTP_ERRORS, this
+	// field indicates the most common HTTP error code, if such is available. For
+	// example, if this code is 404, the scan has encountered too many NOT_FOUND
+	// responses.
 	MostCommonHttpErrorCode int64 `json:"mostCommonHttpErrorCode,omitempty"`
-
-	// ScanConfigError: If the scan encounters SCAN_CONFIG_ISSUE error, this
-	// field has the error message encountered during scan configuration
-	// validation that is performed before each scan run.
+	// ScanConfigError: If the scan encounters SCAN_CONFIG_ISSUE error, this field
+	// has the error message encountered during scan configuration validation that
+	// is performed before each scan run.
 	ScanConfigError *ScanConfigError `json:"scanConfigError,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScanRunErrorTrace) MarshalJSON() ([]byte, error) {
 	type NoMethod ScanRunErrorTrace
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ScanRunWarningTrace: Output only. Defines a warning trace message for
-// ScanRun. Warning traces provide customers with useful information
-// that helps make the scanning process more effective.
+// ScanRun. Warning traces provide customers with useful information that helps
+// make the scanning process more effective.
 type ScanRunWarningTrace struct {
 	// Code: Indicates the warning code.
 	//
@@ -1274,75 +1055,60 @@ type ScanRunWarningTrace struct {
 	//   "INSUFFICIENT_CRAWL_RESULTS" - Indicates that a scan discovered an
 	// unexpectedly low number of URLs. This is sometimes caused by complex
 	// navigation features or by using a single URL for numerous pages.
-	//   "TOO_MANY_CRAWL_RESULTS" - Indicates that a scan discovered too
-	// many URLs to test, or excessive redundant URLs.
-	//   "TOO_MANY_FUZZ_TASKS" - Indicates that too many tests have been
-	// generated for the scan. Customer should try reducing the number of
-	// starting URLs, increasing the QPS rate, or narrowing down the scope
-	// of the scan using the excluded patterns.
+	//   "TOO_MANY_CRAWL_RESULTS" - Indicates that a scan discovered too many URLs
+	// to test, or excessive redundant URLs.
+	//   "TOO_MANY_FUZZ_TASKS" - Indicates that too many tests have been generated
+	// for the scan. Customer should try reducing the number of starting URLs,
+	// increasing the QPS rate, or narrowing down the scope of the scan using the
+	// excluded patterns.
 	//   "BLOCKED_BY_IAP" - Indicates that a scan is blocked by IAP.
-	//   "NO_STARTING_URL_FOUND_FOR_MANAGED_SCAN" - Indicates that no seed
-	// is found for a scan
+	//   "NO_STARTING_URL_FOUND_FOR_MANAGED_SCAN" - Indicates that no seed is found
+	// for a scan
 	Code string `json:"code,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScanRunWarningTrace) MarshalJSON() ([]byte, error) {
 	type NoMethod ScanRunWarningTrace
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Schedule: Scan schedule configuration.
 type Schedule struct {
-	// IntervalDurationDays: Required. The duration of time between
-	// executions in days.
+	// IntervalDurationDays: Required. The duration of time between executions in
+	// days.
 	IntervalDurationDays int64 `json:"intervalDurationDays,omitempty"`
-
-	// ScheduleTime: A timestamp indicates when the next run will be
-	// scheduled. The value is refreshed by the server after each run. If
-	// unspecified, it will default to current server time, which means the
-	// scan will be scheduled to start immediately.
+	// ScheduleTime: A timestamp indicates when the next run will be scheduled. The
+	// value is refreshed by the server after each run. If unspecified, it will
+	// default to current server time, which means the scan will be scheduled to
+	// start immediately.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "IntervalDurationDays") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IntervalDurationDays") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IntervalDurationDays") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "IntervalDurationDays") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Schedule) MarshalJSON() ([]byte, error) {
 	type NoMethod Schedule
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // StartScanRunRequest: Request for the `StartScanRun` method.
@@ -1358,167 +1124,125 @@ type StopScanRunRequest struct {
 type ViolatingResource struct {
 	// ContentType: The MIME type of this resource.
 	ContentType string `json:"contentType,omitempty"`
-
 	// ResourceUrl: URL of this violating resource.
 	ResourceUrl string `json:"resourceUrl,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ContentType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContentType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ViolatingResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ViolatingResource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// VulnerableHeaders: Information about vulnerable or missing HTTP
-// Headers.
+// VulnerableHeaders: Information about vulnerable or missing HTTP Headers.
 type VulnerableHeaders struct {
 	// Headers: List of vulnerable headers.
 	Headers []*Header `json:"headers,omitempty"`
-
 	// MissingHeaders: List of missing headers.
 	MissingHeaders []*Header `json:"missingHeaders,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Headers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Headers") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Headers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VulnerableHeaders) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerableHeaders
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// VulnerableParameters: Information about vulnerable request
-// parameters.
+// VulnerableParameters: Information about vulnerable request parameters.
 type VulnerableParameters struct {
 	// ParameterNames: The vulnerable parameter names.
 	ParameterNames []string `json:"parameterNames,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ParameterNames") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ParameterNames") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ParameterNames") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VulnerableParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerableParameters
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Xss: Information reported for an XSS.
 type Xss struct {
 	// ErrorMessage: An error message generated by a javascript breakage.
 	ErrorMessage string `json:"errorMessage,omitempty"`
-
-	// StackTraces: Stack traces leading to the point where the XSS
-	// occurred.
+	// StackTraces: Stack traces leading to the point where the XSS occurred.
 	StackTraces []string `json:"stackTraces,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorMessage") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Xss) MarshalJSON() ([]byte, error) {
 	type NoMethod Xss
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Xxe: Information reported for an XXE.
 type Xxe struct {
-	// PayloadLocation: Location within the request where the payload was
-	// placed.
+	// PayloadLocation: Location within the request where the payload was placed.
 	//
 	// Possible values:
 	//   "LOCATION_UNSPECIFIED" - Unknown Location.
-	//   "COMPLETE_REQUEST_BODY" - The XML payload replaced the complete
-	// request body.
+	//   "COMPLETE_REQUEST_BODY" - The XML payload replaced the complete request
+	// body.
 	PayloadLocation string `json:"payloadLocation,omitempty"`
-
 	// PayloadValue: The XML string that triggered the XXE vulnerability.
 	// Non-payload values might be redacted.
 	PayloadValue string `json:"payloadValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PayloadLocation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PayloadLocation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PayloadLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Xxe) MarshalJSON() ([]byte, error) {
 	type NoMethod Xxe
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "websecurityscanner.projects.scanConfigs.create":
 
 type ProjectsScanConfigsCreateCall struct {
 	s          *Service
@@ -1531,9 +1255,8 @@ type ProjectsScanConfigsCreateCall struct {
 
 // Create: Creates a new ScanConfig.
 //
-//   - parent: The parent resource name where the scan is created, which
-//     should be a project resource name in the format
-//     'projects/{projectId}'.
+//   - parent: The parent resource name where the scan is created, which should
+//     be a project resource name in the format 'projects/{projectId}'.
 func (r *ProjectsScanConfigsService) Create(parent string, scanconfig *ScanConfig) *ProjectsScanConfigsCreateCall {
 	c := &ProjectsScanConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1542,23 +1265,21 @@ func (r *ProjectsScanConfigsService) Create(parent string, scanconfig *ScanConfi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsCreateCall) Context(ctx context.Context) *ProjectsScanConfigsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1567,18 +1288,12 @@ func (c *ProjectsScanConfigsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scanconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/scanConfigs")
@@ -1595,12 +1310,10 @@ func (c *ProjectsScanConfigsCreateCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.create" call.
-// Exactly one of *ScanConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *ScanConfig.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ScanConfig.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsScanConfigsCreateCall) Do(opts ...googleapi.CallOption) (*ScanConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1631,38 +1344,7 @@ func (c *ProjectsScanConfigsCreateCall) Do(opts ...googleapi.CallOption) (*ScanC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new ScanConfig.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs",
-	//   "httpMethod": "POST",
-	//   "id": "websecurityscanner.projects.scanConfigs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource name where the scan is created, which should be a project resource name in the format 'projects/{projectId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/scanConfigs",
-	//   "request": {
-	//     "$ref": "ScanConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "ScanConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "websecurityscanner.projects.scanConfigs.delete":
 
 type ProjectsScanConfigsDeleteCall struct {
 	s          *Service
@@ -1674,9 +1356,8 @@ type ProjectsScanConfigsDeleteCall struct {
 
 // Delete: Deletes an existing ScanConfig and its child resources.
 //
-//   - name: The resource name of the ScanConfig to be deleted. The name
-//     follows the format of
-//     'projects/{projectId}/scanConfigs/{scanConfigId}'.
+//   - name: The resource name of the ScanConfig to be deleted. The name follows
+//     the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'.
 func (r *ProjectsScanConfigsService) Delete(name string) *ProjectsScanConfigsDeleteCall {
 	c := &ProjectsScanConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1684,23 +1365,21 @@ func (r *ProjectsScanConfigsService) Delete(name string) *ProjectsScanConfigsDel
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsDeleteCall) Context(ctx context.Context) *ProjectsScanConfigsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1709,12 +1388,7 @@ func (c *ProjectsScanConfigsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1732,12 +1406,10 @@ func (c *ProjectsScanConfigsDeleteCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsScanConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1768,35 +1440,7 @@ func (c *ProjectsScanConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an existing ScanConfig and its child resources.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs/{scanConfigsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "websecurityscanner.projects.scanConfigs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the ScanConfig to be deleted. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "websecurityscanner.projects.scanConfigs.get":
 
 type ProjectsScanConfigsGetCall struct {
 	s            *Service
@@ -1809,9 +1453,8 @@ type ProjectsScanConfigsGetCall struct {
 
 // Get: Gets a ScanConfig.
 //
-//   - name: The resource name of the ScanConfig to be returned. The name
-//     follows the format of
-//     'projects/{projectId}/scanConfigs/{scanConfigId}'.
+//   - name: The resource name of the ScanConfig to be returned. The name follows
+//     the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'.
 func (r *ProjectsScanConfigsService) Get(name string) *ProjectsScanConfigsGetCall {
 	c := &ProjectsScanConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1819,33 +1462,29 @@ func (r *ProjectsScanConfigsService) Get(name string) *ProjectsScanConfigsGetCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsScanConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsScanConfigsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsGetCall) Context(ctx context.Context) *ProjectsScanConfigsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1854,12 +1493,7 @@ func (c *ProjectsScanConfigsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1880,12 +1514,10 @@ func (c *ProjectsScanConfigsGetCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.get" call.
-// Exactly one of *ScanConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *ScanConfig.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ScanConfig.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsScanConfigsGetCall) Do(opts ...googleapi.CallOption) (*ScanConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1916,35 +1548,7 @@ func (c *ProjectsScanConfigsGetCall) Do(opts ...googleapi.CallOption) (*ScanConf
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a ScanConfig.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs/{scanConfigsId}",
-	//   "httpMethod": "GET",
-	//   "id": "websecurityscanner.projects.scanConfigs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the ScanConfig to be returned. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "ScanConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "websecurityscanner.projects.scanConfigs.list":
 
 type ProjectsScanConfigsListCall struct {
 	s            *Service
@@ -1957,59 +1561,55 @@ type ProjectsScanConfigsListCall struct {
 
 // List: Lists ScanConfigs under a given project.
 //
-//   - parent: The parent resource name, which should be a project
-//     resource name in the format 'projects/{projectId}'.
+//   - parent: The parent resource name, which should be a project resource name
+//     in the format 'projects/{projectId}'.
 func (r *ProjectsScanConfigsService) List(parent string) *ProjectsScanConfigsListCall {
 	c := &ProjectsScanConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of ScanConfigs to return, can be limited by server. If not specified
-// or not positive, the implementation will select a reasonable value.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// ScanConfigs to return, can be limited by server. If not specified or not
+// positive, the implementation will select a reasonable value.
 func (c *ProjectsScanConfigsListCall) PageSize(pageSize int64) *ProjectsScanConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to be returned. This should be a
-// `next_page_token` value returned from a previous List request. If
-// unspecified, the first page of results is returned.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results to be returned. This should be a `next_page_token` value
+// returned from a previous List request. If unspecified, the first page of
+// results is returned.
 func (c *ProjectsScanConfigsListCall) PageToken(pageToken string) *ProjectsScanConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsListCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsScanConfigsListCall) IfNoneMatch(entityTag string) *ProjectsScanConfigsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsListCall) Context(ctx context.Context) *ProjectsScanConfigsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2018,12 +1618,7 @@ func (c *ProjectsScanConfigsListCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2044,12 +1639,11 @@ func (c *ProjectsScanConfigsListCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.list" call.
-// Exactly one of *ListScanConfigsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListScanConfigsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsScanConfigsListCall) Do(opts ...googleapi.CallOption) (*ListScanConfigsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2080,43 +1674,6 @@ func (c *ProjectsScanConfigsListCall) Do(opts ...googleapi.CallOption) (*ListSca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists ScanConfigs under a given project.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs",
-	//   "httpMethod": "GET",
-	//   "id": "websecurityscanner.projects.scanConfigs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of ScanConfigs to return, can be limited by server. If not specified or not positive, the implementation will select a reasonable value.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results to be returned. This should be a `next_page_token` value returned from a previous List request. If unspecified, the first page of results is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource name, which should be a project resource name in the format 'projects/{projectId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/scanConfigs",
-	//   "response": {
-	//     "$ref": "ListScanConfigsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2124,7 +1681,7 @@ func (c *ProjectsScanConfigsListCall) Do(opts ...googleapi.CallOption) (*ListSca
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsScanConfigsListCall) Pages(ctx context.Context, f func(*ListScanConfigsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2140,8 +1697,6 @@ func (c *ProjectsScanConfigsListCall) Pages(ctx context.Context, f func(*ListSca
 	}
 }
 
-// method id "websecurityscanner.projects.scanConfigs.patch":
-
 type ProjectsScanConfigsPatchCall struct {
 	s          *Service
 	name       string
@@ -2154,9 +1709,9 @@ type ProjectsScanConfigsPatchCall struct {
 // Patch: Updates a ScanConfig. This method support partial update of a
 // ScanConfig.
 //
-//   - name: The resource name of the ScanConfig. The name follows the
-//     format of 'projects/{projectId}/scanConfigs/{scanConfigId}'. The
-//     ScanConfig IDs are generated by the system.
+//   - name: The resource name of the ScanConfig. The name follows the format of
+//     'projects/{projectId}/scanConfigs/{scanConfigId}'. The ScanConfig IDs are
+//     generated by the system.
 func (r *ProjectsScanConfigsService) Patch(name string, scanconfig *ScanConfig) *ProjectsScanConfigsPatchCall {
 	c := &ProjectsScanConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2164,9 +1719,8 @@ func (r *ProjectsScanConfigsService) Patch(name string, scanconfig *ScanConfig) 
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// update mask applies to the resource. For the `FieldMask` definition,
-// see
+// UpdateMask sets the optional parameter "updateMask": Required. The update
+// mask applies to the resource. For the `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsScanConfigsPatchCall) UpdateMask(updateMask string) *ProjectsScanConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -2174,23 +1728,21 @@ func (c *ProjectsScanConfigsPatchCall) UpdateMask(updateMask string) *ProjectsSc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsPatchCall) Context(ctx context.Context) *ProjectsScanConfigsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2199,18 +1751,12 @@ func (c *ProjectsScanConfigsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scanconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -2227,12 +1773,10 @@ func (c *ProjectsScanConfigsPatchCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.patch" call.
-// Exactly one of *ScanConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *ScanConfig.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ScanConfig.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsScanConfigsPatchCall) Do(opts ...googleapi.CallOption) (*ScanConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2263,44 +1807,7 @@ func (c *ProjectsScanConfigsPatchCall) Do(opts ...googleapi.CallOption) (*ScanCo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a ScanConfig. This method support partial update of a ScanConfig.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs/{scanConfigsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "websecurityscanner.projects.scanConfigs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the ScanConfig. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'. The ScanConfig IDs are generated by the system.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "ScanConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "ScanConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "websecurityscanner.projects.scanConfigs.start":
 
 type ProjectsScanConfigsStartCall struct {
 	s                   *Service
@@ -2313,9 +1820,8 @@ type ProjectsScanConfigsStartCall struct {
 
 // Start: Start a ScanRun according to the given ScanConfig.
 //
-//   - name: The resource name of the ScanConfig to be used. The name
-//     follows the format of
-//     'projects/{projectId}/scanConfigs/{scanConfigId}'.
+//   - name: The resource name of the ScanConfig to be used. The name follows the
+//     format of 'projects/{projectId}/scanConfigs/{scanConfigId}'.
 func (r *ProjectsScanConfigsService) Start(name string, startscanrunrequest *StartScanRunRequest) *ProjectsScanConfigsStartCall {
 	c := &ProjectsScanConfigsStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2324,23 +1830,21 @@ func (r *ProjectsScanConfigsService) Start(name string, startscanrunrequest *Sta
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsStartCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsStartCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsStartCall) Context(ctx context.Context) *ProjectsScanConfigsStartCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsStartCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2349,18 +1853,12 @@ func (c *ProjectsScanConfigsStartCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsStartCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.startscanrunrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:start")
@@ -2377,12 +1875,10 @@ func (c *ProjectsScanConfigsStartCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.start" call.
-// Exactly one of *ScanRun or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *ScanRun.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ScanRun.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsScanConfigsStartCall) Do(opts ...googleapi.CallOption) (*ScanRun, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2413,38 +1909,7 @@ func (c *ProjectsScanConfigsStartCall) Do(opts ...googleapi.CallOption) (*ScanRu
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Start a ScanRun according to the given ScanConfig.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs/{scanConfigsId}:start",
-	//   "httpMethod": "POST",
-	//   "id": "websecurityscanner.projects.scanConfigs.start",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the ScanConfig to be used. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}:start",
-	//   "request": {
-	//     "$ref": "StartScanRunRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ScanRun"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "websecurityscanner.projects.scanConfigs.scanRuns.get":
 
 type ProjectsScanConfigsScanRunsGetCall struct {
 	s            *Service
@@ -2457,10 +1922,9 @@ type ProjectsScanConfigsScanRunsGetCall struct {
 
 // Get: Gets a ScanRun.
 //
-//   - name: The resource name of the ScanRun to be returned. The name
-//     follows the format of
-//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
-//     }'.
+//   - name: The resource name of the ScanRun to be returned. The name follows
+//     the format of
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.
 func (r *ProjectsScanConfigsScanRunsService) Get(name string) *ProjectsScanConfigsScanRunsGetCall {
 	c := &ProjectsScanConfigsScanRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2468,33 +1932,29 @@ func (r *ProjectsScanConfigsScanRunsService) Get(name string) *ProjectsScanConfi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsScanRunsGetCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsScanRunsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsScanConfigsScanRunsGetCall) IfNoneMatch(entityTag string) *ProjectsScanConfigsScanRunsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsScanRunsGetCall) Context(ctx context.Context) *ProjectsScanConfigsScanRunsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsScanRunsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2503,12 +1963,7 @@ func (c *ProjectsScanConfigsScanRunsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsScanRunsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2529,12 +1984,10 @@ func (c *ProjectsScanConfigsScanRunsGetCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.scanRuns.get" call.
-// Exactly one of *ScanRun or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *ScanRun.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ScanRun.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsScanConfigsScanRunsGetCall) Do(opts ...googleapi.CallOption) (*ScanRun, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2565,35 +2018,7 @@ func (c *ProjectsScanConfigsScanRunsGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a ScanRun.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs/{scanConfigsId}/scanRuns/{scanRunsId}",
-	//   "httpMethod": "GET",
-	//   "id": "websecurityscanner.projects.scanConfigs.scanRuns.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the ScanRun to be returned. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "ScanRun"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "websecurityscanner.projects.scanConfigs.scanRuns.list":
 
 type ProjectsScanConfigsScanRunsListCall struct {
 	s            *Service
@@ -2607,60 +2032,55 @@ type ProjectsScanConfigsScanRunsListCall struct {
 // List: Lists ScanRuns under a given ScanConfig, in descending order of
 // ScanRun stop time.
 //
-//   - parent: The parent resource name, which should be a scan resource
-//     name in the format
-//     'projects/{projectId}/scanConfigs/{scanConfigId}'.
+//   - parent: The parent resource name, which should be a scan resource name in
+//     the format 'projects/{projectId}/scanConfigs/{scanConfigId}'.
 func (r *ProjectsScanConfigsScanRunsService) List(parent string) *ProjectsScanConfigsScanRunsListCall {
 	c := &ProjectsScanConfigsScanRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of ScanRuns to return, can be limited by server. If not specified or
-// not positive, the implementation will select a reasonable value.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// ScanRuns to return, can be limited by server. If not specified or not
+// positive, the implementation will select a reasonable value.
 func (c *ProjectsScanConfigsScanRunsListCall) PageSize(pageSize int64) *ProjectsScanConfigsScanRunsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to be returned. This should be a
-// `next_page_token` value returned from a previous List request. If
-// unspecified, the first page of results is returned.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results to be returned. This should be a `next_page_token` value
+// returned from a previous List request. If unspecified, the first page of
+// results is returned.
 func (c *ProjectsScanConfigsScanRunsListCall) PageToken(pageToken string) *ProjectsScanConfigsScanRunsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsScanRunsListCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsScanRunsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsScanConfigsScanRunsListCall) IfNoneMatch(entityTag string) *ProjectsScanConfigsScanRunsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsScanRunsListCall) Context(ctx context.Context) *ProjectsScanConfigsScanRunsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsScanRunsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2669,12 +2089,7 @@ func (c *ProjectsScanConfigsScanRunsListCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsScanRunsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2695,12 +2110,11 @@ func (c *ProjectsScanConfigsScanRunsListCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.scanRuns.list" call.
-// Exactly one of *ListScanRunsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListScanRunsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListScanRunsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsScanConfigsScanRunsListCall) Do(opts ...googleapi.CallOption) (*ListScanRunsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2731,43 +2145,6 @@ func (c *ProjectsScanConfigsScanRunsListCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists ScanRuns under a given ScanConfig, in descending order of ScanRun stop time.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs/{scanConfigsId}/scanRuns",
-	//   "httpMethod": "GET",
-	//   "id": "websecurityscanner.projects.scanConfigs.scanRuns.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of ScanRuns to return, can be limited by server. If not specified or not positive, the implementation will select a reasonable value.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results to be returned. This should be a `next_page_token` value returned from a previous List request. If unspecified, the first page of results is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource name, which should be a scan resource name in the format 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/scanRuns",
-	//   "response": {
-	//     "$ref": "ListScanRunsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2775,7 +2152,7 @@ func (c *ProjectsScanConfigsScanRunsListCall) Do(opts ...googleapi.CallOption) (
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsScanConfigsScanRunsListCall) Pages(ctx context.Context, f func(*ListScanRunsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2791,8 +2168,6 @@ func (c *ProjectsScanConfigsScanRunsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
-// method id "websecurityscanner.projects.scanConfigs.scanRuns.stop":
-
 type ProjectsScanConfigsScanRunsStopCall struct {
 	s                  *Service
 	name               string
@@ -2804,10 +2179,9 @@ type ProjectsScanConfigsScanRunsStopCall struct {
 
 // Stop: Stops a ScanRun. The stopped ScanRun is returned.
 //
-//   - name: The resource name of the ScanRun to be stopped. The name
-//     follows the format of
-//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
-//     }'.
+//   - name: The resource name of the ScanRun to be stopped. The name follows the
+//     format of
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.
 func (r *ProjectsScanConfigsScanRunsService) Stop(name string, stopscanrunrequest *StopScanRunRequest) *ProjectsScanConfigsScanRunsStopCall {
 	c := &ProjectsScanConfigsScanRunsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2816,23 +2190,21 @@ func (r *ProjectsScanConfigsScanRunsService) Stop(name string, stopscanrunreques
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsScanRunsStopCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsScanRunsStopCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsScanRunsStopCall) Context(ctx context.Context) *ProjectsScanConfigsScanRunsStopCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsScanRunsStopCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2841,18 +2213,12 @@ func (c *ProjectsScanConfigsScanRunsStopCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsScanRunsStopCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stopscanrunrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:stop")
@@ -2869,12 +2235,10 @@ func (c *ProjectsScanConfigsScanRunsStopCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.scanRuns.stop" call.
-// Exactly one of *ScanRun or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *ScanRun.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ScanRun.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsScanConfigsScanRunsStopCall) Do(opts ...googleapi.CallOption) (*ScanRun, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2905,38 +2269,7 @@ func (c *ProjectsScanConfigsScanRunsStopCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Stops a ScanRun. The stopped ScanRun is returned.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs/{scanConfigsId}/scanRuns/{scanRunsId}:stop",
-	//   "httpMethod": "POST",
-	//   "id": "websecurityscanner.projects.scanConfigs.scanRuns.stop",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the ScanRun to be stopped. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}:stop",
-	//   "request": {
-	//     "$ref": "StopScanRunRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ScanRun"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "websecurityscanner.projects.scanConfigs.scanRuns.crawledUrls.list":
 
 type ProjectsScanConfigsScanRunsCrawledUrlsListCall struct {
 	s            *Service
@@ -2949,61 +2282,56 @@ type ProjectsScanConfigsScanRunsCrawledUrlsListCall struct {
 
 // List: List CrawledUrls under a given ScanRun.
 //
-//   - parent: The parent resource name, which should be a scan run
-//     resource name in the format
-//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
-//     }'.
+//   - parent: The parent resource name, which should be a scan run resource name
+//     in the format
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.
 func (r *ProjectsScanConfigsScanRunsCrawledUrlsService) List(parent string) *ProjectsScanConfigsScanRunsCrawledUrlsListCall {
 	c := &ProjectsScanConfigsScanRunsCrawledUrlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of CrawledUrls to return, can be limited by server. If not specified
-// or not positive, the implementation will select a reasonable value.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// CrawledUrls to return, can be limited by server. If not specified or not
+// positive, the implementation will select a reasonable value.
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) PageSize(pageSize int64) *ProjectsScanConfigsScanRunsCrawledUrlsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to be returned. This should be a
-// `next_page_token` value returned from a previous List request. If
-// unspecified, the first page of results is returned.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results to be returned. This should be a `next_page_token` value
+// returned from a previous List request. If unspecified, the first page of
+// results is returned.
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) PageToken(pageToken string) *ProjectsScanConfigsScanRunsCrawledUrlsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsScanRunsCrawledUrlsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) IfNoneMatch(entityTag string) *ProjectsScanConfigsScanRunsCrawledUrlsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Context(ctx context.Context) *ProjectsScanConfigsScanRunsCrawledUrlsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3012,12 +2340,7 @@ func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3038,12 +2361,11 @@ func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) doRequest(alt string) (
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.scanRuns.crawledUrls.list" call.
-// Exactly one of *ListCrawledUrlsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListCrawledUrlsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Do(opts ...googleapi.CallOption) (*ListCrawledUrlsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3074,43 +2396,6 @@ func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List CrawledUrls under a given ScanRun.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs/{scanConfigsId}/scanRuns/{scanRunsId}/crawledUrls",
-	//   "httpMethod": "GET",
-	//   "id": "websecurityscanner.projects.scanConfigs.scanRuns.crawledUrls.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of CrawledUrls to return, can be limited by server. If not specified or not positive, the implementation will select a reasonable value.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results to be returned. This should be a `next_page_token` value returned from a previous List request. If unspecified, the first page of results is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource name, which should be a scan run resource name in the format 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/crawledUrls",
-	//   "response": {
-	//     "$ref": "ListCrawledUrlsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3118,7 +2403,7 @@ func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Do(opts ...googleapi.Ca
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Pages(ctx context.Context, f func(*ListCrawledUrlsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3134,8 +2419,6 @@ func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Pages(ctx context.Conte
 	}
 }
 
-// method id "websecurityscanner.projects.scanConfigs.scanRuns.findingTypeStats.list":
-
 type ProjectsScanConfigsScanRunsFindingTypeStatsListCall struct {
 	s            *Service
 	parent       string
@@ -3147,10 +2430,9 @@ type ProjectsScanConfigsScanRunsFindingTypeStatsListCall struct {
 
 // List: List all FindingTypeStats under a given ScanRun.
 //
-//   - parent: The parent resource name, which should be a scan run
-//     resource name in the format
-//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
-//     }'.
+//   - parent: The parent resource name, which should be a scan run resource name
+//     in the format
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.
 func (r *ProjectsScanConfigsScanRunsFindingTypeStatsService) List(parent string) *ProjectsScanConfigsScanRunsFindingTypeStatsListCall {
 	c := &ProjectsScanConfigsScanRunsFindingTypeStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3158,33 +2440,29 @@ func (r *ProjectsScanConfigsScanRunsFindingTypeStatsService) List(parent string)
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsScanRunsFindingTypeStatsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) IfNoneMatch(entityTag string) *ProjectsScanConfigsScanRunsFindingTypeStatsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) Context(ctx context.Context) *ProjectsScanConfigsScanRunsFindingTypeStatsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3193,12 +2471,7 @@ func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) Header() http.Head
 }
 
 func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3219,12 +2492,11 @@ func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) doRequest(alt stri
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.scanRuns.findingTypeStats.list" call.
-// Exactly one of *ListFindingTypeStatsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListFindingTypeStatsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListFindingTypeStatsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) Do(opts ...googleapi.CallOption) (*ListFindingTypeStatsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3255,35 +2527,7 @@ func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) Do(opts ...googlea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all FindingTypeStats under a given ScanRun.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs/{scanConfigsId}/scanRuns/{scanRunsId}/findingTypeStats",
-	//   "httpMethod": "GET",
-	//   "id": "websecurityscanner.projects.scanConfigs.scanRuns.findingTypeStats.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource name, which should be a scan run resource name in the format 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/findingTypeStats",
-	//   "response": {
-	//     "$ref": "ListFindingTypeStatsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "websecurityscanner.projects.scanConfigs.scanRuns.findings.get":
 
 type ProjectsScanConfigsScanRunsFindingsGetCall struct {
 	s            *Service
@@ -3296,10 +2540,10 @@ type ProjectsScanConfigsScanRunsFindingsGetCall struct {
 
 // Get: Gets a Finding.
 //
-//   - name: The resource name of the Finding to be returned. The name
-//     follows the format of
-//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
-//     }/findings/{findingId}'.
+//   - name: The resource name of the Finding to be returned. The name follows
+//     the format of
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}/findi
+//     ngs/{findingId}'.
 func (r *ProjectsScanConfigsScanRunsFindingsService) Get(name string) *ProjectsScanConfigsScanRunsFindingsGetCall {
 	c := &ProjectsScanConfigsScanRunsFindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3307,33 +2551,29 @@ func (r *ProjectsScanConfigsScanRunsFindingsService) Get(name string) *ProjectsS
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsScanRunsFindingsGetCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsScanRunsFindingsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsScanConfigsScanRunsFindingsGetCall) IfNoneMatch(entityTag string) *ProjectsScanConfigsScanRunsFindingsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsScanRunsFindingsGetCall) Context(ctx context.Context) *ProjectsScanConfigsScanRunsFindingsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsScanRunsFindingsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3342,12 +2582,7 @@ func (c *ProjectsScanConfigsScanRunsFindingsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsScanRunsFindingsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3368,12 +2603,10 @@ func (c *ProjectsScanConfigsScanRunsFindingsGetCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.scanRuns.findings.get" call.
-// Exactly one of *Finding or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Finding.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Finding.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsScanConfigsScanRunsFindingsGetCall) Do(opts ...googleapi.CallOption) (*Finding, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3404,35 +2637,7 @@ func (c *ProjectsScanConfigsScanRunsFindingsGetCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a Finding.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs/{scanConfigsId}/scanRuns/{scanRunsId}/findings/{findingsId}",
-	//   "httpMethod": "GET",
-	//   "id": "websecurityscanner.projects.scanConfigs.scanRuns.findings.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the Finding to be returned. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}/findings/{findingId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+/findings/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "Finding"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "websecurityscanner.projects.scanConfigs.scanRuns.findings.list":
 
 type ProjectsScanConfigsScanRunsFindingsListCall struct {
 	s            *Service
@@ -3445,10 +2650,9 @@ type ProjectsScanConfigsScanRunsFindingsListCall struct {
 
 // List: List Findings under a given ScanRun.
 //
-//   - parent: The parent resource name, which should be a scan run
-//     resource name in the format
-//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
-//     }'.
+//   - parent: The parent resource name, which should be a scan run resource name
+//     in the format
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.
 func (r *ProjectsScanConfigsScanRunsFindingsService) List(parent string) *ProjectsScanConfigsScanRunsFindingsListCall {
 	c := &ProjectsScanConfigsScanRunsFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3463,51 +2667,47 @@ func (c *ProjectsScanConfigsScanRunsFindingsListCall) Filter(filter string) *Pro
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of Findings to return, can be limited by server. If not specified or
-// not positive, the implementation will select a reasonable value.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// Findings to return, can be limited by server. If not specified or not
+// positive, the implementation will select a reasonable value.
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) PageSize(pageSize int64) *ProjectsScanConfigsScanRunsFindingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to be returned. This should be a
-// `next_page_token` value returned from a previous List request. If
-// unspecified, the first page of results is returned.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results to be returned. This should be a `next_page_token` value
+// returned from a previous List request. If unspecified, the first page of
+// results is returned.
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) PageToken(pageToken string) *ProjectsScanConfigsScanRunsFindingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) Fields(s ...googleapi.Field) *ProjectsScanConfigsScanRunsFindingsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) IfNoneMatch(entityTag string) *ProjectsScanConfigsScanRunsFindingsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) Context(ctx context.Context) *ProjectsScanConfigsScanRunsFindingsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3516,12 +2716,7 @@ func (c *ProjectsScanConfigsScanRunsFindingsListCall) Header() http.Header {
 }
 
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3542,12 +2737,11 @@ func (c *ProjectsScanConfigsScanRunsFindingsListCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "websecurityscanner.projects.scanConfigs.scanRuns.findings.list" call.
-// Exactly one of *ListFindingsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListFindingsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListFindingsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) Do(opts ...googleapi.CallOption) (*ListFindingsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3578,48 +2772,6 @@ func (c *ProjectsScanConfigsScanRunsFindingsListCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List Findings under a given ScanRun.",
-	//   "flatPath": "v1beta/projects/{projectsId}/scanConfigs/{scanConfigsId}/scanRuns/{scanRunsId}/findings",
-	//   "httpMethod": "GET",
-	//   "id": "websecurityscanner.projects.scanConfigs.scanRuns.findings.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Required. The filter expression. The expression must be in the format: . Supported field: 'finding_type'. Supported operator: '='.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of Findings to return, can be limited by server. If not specified or not positive, the implementation will select a reasonable value.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results to be returned. This should be a `next_page_token` value returned from a previous List request. If unspecified, the first page of results is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource name, which should be a scan run resource name in the format 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/findings",
-	//   "response": {
-	//     "$ref": "ListFindingsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3627,7 +2779,7 @@ func (c *ProjectsScanConfigsScanRunsFindingsListCall) Do(opts ...googleapi.CallO
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) Pages(ctx context.Context, f func(*ListFindingsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

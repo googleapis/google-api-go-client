@@ -291,413 +291,328 @@ type PropertiesKeyEventsService struct {
 	s *Service
 }
 
-// GoogleAnalyticsAdminV1betaAccessBetweenFilter: To express that the
-// result needs to be between two numbers (inclusive).
+// GoogleAnalyticsAdminV1betaAccessBetweenFilter: To express that the result
+// needs to be between two numbers (inclusive).
 type GoogleAnalyticsAdminV1betaAccessBetweenFilter struct {
 	// FromValue: Begins with this number.
 	FromValue *GoogleAnalyticsAdminV1betaNumericValue `json:"fromValue,omitempty"`
-
 	// ToValue: Ends with this number.
 	ToValue *GoogleAnalyticsAdminV1betaNumericValue `json:"toValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FromValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FromValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FromValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessBetweenFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessBetweenFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessDateRange: A contiguous range of
-// days: startDate, startDate + 1, ..., endDate.
+// GoogleAnalyticsAdminV1betaAccessDateRange: A contiguous range of days:
+// startDate, startDate + 1, ..., endDate.
 type GoogleAnalyticsAdminV1betaAccessDateRange struct {
-	// EndDate: The inclusive end date for the query in the format
-	// `YYYY-MM-DD`. Cannot be before `startDate`. The format `NdaysAgo`,
-	// `yesterday`, or `today` is also accepted, and in that case, the date
-	// is inferred based on the current time in the request's time zone.
+	// EndDate: The inclusive end date for the query in the format `YYYY-MM-DD`.
+	// Cannot be before `startDate`. The format `NdaysAgo`, `yesterday`, or `today`
+	// is also accepted, and in that case, the date is inferred based on the
+	// current time in the request's time zone.
 	EndDate string `json:"endDate,omitempty"`
-
 	// StartDate: The inclusive start date for the query in the format
-	// `YYYY-MM-DD`. Cannot be after `endDate`. The format `NdaysAgo`,
-	// `yesterday`, or `today` is also accepted, and in that case, the date
-	// is inferred based on the current time in the request's time zone.
+	// `YYYY-MM-DD`. Cannot be after `endDate`. The format `NdaysAgo`, `yesterday`,
+	// or `today` is also accepted, and in that case, the date is inferred based on
+	// the current time in the request's time zone.
 	StartDate string `json:"startDate,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndDate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndDate") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessDateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessDateRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessDimension: Dimensions are attributes
-// of your data. For example, the dimension `userEmail` indicates the
-// email of the user that accessed reporting data. Dimension values in
-// report responses are strings.
+// GoogleAnalyticsAdminV1betaAccessDimension: Dimensions are attributes of your
+// data. For example, the dimension `userEmail` indicates the email of the user
+// that accessed reporting data. Dimension values in report responses are
+// strings.
 type GoogleAnalyticsAdminV1betaAccessDimension struct {
 	// DimensionName: The API name of the dimension. See Data Access Schema
 	// (https://developers.google.com/analytics/devguides/config/admin/v1/access-api-schema)
-	// for the list of dimensions supported in this API. Dimensions are
-	// referenced by name in `dimensionFilter` and `orderBys`.
+	// for the list of dimensions supported in this API. Dimensions are referenced
+	// by name in `dimensionFilter` and `orderBys`.
 	DimensionName string `json:"dimensionName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DimensionName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessDimension
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessDimensionHeader: Describes a
-// dimension column in the report. Dimensions requested in a report
-// produce column entries within rows and DimensionHeaders. However,
-// dimensions used exclusively within filters or expressions do not
-// produce columns in a report; correspondingly, those dimensions do not
-// produce headers.
+// GoogleAnalyticsAdminV1betaAccessDimensionHeader: Describes a dimension
+// column in the report. Dimensions requested in a report produce column
+// entries within rows and DimensionHeaders. However, dimensions used
+// exclusively within filters or expressions do not produce columns in a
+// report; correspondingly, those dimensions do not produce headers.
 type GoogleAnalyticsAdminV1betaAccessDimensionHeader struct {
 	// DimensionName: The dimension's name; for example 'userEmail'.
 	DimensionName string `json:"dimensionName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DimensionName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessDimensionHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessDimensionHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessDimensionValue: The value of a
-// dimension.
+// GoogleAnalyticsAdminV1betaAccessDimensionValue: The value of a dimension.
 type GoogleAnalyticsAdminV1betaAccessDimensionValue struct {
-	// Value: The dimension value. For example, this value may be 'France'
-	// for the 'country' dimension.
+	// Value: The dimension value. For example, this value may be 'France' for the
+	// 'country' dimension.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessDimensionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessDimensionValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessFilter: An expression to filter
-// dimension or metric values.
+// GoogleAnalyticsAdminV1betaAccessFilter: An expression to filter dimension or
+// metric values.
 type GoogleAnalyticsAdminV1betaAccessFilter struct {
 	// BetweenFilter: A filter for two values.
 	BetweenFilter *GoogleAnalyticsAdminV1betaAccessBetweenFilter `json:"betweenFilter,omitempty"`
-
 	// FieldName: The dimension name or metric name.
 	FieldName string `json:"fieldName,omitempty"`
-
 	// InListFilter: A filter for in list values.
 	InListFilter *GoogleAnalyticsAdminV1betaAccessInListFilter `json:"inListFilter,omitempty"`
-
 	// NumericFilter: A filter for numeric or date values.
 	NumericFilter *GoogleAnalyticsAdminV1betaAccessNumericFilter `json:"numericFilter,omitempty"`
-
 	// StringFilter: Strings related filter.
 	StringFilter *GoogleAnalyticsAdminV1betaAccessStringFilter `json:"stringFilter,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BetweenFilter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BetweenFilter") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BetweenFilter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessFilterExpression: Expresses dimension
-// or metric filters. The fields in the same expression need to be
-// either all dimensions or all metrics.
+// GoogleAnalyticsAdminV1betaAccessFilterExpression: Expresses dimension or
+// metric filters. The fields in the same expression need to be either all
+// dimensions or all metrics.
 type GoogleAnalyticsAdminV1betaAccessFilterExpression struct {
-	// AccessFilter: A primitive filter. In the same FilterExpression, all
-	// of the filter's field names need to be either all dimensions or all
-	// metrics.
+	// AccessFilter: A primitive filter. In the same FilterExpression, all of the
+	// filter's field names need to be either all dimensions or all metrics.
 	AccessFilter *GoogleAnalyticsAdminV1betaAccessFilter `json:"accessFilter,omitempty"`
-
 	// AndGroup: Each of the FilterExpressions in the and_group has an AND
 	// relationship.
 	AndGroup *GoogleAnalyticsAdminV1betaAccessFilterExpressionList `json:"andGroup,omitempty"`
-
 	// NotExpression: The FilterExpression is NOT of not_expression.
 	NotExpression *GoogleAnalyticsAdminV1betaAccessFilterExpression `json:"notExpression,omitempty"`
-
 	// OrGroup: Each of the FilterExpressions in the or_group has an OR
 	// relationship.
 	OrGroup *GoogleAnalyticsAdminV1betaAccessFilterExpressionList `json:"orGroup,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AccessFilter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccessFilter") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccessFilter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessFilterExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessFilterExpression
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessFilterExpressionList: A list of
-// filter expressions.
+// GoogleAnalyticsAdminV1betaAccessFilterExpressionList: A list of filter
+// expressions.
 type GoogleAnalyticsAdminV1betaAccessFilterExpressionList struct {
 	// Expressions: A list of filter expressions.
 	Expressions []*GoogleAnalyticsAdminV1betaAccessFilterExpression `json:"expressions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Expressions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Expressions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Expressions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessFilterExpressionList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessFilterExpressionList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessInListFilter: The result needs to be
-// in a list of string values.
+// GoogleAnalyticsAdminV1betaAccessInListFilter: The result needs to be in a
+// list of string values.
 type GoogleAnalyticsAdminV1betaAccessInListFilter struct {
 	// CaseSensitive: If true, the string value is case sensitive.
 	CaseSensitive bool `json:"caseSensitive,omitempty"`
-
 	// Values: The list of string values. Must be non-empty.
 	Values []string `json:"values,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CaseSensitive") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessInListFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessInListFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessMetric: The quantitative measurements
-// of a report. For example, the metric `accessCount` is the total
-// number of data access records.
+// GoogleAnalyticsAdminV1betaAccessMetric: The quantitative measurements of a
+// report. For example, the metric `accessCount` is the total number of data
+// access records.
 type GoogleAnalyticsAdminV1betaAccessMetric struct {
 	// MetricName: The API name of the metric. See Data Access Schema
 	// (https://developers.google.com/analytics/devguides/config/admin/v1/access-api-schema)
-	// for the list of metrics supported in this API. Metrics are referenced
-	// by name in `metricFilter` & `orderBys`.
+	// for the list of metrics supported in this API. Metrics are referenced by
+	// name in `metricFilter` & `orderBys`.
 	MetricName string `json:"metricName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MetricName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MetricName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MetricName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessMetric
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessMetricHeader: Describes a metric
-// column in the report. Visible metrics requested in a report produce
-// column entries within rows and MetricHeaders. However, metrics used
-// exclusively within filters or expressions do not produce columns in a
-// report; correspondingly, those metrics do not produce headers.
+// GoogleAnalyticsAdminV1betaAccessMetricHeader: Describes a metric column in
+// the report. Visible metrics requested in a report produce column entries
+// within rows and MetricHeaders. However, metrics used exclusively within
+// filters or expressions do not produce columns in a report; correspondingly,
+// those metrics do not produce headers.
 type GoogleAnalyticsAdminV1betaAccessMetricHeader struct {
 	// MetricName: The metric's name; for example 'accessCount'.
 	MetricName string `json:"metricName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MetricName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MetricName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MetricName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessMetricHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessMetricHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaAccessMetricValue: The value of a metric.
 type GoogleAnalyticsAdminV1betaAccessMetricValue struct {
 	// Value: The measurement value. For example, this value may be '13'.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessMetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessMetricValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessNumericFilter: Filters for numeric or
-// date values.
+// GoogleAnalyticsAdminV1betaAccessNumericFilter: Filters for numeric or date
+// values.
 type GoogleAnalyticsAdminV1betaAccessNumericFilter struct {
 	// Operation: The operation type for this filter.
 	//
@@ -709,113 +624,90 @@ type GoogleAnalyticsAdminV1betaAccessNumericFilter struct {
 	//   "GREATER_THAN" - Greater than
 	//   "GREATER_THAN_OR_EQUAL" - Greater than or equal
 	Operation string `json:"operation,omitempty"`
-
 	// Value: A numeric value or a date value.
 	Value *GoogleAnalyticsAdminV1betaNumericValue `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Operation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Operation") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Operation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessNumericFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessNumericFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessOrderBy: Order bys define how rows
-// will be sorted in the response. For example, ordering rows by
-// descending access count is one ordering, and ordering rows by the
-// country string is a different ordering.
+// GoogleAnalyticsAdminV1betaAccessOrderBy: Order bys define how rows will be
+// sorted in the response. For example, ordering rows by descending access
+// count is one ordering, and ordering rows by the country string is a
+// different ordering.
 type GoogleAnalyticsAdminV1betaAccessOrderBy struct {
-	// Desc: If true, sorts by descending order. If false or unspecified,
-	// sorts in ascending order.
+	// Desc: If true, sorts by descending order. If false or unspecified, sorts in
+	// ascending order.
 	Desc bool `json:"desc,omitempty"`
-
 	// Dimension: Sorts results by a dimension's values.
 	Dimension *GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy `json:"dimension,omitempty"`
-
 	// Metric: Sorts results by a metric's values.
 	Metric *GoogleAnalyticsAdminV1betaAccessOrderByMetricOrderBy `json:"metric,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Desc") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Desc") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Desc") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Desc") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessOrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessOrderBy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy: Sorts by
-// dimension values.
+// GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy: Sorts by dimension
+// values.
 type GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy struct {
 	// DimensionName: A dimension name in the request to order by.
 	DimensionName string `json:"dimensionName,omitempty"`
-
 	// OrderType: Controls the rule for dimension value ordering.
 	//
 	// Possible values:
 	//   "ORDER_TYPE_UNSPECIFIED" - Unspecified.
-	//   "ALPHANUMERIC" - Alphanumeric sort by Unicode code point. For
-	// example, "2" < "A" < "X" < "b" < "z".
-	//   "CASE_INSENSITIVE_ALPHANUMERIC" - Case insensitive alphanumeric
-	// sort by lower case Unicode code point. For example, "2" < "A" < "b" <
-	// "X" < "z".
-	//   "NUMERIC" - Dimension values are converted to numbers before
-	// sorting. For example in NUMERIC sort, "25" < "100", and in
-	// `ALPHANUMERIC` sort, "100" < "25". Non-numeric dimension values all
-	// have equal ordering value below all numeric values.
+	//   "ALPHANUMERIC" - Alphanumeric sort by Unicode code point. For example, "2"
+	// < "A" < "X" < "b" < "z".
+	//   "CASE_INSENSITIVE_ALPHANUMERIC" - Case insensitive alphanumeric sort by
+	// lower case Unicode code point. For example, "2" < "A" < "b" < "X" < "z".
+	//   "NUMERIC" - Dimension values are converted to numbers before sorting. For
+	// example in NUMERIC sort, "25" < "100", and in `ALPHANUMERIC` sort, "100" <
+	// "25". Non-numeric dimension values all have equal ordering value below all
+	// numeric values.
 	OrderType string `json:"orderType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DimensionName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaAccessOrderByMetricOrderBy: Sorts by metric
@@ -823,154 +715,119 @@ func (s *GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy) MarshalJSON() 
 type GoogleAnalyticsAdminV1betaAccessOrderByMetricOrderBy struct {
 	// MetricName: A metric name in the request to order by.
 	MetricName string `json:"metricName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MetricName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MetricName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MetricName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessOrderByMetricOrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessOrderByMetricOrderBy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessQuota: Current state of all quotas
-// for this Analytics property. If any quota for a property is
-// exhausted, all requests to that property will return Resource
-// Exhausted errors.
+// GoogleAnalyticsAdminV1betaAccessQuota: Current state of all quotas for this
+// Analytics property. If any quota for a property is exhausted, all requests
+// to that property will return Resource Exhausted errors.
 type GoogleAnalyticsAdminV1betaAccessQuota struct {
 	// ConcurrentRequests: Properties can use up to 50 concurrent requests.
 	ConcurrentRequests *GoogleAnalyticsAdminV1betaAccessQuotaStatus `json:"concurrentRequests,omitempty"`
-
-	// ServerErrorsPerProjectPerHour: Properties and cloud project pairs can
-	// have up to 50 server errors per hour.
+	// ServerErrorsPerProjectPerHour: Properties and cloud project pairs can have
+	// up to 50 server errors per hour.
 	ServerErrorsPerProjectPerHour *GoogleAnalyticsAdminV1betaAccessQuotaStatus `json:"serverErrorsPerProjectPerHour,omitempty"`
-
-	// TokensPerDay: Properties can use 250,000 tokens per day. Most
-	// requests consume fewer than 10 tokens.
+	// TokensPerDay: Properties can use 250,000 tokens per day. Most requests
+	// consume fewer than 10 tokens.
 	TokensPerDay *GoogleAnalyticsAdminV1betaAccessQuotaStatus `json:"tokensPerDay,omitempty"`
-
-	// TokensPerHour: Properties can use 50,000 tokens per hour. An API
-	// request consumes a single number of tokens, and that number is
-	// deducted from all of the hourly, daily, and per project hourly
-	// quotas.
+	// TokensPerHour: Properties can use 50,000 tokens per hour. An API request
+	// consumes a single number of tokens, and that number is deducted from all of
+	// the hourly, daily, and per project hourly quotas.
 	TokensPerHour *GoogleAnalyticsAdminV1betaAccessQuotaStatus `json:"tokensPerHour,omitempty"`
-
-	// TokensPerProjectPerHour: Properties can use up to 25% of their tokens
-	// per project per hour. This amounts to Analytics 360 Properties can
-	// use 12,500 tokens per project per hour. An API request consumes a
-	// single number of tokens, and that number is deducted from all of the
-	// hourly, daily, and per project hourly quotas.
+	// TokensPerProjectPerHour: Properties can use up to 25% of their tokens per
+	// project per hour. This amounts to Analytics 360 Properties can use 12,500
+	// tokens per project per hour. An API request consumes a single number of
+	// tokens, and that number is deducted from all of the hourly, daily, and per
+	// project hourly quotas.
 	TokensPerProjectPerHour *GoogleAnalyticsAdminV1betaAccessQuotaStatus `json:"tokensPerProjectPerHour,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConcurrentRequests")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ConcurrentRequests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConcurrentRequests") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ConcurrentRequests") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessQuota) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessQuota
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccessQuotaStatus: Current state for a
-// particular quota group.
+// GoogleAnalyticsAdminV1betaAccessQuotaStatus: Current state for a particular
+// quota group.
 type GoogleAnalyticsAdminV1betaAccessQuotaStatus struct {
 	// Consumed: Quota consumed by this request.
 	Consumed int64 `json:"consumed,omitempty"`
-
 	// Remaining: Quota remaining after this request.
 	Remaining int64 `json:"remaining,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Consumed") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Consumed") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Consumed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessQuotaStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessQuotaStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaAccessRow: Access report data for each row.
 type GoogleAnalyticsAdminV1betaAccessRow struct {
-	// DimensionValues: List of dimension values. These values are in the
-	// same order as specified in the request.
-	DimensionValues []*GoogleAnalyticsAdminV1betaAccessDimensionValue `json:"dimensionValues,omitempty"`
-
-	// MetricValues: List of metric values. These values are in the same
+	// DimensionValues: List of dimension values. These values are in the same
 	// order as specified in the request.
+	DimensionValues []*GoogleAnalyticsAdminV1betaAccessDimensionValue `json:"dimensionValues,omitempty"`
+	// MetricValues: List of metric values. These values are in the same order as
+	// specified in the request.
 	MetricValues []*GoogleAnalyticsAdminV1betaAccessMetricValue `json:"metricValues,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionValues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionValues") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionValues") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessRow
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaAccessStringFilter: The filter for strings.
 type GoogleAnalyticsAdminV1betaAccessStringFilter struct {
 	// CaseSensitive: If true, the string value is case sensitive.
 	CaseSensitive bool `json:"caseSensitive,omitempty"`
-
 	// MatchType: The match type for this filter.
 	//
 	// Possible values:
@@ -979,196 +836,154 @@ type GoogleAnalyticsAdminV1betaAccessStringFilter struct {
 	//   "BEGINS_WITH" - Begins with the string value.
 	//   "ENDS_WITH" - Ends with the string value.
 	//   "CONTAINS" - Contains the string value.
-	//   "FULL_REGEXP" - Full match for the regular expression with the
+	//   "FULL_REGEXP" - Full match for the regular expression with the string
+	// value.
+	//   "PARTIAL_REGEXP" - Partial match for the regular expression with the
 	// string value.
-	//   "PARTIAL_REGEXP" - Partial match for the regular expression with
-	// the string value.
 	MatchType string `json:"matchType,omitempty"`
-
 	// Value: The string value used for the matching.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CaseSensitive") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccessStringFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccessStringFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccount: A resource message representing a
-// Google Analytics account.
+// GoogleAnalyticsAdminV1betaAccount: A resource message representing a Google
+// Analytics account.
 type GoogleAnalyticsAdminV1betaAccount struct {
-	// CreateTime: Output only. Time when this account was originally
-	// created.
+	// CreateTime: Output only. Time when this account was originally created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Deleted: Output only. Indicates whether this Account is soft-deleted
-	// or not. Deleted accounts are excluded from List results unless
-	// specifically requested.
+	// Deleted: Output only. Indicates whether this Account is soft-deleted or not.
+	// Deleted accounts are excluded from List results unless specifically
+	// requested.
 	Deleted bool `json:"deleted,omitempty"`
-
 	// DisplayName: Required. Human-readable display name for this account.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// GmpOrganization: Output only. The URI for a Google Marketing Platform
-	// organization resource. Only set when this account is connected to a
-	// GMP organization. Format:
+	// organization resource. Only set when this account is connected to a GMP
+	// organization. Format:
 	// marketingplatformadmin.googleapis.com/organizations/{org_id}
 	GmpOrganization string `json:"gmpOrganization,omitempty"`
-
-	// Name: Output only. Resource name of this account. Format:
-	// accounts/{account} Example: "accounts/100"
+	// Name: Output only. Resource name of this account. Format: accounts/{account}
+	// Example: "accounts/100"
 	Name string `json:"name,omitempty"`
-
 	// RegionCode: Country of business. Must be a Unicode CLDR region code.
 	RegionCode string `json:"regionCode,omitempty"`
-
-	// UpdateTime: Output only. Time when account payload fields were last
-	// updated.
+	// UpdateTime: Output only. Time when account payload fields were last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAccountSummary: A virtual resource
-// representing an overview of an account and all its child GA4
-// properties.
+// GoogleAnalyticsAdminV1betaAccountSummary: A virtual resource representing an
+// overview of an account and all its child GA4 properties.
 type GoogleAnalyticsAdminV1betaAccountSummary struct {
 	// Account: Resource name of account referred to by this account summary
 	// Format: accounts/{account_id} Example: "accounts/1000"
 	Account string `json:"account,omitempty"`
-
 	// DisplayName: Display name for the account referred to in this account
 	// summary.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Resource name for this account summary. Format:
 	// accountSummaries/{account_id} Example: "accountSummaries/1000"
 	Name string `json:"name,omitempty"`
-
-	// PropertySummaries: List of summaries for child accounts of this
-	// account.
+	// PropertySummaries: List of summaries for child accounts of this account.
 	PropertySummaries []*GoogleAnalyticsAdminV1betaPropertySummary `json:"propertySummaries,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Account") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Account") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Account") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAccountSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAccountSummary
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionRequest:
-// Request message for AcknowledgeUserDataCollection RPC.
+// GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionRequest: Request
+// message for AcknowledgeUserDataCollection RPC.
 type GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionRequest struct {
-	// Acknowledgement: Required. An acknowledgement that the caller of this
-	// method understands the terms of user data collection. This field must
-	// contain the exact value: "I acknowledge that I have the necessary
-	// privacy disclosures and rights from my end users for the collection
-	// and processing of their data, including the association of such data
-	// with the visitation information Google Analytics collects from my
-	// site and/or app property."
+	// Acknowledgement: Required. An acknowledgement that the caller of this method
+	// understands the terms of user data collection. This field must contain the
+	// exact value: "I acknowledge that I have the necessary privacy disclosures
+	// and rights from my end users for the collection and processing of their
+	// data, including the association of such data with the visitation information
+	// Google Analytics collects from my site and/or app property."
 	Acknowledgement string `json:"acknowledgement,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Acknowledgement") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Acknowledgement") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Acknowledgement") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionResponse:
-// Response message for AcknowledgeUserDataCollection RPC.
+// GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionResponse: Response
+// message for AcknowledgeUserDataCollection RPC.
 type GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleAnalyticsAdminV1betaArchiveCustomDimensionRequest: Request
-// message for ArchiveCustomDimension RPC.
+// GoogleAnalyticsAdminV1betaArchiveCustomDimensionRequest: Request message for
+// ArchiveCustomDimension RPC.
 type GoogleAnalyticsAdminV1betaArchiveCustomDimensionRequest struct {
 }
 
-// GoogleAnalyticsAdminV1betaArchiveCustomMetricRequest: Request message
-// for ArchiveCustomMetric RPC.
+// GoogleAnalyticsAdminV1betaArchiveCustomMetricRequest: Request message for
+// ArchiveCustomMetric RPC.
 type GoogleAnalyticsAdminV1betaArchiveCustomMetricRequest struct {
 }
 
-// GoogleAnalyticsAdminV1betaChangeHistoryChange: A description of a
-// change to a single Google Analytics resource.
+// GoogleAnalyticsAdminV1betaChangeHistoryChange: A description of a change to
+// a single Google Analytics resource.
 type GoogleAnalyticsAdminV1betaChangeHistoryChange struct {
 	// Action: The type of action that changed this resource.
 	//
@@ -1178,105 +993,77 @@ type GoogleAnalyticsAdminV1betaChangeHistoryChange struct {
 	//   "UPDATED" - Resource was updated in this change.
 	//   "DELETED" - Resource was deleted in this change.
 	Action string `json:"action,omitempty"`
-
-	// Resource: Resource name of the resource whose changes are described
-	// by this entry.
+	// Resource: Resource name of the resource whose changes are described by this
+	// entry.
 	Resource string `json:"resource,omitempty"`
-
-	// ResourceAfterChange: Resource contents from after the change was
-	// made. If this resource was deleted in this change, this field will be
-	// missing.
+	// ResourceAfterChange: Resource contents from after the change was made. If
+	// this resource was deleted in this change, this field will be missing.
 	ResourceAfterChange *GoogleAnalyticsAdminV1betaChangeHistoryChangeChangeHistoryResource `json:"resourceAfterChange,omitempty"`
-
-	// ResourceBeforeChange: Resource contents from before the change was
-	// made. If this resource was created in this change, this field will be
-	// missing.
+	// ResourceBeforeChange: Resource contents from before the change was made. If
+	// this resource was created in this change, this field will be missing.
 	ResourceBeforeChange *GoogleAnalyticsAdminV1betaChangeHistoryChangeChangeHistoryResource `json:"resourceBeforeChange,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Action") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Action") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaChangeHistoryChange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaChangeHistoryChange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaChangeHistoryChangeChangeHistoryResource: A
-// snapshot of a resource as before or after the result of a change in
-// change history.
+// snapshot of a resource as before or after the result of a change in change
+// history.
 type GoogleAnalyticsAdminV1betaChangeHistoryChangeChangeHistoryResource struct {
 	// Account: A snapshot of an Account resource in change history.
 	Account *GoogleAnalyticsAdminV1betaAccount `json:"account,omitempty"`
-
-	// ConversionEvent: A snapshot of a ConversionEvent resource in change
-	// history.
+	// ConversionEvent: A snapshot of a ConversionEvent resource in change history.
 	ConversionEvent *GoogleAnalyticsAdminV1betaConversionEvent `json:"conversionEvent,omitempty"`
-
-	// DataRetentionSettings: A snapshot of a data retention settings
-	// resource in change history.
+	// DataRetentionSettings: A snapshot of a data retention settings resource in
+	// change history.
 	DataRetentionSettings *GoogleAnalyticsAdminV1betaDataRetentionSettings `json:"dataRetentionSettings,omitempty"`
-
 	// DataStream: A snapshot of a DataStream resource in change history.
 	DataStream *GoogleAnalyticsAdminV1betaDataStream `json:"dataStream,omitempty"`
-
-	// FirebaseLink: A snapshot of a FirebaseLink resource in change
-	// history.
+	// FirebaseLink: A snapshot of a FirebaseLink resource in change history.
 	FirebaseLink *GoogleAnalyticsAdminV1betaFirebaseLink `json:"firebaseLink,omitempty"`
-
-	// GoogleAdsLink: A snapshot of a GoogleAdsLink resource in change
-	// history.
+	// GoogleAdsLink: A snapshot of a GoogleAdsLink resource in change history.
 	GoogleAdsLink *GoogleAnalyticsAdminV1betaGoogleAdsLink `json:"googleAdsLink,omitempty"`
-
 	// MeasurementProtocolSecret: A snapshot of a MeasurementProtocolSecret
 	// resource in change history.
 	MeasurementProtocolSecret *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret `json:"measurementProtocolSecret,omitempty"`
-
 	// Property: A snapshot of a Property resource in change history.
 	Property *GoogleAnalyticsAdminV1betaProperty `json:"property,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Account") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Account") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Account") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaChangeHistoryChangeChangeHistoryResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaChangeHistoryChangeChangeHistoryResource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaChangeHistoryEvent: A set of changes within
-// a Google Analytics account or its child properties that resulted from
-// the same cause. Common causes would be updates made in the Google
-// Analytics UI, changes from customer support, or automatic Google
-// Analytics system changes.
+// GoogleAnalyticsAdminV1betaChangeHistoryEvent: A set of changes within a
+// Google Analytics account or its child properties that resulted from the same
+// cause. Common causes would be updates made in the Google Analytics UI,
+// changes from customer support, or automatic Google Analytics system changes.
 type GoogleAnalyticsAdminV1betaChangeHistoryEvent struct {
 	// ActorType: The type of actor that made this change.
 	//
@@ -1286,160 +1073,123 @@ type GoogleAnalyticsAdminV1betaChangeHistoryEvent struct {
 	//   "SYSTEM" - Changes made by the Google Analytics system.
 	//   "SUPPORT" - Changes made by Google Analytics support team staff.
 	ActorType string `json:"actorType,omitempty"`
-
 	// ChangeTime: Time when change was made.
 	ChangeTime string `json:"changeTime,omitempty"`
-
-	// Changes: A list of changes made in this change history event that fit
-	// the filters specified in SearchChangeHistoryEventsRequest.
+	// Changes: A list of changes made in this change history event that fit the
+	// filters specified in SearchChangeHistoryEventsRequest.
 	Changes []*GoogleAnalyticsAdminV1betaChangeHistoryChange `json:"changes,omitempty"`
-
-	// ChangesFiltered: If true, then the list of changes returned was
-	// filtered, and does not represent all changes that occurred in this
-	// event.
+	// ChangesFiltered: If true, then the list of changes returned was filtered,
+	// and does not represent all changes that occurred in this event.
 	ChangesFiltered bool `json:"changesFiltered,omitempty"`
-
 	// Id: ID of this change history event. This ID is unique across Google
 	// Analytics.
 	Id string `json:"id,omitempty"`
-
-	// UserActorEmail: Email address of the Google account that made the
-	// change. This will be a valid email address if the actor field is set
-	// to USER, and empty otherwise. Google accounts that have been deleted
-	// will cause an error.
+	// UserActorEmail: Email address of the Google account that made the change.
+	// This will be a valid email address if the actor field is set to USER, and
+	// empty otherwise. Google accounts that have been deleted will cause an error.
 	UserActorEmail string `json:"userActorEmail,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ActorType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActorType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ActorType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaChangeHistoryEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaChangeHistoryEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaConversionEvent: A conversion event in a
-// Google Analytics property.
+// GoogleAnalyticsAdminV1betaConversionEvent: A conversion event in a Google
+// Analytics property.
 type GoogleAnalyticsAdminV1betaConversionEvent struct {
-	// CountingMethod: Optional. The method by which conversions will be
-	// counted across multiple events within a session. If this value is not
-	// provided, it will be set to `ONCE_PER_EVENT`.
+	// CountingMethod: Optional. The method by which conversions will be counted
+	// across multiple events within a session. If this value is not provided, it
+	// will be set to `ONCE_PER_EVENT`.
 	//
 	// Possible values:
-	//   "CONVERSION_COUNTING_METHOD_UNSPECIFIED" - Counting method not
-	// specified.
+	//   "CONVERSION_COUNTING_METHOD_UNSPECIFIED" - Counting method not specified.
 	//   "ONCE_PER_EVENT" - Each Event instance is considered a Conversion.
-	//   "ONCE_PER_SESSION" - An Event instance is considered a Conversion
-	// at most once per session per user.
+	//   "ONCE_PER_SESSION" - An Event instance is considered a Conversion at most
+	// once per session per user.
 	CountingMethod string `json:"countingMethod,omitempty"`
-
-	// CreateTime: Output only. Time when this conversion event was created
-	// in the property.
+	// CreateTime: Output only. Time when this conversion event was created in the
+	// property.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Custom: Output only. If set to true, this conversion event refers to
-	// a custom event. If set to false, this conversion event refers to a
-	// default event in GA. Default events typically have special meaning in
-	// GA. Default events are usually created for you by the GA system, but
-	// in some cases can be created by property admins. Custom events count
-	// towards the maximum number of custom conversion events that may be
-	// created per property.
+	// Custom: Output only. If set to true, this conversion event refers to a
+	// custom event. If set to false, this conversion event refers to a default
+	// event in GA. Default events typically have special meaning in GA. Default
+	// events are usually created for you by the GA system, but in some cases can
+	// be created by property admins. Custom events count towards the maximum
+	// number of custom conversion events that may be created per property.
 	Custom bool `json:"custom,omitempty"`
-
-	// DefaultConversionValue: Optional. Defines a default value/currency
-	// for a conversion event.
+	// DefaultConversionValue: Optional. Defines a default value/currency for a
+	// conversion event.
 	DefaultConversionValue *GoogleAnalyticsAdminV1betaConversionEventDefaultConversionValue `json:"defaultConversionValue,omitempty"`
-
-	// Deletable: Output only. If set, this event can currently be deleted
-	// with DeleteConversionEvent.
+	// Deletable: Output only. If set, this event can currently be deleted with
+	// DeleteConversionEvent.
 	Deletable bool `json:"deletable,omitempty"`
-
-	// EventName: Immutable. The event name for this conversion event.
-	// Examples: 'click', 'purchase'
+	// EventName: Immutable. The event name for this conversion event. Examples:
+	// 'click', 'purchase'
 	EventName string `json:"eventName,omitempty"`
-
 	// Name: Output only. Resource name of this conversion event. Format:
 	// properties/{property}/conversionEvents/{conversion_event}
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CountingMethod") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CountingMethod") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CountingMethod") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaConversionEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaConversionEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaConversionEventDefaultConversionValue:
-// Defines a default value/currency for a conversion event. Both value
-// and currency must be provided.
+// GoogleAnalyticsAdminV1betaConversionEventDefaultConversionValue: Defines a
+// default value/currency for a conversion event. Both value and currency must
+// be provided.
 type GoogleAnalyticsAdminV1betaConversionEventDefaultConversionValue struct {
 	// CurrencyCode: When a conversion event for this event_name has no set
-	// currency, this currency will be applied as the default. Must be in
-	// ISO 4217 currency code format. See
-	// https://en.wikipedia.org/wiki/ISO_4217 for more information.
+	// currency, this currency will be applied as the default. Must be in ISO 4217
+	// currency code format. See https://en.wikipedia.org/wiki/ISO_4217 for more
+	// information.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// Value: This value will be used to populate the value for all
-	// conversions of the specified event_name where the event "value"
-	// parameter is unset.
+	// Value: This value will be used to populate the value for all conversions of
+	// the specified event_name where the event "value" parameter is unset.
 	Value float64 `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaConversionEventDefaultConversionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaConversionEventDefaultConversionValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAnalyticsAdminV1betaConversionEventDefaultConversionValue) UnmarshalJSON(data []byte) error {
@@ -1459,36 +1209,31 @@ func (s *GoogleAnalyticsAdminV1betaConversionEventDefaultConversionValue) Unmars
 // GoogleAnalyticsAdminV1betaCustomDimension: A definition for a
 // CustomDimension.
 type GoogleAnalyticsAdminV1betaCustomDimension struct {
-	// Description: Optional. Description for this custom dimension. Max
-	// length of 150 characters.
+	// Description: Optional. Description for this custom dimension. Max length of
+	// 150 characters.
 	Description string `json:"description,omitempty"`
-
-	// DisallowAdsPersonalization: Optional. If set to true, sets this
-	// dimension as NPA and excludes it from ads personalization. This is
-	// currently only supported by user-scoped custom dimensions.
+	// DisallowAdsPersonalization: Optional. If set to true, sets this dimension as
+	// NPA and excludes it from ads personalization. This is currently only
+	// supported by user-scoped custom dimensions.
 	DisallowAdsPersonalization bool `json:"disallowAdsPersonalization,omitempty"`
-
-	// DisplayName: Required. Display name for this custom dimension as
-	// shown in the Analytics UI. Max length of 82 characters, alphanumeric
-	// plus space and underscore starting with a letter. Legacy
-	// system-generated display names may contain square brackets, but
-	// updates to this field will never permit square brackets.
+	// DisplayName: Required. Display name for this custom dimension as shown in
+	// the Analytics UI. Max length of 82 characters, alphanumeric plus space and
+	// underscore starting with a letter. Legacy system-generated display names may
+	// contain square brackets, but updates to this field will never permit square
+	// brackets.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Name: Output only. Resource name for this CustomDimension resource.
-	// Format: properties/{property}/customDimensions/{customDimension}
+	// Name: Output only. Resource name for this CustomDimension resource. Format:
+	// properties/{property}/customDimensions/{customDimension}
 	Name string `json:"name,omitempty"`
-
-	// ParameterName: Required. Immutable. Tagging parameter name for this
-	// custom dimension. If this is a user-scoped dimension, then this is
-	// the user property name. If this is an event-scoped dimension, then
-	// this is the event parameter name. If this is an item-scoped
-	// dimension, then this is the parameter name found in the eCommerce
-	// items array. May only contain alphanumeric and underscore characters,
-	// starting with a letter. Max length of 24 characters for user-scoped
-	// dimensions, 40 characters for event-scoped dimensions.
+	// ParameterName: Required. Immutable. Tagging parameter name for this custom
+	// dimension. If this is a user-scoped dimension, then this is the user
+	// property name. If this is an event-scoped dimension, then this is the event
+	// parameter name. If this is an item-scoped dimension, then this is the
+	// parameter name found in the eCommerce items array. May only contain
+	// alphanumeric and underscore characters, starting with a letter. Max length
+	// of 24 characters for user-scoped dimensions, 40 characters for event-scoped
+	// dimensions.
 	ParameterName string `json:"parameterName,omitempty"`
-
 	// Scope: Required. Immutable. The scope of this dimension.
 	//
 	// Possible values:
@@ -1498,52 +1243,41 @@ type GoogleAnalyticsAdminV1betaCustomDimension struct {
 	//   "ITEM" - Dimension scoped to eCommerce items
 	Scope string `json:"scope,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaCustomDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaCustomDimension
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaCustomMetric: A definition for a custom
-// metric.
+// GoogleAnalyticsAdminV1betaCustomMetric: A definition for a custom metric.
 type GoogleAnalyticsAdminV1betaCustomMetric struct {
-	// Description: Optional. Description for this custom dimension. Max
-	// length of 150 characters.
+	// Description: Optional. Description for this custom dimension. Max length of
+	// 150 characters.
 	Description string `json:"description,omitempty"`
-
-	// DisplayName: Required. Display name for this custom metric as shown
-	// in the Analytics UI. Max length of 82 characters, alphanumeric plus
-	// space and underscore starting with a letter. Legacy system-generated
-	// display names may contain square brackets, but updates to this field
-	// will never permit square brackets.
+	// DisplayName: Required. Display name for this custom metric as shown in the
+	// Analytics UI. Max length of 82 characters, alphanumeric plus space and
+	// underscore starting with a letter. Legacy system-generated display names may
+	// contain square brackets, but updates to this field will never permit square
+	// brackets.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// MeasurementUnit: Required. The type for the custom metric's value.
 	//
 	// Possible values:
-	//   "MEASUREMENT_UNIT_UNSPECIFIED" - MeasurementUnit unspecified or
-	// missing.
+	//   "MEASUREMENT_UNIT_UNSPECIFIED" - MeasurementUnit unspecified or missing.
 	//   "STANDARD" - This metric uses default units.
 	//   "CURRENCY" - This metric measures a currency.
 	//   "FEET" - This metric measures feet.
@@ -1555,28 +1289,23 @@ type GoogleAnalyticsAdminV1betaCustomMetric struct {
 	//   "MINUTES" - This metric measures minutes.
 	//   "HOURS" - This metric measures hours.
 	MeasurementUnit string `json:"measurementUnit,omitempty"`
-
-	// Name: Output only. Resource name for this CustomMetric resource.
-	// Format: properties/{property}/customMetrics/{customMetric}
+	// Name: Output only. Resource name for this CustomMetric resource. Format:
+	// properties/{property}/customMetrics/{customMetric}
 	Name string `json:"name,omitempty"`
-
-	// ParameterName: Required. Immutable. Tagging name for this custom
-	// metric. If this is an event-scoped metric, then this is the event
-	// parameter name. May only contain alphanumeric and underscore
-	// charactes, starting with a letter. Max length of 40 characters for
-	// event-scoped metrics.
+	// ParameterName: Required. Immutable. Tagging name for this custom metric. If
+	// this is an event-scoped metric, then this is the event parameter name. May
+	// only contain alphanumeric and underscore charactes, starting with a letter.
+	// Max length of 40 characters for event-scoped metrics.
 	ParameterName string `json:"parameterName,omitempty"`
-
-	// RestrictedMetricType: Optional. Types of restricted data that this
-	// metric may contain. Required for metrics with CURRENCY measurement
-	// unit. Must be empty for metrics with a non-CURRENCY measurement unit.
+	// RestrictedMetricType: Optional. Types of restricted data that this metric
+	// may contain. Required for metrics with CURRENCY measurement unit. Must be
+	// empty for metrics with a non-CURRENCY measurement unit.
 	//
 	// Possible values:
 	//   "RESTRICTED_METRIC_TYPE_UNSPECIFIED" - Type unknown or unspecified.
 	//   "COST_DATA" - Metric reports cost data.
 	//   "REVENUE_DATA" - Metric reports revenue data.
 	RestrictedMetricType []string `json:"restrictedMetricType,omitempty"`
-
 	// Scope: Required. Immutable. The scope of this custom metric.
 	//
 	// Possible values:
@@ -1584,86 +1313,68 @@ type GoogleAnalyticsAdminV1betaCustomMetric struct {
 	//   "EVENT" - Metric scoped to an event.
 	Scope string `json:"scope,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaCustomMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaCustomMetric
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaDataRetentionSettings: Settings values for
-// data retention. This is a singleton resource.
+// GoogleAnalyticsAdminV1betaDataRetentionSettings: Settings values for data
+// retention. This is a singleton resource.
 type GoogleAnalyticsAdminV1betaDataRetentionSettings struct {
-	// EventDataRetention: The length of time that event-level data is
-	// retained.
+	// EventDataRetention: The length of time that event-level data is retained.
 	//
 	// Possible values:
-	//   "RETENTION_DURATION_UNSPECIFIED" - Data retention time duration is
-	// not specified.
+	//   "RETENTION_DURATION_UNSPECIFIED" - Data retention time duration is not
+	// specified.
 	//   "TWO_MONTHS" - The data retention time duration is 2 months.
 	//   "FOURTEEN_MONTHS" - The data retention time duration is 14 months.
-	//   "TWENTY_SIX_MONTHS" - The data retention time duration is 26
-	// months. Available to 360 properties only.
-	//   "THIRTY_EIGHT_MONTHS" - The data retention time duration is 38
-	// months. Available to 360 properties only.
-	//   "FIFTY_MONTHS" - The data retention time duration is 50 months.
+	//   "TWENTY_SIX_MONTHS" - The data retention time duration is 26 months.
 	// Available to 360 properties only.
+	//   "THIRTY_EIGHT_MONTHS" - The data retention time duration is 38 months.
+	// Available to 360 properties only.
+	//   "FIFTY_MONTHS" - The data retention time duration is 50 months. Available
+	// to 360 properties only.
 	EventDataRetention string `json:"eventDataRetention,omitempty"`
-
-	// Name: Output only. Resource name for this DataRetentionSetting
-	// resource. Format: properties/{property}/dataRetentionSettings
+	// Name: Output only. Resource name for this DataRetentionSetting resource.
+	// Format: properties/{property}/dataRetentionSettings
 	Name string `json:"name,omitempty"`
-
-	// ResetUserDataOnNewActivity: If true, reset the retention period for
-	// the user identifier with every event from that user.
+	// ResetUserDataOnNewActivity: If true, reset the retention period for the user
+	// identifier with every event from that user.
 	ResetUserDataOnNewActivity bool `json:"resetUserDataOnNewActivity,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "EventDataRetention")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EventDataRetention") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EventDataRetention") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EventDataRetention") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaDataRetentionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaDataRetentionSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaDataSharingSettings: A resource message
@@ -1673,82 +1384,63 @@ type GoogleAnalyticsAdminV1betaDataSharingSettings struct {
 	// accounts/{account}/dataSharingSettings Example:
 	// "accounts/1000/dataSharingSettings"
 	Name string `json:"name,omitempty"`
-
-	// SharingWithGoogleAnySalesEnabled: Allows any of Google sales to
-	// access the data in order to suggest configuration changes to improve
-	// results.
+	// SharingWithGoogleAnySalesEnabled: Allows any of Google sales to access the
+	// data in order to suggest configuration changes to improve results.
 	SharingWithGoogleAnySalesEnabled bool `json:"sharingWithGoogleAnySalesEnabled,omitempty"`
-
-	// SharingWithGoogleAssignedSalesEnabled: Allows Google sales teams that
-	// are assigned to the customer to access the data in order to suggest
-	// configuration changes to improve results. Sales team restrictions
-	// still apply when enabled.
+	// SharingWithGoogleAssignedSalesEnabled: Allows Google sales teams that are
+	// assigned to the customer to access the data in order to suggest
+	// configuration changes to improve results. Sales team restrictions still
+	// apply when enabled.
 	SharingWithGoogleAssignedSalesEnabled bool `json:"sharingWithGoogleAssignedSalesEnabled,omitempty"`
-
-	// SharingWithGoogleProductsEnabled: Allows Google to use the data to
-	// improve other Google products or services.
+	// SharingWithGoogleProductsEnabled: Allows Google to use the data to improve
+	// other Google products or services.
 	SharingWithGoogleProductsEnabled bool `json:"sharingWithGoogleProductsEnabled,omitempty"`
-
-	// SharingWithGoogleSupportEnabled: Allows Google support to access the
-	// data in order to help troubleshoot issues.
+	// SharingWithGoogleSupportEnabled: Allows Google support to access the data in
+	// order to help troubleshoot issues.
 	SharingWithGoogleSupportEnabled bool `json:"sharingWithGoogleSupportEnabled,omitempty"`
-
-	// SharingWithOthersEnabled: Allows Google to share the data anonymously
-	// in aggregate form with others.
+	// SharingWithOthersEnabled: Allows Google to share the data anonymously in
+	// aggregate form with others.
 	SharingWithOthersEnabled bool `json:"sharingWithOthersEnabled,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaDataSharingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaDataSharingSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaDataStream: A resource message representing
-// a data stream.
+// GoogleAnalyticsAdminV1betaDataStream: A resource message representing a data
+// stream.
 type GoogleAnalyticsAdminV1betaDataStream struct {
 	// AndroidAppStreamData: Data specific to Android app streams. Must be
 	// populated if type is ANDROID_APP_DATA_STREAM.
 	AndroidAppStreamData *GoogleAnalyticsAdminV1betaDataStreamAndroidAppStreamData `json:"androidAppStreamData,omitempty"`
-
-	// CreateTime: Output only. Time when this stream was originally
-	// created.
+	// CreateTime: Output only. Time when this stream was originally created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DisplayName: Human-readable display name for the Data Stream.
-	// Required for web data streams. The max allowed display name length is
-	// 255 UTF-16 code units.
+	// DisplayName: Human-readable display name for the Data Stream. Required for
+	// web data streams. The max allowed display name length is 255 UTF-16 code
+	// units.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// IosAppStreamData: Data specific to iOS app streams. Must be populated
-	// if type is IOS_APP_DATA_STREAM.
+	// IosAppStreamData: Data specific to iOS app streams. Must be populated if
+	// type is IOS_APP_DATA_STREAM.
 	IosAppStreamData *GoogleAnalyticsAdminV1betaDataStreamIosAppStreamData `json:"iosAppStreamData,omitempty"`
-
 	// Name: Output only. Resource name of this Data Stream. Format:
 	// properties/{property_id}/dataStreams/{stream_id} Example:
 	// "properties/1000/dataStreams/2000"
 	Name string `json:"name,omitempty"`
-
 	// Type: Required. Immutable. The type of this DataStream resource.
 	//
 	// Possible values:
@@ -1757,364 +1449,278 @@ type GoogleAnalyticsAdminV1betaDataStream struct {
 	//   "ANDROID_APP_DATA_STREAM" - Android app data stream.
 	//   "IOS_APP_DATA_STREAM" - iOS app data stream.
 	Type string `json:"type,omitempty"`
-
-	// UpdateTime: Output only. Time when stream payload fields were last
-	// updated.
+	// UpdateTime: Output only. Time when stream payload fields were last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// WebStreamData: Data specific to web streams. Must be populated if
-	// type is WEB_DATA_STREAM.
+	// WebStreamData: Data specific to web streams. Must be populated if type is
+	// WEB_DATA_STREAM.
 	WebStreamData *GoogleAnalyticsAdminV1betaDataStreamWebStreamData `json:"webStreamData,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AndroidAppStreamData") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AndroidAppStreamData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AndroidAppStreamData") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AndroidAppStreamData") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaDataStream) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaDataStream
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaDataStreamAndroidAppStreamData: Data
-// specific to Android app streams.
+// GoogleAnalyticsAdminV1betaDataStreamAndroidAppStreamData: Data specific to
+// Android app streams.
 type GoogleAnalyticsAdminV1betaDataStreamAndroidAppStreamData struct {
-	// FirebaseAppId: Output only. ID of the corresponding Android app in
-	// Firebase, if any. This ID can change if the Android app is deleted
-	// and recreated.
+	// FirebaseAppId: Output only. ID of the corresponding Android app in Firebase,
+	// if any. This ID can change if the Android app is deleted and recreated.
 	FirebaseAppId string `json:"firebaseAppId,omitempty"`
-
 	// PackageName: Immutable. The package name for the app being measured.
 	// Example: "com.example.myandroidapp"
 	PackageName string `json:"packageName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FirebaseAppId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FirebaseAppId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FirebaseAppId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaDataStreamAndroidAppStreamData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaDataStreamAndroidAppStreamData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaDataStreamIosAppStreamData: Data specific
-// to iOS app streams.
+// GoogleAnalyticsAdminV1betaDataStreamIosAppStreamData: Data specific to iOS
+// app streams.
 type GoogleAnalyticsAdminV1betaDataStreamIosAppStreamData struct {
-	// BundleId: Required. Immutable. The Apple App Store Bundle ID for the
-	// app Example: "com.example.myiosapp"
+	// BundleId: Required. Immutable. The Apple App Store Bundle ID for the app
+	// Example: "com.example.myiosapp"
 	BundleId string `json:"bundleId,omitempty"`
-
-	// FirebaseAppId: Output only. ID of the corresponding iOS app in
-	// Firebase, if any. This ID can change if the iOS app is deleted and
-	// recreated.
+	// FirebaseAppId: Output only. ID of the corresponding iOS app in Firebase, if
+	// any. This ID can change if the iOS app is deleted and recreated.
 	FirebaseAppId string `json:"firebaseAppId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BundleId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BundleId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BundleId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaDataStreamIosAppStreamData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaDataStreamIosAppStreamData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaDataStreamWebStreamData: Data specific to
-// web streams.
+// GoogleAnalyticsAdminV1betaDataStreamWebStreamData: Data specific to web
+// streams.
 type GoogleAnalyticsAdminV1betaDataStreamWebStreamData struct {
-	// DefaultUri: Domain name of the web app being measured, or empty.
-	// Example: "http://www.google.com", "https://www.google.com"
+	// DefaultUri: Domain name of the web app being measured, or empty. Example:
+	// "http://www.google.com", "https://www.google.com"
 	DefaultUri string `json:"defaultUri,omitempty"`
-
-	// FirebaseAppId: Output only. ID of the corresponding web app in
-	// Firebase, if any. This ID can change if the web app is deleted and
-	// recreated.
+	// FirebaseAppId: Output only. ID of the corresponding web app in Firebase, if
+	// any. This ID can change if the web app is deleted and recreated.
 	FirebaseAppId string `json:"firebaseAppId,omitempty"`
-
 	// MeasurementId: Output only. Analytics Measurement ID. Example:
 	// "G-1A2BCD345E"
 	MeasurementId string `json:"measurementId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DefaultUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DefaultUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaDataStreamWebStreamData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaDataStreamWebStreamData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaFirebaseLink: A link between a GA4 property
-// and a Firebase project.
+// GoogleAnalyticsAdminV1betaFirebaseLink: A link between a GA4 property and a
+// Firebase project.
 type GoogleAnalyticsAdminV1betaFirebaseLink struct {
-	// CreateTime: Output only. Time when this FirebaseLink was originally
-	// created.
+	// CreateTime: Output only. Time when this FirebaseLink was originally created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Name: Output only. Example format: properties/1234/firebaseLinks/5678
 	Name string `json:"name,omitempty"`
-
 	// Project: Immutable. Firebase project resource name. When creating a
-	// FirebaseLink, you may provide this resource name using either a
-	// project number or project ID. Once this resource has been created,
-	// returned FirebaseLinks will always have a project_name that contains
-	// a project number. Format: 'projects/{project number}' Example:
-	// 'projects/1234'
+	// FirebaseLink, you may provide this resource name using either a project
+	// number or project ID. Once this resource has been created, returned
+	// FirebaseLinks will always have a project_name that contains a project
+	// number. Format: 'projects/{project number}' Example: 'projects/1234'
 	Project string `json:"project,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaFirebaseLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaFirebaseLink
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaGoogleAdsLink: A link between a GA4
-// property and a Google Ads account.
+// GoogleAnalyticsAdminV1betaGoogleAdsLink: A link between a GA4 property and a
+// Google Ads account.
 type GoogleAnalyticsAdminV1betaGoogleAdsLink struct {
-	// AdsPersonalizationEnabled: Enable personalized advertising features
-	// with this integration. Automatically publish my Google Analytics
-	// audience lists and Google Analytics remarketing events/parameters to
-	// the linked Google Ads account. If this field is not set on
-	// create/update, it will be defaulted to true.
+	// AdsPersonalizationEnabled: Enable personalized advertising features with
+	// this integration. Automatically publish my Google Analytics audience lists
+	// and Google Analytics remarketing events/parameters to the linked Google Ads
+	// account. If this field is not set on create/update, it will be defaulted to
+	// true.
 	AdsPersonalizationEnabled bool `json:"adsPersonalizationEnabled,omitempty"`
-
 	// CanManageClients: Output only. If true, this link is for a Google Ads
 	// manager account.
 	CanManageClients bool `json:"canManageClients,omitempty"`
-
 	// CreateTime: Output only. Time when this link was originally created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// CreatorEmailAddress: Output only. Email address of the user that
-	// created the link. An empty string will be returned if the email
-	// address can't be retrieved.
+	// CreatorEmailAddress: Output only. Email address of the user that created the
+	// link. An empty string will be returned if the email address can't be
+	// retrieved.
 	CreatorEmailAddress string `json:"creatorEmailAddress,omitempty"`
-
 	// CustomerId: Immutable. Google Ads customer ID.
 	CustomerId string `json:"customerId,omitempty"`
-
 	// Name: Output only. Format:
 	// properties/{propertyId}/googleAdsLinks/{googleAdsLinkId} Note:
 	// googleAdsLinkId is not the Google Ads customer ID.
 	Name string `json:"name,omitempty"`
-
 	// UpdateTime: Output only. Time when this link was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdsPersonalizationEnabled") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdsPersonalizationEnabled")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "AdsPersonalizationEnabled") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdsPersonalizationEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaGoogleAdsLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaGoogleAdsLink
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaKeyEvent: A key event in a Google Analytics
 // property.
 type GoogleAnalyticsAdminV1betaKeyEvent struct {
-	// CountingMethod: Required. The method by which Key Events will be
-	// counted across multiple events within a session.
+	// CountingMethod: Required. The method by which Key Events will be counted
+	// across multiple events within a session.
 	//
 	// Possible values:
 	//   "COUNTING_METHOD_UNSPECIFIED" - Counting method not specified.
 	//   "ONCE_PER_EVENT" - Each Event instance is considered a Key Event.
-	//   "ONCE_PER_SESSION" - An Event instance is considered a Key Event at
-	// most once per session per user.
+	//   "ONCE_PER_SESSION" - An Event instance is considered a Key Event at most
+	// once per session per user.
 	CountingMethod string `json:"countingMethod,omitempty"`
-
 	// CreateTime: Output only. Time when this key event was created in the
 	// property.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Custom: Output only. If set to true, this key event refers to a
-	// custom event. If set to false, this key event refers to a default
-	// event in GA. Default events typically have special meaning in GA.
-	// Default events are usually created for you by the GA system, but in
-	// some cases can be created by property admins. Custom events count
-	// towards the maximum number of custom key events that may be created
-	// per property.
+	// Custom: Output only. If set to true, this key event refers to a custom
+	// event. If set to false, this key event refers to a default event in GA.
+	// Default events typically have special meaning in GA. Default events are
+	// usually created for you by the GA system, but in some cases can be created
+	// by property admins. Custom events count towards the maximum number of custom
+	// key events that may be created per property.
 	Custom bool `json:"custom,omitempty"`
-
-	// DefaultValue: Optional. Defines a default value/currency for a key
-	// event.
+	// DefaultValue: Optional. Defines a default value/currency for a key event.
 	DefaultValue *GoogleAnalyticsAdminV1betaKeyEventDefaultValue `json:"defaultValue,omitempty"`
-
 	// Deletable: Output only. If set to true, this event can be deleted.
 	Deletable bool `json:"deletable,omitempty"`
-
-	// EventName: Immutable. The event name for this key event. Examples:
-	// 'click', 'purchase'
+	// EventName: Immutable. The event name for this key event. Examples: 'click',
+	// 'purchase'
 	EventName string `json:"eventName,omitempty"`
-
 	// Name: Output only. Resource name of this key event. Format:
 	// properties/{property}/keyEvents/{key_event}
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CountingMethod") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CountingMethod") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CountingMethod") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaKeyEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaKeyEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaKeyEventDefaultValue: Defines a default
 // value/currency for a key event.
 type GoogleAnalyticsAdminV1betaKeyEventDefaultValue struct {
-	// CurrencyCode: Required. When an occurrence of this Key Event
-	// (specified by event_name) has no set currency this currency will be
-	// applied as the default. Must be in ISO 4217 currency code format. See
+	// CurrencyCode: Required. When an occurrence of this Key Event (specified by
+	// event_name) has no set currency this currency will be applied as the
+	// default. Must be in ISO 4217 currency code format. See
 	// https://en.wikipedia.org/wiki/ISO_4217 for more information.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// NumericValue: Required. This will be used to populate the "value"
-	// parameter for all occurrences of this Key Event (specified by
-	// event_name) where that parameter is unset.
+	// NumericValue: Required. This will be used to populate the "value" parameter
+	// for all occurrences of this Key Event (specified by event_name) where that
+	// parameter is unset.
 	NumericValue float64 `json:"numericValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaKeyEventDefaultValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaKeyEventDefaultValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAnalyticsAdminV1betaKeyEventDefaultValue) UnmarshalJSON(data []byte) error {
@@ -2131,44 +1737,34 @@ func (s *GoogleAnalyticsAdminV1betaKeyEventDefaultValue) UnmarshalJSON(data []by
 	return nil
 }
 
-// GoogleAnalyticsAdminV1betaListAccountSummariesResponse: Response
-// message for ListAccountSummaries RPC.
+// GoogleAnalyticsAdminV1betaListAccountSummariesResponse: Response message for
+// ListAccountSummaries RPC.
 type GoogleAnalyticsAdminV1betaListAccountSummariesResponse struct {
-	// AccountSummaries: Account summaries of all accounts the caller has
-	// access to.
+	// AccountSummaries: Account summaries of all accounts the caller has access
+	// to.
 	AccountSummaries []*GoogleAnalyticsAdminV1betaAccountSummary `json:"accountSummaries,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountSummaries") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountSummaries") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AccountSummaries") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaListAccountSummariesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListAccountSummariesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaListAccountsResponse: Request message for
@@ -2176,270 +1772,204 @@ func (s *GoogleAnalyticsAdminV1betaListAccountSummariesResponse) MarshalJSON() (
 type GoogleAnalyticsAdminV1betaListAccountsResponse struct {
 	// Accounts: Results that were accessible to the caller.
 	Accounts []*GoogleAnalyticsAdminV1betaAccount `json:"accounts,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Accounts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Accounts") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Accounts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListAccountsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaListConversionEventsResponse: Response
-// message for ListConversionEvents RPC.
+// GoogleAnalyticsAdminV1betaListConversionEventsResponse: Response message for
+// ListConversionEvents RPC.
 type GoogleAnalyticsAdminV1betaListConversionEventsResponse struct {
 	// ConversionEvents: The requested conversion events
 	ConversionEvents []*GoogleAnalyticsAdminV1betaConversionEvent `json:"conversionEvents,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ConversionEvents") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConversionEvents") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ConversionEvents") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaListConversionEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListConversionEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaListCustomDimensionsResponse: Response
-// message for ListCustomDimensions RPC.
+// GoogleAnalyticsAdminV1betaListCustomDimensionsResponse: Response message for
+// ListCustomDimensions RPC.
 type GoogleAnalyticsAdminV1betaListCustomDimensionsResponse struct {
 	// CustomDimensions: List of CustomDimensions.
 	CustomDimensions []*GoogleAnalyticsAdminV1betaCustomDimension `json:"customDimensions,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CustomDimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomDimensions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CustomDimensions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaListCustomDimensionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListCustomDimensionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaListCustomMetricsResponse: Response message
-// for ListCustomMetrics RPC.
+// GoogleAnalyticsAdminV1betaListCustomMetricsResponse: Response message for
+// ListCustomMetrics RPC.
 type GoogleAnalyticsAdminV1betaListCustomMetricsResponse struct {
 	// CustomMetrics: List of CustomMetrics.
 	CustomMetrics []*GoogleAnalyticsAdminV1betaCustomMetric `json:"customMetrics,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CustomMetrics") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomMetrics") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CustomMetrics") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaListCustomMetricsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListCustomMetricsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaListDataStreamsResponse: Response message
-// for ListDataStreams RPC.
+// GoogleAnalyticsAdminV1betaListDataStreamsResponse: Response message for
+// ListDataStreams RPC.
 type GoogleAnalyticsAdminV1betaListDataStreamsResponse struct {
 	// DataStreams: List of DataStreams.
 	DataStreams []*GoogleAnalyticsAdminV1betaDataStream `json:"dataStreams,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DataStreams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataStreams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataStreams") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaListDataStreamsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListDataStreamsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaListFirebaseLinksResponse: Response message
-// for ListFirebaseLinks RPC
+// GoogleAnalyticsAdminV1betaListFirebaseLinksResponse: Response message for
+// ListFirebaseLinks RPC
 type GoogleAnalyticsAdminV1betaListFirebaseLinksResponse struct {
-	// FirebaseLinks: List of FirebaseLinks. This will have at most one
-	// value.
+	// FirebaseLinks: List of FirebaseLinks. This will have at most one value.
 	FirebaseLinks []*GoogleAnalyticsAdminV1betaFirebaseLink `json:"firebaseLinks,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages. Currently, Google Analytics supports only one FirebaseLink per
-	// property, so this will never be populated.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	// Currently, Google Analytics supports only one FirebaseLink per property, so
+	// this will never be populated.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "FirebaseLinks") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FirebaseLinks") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FirebaseLinks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaListFirebaseLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListFirebaseLinksResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse: Response
-// message for ListGoogleAdsLinks RPC.
+// GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse: Response message for
+// ListGoogleAdsLinks RPC.
 type GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse struct {
 	// GoogleAdsLinks: List of GoogleAdsLinks.
 	GoogleAdsLinks []*GoogleAnalyticsAdminV1betaGoogleAdsLink `json:"googleAdsLinks,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "GoogleAdsLinks") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GoogleAdsLinks") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GoogleAdsLinks") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaListKeyEventsResponse: Response message for
@@ -2447,192 +1977,147 @@ func (s *GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse) MarshalJSON() ([]
 type GoogleAnalyticsAdminV1betaListKeyEventsResponse struct {
 	// KeyEvents: The requested Key Events
 	KeyEvents []*GoogleAnalyticsAdminV1betaKeyEvent `json:"keyEvents,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "KeyEvents") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "KeyEvents") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "KeyEvents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaListKeyEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListKeyEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaListMeasurementProtocolSecretsResponse:
-// Response message for ListMeasurementProtocolSecret RPC
+// GoogleAnalyticsAdminV1betaListMeasurementProtocolSecretsResponse: Response
+// message for ListMeasurementProtocolSecret RPC
 type GoogleAnalyticsAdminV1betaListMeasurementProtocolSecretsResponse struct {
 	// MeasurementProtocolSecrets: A list of secrets for the parent stream
 	// specified in the request.
 	MeasurementProtocolSecrets []*GoogleAnalyticsAdminV1betaMeasurementProtocolSecret `json:"measurementProtocolSecrets,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "MeasurementProtocolSecrets") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "MeasurementProtocolSecrets")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "MeasurementProtocolSecrets") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MeasurementProtocolSecrets") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaListMeasurementProtocolSecretsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListMeasurementProtocolSecretsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaListPropertiesResponse: Response message
-// for ListProperties RPC.
+// GoogleAnalyticsAdminV1betaListPropertiesResponse: Response message for
+// ListProperties RPC.
 type GoogleAnalyticsAdminV1betaListPropertiesResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Properties: Results that matched the filter criteria and were
-	// accessible to the caller.
+	// Properties: Results that matched the filter criteria and were accessible to
+	// the caller.
 	Properties []*GoogleAnalyticsAdminV1betaProperty `json:"properties,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaListPropertiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListPropertiesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaMeasurementProtocolSecret: A secret value
-// used for sending hits to Measurement Protocol.
+// GoogleAnalyticsAdminV1betaMeasurementProtocolSecret: A secret value used for
+// sending hits to Measurement Protocol.
 type GoogleAnalyticsAdminV1betaMeasurementProtocolSecret struct {
 	// DisplayName: Required. Human-readable display name for this secret.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Name: Output only. Resource name of this secret. This secret may be a
-	// child of any type of stream. Format:
-	// properties/{property}/dataStreams/{dataStream}/measurementProtocolSecr
-	// ets/{measurementProtocolSecret}
+	// Name: Output only. Resource name of this secret. This secret may be a child
+	// of any type of stream. Format:
+	// properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{me
+	// asurementProtocolSecret}
 	Name string `json:"name,omitempty"`
-
-	// SecretValue: Output only. The measurement protocol secret value. Pass
-	// this value to the api_secret field of the Measurement Protocol API
-	// when sending hits to this secret's parent property.
+	// SecretValue: Output only. The measurement protocol secret value. Pass this
+	// value to the api_secret field of the Measurement Protocol API when sending
+	// hits to this secret's parent property.
 	SecretValue string `json:"secretValue,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaMeasurementProtocolSecret
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaNumericValue: To represent a number.
 type GoogleAnalyticsAdminV1betaNumericValue struct {
 	// DoubleValue: Double value
 	DoubleValue float64 `json:"doubleValue,omitempty"`
-
 	// Int64Value: Integer value
 	Int64Value int64 `json:"int64Value,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DoubleValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DoubleValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaNumericValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaNumericValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAnalyticsAdminV1betaNumericValue) UnmarshalJSON(data []byte) error {
@@ -2649,35 +2134,27 @@ func (s *GoogleAnalyticsAdminV1betaNumericValue) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-// GoogleAnalyticsAdminV1betaProperty: A resource message representing a
-// Google Analytics GA4 property.
+// GoogleAnalyticsAdminV1betaProperty: A resource message representing a Google
+// Analytics GA4 property.
 type GoogleAnalyticsAdminV1betaProperty struct {
 	// Account: Immutable. The resource name of the parent account Format:
 	// accounts/{account_id} Example: "accounts/123"
 	Account string `json:"account,omitempty"`
-
 	// CreateTime: Output only. Time when the entity was originally created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// CurrencyCode: The currency type used in reports involving monetary
-	// values. Format: https://en.wikipedia.org/wiki/ISO_4217 Examples:
-	// "USD", "EUR", "JPY"
+	// CurrencyCode: The currency type used in reports involving monetary values.
+	// Format: https://en.wikipedia.org/wiki/ISO_4217 Examples: "USD", "EUR", "JPY"
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// DeleteTime: Output only. If set, the time at which this property was
-	// trashed. If not set, then this property is not currently in the trash
-	// can.
+	// trashed. If not set, then this property is not currently in the trash can.
 	DeleteTime string `json:"deleteTime,omitempty"`
-
-	// DisplayName: Required. Human-readable display name for this property.
-	// The max allowed display name length is 100 UTF-16 code units.
+	// DisplayName: Required. Human-readable display name for this property. The
+	// max allowed display name length is 100 UTF-16 code units.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// ExpireTime: Output only. If set, the time at which this trashed
-	// property will be permanently deleted. If not set, then this property
-	// is not currently in the trash can and is not slated to be deleted.
+	// ExpireTime: Output only. If set, the time at which this trashed property
+	// will be permanently deleted. If not set, then this property is not currently
+	// in the trash can and is not slated to be deleted.
 	ExpireTime string `json:"expireTime,omitempty"`
-
 	// IndustryCategory: Industry associated with this property Example:
 	// AUTOMOTIVE, FOOD_AND_DRINK
 	//
@@ -2710,21 +2187,17 @@ type GoogleAnalyticsAdminV1betaProperty struct {
 	//   "JOBS_AND_EDUCATION" - Jobs and education
 	//   "SHOPPING" - Shopping
 	IndustryCategory string `json:"industryCategory,omitempty"`
-
 	// Name: Output only. Resource name of this property. Format:
 	// properties/{property_id} Example: "properties/1000"
 	Name string `json:"name,omitempty"`
-
-	// Parent: Immutable. Resource name of this property's logical parent.
-	// Note: The Property-Moving UI can be used to change the parent.
-	// Format: accounts/{account}, properties/{property} Example:
-	// "accounts/100", "properties/101"
+	// Parent: Immutable. Resource name of this property's logical parent. Note:
+	// The Property-Moving UI can be used to change the parent. Format:
+	// accounts/{account}, properties/{property} Example: "accounts/100",
+	// "properties/101"
 	Parent string `json:"parent,omitempty"`
-
-	// PropertyType: Immutable. The property type for this Property
-	// resource. When creating a property, if the type is
-	// "PROPERTY_TYPE_UNSPECIFIED", then "ORDINARY_PROPERTY" will be
-	// implied.
+	// PropertyType: Immutable. The property type for this Property resource. When
+	// creating a property, if the type is "PROPERTY_TYPE_UNSPECIFIED", then
+	// "ORDINARY_PROPERTY" will be implied.
 	//
 	// Possible values:
 	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
@@ -2732,75 +2205,57 @@ type GoogleAnalyticsAdminV1betaProperty struct {
 	//   "PROPERTY_TYPE_SUBPROPERTY" - GA4 subproperty
 	//   "PROPERTY_TYPE_ROLLUP" - GA4 rollup property
 	PropertyType string `json:"propertyType,omitempty"`
-
-	// ServiceLevel: Output only. The Google Analytics service level that
-	// applies to this property.
+	// ServiceLevel: Output only. The Google Analytics service level that applies
+	// to this property.
 	//
 	// Possible values:
-	//   "SERVICE_LEVEL_UNSPECIFIED" - Service level not specified or
-	// invalid.
-	//   "GOOGLE_ANALYTICS_STANDARD" - The standard version of Google
-	// Analytics.
-	//   "GOOGLE_ANALYTICS_360" - The paid, premium version of Google
-	// Analytics.
+	//   "SERVICE_LEVEL_UNSPECIFIED" - Service level not specified or invalid.
+	//   "GOOGLE_ANALYTICS_STANDARD" - The standard version of Google Analytics.
+	//   "GOOGLE_ANALYTICS_360" - The paid, premium version of Google Analytics.
 	ServiceLevel string `json:"serviceLevel,omitempty"`
-
 	// TimeZone: Required. Reporting Time Zone, used as the day boundary for
-	// reports, regardless of where the data originates. If the time zone
-	// honors DST, Analytics will automatically adjust for the changes.
-	// NOTE: Changing the time zone only affects data going forward, and is
-	// not applied retroactively. Format: https://www.iana.org/time-zones
-	// Example: "America/Los_Angeles"
+	// reports, regardless of where the data originates. If the time zone honors
+	// DST, Analytics will automatically adjust for the changes. NOTE: Changing the
+	// time zone only affects data going forward, and is not applied retroactively.
+	// Format: https://www.iana.org/time-zones Example: "America/Los_Angeles"
 	TimeZone string `json:"timeZone,omitempty"`
-
-	// UpdateTime: Output only. Time when entity payload fields were last
-	// updated.
+	// UpdateTime: Output only. Time when entity payload fields were last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Account") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Account") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Account") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaProperty
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaPropertySummary: A virtual resource
-// representing metadata for a GA4 property.
+// GoogleAnalyticsAdminV1betaPropertySummary: A virtual resource representing
+// metadata for a GA4 property.
 type GoogleAnalyticsAdminV1betaPropertySummary struct {
-	// DisplayName: Display name for the property referred to in this
-	// property summary.
+	// DisplayName: Display name for the property referred to in this property
+	// summary.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Parent: Resource name of this property's logical parent. Note: The
 	// Property-Moving UI can be used to change the parent. Format:
 	// accounts/{account}, properties/{property} Example: "accounts/100",
 	// "properties/200"
 	Parent string `json:"parent,omitempty"`
-
-	// Property: Resource name of property referred to by this property
-	// summary Format: properties/{property_id} Example: "properties/1000"
+	// Property: Resource name of property referred to by this property summary
+	// Format: properties/{property_id} Example: "properties/1000"
 	Property string `json:"property,omitempty"`
-
 	// PropertyType: The property's property type.
 	//
 	// Possible values:
@@ -2809,266 +2264,210 @@ type GoogleAnalyticsAdminV1betaPropertySummary struct {
 	//   "PROPERTY_TYPE_SUBPROPERTY" - GA4 subproperty
 	//   "PROPERTY_TYPE_ROLLUP" - GA4 rollup property
 	PropertyType string `json:"propertyType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaPropertySummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaPropertySummary
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaProvisionAccountTicketRequest: Request
-// message for ProvisionAccountTicket RPC.
+// GoogleAnalyticsAdminV1betaProvisionAccountTicketRequest: Request message for
+// ProvisionAccountTicket RPC.
 type GoogleAnalyticsAdminV1betaProvisionAccountTicketRequest struct {
 	// Account: The account to create.
 	Account *GoogleAnalyticsAdminV1betaAccount `json:"account,omitempty"`
-
-	// RedirectUri: Redirect URI where the user will be sent after accepting
-	// Terms of Service. Must be configured in Cloud Console as a Redirect
-	// URI.
+	// RedirectUri: Redirect URI where the user will be sent after accepting Terms
+	// of Service. Must be configured in Cloud Console as a Redirect URI.
 	RedirectUri string `json:"redirectUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Account") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Account") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Account") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaProvisionAccountTicketRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaProvisionAccountTicketRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse: Response
-// message for ProvisionAccountTicket RPC.
+// GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse: Response message
+// for ProvisionAccountTicket RPC.
 type GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse struct {
 	// AccountTicketId: The param to be passed in the ToS link.
 	AccountTicketId string `json:"accountTicketId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountTicketId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountTicketId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AccountTicketId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaRunAccessReportRequest: The request for a
-// Data Access Record Report.
+// GoogleAnalyticsAdminV1betaRunAccessReportRequest: The request for a Data
+// Access Record Report.
 type GoogleAnalyticsAdminV1betaRunAccessReportRequest struct {
-	// DateRanges: Date ranges of access records to read. If multiple date
-	// ranges are requested, each response row will contain a zero based
-	// date range index. If two date ranges overlap, the access records for
-	// the overlapping days is included in the response rows for both date
-	// ranges. Requests are allowed up to 2 date ranges.
+	// DateRanges: Date ranges of access records to read. If multiple date ranges
+	// are requested, each response row will contain a zero based date range index.
+	// If two date ranges overlap, the access records for the overlapping days is
+	// included in the response rows for both date ranges. Requests are allowed up
+	// to 2 date ranges.
 	DateRanges []*GoogleAnalyticsAdminV1betaAccessDateRange `json:"dateRanges,omitempty"`
-
-	// DimensionFilter: Dimension filters let you restrict report response
-	// to specific dimension values which match the filter. For example,
-	// filtering on access records of a single user. To learn more, see
-	// Fundamentals of Dimension Filters
+	// DimensionFilter: Dimension filters let you restrict report response to
+	// specific dimension values which match the filter. For example, filtering on
+	// access records of a single user. To learn more, see Fundamentals of
+	// Dimension Filters
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#dimension_filters)
 	// for examples. Metrics cannot be used in this filter.
 	DimensionFilter *GoogleAnalyticsAdminV1betaAccessFilterExpression `json:"dimensionFilter,omitempty"`
-
-	// Dimensions: The dimensions requested and displayed in the response.
-	// Requests are allowed up to 9 dimensions.
+	// Dimensions: The dimensions requested and displayed in the response. Requests
+	// are allowed up to 9 dimensions.
 	Dimensions []*GoogleAnalyticsAdminV1betaAccessDimension `json:"dimensions,omitempty"`
-
-	// ExpandGroups: Optional. Decides whether to return the users within
-	// user groups. This field works only when include_all_users is set to
-	// true. If true, it will return all users with access to the specified
-	// property or account. If false, only the users with direct access will
-	// be returned.
+	// ExpandGroups: Optional. Decides whether to return the users within user
+	// groups. This field works only when include_all_users is set to true. If
+	// true, it will return all users with access to the specified property or
+	// account. If false, only the users with direct access will be returned.
 	ExpandGroups bool `json:"expandGroups,omitempty"`
-
-	// IncludeAllUsers: Optional. Determines whether to include users who
-	// have never made an API call in the response. If true, all users with
-	// access to the specified property or account are included in the
-	// response, regardless of whether they have made an API call or not. If
-	// false, only the users who have made an API call will be included.
+	// IncludeAllUsers: Optional. Determines whether to include users who have
+	// never made an API call in the response. If true, all users with access to
+	// the specified property or account are included in the response, regardless
+	// of whether they have made an API call or not. If false, only the users who
+	// have made an API call will be included.
 	IncludeAllUsers bool `json:"includeAllUsers,omitempty"`
-
 	// Limit: The number of rows to return. If unspecified, 10,000 rows are
-	// returned. The API returns a maximum of 100,000 rows per request, no
-	// matter how many you ask for. `limit` must be positive. The API may
-	// return fewer rows than the requested `limit`, if there aren't as many
-	// remaining rows as the `limit`. For instance, there are fewer than 300
-	// possible values for the dimension `country`, so when reporting on
-	// only `country`, you can't get more than 300 rows, even if you set
-	// `limit` to a higher value. To learn more about this pagination
-	// parameter, see Pagination
+	// returned. The API returns a maximum of 100,000 rows per request, no matter
+	// how many you ask for. `limit` must be positive. The API may return fewer
+	// rows than the requested `limit`, if there aren't as many remaining rows as
+	// the `limit`. For instance, there are fewer than 300 possible values for the
+	// dimension `country`, so when reporting on only `country`, you can't get more
+	// than 300 rows, even if you set `limit` to a higher value. To learn more
+	// about this pagination parameter, see Pagination
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Limit int64 `json:"limit,omitempty,string"`
-
 	// MetricFilter: Metric filters allow you to restrict report response to
-	// specific metric values which match the filter. Metric filters are
-	// applied after aggregating the report's rows, similar to SQL
-	// having-clause. Dimensions cannot be used in this filter.
+	// specific metric values which match the filter. Metric filters are applied
+	// after aggregating the report's rows, similar to SQL having-clause.
+	// Dimensions cannot be used in this filter.
 	MetricFilter *GoogleAnalyticsAdminV1betaAccessFilterExpression `json:"metricFilter,omitempty"`
-
-	// Metrics: The metrics requested and displayed in the response.
-	// Requests are allowed up to 10 metrics.
+	// Metrics: The metrics requested and displayed in the response. Requests are
+	// allowed up to 10 metrics.
 	Metrics []*GoogleAnalyticsAdminV1betaAccessMetric `json:"metrics,omitempty"`
-
-	// Offset: The row count of the start row. The first row is counted as
-	// row 0. If offset is unspecified, it is treated as 0. If offset is
-	// zero, then this method will return the first page of results with
-	// `limit` entries. To learn more about this pagination parameter, see
-	// Pagination
+	// Offset: The row count of the start row. The first row is counted as row 0.
+	// If offset is unspecified, it is treated as 0. If offset is zero, then this
+	// method will return the first page of results with `limit` entries. To learn
+	// more about this pagination parameter, see Pagination
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Offset int64 `json:"offset,omitempty,string"`
-
 	// OrderBys: Specifies how rows are ordered in the response.
 	OrderBys []*GoogleAnalyticsAdminV1betaAccessOrderBy `json:"orderBys,omitempty"`
-
-	// ReturnEntityQuota: Toggles whether to return the current state of
-	// this Analytics Property's quota. Quota is returned in AccessQuota
-	// (#AccessQuota). For account-level requests, this field must be false.
+	// ReturnEntityQuota: Toggles whether to return the current state of this
+	// Analytics Property's quota. Quota is returned in AccessQuota (#AccessQuota).
+	// For account-level requests, this field must be false.
 	ReturnEntityQuota bool `json:"returnEntityQuota,omitempty"`
-
 	// TimeZone: This request's time zone if specified. If unspecified, the
-	// property's time zone is used. The request's time zone is used to
-	// interpret the start & end dates of the report. Formatted as strings
-	// from the IANA Time Zone database (https://www.iana.org/time-zones);
-	// for example "America/New_York" or "Asia/Tokyo".
+	// property's time zone is used. The request's time zone is used to interpret
+	// the start & end dates of the report. Formatted as strings from the IANA Time
+	// Zone database (https://www.iana.org/time-zones); for example
+	// "America/New_York" or "Asia/Tokyo".
 	TimeZone string `json:"timeZone,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DateRanges") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DateRanges") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DateRanges") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaRunAccessReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaRunAccessReportRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaRunAccessReportResponse: The customized
-// Data Access Record Report response.
+// GoogleAnalyticsAdminV1betaRunAccessReportResponse: The customized Data
+// Access Record Report response.
 type GoogleAnalyticsAdminV1betaRunAccessReportResponse struct {
-	// DimensionHeaders: The header for a column in the report that
-	// corresponds to a specific dimension. The number of DimensionHeaders
-	// and ordering of DimensionHeaders matches the dimensions present in
-	// rows.
+	// DimensionHeaders: The header for a column in the report that corresponds to
+	// a specific dimension. The number of DimensionHeaders and ordering of
+	// DimensionHeaders matches the dimensions present in rows.
 	DimensionHeaders []*GoogleAnalyticsAdminV1betaAccessDimensionHeader `json:"dimensionHeaders,omitempty"`
-
-	// MetricHeaders: The header for a column in the report that corresponds
-	// to a specific metric. The number of MetricHeaders and ordering of
-	// MetricHeaders matches the metrics present in rows.
+	// MetricHeaders: The header for a column in the report that corresponds to a
+	// specific metric. The number of MetricHeaders and ordering of MetricHeaders
+	// matches the metrics present in rows.
 	MetricHeaders []*GoogleAnalyticsAdminV1betaAccessMetricHeader `json:"metricHeaders,omitempty"`
-
-	// Quota: The quota state for this Analytics property including this
-	// request. This field doesn't work with account-level requests.
+	// Quota: The quota state for this Analytics property including this request.
+	// This field doesn't work with account-level requests.
 	Quota *GoogleAnalyticsAdminV1betaAccessQuota `json:"quota,omitempty"`
-
 	// RowCount: The total number of rows in the query result. `rowCount` is
-	// independent of the number of rows returned in the response, the
-	// `limit` request parameter, and the `offset` request parameter. For
-	// example if a query returns 175 rows and includes `limit` of 50 in the
-	// API request, the response will contain `rowCount` of 175 but only 50
-	// rows. To learn more about this pagination parameter, see Pagination
+	// independent of the number of rows returned in the response, the `limit`
+	// request parameter, and the `offset` request parameter. For example if a
+	// query returns 175 rows and includes `limit` of 50 in the API request, the
+	// response will contain `rowCount` of 175 but only 50 rows. To learn more
+	// about this pagination parameter, see Pagination
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	RowCount int64 `json:"rowCount,omitempty"`
-
-	// Rows: Rows of dimension value combinations and metric values in the
-	// report.
+	// Rows: Rows of dimension value combinations and metric values in the report.
 	Rows []*GoogleAnalyticsAdminV1betaAccessRow `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionHeaders") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionHeaders") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionHeaders") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaRunAccessReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaRunAccessReportResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest: Request
-// message for SearchChangeHistoryEvents RPC.
+// GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest: Request message
+// for SearchChangeHistoryEvents RPC.
 type GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest struct {
-	// Action: Optional. If set, only return changes that match one or more
-	// of these types of actions.
+	// Action: Optional. If set, only return changes that match one or more of
+	// these types of actions.
 	//
 	// Possible values:
 	//   "ACTION_TYPE_UNSPECIFIED" - Action type unknown or not specified.
@@ -3076,44 +2475,36 @@ type GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest struct {
 	//   "UPDATED" - Resource was updated in this change.
 	//   "DELETED" - Resource was deleted in this change.
 	Action []string `json:"action,omitempty"`
-
-	// ActorEmail: Optional. If set, only return changes if they are made by
-	// a user in this list.
+	// ActorEmail: Optional. If set, only return changes if they are made by a user
+	// in this list.
 	ActorEmail []string `json:"actorEmail,omitempty"`
-
-	// EarliestChangeTime: Optional. If set, only return changes made after
-	// this time (inclusive).
+	// EarliestChangeTime: Optional. If set, only return changes made after this
+	// time (inclusive).
 	EarliestChangeTime string `json:"earliestChangeTime,omitempty"`
-
-	// LatestChangeTime: Optional. If set, only return changes made before
-	// this time (inclusive).
+	// LatestChangeTime: Optional. If set, only return changes made before this
+	// time (inclusive).
 	LatestChangeTime string `json:"latestChangeTime,omitempty"`
-
 	// PageSize: Optional. The maximum number of ChangeHistoryEvent items to
-	// return. The service may return fewer than this value, even if there
-	// are additional pages. If unspecified, at most 50 items will be
-	// returned. The maximum value is 200 (higher values will be coerced to
-	// the maximum).
+	// return. The service may return fewer than this value, even if there are
+	// additional pages. If unspecified, at most 50 items will be returned. The
+	// maximum value is 200 (higher values will be coerced to the maximum).
 	PageSize int64 `json:"pageSize,omitempty"`
-
 	// PageToken: Optional. A page token, received from a previous
-	// `SearchChangeHistoryEvents` call. Provide this to retrieve the
-	// subsequent page. When paginating, all other parameters provided to
-	// `SearchChangeHistoryEvents` must match the call that provided the
-	// page token.
+	// `SearchChangeHistoryEvents` call. Provide this to retrieve the subsequent
+	// page. When paginating, all other parameters provided to
+	// `SearchChangeHistoryEvents` must match the call that provided the page
+	// token.
 	PageToken string `json:"pageToken,omitempty"`
-
-	// Property: Optional. Resource name for a child property. If set, only
-	// return changes made to this property or its child resources. Format:
+	// Property: Optional. Resource name for a child property. If set, only return
+	// changes made to this property or its child resources. Format:
 	// properties/{propertyId} Example: "properties/100"
 	Property string `json:"property,omitempty"`
-
 	// ResourceType: Optional. If set, only return changes if they are for a
 	// resource that matches at least one of these types.
 	//
 	// Possible values:
-	//   "CHANGE_HISTORY_RESOURCE_TYPE_UNSPECIFIED" - Resource type unknown
-	// or not specified.
+	//   "CHANGE_HISTORY_RESOURCE_TYPE_UNSPECIFIED" - Resource type unknown or not
+	// specified.
 	//   "ACCOUNT" - Account resource
 	//   "PROPERTY" - Property resource
 	//   "FIREBASE_LINK" - FirebaseLink resource
@@ -3129,28 +2520,22 @@ type GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest struct {
 	//   "DATA_STREAM" - DataStream resource
 	//   "ATTRIBUTION_SETTINGS" - AttributionSettings resource
 	ResourceType []string `json:"resourceType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Action") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Action") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsResponse: Response
@@ -3158,52 +2543,39 @@ func (s *GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest) MarshalJSON
 type GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsResponse struct {
 	// ChangeHistoryEvents: Results that were accessible to the caller.
 	ChangeHistoryEvents []*GoogleAnalyticsAdminV1betaChangeHistoryEvent `json:"changeHistoryEvents,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ChangeHistoryEvents")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ChangeHistoryEvents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChangeHistoryEvents") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ChangeHistoryEvents") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
-
-// method id "analyticsadmin.accountSummaries.list":
 
 type AccountSummariesListCall struct {
 	s            *Service
@@ -3219,54 +2591,49 @@ func (r *AccountSummariesService) List() *AccountSummariesListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of AccountSummary resources to return. The service may return fewer
-// than this value, even if there are additional pages. If unspecified,
-// at most 50 resources will be returned. The maximum value is 200;
-// (higher values will be coerced to the maximum)
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// AccountSummary resources to return. The service may return fewer than this
+// value, even if there are additional pages. If unspecified, at most 50
+// resources will be returned. The maximum value is 200; (higher values will be
+// coerced to the maximum)
 func (c *AccountSummariesListCall) PageSize(pageSize int64) *AccountSummariesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListAccountSummaries` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListAccountSummaries` must match the call that provided
-// the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAccountSummaries` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListAccountSummaries` must match the call that provided the page token.
 func (c *AccountSummariesListCall) PageToken(pageToken string) *AccountSummariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountSummariesListCall) Fields(s ...googleapi.Field) *AccountSummariesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountSummariesListCall) IfNoneMatch(entityTag string) *AccountSummariesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountSummariesListCall) Context(ctx context.Context) *AccountSummariesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountSummariesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3275,12 +2642,7 @@ func (c *AccountSummariesListCall) Header() http.Header {
 }
 
 func (c *AccountSummariesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3298,15 +2660,13 @@ func (c *AccountSummariesListCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "analyticsadmin.accountSummaries.list" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1betaListAccountSummariesResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleAnalyticsAdminV1betaListAccountSummariesResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaListAccountSummariesResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListAccountSummariesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3337,35 +2697,6 @@ func (c *AccountSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns summaries of all accounts accessible by the caller.",
-	//   "flatPath": "v1beta/accountSummaries",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.accountSummaries.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of AccountSummary resources to return. The service may return fewer than this value, even if there are additional pages. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListAccountSummaries` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAccountSummaries` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/accountSummaries",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaListAccountSummariesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3373,7 +2704,7 @@ func (c *AccountSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnal
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountSummariesListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListAccountSummariesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3389,8 +2720,6 @@ func (c *AccountSummariesListCall) Pages(ctx context.Context, f func(*GoogleAnal
 	}
 }
 
-// method id "analyticsadmin.accounts.delete":
-
 type AccountsDeleteCall struct {
 	s          *Service
 	name       string
@@ -3399,17 +2728,16 @@ type AccountsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Marks target Account as soft-deleted (ie: "trashed") and
-// returns it. This API does not have a method to restore soft-deleted
-// accounts. However, they can be restored using the Trash Can UI. If
-// the accounts are not restored before the expiration time, the account
-// and all child resources (eg: Properties, GoogleAdsLinks, Streams,
-// AccessBindings) will be permanently purged.
-// https://support.google.com/analytics/answer/6154772 Returns an error
-// if the target is not found.
+// Delete: Marks target Account as soft-deleted (ie: "trashed") and returns it.
+// This API does not have a method to restore soft-deleted accounts. However,
+// they can be restored using the Trash Can UI. If the accounts are not
+// restored before the expiration time, the account and all child resources
+// (eg: Properties, GoogleAdsLinks, Streams, AccessBindings) will be
+// permanently purged. https://support.google.com/analytics/answer/6154772
+// Returns an error if the target is not found.
 //
-//   - name: The name of the Account to soft-delete. Format:
-//     accounts/{account} Example: "accounts/100".
+//   - name: The name of the Account to soft-delete. Format: accounts/{account}
+//     Example: "accounts/100".
 func (r *AccountsService) Delete(name string) *AccountsDeleteCall {
 	c := &AccountsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3417,23 +2745,21 @@ func (r *AccountsService) Delete(name string) *AccountsDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsDeleteCall) Fields(s ...googleapi.Field) *AccountsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsDeleteCall) Context(ctx context.Context) *AccountsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3442,12 +2768,7 @@ func (c *AccountsDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3465,12 +2786,11 @@ func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "analyticsadmin.accounts.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3501,35 +2821,7 @@ func (c *AccountsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEm
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Marks target Account as soft-deleted (ie: \"trashed\") and returns it. This API does not have a method to restore soft-deleted accounts. However, they can be restored using the Trash Can UI. If the accounts are not restored before the expiration time, the account and all child resources (eg: Properties, GoogleAdsLinks, Streams, AccessBindings) will be permanently purged. https://support.google.com/analytics/answer/6154772 Returns an error if the target is not found.",
-	//   "flatPath": "v1beta/accounts/{accountsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "analyticsadmin.accounts.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the Account to soft-delete. Format: accounts/{account} Example: \"accounts/100\"",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.accounts.get":
 
 type AccountsGetCall struct {
 	s            *Service
@@ -3551,33 +2843,29 @@ func (r *AccountsService) Get(name string) *AccountsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsGetCall) IfNoneMatch(entityTag string) *AccountsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3586,12 +2874,7 @@ func (c *AccountsGetCall) Header() http.Header {
 }
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3612,13 +2895,11 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "analyticsadmin.accounts.get" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaAccount or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaAccount.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaAccount.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaAccount, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3649,36 +2930,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdmi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lookup for a single Account.",
-	//   "flatPath": "v1beta/accounts/{accountsId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.accounts.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the account to lookup. Format: accounts/{account} Example: \"accounts/100\"",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaAccount"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.accounts.getDataSharingSettings":
 
 type AccountsGetDataSharingSettingsCall struct {
 	s            *Service
@@ -3702,33 +2954,29 @@ func (r *AccountsService) GetDataSharingSettings(name string) *AccountsGetDataSh
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsGetDataSharingSettingsCall) Fields(s ...googleapi.Field) *AccountsGetDataSharingSettingsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsGetDataSharingSettingsCall) IfNoneMatch(entityTag string) *AccountsGetDataSharingSettingsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsGetDataSharingSettingsCall) Context(ctx context.Context) *AccountsGetDataSharingSettingsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsGetDataSharingSettingsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3737,12 +2985,7 @@ func (c *AccountsGetDataSharingSettingsCall) Header() http.Header {
 }
 
 func (c *AccountsGetDataSharingSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3763,14 +3006,11 @@ func (c *AccountsGetDataSharingSettingsCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "analyticsadmin.accounts.getDataSharingSettings" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaDataSharingSettings or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaDataSharingSettings.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaDataSharingSettings.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsGetDataSharingSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaDataSharingSettings, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3801,36 +3041,7 @@ func (c *AccountsGetDataSharingSettingsCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get data sharing settings on an account. Data sharing settings are singletons.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/dataSharingSettings",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.accounts.getDataSharingSettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the settings to lookup. Format: accounts/{account}/dataSharingSettings Example: \"accounts/1000/dataSharingSettings\"",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/dataSharingSettings$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaDataSharingSettings"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.accounts.list":
 
 type AccountsListCall struct {
 	s            *Service
@@ -3842,70 +3053,64 @@ type AccountsListCall struct {
 
 // List: Returns all accounts accessible by the caller. Note that these
 // accounts might not currently have GA4 properties. Soft-deleted (ie:
-// "trashed") accounts are excluded by default. Returns an empty list if
-// no relevant accounts are found.
+// "trashed") accounts are excluded by default. Returns an empty list if no
+// relevant accounts are found.
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. The service may return fewer than this value,
-// even if there are additional pages. If unspecified, at most 50
-// resources will be returned. The maximum value is 200; (higher values
-// will be coerced to the maximum)
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. The service may return fewer than this value, even if
+// there are additional pages. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200; (higher values will be coerced to the
+// maximum)
 func (c *AccountsListCall) PageSize(pageSize int64) *AccountsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListAccounts` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListAccounts` must match the call that provided the page
-// token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAccounts` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to `ListAccounts` must
+// match the call that provided the page token.
 func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ShowDeleted sets the optional parameter "showDeleted": Whether to
-// include soft-deleted (ie: "trashed") Accounts in the results.
-// Accounts can be inspected to determine whether they are deleted or
-// not.
+// ShowDeleted sets the optional parameter "showDeleted": Whether to include
+// soft-deleted (ie: "trashed") Accounts in the results. Accounts can be
+// inspected to determine whether they are deleted or not.
 func (c *AccountsListCall) ShowDeleted(showDeleted bool) *AccountsListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsListCall) IfNoneMatch(entityTag string) *AccountsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3914,12 +3119,7 @@ func (c *AccountsListCall) Header() http.Header {
 }
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3937,14 +3137,11 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "analyticsadmin.accounts.list" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaListAccountsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaListAccountsResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaListAccountsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListAccountsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3975,40 +3172,6 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdm
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns all accounts accessible by the caller. Note that these accounts might not currently have GA4 properties. Soft-deleted (ie: \"trashed\") accounts are excluded by default. Returns an empty list if no relevant accounts are found.",
-	//   "flatPath": "v1beta/accounts",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.accounts.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. The service may return fewer than this value, even if there are additional pages. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListAccounts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAccounts` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "showDeleted": {
-	//       "description": "Whether to include soft-deleted (ie: \"trashed\") Accounts in the results. Accounts can be inspected to determine whether they are deleted or not.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v1beta/accounts",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaListAccountsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4016,7 +3179,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdm
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListAccountsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4031,8 +3194,6 @@ func (c *AccountsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdm
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "analyticsadmin.accounts.patch":
 
 type AccountsPatchCall struct {
 	s                                 *Service
@@ -4054,34 +3215,31 @@ func (r *AccountsService) Patch(name string, googleanalyticsadminv1betaaccount *
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Field names must be in snake case (for
-// example, "field_to_update"). Omitted fields will not be updated. To
-// replace the entire entity, use one path with the string "*" to match
-// all fields.
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated. Field names must be in snake case (for example,
+// "field_to_update"). Omitted fields will not be updated. To replace the
+// entire entity, use one path with the string "*" to match all fields.
 func (c *AccountsPatchCall) UpdateMask(updateMask string) *AccountsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsPatchCall) Fields(s ...googleapi.Field) *AccountsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsPatchCall) Context(ctx context.Context) *AccountsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4090,18 +3248,12 @@ func (c *AccountsPatchCall) Header() http.Header {
 }
 
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betaaccount)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -4118,13 +3270,11 @@ func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "analyticsadmin.accounts.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaAccount or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaAccount.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaAccount.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaAccount, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4155,44 +3305,7 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAd
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an account.",
-	//   "flatPath": "v1beta/accounts/{accountsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.accounts.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of this account. Format: accounts/{account} Example: \"accounts/100\"",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (for example, \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaAccount"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaAccount"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.accounts.provisionAccountTicket":
 
 type AccountsProvisionAccountTicketCall struct {
 	s                                                       *Service
@@ -4210,23 +3323,21 @@ func (r *AccountsService) ProvisionAccountTicket(googleanalyticsadminv1betaprovi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsProvisionAccountTicketCall) Fields(s ...googleapi.Field) *AccountsProvisionAccountTicketCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsProvisionAccountTicketCall) Context(ctx context.Context) *AccountsProvisionAccountTicketCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsProvisionAccountTicketCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4235,18 +3346,12 @@ func (c *AccountsProvisionAccountTicketCall) Header() http.Header {
 }
 
 func (c *AccountsProvisionAccountTicketCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betaprovisionaccountticketrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/accounts:provisionAccountTicket")
@@ -4260,15 +3365,11 @@ func (c *AccountsProvisionAccountTicketCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "analyticsadmin.accounts.provisionAccountTicket" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse.ServerRespon
-// se.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsProvisionAccountTicketCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4299,28 +3400,7 @@ func (c *AccountsProvisionAccountTicketCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Requests a ticket for creating an account.",
-	//   "flatPath": "v1beta/accounts:provisionAccountTicket",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.accounts.provisionAccountTicket",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta/accounts:provisionAccountTicket",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaProvisionAccountTicketRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.accounts.runAccessReport":
 
 type AccountsRunAccessReportCall struct {
 	s                                                *Service
@@ -4331,28 +3411,25 @@ type AccountsRunAccessReportCall struct {
 	header_                                          http.Header
 }
 
-// RunAccessReport: Returns a customized report of data access records.
-// The report provides records of each time a user reads Google
-// Analytics reporting data. Access records are retained for up to 2
-// years. Data Access Reports can be requested for a property. Reports
-// may be requested for any property, but dimensions that aren't related
-// to quota can only be requested on Google Analytics 360 properties.
-// This method is only available to Administrators. These data access
-// records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API,
-// and other products like Firebase & Admob that can retrieve data from
-// Google Analytics through a linkage. These records don't include
-// property configuration changes like adding a stream or changing a
-// property's time zone. For configuration change history, see
-// searchChangeHistoryEvents
+// RunAccessReport: Returns a customized report of data access records. The
+// report provides records of each time a user reads Google Analytics reporting
+// data. Access records are retained for up to 2 years. Data Access Reports can
+// be requested for a property. Reports may be requested for any property, but
+// dimensions that aren't related to quota can only be requested on Google
+// Analytics 360 properties. This method is only available to Administrators.
+// These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4
+// Data API, and other products like Firebase & Admob that can retrieve data
+// from Google Analytics through a linkage. These records don't include
+// property configuration changes like adding a stream or changing a property's
+// time zone. For configuration change history, see searchChangeHistoryEvents
 // (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
 //
-//   - entity: The Data Access Report supports requesting at the property
-//     level or account level. If requested at the account level, Data
-//     Access Reports include all access for all properties under that
-//     account. To request at the property level, entity should be for
-//     example 'properties/123' if "123" is your GA4 property ID. To
-//     request at the account level, entity should be for example
-//     'accounts/1234' if "1234" is your GA4 Account ID.
+//   - entity: The Data Access Report supports requesting at the property level
+//     or account level. If requested at the account level, Data Access Reports
+//     include all access for all properties under that account. To request at
+//     the property level, entity should be for example 'properties/123' if "123"
+//     is your GA4 property ID. To request at the account level, entity should be
+//     for example 'accounts/1234' if "1234" is your GA4 Account ID.
 func (r *AccountsService) RunAccessReport(entity string, googleanalyticsadminv1betarunaccessreportrequest *GoogleAnalyticsAdminV1betaRunAccessReportRequest) *AccountsRunAccessReportCall {
 	c := &AccountsRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entity = entity
@@ -4361,23 +3438,21 @@ func (r *AccountsService) RunAccessReport(entity string, googleanalyticsadminv1b
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsRunAccessReportCall) Fields(s ...googleapi.Field) *AccountsRunAccessReportCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsRunAccessReportCall) Context(ctx context.Context) *AccountsRunAccessReportCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsRunAccessReportCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4386,18 +3461,12 @@ func (c *AccountsRunAccessReportCall) Header() http.Header {
 }
 
 func (c *AccountsRunAccessReportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betarunaccessreportrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+entity}:runAccessReport")
@@ -4414,14 +3483,11 @@ func (c *AccountsRunAccessReportCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "analyticsadmin.accounts.runAccessReport" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaRunAccessReportResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaRunAccessReportResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaRunAccessReportResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsRunAccessReportCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaRunAccessReportResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4452,39 +3518,7 @@ func (c *AccountsRunAccessReportCall) Do(opts ...googleapi.CallOption) (*GoogleA
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a customized report of data access records. The report provides records of each time a user reads Google Analytics reporting data. Access records are retained for up to 2 years. Data Access Reports can be requested for a property. Reports may be requested for any property, but dimensions that aren't related to quota can only be requested on Google Analytics 360 properties. This method is only available to Administrators. These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API, and other products like Firebase \u0026 Admob that can retrieve data from Google Analytics through a linkage. These records don't include property configuration changes like adding a stream or changing a property's time zone. For configuration change history, see [searchChangeHistoryEvents](https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).",
-	//   "flatPath": "v1beta/accounts/{accountsId}:runAccessReport",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.accounts.runAccessReport",
-	//   "parameterOrder": [
-	//     "entity"
-	//   ],
-	//   "parameters": {
-	//     "entity": {
-	//       "description": "The Data Access Report supports requesting at the property level or account level. If requested at the account level, Data Access Reports include all access for all properties under that account. To request at the property level, entity should be for example 'properties/123' if \"123\" is your GA4 property ID. To request at the account level, entity should be for example 'accounts/1234' if \"1234\" is your GA4 Account ID.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+entity}:runAccessReport",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaRunAccessReportRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaRunAccessReportResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.accounts.searchChangeHistoryEvents":
 
 type AccountsSearchChangeHistoryEventsCall struct {
 	s                                                          *Service
@@ -4495,8 +3529,8 @@ type AccountsSearchChangeHistoryEventsCall struct {
 	header_                                                    http.Header
 }
 
-// SearchChangeHistoryEvents: Searches through all changes to an account
-// or its children given the specified set of filters.
+// SearchChangeHistoryEvents: Searches through all changes to an account or its
+// children given the specified set of filters.
 //
 //   - account: The account resource for which to return change history
 //     resources. Format: accounts/{account} Example: "accounts/100".
@@ -4508,23 +3542,21 @@ func (r *AccountsService) SearchChangeHistoryEvents(account string, googleanalyt
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsSearchChangeHistoryEventsCall) Fields(s ...googleapi.Field) *AccountsSearchChangeHistoryEventsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsSearchChangeHistoryEventsCall) Context(ctx context.Context) *AccountsSearchChangeHistoryEventsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsSearchChangeHistoryEventsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4533,18 +3565,12 @@ func (c *AccountsSearchChangeHistoryEventsCall) Header() http.Header {
 }
 
 func (c *AccountsSearchChangeHistoryEventsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betasearchchangehistoryeventsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+account}:searchChangeHistoryEvents")
@@ -4561,15 +3587,11 @@ func (c *AccountsSearchChangeHistoryEventsCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "analyticsadmin.accounts.searchChangeHistoryEvents" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsResponse.ServerRes
-// ponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsSearchChangeHistoryEventsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4600,35 +3622,6 @@ func (c *AccountsSearchChangeHistoryEventsCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Searches through all changes to an account or its children given the specified set of filters.",
-	//   "flatPath": "v1beta/accounts/{accountsId}:searchChangeHistoryEvents",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.accounts.searchChangeHistoryEvents",
-	//   "parameterOrder": [
-	//     "account"
-	//   ],
-	//   "parameters": {
-	//     "account": {
-	//       "description": "Required. The account resource for which to return change history resources. Format: accounts/{account} Example: \"accounts/100\"",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+account}:searchChangeHistoryEvents",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4636,7 +3629,7 @@ func (c *AccountsSearchChangeHistoryEventsCall) Do(opts ...googleapi.CallOption)
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsSearchChangeHistoryEventsCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googleanalyticsadminv1betasearchchangehistoryeventsrequest.PageToken = pt }(c.googleanalyticsadminv1betasearchchangehistoryeventsrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googleanalyticsadminv1betasearchchangehistoryeventsrequest.PageToken = pt }(c.googleanalyticsadminv1betasearchchangehistoryeventsrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4652,8 +3645,6 @@ func (c *AccountsSearchChangeHistoryEventsCall) Pages(ctx context.Context, f fun
 	}
 }
 
-// method id "analyticsadmin.properties.acknowledgeUserDataCollection":
-
 type PropertiesAcknowledgeUserDataCollectionCall struct {
 	s                                                              *Service
 	property                                                       string
@@ -4665,11 +3656,10 @@ type PropertiesAcknowledgeUserDataCollectionCall struct {
 
 // AcknowledgeUserDataCollection: Acknowledges the terms of user data
 // collection for the specified property. This acknowledgement must be
-// completed (either in the Google Analytics UI or through this API)
-// before MeasurementProtocolSecret resources may be created.
+// completed (either in the Google Analytics UI or through this API) before
+// MeasurementProtocolSecret resources may be created.
 //
-//   - property: The property for which to acknowledge user data
-//     collection.
+// - property: The property for which to acknowledge user data collection.
 func (r *PropertiesService) AcknowledgeUserDataCollection(property string, googleanalyticsadminv1betaacknowledgeuserdatacollectionrequest *GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionRequest) *PropertiesAcknowledgeUserDataCollectionCall {
 	c := &PropertiesAcknowledgeUserDataCollectionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.property = property
@@ -4678,23 +3668,21 @@ func (r *PropertiesService) AcknowledgeUserDataCollection(property string, googl
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesAcknowledgeUserDataCollectionCall) Fields(s ...googleapi.Field) *PropertiesAcknowledgeUserDataCollectionCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesAcknowledgeUserDataCollectionCall) Context(ctx context.Context) *PropertiesAcknowledgeUserDataCollectionCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesAcknowledgeUserDataCollectionCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4703,18 +3691,12 @@ func (c *PropertiesAcknowledgeUserDataCollectionCall) Header() http.Header {
 }
 
 func (c *PropertiesAcknowledgeUserDataCollectionCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betaacknowledgeuserdatacollectionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+property}:acknowledgeUserDataCollection")
@@ -4731,15 +3713,11 @@ func (c *PropertiesAcknowledgeUserDataCollectionCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "analyticsadmin.properties.acknowledgeUserDataCollection" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionResponse.Serve
-// rResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PropertiesAcknowledgeUserDataCollectionCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4770,38 +3748,7 @@ func (c *PropertiesAcknowledgeUserDataCollectionCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Acknowledges the terms of user data collection for the specified property. This acknowledgement must be completed (either in the Google Analytics UI or through this API) before MeasurementProtocolSecret resources may be created.",
-	//   "flatPath": "v1beta/properties/{propertiesId}:acknowledgeUserDataCollection",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.acknowledgeUserDataCollection",
-	//   "parameterOrder": [
-	//     "property"
-	//   ],
-	//   "parameters": {
-	//     "property": {
-	//       "description": "Required. The property for which to acknowledge user data collection.",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+property}:acknowledgeUserDataCollection",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaAcknowledgeUserDataCollectionResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.create":
 
 type PropertiesCreateCall struct {
 	s                                  *Service
@@ -4820,23 +3767,21 @@ func (r *PropertiesService) Create(googleanalyticsadminv1betaproperty *GoogleAna
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCreateCall) Fields(s ...googleapi.Field) *PropertiesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCreateCall) Context(ctx context.Context) *PropertiesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4845,18 +3790,12 @@ func (c *PropertiesCreateCall) Header() http.Header {
 }
 
 func (c *PropertiesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betaproperty)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/properties")
@@ -4870,13 +3809,11 @@ func (c *PropertiesCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "analyticsadmin.properties.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaProperty or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaProperty.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaProperty.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaProperty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4907,28 +3844,7 @@ func (c *PropertiesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytic
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an \"GA4\" property with the specified location and attributes.",
-	//   "flatPath": "v1beta/properties",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta/properties",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaProperty"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaProperty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.delete":
 
 type PropertiesDeleteCall struct {
 	s          *Service
@@ -4938,13 +3854,12 @@ type PropertiesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Marks target Property as soft-deleted (ie: "trashed") and
-// returns it. This API does not have a method to restore soft-deleted
-// properties. However, they can be restored using the Trash Can UI. If
-// the properties are not restored before the expiration time, the
-// Property and all child resources (eg: GoogleAdsLinks, Streams,
-// AccessBindings) will be permanently purged.
-// https://support.google.com/analytics/answer/6154772 Returns an error
+// Delete: Marks target Property as soft-deleted (ie: "trashed") and returns
+// it. This API does not have a method to restore soft-deleted properties.
+// However, they can be restored using the Trash Can UI. If the properties are
+// not restored before the expiration time, the Property and all child
+// resources (eg: GoogleAdsLinks, Streams, AccessBindings) will be permanently
+// purged. https://support.google.com/analytics/answer/6154772 Returns an error
 // if the target is not found, or is not a GA4 Property.
 //
 //   - name: The name of the Property to soft-delete. Format:
@@ -4956,23 +3871,21 @@ func (r *PropertiesService) Delete(name string) *PropertiesDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesDeleteCall) Fields(s ...googleapi.Field) *PropertiesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesDeleteCall) Context(ctx context.Context) *PropertiesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4981,12 +3894,7 @@ func (c *PropertiesDeleteCall) Header() http.Header {
 }
 
 func (c *PropertiesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5004,13 +3912,11 @@ func (c *PropertiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "analyticsadmin.properties.delete" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaProperty or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaProperty.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaProperty.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaProperty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5041,35 +3947,7 @@ func (c *PropertiesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytic
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Marks target Property as soft-deleted (ie: \"trashed\") and returns it. This API does not have a method to restore soft-deleted properties. However, they can be restored using the Trash Can UI. If the properties are not restored before the expiration time, the Property and all child resources (eg: GoogleAdsLinks, Streams, AccessBindings) will be permanently purged. https://support.google.com/analytics/answer/6154772 Returns an error if the target is not found, or is not a GA4 Property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "analyticsadmin.properties.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the Property to soft-delete. Format: properties/{property_id} Example: \"properties/1000\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaProperty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.get":
 
 type PropertiesGetCall struct {
 	s            *Service
@@ -5082,8 +3960,8 @@ type PropertiesGetCall struct {
 
 // Get: Lookup for a single "GA4" Property.
 //
-//   - name: The name of the property to lookup. Format:
-//     properties/{property_id} Example: "properties/1000".
+//   - name: The name of the property to lookup. Format: properties/{property_id}
+//     Example: "properties/1000".
 func (r *PropertiesService) Get(name string) *PropertiesGetCall {
 	c := &PropertiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5091,33 +3969,29 @@ func (r *PropertiesService) Get(name string) *PropertiesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesGetCall) Fields(s ...googleapi.Field) *PropertiesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesGetCall) IfNoneMatch(entityTag string) *PropertiesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesGetCall) Context(ctx context.Context) *PropertiesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5126,12 +4000,7 @@ func (c *PropertiesGetCall) Header() http.Header {
 }
 
 func (c *PropertiesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5152,13 +4021,11 @@ func (c *PropertiesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "analyticsadmin.properties.get" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaProperty or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaProperty.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaProperty.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaProperty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5189,36 +4056,7 @@ func (c *PropertiesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAd
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lookup for a single \"GA4\" Property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the property to lookup. Format: properties/{property_id} Example: \"properties/1000\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaProperty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.getDataRetentionSettings":
 
 type PropertiesGetDataRetentionSettingsCall struct {
 	s            *Service
@@ -5229,8 +4067,8 @@ type PropertiesGetDataRetentionSettingsCall struct {
 	header_      http.Header
 }
 
-// GetDataRetentionSettings: Returns the singleton data retention
-// settings for this property.
+// GetDataRetentionSettings: Returns the singleton data retention settings for
+// this property.
 //
 //   - name: The name of the settings to lookup. Format:
 //     properties/{property}/dataRetentionSettings Example:
@@ -5242,33 +4080,29 @@ func (r *PropertiesService) GetDataRetentionSettings(name string) *PropertiesGet
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesGetDataRetentionSettingsCall) Fields(s ...googleapi.Field) *PropertiesGetDataRetentionSettingsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesGetDataRetentionSettingsCall) IfNoneMatch(entityTag string) *PropertiesGetDataRetentionSettingsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesGetDataRetentionSettingsCall) Context(ctx context.Context) *PropertiesGetDataRetentionSettingsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesGetDataRetentionSettingsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5277,12 +4111,7 @@ func (c *PropertiesGetDataRetentionSettingsCall) Header() http.Header {
 }
 
 func (c *PropertiesGetDataRetentionSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5303,16 +4132,11 @@ func (c *PropertiesGetDataRetentionSettingsCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "analyticsadmin.properties.getDataRetentionSettings" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaDataRetentionSettings or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaDataRetentionSettings.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaDataRetentionSettings.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesGetDataRetentionSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaDataRetentionSettings, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5343,36 +4167,7 @@ func (c *PropertiesGetDataRetentionSettingsCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the singleton data retention settings for this property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataRetentionSettings",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.getDataRetentionSettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the settings to lookup. Format: properties/{property}/dataRetentionSettings Example: \"properties/1000/dataRetentionSettings\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/dataRetentionSettings$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaDataRetentionSettings"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.list":
 
 type PropertiesListCall struct {
 	s            *Service
@@ -5382,92 +4177,83 @@ type PropertiesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns child Properties under the specified parent Account.
-// Only "GA4" properties will be returned. Properties will be excluded
-// if the caller does not have access. Soft-deleted (ie: "trashed")
-// properties are excluded by default. Returns an empty list if no
-// relevant properties are found.
+// List: Returns child Properties under the specified parent Account. Only
+// "GA4" properties will be returned. Properties will be excluded if the caller
+// does not have access. Soft-deleted (ie: "trashed") properties are excluded
+// by default. Returns an empty list if no relevant properties are found.
 func (r *PropertiesService) List() *PropertiesListCall {
 	c := &PropertiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// Filter sets the optional parameter "filter": Required. An expression
-// for filtering the results of the request. Fields eligible for
-// filtering are: `parent:`(The resource name of the parent
-// account/property) or `ancestor:`(The resource name of the parent
-// account) or `firebase_project:`(The id or number of the linked
-// firebase project). Some examples of filters: ``` | Filter |
-// Description |
-// |-----------------------------|---------------------------------------
-// ----| | parent:accounts/123 | The account with account id: 123. | |
+// Filter sets the optional parameter "filter": Required. An expression for
+// filtering the results of the request. Fields eligible for filtering are:
+// `parent:`(The resource name of the parent account/property) or
+// `ancestor:`(The resource name of the parent account) or
+// `firebase_project:`(The id or number of the linked firebase project). Some
+// examples of filters: ``` | Filter | Description |
+// |-----------------------------|-------------------------------------------|
+// | parent:accounts/123 | The account with account id: 123. | |
 // parent:properties/123 | The property with property id: 123. | |
 // ancestor:accounts/123 | The account with account id: 123. | |
-// firebase_project:project-id | The firebase project with id:
-// project-id. | | firebase_project:123 | The firebase project with
-// number: 123. | ```
+// firebase_project:project-id | The firebase project with id: project-id. | |
+// firebase_project:123 | The firebase project with number: 123. | ```
 func (c *PropertiesListCall) Filter(filter string) *PropertiesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. The service may return fewer than this value,
-// even if there are additional pages. If unspecified, at most 50
-// resources will be returned. The maximum value is 200; (higher values
-// will be coerced to the maximum)
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. The service may return fewer than this value, even if
+// there are additional pages. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200; (higher values will be coerced to the
+// maximum)
 func (c *PropertiesListCall) PageSize(pageSize int64) *PropertiesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListProperties` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListProperties` must match the call that provided the
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListProperties` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListProperties` must match the call that provided the page token.
 func (c *PropertiesListCall) PageToken(pageToken string) *PropertiesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ShowDeleted sets the optional parameter "showDeleted": Whether to
-// include soft-deleted (ie: "trashed") Properties in the results.
-// Properties can be inspected to determine whether they are deleted or
-// not.
+// ShowDeleted sets the optional parameter "showDeleted": Whether to include
+// soft-deleted (ie: "trashed") Properties in the results. Properties can be
+// inspected to determine whether they are deleted or not.
 func (c *PropertiesListCall) ShowDeleted(showDeleted bool) *PropertiesListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesListCall) Fields(s ...googleapi.Field) *PropertiesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesListCall) IfNoneMatch(entityTag string) *PropertiesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesListCall) Context(ctx context.Context) *PropertiesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5476,12 +4262,7 @@ func (c *PropertiesListCall) Header() http.Header {
 }
 
 func (c *PropertiesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5499,14 +4280,11 @@ func (c *PropertiesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "analyticsadmin.properties.list" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaListPropertiesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaListPropertiesResponse.ServerResponse.Heade
-// r or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaListPropertiesResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListPropertiesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5537,45 +4315,6 @@ func (c *PropertiesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsA
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns child Properties under the specified parent Account. Only \"GA4\" properties will be returned. Properties will be excluded if the caller does not have access. Soft-deleted (ie: \"trashed\") properties are excluded by default. Returns an empty list if no relevant properties are found.",
-	//   "flatPath": "v1beta/properties",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Required. An expression for filtering the results of the request. Fields eligible for filtering are: `parent:`(The resource name of the parent account/property) or `ancestor:`(The resource name of the parent account) or `firebase_project:`(The id or number of the linked firebase project). Some examples of filters: ``` | Filter | Description | |-----------------------------|-------------------------------------------| | parent:accounts/123 | The account with account id: 123. | | parent:properties/123 | The property with property id: 123. | | ancestor:accounts/123 | The account with account id: 123. | | firebase_project:project-id | The firebase project with id: project-id. | | firebase_project:123 | The firebase project with number: 123. | ```",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. The service may return fewer than this value, even if there are additional pages. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListProperties` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListProperties` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "showDeleted": {
-	//       "description": "Whether to include soft-deleted (ie: \"trashed\") Properties in the results. Properties can be inspected to determine whether they are deleted or not.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v1beta/properties",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaListPropertiesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5583,7 +4322,7 @@ func (c *PropertiesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsA
 // The provided context supersedes any context provided to the Context method.
 func (c *PropertiesListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListPropertiesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5598,8 +4337,6 @@ func (c *PropertiesListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsA
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "analyticsadmin.properties.patch":
 
 type PropertiesPatchCall struct {
 	s                                  *Service
@@ -5621,34 +4358,31 @@ func (r *PropertiesService) Patch(name string, googleanalyticsadminv1betapropert
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Field names must be in snake case
-// (e.g., "field_to_update"). Omitted fields will not be updated. To
-// replace the entire entity, use one path with the string "*" to match
-// all fields.
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated. Field names must be in snake case (e.g.,
+// "field_to_update"). Omitted fields will not be updated. To replace the
+// entire entity, use one path with the string "*" to match all fields.
 func (c *PropertiesPatchCall) UpdateMask(updateMask string) *PropertiesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesPatchCall) Fields(s ...googleapi.Field) *PropertiesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesPatchCall) Context(ctx context.Context) *PropertiesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5657,18 +4391,12 @@ func (c *PropertiesPatchCall) Header() http.Header {
 }
 
 func (c *PropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betaproperty)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -5685,13 +4413,11 @@ func (c *PropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "analyticsadmin.properties.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaProperty or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaProperty.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaProperty.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaProperty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5722,44 +4448,7 @@ func (c *PropertiesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytics
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of this property. Format: properties/{property_id} Example: \"properties/1000\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaProperty"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaProperty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.runAccessReport":
 
 type PropertiesRunAccessReportCall struct {
 	s                                                *Service
@@ -5770,28 +4459,25 @@ type PropertiesRunAccessReportCall struct {
 	header_                                          http.Header
 }
 
-// RunAccessReport: Returns a customized report of data access records.
-// The report provides records of each time a user reads Google
-// Analytics reporting data. Access records are retained for up to 2
-// years. Data Access Reports can be requested for a property. Reports
-// may be requested for any property, but dimensions that aren't related
-// to quota can only be requested on Google Analytics 360 properties.
-// This method is only available to Administrators. These data access
-// records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API,
-// and other products like Firebase & Admob that can retrieve data from
-// Google Analytics through a linkage. These records don't include
-// property configuration changes like adding a stream or changing a
-// property's time zone. For configuration change history, see
-// searchChangeHistoryEvents
+// RunAccessReport: Returns a customized report of data access records. The
+// report provides records of each time a user reads Google Analytics reporting
+// data. Access records are retained for up to 2 years. Data Access Reports can
+// be requested for a property. Reports may be requested for any property, but
+// dimensions that aren't related to quota can only be requested on Google
+// Analytics 360 properties. This method is only available to Administrators.
+// These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4
+// Data API, and other products like Firebase & Admob that can retrieve data
+// from Google Analytics through a linkage. These records don't include
+// property configuration changes like adding a stream or changing a property's
+// time zone. For configuration change history, see searchChangeHistoryEvents
 // (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
 //
-//   - entity: The Data Access Report supports requesting at the property
-//     level or account level. If requested at the account level, Data
-//     Access Reports include all access for all properties under that
-//     account. To request at the property level, entity should be for
-//     example 'properties/123' if "123" is your GA4 property ID. To
-//     request at the account level, entity should be for example
-//     'accounts/1234' if "1234" is your GA4 Account ID.
+//   - entity: The Data Access Report supports requesting at the property level
+//     or account level. If requested at the account level, Data Access Reports
+//     include all access for all properties under that account. To request at
+//     the property level, entity should be for example 'properties/123' if "123"
+//     is your GA4 property ID. To request at the account level, entity should be
+//     for example 'accounts/1234' if "1234" is your GA4 Account ID.
 func (r *PropertiesService) RunAccessReport(entity string, googleanalyticsadminv1betarunaccessreportrequest *GoogleAnalyticsAdminV1betaRunAccessReportRequest) *PropertiesRunAccessReportCall {
 	c := &PropertiesRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entity = entity
@@ -5800,23 +4486,21 @@ func (r *PropertiesService) RunAccessReport(entity string, googleanalyticsadminv
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesRunAccessReportCall) Fields(s ...googleapi.Field) *PropertiesRunAccessReportCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesRunAccessReportCall) Context(ctx context.Context) *PropertiesRunAccessReportCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesRunAccessReportCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5825,18 +4509,12 @@ func (c *PropertiesRunAccessReportCall) Header() http.Header {
 }
 
 func (c *PropertiesRunAccessReportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betarunaccessreportrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+entity}:runAccessReport")
@@ -5853,14 +4531,11 @@ func (c *PropertiesRunAccessReportCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "analyticsadmin.properties.runAccessReport" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaRunAccessReportResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaRunAccessReportResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaRunAccessReportResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesRunAccessReportCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaRunAccessReportResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5891,39 +4566,7 @@ func (c *PropertiesRunAccessReportCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a customized report of data access records. The report provides records of each time a user reads Google Analytics reporting data. Access records are retained for up to 2 years. Data Access Reports can be requested for a property. Reports may be requested for any property, but dimensions that aren't related to quota can only be requested on Google Analytics 360 properties. This method is only available to Administrators. These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API, and other products like Firebase \u0026 Admob that can retrieve data from Google Analytics through a linkage. These records don't include property configuration changes like adding a stream or changing a property's time zone. For configuration change history, see [searchChangeHistoryEvents](https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).",
-	//   "flatPath": "v1beta/properties/{propertiesId}:runAccessReport",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.runAccessReport",
-	//   "parameterOrder": [
-	//     "entity"
-	//   ],
-	//   "parameters": {
-	//     "entity": {
-	//       "description": "The Data Access Report supports requesting at the property level or account level. If requested at the account level, Data Access Reports include all access for all properties under that account. To request at the property level, entity should be for example 'properties/123' if \"123\" is your GA4 property ID. To request at the account level, entity should be for example 'accounts/1234' if \"1234\" is your GA4 Account ID.",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+entity}:runAccessReport",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaRunAccessReportRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaRunAccessReportResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.updateDataRetentionSettings":
 
 type PropertiesUpdateDataRetentionSettingsCall struct {
 	s                                               *Service
@@ -5934,11 +4577,11 @@ type PropertiesUpdateDataRetentionSettingsCall struct {
 	header_                                         http.Header
 }
 
-// UpdateDataRetentionSettings: Updates the singleton data retention
-// settings for this property.
+// UpdateDataRetentionSettings: Updates the singleton data retention settings
+// for this property.
 //
-//   - name: Output only. Resource name for this DataRetentionSetting
-//     resource. Format: properties/{property}/dataRetentionSettings.
+//   - name: Output only. Resource name for this DataRetentionSetting resource.
+//     Format: properties/{property}/dataRetentionSettings.
 func (r *PropertiesService) UpdateDataRetentionSettings(name string, googleanalyticsadminv1betadataretentionsettings *GoogleAnalyticsAdminV1betaDataRetentionSettings) *PropertiesUpdateDataRetentionSettingsCall {
 	c := &PropertiesUpdateDataRetentionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5946,34 +4589,31 @@ func (r *PropertiesService) UpdateDataRetentionSettings(name string, googleanaly
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Field names must be in snake case
-// (e.g., "field_to_update"). Omitted fields will not be updated. To
-// replace the entire entity, use one path with the string "*" to match
-// all fields.
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated. Field names must be in snake case (e.g.,
+// "field_to_update"). Omitted fields will not be updated. To replace the
+// entire entity, use one path with the string "*" to match all fields.
 func (c *PropertiesUpdateDataRetentionSettingsCall) UpdateMask(updateMask string) *PropertiesUpdateDataRetentionSettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesUpdateDataRetentionSettingsCall) Fields(s ...googleapi.Field) *PropertiesUpdateDataRetentionSettingsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesUpdateDataRetentionSettingsCall) Context(ctx context.Context) *PropertiesUpdateDataRetentionSettingsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesUpdateDataRetentionSettingsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5982,18 +4622,12 @@ func (c *PropertiesUpdateDataRetentionSettingsCall) Header() http.Header {
 }
 
 func (c *PropertiesUpdateDataRetentionSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betadataretentionsettings)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -6010,16 +4644,11 @@ func (c *PropertiesUpdateDataRetentionSettingsCall) doRequest(alt string) (*http
 }
 
 // Do executes the "analyticsadmin.properties.updateDataRetentionSettings" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaDataRetentionSettings or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaDataRetentionSettings.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaDataRetentionSettings.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesUpdateDataRetentionSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaDataRetentionSettings, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6050,44 +4679,7 @@ func (c *PropertiesUpdateDataRetentionSettingsCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the singleton data retention settings for this property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataRetentionSettings",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.updateDataRetentionSettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name for this DataRetentionSetting resource. Format: properties/{property}/dataRetentionSettings",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/dataRetentionSettings$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaDataRetentionSettings"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaDataRetentionSettings"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.conversionEvents.create":
 
 type PropertiesConversionEventsCreateCall struct {
 	s                                         *Service
@@ -6100,8 +4692,8 @@ type PropertiesConversionEventsCreateCall struct {
 
 // Create: Creates a conversion event with the specified attributes.
 //
-//   - parent: The resource name of the parent property where this
-//     conversion event will be created. Format: properties/123.
+//   - parent: The resource name of the parent property where this conversion
+//     event will be created. Format: properties/123.
 func (r *PropertiesConversionEventsService) Create(parent string, googleanalyticsadminv1betaconversionevent *GoogleAnalyticsAdminV1betaConversionEvent) *PropertiesConversionEventsCreateCall {
 	c := &PropertiesConversionEventsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6110,23 +4702,21 @@ func (r *PropertiesConversionEventsService) Create(parent string, googleanalytic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesConversionEventsCreateCall) Fields(s ...googleapi.Field) *PropertiesConversionEventsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesConversionEventsCreateCall) Context(ctx context.Context) *PropertiesConversionEventsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesConversionEventsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6135,18 +4725,12 @@ func (c *PropertiesConversionEventsCreateCall) Header() http.Header {
 }
 
 func (c *PropertiesConversionEventsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betaconversionevent)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/conversionEvents")
@@ -6163,14 +4747,11 @@ func (c *PropertiesConversionEventsCreateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "analyticsadmin.properties.conversionEvents.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaConversionEvent or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaConversionEvent.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaConversionEvent.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesConversionEventsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaConversionEvent, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6201,39 +4782,7 @@ func (c *PropertiesConversionEventsCreateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Creates a conversion event with the specified attributes.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/conversionEvents",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.conversionEvents.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the parent property where this conversion event will be created. Format: properties/123",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/conversionEvents",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaConversionEvent"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaConversionEvent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.conversionEvents.delete":
 
 type PropertiesConversionEventsDeleteCall struct {
 	s          *Service
@@ -6255,23 +4804,21 @@ func (r *PropertiesConversionEventsService) Delete(name string) *PropertiesConve
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesConversionEventsDeleteCall) Fields(s ...googleapi.Field) *PropertiesConversionEventsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesConversionEventsDeleteCall) Context(ctx context.Context) *PropertiesConversionEventsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesConversionEventsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6280,12 +4827,7 @@ func (c *PropertiesConversionEventsDeleteCall) Header() http.Header {
 }
 
 func (c *PropertiesConversionEventsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -6303,12 +4845,11 @@ func (c *PropertiesConversionEventsDeleteCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "analyticsadmin.properties.conversionEvents.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PropertiesConversionEventsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6339,36 +4880,7 @@ func (c *PropertiesConversionEventsDeleteCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Deletes a conversion event in a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/conversionEvents/{conversionEventsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "analyticsadmin.properties.conversionEvents.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the conversion event to delete. Format: properties/{property}/conversionEvents/{conversion_event} Example: \"properties/123/conversionEvents/456\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/conversionEvents/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.conversionEvents.get":
 
 type PropertiesConversionEventsGetCall struct {
 	s            *Service
@@ -6381,9 +4893,9 @@ type PropertiesConversionEventsGetCall struct {
 
 // Get: Retrieve a single conversion event.
 //
-//   - name: The resource name of the conversion event to retrieve.
-//     Format: properties/{property}/conversionEvents/{conversion_event}
-//     Example: "properties/123/conversionEvents/456".
+//   - name: The resource name of the conversion event to retrieve. Format:
+//     properties/{property}/conversionEvents/{conversion_event} Example:
+//     "properties/123/conversionEvents/456".
 func (r *PropertiesConversionEventsService) Get(name string) *PropertiesConversionEventsGetCall {
 	c := &PropertiesConversionEventsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6391,33 +4903,29 @@ func (r *PropertiesConversionEventsService) Get(name string) *PropertiesConversi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesConversionEventsGetCall) Fields(s ...googleapi.Field) *PropertiesConversionEventsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesConversionEventsGetCall) IfNoneMatch(entityTag string) *PropertiesConversionEventsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesConversionEventsGetCall) Context(ctx context.Context) *PropertiesConversionEventsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesConversionEventsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6426,12 +4934,7 @@ func (c *PropertiesConversionEventsGetCall) Header() http.Header {
 }
 
 func (c *PropertiesConversionEventsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6452,14 +4955,11 @@ func (c *PropertiesConversionEventsGetCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "analyticsadmin.properties.conversionEvents.get" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaConversionEvent or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaConversionEvent.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaConversionEvent.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesConversionEventsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaConversionEvent, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6490,37 +4990,7 @@ func (c *PropertiesConversionEventsGetCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Retrieve a single conversion event.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/conversionEvents/{conversionEventsId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.conversionEvents.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the conversion event to retrieve. Format: properties/{property}/conversionEvents/{conversion_event} Example: \"properties/123/conversionEvents/456\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/conversionEvents/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaConversionEvent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.conversionEvents.list":
 
 type PropertiesConversionEventsListCall struct {
 	s            *Service
@@ -6531,8 +5001,8 @@ type PropertiesConversionEventsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of conversion events in the specified parent
-// property. Returns an empty list if no conversion events are found.
+// List: Returns a list of conversion events in the specified parent property.
+// Returns an empty list if no conversion events are found.
 //
 //   - parent: The resource name of the parent property. Example:
 //     'properties/123'.
@@ -6542,53 +5012,47 @@ func (r *PropertiesConversionEventsService) List(parent string) *PropertiesConve
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. If unspecified, at most 50 resources will be
-// returned. The maximum value is 200; (higher values will be coerced to
-// the maximum)
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. If unspecified, at most 50 resources will be returned.
+// The maximum value is 200; (higher values will be coerced to the maximum)
 func (c *PropertiesConversionEventsListCall) PageSize(pageSize int64) *PropertiesConversionEventsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListConversionEvents` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListConversionEvents` must match the call that provided
-// the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListConversionEvents` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListConversionEvents` must match the call that provided the page token.
 func (c *PropertiesConversionEventsListCall) PageToken(pageToken string) *PropertiesConversionEventsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesConversionEventsListCall) Fields(s ...googleapi.Field) *PropertiesConversionEventsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesConversionEventsListCall) IfNoneMatch(entityTag string) *PropertiesConversionEventsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesConversionEventsListCall) Context(ctx context.Context) *PropertiesConversionEventsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesConversionEventsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6597,12 +5061,7 @@ func (c *PropertiesConversionEventsListCall) Header() http.Header {
 }
 
 func (c *PropertiesConversionEventsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6623,15 +5082,13 @@ func (c *PropertiesConversionEventsListCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "analyticsadmin.properties.conversionEvents.list" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1betaListConversionEventsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleAnalyticsAdminV1betaListConversionEventsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaListConversionEventsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesConversionEventsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListConversionEventsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6662,45 +5119,6 @@ func (c *PropertiesConversionEventsListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Returns a list of conversion events in the specified parent property. Returns an empty list if no conversion events are found.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/conversionEvents",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.conversionEvents.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListConversionEvents` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListConversionEvents` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the parent property. Example: 'properties/123'",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/conversionEvents",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaListConversionEventsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6708,7 +5126,7 @@ func (c *PropertiesConversionEventsListCall) Do(opts ...googleapi.CallOption) (*
 // The provided context supersedes any context provided to the Context method.
 func (c *PropertiesConversionEventsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListConversionEventsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6723,8 +5141,6 @@ func (c *PropertiesConversionEventsListCall) Pages(ctx context.Context, f func(*
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "analyticsadmin.properties.conversionEvents.patch":
 
 type PropertiesConversionEventsPatchCall struct {
 	s                                         *Service
@@ -6746,34 +5162,31 @@ func (r *PropertiesConversionEventsService) Patch(name string, googleanalyticsad
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Field names must be in snake case
-// (e.g., "field_to_update"). Omitted fields will not be updated. To
-// replace the entire entity, use one path with the string "*" to match
-// all fields.
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated. Field names must be in snake case (e.g.,
+// "field_to_update"). Omitted fields will not be updated. To replace the
+// entire entity, use one path with the string "*" to match all fields.
 func (c *PropertiesConversionEventsPatchCall) UpdateMask(updateMask string) *PropertiesConversionEventsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesConversionEventsPatchCall) Fields(s ...googleapi.Field) *PropertiesConversionEventsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesConversionEventsPatchCall) Context(ctx context.Context) *PropertiesConversionEventsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesConversionEventsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6782,18 +5195,12 @@ func (c *PropertiesConversionEventsPatchCall) Header() http.Header {
 }
 
 func (c *PropertiesConversionEventsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betaconversionevent)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -6810,14 +5217,11 @@ func (c *PropertiesConversionEventsPatchCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "analyticsadmin.properties.conversionEvents.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaConversionEvent or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaConversionEvent.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaConversionEvent.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesConversionEventsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaConversionEvent, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6848,45 +5252,7 @@ func (c *PropertiesConversionEventsPatchCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "deprecated": true,
-	//   "description": "Updates a conversion event with the specified attributes.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/conversionEvents/{conversionEventsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.conversionEvents.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of this conversion event. Format: properties/{property}/conversionEvents/{conversion_event}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/conversionEvents/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaConversionEvent"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaConversionEvent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.customDimensions.archive":
 
 type PropertiesCustomDimensionsArchiveCall struct {
 	s                                                       *Service
@@ -6909,23 +5275,21 @@ func (r *PropertiesCustomDimensionsService) Archive(name string, googleanalytics
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCustomDimensionsArchiveCall) Fields(s ...googleapi.Field) *PropertiesCustomDimensionsArchiveCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCustomDimensionsArchiveCall) Context(ctx context.Context) *PropertiesCustomDimensionsArchiveCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCustomDimensionsArchiveCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6934,18 +5298,12 @@ func (c *PropertiesCustomDimensionsArchiveCall) Header() http.Header {
 }
 
 func (c *PropertiesCustomDimensionsArchiveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betaarchivecustomdimensionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:archive")
@@ -6962,12 +5320,11 @@ func (c *PropertiesCustomDimensionsArchiveCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "analyticsadmin.properties.customDimensions.archive" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PropertiesCustomDimensionsArchiveCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6998,38 +5355,7 @@ func (c *PropertiesCustomDimensionsArchiveCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Archives a CustomDimension on a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/customDimensions/{customDimensionsId}:archive",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.customDimensions.archive",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the CustomDimension to archive. Example format: properties/1234/customDimensions/5678",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/customDimensions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}:archive",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaArchiveCustomDimensionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.customDimensions.create":
 
 type PropertiesCustomDimensionsCreateCall struct {
 	s                                         *Service
@@ -7051,23 +5377,21 @@ func (r *PropertiesCustomDimensionsService) Create(parent string, googleanalytic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCustomDimensionsCreateCall) Fields(s ...googleapi.Field) *PropertiesCustomDimensionsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCustomDimensionsCreateCall) Context(ctx context.Context) *PropertiesCustomDimensionsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCustomDimensionsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7076,18 +5400,12 @@ func (c *PropertiesCustomDimensionsCreateCall) Header() http.Header {
 }
 
 func (c *PropertiesCustomDimensionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betacustomdimension)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/customDimensions")
@@ -7104,14 +5422,11 @@ func (c *PropertiesCustomDimensionsCreateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "analyticsadmin.properties.customDimensions.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaCustomDimension or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaCustomDimension.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaCustomDimension.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesCustomDimensionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaCustomDimension, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7142,38 +5457,7 @@ func (c *PropertiesCustomDimensionsCreateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a CustomDimension.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/customDimensions",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.customDimensions.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Example format: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/customDimensions",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaCustomDimension"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaCustomDimension"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.customDimensions.get":
 
 type PropertiesCustomDimensionsGetCall struct {
 	s            *Service
@@ -7195,33 +5479,29 @@ func (r *PropertiesCustomDimensionsService) Get(name string) *PropertiesCustomDi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCustomDimensionsGetCall) Fields(s ...googleapi.Field) *PropertiesCustomDimensionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesCustomDimensionsGetCall) IfNoneMatch(entityTag string) *PropertiesCustomDimensionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCustomDimensionsGetCall) Context(ctx context.Context) *PropertiesCustomDimensionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCustomDimensionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7230,12 +5510,7 @@ func (c *PropertiesCustomDimensionsGetCall) Header() http.Header {
 }
 
 func (c *PropertiesCustomDimensionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7256,14 +5531,11 @@ func (c *PropertiesCustomDimensionsGetCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "analyticsadmin.properties.customDimensions.get" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaCustomDimension or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaCustomDimension.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaCustomDimension.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesCustomDimensionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaCustomDimension, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7294,36 +5566,7 @@ func (c *PropertiesCustomDimensionsGetCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lookup for a single CustomDimension.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/customDimensions/{customDimensionsId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.customDimensions.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the CustomDimension to get. Example format: properties/1234/customDimensions/5678",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/customDimensions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaCustomDimension"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.customDimensions.list":
 
 type PropertiesCustomDimensionsListCall struct {
 	s            *Service
@@ -7343,53 +5586,47 @@ func (r *PropertiesCustomDimensionsService) List(parent string) *PropertiesCusto
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. If unspecified, at most 50 resources will be
-// returned. The maximum value is 200 (higher values will be coerced to
-// the maximum).
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. If unspecified, at most 50 resources will be returned.
+// The maximum value is 200 (higher values will be coerced to the maximum).
 func (c *PropertiesCustomDimensionsListCall) PageSize(pageSize int64) *PropertiesCustomDimensionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListCustomDimensions` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListCustomDimensions` must match the call that provided
-// the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListCustomDimensions` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListCustomDimensions` must match the call that provided the page token.
 func (c *PropertiesCustomDimensionsListCall) PageToken(pageToken string) *PropertiesCustomDimensionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCustomDimensionsListCall) Fields(s ...googleapi.Field) *PropertiesCustomDimensionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesCustomDimensionsListCall) IfNoneMatch(entityTag string) *PropertiesCustomDimensionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCustomDimensionsListCall) Context(ctx context.Context) *PropertiesCustomDimensionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCustomDimensionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7398,12 +5635,7 @@ func (c *PropertiesCustomDimensionsListCall) Header() http.Header {
 }
 
 func (c *PropertiesCustomDimensionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7424,15 +5656,13 @@ func (c *PropertiesCustomDimensionsListCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "analyticsadmin.properties.customDimensions.list" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1betaListCustomDimensionsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleAnalyticsAdminV1betaListCustomDimensionsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaListCustomDimensionsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesCustomDimensionsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListCustomDimensionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7463,44 +5693,6 @@ func (c *PropertiesCustomDimensionsListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists CustomDimensions on a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/customDimensions",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.customDimensions.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200 (higher values will be coerced to the maximum).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListCustomDimensions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListCustomDimensions` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Example format: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/customDimensions",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaListCustomDimensionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7508,7 +5700,7 @@ func (c *PropertiesCustomDimensionsListCall) Do(opts ...googleapi.CallOption) (*
 // The provided context supersedes any context provided to the Context method.
 func (c *PropertiesCustomDimensionsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListCustomDimensionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7523,8 +5715,6 @@ func (c *PropertiesCustomDimensionsListCall) Pages(ctx context.Context, f func(*
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "analyticsadmin.properties.customDimensions.patch":
 
 type PropertiesCustomDimensionsPatchCall struct {
 	s                                         *Service
@@ -7546,33 +5736,30 @@ func (r *PropertiesCustomDimensionsService) Patch(name string, googleanalyticsad
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
-// replace the entire entity, use one path with the string "*" to match
-// all fields.
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated. Omitted fields will not be updated. To replace the
+// entire entity, use one path with the string "*" to match all fields.
 func (c *PropertiesCustomDimensionsPatchCall) UpdateMask(updateMask string) *PropertiesCustomDimensionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCustomDimensionsPatchCall) Fields(s ...googleapi.Field) *PropertiesCustomDimensionsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCustomDimensionsPatchCall) Context(ctx context.Context) *PropertiesCustomDimensionsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCustomDimensionsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7581,18 +5768,12 @@ func (c *PropertiesCustomDimensionsPatchCall) Header() http.Header {
 }
 
 func (c *PropertiesCustomDimensionsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betacustomdimension)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -7609,14 +5790,11 @@ func (c *PropertiesCustomDimensionsPatchCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "analyticsadmin.properties.customDimensions.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaCustomDimension or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaCustomDimension.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaCustomDimension.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesCustomDimensionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaCustomDimension, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7647,44 +5825,7 @@ func (c *PropertiesCustomDimensionsPatchCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a CustomDimension on a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/customDimensions/{customDimensionsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.customDimensions.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name for this CustomDimension resource. Format: properties/{property}/customDimensions/{customDimension}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/customDimensions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaCustomDimension"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaCustomDimension"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.customMetrics.archive":
 
 type PropertiesCustomMetricsArchiveCall struct {
 	s                                                    *Service
@@ -7707,23 +5848,21 @@ func (r *PropertiesCustomMetricsService) Archive(name string, googleanalyticsadm
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCustomMetricsArchiveCall) Fields(s ...googleapi.Field) *PropertiesCustomMetricsArchiveCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCustomMetricsArchiveCall) Context(ctx context.Context) *PropertiesCustomMetricsArchiveCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCustomMetricsArchiveCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7732,18 +5871,12 @@ func (c *PropertiesCustomMetricsArchiveCall) Header() http.Header {
 }
 
 func (c *PropertiesCustomMetricsArchiveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betaarchivecustommetricrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:archive")
@@ -7760,12 +5893,11 @@ func (c *PropertiesCustomMetricsArchiveCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "analyticsadmin.properties.customMetrics.archive" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PropertiesCustomMetricsArchiveCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7796,38 +5928,7 @@ func (c *PropertiesCustomMetricsArchiveCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Archives a CustomMetric on a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/customMetrics/{customMetricsId}:archive",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.customMetrics.archive",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the CustomMetric to archive. Example format: properties/1234/customMetrics/5678",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/customMetrics/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}:archive",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaArchiveCustomMetricRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.customMetrics.create":
 
 type PropertiesCustomMetricsCreateCall struct {
 	s                                      *Service
@@ -7849,23 +5950,21 @@ func (r *PropertiesCustomMetricsService) Create(parent string, googleanalyticsad
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCustomMetricsCreateCall) Fields(s ...googleapi.Field) *PropertiesCustomMetricsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCustomMetricsCreateCall) Context(ctx context.Context) *PropertiesCustomMetricsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCustomMetricsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7874,18 +5973,12 @@ func (c *PropertiesCustomMetricsCreateCall) Header() http.Header {
 }
 
 func (c *PropertiesCustomMetricsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betacustommetric)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/customMetrics")
@@ -7902,13 +5995,11 @@ func (c *PropertiesCustomMetricsCreateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "analyticsadmin.properties.customMetrics.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaCustomMetric or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleAnalyticsAdminV1betaCustomMetric.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaCustomMetric.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesCustomMetricsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaCustomMetric, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7939,38 +6030,7 @@ func (c *PropertiesCustomMetricsCreateCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a CustomMetric.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/customMetrics",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.customMetrics.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Example format: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/customMetrics",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaCustomMetric"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaCustomMetric"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.customMetrics.get":
 
 type PropertiesCustomMetricsGetCall struct {
 	s            *Service
@@ -7992,33 +6052,29 @@ func (r *PropertiesCustomMetricsService) Get(name string) *PropertiesCustomMetri
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCustomMetricsGetCall) Fields(s ...googleapi.Field) *PropertiesCustomMetricsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesCustomMetricsGetCall) IfNoneMatch(entityTag string) *PropertiesCustomMetricsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCustomMetricsGetCall) Context(ctx context.Context) *PropertiesCustomMetricsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCustomMetricsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8027,12 +6083,7 @@ func (c *PropertiesCustomMetricsGetCall) Header() http.Header {
 }
 
 func (c *PropertiesCustomMetricsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8053,13 +6104,11 @@ func (c *PropertiesCustomMetricsGetCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "analyticsadmin.properties.customMetrics.get" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaCustomMetric or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleAnalyticsAdminV1betaCustomMetric.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaCustomMetric.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesCustomMetricsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaCustomMetric, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8090,36 +6139,7 @@ func (c *PropertiesCustomMetricsGetCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lookup for a single CustomMetric.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/customMetrics/{customMetricsId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.customMetrics.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the CustomMetric to get. Example format: properties/1234/customMetrics/5678",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/customMetrics/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaCustomMetric"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.customMetrics.list":
 
 type PropertiesCustomMetricsListCall struct {
 	s            *Service
@@ -8139,53 +6159,47 @@ func (r *PropertiesCustomMetricsService) List(parent string) *PropertiesCustomMe
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. If unspecified, at most 50 resources will be
-// returned. The maximum value is 200 (higher values will be coerced to
-// the maximum).
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. If unspecified, at most 50 resources will be returned.
+// The maximum value is 200 (higher values will be coerced to the maximum).
 func (c *PropertiesCustomMetricsListCall) PageSize(pageSize int64) *PropertiesCustomMetricsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListCustomMetrics` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListCustomMetrics` must match the call that provided the
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListCustomMetrics` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListCustomMetrics` must match the call that provided the page token.
 func (c *PropertiesCustomMetricsListCall) PageToken(pageToken string) *PropertiesCustomMetricsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCustomMetricsListCall) Fields(s ...googleapi.Field) *PropertiesCustomMetricsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesCustomMetricsListCall) IfNoneMatch(entityTag string) *PropertiesCustomMetricsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCustomMetricsListCall) Context(ctx context.Context) *PropertiesCustomMetricsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCustomMetricsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8194,12 +6208,7 @@ func (c *PropertiesCustomMetricsListCall) Header() http.Header {
 }
 
 func (c *PropertiesCustomMetricsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8220,14 +6229,11 @@ func (c *PropertiesCustomMetricsListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "analyticsadmin.properties.customMetrics.list" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaListCustomMetricsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1betaListCustomMetricsResponse.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaListCustomMetricsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesCustomMetricsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListCustomMetricsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8258,44 +6264,6 @@ func (c *PropertiesCustomMetricsListCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists CustomMetrics on a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/customMetrics",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.customMetrics.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200 (higher values will be coerced to the maximum).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListCustomMetrics` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListCustomMetrics` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Example format: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/customMetrics",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaListCustomMetricsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -8303,7 +6271,7 @@ func (c *PropertiesCustomMetricsListCall) Do(opts ...googleapi.CallOption) (*Goo
 // The provided context supersedes any context provided to the Context method.
 func (c *PropertiesCustomMetricsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListCustomMetricsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -8319,8 +6287,6 @@ func (c *PropertiesCustomMetricsListCall) Pages(ctx context.Context, f func(*Goo
 	}
 }
 
-// method id "analyticsadmin.properties.customMetrics.patch":
-
 type PropertiesCustomMetricsPatchCall struct {
 	s                                      *Service
 	name                                   string
@@ -8332,8 +6298,8 @@ type PropertiesCustomMetricsPatchCall struct {
 
 // Patch: Updates a CustomMetric on a property.
 //
-//   - name: Output only. Resource name for this CustomMetric resource.
-//     Format: properties/{property}/customMetrics/{customMetric}.
+//   - name: Output only. Resource name for this CustomMetric resource. Format:
+//     properties/{property}/customMetrics/{customMetric}.
 func (r *PropertiesCustomMetricsService) Patch(name string, googleanalyticsadminv1betacustommetric *GoogleAnalyticsAdminV1betaCustomMetric) *PropertiesCustomMetricsPatchCall {
 	c := &PropertiesCustomMetricsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8341,33 +6307,30 @@ func (r *PropertiesCustomMetricsService) Patch(name string, googleanalyticsadmin
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
-// replace the entire entity, use one path with the string "*" to match
-// all fields.
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated. Omitted fields will not be updated. To replace the
+// entire entity, use one path with the string "*" to match all fields.
 func (c *PropertiesCustomMetricsPatchCall) UpdateMask(updateMask string) *PropertiesCustomMetricsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesCustomMetricsPatchCall) Fields(s ...googleapi.Field) *PropertiesCustomMetricsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesCustomMetricsPatchCall) Context(ctx context.Context) *PropertiesCustomMetricsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesCustomMetricsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8376,18 +6339,12 @@ func (c *PropertiesCustomMetricsPatchCall) Header() http.Header {
 }
 
 func (c *PropertiesCustomMetricsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betacustommetric)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -8404,13 +6361,11 @@ func (c *PropertiesCustomMetricsPatchCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "analyticsadmin.properties.customMetrics.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaCustomMetric or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleAnalyticsAdminV1betaCustomMetric.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaCustomMetric.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesCustomMetricsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaCustomMetric, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8441,44 +6396,7 @@ func (c *PropertiesCustomMetricsPatchCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a CustomMetric on a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/customMetrics/{customMetricsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.customMetrics.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name for this CustomMetric resource. Format: properties/{property}/customMetrics/{customMetric}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/customMetrics/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaCustomMetric"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaCustomMetric"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.dataStreams.create":
 
 type PropertiesDataStreamsCreateCall struct {
 	s                                    *Service
@@ -8500,23 +6418,21 @@ func (r *PropertiesDataStreamsService) Create(parent string, googleanalyticsadmi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesDataStreamsCreateCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesDataStreamsCreateCall) Context(ctx context.Context) *PropertiesDataStreamsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesDataStreamsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8525,18 +6441,12 @@ func (c *PropertiesDataStreamsCreateCall) Header() http.Header {
 }
 
 func (c *PropertiesDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betadatastream)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/dataStreams")
@@ -8553,13 +6463,11 @@ func (c *PropertiesDataStreamsCreateCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "analyticsadmin.properties.dataStreams.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaDataStream or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaDataStream.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaDataStream.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesDataStreamsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaDataStream, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8590,38 +6498,7 @@ func (c *PropertiesDataStreamsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a DataStream.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataStreams",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.dataStreams.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Example format: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/dataStreams",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaDataStream"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaDataStream"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.dataStreams.delete":
 
 type PropertiesDataStreamsDeleteCall struct {
 	s          *Service
@@ -8642,23 +6519,21 @@ func (r *PropertiesDataStreamsService) Delete(name string) *PropertiesDataStream
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesDataStreamsDeleteCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesDataStreamsDeleteCall) Context(ctx context.Context) *PropertiesDataStreamsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesDataStreamsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8667,12 +6542,7 @@ func (c *PropertiesDataStreamsDeleteCall) Header() http.Header {
 }
 
 func (c *PropertiesDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8690,12 +6560,11 @@ func (c *PropertiesDataStreamsDeleteCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "analyticsadmin.properties.dataStreams.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PropertiesDataStreamsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8726,35 +6595,7 @@ func (c *PropertiesDataStreamsDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a DataStream on a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataStreams/{dataStreamsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "analyticsadmin.properties.dataStreams.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the DataStream to delete. Example format: properties/1234/dataStreams/5678",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.dataStreams.get":
 
 type PropertiesDataStreamsGetCall struct {
 	s            *Service
@@ -8776,33 +6617,29 @@ func (r *PropertiesDataStreamsService) Get(name string) *PropertiesDataStreamsGe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesDataStreamsGetCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesDataStreamsGetCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesDataStreamsGetCall) Context(ctx context.Context) *PropertiesDataStreamsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesDataStreamsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8811,12 +6648,7 @@ func (c *PropertiesDataStreamsGetCall) Header() http.Header {
 }
 
 func (c *PropertiesDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8837,13 +6669,11 @@ func (c *PropertiesDataStreamsGetCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "analyticsadmin.properties.dataStreams.get" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaDataStream or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaDataStream.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaDataStream.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesDataStreamsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaDataStream, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8874,36 +6704,7 @@ func (c *PropertiesDataStreamsGetCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lookup for a single DataStream.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataStreams/{dataStreamsId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.dataStreams.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the DataStream to get. Example format: properties/1234/dataStreams/5678",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaDataStream"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.dataStreams.list":
 
 type PropertiesDataStreamsListCall struct {
 	s            *Service
@@ -8923,53 +6724,47 @@ func (r *PropertiesDataStreamsService) List(parent string) *PropertiesDataStream
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. If unspecified, at most 50 resources will be
-// returned. The maximum value is 200 (higher values will be coerced to
-// the maximum).
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. If unspecified, at most 50 resources will be returned.
+// The maximum value is 200 (higher values will be coerced to the maximum).
 func (c *PropertiesDataStreamsListCall) PageSize(pageSize int64) *PropertiesDataStreamsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListDataStreams` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListDataStreams` must match the call that provided the
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListDataStreams` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListDataStreams` must match the call that provided the page token.
 func (c *PropertiesDataStreamsListCall) PageToken(pageToken string) *PropertiesDataStreamsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesDataStreamsListCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesDataStreamsListCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesDataStreamsListCall) Context(ctx context.Context) *PropertiesDataStreamsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesDataStreamsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8978,12 +6773,7 @@ func (c *PropertiesDataStreamsListCall) Header() http.Header {
 }
 
 func (c *PropertiesDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9004,14 +6794,11 @@ func (c *PropertiesDataStreamsListCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "analyticsadmin.properties.dataStreams.list" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaListDataStreamsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaListDataStreamsResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaListDataStreamsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesDataStreamsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListDataStreamsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9042,44 +6829,6 @@ func (c *PropertiesDataStreamsListCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists DataStreams on a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataStreams",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.dataStreams.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200 (higher values will be coerced to the maximum).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListDataStreams` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDataStreams` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Example format: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/dataStreams",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaListDataStreamsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -9087,7 +6836,7 @@ func (c *PropertiesDataStreamsListCall) Do(opts ...googleapi.CallOption) (*Googl
 // The provided context supersedes any context provided to the Context method.
 func (c *PropertiesDataStreamsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListDataStreamsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -9102,8 +6851,6 @@ func (c *PropertiesDataStreamsListCall) Pages(ctx context.Context, f func(*Googl
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "analyticsadmin.properties.dataStreams.patch":
 
 type PropertiesDataStreamsPatchCall struct {
 	s                                    *Service
@@ -9126,33 +6873,30 @@ func (r *PropertiesDataStreamsService) Patch(name string, googleanalyticsadminv1
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
-// replace the entire entity, use one path with the string "*" to match
-// all fields.
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated. Omitted fields will not be updated. To replace the
+// entire entity, use one path with the string "*" to match all fields.
 func (c *PropertiesDataStreamsPatchCall) UpdateMask(updateMask string) *PropertiesDataStreamsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesDataStreamsPatchCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesDataStreamsPatchCall) Context(ctx context.Context) *PropertiesDataStreamsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesDataStreamsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9161,18 +6905,12 @@ func (c *PropertiesDataStreamsPatchCall) Header() http.Header {
 }
 
 func (c *PropertiesDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betadatastream)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -9189,13 +6927,11 @@ func (c *PropertiesDataStreamsPatchCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "analyticsadmin.properties.dataStreams.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaDataStream or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaDataStream.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaDataStream.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesDataStreamsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaDataStream, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9226,44 +6962,7 @@ func (c *PropertiesDataStreamsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a DataStream on a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataStreams/{dataStreamsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.dataStreams.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of this Data Stream. Format: properties/{property_id}/dataStreams/{stream_id} Example: \"properties/1000/dataStreams/2000\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaDataStream"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaDataStream"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.create":
 
 type PropertiesDataStreamsMeasurementProtocolSecretsCreateCall struct {
 	s                                                   *Service
@@ -9276,8 +6975,8 @@ type PropertiesDataStreamsMeasurementProtocolSecretsCreateCall struct {
 
 // Create: Creates a measurement protocol secret.
 //
-//   - parent: The parent resource where this secret will be created.
-//     Format: properties/{property}/dataStreams/{dataStream}.
+//   - parent: The parent resource where this secret will be created. Format:
+//     properties/{property}/dataStreams/{dataStream}.
 func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Create(parent string, googleanalyticsadminv1betameasurementprotocolsecret *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret) *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall {
 	c := &PropertiesDataStreamsMeasurementProtocolSecretsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9286,23 +6985,21 @@ func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Create(parent s
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) Context(ctx context.Context) *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9311,18 +7008,12 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) Header() htt
 }
 
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betameasurementprotocolsecret)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/measurementProtocolSecrets")
@@ -9339,14 +7030,11 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) doRequest(al
 }
 
 // Do executes the "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaMeasurementProtocolSecret, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9377,38 +7065,7 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsCreateCall) Do(opts ...g
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a measurement protocol secret.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataStreams/{dataStreamsId}/measurementProtocolSecrets",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this secret will be created. Format: properties/{property}/dataStreams/{dataStream}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/measurementProtocolSecrets",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaMeasurementProtocolSecret"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaMeasurementProtocolSecret"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.delete":
 
 type PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall struct {
 	s          *Service
@@ -9421,8 +7078,8 @@ type PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall struct {
 // Delete: Deletes target MeasurementProtocolSecret.
 //
 //   - name: The name of the MeasurementProtocolSecret to delete. Format:
-//     properties/{property}/dataStreams/{dataStream}/measurementProtocolSe
-//     crets/{measurementProtocolSecret}.
+//     properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{
+//     measurementProtocolSecret}.
 func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Delete(name string) *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall {
 	c := &PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9430,23 +7087,21 @@ func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Delete(name str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) Context(ctx context.Context) *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9455,12 +7110,7 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) Header() htt
 }
 
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -9478,12 +7128,11 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) doRequest(al
 }
 
 // Do executes the "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9514,35 +7163,7 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsDeleteCall) Do(opts ...g
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes target MeasurementProtocolSecret.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataStreams/{dataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the MeasurementProtocolSecret to delete. Format: properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.get":
 
 type PropertiesDataStreamsMeasurementProtocolSecretsGetCall struct {
 	s            *Service
@@ -9555,10 +7176,9 @@ type PropertiesDataStreamsMeasurementProtocolSecretsGetCall struct {
 
 // Get: Lookup for a single "GA4" MeasurementProtocolSecret.
 //
-//   - name: The name of the measurement protocol secret to lookup.
-//     Format:
-//     properties/{property}/dataStreams/{dataStream}/measurementProtocolSe
-//     crets/{measurementProtocolSecret}.
+//   - name: The name of the measurement protocol secret to lookup. Format:
+//     properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{
+//     measurementProtocolSecret}.
 func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Get(name string) *PropertiesDataStreamsMeasurementProtocolSecretsGetCall {
 	c := &PropertiesDataStreamsMeasurementProtocolSecretsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9566,33 +7186,29 @@ func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Get(name string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsMeasurementProtocolSecretsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsMeasurementProtocolSecretsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) Context(ctx context.Context) *PropertiesDataStreamsMeasurementProtocolSecretsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9601,12 +7217,7 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) Header() http.H
 }
 
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9627,14 +7238,11 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) doRequest(alt s
 }
 
 // Do executes the "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.get" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaMeasurementProtocolSecret, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9665,36 +7273,7 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsGetCall) Do(opts ...goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lookup for a single \"GA4\" MeasurementProtocolSecret.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataStreams/{dataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the measurement protocol secret to lookup. Format: properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaMeasurementProtocolSecret"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.list":
 
 type PropertiesDataStreamsMeasurementProtocolSecretsListCall struct {
 	s            *Service
@@ -9705,65 +7284,59 @@ type PropertiesDataStreamsMeasurementProtocolSecretsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns child MeasurementProtocolSecrets under the specified
-// parent Property.
+// List: Returns child MeasurementProtocolSecrets under the specified parent
+// Property.
 //
 //   - parent: The resource name of the parent stream. Format:
-//     properties/{property}/dataStreams/{dataStream}/measurementProtocolSe
-//     crets.
+//     properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets.
 func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) List(parent string) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
 	c := &PropertiesDataStreamsMeasurementProtocolSecretsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. If unspecified, at most 10 resources will be
-// returned. The maximum value is 10. Higher values will be coerced to
-// the maximum.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. If unspecified, at most 10 resources will be returned.
+// The maximum value is 10. Higher values will be coerced to the maximum.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) PageSize(pageSize int64) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListMeasurementProtocolSecrets` call.
-// Provide this to retrieve the subsequent page. When paginating, all
-// other parameters provided to `ListMeasurementProtocolSecrets` must
-// match the call that provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListMeasurementProtocolSecrets` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListMeasurementProtocolSecrets` must match the call that provided the
+// page token.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) PageToken(pageToken string) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Context(ctx context.Context) *PropertiesDataStreamsMeasurementProtocolSecretsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9772,12 +7345,7 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Header() http.
 }
 
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9798,15 +7366,11 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) doRequest(alt 
 }
 
 // Do executes the "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.list" call.
-// Exactly one of
-// *GoogleAnalyticsAdminV1betaListMeasurementProtocolSecretsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaListMeasurementProtocolSecretsResponse.Serv
-// erResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaListMeasurementProtocolSecretsResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListMeasurementProtocolSecretsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9837,44 +7401,6 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Do(opts ...goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns child MeasurementProtocolSecrets under the specified parent Property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataStreams/{dataStreamsId}/measurementProtocolSecrets",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. If unspecified, at most 10 resources will be returned. The maximum value is 10. Higher values will be coerced to the maximum.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListMeasurementProtocolSecrets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMeasurementProtocolSecrets` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the parent stream. Format: properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/measurementProtocolSecrets",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaListMeasurementProtocolSecretsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -9882,7 +7408,7 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Do(opts ...goo
 // The provided context supersedes any context provided to the Context method.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListMeasurementProtocolSecretsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -9898,8 +7424,6 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsListCall) Pages(ctx cont
 	}
 }
 
-// method id "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.patch":
-
 type PropertiesDataStreamsMeasurementProtocolSecretsPatchCall struct {
 	s                                                   *Service
 	name                                                string
@@ -9911,10 +7435,10 @@ type PropertiesDataStreamsMeasurementProtocolSecretsPatchCall struct {
 
 // Patch: Updates a measurement protocol secret.
 //
-//   - name: Output only. Resource name of this secret. This secret may be
-//     a child of any type of stream. Format:
-//     properties/{property}/dataStreams/{dataStream}/measurementProtocolSe
-//     crets/{measurementProtocolSecret}.
+//   - name: Output only. Resource name of this secret. This secret may be a
+//     child of any type of stream. Format:
+//     properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{
+//     measurementProtocolSecret}.
 func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Patch(name string, googleanalyticsadminv1betameasurementprotocolsecret *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
 	c := &PropertiesDataStreamsMeasurementProtocolSecretsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9922,31 +7446,29 @@ func (r *PropertiesDataStreamsMeasurementProtocolSecretsService) Patch(name stri
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated.
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated. Omitted fields will not be updated.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) UpdateMask(updateMask string) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Context(ctx context.Context) *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9955,18 +7477,12 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Header() http
 }
 
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betameasurementprotocolsecret)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -9983,14 +7499,11 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) doRequest(alt
 }
 
 // Do executes the "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaMeasurementProtocolSecret, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10021,44 +7534,7 @@ func (c *PropertiesDataStreamsMeasurementProtocolSecretsPatchCall) Do(opts ...go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a measurement protocol secret.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/dataStreams/{dataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.dataStreams.measurementProtocolSecrets.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of this secret. This secret may be a child of any type of stream. Format: properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{measurementProtocolSecret}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/measurementProtocolSecrets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaMeasurementProtocolSecret"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaMeasurementProtocolSecret"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.firebaseLinks.create":
 
 type PropertiesFirebaseLinksCreateCall struct {
 	s                                      *Service
@@ -10081,23 +7557,21 @@ func (r *PropertiesFirebaseLinksService) Create(parent string, googleanalyticsad
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesFirebaseLinksCreateCall) Fields(s ...googleapi.Field) *PropertiesFirebaseLinksCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesFirebaseLinksCreateCall) Context(ctx context.Context) *PropertiesFirebaseLinksCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesFirebaseLinksCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10106,18 +7580,12 @@ func (c *PropertiesFirebaseLinksCreateCall) Header() http.Header {
 }
 
 func (c *PropertiesFirebaseLinksCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betafirebaselink)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/firebaseLinks")
@@ -10134,13 +7602,11 @@ func (c *PropertiesFirebaseLinksCreateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "analyticsadmin.properties.firebaseLinks.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaFirebaseLink or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleAnalyticsAdminV1betaFirebaseLink.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaFirebaseLink.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesFirebaseLinksCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaFirebaseLink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10171,38 +7637,7 @@ func (c *PropertiesFirebaseLinksCreateCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a FirebaseLink. Properties can have at most one FirebaseLink.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/firebaseLinks",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.firebaseLinks.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Format: properties/{property_id} Example: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/firebaseLinks",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaFirebaseLink"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaFirebaseLink"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.firebaseLinks.delete":
 
 type PropertiesFirebaseLinksDeleteCall struct {
 	s          *Service
@@ -10214,9 +7649,8 @@ type PropertiesFirebaseLinksDeleteCall struct {
 
 // Delete: Deletes a FirebaseLink on a property
 //
-//   - name: Format:
-//     properties/{property_id}/firebaseLinks/{firebase_link_id} Example:
-//     properties/1234/firebaseLinks/5678.
+//   - name: Format: properties/{property_id}/firebaseLinks/{firebase_link_id}
+//     Example: properties/1234/firebaseLinks/5678.
 func (r *PropertiesFirebaseLinksService) Delete(name string) *PropertiesFirebaseLinksDeleteCall {
 	c := &PropertiesFirebaseLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10224,23 +7658,21 @@ func (r *PropertiesFirebaseLinksService) Delete(name string) *PropertiesFirebase
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesFirebaseLinksDeleteCall) Fields(s ...googleapi.Field) *PropertiesFirebaseLinksDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesFirebaseLinksDeleteCall) Context(ctx context.Context) *PropertiesFirebaseLinksDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesFirebaseLinksDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10249,12 +7681,7 @@ func (c *PropertiesFirebaseLinksDeleteCall) Header() http.Header {
 }
 
 func (c *PropertiesFirebaseLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -10272,12 +7699,11 @@ func (c *PropertiesFirebaseLinksDeleteCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "analyticsadmin.properties.firebaseLinks.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PropertiesFirebaseLinksDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10308,35 +7734,7 @@ func (c *PropertiesFirebaseLinksDeleteCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a FirebaseLink on a property",
-	//   "flatPath": "v1beta/properties/{propertiesId}/firebaseLinks/{firebaseLinksId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "analyticsadmin.properties.firebaseLinks.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Format: properties/{property_id}/firebaseLinks/{firebase_link_id} Example: properties/1234/firebaseLinks/5678",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/firebaseLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.firebaseLinks.list":
 
 type PropertiesFirebaseLinksListCall struct {
 	s            *Service
@@ -10347,8 +7745,8 @@ type PropertiesFirebaseLinksListCall struct {
 	header_      http.Header
 }
 
-// List: Lists FirebaseLinks on a property. Properties can have at most
-// one FirebaseLink.
+// List: Lists FirebaseLinks on a property. Properties can have at most one
+// FirebaseLink.
 //
 // - parent: Format: properties/{property_id} Example: properties/1234.
 func (r *PropertiesFirebaseLinksService) List(parent string) *PropertiesFirebaseLinksListCall {
@@ -10357,54 +7755,49 @@ func (r *PropertiesFirebaseLinksService) List(parent string) *PropertiesFirebase
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. The service may return fewer than this value,
-// even if there are additional pages. If unspecified, at most 50
-// resources will be returned. The maximum value is 200; (higher values
-// will be coerced to the maximum)
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. The service may return fewer than this value, even if
+// there are additional pages. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200; (higher values will be coerced to the
+// maximum)
 func (c *PropertiesFirebaseLinksListCall) PageSize(pageSize int64) *PropertiesFirebaseLinksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListFirebaseLinks` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListFirebaseLinks` must match the call that provided the
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListFirebaseLinks` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListFirebaseLinks` must match the call that provided the page token.
 func (c *PropertiesFirebaseLinksListCall) PageToken(pageToken string) *PropertiesFirebaseLinksListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesFirebaseLinksListCall) Fields(s ...googleapi.Field) *PropertiesFirebaseLinksListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesFirebaseLinksListCall) IfNoneMatch(entityTag string) *PropertiesFirebaseLinksListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesFirebaseLinksListCall) Context(ctx context.Context) *PropertiesFirebaseLinksListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesFirebaseLinksListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10413,12 +7806,7 @@ func (c *PropertiesFirebaseLinksListCall) Header() http.Header {
 }
 
 func (c *PropertiesFirebaseLinksListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10439,14 +7827,11 @@ func (c *PropertiesFirebaseLinksListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "analyticsadmin.properties.firebaseLinks.list" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaListFirebaseLinksResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1betaListFirebaseLinksResponse.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaListFirebaseLinksResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesFirebaseLinksListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListFirebaseLinksResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10477,44 +7862,6 @@ func (c *PropertiesFirebaseLinksListCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists FirebaseLinks on a property. Properties can have at most one FirebaseLink.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/firebaseLinks",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.firebaseLinks.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. The service may return fewer than this value, even if there are additional pages. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListFirebaseLinks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListFirebaseLinks` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Format: properties/{property_id} Example: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/firebaseLinks",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaListFirebaseLinksResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -10522,7 +7869,7 @@ func (c *PropertiesFirebaseLinksListCall) Do(opts ...googleapi.CallOption) (*Goo
 // The provided context supersedes any context provided to the Context method.
 func (c *PropertiesFirebaseLinksListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListFirebaseLinksResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -10537,8 +7884,6 @@ func (c *PropertiesFirebaseLinksListCall) Pages(ctx context.Context, f func(*Goo
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "analyticsadmin.properties.googleAdsLinks.create":
 
 type PropertiesGoogleAdsLinksCreateCall struct {
 	s                                       *Service
@@ -10560,23 +7905,21 @@ func (r *PropertiesGoogleAdsLinksService) Create(parent string, googleanalyticsa
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesGoogleAdsLinksCreateCall) Fields(s ...googleapi.Field) *PropertiesGoogleAdsLinksCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesGoogleAdsLinksCreateCall) Context(ctx context.Context) *PropertiesGoogleAdsLinksCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesGoogleAdsLinksCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10585,18 +7928,12 @@ func (c *PropertiesGoogleAdsLinksCreateCall) Header() http.Header {
 }
 
 func (c *PropertiesGoogleAdsLinksCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betagoogleadslink)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/googleAdsLinks")
@@ -10613,13 +7950,11 @@ func (c *PropertiesGoogleAdsLinksCreateCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "analyticsadmin.properties.googleAdsLinks.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaGoogleAdsLink or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleAnalyticsAdminV1betaGoogleAdsLink.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaGoogleAdsLink.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesGoogleAdsLinksCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaGoogleAdsLink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10650,38 +7985,7 @@ func (c *PropertiesGoogleAdsLinksCreateCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a GoogleAdsLink.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/googleAdsLinks",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.googleAdsLinks.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Example format: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/googleAdsLinks",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaGoogleAdsLink"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaGoogleAdsLink"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.googleAdsLinks.delete":
 
 type PropertiesGoogleAdsLinksDeleteCall struct {
 	s          *Service
@@ -10701,23 +8005,21 @@ func (r *PropertiesGoogleAdsLinksService) Delete(name string) *PropertiesGoogleA
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesGoogleAdsLinksDeleteCall) Fields(s ...googleapi.Field) *PropertiesGoogleAdsLinksDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesGoogleAdsLinksDeleteCall) Context(ctx context.Context) *PropertiesGoogleAdsLinksDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesGoogleAdsLinksDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10726,12 +8028,7 @@ func (c *PropertiesGoogleAdsLinksDeleteCall) Header() http.Header {
 }
 
 func (c *PropertiesGoogleAdsLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -10749,12 +8046,11 @@ func (c *PropertiesGoogleAdsLinksDeleteCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "analyticsadmin.properties.googleAdsLinks.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PropertiesGoogleAdsLinksDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10785,35 +8081,7 @@ func (c *PropertiesGoogleAdsLinksDeleteCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a GoogleAdsLink on a property",
-	//   "flatPath": "v1beta/properties/{propertiesId}/googleAdsLinks/{googleAdsLinksId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "analyticsadmin.properties.googleAdsLinks.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Example format: properties/1234/googleAdsLinks/5678",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/googleAdsLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.googleAdsLinks.list":
 
 type PropertiesGoogleAdsLinksListCall struct {
 	s            *Service
@@ -10833,53 +8101,47 @@ func (r *PropertiesGoogleAdsLinksService) List(parent string) *PropertiesGoogleA
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. If unspecified, at most 50 resources will be
-// returned. The maximum value is 200 (higher values will be coerced to
-// the maximum).
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. If unspecified, at most 50 resources will be returned.
+// The maximum value is 200 (higher values will be coerced to the maximum).
 func (c *PropertiesGoogleAdsLinksListCall) PageSize(pageSize int64) *PropertiesGoogleAdsLinksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListGoogleAdsLinks` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListGoogleAdsLinks` must match the call that provided
-// the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListGoogleAdsLinks` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListGoogleAdsLinks` must match the call that provided the page token.
 func (c *PropertiesGoogleAdsLinksListCall) PageToken(pageToken string) *PropertiesGoogleAdsLinksListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesGoogleAdsLinksListCall) Fields(s ...googleapi.Field) *PropertiesGoogleAdsLinksListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesGoogleAdsLinksListCall) IfNoneMatch(entityTag string) *PropertiesGoogleAdsLinksListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesGoogleAdsLinksListCall) Context(ctx context.Context) *PropertiesGoogleAdsLinksListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesGoogleAdsLinksListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10888,12 +8150,7 @@ func (c *PropertiesGoogleAdsLinksListCall) Header() http.Header {
 }
 
 func (c *PropertiesGoogleAdsLinksListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10914,14 +8171,11 @@ func (c *PropertiesGoogleAdsLinksListCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "analyticsadmin.properties.googleAdsLinks.list" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesGoogleAdsLinksListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10952,44 +8206,6 @@ func (c *PropertiesGoogleAdsLinksListCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists GoogleAdsLinks on a property.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/googleAdsLinks",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.googleAdsLinks.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200 (higher values will be coerced to the maximum).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListGoogleAdsLinks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListGoogleAdsLinks` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Example format: properties/1234",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/googleAdsLinks",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -10997,7 +8213,7 @@ func (c *PropertiesGoogleAdsLinksListCall) Do(opts ...googleapi.CallOption) (*Go
 // The provided context supersedes any context provided to the Context method.
 func (c *PropertiesGoogleAdsLinksListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -11012,8 +8228,6 @@ func (c *PropertiesGoogleAdsLinksListCall) Pages(ctx context.Context, f func(*Go
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "analyticsadmin.properties.googleAdsLinks.patch":
 
 type PropertiesGoogleAdsLinksPatchCall struct {
 	s                                       *Service
@@ -11036,34 +8250,31 @@ func (r *PropertiesGoogleAdsLinksService) Patch(name string, googleanalyticsadmi
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Field names must be in snake case
-// (e.g., "field_to_update"). Omitted fields will not be updated. To
-// replace the entire entity, use one path with the string "*" to match
-// all fields.
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated. Field names must be in snake case (e.g.,
+// "field_to_update"). Omitted fields will not be updated. To replace the
+// entire entity, use one path with the string "*" to match all fields.
 func (c *PropertiesGoogleAdsLinksPatchCall) UpdateMask(updateMask string) *PropertiesGoogleAdsLinksPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesGoogleAdsLinksPatchCall) Fields(s ...googleapi.Field) *PropertiesGoogleAdsLinksPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesGoogleAdsLinksPatchCall) Context(ctx context.Context) *PropertiesGoogleAdsLinksPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesGoogleAdsLinksPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11072,18 +8283,12 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Header() http.Header {
 }
 
 func (c *PropertiesGoogleAdsLinksPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betagoogleadslink)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -11100,13 +8305,11 @@ func (c *PropertiesGoogleAdsLinksPatchCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "analyticsadmin.properties.googleAdsLinks.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaGoogleAdsLink or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleAnalyticsAdminV1betaGoogleAdsLink.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaGoogleAdsLink.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesGoogleAdsLinksPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaGoogleAdsLink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11137,44 +8340,7 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a GoogleAdsLink on a property",
-	//   "flatPath": "v1beta/properties/{propertiesId}/googleAdsLinks/{googleAdsLinksId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.googleAdsLinks.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Format: properties/{propertyId}/googleAdsLinks/{googleAdsLinkId} Note: googleAdsLinkId is not the Google Ads customer ID.",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/googleAdsLinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaGoogleAdsLink"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaGoogleAdsLink"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.keyEvents.create":
 
 type PropertiesKeyEventsCreateCall struct {
 	s                                  *Service
@@ -11187,8 +8353,8 @@ type PropertiesKeyEventsCreateCall struct {
 
 // Create: Creates a Key Event.
 //
-//   - parent: The resource name of the parent property where this Key
-//     Event will be created. Format: properties/123.
+//   - parent: The resource name of the parent property where this Key Event will
+//     be created. Format: properties/123.
 func (r *PropertiesKeyEventsService) Create(parent string, googleanalyticsadminv1betakeyevent *GoogleAnalyticsAdminV1betaKeyEvent) *PropertiesKeyEventsCreateCall {
 	c := &PropertiesKeyEventsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11197,23 +8363,21 @@ func (r *PropertiesKeyEventsService) Create(parent string, googleanalyticsadminv
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesKeyEventsCreateCall) Fields(s ...googleapi.Field) *PropertiesKeyEventsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesKeyEventsCreateCall) Context(ctx context.Context) *PropertiesKeyEventsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesKeyEventsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11222,18 +8386,12 @@ func (c *PropertiesKeyEventsCreateCall) Header() http.Header {
 }
 
 func (c *PropertiesKeyEventsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betakeyevent)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/keyEvents")
@@ -11250,13 +8408,11 @@ func (c *PropertiesKeyEventsCreateCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "analyticsadmin.properties.keyEvents.create" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaKeyEvent or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaKeyEvent.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaKeyEvent.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesKeyEventsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaKeyEvent, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11287,38 +8443,7 @@ func (c *PropertiesKeyEventsCreateCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a Key Event.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/keyEvents",
-	//   "httpMethod": "POST",
-	//   "id": "analyticsadmin.properties.keyEvents.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the parent property where this Key Event will be created. Format: properties/123",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/keyEvents",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaKeyEvent"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaKeyEvent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.keyEvents.delete":
 
 type PropertiesKeyEventsDeleteCall struct {
 	s          *Service
@@ -11340,23 +8465,21 @@ func (r *PropertiesKeyEventsService) Delete(name string) *PropertiesKeyEventsDel
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesKeyEventsDeleteCall) Fields(s ...googleapi.Field) *PropertiesKeyEventsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesKeyEventsDeleteCall) Context(ctx context.Context) *PropertiesKeyEventsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesKeyEventsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11365,12 +8488,7 @@ func (c *PropertiesKeyEventsDeleteCall) Header() http.Header {
 }
 
 func (c *PropertiesKeyEventsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -11388,12 +8506,11 @@ func (c *PropertiesKeyEventsDeleteCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "analyticsadmin.properties.keyEvents.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PropertiesKeyEventsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11424,35 +8541,7 @@ func (c *PropertiesKeyEventsDeleteCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a Key Event.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/keyEvents/{keyEventsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "analyticsadmin.properties.keyEvents.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the Key Event to delete. Format: properties/{property}/keyEvents/{key_event} Example: \"properties/123/keyEvents/456\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/keyEvents/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.keyEvents.get":
 
 type PropertiesKeyEventsGetCall struct {
 	s            *Service
@@ -11475,33 +8564,29 @@ func (r *PropertiesKeyEventsService) Get(name string) *PropertiesKeyEventsGetCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesKeyEventsGetCall) Fields(s ...googleapi.Field) *PropertiesKeyEventsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesKeyEventsGetCall) IfNoneMatch(entityTag string) *PropertiesKeyEventsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesKeyEventsGetCall) Context(ctx context.Context) *PropertiesKeyEventsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesKeyEventsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11510,12 +8595,7 @@ func (c *PropertiesKeyEventsGetCall) Header() http.Header {
 }
 
 func (c *PropertiesKeyEventsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11536,13 +8616,11 @@ func (c *PropertiesKeyEventsGetCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "analyticsadmin.properties.keyEvents.get" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaKeyEvent or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaKeyEvent.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaKeyEvent.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesKeyEventsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaKeyEvent, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11573,36 +8651,7 @@ func (c *PropertiesKeyEventsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAn
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve a single Key Event.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/keyEvents/{keyEventsId}",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.keyEvents.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the Key Event to retrieve. Format: properties/{property}/keyEvents/{key_event} Example: \"properties/123/keyEvents/456\"",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/keyEvents/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaKeyEvent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "analyticsadmin.properties.keyEvents.list":
 
 type PropertiesKeyEventsListCall struct {
 	s            *Service
@@ -11613,8 +8662,8 @@ type PropertiesKeyEventsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of Key Events in the specified parent property.
-// Returns an empty list if no Key Events are found.
+// List: Returns a list of Key Events in the specified parent property. Returns
+// an empty list if no Key Events are found.
 //
 //   - parent: The resource name of the parent property. Example:
 //     'properties/123'.
@@ -11624,53 +8673,47 @@ func (r *PropertiesKeyEventsService) List(parent string) *PropertiesKeyEventsLis
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. If unspecified, at most 50 resources will be
-// returned. The maximum value is 200; (higher values will be coerced to
-// the maximum)
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. If unspecified, at most 50 resources will be returned.
+// The maximum value is 200; (higher values will be coerced to the maximum)
 func (c *PropertiesKeyEventsListCall) PageSize(pageSize int64) *PropertiesKeyEventsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListKeyEvents` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListKeyEvents` must match the call that provided the
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListKeyEvents` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListKeyEvents` must match the call that provided the page token.
 func (c *PropertiesKeyEventsListCall) PageToken(pageToken string) *PropertiesKeyEventsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesKeyEventsListCall) Fields(s ...googleapi.Field) *PropertiesKeyEventsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PropertiesKeyEventsListCall) IfNoneMatch(entityTag string) *PropertiesKeyEventsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesKeyEventsListCall) Context(ctx context.Context) *PropertiesKeyEventsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesKeyEventsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11679,12 +8722,7 @@ func (c *PropertiesKeyEventsListCall) Header() http.Header {
 }
 
 func (c *PropertiesKeyEventsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11705,16 +8743,11 @@ func (c *PropertiesKeyEventsListCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "analyticsadmin.properties.keyEvents.list" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaListKeyEventsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAnalyticsAdminV1betaListKeyEventsResponse.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaListKeyEventsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesKeyEventsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListKeyEventsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11745,44 +8778,6 @@ func (c *PropertiesKeyEventsListCall) Do(opts ...googleapi.CallOption) (*GoogleA
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of Key Events in the specified parent property. Returns an empty list if no Key Events are found.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/keyEvents",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsadmin.properties.keyEvents.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListKeyEvents` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListKeyEvents` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the parent property. Example: 'properties/123'",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/keyEvents",
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaListKeyEventsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -11790,7 +8785,7 @@ func (c *PropertiesKeyEventsListCall) Do(opts ...googleapi.CallOption) (*GoogleA
 // The provided context supersedes any context provided to the Context method.
 func (c *PropertiesKeyEventsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListKeyEventsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -11805,8 +8800,6 @@ func (c *PropertiesKeyEventsListCall) Pages(ctx context.Context, f func(*GoogleA
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "analyticsadmin.properties.keyEvents.patch":
 
 type PropertiesKeyEventsPatchCall struct {
 	s                                  *Service
@@ -11828,34 +8821,31 @@ func (r *PropertiesKeyEventsService) Patch(name string, googleanalyticsadminv1be
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Field names must be in snake case
-// (e.g., "field_to_update"). Omitted fields will not be updated. To
-// replace the entire entity, use one path with the string "*" to match
-// all fields.
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated. Field names must be in snake case (e.g.,
+// "field_to_update"). Omitted fields will not be updated. To replace the
+// entire entity, use one path with the string "*" to match all fields.
 func (c *PropertiesKeyEventsPatchCall) UpdateMask(updateMask string) *PropertiesKeyEventsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PropertiesKeyEventsPatchCall) Fields(s ...googleapi.Field) *PropertiesKeyEventsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PropertiesKeyEventsPatchCall) Context(ctx context.Context) *PropertiesKeyEventsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PropertiesKeyEventsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11864,18 +8854,12 @@ func (c *PropertiesKeyEventsPatchCall) Header() http.Header {
 }
 
 func (c *PropertiesKeyEventsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betakeyevent)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -11892,13 +8876,11 @@ func (c *PropertiesKeyEventsPatchCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "analyticsadmin.properties.keyEvents.patch" call.
-// Exactly one of *GoogleAnalyticsAdminV1betaKeyEvent or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleAnalyticsAdminV1betaKeyEvent.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1betaKeyEvent.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PropertiesKeyEventsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaKeyEvent, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11929,39 +8911,4 @@ func (c *PropertiesKeyEventsPatchCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a Key Event.",
-	//   "flatPath": "v1beta/properties/{propertiesId}/keyEvents/{keyEventsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "analyticsadmin.properties.keyEvents.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Resource name of this key event. Format: properties/{property}/keyEvents/{key_event}",
-	//       "location": "path",
-	//       "pattern": "^properties/[^/]+/keyEvents/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaKeyEvent"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAnalyticsAdminV1betaKeyEvent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
 }

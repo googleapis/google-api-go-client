@@ -56,7 +56,18 @@
 // marshalled. Sometimes you may actually want to send a default value, for
 // instance sending an int of `0`. In this case you can override the `omitempty`
 // feature by adding the field name to the `ForceSendFields` slice. See docs on
-// any struct for more details.
+// any struct for more details. This may be used to include empty fields in
+// Patch requests.
+//
+// # NullFields
+//
+// This field can be found on all Request/Response structs in the generated
+// clients. It can be be used to send JSON null values for the listed fields.
+// By default, fields with empty values are omitted from API requests because of
+// the presence of the `omitempty` field tag on all fields. However, any field
+// with an empty value appearing in NullFields will be sent to the server as
+// null. It is an error if a field in this list has a non-empty value. This may
+// be used to include null fields in Patch requests.
 //
 // # Inspecting errors
 //
@@ -132,3 +143,10 @@
 //		 // Do something with the response
 //		 fmt.Println(op.Response)
 package api
+
+import (
+	// Force dependency on main module to ensure it is unambiguous during
+	// module resolution.
+	// See: https://github.com/googleapis/google-api-go-client/issues/2559.
+	_ "cloud.google.com/go/civil"
+)

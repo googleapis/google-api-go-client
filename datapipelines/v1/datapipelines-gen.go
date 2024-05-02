@@ -95,8 +95,8 @@ const mtlsBasePath = "https://datapipelines.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -199,64 +199,51 @@ type ProjectsLocationsPipelinesJobsService struct {
 	s *Service
 }
 
-// GoogleCloudDatapipelinesV1DataflowJobDetails: Pipeline job details
-// specific to the Dataflow API. This is encapsulated here to allow for
-// more executors to store their specific details separately.
+// GoogleCloudDatapipelinesV1DataflowJobDetails: Pipeline job details specific
+// to the Dataflow API. This is encapsulated here to allow for more executors
+// to store their specific details separately.
 type GoogleCloudDatapipelinesV1DataflowJobDetails struct {
-	// CurrentWorkers: Output only. The current number of workers used to
-	// run the jobs. Only set to a value if the job is still running.
+	// CurrentWorkers: Output only. The current number of workers used to run the
+	// jobs. Only set to a value if the job is still running.
 	CurrentWorkers int64 `json:"currentWorkers,omitempty"`
-
-	// ResourceInfo: Cached version of all the metrics of interest for the
-	// job. This value gets stored here when the job is terminated. As long
-	// as the job is running, this field is populated from the Dataflow API.
+	// ResourceInfo: Cached version of all the metrics of interest for the job.
+	// This value gets stored here when the job is terminated. As long as the job
+	// is running, this field is populated from the Dataflow API.
 	ResourceInfo map[string]float64 `json:"resourceInfo,omitempty"`
-
 	// SdkVersion: Output only. The SDK version used to run the job.
 	SdkVersion *GoogleCloudDatapipelinesV1SdkVersion `json:"sdkVersion,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrentWorkers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrentWorkers") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CurrentWorkers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1DataflowJobDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1DataflowJobDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatapipelinesV1FlexTemplateRuntimeEnvironment: The
-// environment values to be set at runtime for a Flex Template.
+// GoogleCloudDatapipelinesV1FlexTemplateRuntimeEnvironment: The environment
+// values to be set at runtime for a Flex Template.
 type GoogleCloudDatapipelinesV1FlexTemplateRuntimeEnvironment struct {
 	// AdditionalExperiments: Additional experiment flags for the job.
 	AdditionalExperiments []string `json:"additionalExperiments,omitempty"`
-
-	// AdditionalUserLabels: Additional user labels to be specified for the
-	// job. Keys and values must follow the restrictions specified in the
-	// labeling restrictions
-	// (https://cloud.google.com/compute/docs/labeling-resources#restrictions).
-	// An object containing a list of key/value pairs. Example: `{ "name":
-	// "wrench", "mass": "1kg", "count": "3" }`.
+	// AdditionalUserLabels: Additional user labels to be specified for the job.
+	// Keys and values must follow the restrictions specified in the labeling
+	// restrictions
+	// (https://cloud.google.com/compute/docs/labeling-resources#restrictions). An
+	// object containing a list of key/value pairs. Example: `{ "name": "wrench",
+	// "mass": "1kg", "count": "3" }`.
 	AdditionalUserLabels map[string]string `json:"additionalUserLabels,omitempty"`
-
-	// EnableStreamingEngine: Whether to enable Streaming Engine for the
-	// job.
+	// EnableStreamingEngine: Whether to enable Streaming Engine for the job.
 	EnableStreamingEngine bool `json:"enableStreamingEngine,omitempty"`
-
 	// FlexrsGoal: Set FlexRS goal for the job.
 	// https://cloud.google.com/dataflow/docs/guides/flexrs
 	//
@@ -265,121 +252,92 @@ type GoogleCloudDatapipelinesV1FlexTemplateRuntimeEnvironment struct {
 	//   "FLEXRS_SPEED_OPTIMIZED" - Optimize for lower execution time.
 	//   "FLEXRS_COST_OPTIMIZED" - Optimize for lower cost.
 	FlexrsGoal string `json:"flexrsGoal,omitempty"`
-
 	// IpConfiguration: Configuration for VM IPs.
 	//
 	// Possible values:
-	//   "WORKER_IP_UNSPECIFIED" - The configuration is unknown, or
-	// unspecified.
+	//   "WORKER_IP_UNSPECIFIED" - The configuration is unknown, or unspecified.
 	//   "WORKER_IP_PUBLIC" - Workers should have public IP addresses.
 	//   "WORKER_IP_PRIVATE" - Workers should have private IP addresses.
 	IpConfiguration string `json:"ipConfiguration,omitempty"`
-
 	// KmsKeyName: Name for the Cloud KMS key for the job. Key format is:
 	// projects//locations//keyRings//cryptoKeys/
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-
-	// MachineType: The machine type to use for the job. Defaults to the
-	// value from the template if not specified.
+	// MachineType: The machine type to use for the job. Defaults to the value from
+	// the template if not specified.
 	MachineType string `json:"machineType,omitempty"`
-
 	// MaxWorkers: The maximum number of Compute Engine instances to be made
 	// available to your pipeline during execution, from 1 to 1000.
 	MaxWorkers int64 `json:"maxWorkers,omitempty"`
-
-	// Network: Network to which VMs will be assigned. If empty or
-	// unspecified, the service will use the network "default".
+	// Network: Network to which VMs will be assigned. If empty or unspecified, the
+	// service will use the network "default".
 	Network string `json:"network,omitempty"`
-
-	// NumWorkers: The initial number of Compute Engine instances for the
-	// job.
+	// NumWorkers: The initial number of Compute Engine instances for the job.
 	NumWorkers int64 `json:"numWorkers,omitempty"`
-
-	// ServiceAccountEmail: The email address of the service account to run
-	// the job as.
+	// ServiceAccountEmail: The email address of the service account to run the job
+	// as.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
-
-	// Subnetwork: Subnetwork to which VMs will be assigned, if desired. You
-	// can specify a subnetwork using either a complete URL or an
-	// abbreviated path. Expected to be of the form
-	// "https://www.googleapis.com/compute/v1/projects/HOST_PROJECT_ID/region
-	// s/REGION/subnetworks/SUBNETWORK" or
-	// "regions/REGION/subnetworks/SUBNETWORK". If the subnetwork is located
-	// in a Shared VPC network, you must use the complete URL.
+	// Subnetwork: Subnetwork to which VMs will be assigned, if desired. You can
+	// specify a subnetwork using either a complete URL or an abbreviated path.
+	// Expected to be of the form
+	// "https://www.googleapis.com/compute/v1/projects/HOST_PROJECT_ID/regions/REGIO
+	// N/subnetworks/SUBNETWORK" or "regions/REGION/subnetworks/SUBNETWORK". If the
+	// subnetwork is located in a Shared VPC network, you must use the complete
+	// URL.
 	Subnetwork string `json:"subnetwork,omitempty"`
-
-	// TempLocation: The Cloud Storage path to use for temporary files. Must
-	// be a valid Cloud Storage URL, beginning with `gs://`.
+	// TempLocation: The Cloud Storage path to use for temporary files. Must be a
+	// valid Cloud Storage URL, beginning with `gs://`.
 	TempLocation string `json:"tempLocation,omitempty"`
-
 	// WorkerRegion: The Compute Engine region
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones)
-	// in which worker processing should occur, e.g. "us-west1". Mutually
-	// exclusive with worker_zone. If neither worker_region nor worker_zone
-	// is specified, defaults to the control plane region.
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which
+	// worker processing should occur, e.g. "us-west1". Mutually exclusive with
+	// worker_zone. If neither worker_region nor worker_zone is specified, defaults
+	// to the control plane region.
 	WorkerRegion string `json:"workerRegion,omitempty"`
-
 	// WorkerZone: The Compute Engine zone
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones)
-	// in which worker processing should occur, e.g. "us-west1-a". Mutually
-	// exclusive with worker_region. If neither worker_region nor
-	// worker_zone is specified, a zone in the control plane region is
-	// chosen based on available capacity. If both `worker_zone` and `zone`
-	// are set, `worker_zone` takes precedence.
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which
+	// worker processing should occur, e.g. "us-west1-a". Mutually exclusive with
+	// worker_region. If neither worker_region nor worker_zone is specified, a zone
+	// in the control plane region is chosen based on available capacity. If both
+	// `worker_zone` and `zone` are set, `worker_zone` takes precedence.
 	WorkerZone string `json:"workerZone,omitempty"`
-
 	// Zone: The Compute Engine availability zone
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones)
-	// for launching worker instances to run your pipeline. In the future,
-	// worker_zone will take precedence.
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones) for
+	// launching worker instances to run your pipeline. In the future, worker_zone
+	// will take precedence.
 	Zone string `json:"zone,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdditionalExperiments") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdditionalExperiments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "AdditionalExperiments") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1FlexTemplateRuntimeEnvironment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1FlexTemplateRuntimeEnvironment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatapipelinesV1Job: Definition of the job information
-// maintained by the pipeline. Fields in this entity are retrieved from
-// the executor API (e.g. Dataflow API).
+// GoogleCloudDatapipelinesV1Job: Definition of the job information maintained
+// by the pipeline. Fields in this entity are retrieved from the executor API
+// (e.g. Dataflow API).
 type GoogleCloudDatapipelinesV1Job struct {
 	// CreateTime: Output only. The time of job creation.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DataflowJobDetails: All the details that are specific to a Dataflow
-	// job.
+	// DataflowJobDetails: All the details that are specific to a Dataflow job.
 	DataflowJobDetails *GoogleCloudDatapipelinesV1DataflowJobDetails `json:"dataflowJobDetails,omitempty"`
-
-	// EndTime: Output only. The time of job termination. This is absent if
-	// the job is still running.
+	// EndTime: Output only. The time of job termination. This is absent if the job
+	// is still running.
 	EndTime string `json:"endTime,omitempty"`
-
 	// Id: Output only. The internal ID for the job.
 	Id string `json:"id,omitempty"`
-
 	// Name: Required. The fully qualified resource name for the job.
 	Name string `json:"name,omitempty"`
-
 	// State: The current state of the job.
 	//
 	// Possible values:
@@ -390,363 +348,278 @@ type GoogleCloudDatapipelinesV1Job struct {
 	//   "STATE_FAILED" - The job has finished execution with a failure.
 	//   "STATE_CANCELLED" - The job has been terminated upon user request.
 	State string `json:"state,omitempty"`
-
-	// Status: Status capturing any error code or message related to job
-	// creation or execution.
+	// Status: Status capturing any error code or message related to job creation
+	// or execution.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1Job) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1Job
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatapipelinesV1LaunchFlexTemplateParameter: Launch Flex
-// Template parameter.
+// GoogleCloudDatapipelinesV1LaunchFlexTemplateParameter: Launch Flex Template
+// parameter.
 type GoogleCloudDatapipelinesV1LaunchFlexTemplateParameter struct {
-	// ContainerSpecGcsPath: Cloud Storage path to a file with a
-	// JSON-serialized ContainerSpec as content.
+	// ContainerSpecGcsPath: Cloud Storage path to a file with a JSON-serialized
+	// ContainerSpec as content.
 	ContainerSpecGcsPath string `json:"containerSpecGcsPath,omitempty"`
-
 	// Environment: The runtime environment for the Flex Template job.
 	Environment *GoogleCloudDatapipelinesV1FlexTemplateRuntimeEnvironment `json:"environment,omitempty"`
-
-	// JobName: Required. The job name to use for the created job. For an
-	// update job request, the job name should be the same as the existing
-	// running job.
+	// JobName: Required. The job name to use for the created job. For an update
+	// job request, the job name should be the same as the existing running job.
 	JobName string `json:"jobName,omitempty"`
-
-	// LaunchOptions: Launch options for this Flex Template job. This is a
-	// common set of options across languages and templates. This should not
-	// be used to pass job parameters.
+	// LaunchOptions: Launch options for this Flex Template job. This is a common
+	// set of options across languages and templates. This should not be used to
+	// pass job parameters.
 	LaunchOptions map[string]string `json:"launchOptions,omitempty"`
-
 	// Parameters: The parameters for the Flex Template. Example:
 	// `{"num_workers":"5"}`
 	Parameters map[string]string `json:"parameters,omitempty"`
-
 	// TransformNameMappings: Use this to pass transform name mappings for
 	// streaming update jobs. Example:
 	// `{"oldTransformName":"newTransformName",...}`
 	TransformNameMappings map[string]string `json:"transformNameMappings,omitempty"`
-
-	// Update: Set this to true if you are sending a request to update a
-	// running streaming job. When set, the job name should be the same as
-	// the running job.
+	// Update: Set this to true if you are sending a request to update a running
+	// streaming job. When set, the job name should be the same as the running job.
 	Update bool `json:"update,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ContainerSpecGcsPath") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ContainerSpecGcsPath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContainerSpecGcsPath") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ContainerSpecGcsPath") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1LaunchFlexTemplateParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1LaunchFlexTemplateParameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatapipelinesV1LaunchFlexTemplateRequest: A request to
-// launch a Dataflow job from a Flex Template.
+// GoogleCloudDatapipelinesV1LaunchFlexTemplateRequest: A request to launch a
+// Dataflow job from a Flex Template.
 type GoogleCloudDatapipelinesV1LaunchFlexTemplateRequest struct {
-	// LaunchParameter: Required. Parameter to launch a job from a Flex
-	// Template.
+	// LaunchParameter: Required. Parameter to launch a job from a Flex Template.
 	LaunchParameter *GoogleCloudDatapipelinesV1LaunchFlexTemplateParameter `json:"launchParameter,omitempty"`
-
 	// Location: Required. The [regional endpoint]
-	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
-	// to which to direct the request. For example, `us-central1`,
-	// `us-west1`.
+	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to
+	// which to direct the request. For example, `us-central1`, `us-west1`.
 	Location string `json:"location,omitempty"`
-
-	// ProjectId: Required. The ID of the Cloud Platform project that the
-	// job belongs to.
+	// ProjectId: Required. The ID of the Cloud Platform project that the job
+	// belongs to.
 	ProjectId string `json:"projectId,omitempty"`
-
-	// ValidateOnly: If true, the request is validated but not actually
-	// executed. Defaults to false.
+	// ValidateOnly: If true, the request is validated but not actually executed.
+	// Defaults to false.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LaunchParameter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LaunchParameter") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "LaunchParameter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1LaunchFlexTemplateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1LaunchFlexTemplateRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatapipelinesV1LaunchTemplateParameters: Parameters to
-// provide to the template being launched.
+// GoogleCloudDatapipelinesV1LaunchTemplateParameters: Parameters to provide to
+// the template being launched.
 type GoogleCloudDatapipelinesV1LaunchTemplateParameters struct {
 	// Environment: The runtime environment for the job.
 	Environment *GoogleCloudDatapipelinesV1RuntimeEnvironment `json:"environment,omitempty"`
-
 	// JobName: Required. The job name to use for the created job.
 	JobName string `json:"jobName,omitempty"`
-
 	// Parameters: The runtime parameters to pass to the job.
 	Parameters map[string]string `json:"parameters,omitempty"`
-
 	// TransformNameMapping: Map of transform name prefixes of the job to be
-	// replaced to the corresponding name prefixes of the new job. Only
-	// applicable when updating a pipeline.
+	// replaced to the corresponding name prefixes of the new job. Only applicable
+	// when updating a pipeline.
 	TransformNameMapping map[string]string `json:"transformNameMapping,omitempty"`
-
-	// Update: If set, replace the existing pipeline with the name specified
-	// by jobName with this pipeline, preserving state.
+	// Update: If set, replace the existing pipeline with the name specified by
+	// jobName with this pipeline, preserving state.
 	Update bool `json:"update,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Environment") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Environment") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Environment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1LaunchTemplateParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1LaunchTemplateParameters
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatapipelinesV1LaunchTemplateRequest: A request to launch
-// a template.
+// GoogleCloudDatapipelinesV1LaunchTemplateRequest: A request to launch a
+// template.
 type GoogleCloudDatapipelinesV1LaunchTemplateRequest struct {
-	// GcsPath: A Cloud Storage path to the template from which to create
-	// the job. Must be a valid Cloud Storage URL, beginning with 'gs://'.
+	// GcsPath: A Cloud Storage path to the template from which to create the job.
+	// Must be a valid Cloud Storage URL, beginning with 'gs://'.
 	GcsPath string `json:"gcsPath,omitempty"`
-
-	// LaunchParameters: The parameters of the template to launch. This
-	// should be part of the body of the POST request.
+	// LaunchParameters: The parameters of the template to launch. This should be
+	// part of the body of the POST request.
 	LaunchParameters *GoogleCloudDatapipelinesV1LaunchTemplateParameters `json:"launchParameters,omitempty"`
-
 	// Location: The [regional endpoint]
-	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
-	// to which to direct the request.
+	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to
+	// which to direct the request.
 	Location string `json:"location,omitempty"`
-
-	// ProjectId: Required. The ID of the Cloud Platform project that the
-	// job belongs to.
+	// ProjectId: Required. The ID of the Cloud Platform project that the job
+	// belongs to.
 	ProjectId string `json:"projectId,omitempty"`
-
-	// ValidateOnly: If true, the request is validated but not actually
-	// executed. Defaults to false.
+	// ValidateOnly: If true, the request is validated but not actually executed.
+	// Defaults to false.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GcsPath") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "GcsPath") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsPath") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GcsPath") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1LaunchTemplateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1LaunchTemplateRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatapipelinesV1ListJobsResponse: Response message for
-// ListJobs
+// GoogleCloudDatapipelinesV1ListJobsResponse: Response message for ListJobs
 type GoogleCloudDatapipelinesV1ListJobsResponse struct {
-	// Jobs: Results that were accessible to the caller. Results are always
-	// in descending order of job creation date.
+	// Jobs: Results that were accessible to the caller. Results are always in
+	// descending order of job creation date.
 	Jobs []*GoogleCloudDatapipelinesV1Job `json:"jobs,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Jobs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Jobs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Jobs") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Jobs") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1ListJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1ListJobsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatapipelinesV1ListPipelinesResponse: Response message for
 // ListPipelines.
 type GoogleCloudDatapipelinesV1ListPipelinesResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Pipelines: Results that matched the filter criteria and were
-	// accessible to the caller. Results are always in descending order of
-	// pipeline creation date.
+	// Pipelines: Results that matched the filter criteria and were accessible to
+	// the caller. Results are always in descending order of pipeline creation
+	// date.
 	Pipelines []*GoogleCloudDatapipelinesV1Pipeline `json:"pipelines,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1ListPipelinesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1ListPipelinesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatapipelinesV1Pipeline: The main pipeline entity and all
-// the necessary metadata for launching and managing linked jobs.
+// GoogleCloudDatapipelinesV1Pipeline: The main pipeline entity and all the
+// necessary metadata for launching and managing linked jobs.
 type GoogleCloudDatapipelinesV1Pipeline struct {
-	// CreateTime: Output only. Immutable. The timestamp when the pipeline
-	// was initially created. Set by the Data Pipelines service.
+	// CreateTime: Output only. Immutable. The timestamp when the pipeline was
+	// initially created. Set by the Data Pipelines service.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DisplayName: Required. The display name of the pipeline. It can
-	// contain only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), and
-	// underscores (_).
+	// DisplayName: Required. The display name of the pipeline. It can contain only
+	// letters ([A-Za-z]), numbers ([0-9]), hyphens (-), and underscores (_).
 	DisplayName string `json:"displayName,omitempty"`
-
 	// JobCount: Output only. Number of jobs.
 	JobCount int64 `json:"jobCount,omitempty"`
-
-	// LastUpdateTime: Output only. Immutable. The timestamp when the
-	// pipeline was last modified. Set by the Data Pipelines service.
+	// LastUpdateTime: Output only. Immutable. The timestamp when the pipeline was
+	// last modified. Set by the Data Pipelines service.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
-
 	// Name: The pipeline name. For example:
 	// `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`. *
-	// `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens
-	// (-), colons (:), and periods (.). For more information, see
-	// Identifying projects
+	// `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-),
+	// colons (:), and periods (.). For more information, see Identifying projects
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects).
-	// * `LOCATION_ID` is the canonical ID for the pipeline's location. The
-	// list of available locations can be obtained by calling
+	// * `LOCATION_ID` is the canonical ID for the pipeline's location. The list of
+	// available locations can be obtained by calling
 	// `google.cloud.location.Locations.ListLocations`. Note that the Data
-	// Pipelines service is not available in all regions. It depends on
-	// Cloud Scheduler, an App Engine application, so it's only available in
-	// App Engine regions (https://cloud.google.com/about/locations#region).
-	// * `PIPELINE_ID` is the ID of the pipeline. Must be unique for the
-	// selected project and location.
+	// Pipelines service is not available in all regions. It depends on Cloud
+	// Scheduler, an App Engine application, so it's only available in App Engine
+	// regions (https://cloud.google.com/about/locations#region). * `PIPELINE_ID`
+	// is the ID of the pipeline. Must be unique for the selected project and
+	// location.
 	Name string `json:"name,omitempty"`
-
 	// PipelineSources: Immutable. The sources of the pipeline (for example,
-	// Dataplex). The keys and values are set by the corresponding sources
-	// during pipeline creation.
+	// Dataplex). The keys and values are set by the corresponding sources during
+	// pipeline creation.
 	PipelineSources map[string]string `json:"pipelineSources,omitempty"`
-
 	// ScheduleInfo: Internal scheduling information for a pipeline. If this
-	// information is provided, periodic jobs will be created per the
-	// schedule. If not, users are responsible for creating jobs externally.
+	// information is provided, periodic jobs will be created per the schedule. If
+	// not, users are responsible for creating jobs externally.
 	ScheduleInfo *GoogleCloudDatapipelinesV1ScheduleSpec `json:"scheduleInfo,omitempty"`
-
-	// SchedulerServiceAccountEmail: Optional. A service account email to be
-	// used with the Cloud Scheduler job. If not specified, the default
-	// compute engine service account will be used.
+	// SchedulerServiceAccountEmail: Optional. A service account email to be used
+	// with the Cloud Scheduler job. If not specified, the default compute engine
+	// service account will be used.
 	SchedulerServiceAccountEmail string `json:"schedulerServiceAccountEmail,omitempty"`
-
-	// State: Required. The state of the pipeline. When the pipeline is
-	// created, the state is set to 'PIPELINE_STATE_ACTIVE' by default.
-	// State changes can be requested by setting the state to stopping,
-	// paused, or resuming. State cannot be changed through UpdatePipeline
-	// requests.
+	// State: Required. The state of the pipeline. When the pipeline is created,
+	// the state is set to 'PIPELINE_STATE_ACTIVE' by default. State changes can be
+	// requested by setting the state to stopping, paused, or resuming. State
+	// cannot be changed through UpdatePipeline requests.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The pipeline state isn't specified.
@@ -755,58 +628,48 @@ type GoogleCloudDatapipelinesV1Pipeline struct {
 	//   "STATE_ACTIVE" - The pipeline is actively running.
 	//   "STATE_STOPPING" - The pipeline is in the process of stopping. When
 	// finished, the pipeline state will be 'PIPELINE_STATE_ARCHIVED'.
-	//   "STATE_ARCHIVED" - The pipeline has been stopped. This is a
-	// terminal state and cannot be undone.
-	//   "STATE_PAUSED" - The pipeline is paused. This is a non-terminal
-	// state. When the pipeline is paused, it will hold processing jobs, but
-	// can be resumed later. For a batch pipeline, this means pausing the
-	// scheduler job. For a streaming pipeline, creating a job snapshot to
-	// resume from will give the same effect.
+	//   "STATE_ARCHIVED" - The pipeline has been stopped. This is a terminal state
+	// and cannot be undone.
+	//   "STATE_PAUSED" - The pipeline is paused. This is a non-terminal state.
+	// When the pipeline is paused, it will hold processing jobs, but can be
+	// resumed later. For a batch pipeline, this means pausing the scheduler job.
+	// For a streaming pipeline, creating a job snapshot to resume from will give
+	// the same effect.
 	State string `json:"state,omitempty"`
-
-	// Type: Required. The type of the pipeline. This field affects the
-	// scheduling of the pipeline and the type of metrics to show for the
-	// pipeline.
+	// Type: Required. The type of the pipeline. This field affects the scheduling
+	// of the pipeline and the type of metrics to show for the pipeline.
 	//
 	// Possible values:
 	//   "PIPELINE_TYPE_UNSPECIFIED" - The pipeline type isn't specified.
-	//   "PIPELINE_TYPE_BATCH" - A batch pipeline. It runs jobs on a
-	// specific schedule, and each job will automatically terminate once
-	// execution is finished.
-	//   "PIPELINE_TYPE_STREAMING" - A streaming pipeline. The underlying
-	// job is continuously running until it is manually terminated by the
-	// user. This type of pipeline doesn't have a schedule to run on, and
-	// the linked job gets created when the pipeline is created.
+	//   "PIPELINE_TYPE_BATCH" - A batch pipeline. It runs jobs on a specific
+	// schedule, and each job will automatically terminate once execution is
+	// finished.
+	//   "PIPELINE_TYPE_STREAMING" - A streaming pipeline. The underlying job is
+	// continuously running until it is manually terminated by the user. This type
+	// of pipeline doesn't have a schedule to run on, and the linked job gets
+	// created when the pipeline is created.
 	Type string `json:"type,omitempty"`
-
 	// Workload: Workload information for creating new jobs.
 	Workload *GoogleCloudDatapipelinesV1Workload `json:"workload,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1Pipeline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1Pipeline
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatapipelinesV1RunPipelineRequest: Request message for
@@ -820,231 +683,177 @@ type GoogleCloudDatapipelinesV1RunPipelineResponse struct {
 	// Job: Job that was created as part of RunPipeline operation.
 	Job *GoogleCloudDatapipelinesV1Job `json:"job,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Job") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Job") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Job") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Job") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1RunPipelineResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1RunPipelineResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatapipelinesV1RuntimeEnvironment: The environment values
-// to set at runtime.
+// GoogleCloudDatapipelinesV1RuntimeEnvironment: The environment values to set
+// at runtime.
 type GoogleCloudDatapipelinesV1RuntimeEnvironment struct {
 	// AdditionalExperiments: Additional experiment flags for the job.
 	AdditionalExperiments []string `json:"additionalExperiments,omitempty"`
-
-	// AdditionalUserLabels: Additional user labels to be specified for the
-	// job. Keys and values should follow the restrictions specified in the
-	// labeling restrictions
+	// AdditionalUserLabels: Additional user labels to be specified for the job.
+	// Keys and values should follow the restrictions specified in the labeling
+	// restrictions
 	// (https://cloud.google.com/compute/docs/labeling-resources#restrictions)
-	// page. An object containing a list of key/value pairs. Example: {
-	// "name": "wrench", "mass": "1kg", "count": "3" }.
+	// page. An object containing a list of key/value pairs. Example: { "name":
+	// "wrench", "mass": "1kg", "count": "3" }.
 	AdditionalUserLabels map[string]string `json:"additionalUserLabels,omitempty"`
-
-	// BypassTempDirValidation: Whether to bypass the safety checks for the
-	// job's temporary directory. Use with caution.
+	// BypassTempDirValidation: Whether to bypass the safety checks for the job's
+	// temporary directory. Use with caution.
 	BypassTempDirValidation bool `json:"bypassTempDirValidation,omitempty"`
-
-	// EnableStreamingEngine: Whether to enable Streaming Engine for the
-	// job.
+	// EnableStreamingEngine: Whether to enable Streaming Engine for the job.
 	EnableStreamingEngine bool `json:"enableStreamingEngine,omitempty"`
-
 	// IpConfiguration: Configuration for VM IPs.
 	//
 	// Possible values:
-	//   "WORKER_IP_UNSPECIFIED" - The configuration is unknown, or
-	// unspecified.
+	//   "WORKER_IP_UNSPECIFIED" - The configuration is unknown, or unspecified.
 	//   "WORKER_IP_PUBLIC" - Workers should have public IP addresses.
 	//   "WORKER_IP_PRIVATE" - Workers should have private IP addresses.
 	IpConfiguration string `json:"ipConfiguration,omitempty"`
-
-	// KmsKeyName: Name for the Cloud KMS key for the job. The key format
-	// is: projects//locations//keyRings//cryptoKeys/
+	// KmsKeyName: Name for the Cloud KMS key for the job. The key format is:
+	// projects//locations//keyRings//cryptoKeys/
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-
-	// MachineType: The machine type to use for the job. Defaults to the
-	// value from the template if not specified.
+	// MachineType: The machine type to use for the job. Defaults to the value from
+	// the template if not specified.
 	MachineType string `json:"machineType,omitempty"`
-
 	// MaxWorkers: The maximum number of Compute Engine instances to be made
 	// available to your pipeline during execution, from 1 to 1000.
 	MaxWorkers int64 `json:"maxWorkers,omitempty"`
-
-	// Network: Network to which VMs will be assigned. If empty or
-	// unspecified, the service will use the network "default".
+	// Network: Network to which VMs will be assigned. If empty or unspecified, the
+	// service will use the network "default".
 	Network string `json:"network,omitempty"`
-
-	// NumWorkers: The initial number of Compute Engine instances for the
-	// job.
+	// NumWorkers: The initial number of Compute Engine instances for the job.
 	NumWorkers int64 `json:"numWorkers,omitempty"`
-
-	// ServiceAccountEmail: The email address of the service account to run
-	// the job as.
+	// ServiceAccountEmail: The email address of the service account to run the job
+	// as.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
-
-	// Subnetwork: Subnetwork to which VMs will be assigned, if desired. You
-	// can specify a subnetwork using either a complete URL or an
-	// abbreviated path. Expected to be of the form
-	// "https://www.googleapis.com/compute/v1/projects/HOST_PROJECT_ID/region
-	// s/REGION/subnetworks/SUBNETWORK" or
-	// "regions/REGION/subnetworks/SUBNETWORK". If the subnetwork is located
-	// in a Shared VPC network, you must use the complete URL.
+	// Subnetwork: Subnetwork to which VMs will be assigned, if desired. You can
+	// specify a subnetwork using either a complete URL or an abbreviated path.
+	// Expected to be of the form
+	// "https://www.googleapis.com/compute/v1/projects/HOST_PROJECT_ID/regions/REGIO
+	// N/subnetworks/SUBNETWORK" or "regions/REGION/subnetworks/SUBNETWORK". If the
+	// subnetwork is located in a Shared VPC network, you must use the complete
+	// URL.
 	Subnetwork string `json:"subnetwork,omitempty"`
-
-	// TempLocation: The Cloud Storage path to use for temporary files. Must
-	// be a valid Cloud Storage URL, beginning with `gs://`.
+	// TempLocation: The Cloud Storage path to use for temporary files. Must be a
+	// valid Cloud Storage URL, beginning with `gs://`.
 	TempLocation string `json:"tempLocation,omitempty"`
-
 	// WorkerRegion: The Compute Engine region
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones)
-	// in which worker processing should occur, e.g. "us-west1". Mutually
-	// exclusive with worker_zone. If neither worker_region nor worker_zone
-	// is specified, default to the control plane's region.
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which
+	// worker processing should occur, e.g. "us-west1". Mutually exclusive with
+	// worker_zone. If neither worker_region nor worker_zone is specified, default
+	// to the control plane's region.
 	WorkerRegion string `json:"workerRegion,omitempty"`
-
 	// WorkerZone: The Compute Engine zone
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones)
-	// in which worker processing should occur, e.g. "us-west1-a". Mutually
-	// exclusive with worker_region. If neither worker_region nor
-	// worker_zone is specified, a zone in the control plane's region is
-	// chosen based on available capacity. If both `worker_zone` and `zone`
-	// are set, `worker_zone` takes precedence.
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which
+	// worker processing should occur, e.g. "us-west1-a". Mutually exclusive with
+	// worker_region. If neither worker_region nor worker_zone is specified, a zone
+	// in the control plane's region is chosen based on available capacity. If both
+	// `worker_zone` and `zone` are set, `worker_zone` takes precedence.
 	WorkerZone string `json:"workerZone,omitempty"`
-
 	// Zone: The Compute Engine availability zone
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones)
-	// for launching worker instances to run your pipeline. In the future,
-	// worker_zone will take precedence.
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones) for
+	// launching worker instances to run your pipeline. In the future, worker_zone
+	// will take precedence.
 	Zone string `json:"zone,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdditionalExperiments") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdditionalExperiments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "AdditionalExperiments") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1RuntimeEnvironment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1RuntimeEnvironment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatapipelinesV1ScheduleSpec: Details of the schedule the
-// pipeline runs on.
+// GoogleCloudDatapipelinesV1ScheduleSpec: Details of the schedule the pipeline
+// runs on.
 type GoogleCloudDatapipelinesV1ScheduleSpec struct {
-	// NextJobTime: Output only. When the next Scheduler job is going to
-	// run.
+	// NextJobTime: Output only. When the next Scheduler job is going to run.
 	NextJobTime string `json:"nextJobTime,omitempty"`
-
-	// Schedule: Unix-cron format of the schedule. This information is
-	// retrieved from the linked Cloud Scheduler.
+	// Schedule: Unix-cron format of the schedule. This information is retrieved
+	// from the linked Cloud Scheduler.
 	Schedule string `json:"schedule,omitempty"`
-
-	// TimeZone: Timezone ID. This matches the timezone IDs used by the
-	// Cloud Scheduler API. If empty, UTC time is assumed.
+	// TimeZone: Timezone ID. This matches the timezone IDs used by the Cloud
+	// Scheduler API. If empty, UTC time is assumed.
 	TimeZone string `json:"timeZone,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "NextJobTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextJobTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextJobTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1ScheduleSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1ScheduleSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatapipelinesV1SdkVersion: The version of the SDK used to
-// run the job.
+// GoogleCloudDatapipelinesV1SdkVersion: The version of the SDK used to run the
+// job.
 type GoogleCloudDatapipelinesV1SdkVersion struct {
 	// SdkSupportStatus: The support status for this SDK version.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Dataflow is unaware of this version.
 	//   "SUPPORTED" - This is a known version of an SDK, and is supported.
-	//   "STALE" - A newer version of the SDK exists, and an update is
-	// recommended.
-	//   "DEPRECATED" - This version of the SDK is deprecated and will
-	// eventually be unsupported.
-	//   "UNSUPPORTED" - Support for this SDK version has ended and it
-	// should no longer be used.
+	//   "STALE" - A newer version of the SDK exists, and an update is recommended.
+	//   "DEPRECATED" - This version of the SDK is deprecated and will eventually
+	// be unsupported.
+	//   "UNSUPPORTED" - Support for this SDK version has ended and it should no
+	// longer be used.
 	SdkSupportStatus string `json:"sdkSupportStatus,omitempty"`
-
 	// Version: The version of the SDK used to run the job.
 	Version string `json:"version,omitempty"`
-
-	// VersionDisplayName: A readable string describing the version of the
-	// SDK.
+	// VersionDisplayName: A readable string describing the version of the SDK.
 	VersionDisplayName string `json:"versionDisplayName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SdkSupportStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SdkSupportStatus") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "SdkSupportStatus") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1SdkVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1SdkVersion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatapipelinesV1StopPipelineRequest: Request message for
@@ -1055,96 +864,73 @@ type GoogleCloudDatapipelinesV1StopPipelineRequest struct {
 // GoogleCloudDatapipelinesV1Workload: Workload details for creating the
 // pipeline jobs.
 type GoogleCloudDatapipelinesV1Workload struct {
-	// DataflowFlexTemplateRequest: Template information and additional
-	// parameters needed to launch a Dataflow job using the flex launch API.
+	// DataflowFlexTemplateRequest: Template information and additional parameters
+	// needed to launch a Dataflow job using the flex launch API.
 	DataflowFlexTemplateRequest *GoogleCloudDatapipelinesV1LaunchFlexTemplateRequest `json:"dataflowFlexTemplateRequest,omitempty"`
-
 	// DataflowLaunchTemplateRequest: Template information and additional
-	// parameters needed to launch a Dataflow job using the standard launch
-	// API.
+	// parameters needed to launch a Dataflow job using the standard launch API.
 	DataflowLaunchTemplateRequest *GoogleCloudDatapipelinesV1LaunchTemplateRequest `json:"dataflowLaunchTemplateRequest,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "DataflowFlexTemplateRequest") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "DataflowFlexTemplateRequest") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "DataflowFlexTemplateRequest") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataflowFlexTemplateRequest") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatapipelinesV1Workload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1Workload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleRpcStatus: The `Status` type defines a logical error model that
-// is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// GoogleRpcStatus: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs and RPC
+// APIs. It is used by gRPC (https://github.com/grpc). Each `Status` message
+// contains three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it in the
+// API Design Guide (https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "datapipelines.projects.locations.pipelines.create":
 
 type ProjectsLocationsPipelinesCreateCall struct {
 	s                                  *Service
@@ -1155,11 +941,10 @@ type ProjectsLocationsPipelinesCreateCall struct {
 	header_                            http.Header
 }
 
-// Create: Creates a pipeline. For a batch pipeline, you can pass
-// scheduler information. Data Pipelines uses the scheduler information
-// to create an internal scheduler that runs jobs periodically. If the
-// internal scheduler is not configured, you can use RunPipeline to run
-// jobs.
+// Create: Creates a pipeline. For a batch pipeline, you can pass scheduler
+// information. Data Pipelines uses the scheduler information to create an
+// internal scheduler that runs jobs periodically. If the internal scheduler is
+// not configured, you can use RunPipeline to run jobs.
 //
 //   - parent: The location name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID`.
@@ -1171,23 +956,21 @@ func (r *ProjectsLocationsPipelinesService) Create(parent string, googleclouddat
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsPipelinesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsPipelinesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsPipelinesCreateCall) Context(ctx context.Context) *ProjectsLocationsPipelinesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsPipelinesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1196,18 +979,12 @@ func (c *ProjectsLocationsPipelinesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsPipelinesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatapipelinesv1pipeline)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/pipelines")
@@ -1224,13 +1001,11 @@ func (c *ProjectsLocationsPipelinesCreateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.create" call.
-// Exactly one of *GoogleCloudDatapipelinesV1Pipeline or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudDatapipelinesV1Pipeline.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatapipelinesV1Pipeline.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsPipelinesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatapipelinesV1Pipeline, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1261,38 +1036,7 @@ func (c *ProjectsLocationsPipelinesCreateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a pipeline. For a batch pipeline, you can pass scheduler information. Data Pipelines uses the scheduler information to create an internal scheduler that runs jobs periodically. If the internal scheduler is not configured, you can use RunPipeline to run jobs.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/pipelines",
-	//   "httpMethod": "POST",
-	//   "id": "datapipelines.projects.locations.pipelines.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The location name. For example: `projects/PROJECT_ID/locations/LOCATION_ID`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/pipelines",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatapipelinesV1Pipeline"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatapipelinesV1Pipeline"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datapipelines.projects.locations.pipelines.delete":
 
 type ProjectsLocationsPipelinesDeleteCall struct {
 	s          *Service
@@ -1302,8 +1046,8 @@ type ProjectsLocationsPipelinesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a pipeline. If a scheduler job is attached to the
-// pipeline, it will be deleted.
+// Delete: Deletes a pipeline. If a scheduler job is attached to the pipeline,
+// it will be deleted.
 //
 //   - name: The pipeline name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
@@ -1314,23 +1058,21 @@ func (r *ProjectsLocationsPipelinesService) Delete(name string) *ProjectsLocatio
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsPipelinesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsPipelinesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsPipelinesDeleteCall) Context(ctx context.Context) *ProjectsLocationsPipelinesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsPipelinesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1339,12 +1081,7 @@ func (c *ProjectsLocationsPipelinesDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsPipelinesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1362,12 +1099,11 @@ func (c *ProjectsLocationsPipelinesDeleteCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsPipelinesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1398,35 +1134,7 @@ func (c *ProjectsLocationsPipelinesDeleteCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a pipeline. If a scheduler job is attached to the pipeline, it will be deleted.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/pipelines/{pipelinesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datapipelines.projects.locations.pipelines.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The pipeline name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/pipelines/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datapipelines.projects.locations.pipelines.get":
 
 type ProjectsLocationsPipelinesGetCall struct {
 	s            *Service
@@ -1437,9 +1145,9 @@ type ProjectsLocationsPipelinesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Looks up a single pipeline. Returns a "NOT_FOUND" error if no
-// such pipeline exists. Returns a "FORBIDDEN" error if the caller
-// doesn't have permission to access it.
+// Get: Looks up a single pipeline. Returns a "NOT_FOUND" error if no such
+// pipeline exists. Returns a "FORBIDDEN" error if the caller doesn't have
+// permission to access it.
 //
 //   - name: The pipeline name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
@@ -1450,33 +1158,29 @@ func (r *ProjectsLocationsPipelinesService) Get(name string) *ProjectsLocationsP
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsPipelinesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPipelinesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsPipelinesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPipelinesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsPipelinesGetCall) Context(ctx context.Context) *ProjectsLocationsPipelinesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsPipelinesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1485,12 +1189,7 @@ func (c *ProjectsLocationsPipelinesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsPipelinesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1511,13 +1210,11 @@ func (c *ProjectsLocationsPipelinesGetCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.get" call.
-// Exactly one of *GoogleCloudDatapipelinesV1Pipeline or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudDatapipelinesV1Pipeline.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatapipelinesV1Pipeline.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsPipelinesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatapipelinesV1Pipeline, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1548,35 +1245,7 @@ func (c *ProjectsLocationsPipelinesGetCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Looks up a single pipeline. Returns a \"NOT_FOUND\" error if no such pipeline exists. Returns a \"FORBIDDEN\" error if the caller doesn't have permission to access it.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/pipelines/{pipelinesId}",
-	//   "httpMethod": "GET",
-	//   "id": "datapipelines.projects.locations.pipelines.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The pipeline name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/pipelines/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatapipelinesV1Pipeline"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datapipelines.projects.locations.pipelines.list":
 
 type ProjectsLocationsPipelinesListCall struct {
 	s            *Service
@@ -1587,8 +1256,8 @@ type ProjectsLocationsPipelinesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists pipelines. Returns a "FORBIDDEN" error if the caller
-// doesn't have permission to access it.
+// List: Lists pipelines. Returns a "FORBIDDEN" error if the caller doesn't
+// have permission to access it.
 //
 //   - parent: The location name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID`.
@@ -1598,67 +1267,61 @@ func (r *ProjectsLocationsPipelinesService) List(parent string) *ProjectsLocatio
 	return c
 }
 
-// Filter sets the optional parameter "filter": An expression for
-// filtering the results of the request. If unspecified, all pipelines
-// will be returned. Multiple filters can be applied and must be comma
-// separated. Fields eligible for filtering are: + `type`: The type of
-// the pipeline (streaming or batch). Allowed values are `ALL`, `BATCH`,
-// and `STREAMING`. + `status`: The activity status of the pipeline.
-// Allowed values are `ALL`, `ACTIVE`, `ARCHIVED`, and `PAUSED`. For
-// example, to limit results to active batch processing pipelines:
-// type:BATCH,status:ACTIVE
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. If unspecified, all pipelines will be returned.
+// Multiple filters can be applied and must be comma separated. Fields eligible
+// for filtering are: + `type`: The type of the pipeline (streaming or batch).
+// Allowed values are `ALL`, `BATCH`, and `STREAMING`. + `status`: The activity
+// status of the pipeline. Allowed values are `ALL`, `ACTIVE`, `ARCHIVED`, and
+// `PAUSED`. For example, to limit results to active batch processing
+// pipelines: type:BATCH,status:ACTIVE
 func (c *ProjectsLocationsPipelinesListCall) Filter(filter string) *ProjectsLocationsPipelinesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entities to return. The service may return fewer than this value,
-// even if there are additional pages. If unspecified, the max limit is
-// yet to be determined by the backend implementation.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entities to return. The service may return fewer than this value, even if
+// there are additional pages. If unspecified, the max limit is yet to be
+// determined by the backend implementation.
 func (c *ProjectsLocationsPipelinesListCall) PageSize(pageSize int64) *ProjectsLocationsPipelinesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListPipelines` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListPipelines` must match the call that provided the
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListPipelines` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListPipelines` must match the call that provided the page token.
 func (c *ProjectsLocationsPipelinesListCall) PageToken(pageToken string) *ProjectsLocationsPipelinesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsPipelinesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPipelinesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsPipelinesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPipelinesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsPipelinesListCall) Context(ctx context.Context) *ProjectsLocationsPipelinesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsPipelinesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1667,12 +1330,7 @@ func (c *ProjectsLocationsPipelinesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsPipelinesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1693,16 +1351,11 @@ func (c *ProjectsLocationsPipelinesListCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.list" call.
-// Exactly one of *GoogleCloudDatapipelinesV1ListPipelinesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatapipelinesV1ListPipelinesResponse.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatapipelinesV1ListPipelinesResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsPipelinesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatapipelinesV1ListPipelinesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1733,48 +1386,6 @@ func (c *ProjectsLocationsPipelinesListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists pipelines. Returns a \"FORBIDDEN\" error if the caller doesn't have permission to access it.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/pipelines",
-	//   "httpMethod": "GET",
-	//   "id": "datapipelines.projects.locations.pipelines.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "An expression for filtering the results of the request. If unspecified, all pipelines will be returned. Multiple filters can be applied and must be comma separated. Fields eligible for filtering are: + `type`: The type of the pipeline (streaming or batch). Allowed values are `ALL`, `BATCH`, and `STREAMING`. + `status`: The activity status of the pipeline. Allowed values are `ALL`, `ACTIVE`, `ARCHIVED`, and `PAUSED`. For example, to limit results to active batch processing pipelines: type:BATCH,status:ACTIVE",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of entities to return. The service may return fewer than this value, even if there are additional pages. If unspecified, the max limit is yet to be determined by the backend implementation.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListPipelines` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPipelines` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The location name. For example: `projects/PROJECT_ID/locations/LOCATION_ID`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/pipelines",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatapipelinesV1ListPipelinesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1782,7 +1393,7 @@ func (c *ProjectsLocationsPipelinesListCall) Do(opts ...googleapi.CallOption) (*
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsPipelinesListCall) Pages(ctx context.Context, f func(*GoogleCloudDatapipelinesV1ListPipelinesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1798,8 +1409,6 @@ func (c *ProjectsLocationsPipelinesListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
-// method id "datapipelines.projects.locations.pipelines.patch":
-
 type ProjectsLocationsPipelinesPatchCall struct {
 	s                                  *Service
 	name                               string
@@ -1809,26 +1418,25 @@ type ProjectsLocationsPipelinesPatchCall struct {
 	header_                            http.Header
 }
 
-// Patch: Updates a pipeline. If successful, the updated Pipeline is
-// returned. Returns `NOT_FOUND` if the pipeline doesn't exist. If
-// UpdatePipeline does not return successfully, you can retry the
-// UpdatePipeline request until you receive a successful response.
+// Patch: Updates a pipeline. If successful, the updated Pipeline is returned.
+// Returns `NOT_FOUND` if the pipeline doesn't exist. If UpdatePipeline does
+// not return successfully, you can retry the UpdatePipeline request until you
+// receive a successful response.
 //
 //   - name: The pipeline name. For example:
-//     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
-//   - `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),
-//     hyphens (-), colons (:), and periods (.). For more information, see
-//     Identifying projects
+//     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`. *
+//     `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-),
+//     colons (:), and periods (.). For more information, see Identifying
+//     projects
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects).
-//   - `LOCATION_ID` is the canonical ID for the pipeline's location.
-//     The list of available locations can be obtained by calling
+//   - `LOCATION_ID` is the canonical ID for the pipeline's location. The list
+//     of available locations can be obtained by calling
 //     `google.cloud.location.Locations.ListLocations`. Note that the Data
-//     Pipelines service is not available in all regions. It depends on
-//     Cloud Scheduler, an App Engine application, so it's only available
-//     in App Engine regions
-//     (https://cloud.google.com/about/locations#region). * `PIPELINE_ID`
-//     is the ID of the pipeline. Must be unique for the selected project
-//     and location.
+//     Pipelines service is not available in all regions. It depends on Cloud
+//     Scheduler, an App Engine application, so it's only available in App Engine
+//     regions (https://cloud.google.com/about/locations#region). * `PIPELINE_ID`
+//     is the ID of the pipeline. Must be unique for the selected project and
+//     location.
 func (r *ProjectsLocationsPipelinesService) Patch(name string, googleclouddatapipelinesv1pipeline *GoogleCloudDatapipelinesV1Pipeline) *ProjectsLocationsPipelinesPatchCall {
 	c := &ProjectsLocationsPipelinesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1836,31 +1444,29 @@ func (r *ProjectsLocationsPipelinesService) Patch(name string, googleclouddatapi
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// be updated.
 func (c *ProjectsLocationsPipelinesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsPipelinesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsPipelinesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsPipelinesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsPipelinesPatchCall) Context(ctx context.Context) *ProjectsLocationsPipelinesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsPipelinesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1869,18 +1475,12 @@ func (c *ProjectsLocationsPipelinesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsPipelinesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatapipelinesv1pipeline)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -1897,13 +1497,11 @@ func (c *ProjectsLocationsPipelinesPatchCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.patch" call.
-// Exactly one of *GoogleCloudDatapipelinesV1Pipeline or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudDatapipelinesV1Pipeline.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatapipelinesV1Pipeline.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsPipelinesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatapipelinesV1Pipeline, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1934,44 +1532,7 @@ func (c *ProjectsLocationsPipelinesPatchCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a pipeline. If successful, the updated Pipeline is returned. Returns `NOT_FOUND` if the pipeline doesn't exist. If UpdatePipeline does not return successfully, you can retry the UpdatePipeline request until you receive a successful response.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/pipelines/{pipelinesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "datapipelines.projects.locations.pipelines.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The pipeline name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`. * `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-), colons (:), and periods (.). For more information, see [Identifying projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects). * `LOCATION_ID` is the canonical ID for the pipeline's location. The list of available locations can be obtained by calling `google.cloud.location.Locations.ListLocations`. Note that the Data Pipelines service is not available in all regions. It depends on Cloud Scheduler, an App Engine application, so it's only available in [App Engine regions](https://cloud.google.com/about/locations#region). * `PIPELINE_ID` is the ID of the pipeline. Must be unique for the selected project and location.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/pipelines/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatapipelinesV1Pipeline"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatapipelinesV1Pipeline"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datapipelines.projects.locations.pipelines.run":
 
 type ProjectsLocationsPipelinesRunCall struct {
 	s                                            *Service
@@ -1982,12 +1543,11 @@ type ProjectsLocationsPipelinesRunCall struct {
 	header_                                      http.Header
 }
 
-// Run: Creates a job for the specified pipeline directly. You can use
-// this method when the internal scheduler is not configured and you
-// want to trigger the job directly or through an external system.
-// Returns a "NOT_FOUND" error if the pipeline doesn't exist. Returns a
-// "FORBIDDEN" error if the user doesn't have permission to access the
-// pipeline or run jobs for the pipeline.
+// Run: Creates a job for the specified pipeline directly. You can use this
+// method when the internal scheduler is not configured and you want to trigger
+// the job directly or through an external system. Returns a "NOT_FOUND" error
+// if the pipeline doesn't exist. Returns a "FORBIDDEN" error if the user
+// doesn't have permission to access the pipeline or run jobs for the pipeline.
 //
 //   - name: The pipeline name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
@@ -1999,23 +1559,21 @@ func (r *ProjectsLocationsPipelinesService) Run(name string, googleclouddatapipe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsPipelinesRunCall) Fields(s ...googleapi.Field) *ProjectsLocationsPipelinesRunCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsPipelinesRunCall) Context(ctx context.Context) *ProjectsLocationsPipelinesRunCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsPipelinesRunCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2024,18 +1582,12 @@ func (c *ProjectsLocationsPipelinesRunCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsPipelinesRunCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatapipelinesv1runpipelinerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:run")
@@ -2052,14 +1604,11 @@ func (c *ProjectsLocationsPipelinesRunCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.run" call.
-// Exactly one of *GoogleCloudDatapipelinesV1RunPipelineResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatapipelinesV1RunPipelineResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatapipelinesV1RunPipelineResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsPipelinesRunCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatapipelinesV1RunPipelineResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2090,38 +1639,7 @@ func (c *ProjectsLocationsPipelinesRunCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a job for the specified pipeline directly. You can use this method when the internal scheduler is not configured and you want to trigger the job directly or through an external system. Returns a \"NOT_FOUND\" error if the pipeline doesn't exist. Returns a \"FORBIDDEN\" error if the user doesn't have permission to access the pipeline or run jobs for the pipeline.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/pipelines/{pipelinesId}:run",
-	//   "httpMethod": "POST",
-	//   "id": "datapipelines.projects.locations.pipelines.run",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The pipeline name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/pipelines/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:run",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatapipelinesV1RunPipelineRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatapipelinesV1RunPipelineResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datapipelines.projects.locations.pipelines.stop":
 
 type ProjectsLocationsPipelinesStopCall struct {
 	s                                             *Service
@@ -2132,9 +1650,9 @@ type ProjectsLocationsPipelinesStopCall struct {
 	header_                                       http.Header
 }
 
-// Stop: Freezes pipeline execution permanently. If there's a
-// corresponding scheduler entry, it's deleted, and the pipeline state
-// is changed to "ARCHIVED". However, pipeline metadata is retained.
+// Stop: Freezes pipeline execution permanently. If there's a corresponding
+// scheduler entry, it's deleted, and the pipeline state is changed to
+// "ARCHIVED". However, pipeline metadata is retained.
 //
 //   - name: The pipeline name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
@@ -2146,23 +1664,21 @@ func (r *ProjectsLocationsPipelinesService) Stop(name string, googleclouddatapip
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsPipelinesStopCall) Fields(s ...googleapi.Field) *ProjectsLocationsPipelinesStopCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsPipelinesStopCall) Context(ctx context.Context) *ProjectsLocationsPipelinesStopCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsPipelinesStopCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2171,18 +1687,12 @@ func (c *ProjectsLocationsPipelinesStopCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsPipelinesStopCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatapipelinesv1stoppipelinerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:stop")
@@ -2199,13 +1709,11 @@ func (c *ProjectsLocationsPipelinesStopCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.stop" call.
-// Exactly one of *GoogleCloudDatapipelinesV1Pipeline or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudDatapipelinesV1Pipeline.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatapipelinesV1Pipeline.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsPipelinesStopCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatapipelinesV1Pipeline, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2236,38 +1744,7 @@ func (c *ProjectsLocationsPipelinesStopCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Freezes pipeline execution permanently. If there's a corresponding scheduler entry, it's deleted, and the pipeline state is changed to \"ARCHIVED\". However, pipeline metadata is retained.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/pipelines/{pipelinesId}:stop",
-	//   "httpMethod": "POST",
-	//   "id": "datapipelines.projects.locations.pipelines.stop",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The pipeline name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/pipelines/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:stop",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatapipelinesV1StopPipelineRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatapipelinesV1Pipeline"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datapipelines.projects.locations.pipelines.jobs.list":
 
 type ProjectsLocationsPipelinesJobsListCall struct {
 	s            *Service
@@ -2278,8 +1755,8 @@ type ProjectsLocationsPipelinesJobsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists jobs for a given pipeline. Throws a "FORBIDDEN" error if
-// the caller doesn't have permission to access it.
+// List: Lists jobs for a given pipeline. Throws a "FORBIDDEN" error if the
+// caller doesn't have permission to access it.
 //
 //   - parent: The pipeline name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
@@ -2289,52 +1766,48 @@ func (r *ProjectsLocationsPipelinesJobsService) List(parent string) *ProjectsLoc
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entities to return. The service may return fewer than this value,
-// even if there are additional pages. If unspecified, the max limit
-// will be determined by the backend implementation.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entities to return. The service may return fewer than this value, even if
+// there are additional pages. If unspecified, the max limit will be determined
+// by the backend implementation.
 func (c *ProjectsLocationsPipelinesJobsListCall) PageSize(pageSize int64) *ProjectsLocationsPipelinesJobsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListJobs` call. Provide this to retrieve
-// the subsequent page. When paginating, all other parameters provided
-// to `ListJobs` must match the call that provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListJobs` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to `ListJobs` must
+// match the call that provided the page token.
 func (c *ProjectsLocationsPipelinesJobsListCall) PageToken(pageToken string) *ProjectsLocationsPipelinesJobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsPipelinesJobsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPipelinesJobsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsPipelinesJobsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPipelinesJobsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsPipelinesJobsListCall) Context(ctx context.Context) *ProjectsLocationsPipelinesJobsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsPipelinesJobsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2343,12 +1816,7 @@ func (c *ProjectsLocationsPipelinesJobsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsPipelinesJobsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2369,14 +1837,11 @@ func (c *ProjectsLocationsPipelinesJobsListCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.jobs.list" call.
-// Exactly one of *GoogleCloudDatapipelinesV1ListJobsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatapipelinesV1ListJobsResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatapipelinesV1ListJobsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsPipelinesJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatapipelinesV1ListJobsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2407,43 +1872,6 @@ func (c *ProjectsLocationsPipelinesJobsListCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists jobs for a given pipeline. Throws a \"FORBIDDEN\" error if the caller doesn't have permission to access it.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/pipelines/{pipelinesId}/jobs",
-	//   "httpMethod": "GET",
-	//   "id": "datapipelines.projects.locations.pipelines.jobs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of entities to return. The service may return fewer than this value, even if there are additional pages. If unspecified, the max limit will be determined by the backend implementation.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListJobs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListJobs` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The pipeline name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/pipelines/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/jobs",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatapipelinesV1ListJobsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2451,7 +1879,7 @@ func (c *ProjectsLocationsPipelinesJobsListCall) Do(opts ...googleapi.CallOption
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsPipelinesJobsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatapipelinesV1ListJobsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

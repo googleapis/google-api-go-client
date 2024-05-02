@@ -163,11 +163,9 @@ type ViolatingSitesService struct {
 	s *Service
 }
 
-// PlatformSummary: A site's Ad Experience Report summary on a single
-// platform.
+// PlatformSummary: A site's Ad Experience Report summary on a single platform.
 type PlatformSummary struct {
-	// BetterAdsStatus: The site's Ad Experience Report status on this
-	// platform.
+	// BetterAdsStatus: The site's Ad Experience Report status on this platform.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Not reviewed.
@@ -175,16 +173,12 @@ type PlatformSummary struct {
 	//   "WARNING" - Warning. No longer a possible status.
 	//   "FAILING" - Failing.
 	BetterAdsStatus string `json:"betterAdsStatus,omitempty"`
-
 	// EnforcementTime: The time at which enforcement
-	// (https://support.google.com/webtools/answer/7308033) against the site
-	// began or will begin on this platform. Not set when the filter_status
-	// is OFF.
+	// (https://support.google.com/webtools/answer/7308033) against the site began
+	// or will begin on this platform. Not set when the filter_status is OFF.
 	EnforcementTime string `json:"enforcementTime,omitempty"`
-
 	// FilterStatus: The site's enforcement status
-	// (https://support.google.com/webtools/answer/7308033) on this
-	// platform.
+	// (https://support.google.com/webtools/answer/7308033) on this platform.
 	//
 	// Possible values:
 	//   "UNKNOWN" - N/A.
@@ -193,14 +187,12 @@ type PlatformSummary struct {
 	//   "PAUSED" - Ad filtering is paused.
 	//   "PENDING" - Ad filtering is pending.
 	FilterStatus string `json:"filterStatus,omitempty"`
-
-	// LastChangeTime: The time at which the site's status last changed on
-	// this platform.
+	// LastChangeTime: The time at which the site's status last changed on this
+	// platform.
 	LastChangeTime string `json:"lastChangeTime,omitempty"`
-
-	// Region: The site's regions on this platform. No longer populated,
-	// because there is no longer any semantic difference between sites in
-	// different regions.
+	// Region: The site's regions on this platform. No longer populated, because
+	// there is no longer any semantic difference between sites in different
+	// regions.
 	//
 	// Possible values:
 	//   "REGION_UNKNOWN" - Ad standard not yet defined for your region.
@@ -208,79 +200,59 @@ type PlatformSummary struct {
 	//   "REGION_B" - Region B.
 	//   "REGION_C" - Region C.
 	Region []string `json:"region,omitempty"`
-
-	// ReportUrl: A link to the full Ad Experience Report for the site on
-	// this platform.. Not set in ViolatingSitesResponse. Note that you must
-	// complete the Search Console verification process
-	// (https://support.google.com/webmasters/answer/9008080) for the site
-	// before you can access the full report.
+	// ReportUrl: A link to the full Ad Experience Report for the site on this
+	// platform.. Not set in ViolatingSitesResponse. Note that you must complete
+	// the Search Console verification process
+	// (https://support.google.com/webmasters/answer/9008080) for the site before
+	// you can access the full report.
 	ReportUrl string `json:"reportUrl,omitempty"`
-
-	// UnderReview: Whether the site is currently under review on this
-	// platform.
+	// UnderReview: Whether the site is currently under review on this platform.
 	UnderReview bool `json:"underReview,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BetterAdsStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BetterAdsStatus") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BetterAdsStatus") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PlatformSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod PlatformSummary
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SiteSummaryResponse: Response message for GetSiteSummary.
 type SiteSummaryResponse struct {
 	// DesktopSummary: The site's Ad Experience Report summary on desktop.
 	DesktopSummary *PlatformSummary `json:"desktopSummary,omitempty"`
-
 	// MobileSummary: The site's Ad Experience Report summary on mobile.
 	MobileSummary *PlatformSummary `json:"mobileSummary,omitempty"`
-
 	// ReviewedSite: The name of the reviewed site, e.g. `google.com`.
 	ReviewedSite string `json:"reviewedSite,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DesktopSummary") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DesktopSummary") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DesktopSummary") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SiteSummaryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteSummaryResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ViolatingSitesResponse: Response message for ListViolatingSites.
@@ -288,35 +260,25 @@ type ViolatingSitesResponse struct {
 	// ViolatingSites: The list of violating sites.
 	ViolatingSites []*SiteSummaryResponse `json:"violatingSites,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ViolatingSites") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ViolatingSites") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ViolatingSites") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ViolatingSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ViolatingSitesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "adexperiencereport.sites.get":
 
 type SitesGetCall struct {
 	s            *Service
@@ -338,33 +300,29 @@ func (r *SitesService) Get(name string) *SitesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SitesGetCall) Fields(s ...googleapi.Field) *SitesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SitesGetCall) IfNoneMatch(entityTag string) *SitesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SitesGetCall) Context(ctx context.Context) *SitesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SitesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -373,12 +331,7 @@ func (c *SitesGetCall) Header() http.Header {
 }
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -399,12 +352,11 @@ func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "adexperiencereport.sites.get" call.
-// Exactly one of *SiteSummaryResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *SiteSummaryResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SiteSummaryResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -435,32 +387,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a site's Ad Experience Report summary.",
-	//   "flatPath": "v1/sites/{sitesId}",
-	//   "httpMethod": "GET",
-	//   "id": "adexperiencereport.sites.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the site whose summary to get, e.g. `sites/http%3A%2F%2Fwww.google.com%2F`. Format: `sites/{site}`",
-	//       "location": "path",
-	//       "pattern": "^sites/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "SiteSummaryResponse"
-	//   }
-	// }
-
 }
-
-// method id "adexperiencereport.violatingSites.list":
 
 type ViolatingSitesListCall struct {
 	s            *Service
@@ -470,41 +397,37 @@ type ViolatingSitesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists sites that are failing in the Ad Experience Report on at
-// least one platform.
+// List: Lists sites that are failing in the Ad Experience Report on at least
+// one platform.
 func (r *ViolatingSitesService) List() *ViolatingSitesListCall {
 	c := &ViolatingSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ViolatingSitesListCall) Fields(s ...googleapi.Field) *ViolatingSitesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ViolatingSitesListCall) IfNoneMatch(entityTag string) *ViolatingSitesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ViolatingSitesListCall) Context(ctx context.Context) *ViolatingSitesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ViolatingSitesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -513,12 +436,7 @@ func (c *ViolatingSitesListCall) Header() http.Header {
 }
 
 func (c *ViolatingSitesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -536,12 +454,11 @@ func (c *ViolatingSitesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "adexperiencereport.violatingSites.list" call.
-// Exactly one of *ViolatingSitesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ViolatingSitesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ViolatingSitesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ViolatingSitesListCall) Do(opts ...googleapi.CallOption) (*ViolatingSitesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -572,17 +489,4 @@ func (c *ViolatingSitesListCall) Do(opts ...googleapi.CallOption) (*ViolatingSit
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists sites that are failing in the Ad Experience Report on at least one platform.",
-	//   "flatPath": "v1/violatingSites",
-	//   "httpMethod": "GET",
-	//   "id": "adexperiencereport.violatingSites.list",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/violatingSites",
-	//   "response": {
-	//     "$ref": "ViolatingSitesResponse"
-	//   }
-	// }
-
 }

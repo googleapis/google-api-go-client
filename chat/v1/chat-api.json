@@ -46,6 +46,12 @@
         },
         "https://www.googleapis.com/auth/chat.spaces.readonly": {
           "description": "View chat and spaces in Google Chat"
+        },
+        "https://www.googleapis.com/auth/chat.users.readstate": {
+          "description": "View and modify last read time for Google Chat conversations"
+        },
+        "https://www.googleapis.com/auth/chat.users.readstate.readonly": {
+          "description": "View last read time for Google Chat conversations"
         }
       }
     }
@@ -359,7 +365,7 @@
           ]
         },
         "list": {
-          "description": "Lists spaces the caller is a member of. Group chats and DMs aren't listed until the first message is sent. For an example, see [List spaces](https://developers.google.com/workspace/chat/list-spaces). Requires [authentication](https://developers.google.com/workspace/chat/authenticate-authorize). Supports [app authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app) and [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user). Lists spaces visible to the caller or authenticated user. Group chats and DMs aren't listed until the first message is sent.",
+          "description": "Lists spaces the caller is a member of. Group chats and DMs aren't listed until the first message is sent. For an example, see [List spaces](https://developers.google.com/workspace/chat/list-spaces). Requires [authentication](https://developers.google.com/workspace/chat/authenticate-authorize). Supports [app authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app) and [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user). Lists spaces visible to the caller or authenticated user. Group chats and DMs aren't listed until the first message is sent. ",
           "flatPath": "v1/spaces",
           "httpMethod": "GET",
           "id": "chat.spaces.list",
@@ -517,7 +523,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the membership to retrieve. To get the app's own membership, you can optionally use `spaces/{space}/members/app`. Format: `spaces/{space}/members/{member}` or `spaces/{space}/members/app` When [authenticated as a user](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user), you can use the user's email as an alias for `{member}`. For example, `spaces/{space}/members/example@gmail.com` where `example@gmail.com` is the email of the Google Chat user.",
+                  "description": "Required. Resource name of the membership to retrieve. To get the app's own membership [by using user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user), you can optionally use `spaces/{space}/members/app`. Format: `spaces/{space}/members/{member}` or `spaces/{space}/members/app` When [authenticated as a user](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user), you can use the user's email as an alias for `{member}`. For example, `spaces/{space}/members/example@gmail.com` where `example@gmail.com` is the email of the Google Chat user.",
                   "location": "path",
                   "pattern": "^spaces/[^/]+/members/[^/]+$",
                   "required": true,
@@ -535,7 +541,7 @@
               ]
             },
             "list": {
-              "description": "Lists memberships in a space. For an example, see [List users and Google Chat apps in a space](https://developers.google.com/workspace/chat/list-members). Listing memberships with [app authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app) lists memberships in spaces that the Chat app has access to, but excludes Chat app memberships, including its own. Listing memberships with [User authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) lists memberships in spaces that the authenticated user has access to. Requires [authentication](https://developers.google.com/workspace/chat/authenticate-authorize). Supports [app authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app) and [user authentication](hhttps://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
+              "description": "Lists memberships in a space. For an example, see [List users and Google Chat apps in a space](https://developers.google.com/workspace/chat/list-members). Listing memberships with [app authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app) lists memberships in spaces that the Chat app has access to, but excludes Chat app memberships, including its own. Listing memberships with [User authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) lists memberships in spaces that the authenticated user has access to. Requires [authentication](https://developers.google.com/workspace/chat/authenticate-authorize). Supports [app authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app) and [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
               "flatPath": "v1/spaces/{spacesId}/members",
               "httpMethod": "GET",
               "id": "chat.spaces.members.list",
@@ -587,13 +593,48 @@
                 "https://www.googleapis.com/auth/chat.memberships",
                 "https://www.googleapis.com/auth/chat.memberships.readonly"
               ]
+            },
+            "patch": {
+              "description": "Updates a membership. Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
+              "flatPath": "v1/spaces/{spacesId}/members/{membersId}",
+              "httpMethod": "PATCH",
+              "id": "chat.spaces.members.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name of the membership, assigned by the server. Format: `spaces/{space}/members/{member}`",
+                  "location": "path",
+                  "pattern": "^spaces/[^/]+/members/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Required. The field paths to update. Separate multiple values with commas or use `*` to update all field paths. Currently supported field paths: - `role`",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "Membership"
+              },
+              "response": {
+                "$ref": "Membership"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chat.import",
+                "https://www.googleapis.com/auth/chat.memberships"
+              ]
             }
           }
         },
         "messages": {
           "methods": {
             "create": {
-              "description": "Creates a message in a Google Chat space. For an example, see [Send a message](https://developers.google.com/workspace/chat/create-messages). Calling this method requires [authentication](https://developers.google.com/workspace/chat/authenticate-authorize) and supports the following authentication types: - For text messages, user authentication or app authentication are supported. - For card messages, only app authentication is supported. (Only Chat apps can create card messages.)",
+              "description": "Creates a message in a Google Chat space. The maximum message size, including text and cards, is 32,000 bytes. For an example, see [Send a message](https://developers.google.com/workspace/chat/create-messages). Calling this method requires [authentication](https://developers.google.com/workspace/chat/authenticate-authorize) and supports the following authentication types: - For text messages, user authentication or app authentication are supported. - For card messages, only app authentication is supported. (Only Chat apps can create card messages.)",
               "flatPath": "v1/spaces/{spacesId}/messages",
               "httpMethod": "POST",
               "id": "chat.spaces.messages.create",
@@ -882,7 +923,7 @@
             "reactions": {
               "methods": {
                 "create": {
-                  "description": "Creates a reaction and adds it to a message. Only unicode emojis are supported.For an example, see [Add a reaction to a reaction](https://developers.google.com/workspace/chat/create-reactions). Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
+                  "description": "Creates a reaction and adds it to a message. Only unicode emojis are supported. For an example, see [Add a reaction to a message](https://developers.google.com/workspace/chat/create-reactions). Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
                   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}/reactions",
                   "httpMethod": "POST",
                   "id": "chat.spaces.messages.reactions.create",
@@ -990,7 +1031,7 @@
         "spaceEvents": {
           "methods": {
             "get": {
-              "description": "Returns an event from a Google Chat space. The [event payload](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.spaceEvents#SpaceEvent.FIELDS.oneof_payload) contains the most recent version of the resource that changed. For example, if you request an event about a new message but the message was later updated, the server returns the updated `Message` resource in the event payload. Requires [user authentication](hhttps://developers.google.com/workspace/chat/authenticate-authorize-chat-user). To get an event, the authenticated user must be a member of the space. For an example, see [Get details about an event from a Google Chat space](https://developers.google.com/workspace/chat/get-space-event).",
+              "description": "Returns an event from a Google Chat space. The [event payload](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.spaceEvents#SpaceEvent.FIELDS.oneof_payload) contains the most recent version of the resource that changed. For example, if you request an event about a new message but the message was later updated, the server returns the updated `Message` resource in the event payload. Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user). To get an event, the authenticated user must be a member of the space. For an example, see [Get details about an event from a Google Chat space](https://developers.google.com/workspace/chat/get-space-event).",
               "flatPath": "v1/spaces/{spacesId}/spaceEvents/{spaceEventsId}",
               "httpMethod": "GET",
               "id": "chat.spaces.spaceEvents.get",
@@ -1072,9 +1113,109 @@
           }
         }
       }
+    },
+    "users": {
+      "resources": {
+        "spaces": {
+          "methods": {
+            "getSpaceReadState": {
+              "description": "Returns details about a user's read state within a space, used to identify read and unread messages. Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
+              "flatPath": "v1/users/{usersId}/spaces/{spacesId}/spaceReadState",
+              "httpMethod": "GET",
+              "id": "chat.users.spaces.getSpaceReadState",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Resource name of the space read state to retrieve. Only supports getting read state for the calling user. To refer to the calling user, set one of the following: - The `me` alias. For example, `users/me/spaces/{space}/spaceReadState`. - Their Workspace email address. For example, `users/user@example.com/spaces/{space}/spaceReadState`. - Their user id. For example, `users/123456789/spaces/{space}/spaceReadState`. Format: users/{user}/spaces/{space}/spaceReadState",
+                  "location": "path",
+                  "pattern": "^users/[^/]+/spaces/[^/]+/spaceReadState$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "SpaceReadState"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chat.users.readstate",
+                "https://www.googleapis.com/auth/chat.users.readstate.readonly"
+              ]
+            },
+            "updateSpaceReadState": {
+              "description": "Updates a user's read state within a space, used to identify read and unread messages. Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
+              "flatPath": "v1/users/{usersId}/spaces/{spacesId}/spaceReadState",
+              "httpMethod": "PATCH",
+              "id": "chat.users.spaces.updateSpaceReadState",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name of the space read state. Format: `users/{user}/spaces/{space}/spaceReadState`",
+                  "location": "path",
+                  "pattern": "^users/[^/]+/spaces/[^/]+/spaceReadState$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Required. The field paths to update. Currently supported field paths: - `last_read_time` When the `last_read_time` is before the latest message create time, the space appears as unread in the UI. To mark the space as read, set `last_read_time` to any value later (larger) than the latest message create time. The `last_read_time` is coerced to match the latest message create time. Note that the space read state only affects the read state of messages that are visible in the space's top-level conversation. Replies in threads are unaffected by this timestamp, and instead rely on the thread read state.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "SpaceReadState"
+              },
+              "response": {
+                "$ref": "SpaceReadState"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chat.users.readstate"
+              ]
+            }
+          },
+          "resources": {
+            "threads": {
+              "methods": {
+                "getThreadReadState": {
+                  "description": "Returns details about a user's read state within a thread, used to identify read and unread messages. Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
+                  "flatPath": "v1/users/{usersId}/spaces/{spacesId}/threads/{threadsId}/threadReadState",
+                  "httpMethod": "GET",
+                  "id": "chat.users.spaces.threads.getThreadReadState",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Resource name of the thread read state to retrieve. Only supports getting read state for the calling user. To refer to the calling user, set one of the following: - The `me` alias. For example, `users/me/spaces/{space}/threads/{thread}/threadReadState`. - Their Workspace email address. For example, `users/user@example.com/spaces/{space}/threads/{thread}/threadReadState`. - Their user id. For example, `users/123456789/spaces/{space}/threads/{thread}/threadReadState`. Format: users/{user}/spaces/{space}/threads/{thread}/threadReadState",
+                      "location": "path",
+                      "pattern": "^users/[^/]+/spaces/[^/]+/threads/[^/]+/threadReadState$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "ThreadReadState"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/chat.users.readstate",
+                    "https://www.googleapis.com/auth/chat.users.readstate.readonly"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "revision": "20240404",
+  "revision": "20240423",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessoryWidget": {
@@ -1294,9 +1435,9 @@
             "UPLOADED_CONTENT"
           ],
           "enumDescriptions": [
-            "",
-            "",
-            ""
+            "Reserved.",
+            "The file is a Google Drive file.",
+            "The file is uploaded to Chat."
           ],
           "readOnly": true,
           "type": "string"
@@ -1310,6 +1451,7 @@
       "type": "object"
     },
     "AttachmentDataRef": {
+      "description": "A reference to the attachment data.",
       "id": "AttachmentDataRef",
       "properties": {
         "attachmentUploadToken": {
@@ -1572,6 +1714,7 @@
       "type": "object"
     },
     "CompleteImportSpaceResponse": {
+      "description": "Response message for completing the import process for a space.",
       "id": "CompleteImportSpaceResponse",
       "properties": {
         "space": {
@@ -1586,7 +1729,8 @@
       "id": "CustomEmoji",
       "properties": {
         "uid": {
-          "description": "Unique key for the custom emoji resource.",
+          "description": "Output only. Unique key for the custom emoji resource.",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -1691,7 +1835,7 @@
           "type": "string"
         },
         "isDialogEvent": {
-          "description": "For `CARD_CLICKED` interaction events, whether the user interacted with a [dialog](https://developers.google.com/workspace/chat/dialogs).",
+          "description": "For `CARD_CLICKED` and `MESSAGE` interaction events, whether the user is interacting with or about to interact with a [dialog](https://developers.google.com/workspace/chat/dialogs).",
           "type": "boolean"
         },
         "message": {
@@ -1850,7 +1994,7 @@
       "id": "GoogleAppsCardV1Action",
       "properties": {
         "function": {
-          "description": "A custom function to invoke when the containing element is clicked or othrwise activated. For example usage, see [Read form data](https://developers.google.com/workspace/chat/read-form-data).",
+          "description": "A custom function to invoke when the containing element is clicked or otherwise activated. For example usage, see [Read form data](https://developers.google.com/workspace/chat/read-form-data).",
           "type": "string"
         },
         "interaction": {
@@ -3161,6 +3305,7 @@
       "type": "object"
     },
     "ListMembershipsResponse": {
+      "description": "Response to list memberships of the space.",
       "id": "ListMembershipsResponse",
       "properties": {
         "memberships": {
@@ -3178,6 +3323,7 @@
       "type": "object"
     },
     "ListMessagesResponse": {
+      "description": "Response message for listing messages.",
       "id": "ListMessagesResponse",
       "properties": {
         "messages": {
@@ -3195,6 +3341,7 @@
       "type": "object"
     },
     "ListReactionsResponse": {
+      "description": "Response to a list reactions request.",
       "id": "ListReactionsResponse",
       "properties": {
         "nextPageToken": {
@@ -3230,6 +3377,7 @@
       "type": "object"
     },
     "ListSpacesResponse": {
+      "description": "The response for a list spaces request.",
       "id": "ListSpacesResponse",
       "properties": {
         "nextPageToken": {
@@ -3296,7 +3444,7 @@
           "type": "string"
         },
         "role": {
-          "description": "Optional. User's role within a Chat space, which determines their permitted actions in the space. [Developer Preview](https://developers.google.com/workspace/preview): This field can only be used as input in `UpdateMembership`.",
+          "description": "Optional. User's role within a Chat space, which determines their permitted actions in the space. This field can only be used as input in `UpdateMembership`.",
           "enum": [
             "MEMBERSHIP_ROLE_UNSPECIFIED",
             "ROLE_MEMBER",
@@ -3802,6 +3950,7 @@
       "type": "object"
     },
     "SetUpSpaceRequest": {
+      "description": "Request to create a space and add specified users to it.",
       "id": "SetUpSpaceRequest",
       "properties": {
         "memberships": {
@@ -3891,7 +4040,7 @@
           "type": "string"
         },
         "externalUserAllowed": {
-          "description": "Immutable. Whether this space permits any Google Chat user as a member. Input when creating a space in a Google Workspace organization. Omit this field when creating spaces in the following conditions: * The authenticated user uses a consumer account (unmanaged user account). By default, a space created by a consumer account permits any Google Chat user. * The space is used to [import data to Google Chat] (https://developers.google.com/workspace/chat/import-data). Import mode spaces must only permit members from the same Google Workspace organization. For existing spaces, this field is output only.",
+          "description": "Immutable. Whether this space permits any Google Chat user as a member. Input when creating a space in a Google Workspace organization. Omit this field when creating spaces in the following conditions: * The authenticated user uses a consumer account (unmanaged user account). By default, a space created by a consumer account permits any Google Chat user. * The space is used to [import data to Google Chat] (https://developers.google.com/chat/api/guides/import-data-overview) because import mode spaces must only permit members from the same Google Workspace organization. However, as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), import mode spaces can permit any Google Chat user so this field can then be set for import mode spaces. For existing spaces, this field is output only.",
           "type": "boolean"
         },
         "importMode": {
@@ -3972,7 +4121,7 @@
             "DM"
           ],
           "enumDescriptions": [
-            "",
+            "Reserved.",
             "Conversations between two or more humans.",
             "1:1 Direct Message between a human and a Chat app, where all messages are flat. Note that this doesn't include direct messages between two humans."
           ],
@@ -4114,6 +4263,22 @@
       },
       "type": "object"
     },
+    "SpaceReadState": {
+      "description": "A user's read state within a space, used to identify read and unread messages.",
+      "id": "SpaceReadState",
+      "properties": {
+        "lastReadTime": {
+          "description": "Optional. The time when the user's space read state was updated. Usually this corresponds with either the timestamp of the last read message, or a timestamp specified by the user to mark the last read position in a space.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "name": {
+          "description": "Resource name of the space read state. Format: `users/{user}/spaces/{space}/spaceReadState`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SpaceUpdatedEventData": {
       "description": "Event payload for an updated space. Event type: `google.workspace.chat.space.v1.updated`",
       "id": "SpaceUpdatedEventData",
@@ -4206,6 +4371,22 @@
       },
       "type": "object"
     },
+    "ThreadReadState": {
+      "description": "A user's read state within a thread, used to identify read and unread messages.",
+      "id": "ThreadReadState",
+      "properties": {
+        "lastReadTime": {
+          "description": "The time when the user's thread read state was updated. Usually this corresponds with the timestamp of the last read message in a thread.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "name": {
+          "description": "Resource name of the thread read state. Format: `users/{user}/spaces/{space}/threads/{thread}/threadReadState`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "TimeInput": {
       "description": "Time input values.",
       "id": "TimeInput",
@@ -4255,6 +4436,7 @@
       "type": "object"
     },
     "UploadAttachmentRequest": {
+      "description": "Request to upload an attachment.",
       "id": "UploadAttachmentRequest",
       "properties": {
         "filename": {
@@ -4265,6 +4447,7 @@
       "type": "object"
     },
     "UploadAttachmentResponse": {
+      "description": "Response of uploading an attachment.",
       "id": "UploadAttachmentResponse",
       "properties": {
         "attachmentDataRef": {

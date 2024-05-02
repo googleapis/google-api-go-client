@@ -82,8 +82,11 @@ var skipAPIGeneration = map[string]bool{
 
 // skipNewAuthLibrary is a set of APIs to not migrate to cloud.google.com/go/auth.
 var skipNewAuthLibrary = map[string]bool{
-	"bigquery:v2": true,
-	"storage:v1":  true,
+	"bigquery:v2":   true,
+	"compute:alpha": true,
+	"compute:beta":  true,
+	"compute:v1":    true,
+	"storage:v1":    true,
 }
 
 var apisToSplit = map[string]bool{

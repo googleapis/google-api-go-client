@@ -175,35 +175,6 @@ type QueriesReportsService struct {
 	s *Service
 }
 
-// ChannelGrouping: A channel grouping defines a set of rules that can be used
-// to categorize events in a path report.
-type ChannelGrouping struct {
-	// FallbackName: The name to apply to an event that does not match any of the
-	// rules in the channel grouping.
-	FallbackName string `json:"fallbackName,omitempty"`
-	// Name: Channel Grouping name.
-	Name string `json:"name,omitempty"`
-	// Rules: Rules within Channel Grouping. There is a limit of 100 rules that can
-	// be set per channel grouping.
-	Rules []*Rule `json:"rules,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FallbackName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FallbackName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *ChannelGrouping) MarshalJSON() ([]byte, error) {
-	type NoMethod ChannelGrouping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // DataRange: Report data range.
 type DataRange struct {
 	// CustomEndDate: The ending date for the data that is shown in the report.
@@ -300,53 +271,6 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DisjunctiveMatchStatement: DisjunctiveMatchStatement that OR's all contained
-// filters.
-type DisjunctiveMatchStatement struct {
-	// EventFilters: Filters. There is a limit of 100 filters that can be set per
-	// disjunctive match statement.
-	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EventFilters") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EventFilters") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *DisjunctiveMatchStatement) MarshalJSON() ([]byte, error) {
-	type NoMethod DisjunctiveMatchStatement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// EventFilter: Defines the type of filter to be applied to the path, a DV360
-// event dimension filter.
-type EventFilter struct {
-	// DimensionFilter: Filter on a dimension.
-	DimensionFilter *PathQueryOptionsFilter `json:"dimensionFilter,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DimensionFilter") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *EventFilter) MarshalJSON() ([]byte, error) {
-	type NoMethod EventFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // FilterPair: Filter used to match traffic data in your report.
 type FilterPair struct {
 	// Type: Filter type.
@@ -431,10 +355,6 @@ type Options struct {
 	// `FILTER_INSERTION_ORDER` or `FILTER_LINE_ITEM` to include data for audience
 	// lists specifically targeted by those items.
 	IncludeOnlyTargetedUserLists bool `json:"includeOnlyTargetedUserLists,omitempty"`
-	// PathQueryOptions: Options that contain Path Filters and Custom Channel
-	// Groupings. This field is deprecated and will sunset on **May 1, 2024**.
-	// After sunset, requests using this field will return an error.
-	PathQueryOptions *PathQueryOptions `json:"pathQueryOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "IncludeOnlyTargetedUserLists") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -479,12 +399,6 @@ type Parameters struct {
 	// report.
 	//   "REACH" - Reach report.
 	//   "UNIQUE_REACH_AUDIENCE" - Unique Reach Audience report.
-	//   "FULL_PATH" - Full Path report. This report type is deprecated and will
-	// sunset on **May 1, 2024**. After sunset, requests retrieving, creating, or
-	// running reports of this type will return an error.
-	//   "PATH_ATTRIBUTION" - Path Attribution report. This report type is
-	// deprecated and will sunset on **May 1, 2024**. After sunset, requests
-	// retrieving, creating, or running reports of this type will return an error.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filters") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -501,102 +415,6 @@ type Parameters struct {
 
 func (s *Parameters) MarshalJSON() ([]byte, error) {
 	type NoMethod Parameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// PathFilter: Path filters specify which paths to include in a report. A path
-// is the result of combining DV360 events based on User ID to create a
-// workflow of users' actions. When a path filter is set, the resulting report
-// will only include paths that match the specified event at the specified
-// position. All other paths will be excluded.
-type PathFilter struct {
-	// EventFilters: Filter on an event to be applied to some part of the path.
-	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
-	// PathMatchPosition: The position of the path the filter should match to
-	// (first, last, or any event in path).
-	//
-	// Possible values:
-	//   "PATH_MATCH_POSITION_UNSPECIFIED" - Default value when path match position
-	// is not specified or is unknown in this version.
-	//   "ANY" - Any position in the path.
-	//   "FIRST" - The first position in the path.
-	//   "LAST" - The last position in the path.
-	PathMatchPosition string `json:"pathMatchPosition,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EventFilters") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EventFilters") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *PathFilter) MarshalJSON() ([]byte, error) {
-	type NoMethod PathFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// PathQueryOptions: Path Query Options for Report Options.
-type PathQueryOptions struct {
-	// ChannelGrouping: Custom Channel Groupings.
-	ChannelGrouping *ChannelGrouping `json:"channelGrouping,omitempty"`
-	// PathFilters: Path Filters. There is a limit of 100 path filters that can be
-	// set per report.
-	PathFilters []*PathFilter `json:"pathFilters,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChannelGrouping") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChannelGrouping") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *PathQueryOptions) MarshalJSON() ([]byte, error) {
-	type NoMethod PathQueryOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// PathQueryOptionsFilter: Dimension filter on path events.
-type PathQueryOptionsFilter struct {
-	// Filter: Dimension the filter is applied to.
-	Filter string `json:"filter,omitempty"`
-	// Match: Match logic of the filter.
-	//
-	// Possible values:
-	//   "UNKNOWN" - Default value when match is not specified or is unknown in
-	// this version.
-	//   "EXACT" - Matches a value exactly.
-	//   "PARTIAL" - Matches a value partially.
-	//   "BEGINS_WITH" - Begins with a value.
-	//   "WILDCARD_EXPRESSION" - Matches a value, utilizing wildcard character
-	// logic in the value.
-	Match string `json:"match,omitempty"`
-	// Values: Values to filter on.
-	Values []string `json:"values,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Filter") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *PathQueryOptionsFilter) MarshalJSON() ([]byte, error) {
-	type NoMethod PathQueryOptionsFilter
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -836,34 +654,6 @@ type ReportStatus struct {
 
 func (s *ReportStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// Rule: A Rule defines a name, and a boolean expression in [conjunctive normal
-// form] (http://mathworld.wolfram.com/ConjunctiveNormalForm.html){.external}
-// that can be applied to a path event to determine if that name should be
-// applied.
-type Rule struct {
-	// DisjunctiveMatchStatements: DisjunctiveMatchStatements within a Rule.
-	// DisjunctiveMatchStatement OR's all contained filters.
-	DisjunctiveMatchStatements []*DisjunctiveMatchStatement `json:"disjunctiveMatchStatements,omitempty"`
-	// Name: Rule name.
-	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisjunctiveMatchStatements")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisjunctiveMatchStatements") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *Rule) MarshalJSON() ([]byte, error) {
-	type NoMethod Rule
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

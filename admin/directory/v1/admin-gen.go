@@ -1513,8 +1513,12 @@ type ChromeOsDevice struct {
 	// length is 100 characters. Empty values are allowed.
 	AnnotatedUser string `json:"annotatedUser,omitempty"`
 	// AutoUpdateExpiration: (Read-only) The timestamp after which the device will
-	// stop receiving Chrome updates or support
+	// stop receiving Chrome updates or support. Please use "autoUpdateThrough"
+	// instead.
 	AutoUpdateExpiration int64 `json:"autoUpdateExpiration,omitempty,string"`
+	// AutoUpdateThrough: Output only. The timestamp after which the device will
+	// stop receiving Chrome updates or support.
+	AutoUpdateThrough string `json:"autoUpdateThrough,omitempty"`
 	// BacklightInfo: Output only. Contains backlight information for the device.
 	BacklightInfo []*BacklightInfo `json:"backlightInfo,omitempty"`
 	// BootMode: The boot mode for the device. The possible values are: *
@@ -1591,6 +1595,15 @@ type ChromeOsDevice struct {
 	// format is twelve (12) hexadecimal digits without any delimiter (uppercase
 	// letters). This is only relevant for some devices.
 	EthernetMacAddress0 string `json:"ethernetMacAddress0,omitempty"`
+	// ExtendedSupportEligible: Output only. Whether or not the device requires the
+	// extended support opt in.
+	ExtendedSupportEligible bool `json:"extendedSupportEligible,omitempty"`
+	// ExtendedSupportEnabled: Output only. Whether extended support policy is
+	// enabled on the device.
+	ExtendedSupportEnabled bool `json:"extendedSupportEnabled,omitempty"`
+	// ExtendedSupportStart: Output only. Date of the device when extended support
+	// policy for automatic updates starts.
+	ExtendedSupportStart string `json:"extendedSupportStart,omitempty"`
 	// FirmwareVersion: The Chrome device's firmware version.
 	FirmwareVersion string `json:"firmwareVersion,omitempty"`
 	// FirstEnrollmentTime: Date and time for the first time the device was

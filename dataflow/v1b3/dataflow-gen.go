@@ -1635,8 +1635,8 @@ type Environment struct {
 	// encrypt data at rest, AKA a Customer Managed Encryption Key (CMEK). Format:
 	// projects/PROJECT_ID/locations/LOCATION/keyRings/KEY_RING/cryptoKeys/KEY
 	ServiceKmsKeyName string `json:"serviceKmsKeyName,omitempty"`
-	// ServiceOptions: The list of service options to enable. This field should be
-	// used for service related experiments only. These experiments, when
+	// ServiceOptions: Optional. The list of service options to enable. This field
+	// should be used for service related experiments only. These experiments, when
 	// graduating to GA, should be replaced by dedicated fields or become default
 	// (i.e. always on).
 	ServiceOptions []string `json:"serviceOptions,omitempty"`
@@ -2560,7 +2560,7 @@ type Job struct {
 	CurrentState string `json:"currentState,omitempty"`
 	// CurrentStateTime: The timestamp associated with the current state.
 	CurrentStateTime string `json:"currentStateTime,omitempty"`
-	// Environment: The environment for the job.
+	// Environment: Optional. The environment for the job.
 	Environment *Environment `json:"environment,omitempty"`
 	// ExecutionInfo: Deprecated.
 	ExecutionInfo *JobExecutionInfo `json:"executionInfo,omitempty"`
@@ -2582,11 +2582,11 @@ type Job struct {
 	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that
 	// contains this job.
 	Location string `json:"location,omitempty"`
-	// Name: The user-specified Dataflow job name. Only one active job with a given
-	// name can exist in a project within one region at any given time. Jobs in
-	// different regions can have the same name. If a caller attempts to create a
-	// job with the same name as an active job that already exists, the attempt
-	// returns the existing job. The name must match the regular expression
+	// Name: Optional. The user-specified Dataflow job name. Only one active job
+	// with a given name can exist in a project within one region at any given
+	// time. Jobs in different regions can have the same name. If a caller attempts
+	// to create a job with the same name as an active job that already exists, the
+	// attempt returns the existing job. The name must match the regular expression
 	// `[a-z]([-a-z0-9]{0,1022}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
 	// PipelineDescription: Preliminary field: The format of this data may change
@@ -2696,7 +2696,7 @@ type Job struct {
 	// TransformNameMapping: The map of transform name prefixes of the job to be
 	// replaced to the corresponding name prefixes of the new job.
 	TransformNameMapping map[string]string `json:"transformNameMapping,omitempty"`
-	// Type: The type of Dataflow job.
+	// Type: Optional. The type of Dataflow job.
 	//
 	// Possible values:
 	//   "JOB_TYPE_UNKNOWN" - The type of the job is unspecified, or unknown.
@@ -3893,6 +3893,9 @@ type ParameterMetadata struct {
 	//   "BOOLEAN" - The parameter specifies a boolean input.
 	//   "ENUM" - The parameter specifies an enum input.
 	//   "NUMBER" - The parameter specifies a number input.
+	//   "KAFKA_TOPIC" - The parameter specifies the fully-qualified name of an
+	// Apache Kafka topic. This can be either a Google Managed Kafka topic or a
+	// non-managed Kafka topic.
 	ParamType string `json:"paramType,omitempty"`
 	// ParentName: Optional. Specifies the name of the parent parameter. Used in
 	// conjunction with 'parent_trigger_values' to make this parameter conditional
@@ -5970,6 +5973,9 @@ type StreamingConfigTask struct {
 	// MaxWorkItemCommitBytes: Maximum size for work item commit supported windmill
 	// storage layer.
 	MaxWorkItemCommitBytes int64 `json:"maxWorkItemCommitBytes,omitempty,string"`
+	// OperationalLimits: Operational limits for the streaming job. Can be used by
+	// the worker to validate outputs sent to the backend.
+	OperationalLimits *StreamingOperationalLimits `json:"operationalLimits,omitempty"`
 	// StreamingComputationConfigs: Set of computation configuration information.
 	StreamingComputationConfigs []*StreamingComputationConfig `json:"streamingComputationConfigs,omitempty"`
 	// UserStepToStateFamilyNameMap: Map from user step names to state families.
@@ -5997,6 +6003,44 @@ type StreamingConfigTask struct {
 
 func (s *StreamingConfigTask) MarshalJSON() ([]byte, error) {
 	type NoMethod StreamingConfigTask
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// StreamingOperationalLimits: Operational limits imposed on streaming jobs by
+// the backend.
+type StreamingOperationalLimits struct {
+	// MaxBagElementBytes: The maximum size for an element in bag state.
+	MaxBagElementBytes int64 `json:"maxBagElementBytes,omitempty,string"`
+	// MaxGlobalDataBytes: The maximum size for an element in global data.
+	MaxGlobalDataBytes int64 `json:"maxGlobalDataBytes,omitempty,string"`
+	// MaxKeyBytes: The maximum size allowed for a key.
+	MaxKeyBytes int64 `json:"maxKeyBytes,omitempty,string"`
+	// MaxProductionOutputBytes: The maximum size for a single output element.
+	MaxProductionOutputBytes int64 `json:"maxProductionOutputBytes,omitempty,string"`
+	// MaxSortedListElementBytes: The maximum size for an element in sorted list
+	// state.
+	MaxSortedListElementBytes int64 `json:"maxSortedListElementBytes,omitempty,string"`
+	// MaxSourceStateBytes: The maximum size for a source state update.
+	MaxSourceStateBytes int64 `json:"maxSourceStateBytes,omitempty,string"`
+	// MaxTagBytes: The maximum size for a state tag.
+	MaxTagBytes int64 `json:"maxTagBytes,omitempty,string"`
+	// MaxValueBytes: The maximum size for a value state field.
+	MaxValueBytes int64 `json:"maxValueBytes,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "MaxBagElementBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxBagElementBytes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *StreamingOperationalLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod StreamingOperationalLimits
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

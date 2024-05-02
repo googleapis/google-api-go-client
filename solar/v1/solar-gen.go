@@ -1347,6 +1347,18 @@ func (r *DataLayersService) Get() *DataLayersGetCall {
 	return c
 }
 
+// ExactQualityRequired sets the optional parameter "exactQualityRequired":
+// Whether to require exact quality of the imagery. If set to false, the
+// `required_quality` field is interpreted as the minimum required quality,
+// such that HIGH quality imagery may be returned when `required_quality` is
+// set to MEDIUM. If set to true, `required_quality` is interpreted as the
+// exact required quality and only `MEDIUM` quality imagery is returned if
+// `required_quality` is set to `MEDIUM`.
+func (c *DataLayersGetCall) ExactQualityRequired(exactQualityRequired bool) *DataLayersGetCall {
+	c.urlParams_.Set("exactQualityRequired", fmt.Sprint(exactQualityRequired))
+	return c
+}
+
 // LocationLatitude sets the optional parameter "location.latitude": The
 // latitude in degrees. It must be in the range [-90.0, +90.0].
 func (c *DataLayersGetCall) LocationLatitude(locationLatitude float64) *DataLayersGetCall {

@@ -335,12 +335,6 @@ type GoogleIdentityStsV1Options struct {
 	// AccessBoundary. The access boundary can include up to 10 rules. The size of
 	// the parameter value should not exceed 2048 characters.
 	AccessBoundary *GoogleIdentityStsV1AccessBoundary `json:"accessBoundary,omitempty"`
-	// Audiences: The intended audience(s) of the credential. The audience value(s)
-	// should be the name(s) of services intended to receive the credential.
-	// Example: `["https://pubsub.googleapis.com/",
-	// "https://storage.googleapis.com/"]`. A maximum of 5 audiences can be
-	// included. For each provided audience, the maximum length is 262 characters.
-	Audiences []string `json:"audiences,omitempty"`
 	// UserProject: A Google project used for quota and billing purposes when the
 	// credential is used to access Google APIs. The provided project overrides the
 	// project bound to the credential. The value must be a project number or a
@@ -616,12 +610,6 @@ type GoogleIdentityStsV1betaOptions struct {
 	// AccessBoundary. The access boundary can include up to 10 rules. The size of
 	// the parameter value should not exceed 2048 characters.
 	AccessBoundary *GoogleIdentityStsV1betaAccessBoundary `json:"accessBoundary,omitempty"`
-	// Audiences: The intended audience(s) of the credential. The audience value(s)
-	// should be the name(s) of services intended to receive the credential.
-	// Example: `["https://pubsub.googleapis.com/",
-	// "https://storage.googleapis.com/"]`. A maximum of 5 audiences can be
-	// included. For each provided audience, the maximum length is 262 characters.
-	Audiences []string `json:"audiences,omitempty"`
 	// UserProject: A Google project used for quota and billing purposes when the
 	// credential is used to access Google APIs. The provided project overrides the
 	// project bound to the credential. The value must be a project number or a

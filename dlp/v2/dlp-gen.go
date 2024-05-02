@@ -5001,7 +5001,7 @@ func (s *GooglePrivacyDlpV2InfoType) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2InfoTypeCategory: Classification of infoTypes to organize
-// them according to geographic location, industry, and data type. NEXT_ID: 47
+// them according to geographic location, industry, and data type. NEXT_ID: 48
 type GooglePrivacyDlpV2InfoTypeCategory struct {
 	// IndustryCategory: The group of relevant businesses where this infoType is
 	// commonly used
@@ -5040,6 +5040,7 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "ISRAEL" - The infoType is typically used in Israel.
 	//   "ITALY" - The infoType is typically used in Italy.
 	//   "JAPAN" - The infoType is typically used in Japan.
+	//   "KAZAKHSTAN" - The infoType is typically used in Kazakhstan.
 	//   "KOREA" - The infoType is typically used in Korea.
 	//   "MEXICO" - The infoType is typically used in Mexico.
 	//   "THE_NETHERLANDS" - The infoType is typically used in the Netherlands.

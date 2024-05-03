@@ -3844,9 +3844,10 @@ type GoogleCloudDiscoveryengineV1SearchRequest struct {
 	Offset int64 `json:"offset,omitempty"`
 	// OrderBy: The order in which documents are returned. Documents can be ordered
 	// by a field in an Document object. Leave it unset if ordered by relevance.
-	// `order_by` expression is case-sensitive. For more information on ordering,
-	// see Ordering (https://cloud.google.com/retail/docs/filter-and-order#order)
-	// If this field is unrecognizable, an `INVALID_ARGUMENT` is returned.
+	// `order_by` expression is case-sensitive. For more information on ordering
+	// for retail search, see Ordering
+	// (https://cloud.google.com/retail/docs/filter-and-order#order) If this field
+	// is unrecognizable, an `INVALID_ARGUMENT` is returned.
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -5071,6 +5072,8 @@ type GoogleCloudDiscoveryengineV1TargetSite struct {
 	// ProvidedUriPattern: Required. Input only. The user provided URI pattern from
 	// which the `generated_uri_pattern` is generated.
 	ProvidedUriPattern string `json:"providedUriPattern,omitempty"`
+	// RootDomainUri: Output only. Root domain of the provided_uri_pattern.
+	RootDomainUri string `json:"rootDomainUri,omitempty"`
 	// SiteVerificationInfo: Output only. Site ownership and validity verification
 	// status.
 	SiteVerificationInfo *GoogleCloudDiscoveryengineV1SiteVerificationInfo `json:"siteVerificationInfo,omitempty"`
@@ -6174,6 +6177,50 @@ func (s *GoogleCloudDiscoveryengineV1alphaCreateTargetSiteMetadata) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaCustomTuningModel: Metadata that describes
+// a custom tuned model.
+type GoogleCloudDiscoveryengineV1alphaCustomTuningModel struct {
+	// CreateTime: Timestamp the Model was created at.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: The display name of the model.
+	DisplayName string `json:"displayName,omitempty"`
+	// ModelState: The state that the model is in (e.g.`TRAINING` or
+	// `TRAINING_FAILED`).
+	//
+	// Possible values:
+	//   "MODEL_STATE_UNSPECIFIED"
+	//   "TRAINING_PAUSED" - The model is in a paused training state.
+	//   "TRAINING" - The model is currently training.
+	//   "TRAINING_COMPLETE" - The model has successfully completed training.
+	//   "READY_FOR_SERVING" - The model is ready for serving.
+	//   "TRAINING_FAILED" - The model training failed.
+	ModelState   string `json:"modelState,omitempty"`
+	ModelVersion int64  `json:"modelVersion,omitempty,string"`
+	// Name: Required. The fully qualified resource name of the model. Format:
+	// `projects/{project_number}/locations/{location}/collections/{collection}/data
+	// Stores/{data_store}/customTuningModels/{custom_tuning_model}` model must be
+	// an alpha-numerical string with limit of 40 characters.
+	Name string `json:"name,omitempty"`
+	// TrainingStartTime: Timestamp the model training was initiated.
+	TrainingStartTime string `json:"trainingStartTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaCustomTuningModel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCustomTuningModel
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaDataStore: DataStore captures global
 // settings and configs at the DataStore level.
 type GoogleCloudDiscoveryengineV1alphaDataStore struct {
@@ -7114,8 +7161,19 @@ type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
 	//   "NUMBER" - Field value type is Number.
 	//   "INTEGER" - Field value type is Integer.
 	//   "BOOLEAN" - Field value type is Boolean.
-	//   "GEOLOCATION" - Field value type is Geolocation.
-	//   "DATETIME" - Field value type is Datetime.
+	//   "GEOLOCATION" - Field value type is Geolocation. Geolocation is expressed
+	// as an object with the following keys: * `id`: a string representing the
+	// location id * `longitude`: a number representing the longitude coordinate of
+	// the location * `latitude`: a number repesenting the latitude coordinate of
+	// the location * `address`: a string representing the full address of the
+	// location `latitude` and `longitude` must always be provided together. At
+	// least one of a) `address` or b) `latitude`-`longitude` pair must be
+	// provided.
+	//   "DATETIME" - Field value type is Datetime. Datetime can be expressed as
+	// either: * a number representing milliseconds-since-the-epoch * a string
+	// representing milliseconds-since-the-epoch. e.g. "1420070400001" * a string
+	// representing the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date or
+	// date and time. e.g. "2015-01-01" or "2015-01-01T12:10:30Z"
 	FieldType string `json:"fieldType,omitempty"`
 	// IndexableOption: If indexable_option is INDEXABLE_ENABLED, field values are
 	// indexed so that it can be filtered or faceted in SearchService.Search. If
@@ -7459,6 +7517,29 @@ type GoogleCloudDiscoveryengineV1alphaImportUserEventsResponse struct {
 
 func (s *GoogleCloudDiscoveryengineV1alphaImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaImportUserEventsResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse: Response message
+// for SearchTuningService.ListCustomModels method.
+type GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse struct {
+	// Models: List of custom tuning models.
+	Models []*GoogleCloudDiscoveryengineV1alphaCustomTuningModel `json:"models,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Models") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Models") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8035,6 +8116,8 @@ type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
 	// ProvidedUriPattern: Required. Input only. The user provided URI pattern from
 	// which the `generated_uri_pattern` is generated.
 	ProvidedUriPattern string `json:"providedUriPattern,omitempty"`
+	// RootDomainUri: Output only. Root domain of the provided_uri_pattern.
+	RootDomainUri string `json:"rootDomainUri,omitempty"`
 	// SiteVerificationInfo: Output only. Site ownership and validity verification
 	// status.
 	SiteVerificationInfo *GoogleCloudDiscoveryengineV1alphaSiteVerificationInfo `json:"siteVerificationInfo,omitempty"`
@@ -8152,6 +8235,8 @@ type GoogleCloudDiscoveryengineV1alphaTrainCustomModelResponse struct {
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
 	// Metrics: The metrics of the trained model.
 	Metrics map[string]float64 `json:"metrics,omitempty"`
+	// ModelName: Fully qualified name of the CustomTuningModel.
+	ModelName string `json:"modelName,omitempty"`
 	// ModelStatus: The trained model status. Possible values are: * **bad-data**:
 	// The training data quality is bad. * **no-improvement**: Tuning didn't
 	// improve performance. Won't deploy. * **in-progress**: Model training job
@@ -8417,6 +8502,50 @@ type GoogleCloudDiscoveryengineV1betaCreateTargetSiteMetadata struct {
 
 func (s *GoogleCloudDiscoveryengineV1betaCreateTargetSiteMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaCreateTargetSiteMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaCustomTuningModel: Metadata that describes a
+// custom tuned model.
+type GoogleCloudDiscoveryengineV1betaCustomTuningModel struct {
+	// CreateTime: Timestamp the Model was created at.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: The display name of the model.
+	DisplayName string `json:"displayName,omitempty"`
+	// ModelState: The state that the model is in (e.g.`TRAINING` or
+	// `TRAINING_FAILED`).
+	//
+	// Possible values:
+	//   "MODEL_STATE_UNSPECIFIED"
+	//   "TRAINING_PAUSED" - The model is in a paused training state.
+	//   "TRAINING" - The model is currently training.
+	//   "TRAINING_COMPLETE" - The model has successfully completed training.
+	//   "READY_FOR_SERVING" - The model is ready for serving.
+	//   "TRAINING_FAILED" - The model training failed.
+	ModelState   string `json:"modelState,omitempty"`
+	ModelVersion int64  `json:"modelVersion,omitempty,string"`
+	// Name: Required. The fully qualified resource name of the model. Format:
+	// `projects/{project_number}/locations/{location}/collections/{collection}/data
+	// Stores/{data_store}/customTuningModels/{custom_tuning_model}` model must be
+	// an alpha-numerical string with limit of 40 characters.
+	Name string `json:"name,omitempty"`
+	// TrainingStartTime: Timestamp the model training was initiated.
+	TrainingStartTime string `json:"trainingStartTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaCustomTuningModel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaCustomTuningModel
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9224,6 +9353,29 @@ func (s *GoogleCloudDiscoveryengineV1betaImportUserEventsResponse) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaListCustomModelsResponse: Response message
+// for SearchTuningService.ListCustomModels method.
+type GoogleCloudDiscoveryengineV1betaListCustomModelsResponse struct {
+	// Models: List of custom tuning models.
+	Models []*GoogleCloudDiscoveryengineV1betaCustomTuningModel `json:"models,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Models") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Models") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaListCustomModelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaListCustomModelsResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaPurgeDocumentsMetadata: Metadata related to
 // the progress of the PurgeDocuments operation. This will be returned by the
 // google.longrunning.Operation.metadata field.
@@ -9440,6 +9592,8 @@ type GoogleCloudDiscoveryengineV1betaTargetSite struct {
 	// ProvidedUriPattern: Required. Input only. The user provided URI pattern from
 	// which the `generated_uri_pattern` is generated.
 	ProvidedUriPattern string `json:"providedUriPattern,omitempty"`
+	// RootDomainUri: Output only. Root domain of the provided_uri_pattern.
+	RootDomainUri string `json:"rootDomainUri,omitempty"`
 	// SiteVerificationInfo: Output only. Site ownership and validity verification
 	// status.
 	SiteVerificationInfo *GoogleCloudDiscoveryengineV1betaSiteVerificationInfo `json:"siteVerificationInfo,omitempty"`
@@ -9557,6 +9711,8 @@ type GoogleCloudDiscoveryengineV1betaTrainCustomModelResponse struct {
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
 	// Metrics: The metrics of the trained model.
 	Metrics map[string]float64 `json:"metrics,omitempty"`
+	// ModelName: Fully qualified name of the CustomTuningModel.
+	ModelName string `json:"modelName,omitempty"`
 	// ModelStatus: The trained model status. Possible values are: * **bad-data**:
 	// The training data quality is bad. * **no-improvement**: Tuning didn't
 	// improve performance. Won't deploy. * **in-progress**: Model training job
@@ -10717,7 +10873,7 @@ func (r *ProjectsLocationsCollectionsDataStoresService) List(parent string) *Pro
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter by solution type. For
+// Filter sets the optional parameter "filter": Filter by solution type . For
 // example: filter = 'solution_type:SOLUTION_TYPE_SEARCH'
 func (c *ProjectsLocationsCollectionsDataStoresListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresListCall {
 	c.urlParams_.Set("filter", filter)
@@ -19362,7 +19518,7 @@ func (r *ProjectsLocationsDataStoresService) List(parent string) *ProjectsLocati
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter by solution type. For
+// Filter sets the optional parameter "filter": Filter by solution type . For
 // example: filter = 'solution_type:SOLUTION_TYPE_SEARCH'
 func (c *ProjectsLocationsDataStoresListCall) Filter(filter string) *ProjectsLocationsDataStoresListCall {
 	c.urlParams_.Set("filter", filter)

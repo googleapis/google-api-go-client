@@ -377,6 +377,30 @@ func (s *ApiOperation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// Application: An application that accesses Google Cloud APIs.
+type Application struct {
+	// ClientId: The OAuth client ID of the application.
+	ClientId string `json:"clientId,omitempty"`
+	// Name: The name of the application. Example: "Cloud Console"
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Application) MarshalJSON() ([]byte, error) {
+	type NoMethod Application
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must have one
@@ -1114,6 +1138,10 @@ type GcpUserAccessBinding struct {
 	// Should not be specified by the client during creation. Example:
 	// "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
 	Name string `json:"name,omitempty"`
+	// RestrictedClientApplications: Optional. A list of applications that are
+	// subject to this binding's restrictions. If the list is empty, the binding
+	// restrictions will universally apply to all applications.
+	RestrictedClientApplications []*Application `json:"restrictedClientApplications,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

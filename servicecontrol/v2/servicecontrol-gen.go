@@ -1446,6 +1446,61 @@ func (s *V2LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// V2ResourceEvent: Report v2 extension proto for passing the resource metadata
+// associated with a resource create/update/delete/undelete event from ESF to
+// Chemist. ResourceEvent proto should be serialized into the
+// ReportRequest.operations.extensions.
+type V2ResourceEvent struct {
+	// Destinations: The destinations field determines which backend services
+	// should handle the event. This should be specified as a comma-delimited
+	// string.
+	Destinations string `json:"destinations,omitempty"`
+	// Parent: The parent resource for the resource.
+	Parent *Resource `json:"parent,omitempty"`
+	// Path: The api path the resource event was created in. This should match the
+	// source of the `payload` field. For direct integrations with Chemist, this
+	// should generally be the RESPONSE. go/resource-event-pipeline-type
+	//
+	// Possible values:
+	//   "API_PATH_UNSPECIFIED" - Default value. Do not use.
+	//   "REQUEST" - The request path.
+	//   "RESPONSE" - The response path.
+	Path string `json:"path,omitempty"`
+	// Payload: The payload contains metadata associated with the resource event. A
+	// ResourceEventPayloadStatus is provided instead if the original payload
+	// cannot be returned due to a limitation (e.g. size limit).
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+	// Resource: The resource associated with the event.
+	Resource *Resource `json:"resource,omitempty"`
+	// Type: The resource event type determines how the backend service should
+	// process the event.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The resource event type is unclear. We do not expect
+	// any events to fall into this category.
+	//   "CREATE" - The resource is created/inserted.
+	//   "UPDATE" - The resource is updated.
+	//   "DELETE" - The resource is deleted.
+	//   "UNDELETE" - The resource is un-deleted.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Destinations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Destinations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *V2ResourceEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod V2ResourceEvent
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // ViolationInfo: Provides information about the Policy violation info for this
 // request.
 type ViolationInfo struct {

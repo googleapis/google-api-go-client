@@ -1731,8 +1731,6 @@ func (s *DatabaseDetailsParentDatabaseDeployment) MarshalJSON() ([]byte, error) 
 
 // DatabaseInstance: Details of a database instance.
 type DatabaseInstance struct {
-	// Hosts: Optional. The instance's hosts.
-	Hosts []*DatabaseInstanceHost `json:"hosts,omitempty"`
 	// InstanceName: The instance's name.
 	InstanceName string `json:"instanceName,omitempty"`
 	// Role: The instance role in the database engine.
@@ -1743,13 +1741,13 @@ type DatabaseInstance struct {
 	//   "SECONDARY" - Secondary.
 	//   "ARBITER" - Arbiter.
 	Role string `json:"role,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Hosts") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "InstanceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Hosts") to include in API
+	// NullFields is a list of field names (e.g. "InstanceName") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1758,28 +1756,6 @@ type DatabaseInstance struct {
 
 func (s *DatabaseInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// DatabaseInstanceHost: Details of a host of a database instance.
-type DatabaseInstanceHost struct {
-	// HostName: Optional. The host name of the host.
-	HostName string `json:"hostName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "HostName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "HostName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *DatabaseInstanceHost) MarshalJSON() ([]byte, error) {
-	type NoMethod DatabaseInstanceHost
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3991,30 +3967,8 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MysqlDatabaseDeployment: Specific details for a Mysql database deployment.
-type MysqlDatabaseDeployment struct {
-	// Plugins: Optional. List of Mysql plugins.
-	Plugins []*MysqlPlugin `json:"plugins,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Plugins") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Plugins") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *MysqlDatabaseDeployment) MarshalJSON() ([]byte, error) {
-	type NoMethod MysqlDatabaseDeployment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// MysqlPlugin: Mysql plugin.
-type MysqlPlugin struct {
+// MySqlPlugin: MySql plugin.
+type MySqlPlugin struct {
 	// Enabled: Required. The plugin is active.
 	Enabled bool `json:"enabled,omitempty"`
 	// Plugin: Required. The plugin name.
@@ -4034,8 +3988,30 @@ type MysqlPlugin struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MysqlPlugin) MarshalJSON() ([]byte, error) {
-	type NoMethod MysqlPlugin
+func (s *MySqlPlugin) MarshalJSON() ([]byte, error) {
+	type NoMethod MySqlPlugin
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// MysqlDatabaseDeployment: Specific details for a Mysql database deployment.
+type MysqlDatabaseDeployment struct {
+	// Plugins: Optional. List of MySql plugins.
+	Plugins []*MySqlPlugin `json:"plugins,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Plugins") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Plugins") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlDatabaseDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlDatabaseDeployment
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

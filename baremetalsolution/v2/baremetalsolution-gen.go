@@ -380,6 +380,11 @@ func (s *DetachLunRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// DisableHyperthreadingRequest: Message requesting to perform disable
+// hyperthreading operation on a server.
+type DisableHyperthreadingRequest struct {
+}
+
 // DisableInteractiveSerialConsoleRequest: Message for disabling the
 // interactive serial console on an instance.
 type DisableInteractiveSerialConsoleRequest struct {
@@ -397,6 +402,11 @@ type DisableInteractiveSerialConsoleResponse struct {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EnableHyperthreadingRequest: Message requesting to perform enable
+// hyperthreading operation on a server.
+type EnableHyperthreadingRequest struct {
 }
 
 // EnableInteractiveSerialConsoleRequest: Message for enabling the interactive
@@ -1817,6 +1827,38 @@ func (s *QosPolicy) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ReimageInstanceRequest: Message requesting to perform reimage operation on a
+// server.
+type ReimageInstanceRequest struct {
+	// KmsKeyVersion: Optional. Name of the KMS crypto key version used to encrypt
+	// the initial passwords. The key has to have ASYMMETRIC_DECRYPT purpose.
+	// Format is
+	// `projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}/
+	// cryptoKeyVersions/{version}`.
+	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
+	// OsImage: Required. The OS image code of the image which will be used in the
+	// reimage operation.
+	OsImage string `json:"osImage,omitempty"`
+	// SshKeys: Optional. List of SSH Keys used during reimaging an instance.
+	SshKeys []string `json:"sshKeys,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKeyVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKeyVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReimageInstanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReimageInstanceRequest
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // RenameInstanceRequest: Message requesting rename of a server.
 type RenameInstanceRequest struct {
 	// NewInstanceId: Required. The new `id` of the instance.
@@ -2839,6 +2881,109 @@ func (c *ProjectsLocationsInstancesDetachLunCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 }
 
+type ProjectsLocationsInstancesDisableHyperthreadingCall struct {
+	s                            *Service
+	name                         string
+	disablehyperthreadingrequest *DisableHyperthreadingRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// DisableHyperthreading: Perform disable hyperthreading operation on a single
+// server.
+//
+//   - name: The `name` field is used to identify the instance. Format:
+//     projects/{project}/locations/{location}/instances/{instance}.
+func (r *ProjectsLocationsInstancesService) DisableHyperthreading(name string, disablehyperthreadingrequest *DisableHyperthreadingRequest) *ProjectsLocationsInstancesDisableHyperthreadingCall {
+	c := &ProjectsLocationsInstancesDisableHyperthreadingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.disablehyperthreadingrequest = disablehyperthreadingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInstancesDisableHyperthreadingCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesDisableHyperthreadingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInstancesDisableHyperthreadingCall) Context(ctx context.Context) *ProjectsLocationsInstancesDisableHyperthreadingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInstancesDisableHyperthreadingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesDisableHyperthreadingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.disablehyperthreadingrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:disableHyperthreading")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "baremetalsolution.projects.locations.instances.disableHyperthreading" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesDisableHyperthreadingCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsInstancesDisableInteractiveSerialConsoleCall struct {
 	s                                      *Service
 	name                                   string
@@ -2910,6 +3055,109 @@ func (c *ProjectsLocationsInstancesDisableInteractiveSerialConsoleCall) doReques
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsInstancesDisableInteractiveSerialConsoleCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsInstancesEnableHyperthreadingCall struct {
+	s                           *Service
+	name                        string
+	enablehyperthreadingrequest *EnableHyperthreadingRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// EnableHyperthreading: Perform enable hyperthreading operation on a single
+// server.
+//
+//   - name: The `name` field is used to identify the instance. Format:
+//     projects/{project}/locations/{location}/instances/{instance}.
+func (r *ProjectsLocationsInstancesService) EnableHyperthreading(name string, enablehyperthreadingrequest *EnableHyperthreadingRequest) *ProjectsLocationsInstancesEnableHyperthreadingCall {
+	c := &ProjectsLocationsInstancesEnableHyperthreadingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.enablehyperthreadingrequest = enablehyperthreadingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInstancesEnableHyperthreadingCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesEnableHyperthreadingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInstancesEnableHyperthreadingCall) Context(ctx context.Context) *ProjectsLocationsInstancesEnableHyperthreadingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInstancesEnableHyperthreadingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesEnableHyperthreadingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enablehyperthreadingrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:enableHyperthreading")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "baremetalsolution.projects.locations.instances.enableHyperthreading" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesEnableHyperthreadingCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3489,6 +3737,108 @@ func (c *ProjectsLocationsInstancesPatchCall) doRequest(alt string) (*http.Respo
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsInstancesReimageCall struct {
+	s                      *Service
+	name                   string
+	reimageinstancerequest *ReimageInstanceRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Reimage: Perform reimage operation on a single server.
+//
+//   - name: The `name` field is used to identify the instance. Format:
+//     projects/{project}/locations/{location}/instances/{instance}.
+func (r *ProjectsLocationsInstancesService) Reimage(name string, reimageinstancerequest *ReimageInstanceRequest) *ProjectsLocationsInstancesReimageCall {
+	c := &ProjectsLocationsInstancesReimageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.reimageinstancerequest = reimageinstancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInstancesReimageCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesReimageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInstancesReimageCall) Context(ctx context.Context) *ProjectsLocationsInstancesReimageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInstancesReimageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesReimageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reimageinstancerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:reimage")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "baremetalsolution.projects.locations.instances.reimage" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesReimageCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

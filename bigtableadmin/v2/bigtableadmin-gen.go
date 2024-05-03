@@ -1201,7 +1201,7 @@ type CreateAuthorizedViewMetadata struct {
 	// successfully.
 	FinishTime string `json:"finishTime,omitempty"`
 	// OriginalRequest: The request that prompted the initiation of this
-	// CreateInstance operation.
+	// CreateAuthorizedView operation.
 	OriginalRequest *CreateAuthorizedViewRequest `json:"originalRequest,omitempty"`
 	// RequestTime: The time at which the original request was received.
 	RequestTime string `json:"requestTime,omitempty"`
@@ -2066,6 +2066,8 @@ type Instance struct {
 	// Name: The unique name of the instance. Values are of the form
 	// `projects/{project}/instances/a-z+[a-z0-9]`.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The current state of the instance.
@@ -9360,7 +9362,7 @@ func (c *ProjectsInstancesTablesAuthorizedViewsListCall) PageToken(pageToken str
 }
 
 // View sets the optional parameter "view": The resource_view to be applied to
-// the returned views' fields. Default to NAME_ONLY.
+// the returned AuthorizedViews' fields. Default to NAME_ONLY.
 //
 // Possible values:
 //

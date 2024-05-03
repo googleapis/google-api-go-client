@@ -17,7 +17,8 @@
    your fork.
    
    Commit messages should follow the
-   [Go project style](https://github.com/golang/go/wiki/CommitMessage). For example:
+   [Conventional Commit specification](https://www.conventionalcommits.org/en/v1.0.0/).
+   For example:
    ```
    functions: add gophers codelab
    ```

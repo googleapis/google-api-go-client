@@ -588,6 +588,9 @@ type Cluster struct {
 	InitialUser *UserPassword `json:"initialUser,omitempty"`
 	// Labels: Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
+	// MaintenanceSchedule: Output only. The maintenance schedule for the cluster,
+	// generated for a specific rollout if a maintenance window is set.
+	MaintenanceSchedule *MaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
 	// MaintenanceUpdatePolicy: Optional. The maintenance update policy determines
 	// when to allow or deny updates.
 	MaintenanceUpdatePolicy *MaintenanceUpdatePolicy `json:"maintenanceUpdatePolicy,omitempty"`
@@ -1464,6 +1467,32 @@ type MachineConfig struct {
 
 func (s *MachineConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MachineConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// MaintenanceSchedule: MaintenanceSchedule stores the maintenance schedule
+// generated from the MaintenanceUpdatePolicy, once a maintenance rollout is
+// triggered, if MaintenanceWindow is set, and if there is no conflicting
+// DenyPeriod. The schedule is cleared once the update takes place. This field
+// cannot be manually changed; modify the MaintenanceUpdatePolicy instead.
+type MaintenanceSchedule struct {
+	// StartTime: Output only. The scheduled start time for the maintenance.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StartTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StartTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceSchedule
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3155,6 +3184,7 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "PRODUCT_TYPE_ON_PREM" - On premises database product.
 	//   "ON_PREM" - On premises database product.
 	//   "PRODUCT_TYPE_MEMORYSTORE" - Memorystore product area in GCP
+	//   "PRODUCT_TYPE_BIGTABLE" - Bigtable product area in GCP
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
 	Type string `json:"type,omitempty"`

@@ -945,6 +945,11 @@ type DropInfo struct {
 	// is set.
 	//   "VPC_CONNECTOR_NOT_RUNNING" - Packet could be dropped because the VPC
 	// connector is not in a running state.
+	//   "VPC_CONNECTOR_SERVERLESS_TRAFFIC_BLOCKED" - Packet could be dropped
+	// because the traffic from the serverless service to the VPC connector is not
+	// allowed.
+	//   "VPC_CONNECTOR_HEALTH_CHECK_TRAFFIC_BLOCKED" - Packet could be dropped
+	// because the health check traffic to the VPC connector is not allowed.
 	//   "FORWARDING_RULE_REGION_MISMATCH" - Packet could be dropped because it was
 	// sent from a different region to a regional forwarding without global access.
 	//   "PSC_CONNECTION_NOT_ACCEPTED" - The Private Service Connect endpoint is in

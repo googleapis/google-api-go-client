@@ -9236,6 +9236,7 @@ type GoogleCloudDialogflowCxV3beta1Match struct {
 	//   "NO_MATCH" - No match was found for the query.
 	//   "NO_INPUT" - Indicates an empty query.
 	//   "EVENT" - The query directly triggered an event.
+	//   "LLM" - The query was handled by an LLM.
 	MatchType string `json:"matchType,omitempty"`
 	// Parameters: The collection of parameters extracted from the query. Depending
 	// on your protocol or client library language, this is a map, associative

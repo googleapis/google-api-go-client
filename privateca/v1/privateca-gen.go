@@ -749,6 +749,10 @@ type CertificateAuthority struct {
 	// For a self-signed CA, this will only list the current CertificateAuthority's
 	// certificate.
 	PemCaCertificates []string `json:"pemCaCertificates,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The State for this CertificateAuthority.
 	//
 	// Possible values:

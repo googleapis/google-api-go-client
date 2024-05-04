@@ -879,6 +879,8 @@ func (s *Dashboard) MarshalJSON() ([]byte, error) {
 // DashboardFilter: A filter to reduce the amount of data charted in relevant
 // widgets.
 type DashboardFilter struct {
+	// ApplyToNewWidgets: Whether to apply this filter to new widgets by default
+	ApplyToNewWidgets bool `json:"applyToNewWidgets,omitempty"`
 	// FilterType: The specified filter type
 	//
 	// Possible values:
@@ -898,15 +900,15 @@ type DashboardFilter struct {
 	// string or MQL query. If omitted, the dashboard filter will be applied to all
 	// relevant widgets in the dashboard.
 	TemplateVariable string `json:"templateVariable,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FilterType") to
+	// ForceSendFields is a list of field names (e.g. "ApplyToNewWidgets") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FilterType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ApplyToNewWidgets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

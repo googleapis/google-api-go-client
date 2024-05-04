@@ -9231,8 +9231,9 @@ type TableReplicationInfo struct {
 	// ReplicationError: Optional. Output only. Replication error that will
 	// permanently stopped table replication.
 	ReplicationError *ErrorProto `json:"replicationError,omitempty"`
-	// ReplicationIntervalMs: Required. Specifies the interval at which the source
-	// table is polled for updates.
+	// ReplicationIntervalMs: Optional. Specifies the interval at which the source
+	// table is polled for updates. It's Optional. If not specified, default
+	// replication interval would be applied.
 	ReplicationIntervalMs int64 `json:"replicationIntervalMs,omitempty,string"`
 	// ReplicationStatus: Optional. Output only. Replication status of configured
 	// replication.

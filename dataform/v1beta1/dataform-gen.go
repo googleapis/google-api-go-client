@@ -604,6 +604,31 @@ func (s *CommitRepositoryChangesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// CommitRepositoryChangesResponse: `CommitRepositoryChanges` response message.
+type CommitRepositoryChangesResponse struct {
+	// CommitSha: The commit SHA of the current commit.
+	CommitSha string `json:"commitSha,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CommitSha") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommitSha") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitRepositoryChangesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CommitRepositoryChangesResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // CommitWorkspaceChangesRequest: `CommitWorkspaceChanges` request message.
 type CommitWorkspaceChangesRequest struct {
 	// Author: Required. The commit's author.
@@ -671,6 +696,8 @@ type CompilationResult struct {
 	// CompilationErrors: Output only. Errors encountered during project
 	// compilation.
 	CompilationErrors []*CompilationError `json:"compilationErrors,omitempty"`
+	// DataEncryptionState: Output only. Only set if the repository has a KMS Key.
+	DataEncryptionState *DataEncryptionState `json:"dataEncryptionState,omitempty"`
 	// DataformCoreVersion: Output only. The version of `@dataform/core` that was
 	// used for compilation.
 	DataformCoreVersion string `json:"dataformCoreVersion,omitempty"`
@@ -782,6 +809,29 @@ type ComputeRepositoryAccessTokenStatusResponse struct {
 
 func (s *ComputeRepositoryAccessTokenStatusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeRepositoryAccessTokenStatusResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// DataEncryptionState: Describes encryption state of a resource.
+type DataEncryptionState struct {
+	// KmsKeyVersionName: The KMS key version name with which data of a resource is
+	// encrypted.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKeyVersionName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKeyVersionName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataEncryptionState) MarshalJSON() ([]byte, error) {
+	type NoMethod DataEncryptionState
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2255,11 +2305,21 @@ func (s *RemoveFileRequest) MarshalJSON() ([]byte, error) {
 type Repository struct {
 	// CreateTime: Output only. The timestamp of when the repository was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataEncryptionState: Output only. A data encryption state of a Git
+	// repository if this Repository is protected by a KMS key.
+	DataEncryptionState *DataEncryptionState `json:"dataEncryptionState,omitempty"`
 	// DisplayName: Optional. The repository's user-friendly name.
 	DisplayName string `json:"displayName,omitempty"`
 	// GitRemoteSettings: Optional. If set, configures this repository to be linked
 	// to a Git remote.
 	GitRemoteSettings *GitRemoteSettings `json:"gitRemoteSettings,omitempty"`
+	// KmsKeyName: Optional. The reference to a KMS encryption key. If provided, it
+	// will be used to encrypt user data in the repository and all child resources.
+	// It is not possible to add or update the encryption key after the repository
+	// is created. Example:
+	// `projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKey
+	// s/[key]`
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// Labels: Optional. Repository user labels.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The repository's name.
@@ -2694,6 +2754,8 @@ type WorkflowInvocation struct {
 	// this invocation. Must be in the format
 	// `projects/*/locations/*/repositories/*/compilationResults/*`.
 	CompilationResult string `json:"compilationResult,omitempty"`
+	// DataEncryptionState: Output only. Only set if the repository has a KMS Key.
+	DataEncryptionState *DataEncryptionState `json:"dataEncryptionState,omitempty"`
 	// InvocationConfig: Immutable. If left unset, a default InvocationConfig will
 	// be used.
 	InvocationConfig *InvocationConfig `json:"invocationConfig,omitempty"`
@@ -2795,20 +2857,23 @@ func (s *WorkflowInvocationAction) MarshalJSON() ([]byte, error) {
 
 // Workspace: Represents a Dataform Git workspace.
 type Workspace struct {
+	// DataEncryptionState: Output only. A data encryption state of a Git
+	// repository if this Workspace is protected by a KMS key.
+	DataEncryptionState *DataEncryptionState `json:"dataEncryptionState,omitempty"`
 	// Name: Identifier. The workspace's name.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DataEncryptionState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "DataEncryptionState") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3575,10 +3640,11 @@ func (c *ProjectsLocationsRepositoriesCommitCall) doRequest(alt string) (*http.R
 
 // Do executes the "dataform.projects.locations.repositories.commit" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsRepositoriesCommitCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// *CommitRepositoryChangesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesCommitCall) Do(opts ...googleapi.CallOption) (*CommitRepositoryChangesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3597,7 +3663,7 @@ func (c *ProjectsLocationsRepositoriesCommitCall) Do(opts ...googleapi.CallOptio
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Empty{
+	ret := &CommitRepositoryChangesResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

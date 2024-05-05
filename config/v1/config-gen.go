@@ -483,7 +483,7 @@ func (s *DeleteStatefileRequest) MarshalJSON() ([]byte, error) {
 // provisioned by Infra Manager.
 type Deployment struct {
 	// Annotations: Optional. Arbitrary key-value metadata storage e.g. to help
-	// client tools identifiy deployments during automation. See
+	// client tools identify deployments during automation. See
 	// https://google.aip.dev/148#annotations for details on format and size
 	// limitations.
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -1326,6 +1326,11 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // to move the resources towards the desired state as specified in the
 // configuration.
 type Preview struct {
+	// Annotations: Optional. Arbitrary key-value metadata storage e.g. to help
+	// client tools identifiy preview during automation. See
+	// https://google.aip.dev/148#annotations for details on format and size
+	// limitations.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// ArtifactsGcsBucket: Optional. User-defined location of Cloud Build logs,
 	// artifacts, and in Google Cloud Storage. Format: `gs://{bucket}/{folder}` A
 	// default bucket will be bootstrapped if the field is not set or empty Default
@@ -1412,6 +1417,12 @@ type Preview struct {
 	// preview. It has a size limit of 10, i.e. only top 10 errors will be
 	// summarized here.
 	TfErrors []*TerraformError `json:"tfErrors,omitempty"`
+	// TfVersion: Output only. The current Terraform version set on the preview. It
+	// is in the format of "Major.Minor.Patch", for example, "1.3.10".
+	TfVersion string `json:"tfVersion,omitempty"`
+	// TfVersionConstraint: Optional. The user-specified Terraform version
+	// constraint. Example: "=1.3.10".
+	TfVersionConstraint string `json:"tfVersionConstraint,omitempty"`
 	// WorkerPool: Optional. The user-specified Worker Pool resource in which the
 	// Cloud Build job will execute. Format
 	// projects/{project}/locations/{location}/workerPools/{workerPoolId} If this
@@ -1422,15 +1433,15 @@ type Preview struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ArtifactsGcsBucket") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ArtifactsGcsBucket") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

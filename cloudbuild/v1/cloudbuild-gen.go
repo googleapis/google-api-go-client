@@ -1009,6 +1009,8 @@ type Build struct {
 	// The difference between finish_time and start_time is the duration of the
 	// build's execution.
 	FinishTime string `json:"finishTime,omitempty"`
+	// GitConfig: Optional. Configuration for git operations.
+	GitConfig *GitConfig `json:"gitConfig,omitempty"`
 	// Id: Output only. Unique identifier of the build.
 	Id string `json:"id,omitempty"`
 	// Images: A list of images to be pushed upon the successful completion of all
@@ -1960,6 +1962,36 @@ func (s *DeleteWorkerPoolOperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// DeveloperConnectConfig: This config defines the location of a source through
+// Developer Connect.
+type DeveloperConnectConfig struct {
+	// Dir: Required. Directory, relative to the source root, in which to run the
+	// build.
+	Dir string `json:"dir,omitempty"`
+	// GitRepositoryLink: Required. The Developer Connect Git repository link,
+	// formatted as `projects/*/locations/*/connections/*/gitRepositoryLink/*`.
+	GitRepositoryLink string `json:"gitRepositoryLink,omitempty"`
+	// Revision: Required. The revision to fetch from the Git repository such as a
+	// branch, a tag, a commit SHA, or any Git ref.
+	Revision string `json:"revision,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dir") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dir") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeveloperConnectConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DeveloperConnectConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -2022,6 +2054,28 @@ type FileHashes struct {
 
 func (s *FileHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod FileHashes
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GitConfig: GitConfig is a configuration for git operations.
+type GitConfig struct {
+	// Http: Configuration for HTTP related git operations.
+	Http *HttpConfig `json:"http,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Http") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Http") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GitConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GitConfig
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2602,6 +2656,29 @@ type HttpBody struct {
 
 func (s *HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// HttpConfig: HttpConfig is a configuration for HTTP related git operations.
+type HttpConfig struct {
+	// ProxySecretVersionName: SecretVersion resource of the HTTP proxy URL. The
+	// proxy URL should be in format protocol://@]proxyhost[:port].
+	ProxySecretVersionName string `json:"proxySecretVersionName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProxySecretVersionName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProxySecretVersionName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *HttpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpConfig
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3650,6 +3727,9 @@ type Source struct {
 	// ConnectedRepository: Optional. If provided, get the source from this 2nd-gen
 	// Google Cloud Build repository resource.
 	ConnectedRepository *ConnectedRepository `json:"connectedRepository,omitempty"`
+	// DeveloperConnectConfig: If provided, get the source from this Developer
+	// Connect config.
+	DeveloperConnectConfig *DeveloperConnectConfig `json:"developerConnectConfig,omitempty"`
 	// GitSource: If provided, get the source from this Git repository.
 	GitSource *GitSource `json:"gitSource,omitempty"`
 	// RepoSource: If provided, get the source from this location in a Cloud Source

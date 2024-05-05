@@ -2148,14 +2148,22 @@ type ListLogEntriesRequest struct {
 	// entries that match the filter are returned. An empty filter matches all log
 	// entries in the resources listed in resource_names. Referencing a parent
 	// resource that is not listed in resource_names will cause the filter to
-	// return no results. The maximum length of a filter is 20,000 characters.
+	// return no results. The maximum length of a filter is 20,000 characters.To
+	// make queries faster, you can make the filter more selective by using
+	// restrictions on indexed fields
+	// (https://cloud.google.com/logging/docs/view/logging-query-language#indexed-fields)
+	// as well as limit the time range of the query by adding range restrictions on
+	// the timestamp field.
 	Filter string `json:"filter,omitempty"`
 	// OrderBy: Optional. How the results should be sorted. Presently, the only
 	// permitted values are "timestamp asc" (default) and "timestamp desc". The
 	// first option returns entries in order of increasing values of
 	// LogEntry.timestamp (oldest first), and the second option returns entries in
 	// order of decreasing timestamps (newest first). Entries with equal timestamps
-	// are returned in order of their insert_id values.
+	// are returned in order of their insert_id values.We recommend setting the
+	// order_by field to "timestamp desc" when listing recently ingested log
+	// entries. If not set, the default value of "timestamp asc" may take a long
+	// time to fetch matching logs that are only recently ingested.
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageSize: Optional. The maximum number of results to return from this
 	// request. Default is 50. If the value is negative, the request is

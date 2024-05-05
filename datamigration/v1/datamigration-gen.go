@@ -787,6 +787,8 @@ type CloudSqlSettings struct {
 	// version is 34.
 	//   "MYSQL_8_0_35" - The database major version is MySQL 8.0 and the minor
 	// version is 35.
+	//   "MYSQL_8_0_36" - The database major version is MySQL 8.0 and the minor
+	// version is 36.
 	//   "POSTGRES_9_6" - PostgreSQL 9.6.
 	//   "POSTGRES_11" - PostgreSQL 11.
 	//   "POSTGRES_10" - PostgreSQL 10.

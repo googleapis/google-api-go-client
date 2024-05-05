@@ -1587,6 +1587,7 @@ type PipelineRef struct {
 	//   "GCB_REPO" - GCB repo resolver.
 	//   "GIT" - Simple Git resolver.
 	// https://tekton.dev/docs/pipelines/git-resolver/
+	//   "DEVELOPER_CONNECT" - Developer Connect resolver.
 	Resolver string `json:"resolver,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2437,6 +2438,10 @@ type Step struct {
 	Image string `json:"image,omitempty"`
 	// Name: Name of the container specified as a DNS_LABEL.
 	Name string `json:"name,omitempty"`
+	// Params: Optional. Optional parameters passed to the StepAction.
+	Params []*Param `json:"params,omitempty"`
+	// Ref: Optional. Optional reference to a remote StepAction.
+	Ref *StepRef `json:"ref,omitempty"`
 	// Script: The contents of an executable file to execute.
 	Script string `json:"script,omitempty"`
 	// SecurityContext: Optional. SecurityContext defines the security options the
@@ -2466,6 +2471,41 @@ type Step struct {
 
 func (s *Step) MarshalJSON() ([]byte, error) {
 	type NoMethod Step
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// StepRef: A reference to a remote Step, i.e. a StepAction.
+type StepRef struct {
+	// Name: Optional. Name of the step.
+	Name string `json:"name,omitempty"`
+	// Params: Optional. Parameters used to control the resolution.
+	Params []*Param `json:"params,omitempty"`
+	// Resolver: Optional. Type of the resolver.
+	//
+	// Possible values:
+	//   "RESOLVER_NAME_UNSPECIFIED" - Default enum type; should not be used.
+	//   "BUNDLES" - Bundles resolver.
+	// https://tekton.dev/docs/pipelines/bundle-resolver/
+	//   "GCB_REPO" - GCB repo resolver.
+	//   "GIT" - Simple Git resolver.
+	// https://tekton.dev/docs/pipelines/git-resolver/
+	//   "DEVELOPER_CONNECT" - Developer Connect resolver.
+	Resolver string `json:"resolver,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *StepRef) MarshalJSON() ([]byte, error) {
+	type NoMethod StepRef
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2515,6 +2555,7 @@ type TaskRef struct {
 	//   "GCB_REPO" - GCB repo resolver.
 	//   "GIT" - Simple Git resolver.
 	// https://tekton.dev/docs/pipelines/git-resolver/
+	//   "DEVELOPER_CONNECT" - Developer Connect resolver.
 	Resolver string `json:"resolver,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2551,6 +2592,9 @@ type TaskResult struct {
 	//   "ARRAY" - Array type
 	//   "OBJECT" - Object type
 	Type string `json:"type,omitempty"`
+	// Value: Optional. Optionally used to initialize a Task's result with a Step's
+	// result.
+	Value *ParamValue `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

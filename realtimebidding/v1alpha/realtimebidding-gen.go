@@ -175,217 +175,183 @@ type BiddersBiddingFunctionsService struct {
 	s *Service
 }
 
-// ActivateBiddingFunctionRequest: The request to activate a bidding
-// function.
+// ActivateBiddingFunctionRequest: The request to activate a bidding function.
 type ActivateBiddingFunctionRequest struct {
 }
 
-// ArchiveBiddingFunctionRequest: A request to archive a bidding
-// function.
+// ArchiveBiddingFunctionRequest: A request to archive a bidding function.
 type ArchiveBiddingFunctionRequest struct {
 }
 
 // BiddingFunction: The bidding function to be executed as part of the
 // TURTLEDOVE simulation experiment bidding flow.
 type BiddingFunction struct {
-	// BiddingFunction: The raw Javascript source code of the bidding
-	// function.
+	// BiddingFunction: The raw Javascript source code of the bidding function.
 	BiddingFunction string `json:"biddingFunction,omitempty"`
-
 	// Name: The name of the bidding function that must follow the pattern:
-	// `bidders/{bidder_account_id}/biddingFunctions/{bidding_function_name}`
-	// .
+	// `bidders/{bidder_account_id}/biddingFunctions/{bidding_function_name}`.
 	Name string `json:"name,omitempty"`
-
 	// State: Output only. The state of the bidding function.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value that should not be used.
-	//   "ACTIVE" - An active function. Only `ACTIVE` bidding functions or
-	// ad scoring functions are made available for the server-side
-	// TURTLEDOVE simulations. Every account is limited to 10 active bidding
-	// functions per account.
-	//   "ARCHIVED" - A function that is no longer made available for
-	// invocation in a simulation and instead archived. An archived function
-	// can later be made active by activating the function through
-	// `ActivateBiddingFunction`.
+	//   "ACTIVE" - An active function. Only `ACTIVE` bidding functions or ad
+	// scoring functions are made available for the server-side TURTLEDOVE
+	// simulations. Every account is limited to 10 active bidding functions per
+	// account.
+	//   "ARCHIVED" - A function that is no longer made available for invocation in
+	// a simulation and instead archived. An archived function can later be made
+	// active by activating the function through `ActivateBiddingFunction`.
 	State string `json:"state,omitempty"`
-
 	// Type: The type of the bidding function to be created.
 	//
 	// Possible values:
-	//   "FUNCTION_TYPE_UNSPECIFIED" - Default value that should not be
-	// used.
-	//   "TURTLEDOVE_SIMULATION_BIDDING_FUNCTION" - Bidding function that
-	// can be used by Authorized Buyers in the original TURTLEDOVE
-	// simulation. See documentation on the TURTLEDOVE simulation at
-	// https://developers.google.com/authorized-buyers/rtb/turtledove. The
-	// function takes in a Javascript object, `inputs`, that contains the
-	// following named fields: `openrtbContextualBidRequest` OR
-	// `googleContextualBidRequest`, `customContextualSignal`,
-	// `interestBasedBidData`, `interestGroupData`, and returns the bid
-	// price CPM. Example: ``` /* Returns a bid price CPM. * * @param
-	// {Object} inputs an object with the * following named fields: * -
+	//   "FUNCTION_TYPE_UNSPECIFIED" - Default value that should not be used.
+	//   "TURTLEDOVE_SIMULATION_BIDDING_FUNCTION" - Bidding function that can be
+	// used by Authorized Buyers in the original TURTLEDOVE simulation. See
+	// documentation on the TURTLEDOVE simulation at
+	// https://developers.google.com/authorized-buyers/rtb/turtledove. The function
+	// takes in a Javascript object, `inputs`, that contains the following named
+	// fields: `openrtbContextualBidRequest` OR `googleContextualBidRequest`,
+	// `customContextualSignal`, `interestBasedBidData`, `interestGroupData`, and
+	// returns the bid price CPM. Example: ``` /* Returns a bid price CPM. * *
+	// @param {Object} inputs an object with the * following named fields: * -
 	// openrtbContextualBidRequest * OR googleContextualBidRequest * -
-	// customContextualSignal * - interestBasedBidData * - interestGroupData
-	// */ function biddingFunction(inputs) { ... return
+	// customContextualSignal * - interestBasedBidData * - interestGroupData */
+	// function biddingFunction(inputs) { ... return
 	// inputs.interestBasedBidData.cpm *
 	// inputs.customContextualSignals.placementMultiplier; } ```
-	//   "FLEDGE_BIDDING_FUNCTION" - Buyer's interest group bidding function
-	// that can be used by Authorized Buyers in the FLEDGE simulation. See
-	// the FLEDGE explainer at
+	//   "FLEDGE_BIDDING_FUNCTION" - Buyer's interest group bidding function that
+	// can be used by Authorized Buyers in the FLEDGE simulation. See the FLEDGE
+	// explainer at
 	// https://github.com/WICG/turtledove/blob/main/FLEDGE.md#32-on-device-bidding.
-	// The function takes one argument, `inputs`, that contains an object
-	// with the following named fields of the form: ``` { "interestGroup" :
-	// { "ad" : [ "buyerCreativeId": "...", # Ad creative ID "adData": { #
-	// JSON object } ], "userBiddingSignals": { . # JSON object } },
-	// "auctionSignals": { "url": # string, "slotVisibility": # enum value,
-	// "slotDimensions": [ { "height": # number value "width": # number
-	// value } ] }, "perBuyerSignals": { # JSON object },
-	// "trustedBiddingSignals": { # JSON object }, "browserSignals": {
-	// "recent_impression_ages_secs": [ # Array of integers. Not yet
-	// populated. ] } } ``` `interestGroup`: An object containing a list of
-	// `ad` objects, which contain the following named fields: -
-	// `buyerCreativeId`: The ad creative ID string. - `adData`: Any JSON
-	// value of the bidder's choosing to contain data associated with an ad
-	// provided in `BidResponse.ad.adslot.ad_data` for the Google Authorized
-	// Buyers protocol and `BidResponse.seatbid.bid.ext.ad_data` for the
-	// OpenRTB protocol. - `userBiddingSignals`: Any JSON value of the
+	// The function takes one argument, `inputs`, that contains an object with the
+	// following named fields of the form: ``` { "interestGroup" : { "ad" : [
+	// "buyerCreativeId": "...", # Ad creative ID "adData": { # JSON object } ],
+	// "userBiddingSignals": { . # JSON object } }, "auctionSignals": { "url": #
+	// string, "slotVisibility": # enum value, "slotDimensions": [ { "height": #
+	// number value "width": # number value } ] }, "perBuyerSignals": { # JSON
+	// object }, "trustedBiddingSignals": { # JSON object }, "browserSignals": {
+	// "recent_impression_ages_secs": [ # Array of integers. Not yet populated. ] }
+	// } ``` `interestGroup`: An object containing a list of `ad` objects, which
+	// contain the following named fields: - `buyerCreativeId`: The ad creative ID
+	// string. - `adData`: Any JSON value of the bidder's choosing to contain data
+	// associated with an ad provided in `BidResponse.ad.adslot.ad_data` for the
+	// Google Authorized Buyers protocol and `BidResponse.seatbid.bid.ext.ad_data`
+	// for the OpenRTB protocol. - `userBiddingSignals`: Any JSON value of the
 	// bidder's choosing containing interest group data that corresponds to
-	// user_bidding_signals (as in FLEDGE). This field will be populated
-	// from `BidResponse.interest_group_map.user_bidding_signals` for Google
-	// Authorized Buyers protocol and
-	// `BidResponse.ext.interest_group_map.user_bidding_signals` for the
-	// OpenRTB protocol. `auctionSignals`: Contains data from the seller. It
-	// corresponds to the auction signals data described in the FLEDGE
-	// proposal. It is an object containing the following named fields: -
-	// `url`: The string URL of the page with parameters removed. -
-	// `slotVisibility`: Enum of one of the following potential values: -
-	// NO_DETECTION = 0 - ABOVE_THE_FOLD = 1 - BELOW_THE_FOLD = 2 -
-	// `slotDimensions`: A list of objects containing containing width and
+	// user_bidding_signals (as in FLEDGE). This field will be populated from
+	// `BidResponse.interest_group_map.user_bidding_signals` for Google Authorized
+	// Buyers protocol and
+	// `BidResponse.ext.interest_group_map.user_bidding_signals` for the OpenRTB
+	// protocol. `auctionSignals`: Contains data from the seller. It corresponds to
+	// the auction signals data described in the FLEDGE proposal. It is an object
+	// containing the following named fields: - `url`: The string URL of the page
+	// with parameters removed. - `slotVisibility`: Enum of one of the following
+	// potential values: - NO_DETECTION = 0 - ABOVE_THE_FOLD = 1 - BELOW_THE_FOLD =
+	// 2 - `slotDimensions`: A list of objects containing containing width and
 	// height pairs in `width` and `height` fields, respectively, from
-	// `BidRequest.adslot.width` and `BidRequest.adslot.height` for the
-	// Google Authorized Buyers protocol and
-	// `BidRequest.imp.banner.format.w` and `BidRequest.imp.banner.format.h`
-	// for the OpenRTB protocol. `perBuyerSignals`: The contextual signals
-	// from the bid response that are populated in
-	// `BidResponse.interest_group_bidding.interest_group_buyers.per_buyer_si
-	// gnals` for the Google Authorized Buyers protocol and
-	// `BidResponse.ext.interest_group_bidding.interest_group_buyers.per_buye
-	// r_signals` for the OpenRTB protocol. These signals can be of any JSON
-	// format of your choosing, however, the buyer's domain name must match
-	// between: - the interest group response in
-	// `BidResponse.interest_group_map.buyer_domain` for the Google
+	// `BidRequest.adslot.width` and `BidRequest.adslot.height` for the Google
+	// Authorized Buyers protocol and `BidRequest.imp.banner.format.w` and
+	// `BidRequest.imp.banner.format.h` for the OpenRTB protocol.
+	// `perBuyerSignals`: The contextual signals from the bid response that are
+	// populated in
+	// `BidResponse.interest_group_bidding.interest_group_buyers.per_buyer_signals`
+	// for the Google Authorized Buyers protocol and
+	// `BidResponse.ext.interest_group_bidding.interest_group_buyers.per_buyer_signa
+	// ls` for the OpenRTB protocol. These signals can be of any JSON format of
+	// your choosing, however, the buyer's domain name must match between: - the
+	// interest group response in `BidResponse.interest_group_map.buyer_domain` for
+	// the Google Authorized Buyers protocol or in
+	// `BidResponse.ext.interest_group_map.buyer_domain` for the OpenRTB protocol.
+	// - the contextual response as a key to the map in
+	// `BidResponse.interest_group_bidding.interest_group_buyers` for the Google
 	// Authorized Buyers protocol or in
-	// `BidResponse.ext.interest_group_map.buyer_domain` for the OpenRTB
-	// protocol. - the contextual response as a key to the map in
-	// `BidResponse.interest_group_bidding.interest_group_buyers` for the
-	// Google Authorized Buyers protocol or in
-	// `BidResponse.ext.interest_group_bidding.interest_group_buyers` for
-	// the OpenRTB protocol. In other words, there must be a match between
-	// the buyer domain of the contextual per_buyer_signals and the domain
-	// of an interest group. `trustedBiddingSignals`: The trusted bidding
-	// signals that corresponds to the trusted_bidding_signals in the FLEDGE
-	// proposal. It is provided in the interest group response as
+	// `BidResponse.ext.interest_group_bidding.interest_group_buyers` for the
+	// OpenRTB protocol. In other words, there must be a match between the buyer
+	// domain of the contextual per_buyer_signals and the domain of an interest
+	// group. `trustedBiddingSignals`: The trusted bidding signals that corresponds
+	// to the trusted_bidding_signals in the FLEDGE proposal. It is provided in the
+	// interest group response as
 	// `BidResponse.interest_group_map.user_bidding_signals` for the Google
 	// Authorized Buyers protocol and
-	// `BidResponse.ext.interest_group_map.user_bidding_signals` for the
-	// OpenRTB protocol. This field can be any JSON format of your choosing.
-	// `browserSignals`: An object of simulated browser-provider signals. It
-	// is an object with a single named field,
-	// `recent_impression_ages_secs`, that contains a list of estimated
-	// number value recent impression ages in seconds for a given interest
-	// group. `recent_impression_ages_secs` is not yet populated. The
-	// function returns the string creative ID of the selected ad, the bid
-	// price CPM, and (optionally) selected product IDs. In addition, the
-	// bidding function may populate an optional debug string that may be
-	// used for remote debugging and troubleshooting of a bidder-provided
-	// bidding function. The debug string should not contain a user
-	// identifier. The maximum length of the debug string is 200 bytes. This
-	// debug string is available in `BidResponseFeedback`
+	// `BidResponse.ext.interest_group_map.user_bidding_signals` for the OpenRTB
+	// protocol. This field can be any JSON format of your choosing.
+	// `browserSignals`: An object of simulated browser-provider signals. It is an
+	// object with a single named field, `recent_impression_ages_secs`, that
+	// contains a list of estimated number value recent impression ages in seconds
+	// for a given interest group. `recent_impression_ages_secs` is not yet
+	// populated. The function returns the string creative ID of the selected ad,
+	// the bid price CPM, and (optionally) selected product IDs. In addition, the
+	// bidding function may populate an optional debug string that may be used for
+	// remote debugging and troubleshooting of a bidder-provided bidding function.
+	// The debug string should not contain a user identifier. The maximum length of
+	// the debug string is 200 bytes. This debug string is available in
+	// `BidResponseFeedback`
 	// (https://developers.google.com/authorized-buyers/rtb/realtime-bidding-guide#bidresponsefeedback-object)
 	// and `BidFeedback`
 	// (https://developers.google.com/authorized-buyers/rtb/openrtb-guide#bidfeedback),
-	// for the Google protocol and OpenRTB protocol respectively. In
-	// addition, the debug string can be inserted into the creative HTML
-	// snippet through macro substitution if the following string is
-	// included in the snippet: “%%DEBUG_STRING%%”. Ensure the debug
-	// string complies with [Platform Program
-	// Policies](https://support.google.com/platformspolicy/answer/3013851).
-	// Sample Bidding Function: ``` function biddingFunction(inputs) { ...
-	// return { "buyerCreativeId": "ad_creative_id_1", "bidPriceCpm": 0.3,
-	// "productIds": ["product_id_1", "product_id_2", "product_id_3"]
-	// "debugString": "Bidding function executed successfully!" } } ```
+	// for the Google protocol and OpenRTB protocol respectively. In addition, the
+	// debug string can be inserted into the creative HTML snippet through macro
+	// substitution if the following string is included in the snippet:
+	// “%%DEBUG_STRING%%”. Ensure the debug string complies with [Platform
+	// Program
+	// Policies](https://support.google.com/platformspolicy/answer/3013851). Sample
+	// Bidding Function: ``` function biddingFunction(inputs) { ... return {
+	// "buyerCreativeId": "ad_creative_id_1", "bidPriceCpm": 0.3, "productIds":
+	// ["product_id_1", "product_id_2", "product_id_3"] "debugString": "Bidding
+	// function executed successfully!" } } ```
 	Type string `json:"type,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "BiddingFunction") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BiddingFunction") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BiddingFunction") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BiddingFunction) MarshalJSON() ([]byte, error) {
 	type NoMethod BiddingFunction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListBiddingFunctionsResponse: A response containing a list of a
-// bidder's bidding functions.
+// ListBiddingFunctionsResponse: A response containing a list of a bidder's
+// bidding functions.
 type ListBiddingFunctionsResponse struct {
 	// BiddingFunctions: A list of a bidder's bidding functions.
 	BiddingFunctions []*BiddingFunction `json:"biddingFunctions,omitempty"`
-
-	// NextPageToken: A token which can be passed to a subsequent call to
-	// the `ListBiddingFunctions` method to retrieve the next page of
-	// results in ListBiddingFunctionsRequest.pageToken.
+	// NextPageToken: A token which can be passed to a subsequent call to the
+	// `ListBiddingFunctions` method to retrieve the next page of results in
+	// ListBiddingFunctionsRequest.pageToken.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "BiddingFunctions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BiddingFunctions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BiddingFunctions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListBiddingFunctionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBiddingFunctionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "realtimebidding.bidders.biddingFunctions.activate":
 
 type BiddersBiddingFunctionsActivateCall struct {
 	s                              *Service
@@ -396,13 +362,11 @@ type BiddersBiddingFunctionsActivateCall struct {
 	header_                        http.Header
 }
 
-// Activate: Activates an existing bidding function. An activated
-// function is available for invocation for the server-side TURTLEDOVE
-// simulations.
+// Activate: Activates an existing bidding function. An activated function is
+// available for invocation for the server-side TURTLEDOVE simulations.
 //
 //   - name: The name of the bidding function to activate. Format:
-//     `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}
-//     `.
+//     `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}`.
 func (r *BiddersBiddingFunctionsService) Activate(name string, activatebiddingfunctionrequest *ActivateBiddingFunctionRequest) *BiddersBiddingFunctionsActivateCall {
 	c := &BiddersBiddingFunctionsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -411,23 +375,21 @@ func (r *BiddersBiddingFunctionsService) Activate(name string, activatebiddingfu
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BiddersBiddingFunctionsActivateCall) Fields(s ...googleapi.Field) *BiddersBiddingFunctionsActivateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BiddersBiddingFunctionsActivateCall) Context(ctx context.Context) *BiddersBiddingFunctionsActivateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BiddersBiddingFunctionsActivateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -436,18 +398,12 @@ func (c *BiddersBiddingFunctionsActivateCall) Header() http.Header {
 }
 
 func (c *BiddersBiddingFunctionsActivateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activatebiddingfunctionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:activate")
@@ -464,12 +420,11 @@ func (c *BiddersBiddingFunctionsActivateCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "realtimebidding.bidders.biddingFunctions.activate" call.
-// Exactly one of *BiddingFunction or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BiddingFunction.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BiddingFunction.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *BiddersBiddingFunctionsActivateCall) Do(opts ...googleapi.CallOption) (*BiddingFunction, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -500,38 +455,7 @@ func (c *BiddersBiddingFunctionsActivateCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Activates an existing bidding function. An activated function is available for invocation for the server-side TURTLEDOVE simulations.",
-	//   "flatPath": "v1alpha/bidders/{biddersId}/biddingFunctions/{biddingFunctionsId}:activate",
-	//   "httpMethod": "POST",
-	//   "id": "realtimebidding.bidders.biddingFunctions.activate",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the bidding function to activate. Format: `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}`",
-	//       "location": "path",
-	//       "pattern": "^bidders/[^/]+/biddingFunctions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:activate",
-	//   "request": {
-	//     "$ref": "ActivateBiddingFunctionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "BiddingFunction"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/realtime-bidding"
-	//   ]
-	// }
-
 }
-
-// method id "realtimebidding.bidders.biddingFunctions.archive":
 
 type BiddersBiddingFunctionsArchiveCall struct {
 	s                             *Service
@@ -542,13 +466,12 @@ type BiddersBiddingFunctionsArchiveCall struct {
 	header_                       http.Header
 }
 
-// Archive: Archives an existing bidding function. An archived function
-// will not be available for function invocation for the server-side
-// TURTLEDOVE simulations unless it is activated.
+// Archive: Archives an existing bidding function. An archived function will
+// not be available for function invocation for the server-side TURTLEDOVE
+// simulations unless it is activated.
 //
 //   - name: The name of the bidding function to archive. Format:
-//     `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}
-//     `.
+//     `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}`.
 func (r *BiddersBiddingFunctionsService) Archive(name string, archivebiddingfunctionrequest *ArchiveBiddingFunctionRequest) *BiddersBiddingFunctionsArchiveCall {
 	c := &BiddersBiddingFunctionsArchiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -557,23 +480,21 @@ func (r *BiddersBiddingFunctionsService) Archive(name string, archivebiddingfunc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BiddersBiddingFunctionsArchiveCall) Fields(s ...googleapi.Field) *BiddersBiddingFunctionsArchiveCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BiddersBiddingFunctionsArchiveCall) Context(ctx context.Context) *BiddersBiddingFunctionsArchiveCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BiddersBiddingFunctionsArchiveCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -582,18 +503,12 @@ func (c *BiddersBiddingFunctionsArchiveCall) Header() http.Header {
 }
 
 func (c *BiddersBiddingFunctionsArchiveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.archivebiddingfunctionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:archive")
@@ -610,12 +525,11 @@ func (c *BiddersBiddingFunctionsArchiveCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "realtimebidding.bidders.biddingFunctions.archive" call.
-// Exactly one of *BiddingFunction or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BiddingFunction.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BiddingFunction.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *BiddersBiddingFunctionsArchiveCall) Do(opts ...googleapi.CallOption) (*BiddingFunction, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -646,38 +560,7 @@ func (c *BiddersBiddingFunctionsArchiveCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Archives an existing bidding function. An archived function will not be available for function invocation for the server-side TURTLEDOVE simulations unless it is activated.",
-	//   "flatPath": "v1alpha/bidders/{biddersId}/biddingFunctions/{biddingFunctionsId}:archive",
-	//   "httpMethod": "POST",
-	//   "id": "realtimebidding.bidders.biddingFunctions.archive",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the bidding function to archive. Format: `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}`",
-	//       "location": "path",
-	//       "pattern": "^bidders/[^/]+/biddingFunctions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:archive",
-	//   "request": {
-	//     "$ref": "ArchiveBiddingFunctionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "BiddingFunction"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/realtime-bidding"
-	//   ]
-	// }
-
 }
-
-// method id "realtimebidding.bidders.biddingFunctions.create":
 
 type BiddersBiddingFunctionsCreateCall struct {
 	s               *Service
@@ -690,8 +573,8 @@ type BiddersBiddingFunctionsCreateCall struct {
 
 // Create: Creates a new bidding function.
 //
-//   - parent: The name of the bidder for which to create the bidding
-//     function. Format: `bidders/{bidderAccountId}`.
+//   - parent: The name of the bidder for which to create the bidding function.
+//     Format: `bidders/{bidderAccountId}`.
 func (r *BiddersBiddingFunctionsService) Create(parent string, biddingfunction *BiddingFunction) *BiddersBiddingFunctionsCreateCall {
 	c := &BiddersBiddingFunctionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -700,23 +583,21 @@ func (r *BiddersBiddingFunctionsService) Create(parent string, biddingfunction *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BiddersBiddingFunctionsCreateCall) Fields(s ...googleapi.Field) *BiddersBiddingFunctionsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BiddersBiddingFunctionsCreateCall) Context(ctx context.Context) *BiddersBiddingFunctionsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BiddersBiddingFunctionsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -725,18 +606,12 @@ func (c *BiddersBiddingFunctionsCreateCall) Header() http.Header {
 }
 
 func (c *BiddersBiddingFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.biddingfunction)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/biddingFunctions")
@@ -753,12 +628,11 @@ func (c *BiddersBiddingFunctionsCreateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "realtimebidding.bidders.biddingFunctions.create" call.
-// Exactly one of *BiddingFunction or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BiddingFunction.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BiddingFunction.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *BiddersBiddingFunctionsCreateCall) Do(opts ...googleapi.CallOption) (*BiddingFunction, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -789,38 +663,7 @@ func (c *BiddersBiddingFunctionsCreateCall) Do(opts ...googleapi.CallOption) (*B
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new bidding function.",
-	//   "flatPath": "v1alpha/bidders/{biddersId}/biddingFunctions",
-	//   "httpMethod": "POST",
-	//   "id": "realtimebidding.bidders.biddingFunctions.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the bidder for which to create the bidding function. Format: `bidders/{bidderAccountId}`",
-	//       "location": "path",
-	//       "pattern": "^bidders/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/biddingFunctions",
-	//   "request": {
-	//     "$ref": "BiddingFunction"
-	//   },
-	//   "response": {
-	//     "$ref": "BiddingFunction"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/realtime-bidding"
-	//   ]
-	// }
-
 }
-
-// method id "realtimebidding.bidders.biddingFunctions.list":
 
 type BiddersBiddingFunctionsListCall struct {
 	s            *Service
@@ -831,27 +674,26 @@ type BiddersBiddingFunctionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the bidding functions that a bidder currently has
-// registered.
+// List: Lists the bidding functions that a bidder currently has registered.
 //
-//   - parent: Name of the bidder whose bidding functions will be listed.
-//     Format: `bidders/{bidder_account_id}`.
+//   - parent: Name of the bidder whose bidding functions will be listed. Format:
+//     `bidders/{bidder_account_id}`.
 func (r *BiddersBiddingFunctionsService) List(parent string) *BiddersBiddingFunctionsListCall {
 	c := &BiddersBiddingFunctionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of bidding functions to return.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// bidding functions to return.
 func (c *BiddersBiddingFunctionsListCall) PageSize(pageSize int64) *BiddersBiddingFunctionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return. This value is
-// received from a previous `ListBiddingFunctions` call in
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return. This value is received from a
+// previous `ListBiddingFunctions` call in
 // ListBiddingFunctionsResponse.nextPageToken.
 func (c *BiddersBiddingFunctionsListCall) PageToken(pageToken string) *BiddersBiddingFunctionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -859,33 +701,29 @@ func (c *BiddersBiddingFunctionsListCall) PageToken(pageToken string) *BiddersBi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BiddersBiddingFunctionsListCall) Fields(s ...googleapi.Field) *BiddersBiddingFunctionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BiddersBiddingFunctionsListCall) IfNoneMatch(entityTag string) *BiddersBiddingFunctionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BiddersBiddingFunctionsListCall) Context(ctx context.Context) *BiddersBiddingFunctionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BiddersBiddingFunctionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -894,12 +732,7 @@ func (c *BiddersBiddingFunctionsListCall) Header() http.Header {
 }
 
 func (c *BiddersBiddingFunctionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -920,12 +753,11 @@ func (c *BiddersBiddingFunctionsListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "realtimebidding.bidders.biddingFunctions.list" call.
-// Exactly one of *ListBiddingFunctionsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListBiddingFunctionsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBiddingFunctionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *BiddersBiddingFunctionsListCall) Do(opts ...googleapi.CallOption) (*ListBiddingFunctionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -956,43 +788,6 @@ func (c *BiddersBiddingFunctionsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the bidding functions that a bidder currently has registered.",
-	//   "flatPath": "v1alpha/bidders/{biddersId}/biddingFunctions",
-	//   "httpMethod": "GET",
-	//   "id": "realtimebidding.bidders.biddingFunctions.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of bidding functions to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return. This value is received from a previous `ListBiddingFunctions` call in ListBiddingFunctionsResponse.nextPageToken.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Name of the bidder whose bidding functions will be listed. Format: `bidders/{bidder_account_id}`",
-	//       "location": "path",
-	//       "pattern": "^bidders/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/biddingFunctions",
-	//   "response": {
-	//     "$ref": "ListBiddingFunctionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/realtime-bidding"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1000,7 +795,7 @@ func (c *BiddersBiddingFunctionsListCall) Do(opts ...googleapi.CallOption) (*Lis
 // The provided context supersedes any context provided to the Context method.
 func (c *BiddersBiddingFunctionsListCall) Pages(ctx context.Context, f func(*ListBiddingFunctionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

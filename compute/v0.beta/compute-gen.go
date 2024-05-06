@@ -97,7 +97,6 @@ const apiVersion = "beta"
 const basePath = "https://compute.googleapis.com/compute/beta/"
 const basePathTemplate = "https://compute.UNIVERSE_DOMAIN/compute/beta/"
 const mtlsBasePath = "https://compute.mtls.googleapis.com/compute/beta/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -138,7 +137,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
-	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err

@@ -92,7 +92,6 @@ const apiVersion = "v3.5"
 const basePath = "https://dfareporting.googleapis.com/dfareporting/v3.5/"
 const basePathTemplate = "https://dfareporting.UNIVERSE_DOMAIN/dfareporting/v3.5/"
 const mtlsBasePath = "https://dfareporting.mtls.googleapis.com/dfareporting/v3.5/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -111,7 +110,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
-	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err

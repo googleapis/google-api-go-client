@@ -422,7 +422,7 @@ type File struct {
 	// Hashes: The hashes of the file content.
 	Hashes []*Hash `json:"hashes,omitempty"`
 	// Name: The name of the file, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1/files/a%2Fb%2Fc.txt".
+	// `projects/p1/locations/us-central1/repositories/repo1/files/a%2Fb%2Fc.txt`.
 	// If the file ID part contains slashes, they are escaped.
 	Name string `json:"name,omitempty"`
 	// Owner: The name of the Package or Version that owns this file, if any.
@@ -887,8 +887,12 @@ type Repository struct {
 	// letters, numeric characters, underscores, and dashes.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: The name of the repository, for example:
-	// `projects/p1/locations/us-central1/repositories/repo1`.
+	// `projects/p1/locations/us-central1/repositories/repo1`. For each location in
+	// a project, repository names must be unique.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. If set, the repository satisfies physical zone
+	// isolation.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. If set, the repository satisfies physical zone
 	// separation.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
@@ -2069,7 +2073,8 @@ type ProjectsLocationsRepositoriesPatchCall struct {
 // Patch: Updates a repository.
 //
 //   - name: The name of the repository, for example:
-//     `projects/p1/locations/us-central1/repositories/repo1`.
+//     `projects/p1/locations/us-central1/repositories/repo1`. For each location
+//     in a project, repository names must be unique.
 func (r *ProjectsLocationsRepositoriesService) Patch(name string, repository *Repository) *ProjectsLocationsRepositoriesPatchCall {
 	c := &ProjectsLocationsRepositoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

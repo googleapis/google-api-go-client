@@ -6398,6 +6398,9 @@ type GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunk struct {
 	PageHeaders []*GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageHeader `json:"pageHeaders,omitempty"`
 	// PageSpan: Page span of the chunk.
 	PageSpan *GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageSpan `json:"pageSpan,omitempty"`
+	// SourceBlockIds: DO NOT USE. List of all parsed documents layout source
+	// blocks used to generate the chunk.
+	SourceBlockIds []string `json:"sourceBlockIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

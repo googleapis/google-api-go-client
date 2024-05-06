@@ -419,8 +419,8 @@ func (s *AdvanceRolloutRule) MarshalJSON() ([]byte, error) {
 
 // AnthosCluster: Information specifying an Anthos Cluster.
 type AnthosCluster struct {
-	// Membership: Membership of the GKE Hub-registered cluster to which to apply
-	// the Skaffold configuration. Format is
+	// Membership: Optional. Membership of the GKE Hub-registered cluster to which
+	// to apply the Skaffold configuration. Format is
 	// `projects/{project}/locations/{location}/memberships/{membership_name}`.
 	Membership string `json:"membership,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Membership") to
@@ -2011,7 +2011,7 @@ func (s *GatewayServiceMesh) MarshalJSON() ([]byte, error) {
 
 // GkeCluster: Information specifying a GKE Cluster.
 type GkeCluster struct {
-	// Cluster: Information specifying a GKE Cluster. Format is
+	// Cluster: Optional. Information specifying a GKE Cluster. Format is
 	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`.
 	Cluster string `json:"cluster,omitempty"`
 	// InternalIp: Optional. If true, `cluster` is accessed using the private IP

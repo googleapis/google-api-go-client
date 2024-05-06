@@ -380,6 +380,10 @@ type AppGateway struct {
 	// Name: Required. Unique resource name of the AppGateway. The name is ignored
 	// when creating an AppGateway.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The current state of the AppGateway.
 	//
 	// Possible values:
@@ -598,6 +602,10 @@ type GoogleCloudBeyondcorpAppconnectionsV1AppConnection struct {
 	// Name: Required. Unique resource name of the AppConnection. The name is
 	// ignored when creating a AppConnection.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The current state of the AppConnection.
 	//
 	// Possible values:

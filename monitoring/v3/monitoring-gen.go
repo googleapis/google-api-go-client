@@ -4574,10 +4574,11 @@ func (s *MService) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceAgentAuthentication: Contains information needed for generating an
-// OpenID Connect token
-// (https://developers.google.com/identity/protocols/OpenIDConnect). The OIDC
-// token will be generated for the Monitoring service agent service account.
+// ServiceAgentAuthentication: Contains information needed for generating
+// either an OpenID Connect token
+// (https://developers.google.com/identity/protocols/OpenIDConnect) or OAuth
+// token (https://developers.google.com/identity/protocols/oauth2). The token
+// will be generated for the Monitoring service agent service account.
 type ServiceAgentAuthentication struct {
 	// Type: Type of authentication.
 	//

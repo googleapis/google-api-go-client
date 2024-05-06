@@ -145,7 +145,6 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Media = NewMediaService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -155,8 +154,6 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	Media *MediaService
-
 	Projects *ProjectsService
 }
 
@@ -165,15 +162,6 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func NewMediaService(s *Service) *MediaService {
-	rs := &MediaService{s: s}
-	return rs
-}
-
-type MediaService struct {
-	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -980,7 +968,7 @@ type GoogleDevtoolsArtifactregistryV1File struct {
 	// Hashes: The hashes of the file content.
 	Hashes []*Hash `json:"hashes,omitempty"`
 	// Name: The name of the file, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1/files/a%2Fb%2Fc.txt".
+	// `projects/p1/locations/us-central1/repositories/repo1/files/a%2Fb%2Fc.txt`.
 	// If the file ID part contains slashes, they are escaped.
 	Name string `json:"name,omitempty"`
 	// Owner: The name of the Package or Version that owns this file, if any.
@@ -2476,10 +2464,14 @@ type Repository struct {
 	// upstreams.
 	Mode string `json:"mode,omitempty"`
 	// Name: The name of the repository, for example:
-	// `projects/p1/locations/us-central1/repositories/repo1`.
+	// `projects/p1/locations/us-central1/repositories/repo1`. For each location in
+	// a project, repository names must be unique.
 	Name string `json:"name,omitempty"`
 	// RemoteRepositoryConfig: Configuration specific for a Remote Repository.
 	RemoteRepositoryConfig *RemoteRepositoryConfig `json:"remoteRepositoryConfig,omitempty"`
+	// SatisfiesPzi: Output only. If set, the repository satisfies physical zone
+	// isolation.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. If set, the repository satisfies physical zone
 	// separation.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
@@ -3155,7 +3147,7 @@ func (s *Version) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// VirtualRepositoryConfig: Virtual repository configuration.
+// VirtualRepositoryConfig: LINT.IfChange Virtual repository configuration.
 type VirtualRepositoryConfig struct {
 	// UpstreamPolicies: Policies that configure the upstream artifacts distributed
 	// by the Virtual Repository. Upstream policies cannot be set on a standard
@@ -3235,130 +3227,6 @@ type YumRepository struct {
 func (s *YumRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod YumRepository
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-type MediaDownloadCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Download: Download a file.
-//
-// - name: The name of the file to download.
-func (r *MediaService) Download(name string) *MediaDownloadCall {
-	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *MediaDownloadCall) Fields(s ...googleapi.Field) *MediaDownloadCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *MediaDownloadCall) IfNoneMatch(entityTag string) *MediaDownloadCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do and Download methods.
-func (c *MediaDownloadCall) Context(ctx context.Context) *MediaDownloadCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *MediaDownloadCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:download")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Download fetches the API endpoint's "media" value, instead of the normal
-// API response value. If the returned error is nil, the Response is guaranteed to
-// have a 2xx status code. Callers must close the Response.Body as usual.
-func (c *MediaDownloadCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("media")
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		res.Body.Close()
-		return nil, gensupport.WrapError(err)
-	}
-	return res, nil
-}
-
-// Do executes the "artifactregistry.media.download" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *DownloadFileResponse.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*DownloadFileResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &DownloadFileResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
 }
 
 type ProjectsGetProjectSettingsCall struct {
@@ -4761,7 +4629,8 @@ type ProjectsLocationsRepositoriesPatchCall struct {
 // Patch: Updates a repository.
 //
 //   - name: The name of the repository, for example:
-//     `projects/p1/locations/us-central1/repositories/repo1`.
+//     `projects/p1/locations/us-central1/repositories/repo1`. For each location
+//     in a project, repository names must be unique.
 func (r *ProjectsLocationsRepositoriesService) Patch(name string, repository *Repository) *ProjectsLocationsRepositoriesPatchCall {
 	c := &ProjectsLocationsRepositoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5602,6 +5471,130 @@ func (c *ProjectsLocationsRepositoriesDockerImagesListCall) Pages(ctx context.Co
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsRepositoriesFilesDownloadCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Download: Download a file.
+//
+// - name: The name of the file to download.
+func (r *ProjectsLocationsRepositoriesFilesService) Download(name string) *ProjectsLocationsRepositoriesFilesDownloadCall {
+	c := &ProjectsLocationsRepositoriesFilesDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesFilesDownloadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesFilesDownloadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRepositoriesFilesDownloadCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesFilesDownloadCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do and Download methods.
+func (c *ProjectsLocationsRepositoriesFilesDownloadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesFilesDownloadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesFilesDownloadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesFilesDownloadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:download")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Download fetches the API endpoint's "media" value, instead of the normal
+// API response value. If the returned error is nil, the Response is guaranteed to
+// have a 2xx status code. Callers must close the Response.Body as usual.
+func (c *ProjectsLocationsRepositoriesFilesDownloadCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		res.Body.Close()
+		return nil, gensupport.WrapError(err)
+	}
+	return res, nil
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.files.download" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DownloadFileResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRepositoriesFilesDownloadCall) Do(opts ...googleapi.CallOption) (*DownloadFileResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DownloadFileResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsRepositoriesFilesGetCall struct {

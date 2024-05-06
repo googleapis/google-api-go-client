@@ -146,6 +146,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Folders = NewFoldersService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -155,6 +156,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Folders *FoldersService
+
 	Projects *ProjectsService
 }
 
@@ -163,6 +166,15 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewFoldersService(s *Service) *FoldersService {
+	rs := &FoldersService{s: s}
+	return rs
+}
+
+type FoldersService struct {
+	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -181,7 +193,9 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.EkmConfig = NewProjectsLocationsEkmConfigService(s)
 	rs.EkmConnections = NewProjectsLocationsEkmConnectionsService(s)
+	rs.KeyHandles = NewProjectsLocationsKeyHandlesService(s)
 	rs.KeyRings = NewProjectsLocationsKeyRingsService(s)
+	rs.Operations = NewProjectsLocationsOperationsService(s)
 	return rs
 }
 
@@ -192,7 +206,11 @@ type ProjectsLocationsService struct {
 
 	EkmConnections *ProjectsLocationsEkmConnectionsService
 
+	KeyHandles *ProjectsLocationsKeyHandlesService
+
 	KeyRings *ProjectsLocationsKeyRingsService
+
+	Operations *ProjectsLocationsOperationsService
 }
 
 func NewProjectsLocationsEkmConfigService(s *Service) *ProjectsLocationsEkmConfigService {
@@ -210,6 +228,15 @@ func NewProjectsLocationsEkmConnectionsService(s *Service) *ProjectsLocationsEkm
 }
 
 type ProjectsLocationsEkmConnectionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsKeyHandlesService(s *Service) *ProjectsLocationsKeyHandlesService {
+	rs := &ProjectsLocationsKeyHandlesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsKeyHandlesService struct {
 	s *Service
 }
 
@@ -255,6 +282,15 @@ func NewProjectsLocationsKeyRingsImportJobsService(s *Service) *ProjectsLocation
 }
 
 type ProjectsLocationsKeyRingsImportJobsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
+	rs := &ProjectsLocationsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
@@ -549,6 +585,41 @@ type AuditLogConfig struct {
 
 func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// AutokeyConfig: Cloud KMS Autokey configuration for a folder.
+type AutokeyConfig struct {
+	// KeyProject: Optional. Name of the key project, e.g. `projects/{PROJECT_ID}`
+	// or `projects/{PROJECT_NUMBER}`, where Cloud KMS Autokey will provision new
+	// CryptoKeys. On UpdateAutokeyConfig, the caller will require
+	// `cloudkms.cryptoKeys.setIamPolicy` permission on this key project. Once
+	// configured, for Cloud KMS Autokey to function properly, this key project
+	// must have the Cloud KMS API activated and the Cloud KMS Service Agent for
+	// this key project must be granted the `cloudkms.admin` role (or pertinent
+	// permissions).
+	KeyProject string `json:"keyProject,omitempty"`
+	// Name: Identifier. Name of the AutokeyConfig resource, e.g.
+	// `folders/{FOLDER_NUMBER}/autokeyConfig`.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "KeyProject") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyProject") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutokeyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AutokeyConfig
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -873,6 +944,8 @@ type CryptoKeyVersion struct {
 	// curve is only supported for HSM protection level. Other hash functions can
 	// also be used:
 	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "EC_SIGN_ED25519" - EdDSA on the Curve25519 in pure mode (taking data as
+	// input).
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
 	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
 	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
@@ -1052,6 +1125,8 @@ type CryptoKeyVersionTemplate struct {
 	// curve is only supported for HSM protection level. Other hash functions can
 	// also be used:
 	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "EC_SIGN_ED25519" - EdDSA on the Curve25519 in pure mode (taking data as
+	// input).
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
 	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
 	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
@@ -1653,6 +1728,8 @@ type ImportCryptoKeyVersionRequest struct {
 	// curve is only supported for HSM protection level. Other hash functions can
 	// also be used:
 	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "EC_SIGN_ED25519" - EdDSA on the Curve25519 in pure mode (taking data as
+	// input).
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
 	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
 	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
@@ -1844,6 +1921,42 @@ func (s *ImportJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// KeyHandle: Resource-oriented representation of a request to Cloud KMS
+// Autokey and the resulting provisioning of a CryptoKey.
+type KeyHandle struct {
+	// KmsKey: Output only. Name of a CryptoKey that has been provisioned for
+	// Customer Managed Encryption Key (CMEK) use in the KeyHandle's project and
+	// location for the requested resource type.
+	KmsKey string `json:"kmsKey,omitempty"`
+	// Name: Output only. Identifier. Name of the [KeyHandle] resource, e.g.
+	// `projects/{PROJECT_ID}/locations/{LOCATION}/keyHandles/{KEY_HANDLE_ID}`.
+	Name string `json:"name,omitempty"`
+	// ResourceTypeSelector: Required. Indicates the resource type that the
+	// resulting CryptoKey is meant to protect, e.g.
+	// `{SERVICE}.googleapis.com/{TYPE}`. See documentation for supported resource
+	// types.
+	ResourceTypeSelector string `json:"resourceTypeSelector,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyHandle) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyHandle
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // KeyOperationAttestation: Contains an HSM-generated attestation about a key
 // operation. For more information, see [Verifying attestations]
 // (https://cloud.google.com/kms/docs/attest-key).
@@ -2032,6 +2145,31 @@ type ListImportJobsResponse struct {
 
 func (s *ListImportJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListImportJobsResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ListKeyHandlesResponse: Response message for Autokey.ListKeyHandles.
+type ListKeyHandlesResponse struct {
+	// KeyHandles: Resulting KeyHandles.
+	KeyHandles []*KeyHandle `json:"keyHandles,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "KeyHandles") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyHandles") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListKeyHandlesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListKeyHandlesResponse
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2363,6 +2501,53 @@ func (s *MacVerifyResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// Operation: This resource represents a long-running operation that is the
+// result of a network API call.
+type Operation struct {
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
+	Done bool `json:"done,omitempty"`
+	// Error: The error result of the operation in case of failure or cancellation.
+	Error *Status `json:"error,omitempty"`
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
+	Name string `json:"name,omitempty"`
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Operation) MarshalJSON() ([]byte, error) {
+	type NoMethod Operation
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // Policy: An Identity and Access Management (IAM) policy, which specifies
 // access controls for Google Cloud resources. A `Policy` is a collection of
 // `bindings`. A `binding` binds one or more `members`, or principals, to a
@@ -2508,6 +2693,8 @@ type PublicKey struct {
 	// curve is only supported for HSM protection level. Other hash functions can
 	// also be used:
 	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "EC_SIGN_ED25519" - EdDSA on the Curve25519 in pure mode (taking data as
+	// input).
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
 	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
 	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
@@ -2964,6 +3151,67 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// ShowEffectiveAutokeyConfigResponse: Response message for
+// ShowEffectiveAutokeyConfig.
+type ShowEffectiveAutokeyConfigResponse struct {
+	// KeyProject: Name of the key project configured in the resource project's
+	// folder ancestry.
+	KeyProject string `json:"keyProject,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "KeyProject") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyProject") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ShowEffectiveAutokeyConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ShowEffectiveAutokeyConfigResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`. Permissions
@@ -3072,6 +3320,337 @@ type WrappingPublicKey struct {
 func (s *WrappingPublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod WrappingPublicKey
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type FoldersGetAutokeyConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetAutokeyConfig: Returns the AutokeyConfig for a folder.
+//
+//   - name: Name of the AutokeyConfig resource, e.g.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig`.
+func (r *FoldersService) GetAutokeyConfig(name string) *FoldersGetAutokeyConfigCall {
+	c := &FoldersGetAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersGetAutokeyConfigCall) Fields(s ...googleapi.Field) *FoldersGetAutokeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersGetAutokeyConfigCall) IfNoneMatch(entityTag string) *FoldersGetAutokeyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersGetAutokeyConfigCall) Context(ctx context.Context) *FoldersGetAutokeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersGetAutokeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetAutokeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.folders.getAutokeyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutokeyConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersGetAutokeyConfigCall) Do(opts ...googleapi.CallOption) (*AutokeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutokeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type FoldersUpdateAutokeyConfigCall struct {
+	s             *Service
+	name          string
+	autokeyconfig *AutokeyConfig
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// UpdateAutokeyConfig: Updates the AutokeyConfig for a folder. The caller must
+// have both `cloudkms.autokeyConfigs.update` permission on the parent folder
+// and `cloudkms.cryptoKeys.setIamPolicy` permission on the provided key
+// project. An empty key project may be provided to clear the configuration.
+//
+//   - name: Identifier. Name of the AutokeyConfig resource, e.g.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig`.
+func (r *FoldersService) UpdateAutokeyConfig(name string, autokeyconfig *AutokeyConfig) *FoldersUpdateAutokeyConfigCall {
+	c := &FoldersUpdateAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.autokeyconfig = autokeyconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Masks which
+// fields of the AutokeyConfig to update, e.g. `keyProject`.
+func (c *FoldersUpdateAutokeyConfigCall) UpdateMask(updateMask string) *FoldersUpdateAutokeyConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersUpdateAutokeyConfigCall) Fields(s ...googleapi.Field) *FoldersUpdateAutokeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersUpdateAutokeyConfigCall) Context(ctx context.Context) *FoldersUpdateAutokeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersUpdateAutokeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersUpdateAutokeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autokeyconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.folders.updateAutokeyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutokeyConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersUpdateAutokeyConfigCall) Do(opts ...googleapi.CallOption) (*AutokeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutokeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsShowEffectiveAutokeyConfigCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ShowEffectiveAutokeyConfig: Returns the effective Cloud KMS Autokey
+// configuration for a given project.
+//
+//   - parent: Name of the resource project to the show effective Cloud KMS
+//     Autokey configuration for. This may be helpful for interrogating the
+//     effect of nested folder configurations on a given resource project.
+func (r *ProjectsService) ShowEffectiveAutokeyConfig(parent string) *ProjectsShowEffectiveAutokeyConfigCall {
+	c := &ProjectsShowEffectiveAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsShowEffectiveAutokeyConfigCall) Fields(s ...googleapi.Field) *ProjectsShowEffectiveAutokeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsShowEffectiveAutokeyConfigCall) IfNoneMatch(entityTag string) *ProjectsShowEffectiveAutokeyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsShowEffectiveAutokeyConfigCall) Context(ctx context.Context) *ProjectsShowEffectiveAutokeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsShowEffectiveAutokeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsShowEffectiveAutokeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:showEffectiveAutokeyConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.showEffectiveAutokeyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ShowEffectiveAutokeyConfigResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsShowEffectiveAutokeyConfigCall) Do(opts ...googleapi.CallOption) (*ShowEffectiveAutokeyConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ShowEffectiveAutokeyConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsGenerateRandomBytesCall struct {
@@ -4929,6 +5508,344 @@ func (c *ProjectsLocationsEkmConnectionsVerifyConnectivityCall) Do(opts ...googl
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &VerifyConnectivityResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsKeyHandlesCreateCall struct {
+	s          *Service
+	parent     string
+	keyhandle  *KeyHandle
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new KeyHandle, triggering the provisioning of a new
+// CryptoKey for CMEK use with the given resource type in the configured key
+// project and the same location. GetOperation should be used to resolve the
+// resulting long-running operation and get the resulting KeyHandle and
+// CryptoKey.
+//
+//   - parent: Name of the resource project and location to create the KeyHandle
+//     in, e.g. `projects/{PROJECT_ID}/locations/{LOCATION}`.
+func (r *ProjectsLocationsKeyHandlesService) Create(parent string, keyhandle *KeyHandle) *ProjectsLocationsKeyHandlesCreateCall {
+	c := &ProjectsLocationsKeyHandlesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.keyhandle = keyhandle
+	return c
+}
+
+// KeyHandleId sets the optional parameter "keyHandleId": Id of the KeyHandle.
+// Must be unique to the resource project and location. If not provided by the
+// caller, a new UUID is used.
+func (c *ProjectsLocationsKeyHandlesCreateCall) KeyHandleId(keyHandleId string) *ProjectsLocationsKeyHandlesCreateCall {
+	c.urlParams_.Set("keyHandleId", keyHandleId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsKeyHandlesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyHandlesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsKeyHandlesCreateCall) Context(ctx context.Context) *ProjectsLocationsKeyHandlesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsKeyHandlesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyHandlesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.keyhandle)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keyHandles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyHandles.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsKeyHandlesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsKeyHandlesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the KeyHandle.
+//
+//   - name: Name of the KeyHandle resource, e.g.
+//     `projects/{PROJECT_ID}/locations/{LOCATION}/keyHandles/{KEY_HANDLE_ID}`.
+func (r *ProjectsLocationsKeyHandlesService) Get(name string) *ProjectsLocationsKeyHandlesGetCall {
+	c := &ProjectsLocationsKeyHandlesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsKeyHandlesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyHandlesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsKeyHandlesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsKeyHandlesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsKeyHandlesGetCall) Context(ctx context.Context) *ProjectsLocationsKeyHandlesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsKeyHandlesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyHandlesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyHandles.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *KeyHandle.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsKeyHandlesGetCall) Do(opts ...googleapi.CallOption) (*KeyHandle, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &KeyHandle{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsKeyHandlesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists KeyHandles.
+//
+//   - parent: Name of the resource project and location from which to list
+//     KeyHandles, e.g. `projects/{PROJECT_ID}/locations/{LOCATION}`.
+func (r *ProjectsLocationsKeyHandlesService) List(parent string) *ProjectsLocationsKeyHandlesListCall {
+	c := &ProjectsLocationsKeyHandlesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter to apply when listing
+// KeyHandles, e.g. `resource_type_selector="{SERVICE}.googleapis.com/{TYPE}".
+func (c *ProjectsLocationsKeyHandlesListCall) Filter(filter string) *ProjectsLocationsKeyHandlesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsKeyHandlesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyHandlesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsKeyHandlesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsKeyHandlesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsKeyHandlesListCall) Context(ctx context.Context) *ProjectsLocationsKeyHandlesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsKeyHandlesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyHandlesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keyHandles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyHandles.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListKeyHandlesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsKeyHandlesListCall) Do(opts ...googleapi.CallOption) (*ListKeyHandlesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListKeyHandlesResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -9102,6 +10019,115 @@ func (c *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall) Do(opts ...g
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
+	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.operations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

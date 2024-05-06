@@ -275,6 +275,17 @@ type AccessSettings struct {
 	// GcipSettings: GCIP claims and endpoint configurations for 3p identity
 	// providers.
 	GcipSettings *GcipSettings `json:"gcipSettings,omitempty"`
+	// IdentitySources: Optional. Identity sources that IAP can use to authenticate
+	// the end user. Only one identity source can be configured.
+	//
+	// Possible values:
+	//   "IDENTITY_SOURCE_UNSPECIFIED" - IdentitySource Unspecified. When selected,
+	// IAP relies on which identity settings are fully configured to redirect the
+	// traffic to. The precedence order is WorkforceIdentitySettings >
+	// GcipSettings. If none is set, default to use Google identity.
+	//   "WORKFORCE_IDENTITY_FEDERATION" - Use external identities set up on Google
+	// Cloud Workforce Identity Federation.
+	IdentitySources []string `json:"identitySources,omitempty"`
 	// OauthSettings: Settings to configure IAP's OAuth behavior.
 	OauthSettings *OAuthSettings `json:"oauthSettings,omitempty"`
 	// PolicyDelegationSettings: Settings to configure Policy delegation for apps
@@ -282,6 +293,9 @@ type AccessSettings struct {
 	PolicyDelegationSettings *PolicyDelegationSettings `json:"policyDelegationSettings,omitempty"`
 	// ReauthSettings: Settings to configure reauthentication policies in IAP.
 	ReauthSettings *ReauthSettings `json:"reauthSettings,omitempty"`
+	// WorkforceIdentitySettings: Optional. Settings to configure the workforce
+	// identity federation, including workforce pools and OAuth 2.0 settings.
+	WorkforceIdentitySettings *WorkforceIdentitySettings `json:"workforceIdentitySettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedDomainsSettings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -882,6 +896,35 @@ func (s *ListTunnelDestGroupsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// OAuth2: The OAuth 2.0 Settings
+type OAuth2 struct {
+	// ClientId: The OAuth 2.0 client ID registered in the workforce identity
+	// federation OAuth 2.0 Server.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Input only. The OAuth 2.0 client secret created while
+	// registering the client ID.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// ClientSecretSha256: Output only. SHA256 hash value for the client secret.
+	// This field is returned by IAP when the settings are retrieved.
+	ClientSecretSha256 string `json:"clientSecretSha256,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *OAuth2) MarshalJSON() ([]byte, error) {
+	type NoMethod OAuth2
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // OAuthSettings: Configuration for OAuth login&consent flow behavior as well
 // as for OAuth Credentials.
 type OAuthSettings struct {
@@ -1315,6 +1358,34 @@ func (s *TunnelDestGroup) MarshalJSON() ([]byte, error) {
 type ValidateIapAttributeExpressionResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// WorkforceIdentitySettings: WorkforceIdentitySettings allows customers to
+// configure workforce pools and OAuth 2.0 settings to gate their applications
+// using a third-party IdP with access control.
+type WorkforceIdentitySettings struct {
+	// Oauth2: OAuth 2.0 settings for IAP to perform OIDC flow with workforce
+	// identity federation services.
+	Oauth2 *OAuth2 `json:"oauth2,omitempty"`
+	// WorkforcePools: The workforce pool resources. Only one workforce pool is
+	// accepted.
+	WorkforcePools []string `json:"workforcePools,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Oauth2") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Oauth2") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkforceIdentitySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkforceIdentitySettings
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsBrandsCreateCall struct {

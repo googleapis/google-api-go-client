@@ -488,6 +488,10 @@ type AppGateway struct {
 	// Name: Required. Unique resource name of the AppGateway. The name is ignored
 	// when creating an AppGateway.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The current state of the AppGateway.
 	//
 	// Possible values:
@@ -1122,6 +1126,10 @@ type GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnection struct {
 	// Name: Required. Unique resource name of the AppConnection. The name is
 	// ignored when creating a AppConnection.
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The current state of the AppConnection.
 	//
 	// Possible values:
@@ -2643,6 +2651,32 @@ func (s *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRowFieldVal) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaCancelSubscriptionRespon
+// se: Response message for BeyondCorp.CancelSubscription
+type GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaCancelSubscriptionResponse struct {
+	// EffectiveCancellationTime: Time when the cancellation will become effective
+	EffectiveCancellationTime string `json:"effectiveCancellationTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveCancellationTime")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveCancellationTime") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaCancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaCancelSubscriptionResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaListSubscriptionsRespons
 // e: Response message for BeyondCorp.ListSubscriptions.
 type GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaListSubscriptionsResponse struct {
@@ -2680,6 +2714,10 @@ type GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription struct {
 	// AutoRenewEnabled: Output only. Represents that, if subscription will renew
 	// or end when the term ends.
 	AutoRenewEnabled bool `json:"autoRenewEnabled,omitempty"`
+	// BillingAccount: Optional. Name of the billing account in the format. e.g.
+	// billingAccounts/123456-123456-123456 Required if Subscription is of Paid
+	// type.
+	BillingAccount string `json:"billingAccount,omitempty"`
 	// CreateTime: Output only. Create time of the subscription.
 	CreateTime string `json:"createTime,omitempty"`
 	// EndTime: Output only. End time of the subscription.
@@ -7746,6 +7784,133 @@ func (c *OrganizationsLocationsOperationsListCall) Pages(ctx context.Context, f 
 	}
 }
 
+type OrganizationsLocationsSubscriptionsCancelCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Cancel: Cancels an existing BeyondCorp Enterprise Subscription in a given
+// organization. Location will always be global as BeyondCorp subscriptions are
+// per organization. Returns the timestamp for when the cancellation will
+// become effective
+//
+// - name: Name of the resource.
+func (r *OrganizationsLocationsSubscriptionsService) Cancel(name string) *OrganizationsLocationsSubscriptionsCancelCall {
+	c := &OrganizationsLocationsSubscriptionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationsLocationsSubscriptionsCancelCall) RequestId(requestId string) *OrganizationsLocationsSubscriptionsCancelCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsSubscriptionsCancelCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSubscriptionsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsSubscriptionsCancelCall) IfNoneMatch(entityTag string) *OrganizationsLocationsSubscriptionsCancelCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsSubscriptionsCancelCall) Context(ctx context.Context) *OrganizationsLocationsSubscriptionsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsSubscriptionsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.organizations.locations.subscriptions.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaCancelSubscriptionRespo
+// nse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaCancelSubscriptionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaCancelSubscriptionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type OrganizationsLocationsSubscriptionsCreateCall struct {
 	s                                                                 *Service
 	parent                                                            string
@@ -8150,8 +8315,7 @@ func (c *OrganizationsLocationsSubscriptionsPatchCall) RequestId(requestId strin
 // used to specify the fields to be overwritten in the Subscription resource by
 // the update. The fields specified in the update_mask are relative to the
 // resource, not the full request. A field will be overwritten if it is in the
-// mask. If the user does not provide a mask then all mutable fields will be
-// overwritten. Mutable fields: type, state.
+// mask. Mutable fields: seat_count.
 func (c *OrganizationsLocationsSubscriptionsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsSubscriptionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

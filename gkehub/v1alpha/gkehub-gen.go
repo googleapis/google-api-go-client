@@ -3154,6 +3154,30 @@ func (s *IdentityServiceGroupConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// IdentityServiceIdentityServiceOptions: Holds non-protocol-related
+// configuration options.
+type IdentityServiceIdentityServiceOptions struct {
+	// SessionDuration: Optional. Determines the lifespan of STS tokens issued by
+	// Anthos Identity Service.
+	SessionDuration string `json:"sessionDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SessionDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SessionDuration") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceIdentityServiceOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceIdentityServiceOptions
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // IdentityServiceLdapConfig: Configuration for the LDAP Auth flow.
 type IdentityServiceLdapConfig struct {
 	// Group: Optional. Contains the properties for locating and authenticating
@@ -3191,6 +3215,9 @@ func (s *IdentityServiceLdapConfig) MarshalJSON() ([]byte, error) {
 type IdentityServiceMembershipSpec struct {
 	// AuthMethods: A member may support multiple auth methods.
 	AuthMethods []*IdentityServiceAuthMethod `json:"authMethods,omitempty"`
+	// IdentityServiceOptions: Optional. non-protocol-related configuration
+	// options.
+	IdentityServiceOptions *IdentityServiceIdentityServiceOptions `json:"identityServiceOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthMethods") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5780,6 +5807,35 @@ type ServiceMeshCondition struct {
 	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes
 	// unsupported error code
 	//   "VPCSC_GA_SUPPORTED" - VPC-SC GA is supported for this control plane.
+	//   "CONFIG_APPLY_INTERNAL_ERROR" - Configuration (Istio/k8s resources) failed
+	// to apply due to internal error.
+	//   "CONFIG_VALIDATION_ERROR" - Configuration failed to be applied due to
+	// being invalid.
+	//   "CONFIG_VALIDATION_WARNING" - Encountered configuration(s) with possible
+	// unintended behavior or invalid configuration. These configs may not have
+	// been applied.
+	//   "QUOTA_EXCEEDED_BACKEND_SERVICES" - BackendService quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_HEALTH_CHECKS" - HealthCheck quota exceeded error code.
+	//   "QUOTA_EXCEEDED_HTTP_ROUTES" - HTTPRoute quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TCP_ROUTES" - TCPRoute quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TLS_ROUTES" - TLS routes quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TRAFFIC_POLICIES" - TrafficPolicy quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_ENDPOINT_POLICIES" - EndpointPolicy quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_GATEWAYS" - Gateway quota exceeded error code.
+	//   "QUOTA_EXCEEDED_MESHES" - Mesh quota exceeded error code.
+	//   "QUOTA_EXCEEDED_SERVER_TLS_POLICIES" - ServerTLSPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_CLIENT_TLS_POLICIES" - ClientTLSPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_SERVICE_LB_POLICIES" - ServiceLBPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_HTTP_FILTERS" - HTTPFilter quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TCP_FILTERS" - TCPFilter quota exceeded error code.
+	//   "QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS" - NetworkEndpointGroup quota
+	// exceeded error code.
 	Code string `json:"code,omitempty"`
 	// Details: A short summary about the issue.
 	Details string `json:"details,omitempty"`

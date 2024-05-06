@@ -2317,7 +2317,7 @@
       }
     }
   },
-  "revision": "20240411",
+  "revision": "20240421",
   "rootUrl": "https://migrationcenter.googleapis.com/",
   "schemas": {
     "AddAssetsToGroupRequest": {
@@ -3529,13 +3529,6 @@
       "description": "Details of a database instance.",
       "id": "DatabaseInstance",
       "properties": {
-        "hosts": {
-          "description": "Optional. The instance's hosts.",
-          "items": {
-            "$ref": "DatabaseInstanceHost"
-          },
-          "type": "array"
-        },
         "instanceName": {
           "description": "The instance's name.",
           "type": "string"
@@ -3554,17 +3547,6 @@
             "Secondary.",
             "Arbiter."
           ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "DatabaseInstanceHost": {
-      "description": "Details of a host of a database instance.",
-      "id": "DatabaseInstanceHost",
-      "properties": {
-        "hostName": {
-          "description": "Optional. The host name of the host.",
           "type": "string"
         }
       },
@@ -5498,23 +5480,9 @@
       },
       "type": "object"
     },
-    "MysqlDatabaseDeployment": {
-      "description": "Specific details for a Mysql database deployment.",
-      "id": "MysqlDatabaseDeployment",
-      "properties": {
-        "plugins": {
-          "description": "Optional. List of Mysql plugins.",
-          "items": {
-            "$ref": "MysqlPlugin"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "MysqlPlugin": {
-      "description": "Mysql plugin.",
-      "id": "MysqlPlugin",
+    "MySqlPlugin": {
+      "description": "MySql plugin.",
+      "id": "MySqlPlugin",
       "properties": {
         "enabled": {
           "description": "Required. The plugin is active.",
@@ -5527,6 +5495,20 @@
         "version": {
           "description": "Required. The plugin version.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MysqlDatabaseDeployment": {
+      "description": "Specific details for a Mysql database deployment.",
+      "id": "MysqlDatabaseDeployment",
+      "properties": {
+        "plugins": {
+          "description": "Optional. List of MySql plugins.",
+          "items": {
+            "$ref": "MySqlPlugin"
+          },
+          "type": "array"
         }
       },
       "type": "object"

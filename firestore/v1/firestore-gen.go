@@ -1586,6 +1586,9 @@ type GoogleFirestoreAdminV1Database struct {
 	//   "DELETE_PROTECTION_DISABLED" - Delete protection is disabled
 	//   "DELETE_PROTECTION_ENABLED" - Delete protection is enabled
 	DeleteProtectionState string `json:"deleteProtectionState,omitempty"`
+	// DeleteTime: Output only. The timestamp at which this database was soft
+	// deleted. Only set if the database has been soft deleted.
+	DeleteTime string `json:"deleteTime,omitempty"`
 	// EarliestVersionTime: Output only. The earliest timestamp at which older
 	// versions of the data can be read from the database. See
 	// [version_retention_period] above; this field is populated with `now -
@@ -4626,6 +4629,13 @@ type ProjectsDatabasesListCall struct {
 func (r *ProjectsDatabasesService) List(parent string) *ProjectsDatabasesListCall {
 	c := &ProjectsDatabasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": If true, also returns
+// deleted resources.
+func (c *ProjectsDatabasesListCall) ShowDeleted(showDeleted bool) *ProjectsDatabasesListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 

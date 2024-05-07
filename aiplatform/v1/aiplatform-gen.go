@@ -1351,6 +1351,8 @@ type CloudAiLargeModelsVisionFilteredText struct {
 	//   "DANGEROUS_CONTENT" - Text category from SafetyCat v3
 	//   "RECITATION_TEXT"
 	//   "CELEBRITY_IMG"
+	//   "WATERMARK_IMG_REMOVAL" - Error message when user attempts to remove
+	// watermark from editing image
 	Category string `json:"category,omitempty"`
 	// Confidence: Filtered category
 	//
@@ -1787,12 +1789,12 @@ type CloudAiNlLlmProtoServiceCandidate struct {
 	//   "FINISH_REASON_RECITATION" - The token generation was stopped as the
 	// response was flagged for unauthorized citations.
 	//   "FINISH_REASON_OTHER" - All other reasons that stopped the token
-	// generation.
+	// generation (currently only language filter).
 	//   "FINISH_REASON_BLOCKLIST" - The token generation was stopped as the
 	// response was flagged for the terms which are included from the terminology
 	// blocklist.
 	//   "FINISH_REASON_PROHIBITED_CONTENT" - The token generation was stopped as
-	// the response was flagged for the prohibited contents.
+	// the response was flagged for the prohibited contents (currently only CSAM).
 	//   "FINISH_REASON_SPII" - The token generation was stopped as the response
 	// was flagged for Sensitive Personally Identifiable Information (SPII)
 	// contents.
@@ -2218,10 +2220,12 @@ type CloudAiNlLlmProtoServicePromptFeedback struct {
 	// Possible values:
 	//   "BLOCKED_REASON_UNSPECIFIED" - Unspecified blocked reason.
 	//   "SAFETY" - Candidates blocked due to safety.
-	//   "OTHER" - Candidates blocked due to other reason.
+	//   "OTHER" - Candidates blocked due to other reason (currently only language
+	// filter).
 	//   "BLOCKLIST" - Candidates blocked due to the terms which are included from
 	// the terminology blocklist.
-	//   "PROHIBITED_CONTENT" - Candidates blocked due to prohibited content.
+	//   "PROHIBITED_CONTENT" - Candidates blocked due to prohibited content
+	// (currently only CSAM).
 	BlockReason string `json:"blockReason,omitempty"`
 	// BlockReasonMessage: A readable block reason message.
 	BlockReasonMessage string `json:"blockReasonMessage,omitempty"`
@@ -10515,6 +10519,8 @@ type GoogleCloudAiplatformV1FindNeighborsRequestQuery struct {
 	// crowding_attribute. It's used for improving result diversity. This field is
 	// the maximum number of matches with the same crowding tag.
 	PerCrowdingAttributeNeighborCount int64 `json:"perCrowdingAttributeNeighborCount,omitempty"`
+	// Rrf: Optional. Represents RRF algorithm that combines search results.
+	Rrf *GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF `json:"rrf,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApproximateNeighborCount")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10544,6 +10550,45 @@ func (s *GoogleCloudAiplatformV1FindNeighborsRequestQuery) UnmarshalJSON(data []
 		return err
 	}
 	s.FractionLeafNodesToSearchOverride = float64(s1.FractionLeafNodesToSearchOverride)
+	return nil
+}
+
+// GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF: Parameters for RRF
+// algorithm that combines search results.
+type GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF struct {
+	// Alpha: Required. Users can provide an alpha value to give more weight to
+	// dense vs sparse results. For example, if the alpha is 0, we only return
+	// sparse and if the alpha is 1, we only return dense.
+	Alpha float64 `json:"alpha,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Alpha") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alpha") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF
+	var s1 struct {
+		Alpha gensupport.JSONFloat64 `json:"alpha"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Alpha = float64(s1.Alpha)
 	return nil
 }
 
@@ -10607,6 +10652,9 @@ type GoogleCloudAiplatformV1FindNeighborsResponseNeighbor struct {
 	Datapoint *GoogleCloudAiplatformV1IndexDatapoint `json:"datapoint,omitempty"`
 	// Distance: The distance between the neighbor and the dense embedding query.
 	Distance float64 `json:"distance,omitempty"`
+	// SparseDistance: The distance between the neighbor and the query
+	// sparse_embedding.
+	SparseDistance float64 `json:"sparseDistance,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Datapoint") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10628,7 +10676,8 @@ func (s *GoogleCloudAiplatformV1FindNeighborsResponseNeighbor) MarshalJSON() ([]
 func (s *GoogleCloudAiplatformV1FindNeighborsResponseNeighbor) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudAiplatformV1FindNeighborsResponseNeighbor
 	var s1 struct {
-		Distance gensupport.JSONFloat64 `json:"distance"`
+		Distance       gensupport.JSONFloat64 `json:"distance"`
+		SparseDistance gensupport.JSONFloat64 `json:"sparseDistance"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -10636,6 +10685,7 @@ func (s *GoogleCloudAiplatformV1FindNeighborsResponseNeighbor) UnmarshalJSON(dat
 		return err
 	}
 	s.Distance = float64(s1.Distance)
+	s.SparseDistance = float64(s1.SparseDistance)
 	return nil
 }
 
@@ -11620,6 +11670,8 @@ type GoogleCloudAiplatformV1IndexDatapoint struct {
 	// the database eligible for matching. This uses categorical tokens. See:
 	// https://cloud.google.com/vertex-ai/docs/matching-engine/filtering
 	Restricts []*GoogleCloudAiplatformV1IndexDatapointRestriction `json:"restricts,omitempty"`
+	// SparseEmbedding: Optional. Feature embedding vector for sparse index.
+	SparseEmbedding *GoogleCloudAiplatformV1IndexDatapointSparseEmbedding `json:"sparseEmbedding,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CrowdingTag") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11770,6 +11822,50 @@ func (s *GoogleCloudAiplatformV1IndexDatapointRestriction) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1IndexDatapointSparseEmbedding: Feature embedding
+// vector for sparse index. An array of numbers whose values are located in the
+// specified dimensions.
+type GoogleCloudAiplatformV1IndexDatapointSparseEmbedding struct {
+	// Dimensions: Optional. The list of indexes for the embedding values of the
+	// sparse vector.
+	Dimensions googleapi.Int64s `json:"dimensions,omitempty"`
+	// Values: Optional. The list of embedding values of the sparse vector.
+	Values []float64 `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1IndexDatapointSparseEmbedding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1IndexDatapointSparseEmbedding
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1IndexDatapointSparseEmbedding) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1IndexDatapointSparseEmbedding
+	var s1 struct {
+		Values []gensupport.JSONFloat64 `json:"values"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Values = make([]float64, len(s1.Values))
+	for i := range s1.Values {
+		s.Values[i] = float64(s1.Values[i])
+	}
+	return nil
+}
+
 // GoogleCloudAiplatformV1IndexEndpoint: Indexes are deployed into it. An
 // IndexEndpoint can have multiple DeployedIndexes.
 type GoogleCloudAiplatformV1IndexEndpoint struct {
@@ -11884,6 +11980,8 @@ func (s *GoogleCloudAiplatformV1IndexPrivateEndpoints) MarshalJSON() ([]byte, er
 type GoogleCloudAiplatformV1IndexStats struct {
 	// ShardsCount: Output only. The number of shards in the Index.
 	ShardsCount int64 `json:"shardsCount,omitempty"`
+	// SparseVectorsCount: Output only. The number of sparse vectors in the Index.
+	SparseVectorsCount int64 `json:"sparseVectorsCount,omitempty,string"`
 	// VectorsCount: Output only. The number of dense vectors in the Index.
 	VectorsCount int64 `json:"vectorsCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "ShardsCount") to
@@ -16496,7 +16594,9 @@ type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataRecordError st
 	//   "INVALID_NUMERIC_VALUE" - Numeric restrict has invalid numeric value
 	// specified.
 	//   "INVALID_ENCODING" - File is not in UTF_8 format.
+	//   "INVALID_SPARSE_DIMENSIONS" - Error parsing sparse dimensions field.
 	//   "INVALID_TOKEN_VALUE" - Token restrict value is invalid.
+	//   "INVALID_SPARSE_EMBEDDING" - Invalid sparse embedding.
 	ErrorType string `json:"errorType,omitempty"`
 	// RawRecord: The original content of this record.
 	RawRecord string `json:"rawRecord,omitempty"`
@@ -16936,7 +17036,7 @@ type GoogleCloudAiplatformV1NotebookRuntimeTemplate struct {
 	// MachineSpec: Optional. Immutable. The specification of a single machine for
 	// the template.
 	MachineSpec *GoogleCloudAiplatformV1MachineSpec `json:"machineSpec,omitempty"`
-	// Name: Output only. The resource name of the NotebookRuntimeTemplate.
+	// Name: The resource name of the NotebookRuntimeTemplate.
 	Name string `json:"name,omitempty"`
 	// NetworkSpec: Optional. Network spec.
 	NetworkSpec *GoogleCloudAiplatformV1NetworkSpec `json:"networkSpec,omitempty"`
@@ -27911,9 +28011,11 @@ type GoogleCloudAiplatformV1SupervisedHyperParameters struct {
 	//   "ADAPTER_SIZE_EIGHT" - Adapter size 8.
 	//   "ADAPTER_SIZE_SIXTEEN" - Adapter size 16.
 	AdapterSize string `json:"adapterSize,omitempty"`
-	// EpochCount: Optional. Number of training epoches for this tuning job.
+	// EpochCount: Optional. Number of complete passes the model makes over the
+	// entire training dataset during training.
 	EpochCount int64 `json:"epochCount,omitempty,string"`
-	// LearningRateMultiplier: Optional. Learning rate multiplier for tuning.
+	// LearningRateMultiplier: Optional. Multiplier for adjusting the default
+	// learning rate.
 	LearningRateMultiplier float64 `json:"learningRateMultiplier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdapterSize") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -28104,10 +28206,11 @@ type GoogleCloudAiplatformV1SupervisedTuningSpec struct {
 	// HyperParameters: Optional. Hyperparameters for SFT.
 	HyperParameters *GoogleCloudAiplatformV1SupervisedHyperParameters `json:"hyperParameters,omitempty"`
 	// TrainingDatasetUri: Required. Cloud Storage path to file containing training
-	// dataset for tuning.
+	// dataset for tuning. The dataset must be formatted as a JSONL file.
 	TrainingDatasetUri string `json:"trainingDatasetUri,omitempty"`
 	// ValidationDatasetUri: Optional. Cloud Storage path to file containing
-	// validation dataset for tuning.
+	// validation dataset for tuning. The dataset must be formatted as a JSONL
+	// file.
 	ValidationDatasetUri string `json:"validationDatasetUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HyperParameters") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -29196,7 +29299,7 @@ func (s *GoogleCloudAiplatformV1TuningDataStats) MarshalJSON() ([]byte, error) {
 // GoogleCloudAiplatformV1TuningJob: Represents a TuningJob that runs with
 // Google owned models.
 type GoogleCloudAiplatformV1TuningJob struct {
-	// BaseModel: Model name for tuning, e.g., "gemini-1.0-pro-002".
+	// BaseModel: The base model that is being tuned, e.g., "gemini-1.0-pro-002".
 	BaseModel string `json:"baseModel,omitempty"`
 	// CreateTime: Output only. Time when the TuningJob was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -31475,6 +31578,13 @@ type LanguageLabsAidaTrustRecitationProtoDocAttribution struct {
 	//   "GEMINI_V2_TAIL_PATCH_PMC" - Gemini V2 only tail patch.
 	//   "GEMINI_V2_TAIL_PATCH_VOXPOPULI"
 	//   "GEMINI_V2_TAIL_PATCH_FLEURS"
+	//   "GEMINI_V2_SSFS" - Gemini V2 rev10
+	//   "GEMINI_V2_CODE_TRANSFORM_SYNTHETIC_ERROR_FIX"
+	//   "GEMINI_V2_CODE_TRANSFORM_GITHUB_COMMITS"
+	//   "GEMINI_V2_CODE_TRANSFORM_GITHUB_PR"
+	//   "GEMINI_V2_SQL_REPAIR_SFT"
+	//   "GEMINI_V2_JSON_MODE_SYS_INSTRUCTION"
+	//   "YT_CONTENT_INSPIRATION" - Youtube Content Inpsiration.
 	Dataset           string `json:"dataset,omitempty"`
 	Filepath          string `json:"filepath,omitempty"`
 	GeminiId          string `json:"geminiId,omitempty"`
@@ -32035,6 +32145,13 @@ type LanguageLabsAidaTrustRecitationProtoSegmentResult struct {
 	//   "GEMINI_V2_TAIL_PATCH_PMC" - Gemini V2 only tail patch.
 	//   "GEMINI_V2_TAIL_PATCH_VOXPOPULI"
 	//   "GEMINI_V2_TAIL_PATCH_FLEURS"
+	//   "GEMINI_V2_SSFS" - Gemini V2 rev10
+	//   "GEMINI_V2_CODE_TRANSFORM_SYNTHETIC_ERROR_FIX"
+	//   "GEMINI_V2_CODE_TRANSFORM_GITHUB_COMMITS"
+	//   "GEMINI_V2_CODE_TRANSFORM_GITHUB_PR"
+	//   "GEMINI_V2_SQL_REPAIR_SFT"
+	//   "GEMINI_V2_JSON_MODE_SYS_INSTRUCTION"
+	//   "YT_CONTENT_INSPIRATION" - Youtube Content Inpsiration.
 	AttributionDataset string `json:"attributionDataset,omitempty"`
 	// DisplayAttributionMessage: human-friendly string that contains information
 	// from doc_attribution which could be shown by clients
@@ -32603,6 +32720,13 @@ type LearningGenaiRecitationDocAttribution struct {
 	//   "GEMINI_V2_TAIL_PATCH_PMC" - Gemini V2 only tail patch.
 	//   "GEMINI_V2_TAIL_PATCH_VOXPOPULI"
 	//   "GEMINI_V2_TAIL_PATCH_FLEURS"
+	//   "GEMINI_V2_SSFS" - Gemini V2 rev10
+	//   "GEMINI_V2_CODE_TRANSFORM_SYNTHETIC_ERROR_FIX"
+	//   "GEMINI_V2_CODE_TRANSFORM_GITHUB_COMMITS"
+	//   "GEMINI_V2_CODE_TRANSFORM_GITHUB_PR"
+	//   "GEMINI_V2_SQL_REPAIR_SFT"
+	//   "GEMINI_V2_JSON_MODE_SYS_INSTRUCTION"
+	//   "YT_CONTENT_INSPIRATION" - Youtube Content Inspiration FT datasets.
 	Dataset           string `json:"dataset,omitempty"`
 	Filepath          string `json:"filepath,omitempty"`
 	GeminiId          string `json:"geminiId,omitempty"`
@@ -33162,6 +33286,13 @@ type LearningGenaiRecitationSegmentResult struct {
 	//   "GEMINI_V2_TAIL_PATCH_PMC" - Gemini V2 only tail patch.
 	//   "GEMINI_V2_TAIL_PATCH_VOXPOPULI"
 	//   "GEMINI_V2_TAIL_PATCH_FLEURS"
+	//   "GEMINI_V2_SSFS" - Gemini V2 rev10
+	//   "GEMINI_V2_CODE_TRANSFORM_SYNTHETIC_ERROR_FIX"
+	//   "GEMINI_V2_CODE_TRANSFORM_GITHUB_COMMITS"
+	//   "GEMINI_V2_CODE_TRANSFORM_GITHUB_PR"
+	//   "GEMINI_V2_SQL_REPAIR_SFT"
+	//   "GEMINI_V2_JSON_MODE_SYS_INSTRUCTION"
+	//   "YT_CONTENT_INSPIRATION" - Youtube Content Inspiration FT datasets.
 	AttributionDataset string `json:"attributionDataset,omitempty"`
 	// DisplayAttributionMessage: human-friendly string that contains information
 	// from doc_attribution which could be shown by clients
@@ -34967,9 +35098,36 @@ func (s *LearningGenaiRootTranslationRequestInfo) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+type LearningServingLlmAtlasOutputMetadata struct {
+	RequestTopic string `json:"requestTopic,omitempty"`
+	// Possible values:
+	//   "UNKNOWN"
+	//   "FACTUALITY"
+	//   "INFOBOT"
+	//   "LLM"
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestTopic") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestTopic") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *LearningServingLlmAtlasOutputMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LearningServingLlmAtlasOutputMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // LearningServingLlmMessageMetadata: LINT.IfChange This metadata contains
-// additional information required for debugging.
+// additional information required for debugging. Next ID: 28
 type LearningServingLlmMessageMetadata struct {
+	AtlasMetadata *LearningServingLlmAtlasOutputMetadata `json:"atlasMetadata,omitempty"`
 	// ClassifierSummary: Summary of classifier output. We attach this to all
 	// messages regardless of whether classification rules triggered or not.
 	ClassifierSummary *LearningGenaiRootClassifierOutputSummary `json:"classifierSummary,omitempty"`
@@ -35012,11 +35170,15 @@ type LearningServingLlmMessageMetadata struct {
 	// OriginalText: The original text generated by LLM. This is the raw output for
 	// debugging purposes.
 	OriginalText string `json:"originalText,omitempty"`
-	// PerStreamDecodedTokenCount: NOT YET IMPLEMENTED. Applies to streaming only.
-	// Number of tokens decoded / emitted by the model as part of this stream. This
-	// may be different from token_count, which contains number of tokens returned
-	// in this response after any response rewriting / truncation.
+	// PerStreamDecodedTokenCount: Number of tokens decoded by the model as part of
+	// a stream. This count may be different from `per_stream_returned_token_count`
+	// which, is counted after any response rewriting or truncation. Applies to
+	// streaming response only.
 	PerStreamDecodedTokenCount int64 `json:"perStreamDecodedTokenCount,omitempty"`
+	// PerStreamReturnedTokenCount: Number of tokens returned per stream in a
+	// response candidate after any response rewriting or truncation. Applies to
+	// streaming response only. Applies to Gemini models only.
+	PerStreamReturnedTokenCount int64 `json:"perStreamReturnedTokenCount,omitempty"`
 	// RaiOutputs: Results of running RAI on the query or this response candidate.
 	// One output per rai_config. It will be populated regardless of whether the
 	// threshold is exceeded or not.
@@ -35024,8 +35186,9 @@ type LearningServingLlmMessageMetadata struct {
 	// RecitationResult: Recitation Results. It will be populated as long as
 	// Recitation processing is enabled, regardless of recitation outcome.
 	RecitationResult *LearningGenaiRecitationRecitationResult `json:"recitationResult,omitempty"`
-	// ReturnTokenCount: NOT YET IMPLEMENTED. Number of tokens returned as part of
-	// this candidate.
+	// ReturnTokenCount: NOT IMPLEMENTED TODO (b/334187574) Remove this field after
+	// Labs migrates to per_stream_returned_token_count and
+	// total_returned_token_count.
 	ReturnTokenCount int64 `json:"returnTokenCount,omitempty"`
 	// Scores: All the different scores for a message are logged here.
 	Scores []*LearningGenaiRootScore `json:"scores,omitempty"`
@@ -35036,6 +35199,10 @@ type LearningServingLlmMessageMetadata struct {
 	// For streaming: Count of all the tokens decoded so far (aggregated count).
 	// For unary: Count of all the tokens decoded per response_candidate.
 	TotalDecodedTokenCount int64 `json:"totalDecodedTokenCount,omitempty"`
+	// TotalReturnedTokenCount: Total number of tokens returned in a response
+	// candidate. For streaming, it is the aggregated count (i.e. total so far)
+	// Applies to Gemini models only.
+	TotalReturnedTokenCount int64 `json:"totalReturnedTokenCount,omitempty"`
 	// TranslatedUserPrompts: Translated user-prompt used for RAI post processing.
 	// This is for internal processing only. We will translate in pre-processor and
 	// pass the translated text to the post processor using this field. It will be
@@ -35043,15 +35210,15 @@ type LearningServingLlmMessageMetadata struct {
 	TranslatedUserPrompts []string `json:"translatedUserPrompts,omitempty"`
 	// VertexRaiResult: The metadata from Vertex SafetyCat processors
 	VertexRaiResult *CloudAiNlLlmProtoServiceRaiResult `json:"vertexRaiResult,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ClassifierSummary") to
+	// ForceSendFields is a list of field names (e.g. "AtlasMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ClassifierSummary") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AtlasMetadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

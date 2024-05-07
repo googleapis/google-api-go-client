@@ -1,5 +1,25 @@
 # Changes
 
+## [0.178.0](https://github.com/googleapis/google-api-go-client/compare/v0.177.0...v0.178.0) (2024-05-07)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2561](https://github.com/googleapis/google-api-go-client/issues/2561)) ([2d22d11](https://github.com/googleapis/google-api-go-client/commit/2d22d11df9643a4fad0f9e952d7a92a419370122))
+* **all:** Auto-regenerate discovery clients ([#2564](https://github.com/googleapis/google-api-go-client/issues/2564)) ([b313e4b](https://github.com/googleapis/google-api-go-client/commit/b313e4bd70e601fd7a2a931f168fb1dece980e75))
+* **all:** Auto-regenerate discovery clients ([#2565](https://github.com/googleapis/google-api-go-client/issues/2565)) ([0843d21](https://github.com/googleapis/google-api-go-client/commit/0843d217048b2e713c0d273b95b33afb99926a8c))
+* **all:** Auto-regenerate discovery clients ([#2567](https://github.com/googleapis/google-api-go-client/issues/2567)) ([76b27f1](https://github.com/googleapis/google-api-go-client/commit/76b27f162032649ddb3cb3f06ed24c7333b3fa66))
+* **all:** Auto-regenerate discovery clients ([#2568](https://github.com/googleapis/google-api-go-client/issues/2568)) ([d922e3b](https://github.com/googleapis/google-api-go-client/commit/d922e3b559ce5832941390b4f9bf91210e3f6579))
+* **all:** Auto-regenerate discovery clients ([#2570](https://github.com/googleapis/google-api-go-client/issues/2570)) ([f2da582](https://github.com/googleapis/google-api-go-client/commit/f2da582c9f6aab240d44c8ebd2dcc43f5096f896))
+* **all:** Auto-regenerate discovery clients ([#2571](https://github.com/googleapis/google-api-go-client/issues/2571)) ([0c976dc](https://github.com/googleapis/google-api-go-client/commit/0c976dcc8d1d653f2284ce273493e6714a6d4b2a))
+* **gen:** Add internaloption.EnableNewAuthLibrary ([#2519](https://github.com/googleapis/google-api-go-client/issues/2519)) ([8c74bb8](https://github.com/googleapis/google-api-go-client/commit/8c74bb83e2bc27188154c506e63a3e0f3a042f55))
+* **google-api-go-client:** Add x-goog-api-version header ([#2563](https://github.com/googleapis/google-api-go-client/issues/2563)) ([fe54ffd](https://github.com/googleapis/google-api-go-client/commit/fe54ffd92359506fca1ffd70dc647db0ab9a903c))
+
+
+### Documentation
+
+* Update commit style in CONTRIBUTING ([#2566](https://github.com/googleapis/google-api-go-client/issues/2566)) ([5e44215](https://github.com/googleapis/google-api-go-client/commit/5e44215df618fcafd5f6c1bbe259062cddd32f1a))
+
 ## [0.177.0](https://github.com/googleapis/google-api-go-client/compare/v0.176.1...v0.177.0) (2024-04-30)
 
 

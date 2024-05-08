@@ -6503,11 +6503,14 @@ type SchemaConfig struct {
 	// `Parameters.parameter.resource`, `Bundle.entry.resource`, and
 	// `Bundle.entry.response.outcome`. Analytics schema does not gracefully handle
 	// extensions with one or more occurrences, anaytics schema also does not
-	// handle contained resource.
+	// handle contained resource. Additionally, extensions with a URL ending in
+	// "/{existing_resource_field_name}" may cause undefined behavior.
 	//   "ANALYTICS_V2" - Analytics V2, similar to schema defined by the FHIR
 	// community, with added support for extensions with one or more occurrences
-	// and contained resources in stringified JSON. Analytics V2 uses more space in
-	// the destination table than Analytics V1. It is generally recommended to use
+	// and contained resources in stringified JSON. Extensions with a URL ending in
+	// "/{existing_resource_field_name}" will cause conflict and prevent the
+	// resource from being sent to BigQuery. Analytics V2 uses more space in the
+	// destination table than Analytics V1. It is generally recommended to use
 	// Analytics V2 over Analytics.
 	SchemaType string `json:"schemaType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastUpdatedPartitionConfig")

@@ -6042,7 +6042,7 @@ type SubscriptionPurchaseV2 struct {
 	AcknowledgementState string `json:"acknowledgementState,omitempty"`
 	// CanceledStateContext: Additional context around canceled subscriptions. Only
 	// present if the subscription currently has subscription_state
-	// SUBSCRIPTION_STATE_CANCELED.
+	// SUBSCRIPTION_STATE_CANCELED or SUBSCRIPTION_STATE_EXPIRED.
 	CanceledStateContext *CanceledStateContext `json:"canceledStateContext,omitempty"`
 	// ExternalAccountIdentifiers: User account identifier in the third-party
 	// service.

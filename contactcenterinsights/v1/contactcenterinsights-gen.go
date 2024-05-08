@@ -2763,6 +2763,11 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequest struct {
 	// RedactionConfig: Optional. DLP settings for transcript redaction. Optional,
 	// will default to the config specified in Settings.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1RedactionConfig `json:"redactionConfig,omitempty"`
+	// SampleSize: Optional. If set, this fields indicates the number of objects to
+	// ingest from the Cloud Storage bucket. If empty, the entire bucket will be
+	// ingested. Note that conversations produced via sampling will not be ingested
+	// by subsequent ingest requests unless they are first deleted.
+	SampleSize int64 `json:"sampleSize,omitempty"`
 	// SpeechConfig: Optional. Default Speech-to-Text configuration. Optional, will
 	// default to the config specified in Settings.
 	SpeechConfig *GoogleCloudContactcenterinsightsV1SpeechConfig `json:"speechConfig,omitempty"`
@@ -2794,8 +2799,10 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationCon
 	// the agent. Note that this must be set for conversations to be properly
 	// displayed and analyzed.
 	AgentChannel int64 `json:"agentChannel,omitempty"`
-	// AgentId: An opaque, user-specified string representing the human agent who
-	// handled the conversations.
+	// AgentId: Optional. An opaque, user-specified string representing a human
+	// agent who handled all conversations in the import. Note that this will be
+	// overridden if per-conversation metadata is provided via the
+	// `metadata_bucket_uri`.
 	AgentId string `json:"agentId,omitempty"`
 	// CustomerChannel: Optional. Indicates which of the channels, 1 or 2, contains
 	// the agent. Note that this must be set for conversations to be properly
@@ -3589,7 +3596,13 @@ func (s *GoogleCloudContactcenterinsightsV1PhraseMatcher) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudContactcenterinsightsV1RedactionConfig: DLP resources used for
-// redaction while ingesting conversations.
+// redaction while ingesting conversations. DLP settings are applied to
+// conversations ingested from the UploadConversation and IngestConversations
+// endpoints, including conversation coming from CCAI Platform. They are not
+// applied to conversations ingested from the CreateConversation endpoint or
+// the Dialogflow / Agent Assist runtime integrations. When using Dialogflow /
+// Agent Assist runtime integrations redaction should be performed in
+// Dialogflow / Agent Assist.
 type GoogleCloudContactcenterinsightsV1RedactionConfig struct {
 	// DeidentifyTemplate: The fully-qualified DLP deidentify template resource
 	// name. Format: `projects/{project}/deidentifyTemplates/{template}`
@@ -3829,11 +3842,15 @@ type GoogleCloudContactcenterinsightsV1Settings struct {
 	// each Pub/Sub topic is: projects/{project}/topics/{topic}
 	PubsubNotificationSettings map[string]string `json:"pubsubNotificationSettings,omitempty"`
 	// RedactionConfig: Default DLP redaction resources to be applied while
-	// ingesting conversations.
+	// ingesting conversations. This applies to conversations ingested from the
+	// UploadConversation and IngestConversations endpoints, including
+	// conversations coming from CCAI Platform.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1RedactionConfig `json:"redactionConfig,omitempty"`
 	// SpeechConfig: Optional. Default Speech-to-Text resources to be used while
 	// ingesting audio files. Optional, CCAI Insights will create a default if not
-	// provided.
+	// provided. This applies to conversations ingested from the UploadConversation
+	// and IngestConversations endpoints, including conversations coming from CCAI
+	// Platform.
 	SpeechConfig *GoogleCloudContactcenterinsightsV1SpeechConfig `json:"speechConfig,omitempty"`
 	// UpdateTime: Output only. The time at which the settings were last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -4006,7 +4023,10 @@ func (s *GoogleCloudContactcenterinsightsV1SmartReplyData) UnmarshalJSON(data []
 }
 
 // GoogleCloudContactcenterinsightsV1SpeechConfig: Speech-to-Text
-// configuration.
+// configuration. Speech-to-Text settings are applied to conversations ingested
+// from the UploadConversation and IngestConversations endpoints, including
+// conversation coming from CCAI Platform. They are not applied to
+// conversations ingested from the CreateConversation endpoint.
 type GoogleCloudContactcenterinsightsV1SpeechConfig struct {
 	// SpeechRecognizer: The fully-qualified Speech Recognizer resource name.
 	// Format: `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
@@ -6575,6 +6595,11 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest struct {
 	// RedactionConfig: Optional. DLP settings for transcript redaction. Optional,
 	// will default to the config specified in Settings.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1alpha1RedactionConfig `json:"redactionConfig,omitempty"`
+	// SampleSize: Optional. If set, this fields indicates the number of objects to
+	// ingest from the Cloud Storage bucket. If empty, the entire bucket will be
+	// ingested. Note that conversations produced via sampling will not be ingested
+	// by subsequent ingest requests unless they are first deleted.
+	SampleSize int64 `json:"sampleSize,omitempty"`
 	// SpeechConfig: Optional. Default Speech-to-Text configuration. Optional, will
 	// default to the config specified in Settings.
 	SpeechConfig *GoogleCloudContactcenterinsightsV1alpha1SpeechConfig `json:"speechConfig,omitempty"`
@@ -6606,8 +6631,10 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversat
 	// the agent. Note that this must be set for conversations to be properly
 	// displayed and analyzed.
 	AgentChannel int64 `json:"agentChannel,omitempty"`
-	// AgentId: An opaque, user-specified string representing the human agent who
-	// handled the conversations.
+	// AgentId: Optional. An opaque, user-specified string representing a human
+	// agent who handled all conversations in the import. Note that this will be
+	// overridden if per-conversation metadata is provided via the
+	// `metadata_bucket_uri`.
 	AgentId string `json:"agentId,omitempty"`
 	// CustomerChannel: Optional. Indicates which of the channels, 1 or 2, contains
 	// the agent. Note that this must be set for conversations to be properly
@@ -7040,7 +7067,13 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1PhraseMatchData) MarshalJSON() 
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1RedactionConfig: DLP resources used
-// for redaction while ingesting conversations.
+// for redaction while ingesting conversations. DLP settings are applied to
+// conversations ingested from the UploadConversation and IngestConversations
+// endpoints, including conversation coming from CCAI Platform. They are not
+// applied to conversations ingested from the CreateConversation endpoint or
+// the Dialogflow / Agent Assist runtime integrations. When using Dialogflow /
+// Agent Assist runtime integrations redaction should be performed in
+// Dialogflow / Agent Assist.
 type GoogleCloudContactcenterinsightsV1alpha1RedactionConfig struct {
 	// DeidentifyTemplate: The fully-qualified DLP deidentify template resource
 	// name. Format: `projects/{project}/deidentifyTemplates/{template}`
@@ -7347,7 +7380,10 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1SmartReplyData) UnmarshalJSON(d
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1SpeechConfig: Speech-to-Text
-// configuration.
+// configuration. Speech-to-Text settings are applied to conversations ingested
+// from the UploadConversation and IngestConversations endpoints, including
+// conversation coming from CCAI Platform. They are not applied to
+// conversations ingested from the CreateConversation endpoint.
 type GoogleCloudContactcenterinsightsV1alpha1SpeechConfig struct {
 	// SpeechRecognizer: The fully-qualified Speech Recognizer resource name.
 	// Format: `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
@@ -8211,7 +8247,8 @@ type ProjectsLocationsConversationsCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates a conversation.
+// Create: Creates a conversation. DEPRECATED: Use UploadConversation instead.
+// CreateConversation does not support audio transcription or DLP redaction.
 //
 // - parent: The parent resource of the conversation.
 func (r *ProjectsLocationsConversationsService) Create(parent string, googlecloudcontactcenterinsightsv1conversation *GoogleCloudContactcenterinsightsV1Conversation) *ProjectsLocationsConversationsCreateCall {

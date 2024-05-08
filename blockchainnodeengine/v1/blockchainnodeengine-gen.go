@@ -243,6 +243,8 @@ type BlockchainNode struct {
 	//   "UPDATING" - The node is currently being updated.
 	//   "REPAIRING" - The node is currently being repaired.
 	//   "RECONCILING" - The node is currently being reconciled.
+	//   "SYNCING" - The node is syncing, which is the process by which it obtains
+	// the latest block and current global state.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. The timestamp at which the blockchain node was last
 	// updated.

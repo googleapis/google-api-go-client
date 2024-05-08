@@ -8480,6 +8480,15 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType strin
 	return c
 }
 
+// EnableAttributeSuggestions sets the optional parameter
+// "enableAttributeSuggestions": If true, attribute suggestions are enabled and
+// provided in response. This field is only available for "cloud-retail"
+// dataset.
+func (c *ProjectsLocationsCatalogsCompleteQueryCall) EnableAttributeSuggestions(enableAttributeSuggestions bool) *ProjectsLocationsCatalogsCompleteQueryCall {
+	c.urlParams_.Set("enableAttributeSuggestions", fmt.Sprint(enableAttributeSuggestions))
+	return c
+}
+
 // Entity sets the optional parameter "entity": The entity for customers who
 // run multiple entities, domains, sites, or regions, for example, `Google US`,
 // `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. If this is set, it

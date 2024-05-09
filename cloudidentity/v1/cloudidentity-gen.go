@@ -1365,6 +1365,8 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 	SecurityPatchTime string `json:"securityPatchTime,omitempty"`
 	// SerialNumber: Serial Number of device. Example: HT82V1A01076.
 	SerialNumber string `json:"serialNumber,omitempty"`
+	// UnifiedDeviceId: Output only. Unified device id of the device.
+	UnifiedDeviceId string `json:"unifiedDeviceId,omitempty"`
 	// WifiMacAddresses: WiFi MAC addresses of device.
 	WifiMacAddresses []string `json:"wifiMacAddresses,omitempty"`
 

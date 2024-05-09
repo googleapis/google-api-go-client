@@ -3832,7 +3832,8 @@ type GoogleDevtoolsCloudbuildV1Results struct {
 	// the order corresponding to build step indices. Cloud Builders
 	// (https://cloud.google.com/cloud-build/docs/cloud-builders) can produce this
 	// output by writing to `$BUILDER_OUTPUT/output`. Only the first 50KB of data
-	// is stored.
+	// is stored. Note that the `$BUILDER_OUTPUT` variable is read-only and can't
+	// be substituted.
 	BuildStepOutputs []string `json:"buildStepOutputs,omitempty"`
 	// Images: Container images that were built as a part of the build.
 	Images []*GoogleDevtoolsCloudbuildV1BuiltImage `json:"images,omitempty"`

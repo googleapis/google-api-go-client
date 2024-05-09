@@ -1423,8 +1423,8 @@ type GooglePrivacyDlpV2CloudSqlProperties struct {
 	// only be set at creation time, and cannot be updated. It is an error to use a
 	// connection_name from different project or region than the one that holds the
 	// connection. For example, a Connection resource for Cloud SQL connection_name
-	// "project-id:us-central1:sql-instance" must be created under the parent
-	// "projects/project-id/locations/us-central1"
+	// `project-id:us-central1:sql-instance` must be created under the parent
+	// `projects/project-id/locations/us-central1`
 	ConnectionName string `json:"connectionName,omitempty"`
 	// DatabaseEngine: Required. The database engine used by the Cloud SQL instance
 	// that this connection configures.
@@ -1733,9 +1733,9 @@ type GooglePrivacyDlpV2ColumnDataProfile struct {
 	//   "TYPE_BIGNUMERIC" - Decimal type.
 	//   "TYPE_JSON" - Json type.
 	//   "TYPE_INTERVAL" - Interval type.
-	//   "TYPE_RANGE_DATE" - Range type.
-	//   "TYPE_RANGE_DATETIME" - Range type.
-	//   "TYPE_RANGE_TIMESTAMP" - Range type.
+	//   "TYPE_RANGE_DATE" - `Range` type.
+	//   "TYPE_RANGE_DATETIME" - `Range` type.
+	//   "TYPE_RANGE_TIMESTAMP" - `Range` type.
 	ColumnType string `json:"columnType,omitempty"`
 	// DataRiskLevel: The data risk level for this column.
 	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
@@ -1922,7 +1922,7 @@ type GooglePrivacyDlpV2Connection struct {
 	// Will store the last 10 errors sorted with the most recent first.
 	Errors []*GooglePrivacyDlpV2Error `json:"errors,omitempty"`
 	// Name: Output only. Name of the connection:
-	// projects/{project}/locations/{location}/connections/{name}.
+	// `projects/{project}/locations/{location}/connections/{name}`.
 	Name string `json:"name,omitempty"`
 	// State: Required. The connection's state in its lifecycle.
 	//
@@ -2749,9 +2749,9 @@ type GooglePrivacyDlpV2DataProfilePubSubMessage struct {
 	// Possible values:
 	//   "EVENT_TYPE_UNSPECIFIED" - Unused.
 	//   "NEW_PROFILE" - New profile (not a re-profile).
-	//   "CHANGED_PROFILE" - Changed one of the following profile metrics: * Table
-	// data risk score * Table sensitivity score * Table resource visibility *
-	// Table encryption type * Table predicted infoTypes * Table other infoTypes
+	//   "CHANGED_PROFILE" - Changed one of the following profile metrics: * Data
+	// risk score * Sensitivity score * Resource visibility * Encryption type *
+	// Predicted infoTypes * Other infoTypes
 	//   "SCORE_INCREASED" - Table data risk score or sensitivity score increased.
 	//   "ERROR_CHANGED" - A user (non-internal) error occurred.
 	Event string `json:"event,omitempty"`
@@ -5000,7 +5000,7 @@ func (s *GooglePrivacyDlpV2InfoType) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2InfoTypeCategory: Classification of infoTypes to organize
-// them according to geographic location, industry, and data type. NEXT_ID: 48
+// them according to geographic location, industry, and data type.
 type GooglePrivacyDlpV2InfoTypeCategory struct {
 	// IndustryCategory: The group of relevant businesses where this infoType is
 	// commonly used
@@ -7149,7 +7149,7 @@ type GooglePrivacyDlpV2PubSubNotification struct {
 	// Possible values:
 	//   "DETAIL_LEVEL_UNSPECIFIED" - Unused.
 	//   "TABLE_PROFILE" - The full table data profile.
-	//   "RESOURCE_NAME" - The resource name of the table.
+	//   "RESOURCE_NAME" - The name of the profiled resource.
 	DetailOfMessage string `json:"detailOfMessage,omitempty"`
 	// Event: The type of event that triggers a Pub/Sub. At most one
 	// `PubSubNotification` per EventType is permitted.
@@ -7157,9 +7157,9 @@ type GooglePrivacyDlpV2PubSubNotification struct {
 	// Possible values:
 	//   "EVENT_TYPE_UNSPECIFIED" - Unused.
 	//   "NEW_PROFILE" - New profile (not a re-profile).
-	//   "CHANGED_PROFILE" - Changed one of the following profile metrics: * Table
-	// data risk score * Table sensitivity score * Table resource visibility *
-	// Table encryption type * Table predicted infoTypes * Table other infoTypes
+	//   "CHANGED_PROFILE" - Changed one of the following profile metrics: * Data
+	// risk score * Sensitivity score * Resource visibility * Encryption type *
+	// Predicted infoTypes * Other infoTypes
 	//   "SCORE_INCREASED" - Table data risk score or sensitivity score increased.
 	//   "ERROR_CHANGED" - A user (non-internal) error occurred.
 	Event string `json:"event,omitempty"`
@@ -8071,7 +8071,7 @@ func (s *GooglePrivacyDlpV2SearchConnectionsResponse) MarshalJSON() ([]byte, err
 type GooglePrivacyDlpV2SecretManagerCredential struct {
 	// PasswordSecretVersionName: Required. The name of the Secret Manager resource
 	// that stores the password, in the form
-	// "projects/project-id/secrets/secret-name/versions/version".
+	// `projects/project-id/secrets/secret-name/versions/version`.
 	PasswordSecretVersionName string `json:"passwordSecretVersionName,omitempty"`
 	// Username: Required. The username.
 	Username string `json:"username,omitempty"`
@@ -8541,6 +8541,9 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	// Possible values:
 	//   "RESOURCE_VISIBILITY_UNSPECIFIED" - Unused.
 	//   "RESOURCE_VISIBILITY_PUBLIC" - Visible to any user.
+	//   "RESOURCE_VISIBILITY_INCONCLUSIVE" - May contain public items. For
+	// example, if a GCS bucket has uniform bucket level access disabled, some
+	// objects inside it may be public.
 	//   "RESOURCE_VISIBILITY_RESTRICTED" - Visible only to specific users.
 	ResourceVisibility string `json:"resourceVisibility,omitempty"`
 	// RowCount: Number of rows in the table when the profile was generated. This
@@ -8742,7 +8745,7 @@ type GooglePrivacyDlpV2TimespanConfig struct {
 	// scanning files that have not been modified since the last time the
 	// JobTrigger executed. This will be based on the time of the execution of the
 	// last run of the JobTrigger or the timespan end_time used in the last run of
-	// the JobTrigger. *For BigQuery* Inspect jobs triggered by automatic
+	// the JobTrigger. **For BigQuery** Inspect jobs triggered by automatic
 	// population will scan data that is at least three hours old when the job
 	// starts. This is because streaming buffer rows are not read during inspection
 	// and reading up to the current timestamp will result in skipped rows. See the
@@ -11429,7 +11432,7 @@ type OrganizationsLocationsConnectionsSearchCall struct {
 // Search: Searches for Connections in a parent.
 //
 //   - parent: Parent name, typically an organization, without location. For
-//     example: "organizations/12345678".
+//     example: `organizations/12345678`.
 func (r *OrganizationsLocationsConnectionsService) Search(parent string) *OrganizationsLocationsConnectionsSearchCall {
 	c := &OrganizationsLocationsConnectionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19514,7 +19517,7 @@ type ProjectsLocationsConnectionsCreateCall struct {
 // Create: Create a Connection to an external data source.
 //
 //   - parent: Parent resource name in the format:
-//     "projects/{project}/locations/{location}".
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsConnectionsService) Create(parent string, googleprivacydlpv2createconnectionrequest *GooglePrivacyDlpV2CreateConnectionRequest) *ProjectsLocationsConnectionsCreateCall {
 	c := &ProjectsLocationsConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19616,7 +19619,7 @@ type ProjectsLocationsConnectionsDeleteCall struct {
 // Delete: Delete a Connection.
 //
 //   - name: Resource name of the Connection to be deleted, in the format:
-//     "projects/{project}/locations/{location}/connections/{connection}".
+//     `projects/{project}/locations/{location}/connections/{connection}`.
 func (r *ProjectsLocationsConnectionsService) Delete(name string) *ProjectsLocationsConnectionsDeleteCall {
 	c := &ProjectsLocationsConnectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19714,7 +19717,7 @@ type ProjectsLocationsConnectionsGetCall struct {
 // Get: Get a Connection by name.
 //
 //   - name: Resource name in the format:
-//     "projects/{project}/locations/{location}/connections/{connection}".
+//     `projects/{project}/locations/{location}/connections/{connection}`.
 func (r *ProjectsLocationsConnectionsService) Get(name string) *ProjectsLocationsConnectionsGetCall {
 	c := &ProjectsLocationsConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19822,7 +19825,7 @@ type ProjectsLocationsConnectionsListCall struct {
 
 // List: Lists Connections in a parent.
 //
-// - parent: Parent name, for example: "projects/project-id/locations/global".
+// - parent: Parent name, for example: `projects/project-id/locations/global`.
 func (r *ProjectsLocationsConnectionsService) List(parent string) *ProjectsLocationsConnectionsListCall {
 	c := &ProjectsLocationsConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19974,7 +19977,7 @@ type ProjectsLocationsConnectionsPatchCall struct {
 // Patch: Update a Connection.
 //
 //   - name: Resource name in the format:
-//     "projects/{project}/locations/{location}/connections/{connection}".
+//     `projects/{project}/locations/{location}/connections/{connection}`.
 func (r *ProjectsLocationsConnectionsService) Patch(name string, googleprivacydlpv2updateconnectionrequest *GooglePrivacyDlpV2UpdateConnectionRequest) *ProjectsLocationsConnectionsPatchCall {
 	c := &ProjectsLocationsConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20077,7 +20080,7 @@ type ProjectsLocationsConnectionsSearchCall struct {
 // Search: Searches for Connections in a parent.
 //
 //   - parent: Parent name, typically an organization, without location. For
-//     example: "organizations/12345678".
+//     example: `organizations/12345678`.
 func (r *ProjectsLocationsConnectionsService) Search(parent string) *ProjectsLocationsConnectionsSearchCall {
 	c := &ProjectsLocationsConnectionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

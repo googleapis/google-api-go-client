@@ -110,7 +110,7 @@ const (
 	// Import spaces, messages, and memberships into Google Chat.
 	ChatImportScope = "https://www.googleapis.com/auth/chat.import"
 
-	// View, add, and remove members from conversations in Google Chat
+	// View, add, update, and remove members from conversations in Google Chat
 	ChatMembershipsScope = "https://www.googleapis.com/auth/chat.memberships"
 
 	// Add and remove itself from conversations in Google Chat
@@ -7149,7 +7149,9 @@ type SpacesMembersPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a membership. Requires user authentication
+// Patch: Updates a membership. For an example, see Update a user's membership
+// in a space (https://developers.google.com/workspace/chat/update-members).
+// Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
 //   - name: Resource name of the membership, assigned by the server. Format:
@@ -8965,7 +8967,10 @@ type UsersSpacesGetSpaceReadStateCall struct {
 }
 
 // GetSpaceReadState: Returns details about a user's read state within a space,
-// used to identify read and unread messages. Requires user authentication
+// used to identify read and unread messages. For an example, see Get details
+// about a user's space read state
+// (https://developers.google.com/workspace/chat/get-space-read-state).
+// Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
 //   - name: Resource name of the space read state to retrieve. Only supports
@@ -9081,7 +9086,10 @@ type UsersSpacesUpdateSpaceReadStateCall struct {
 }
 
 // UpdateSpaceReadState: Updates a user's read state within a space, used to
-// identify read and unread messages. Requires user authentication
+// identify read and unread messages. For an example, see Update a user's space
+// read state
+// (https://developers.google.com/workspace/chat/update-space-read-state).
+// Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
 //   - name: Resource name of the space read state. Format:
@@ -9199,8 +9207,10 @@ type UsersSpacesThreadsGetThreadReadStateCall struct {
 }
 
 // GetThreadReadState: Returns details about a user's read state within a
-// thread, used to identify read and unread messages. Requires user
-// authentication
+// thread, used to identify read and unread messages. For an example, see Get
+// details about a user's thread read state
+// (https://developers.google.com/workspace/chat/get-thread-read-state).
+// Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
 //   - name: Resource name of the thread read state to retrieve. Only supports

@@ -591,13 +591,14 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 // AutokeyConfig: Cloud KMS Autokey configuration for a folder.
 type AutokeyConfig struct {
 	// KeyProject: Optional. Name of the key project, e.g. `projects/{PROJECT_ID}`
-	// or `projects/{PROJECT_NUMBER}`, where Cloud KMS Autokey will provision new
-	// CryptoKeys. On UpdateAutokeyConfig, the caller will require
-	// `cloudkms.cryptoKeys.setIamPolicy` permission on this key project. Once
-	// configured, for Cloud KMS Autokey to function properly, this key project
-	// must have the Cloud KMS API activated and the Cloud KMS Service Agent for
-	// this key project must be granted the `cloudkms.admin` role (or pertinent
-	// permissions).
+	// or `projects/{PROJECT_NUMBER}`, where Cloud KMS Autokey will provision a new
+	// CryptoKey when a KeyHandle is created. On UpdateAutokeyConfig, the caller
+	// will require `cloudkms.cryptoKeys.setIamPolicy` permission on this key
+	// project. Once configured, for Cloud KMS Autokey to function properly, this
+	// key project must have the Cloud KMS API activated and the Cloud KMS Service
+	// Agent for this key project must be granted the `cloudkms.admin` role (or
+	// pertinent permissions). A request with an empty key project field will clear
+	// the configuration.
 	KeyProject string `json:"keyProject,omitempty"`
 	// Name: Identifier. Name of the AutokeyConfig resource, e.g.
 	// `folders/{FOLDER_NUMBER}/autokeyConfig`.
@@ -1925,10 +1926,14 @@ func (s *ImportJob) MarshalJSON() ([]byte, error) {
 // Autokey and the resulting provisioning of a CryptoKey.
 type KeyHandle struct {
 	// KmsKey: Output only. Name of a CryptoKey that has been provisioned for
-	// Customer Managed Encryption Key (CMEK) use in the KeyHandle's project and
-	// location for the requested resource type.
+	// Customer Managed Encryption Key (CMEK) use in the KeyHandle project and
+	// location for the requested resource type. The CryptoKey project will reflect
+	// the value configured in the AutokeyConfig on the resource project's ancestor
+	// folder at the time of the KeyHandle creation. If more than one ancestor
+	// folder has a configured AutokeyConfig, the nearest of these configurations
+	// is used.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// Name: Output only. Identifier. Name of the [KeyHandle] resource, e.g.
+	// Name: Output only. Identifier. Name of the KeyHandle resource, e.g.
 	// `projects/{PROJECT_ID}/locations/{LOCATION}/keyHandles/{KEY_HANDLE_ID}`.
 	Name string `json:"name,omitempty"`
 	// ResourceTypeSelector: Required. Indicates the resource type that the
@@ -3442,7 +3447,8 @@ type FoldersUpdateAutokeyConfigCall struct {
 // UpdateAutokeyConfig: Updates the AutokeyConfig for a folder. The caller must
 // have both `cloudkms.autokeyConfigs.update` permission on the parent folder
 // and `cloudkms.cryptoKeys.setIamPolicy` permission on the provided key
-// project. An empty key project may be provided to clear the configuration.
+// project. A KeyHandle creation in the folder's descendant projects will use
+// this configuration to determine where to create the resulting CryptoKey.
 //
 //   - name: Identifier. Name of the AutokeyConfig resource, e.g.
 //     `folders/{FOLDER_NUMBER}/autokeyConfig`.

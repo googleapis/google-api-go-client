@@ -499,9 +499,7 @@ type AppLinkData struct {
 	// included, the app link link module will be rendered on the valuable details
 	// on the android client.
 	AndroidAppLinkInfo *AppLinkDataAppLinkInfo `json:"androidAppLinkInfo,omitempty"`
-	// IosAppLinkInfo: Optional information about the partner app link. If
-	// included, the app link link module will be rendered on the valuable details
-	// on the ios client.
+	// IosAppLinkInfo: Deprecated. Links to open iOS apps are not supported.
 	IosAppLinkInfo *AppLinkDataAppLinkInfo `json:"iosAppLinkInfo,omitempty"`
 	// WebAppLinkInfo: Optional information about the partner app link. If
 	// included, the app link link module will be rendered on the valuable details

@@ -2658,7 +2658,8 @@ type GoogleDevtoolsCloudbuildV1Results struct {
 	// the order corresponding to build step indices. Cloud Builders
 	// (https://cloud.google.com/cloud-build/docs/cloud-builders) can produce this
 	// output by writing to `$BUILDER_OUTPUT/output`. Only the first 50KB of data
-	// is stored.
+	// is stored. Note that the `$BUILDER_OUTPUT` variable is read-only and can't
+	// be substituted.
 	BuildStepOutputs []string `json:"buildStepOutputs,omitempty"`
 	// Images: Container images that were built as a part of the build.
 	Images []*GoogleDevtoolsCloudbuildV1BuiltImage `json:"images,omitempty"`
@@ -4307,6 +4308,8 @@ type RevisionSpec struct {
 	// NodeSelector: Optional. The Node Selector configuration. Map of selector key
 	// to a value which matches a node.
 	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
+	// RuntimeClassName: Runtime. Leave unset for default.
+	RuntimeClassName string `json:"runtimeClassName,omitempty"`
 	// ServiceAccountName: Email address of the IAM service account associated with
 	// the revision of the service. The service account represents the identity of
 	// the running revision, and determines what permissions the revision has. If

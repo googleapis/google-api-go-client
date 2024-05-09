@@ -1443,12 +1443,17 @@ func (s *ListPublisherProfilesResponse) MarshalJSON() ([]byte, error) {
 }
 
 // MarketplaceTargeting: Targeting represents different criteria that can be
-// used to target inventory. For example, they can choose to target inventory
-// only if the user is in the US. Multiple types of targeting are always
-// applied as a logical AND, unless noted otherwise.
+// used to target deals or auction packages. For example, they can choose to
+// target inventory only if the user is in the US. Multiple types of targeting
+// are always applied as a logical AND, unless noted otherwise.
 type MarketplaceTargeting struct {
 	// DaypartTargeting: Daypart targeting information.
 	DaypartTargeting *DayPartTargeting `json:"daypartTargeting,omitempty"`
+	// ExcludedSensitiveCategoryIds: Output only. The sensitive content category
+	// label IDs excluded. Refer to this file
+	// https://storage.googleapis.com/adx-rtb-dictionaries/content-labels.txt for
+	// category IDs.
+	ExcludedSensitiveCategoryIds googleapi.Int64s `json:"excludedSensitiveCategoryIds,omitempty"`
 	// GeoTargeting: Output only. Geo criteria IDs to be included/excluded.
 	GeoTargeting *CriteriaTargeting `json:"geoTargeting,omitempty"`
 	// InventorySizeTargeting: Output only. Inventory sizes to be
@@ -1466,6 +1471,10 @@ type MarketplaceTargeting struct {
 	// uploaded using
 	// https://developers.google.com/authorized-buyers/rtb/bulk-uploader.
 	UserListTargeting *CriteriaTargeting `json:"userListTargeting,omitempty"`
+	// VerticalTargeting: Output only. The verticals included or excluded as
+	// defined in
+	// https://developers.google.com/authorized-buyers/rtb/downloads/publisher-verticals
+	VerticalTargeting *CriteriaTargeting `json:"verticalTargeting,omitempty"`
 	// VideoTargeting: Output only. Video targeting information.
 	VideoTargeting *VideoTargeting `json:"videoTargeting,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DaypartTargeting") to
@@ -2458,6 +2467,17 @@ func (c *BiddersAuctionPackagesListCall) Filter(filter string) *BiddersAuctionPa
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": An optional query string to
+// sort auction packages using the Cloud API sorting syntax
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order). If no
+// sort order is specified, results will be returned in an arbitrary order.
+// Only supported when parent is bidder. Supported columns for sorting are: *
+// displayName * createTime * updateTime
+func (c *BiddersAuctionPackagesListCall) OrderBy(orderBy string) *BiddersAuctionPackagesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Requested page size. The
 // server may return fewer results than requested. Max allowed page size is
 // 500.
@@ -2628,7 +2648,6 @@ func (c *BiddersFinalizedDealsListCall) Filter(filter string) *BiddersFinalizedD
 // rtbMetrics.bidRequests7Days * rtbMetrics.bids7Days *
 // rtbMetrics.adImpressions7Days * rtbMetrics.bidRate7Days *
 // rtbMetrics.filteredBidRate7Days * rtbMetrics.mustBidRateCurrentMonth
-// Example: 'deal.displayName, deal.updateTime desc'
 func (c *BiddersFinalizedDealsListCall) OrderBy(orderBy string) *BiddersFinalizedDealsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -2901,6 +2920,17 @@ func (r *BuyersAuctionPackagesService) List(parent string) *BuyersAuctionPackage
 // updateTime * eligibleSeatIds
 func (c *BuyersAuctionPackagesListCall) Filter(filter string) *BuyersAuctionPackagesListCall {
 	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An optional query string to
+// sort auction packages using the Cloud API sorting syntax
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order). If no
+// sort order is specified, results will be returned in an arbitrary order.
+// Only supported when parent is bidder. Supported columns for sorting are: *
+// displayName * createTime * updateTime
+func (c *BuyersAuctionPackagesListCall) OrderBy(orderBy string) *BuyersAuctionPackagesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
@@ -5064,7 +5094,6 @@ func (c *BuyersFinalizedDealsListCall) Filter(filter string) *BuyersFinalizedDea
 // rtbMetrics.bidRequests7Days * rtbMetrics.bids7Days *
 // rtbMetrics.adImpressions7Days * rtbMetrics.bidRate7Days *
 // rtbMetrics.filteredBidRate7Days * rtbMetrics.mustBidRateCurrentMonth
-// Example: 'deal.displayName, deal.updateTime desc'
 func (c *BuyersFinalizedDealsListCall) OrderBy(orderBy string) *BuyersFinalizedDealsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

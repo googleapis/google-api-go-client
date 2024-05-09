@@ -826,6 +826,9 @@ func (s *ColumnSettings) MarshalJSON() ([]byte, error) {
 // Dashboard: A Google Stackdriver dashboard. Dashboards define the content and
 // layout of pages in the Stackdriver web application.
 type Dashboard struct {
+	// Annotations: Configuration for event annotations to display on this
+	// dashboard.
+	Annotations *DashboardAnnotations `json:"annotations,omitempty"`
 	// ColumnLayout: The content is divided into equally spaced columns and the
 	// widgets are arranged vertically.
 	ColumnLayout *ColumnLayout `json:"columnLayout,omitempty"`
@@ -857,13 +860,13 @@ type Dashboard struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ColumnLayout") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ColumnLayout") to include in API
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -872,6 +875,35 @@ type Dashboard struct {
 
 func (s *Dashboard) MarshalJSON() ([]byte, error) {
 	type NoMethod Dashboard
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// DashboardAnnotations: Dashboard-level configuration for annotations
+type DashboardAnnotations struct {
+	// DefaultResourceNames: Dashboard level defaults for names of logging
+	// resources to search for events. Currently only projects are supported. Each
+	// individual EventAnnotation may have its own overrides. If both this field
+	// and the per annotation field is empty, then the scoping project is used.
+	// Limit: 50 projects. For example: “projects/some-project-id”
+	DefaultResourceNames []string `json:"defaultResourceNames,omitempty"`
+	// EventAnnotations: List of annotation configurations for this dashboard. Each
+	// entry specifies one event type.
+	EventAnnotations []*EventAnnotation `json:"eventAnnotations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultResourceNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultResourceNames") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *DashboardAnnotations) MarshalJSON() ([]byte, error) {
+	type NoMethod DashboardAnnotations
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1133,6 +1165,64 @@ type ErrorReportingPanel struct {
 
 func (s *ErrorReportingPanel) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorReportingPanel
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// EventAnnotation: Annotation configuration for one event type on a dashboard
+type EventAnnotation struct {
+	// DisplayName: Solely for UI display. Should not be used programmatically.
+	DisplayName string `json:"displayName,omitempty"`
+	// Enabled: Whether or not to show the events on the dashboard by default
+	Enabled bool `json:"enabled,omitempty"`
+	// EventType: The type of event to display.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - No event type specified.
+	//   "GKE_WORKLOAD_DEPLOYMENT" - Patch/update of GKE workload.
+	//   "GKE_POD_CRASH" - Crash events for a GKE Pod.
+	//   "GKE_POD_UNSCHEDULABLE" - Scheduling failures for GKE Pods.
+	//   "GKE_CONTAINER_CREATION_FAILED" - Failure to create a GKE container.
+	//   "GKE_CLUSTER_CREATE_DELETE" - Create/delete of a GKE cluster.
+	//   "GKE_CLUSTER_UPDATE" - Update of a GKE cluster.
+	//   "GKE_NODE_POOL_UPDATE" - Update of a GKE node pool.
+	//   "GKE_CLUSTER_AUTOSCALER" - GKE cluster autoscaler event.
+	//   "GKE_POD_AUTOSCALER" - GKE pod autoscaler event.
+	//   "VM_TERMINATION" - Termination of a virtual machine.
+	//   "VM_GUEST_OS_ERROR" - Guest OS error on a virtual machine.
+	//   "VM_START_FAILED" - Start failure on a virtual machine.
+	//   "MIG_UPDATE" - Update of a managed instance group.
+	//   "MIG_AUTOSCALER" - Autoscaler event for a managed instance group.
+	//   "CLOUD_RUN_DEPLOYMENT" - New deployment of a Cloud Run service.
+	//   "CLOUD_SQL_FAILOVER" - Failover of a Cloud SQL instance.
+	//   "CLOUD_SQL_START_STOP" - Start/stop of a Cloud SQL instance.
+	//   "CLOUD_SQL_STORAGE" - Storage event for a Cloud SQL instance.
+	//   "UPTIME_CHECK_FAILURE" - Failure of a Cloud Monitoring uptime check.
+	EventType string `json:"eventType,omitempty"`
+	// Filter: string filtering the events - event dependant. Example values:
+	// "resource.labels.pod_name = 'pod-1'"
+	// "protoPayload.authenticationInfo.principalEmail='user@example.com'"
+	Filter string `json:"filter,omitempty"`
+	// ResourceNames: Per annotation level override for the names of logging
+	// resources to search for events. Currently only projects are supported. If
+	// both this field and the per annotation field is empty, it will default to
+	// the host project. Limit: 50 projects. For example:
+	// “projects/another-project-id”
+	ResourceNames []string `json:"resourceNames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod EventAnnotation
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

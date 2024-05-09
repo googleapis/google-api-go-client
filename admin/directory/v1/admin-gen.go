@@ -1603,6 +1603,8 @@ type ChromeOsDevice struct {
 	// ExtendedSupportStart: Output only. Date of the device when extended support
 	// policy for automatic updates starts.
 	ExtendedSupportStart string `json:"extendedSupportStart,omitempty"`
+	// FanInfo: Output only. Fan information for the device.
+	FanInfo []*FanInfo `json:"fanInfo,omitempty"`
 	// FirmwareVersion: The Chrome device's firmware version.
 	FirmwareVersion string `json:"firmwareVersion,omitempty"`
 	// FirstEnrollmentTime: Date and time for the first time the device was
@@ -2769,6 +2771,28 @@ type FailureInfo struct {
 
 func (s *FailureInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod FailureInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// FanInfo: Information about the device's fan.
+type FanInfo struct {
+	// SpeedRpm: Output only. Fan speed in RPM.
+	SpeedRpm int64 `json:"speedRpm,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SpeedRpm") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SpeedRpm") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *FanInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod FanInfo
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

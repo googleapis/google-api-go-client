@@ -9225,6 +9225,10 @@ type GoogleCloudApigeeV1SecurityActionConditionConfig struct {
 	DeveloperApps []string `json:"developerApps,omitempty"`
 	// Developers: Optional. A list of developers. Limit 1000 per action.
 	Developers []string `json:"developers,omitempty"`
+	// HttpMethods: Optional. Act only on particular HTTP methods. E.g. A read-only
+	// API can block POST/PUT/DELETE methods. Accepted values are: GET, HEAD, POST,
+	// PUT, DELETE, CONNECT, OPTIONS, TRACE and PATCH.
+	HttpMethods []string `json:"httpMethods,omitempty"`
 	// IpAddressRanges: Optional. A list of IP addresses. This could be either IPv4
 	// or IPv6. Limited to 100 per action.
 	IpAddressRanges []string `json:"ipAddressRanges,omitempty"`

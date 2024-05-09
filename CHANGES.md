@@ -1,5 +1,18 @@
 # Changes
 
+## [0.179.0](https://github.com/googleapis/google-api-go-client/compare/v0.178.0...v0.179.0) (2024-05-09)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2573](https://github.com/googleapis/google-api-go-client/issues/2573)) ([887c564](https://github.com/googleapis/google-api-go-client/commit/887c564239fdc5b2d1bbb156447281c644e81ee8))
+* **all:** Auto-regenerate discovery clients ([#2575](https://github.com/googleapis/google-api-go-client/issues/2575)) ([a784ae0](https://github.com/googleapis/google-api-go-client/commit/a784ae096a6d0d3b666907307cb61c88d461a9c6))
+
+
+### Bug Fixes
+
+* Bump auth to v0.4.1 ([#2577](https://github.com/googleapis/google-api-go-client/issues/2577)) ([090ff6c](https://github.com/googleapis/google-api-go-client/commit/090ff6c58926594a1fc58f4f3a7603c1ecfc3a21))
+
 ## [0.178.0](https://github.com/googleapis/google-api-go-client/compare/v0.177.0...v0.178.0) (2024-05-07)
 
 

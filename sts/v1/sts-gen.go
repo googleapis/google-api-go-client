@@ -343,7 +343,8 @@ type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	// characters.
 	Options string `json:"options,omitempty"`
 	// RequestedTokenType: Required. An identifier for the type of requested
-	// security token. Must be `urn:ietf:params:oauth:token-type:access_token`.
+	// security token. Can be `urn:ietf:params:oauth:token-type:access_token` or
+	// `urn:ietf:params:oauth:token-type:access_boundary_intermediate_token`.
 	RequestedTokenType string `json:"requestedTokenType,omitempty"`
 	// Scope: The OAuth 2.0 scopes to include on the resulting access token,
 	// formatted as a list of space-delimited, case-sensitive strings. Required

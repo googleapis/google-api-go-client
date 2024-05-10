@@ -1818,8 +1818,8 @@ func (s *CancelSurveyResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CanceledStateContext: Information specific to a subscription in canceled
-// state.
+// CanceledStateContext: Information specific to a subscription in the
+// SUBSCRIPTION_STATE_CANCELED or SUBSCRIPTION_STATE_EXPIRED state.
 type CanceledStateContext struct {
 	// DeveloperInitiatedCancellation: Subscription was canceled by the developer.
 	DeveloperInitiatedCancellation *DeveloperInitiatedCancellation `json:"developerInitiatedCancellation,omitempty"`

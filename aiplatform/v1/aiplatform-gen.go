@@ -1882,17 +1882,19 @@ func (s *CloudAiNlLlmProtoServiceCitationMetadata) MarshalJSON() ([]byte, error)
 // CloudAiNlLlmProtoServiceContent: The content of a single message from a
 // participant.
 type CloudAiNlLlmProtoServiceContent struct {
+	// IsCached: If true, the content is from a cached content.
+	IsCached bool `json:"isCached,omitempty"`
 	// Parts: The parts of the message.
 	Parts []*CloudAiNlLlmProtoServicePart `json:"parts,omitempty"`
 	// Role: The role of the current conversation participant.
 	Role string `json:"role,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Parts") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "IsCached") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Parts") to include in API
+	// NullFields is a list of field names (e.g. "IsCached") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2249,7 +2251,8 @@ func (s *CloudAiNlLlmProtoServicePromptFeedback) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudAiNlLlmProtoServiceRaiResult: The RAI results for a given text.
+// CloudAiNlLlmProtoServiceRaiResult: The RAI results for a given text. Next
+// ID: 12
 type CloudAiNlLlmProtoServiceRaiResult struct {
 	// AidaRecitationResult: Recitation result from Aida recitation checker.
 	AidaRecitationResult *LanguageLabsAidaTrustRecitationProtoRecitationResult `json:"aidaRecitationResult,omitempty"`
@@ -2264,6 +2267,9 @@ type CloudAiNlLlmProtoServiceRaiResult struct {
 	Filtered bool `json:"filtered,omitempty"`
 	// LanguageFilterResult: Language filter result from SAFT LangId.
 	LanguageFilterResult *LearningGenaiRootLanguageFilterResult `json:"languageFilterResult,omitempty"`
+	// MmRecitationResult: Multi modal recitation results. It will be populated as
+	// long as Multi modal Recitation processor is invoked.
+	MmRecitationResult *LearningGenaiRecitationMMRecitationCheckResult `json:"mmRecitationResult,omitempty"`
 	// RaiSignals: The RAI signals for the text.
 	RaiSignals []*CloudAiNlLlmProtoServiceRaiSignal `json:"raiSignals,omitempty"`
 	// TranslationRequestInfos: Translation request info during RAI for debugging
@@ -6008,6 +6014,9 @@ type GoogleCloudAiplatformV1Dataset struct {
 	// defined as an OpenAPI 3.0.2 Schema Object. The schema files that can be used
 	// here are found in gs://google-cloud-aiplatform/schema/dataset/metadata/.
 	MetadataSchemaUri string `json:"metadataSchemaUri,omitempty"`
+	// ModelReference: Optional. Reference to the public base model last used by
+	// the dataset. Only set for prompt datasets.
+	ModelReference string `json:"modelReference,omitempty"`
 	// Name: Output only. The resource name of the Dataset.
 	Name string `json:"name,omitempty"`
 	// SavedQueries: All SavedQueries belong to the Dataset will be returned in
@@ -6055,6 +6064,9 @@ type GoogleCloudAiplatformV1DatasetVersion struct {
 	// Metadata: Required. Output only. Additional information about the
 	// DatasetVersion.
 	Metadata interface{} `json:"metadata,omitempty"`
+	// ModelReference: Output only. Reference to the public base model last used by
+	// the dataset version. Only set for prompt dataset versions.
+	ModelReference string `json:"modelReference,omitempty"`
 	// Name: Output only. The resource name of the DatasetVersion.
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. Timestamp when this DatasetVersion was last
@@ -9015,9 +9027,9 @@ func (s *GoogleCloudAiplatformV1Feature) MarshalJSON() ([]byte, error) {
 // GoogleCloudAiplatformV1FeatureGroup: Vertex AI Feature Group.
 type GoogleCloudAiplatformV1FeatureGroup struct {
 	// BigQuery: Indicates that features for this group come from BigQuery
-	// Table/View. By default treats the source as a sparse time series source,
-	// which is required to have an entity_id and a feature_timestamp column in the
-	// source.
+	// Table/View. By default treats the source as a sparse time series source. The
+	// BigQuery source table or view must have at least one entity ID column and a
+	// column named `feature_timestamp`.
 	BigQuery *GoogleCloudAiplatformV1FeatureGroupBigQuery `json:"bigQuery,omitempty"`
 	// CreateTime: Output only. Timestamp when this FeatureGroup was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -10519,8 +10531,6 @@ type GoogleCloudAiplatformV1FindNeighborsRequestQuery struct {
 	// crowding_attribute. It's used for improving result diversity. This field is
 	// the maximum number of matches with the same crowding tag.
 	PerCrowdingAttributeNeighborCount int64 `json:"perCrowdingAttributeNeighborCount,omitempty"`
-	// Rrf: Optional. Represents RRF algorithm that combines search results.
-	Rrf *GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF `json:"rrf,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApproximateNeighborCount")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10550,45 +10560,6 @@ func (s *GoogleCloudAiplatformV1FindNeighborsRequestQuery) UnmarshalJSON(data []
 		return err
 	}
 	s.FractionLeafNodesToSearchOverride = float64(s1.FractionLeafNodesToSearchOverride)
-	return nil
-}
-
-// GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF: Parameters for RRF
-// algorithm that combines search results.
-type GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF struct {
-	// Alpha: Required. Users can provide an alpha value to give more weight to
-	// dense vs sparse results. For example, if the alpha is 0, we only return
-	// sparse and if the alpha is 1, we only return dense.
-	Alpha float64 `json:"alpha,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Alpha") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Alpha") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudAiplatformV1FindNeighborsRequestQueryRRF
-	var s1 struct {
-		Alpha gensupport.JSONFloat64 `json:"alpha"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Alpha = float64(s1.Alpha)
 	return nil
 }
 
@@ -10652,9 +10623,6 @@ type GoogleCloudAiplatformV1FindNeighborsResponseNeighbor struct {
 	Datapoint *GoogleCloudAiplatformV1IndexDatapoint `json:"datapoint,omitempty"`
 	// Distance: The distance between the neighbor and the dense embedding query.
 	Distance float64 `json:"distance,omitempty"`
-	// SparseDistance: The distance between the neighbor and the query
-	// sparse_embedding.
-	SparseDistance float64 `json:"sparseDistance,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Datapoint") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10676,8 +10644,7 @@ func (s *GoogleCloudAiplatformV1FindNeighborsResponseNeighbor) MarshalJSON() ([]
 func (s *GoogleCloudAiplatformV1FindNeighborsResponseNeighbor) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudAiplatformV1FindNeighborsResponseNeighbor
 	var s1 struct {
-		Distance       gensupport.JSONFloat64 `json:"distance"`
-		SparseDistance gensupport.JSONFloat64 `json:"sparseDistance"`
+		Distance gensupport.JSONFloat64 `json:"distance"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -10685,7 +10652,6 @@ func (s *GoogleCloudAiplatformV1FindNeighborsResponseNeighbor) UnmarshalJSON(dat
 		return err
 	}
 	s.Distance = float64(s1.Distance)
-	s.SparseDistance = float64(s1.SparseDistance)
 	return nil
 }
 
@@ -11042,6 +11008,15 @@ type GoogleCloudAiplatformV1GenerationConfig struct {
 	// prompted to output the appropriate response type, otherwise the behavior is
 	// undefined. This is a preview feature.
 	ResponseMimeType string `json:"responseMimeType,omitempty"`
+	// ResponseStyle: Optional. Control Three levels of creativity in the model
+	// output. Default: RESPONSE_STYLE_BALANCED
+	//
+	// Possible values:
+	//   "RESPONSE_STYLE_UNSPECIFIED" - response style unspecified.
+	//   "RESPONSE_STYLE_PRECISE" - Precise response.
+	//   "RESPONSE_STYLE_BALANCED" - Default response style.
+	//   "RESPONSE_STYLE_CREATIVE" - Creative response style.
+	ResponseStyle string `json:"responseStyle,omitempty"`
 	// StopSequences: Optional. Stop sequences.
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.
@@ -11670,8 +11645,6 @@ type GoogleCloudAiplatformV1IndexDatapoint struct {
 	// the database eligible for matching. This uses categorical tokens. See:
 	// https://cloud.google.com/vertex-ai/docs/matching-engine/filtering
 	Restricts []*GoogleCloudAiplatformV1IndexDatapointRestriction `json:"restricts,omitempty"`
-	// SparseEmbedding: Optional. Feature embedding vector for sparse index.
-	SparseEmbedding *GoogleCloudAiplatformV1IndexDatapointSparseEmbedding `json:"sparseEmbedding,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CrowdingTag") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11822,50 +11795,6 @@ func (s *GoogleCloudAiplatformV1IndexDatapointRestriction) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAiplatformV1IndexDatapointSparseEmbedding: Feature embedding
-// vector for sparse index. An array of numbers whose values are located in the
-// specified dimensions.
-type GoogleCloudAiplatformV1IndexDatapointSparseEmbedding struct {
-	// Dimensions: Optional. The list of indexes for the embedding values of the
-	// sparse vector.
-	Dimensions googleapi.Int64s `json:"dimensions,omitempty"`
-	// Values: Optional. The list of embedding values of the sparse vector.
-	Values []float64 `json:"values,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Dimensions") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1IndexDatapointSparseEmbedding) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1IndexDatapointSparseEmbedding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudAiplatformV1IndexDatapointSparseEmbedding) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudAiplatformV1IndexDatapointSparseEmbedding
-	var s1 struct {
-		Values []gensupport.JSONFloat64 `json:"values"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Values = make([]float64, len(s1.Values))
-	for i := range s1.Values {
-		s.Values[i] = float64(s1.Values[i])
-	}
-	return nil
-}
-
 // GoogleCloudAiplatformV1IndexEndpoint: Indexes are deployed into it. An
 // IndexEndpoint can have multiple DeployedIndexes.
 type GoogleCloudAiplatformV1IndexEndpoint struct {
@@ -11980,8 +11909,6 @@ func (s *GoogleCloudAiplatformV1IndexPrivateEndpoints) MarshalJSON() ([]byte, er
 type GoogleCloudAiplatformV1IndexStats struct {
 	// ShardsCount: Output only. The number of shards in the Index.
 	ShardsCount int64 `json:"shardsCount,omitempty"`
-	// SparseVectorsCount: Output only. The number of sparse vectors in the Index.
-	SparseVectorsCount int64 `json:"sparseVectorsCount,omitempty,string"`
 	// VectorsCount: Output only. The number of dense vectors in the Index.
 	VectorsCount int64 `json:"vectorsCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "ShardsCount") to
@@ -16538,6 +16465,9 @@ type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataContentValidat
 	// InvalidRecordCount: Number of records in this file we skipped due to
 	// validate errors.
 	InvalidRecordCount int64 `json:"invalidRecordCount,omitempty,string"`
+	// InvalidSparseRecordCount: Number of sparse records in this file we skipped
+	// due to validate errors.
+	InvalidSparseRecordCount int64 `json:"invalidSparseRecordCount,omitempty,string"`
 	// PartialErrors: The detail information of the partial failures encountered
 	// for those invalid records that couldn't be parsed. Up to 50 partial errors
 	// will be reported.
@@ -16548,6 +16478,9 @@ type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataContentValidat
 	// ValidRecordCount: Number of records in this file that were successfully
 	// processed.
 	ValidRecordCount int64 `json:"validRecordCount,omitempty,string"`
+	// ValidSparseRecordCount: Number of sparse records in this file that were
+	// successfully processed.
+	ValidSparseRecordCount int64 `json:"validSparseRecordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "InvalidRecordCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -16594,9 +16527,7 @@ type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataRecordError st
 	//   "INVALID_NUMERIC_VALUE" - Numeric restrict has invalid numeric value
 	// specified.
 	//   "INVALID_ENCODING" - File is not in UTF_8 format.
-	//   "INVALID_SPARSE_DIMENSIONS" - Error parsing sparse dimensions field.
 	//   "INVALID_TOKEN_VALUE" - Token restrict value is invalid.
-	//   "INVALID_SPARSE_EMBEDDING" - Invalid sparse embedding.
 	ErrorType string `json:"errorType,omitempty"`
 	// RawRecord: The original content of this record.
 	RawRecord string `json:"rawRecord,omitempty"`
@@ -16970,6 +16901,10 @@ type GoogleCloudAiplatformV1NotebookRuntime struct {
 	RuntimeState string `json:"runtimeState,omitempty"`
 	// RuntimeUser: Required. The user email of the NotebookRuntime.
 	RuntimeUser string `json:"runtimeUser,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ServiceAccount: Output only. The service account that the NotebookRuntime
 	// workload runs as.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -29305,6 +29240,10 @@ type GoogleCloudAiplatformV1TuningJob struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. The description of the TuningJob.
 	Description string `json:"description,omitempty"`
+	// EncryptionSpec: Customer-managed encryption key options for a TuningJob. If
+	// this is set, then all resources created by the TuningJob will be encrypted
+	// with the provided encryption key.
+	EncryptionSpec *GoogleCloudAiplatformV1EncryptionSpec `json:"encryptionSpec,omitempty"`
 	// EndTime: Output only. Time when the TuningJob entered any of the following
 	// JobStates: `JOB_STATE_SUCCEEDED`, `JOB_STATE_FAILED`, `JOB_STATE_CANCELLED`,
 	// `JOB_STATE_EXPIRED`.
@@ -32251,6 +32190,29 @@ func (s *LanguageLabsAidaTrustRecitationProtoStreamRecitationResult) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// LearningGenaiRecitationContentChunkRecitationCheckResult: Recitation check
+// result for a single content chunk.
+type LearningGenaiRecitationContentChunkRecitationCheckResult struct {
+	ImageResult *LearningGenaiRecitationImageRecitationCheckResult `json:"imageResult,omitempty"`
+	TextResult  *LearningGenaiRecitationRecitationResult           `json:"textResult,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageResult") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *LearningGenaiRecitationContentChunkRecitationCheckResult) MarshalJSON() ([]byte, error) {
+	type NoMethod LearningGenaiRecitationContentChunkRecitationCheckResult
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // LearningGenaiRecitationDocAttribution: The proto defines the attribution
 // information for a document using whatever fields are most applicable for
 // that document's datasource. For example, a Wikipedia article's attribution
@@ -32796,6 +32758,159 @@ func (s *LearningGenaiRecitationDocAttribution) UnmarshalJSON(data []byte) error
 	}
 	s.QualityScoreExperimentOnly = float64(s1.QualityScoreExperimentOnly)
 	return nil
+}
+
+// LearningGenaiRecitationImageDocAttribution: Attribution information about
+// the recited image.
+type LearningGenaiRecitationImageDocAttribution struct {
+	// DatasetName: Unique ID of the image.
+	//
+	// Possible values:
+	//   "IMAGE_DATA_SET_UNSPECIFIED"
+	//   "JUNO_SHUTTERSTOCK_V1" - go/tigg-shutterstock
+	//   "JUNO_V1_HIPR" - go/hipr-in-tigg-notes
+	//   "JUNO_V1_WEBLI_AESTHETICS_V2_4_5"
+	//   "JUNO_V1_TIGG_DATA_V1"
+	//   "JUNO_V1_PINTEREST_A"
+	//   "JUNO_V1_PINTEREST_B"
+	//   "JUNO_V1_IMAGEJOINS"
+	//   "JUNO_V1_M1"
+	//   "JUNO_V1_M2_MISC"
+	//   "JUNO_V1_M2_ART"
+	//   "JUNO_V1_DEVIANTAR"
+	//   "IMAGE_PASSAGE" - go/image-passage
+	DatasetName string `json:"datasetName,omitempty"`
+	// StringDocids: Doc ID to identify the image. These could be urls of images or
+	// amarna id.
+	StringDocids string `json:"stringDocids,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatasetName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatasetName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *LearningGenaiRecitationImageDocAttribution) MarshalJSON() ([]byte, error) {
+	type NoMethod LearningGenaiRecitationImageDocAttribution
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type LearningGenaiRecitationImageRecitationCheckResult struct {
+	// RecitationAction: Only has NO_ACTION or BLOCK to start with.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED"
+	//   "CITE" - indicate that attribution must be shown for a Segment
+	//   "BLOCK" - indicate that a Segment should be blocked from being used
+	//   "NO_ACTION" - for tagging high-frequency code snippets
+	//   "EXEMPT_FOUND_IN_PROMPT" - The recitation was found in prompt and is
+	// exempted from overall results
+	RecitationAction string `json:"recitationAction,omitempty"`
+	// RecitedImages: Images that are similar to the requested image.
+	RecitedImages []*LearningGenaiRecitationImageRecitationCheckResultSimilarImage `json:"recitedImages,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RecitationAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RecitationAction") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *LearningGenaiRecitationImageRecitationCheckResult) MarshalJSON() ([]byte, error) {
+	type NoMethod LearningGenaiRecitationImageRecitationCheckResult
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type LearningGenaiRecitationImageRecitationCheckResultSimilarImage struct {
+	// DocAttribution: Attribution information about the image
+	DocAttribution *LearningGenaiRecitationImageDocAttribution `json:"docAttribution,omitempty"`
+	// EmbeddingModel: The memorization embedding model that returned this image
+	//
+	// Possible values:
+	//   "EMBEDDING_MODEL_UNSPECIFIED"
+	//   "STARBURST_V4" - Starburst V4, 64 float features.
+	//   "REISIM" - Reisim, 128 Byte float feature
+	EmbeddingModel string `json:"embeddingModel,omitempty"`
+	// ImageId: Image ID corresponding of the image corresponding to the score.
+	// `image_id` serves for debugging purposes and can't be used by clients to
+	// retrieve an image.
+	ImageId uint64 `json:"imageId,omitempty,string"`
+	// Scores: Similarity score of requested image compared with image in training
+	// data.
+	Scores float64 `json:"scores,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocAttribution") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocAttribution") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *LearningGenaiRecitationImageRecitationCheckResultSimilarImage) MarshalJSON() ([]byte, error) {
+	type NoMethod LearningGenaiRecitationImageRecitationCheckResultSimilarImage
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *LearningGenaiRecitationImageRecitationCheckResultSimilarImage) UnmarshalJSON(data []byte) error {
+	type NoMethod LearningGenaiRecitationImageRecitationCheckResultSimilarImage
+	var s1 struct {
+		Scores gensupport.JSONFloat64 `json:"scores"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Scores = float64(s1.Scores)
+	return nil
+}
+
+// LearningGenaiRecitationMMRecitationCheckResult: Recitation check result for
+// a stream of content chunks (e.g. a model response).
+type LearningGenaiRecitationMMRecitationCheckResult struct {
+	ChunkResults []*LearningGenaiRecitationContentChunkRecitationCheckResult `json:"chunkResults,omitempty"`
+	// RecitationAction: Overall recommended recitation action for the content.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED"
+	//   "CITE" - indicate that attribution must be shown for a Segment
+	//   "BLOCK" - indicate that a Segment should be blocked from being used
+	//   "NO_ACTION" - for tagging high-frequency code snippets
+	//   "EXEMPT_FOUND_IN_PROMPT" - The recitation was found in prompt and is
+	// exempted from overall results
+	RecitationAction string `json:"recitationAction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChunkResults") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChunkResults") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *LearningGenaiRecitationMMRecitationCheckResult) MarshalJSON() ([]byte, error) {
+	type NoMethod LearningGenaiRecitationMMRecitationCheckResult
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // LearningGenaiRecitationRecitationResult: The recitation result for one input
@@ -34171,6 +34286,9 @@ func (s *LearningGenaiRootHarmGrailTextHarmType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// LearningGenaiRootHarmSafetyCatCategories:
+// LINT.ThenChange(//depot/google3/learning/genai/root/util/classifier/backends/
+// grail/grail.cc)
 type LearningGenaiRootHarmSafetyCatCategories struct {
 	// Possible values:
 	//   "SAFETYCAT_CATEGORY_UNSPECIFIED"
@@ -34215,6 +34333,7 @@ func (s *LearningGenaiRootHarmSafetyCatCategories) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// LearningGenaiRootHarmSpiiFilter: LINT.IfChange
 type LearningGenaiRootHarmSpiiFilter struct {
 	UsBankRoutingMicr              bool `json:"usBankRoutingMicr,omitempty"`
 	UsEmployerIdentificationNumber bool `json:"usEmployerIdentificationNumber,omitempty"`
@@ -34344,6 +34463,9 @@ type LearningGenaiRootPerRequestProcessorDebugMetadataFactualityDebugMetadata st
 	// Prompt2queryMilliseconds: Latency spent on prompt2query. The procedure
 	// generates a search-friendly query given the original prompt.
 	Prompt2queryMilliseconds int64 `json:"prompt2queryMilliseconds,omitempty,string"`
+	// RetrievalAugmentMilliseconds: Latency if use GroundedGeneration service for
+	// the whole retrieval & augmentation.
+	RetrievalAugmentMilliseconds int64 `json:"retrievalAugmentMilliseconds,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g.
 	// "FactRetrievalMillisecondsByProvider") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -34424,6 +34546,110 @@ type LearningGenaiRootRegexTakedownResult struct {
 
 func (s *LearningGenaiRootRegexTakedownResult) MarshalJSON() ([]byte, error) {
 	type NoMethod LearningGenaiRootRegexTakedownResult
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type LearningGenaiRootRequestMetrics struct {
+	// AudioMetrics: Metrics for audio samples in the request.
+	AudioMetrics *LearningGenaiRootRequestMetricsAudioMetrics `json:"audioMetrics,omitempty"`
+	// ImageMetrics: Metrics for image samples in the request.
+	ImageMetrics *LearningGenaiRootRequestMetricsImageMetrics `json:"imageMetrics,omitempty"`
+	// TextTokenCount: Number of text tokens extracted from the request.
+	TextTokenCount int64 `json:"textTokenCount,omitempty"`
+	// TotalTokenCount: Total number of tokens in the request.
+	TotalTokenCount int64 `json:"totalTokenCount,omitempty"`
+	// VideoMetrics: Metrics for video samples in the request.
+	VideoMetrics *LearningGenaiRootRequestMetricsVideoMetrics `json:"videoMetrics,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudioMetrics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioMetrics") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *LearningGenaiRootRequestMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod LearningGenaiRootRequestMetrics
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type LearningGenaiRootRequestMetricsAudioMetrics struct {
+	// AudioDuration: Duration of the audio sample in seconds.
+	AudioDuration string `json:"audioDuration,omitempty"`
+	// AudioTokenCount: Number of tokens derived directly from audio data.
+	AudioTokenCount int64 `json:"audioTokenCount,omitempty"`
+	// NumAudioFrames: Number of audio frames in the audio.
+	NumAudioFrames int64 `json:"numAudioFrames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudioDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioDuration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *LearningGenaiRootRequestMetricsAudioMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod LearningGenaiRootRequestMetricsAudioMetrics
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type LearningGenaiRootRequestMetricsImageMetrics struct {
+	// ImageTokenCount: Number of tokens extracted from image bytes.
+	ImageTokenCount int64 `json:"imageTokenCount,omitempty"`
+	// NumImages: Number of images in the request.
+	NumImages int64 `json:"numImages,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageTokenCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageTokenCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *LearningGenaiRootRequestMetricsImageMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod LearningGenaiRootRequestMetricsImageMetrics
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type LearningGenaiRootRequestMetricsVideoMetrics struct {
+	// AudioSample: Metrics associated with audio sample in the video.
+	AudioSample *LearningGenaiRootRequestMetricsAudioMetrics `json:"audioSample,omitempty"`
+	// NumVideoFrames: Number of video frames in the video.
+	NumVideoFrames int64 `json:"numVideoFrames,omitempty"`
+	// VideoDuration: Duration of the video sample in seconds.
+	VideoDuration string `json:"videoDuration,omitempty"`
+	// VideoFramesTokenCount: Number of tokens extracted from video frames.
+	VideoFramesTokenCount int64 `json:"videoFramesTokenCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudioSample") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioSample") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *LearningGenaiRootRequestMetricsVideoMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod LearningGenaiRootRequestMetricsVideoMetrics
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -35125,7 +35351,7 @@ func (s *LearningServingLlmAtlasOutputMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // LearningServingLlmMessageMetadata: LINT.IfChange This metadata contains
-// additional information required for debugging. Next ID: 28
+// additional information required for debugging.
 type LearningServingLlmMessageMetadata struct {
 	AtlasMetadata *LearningServingLlmAtlasOutputMetadata `json:"atlasMetadata,omitempty"`
 	// ClassifierSummary: Summary of classifier output. We attach this to all
@@ -35167,6 +35393,16 @@ type LearningServingLlmMessageMetadata struct {
 	Language string `json:"language,omitempty"`
 	// LmPrefix: The LM prefix used to generate this response.
 	LmPrefix string `json:"lmPrefix,omitempty"`
+	// LmrootInternalRequestMetrics: FOR LMROOT INTERNAL USE ONLY. Externally, use
+	// learning.genai.root.RequestMetadata.RequestMetrics. Request metrics per
+	// modality including token count, duration, num_frames.
+	LmrootInternalRequestMetrics *LearningGenaiRootRequestMetrics `json:"lmrootInternalRequestMetrics,omitempty"`
+	// MmRecitationResult: Multi modal recitation results. It will be populated as
+	// long as Multi modal Recitation processor is invoked.
+	MmRecitationResult *LearningGenaiRecitationMMRecitationCheckResult `json:"mmRecitationResult,omitempty"`
+	// NumRewinds: Number of Controlled Decoding rewind and repeats that have
+	// happened for this response.
+	NumRewinds int64 `json:"numRewinds,omitempty"`
 	// OriginalText: The original text generated by LLM. This is the raw output for
 	// debugging purposes.
 	OriginalText string `json:"originalText,omitempty"`
@@ -35186,10 +35422,6 @@ type LearningServingLlmMessageMetadata struct {
 	// RecitationResult: Recitation Results. It will be populated as long as
 	// Recitation processing is enabled, regardless of recitation outcome.
 	RecitationResult *LearningGenaiRecitationRecitationResult `json:"recitationResult,omitempty"`
-	// ReturnTokenCount: NOT IMPLEMENTED TODO (b/334187574) Remove this field after
-	// Labs migrates to per_stream_returned_token_count and
-	// total_returned_token_count.
-	ReturnTokenCount int64 `json:"returnTokenCount,omitempty"`
 	// Scores: All the different scores for a message are logged here.
 	Scores []*LearningGenaiRootScore `json:"scores,omitempty"`
 	// StreamTerminated: Whether the response is terminated during streaming
@@ -42333,6 +42565,116 @@ func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) Pages(ctx context.Con
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsDatasetsDatasetVersionsPatchCall struct {
+	s                                     *Service
+	name                                  string
+	googlecloudaiplatformv1datasetversion *GoogleCloudAiplatformV1DatasetVersion
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Patch: Updates a DatasetVersion.
+//
+// - name: Output only. The resource name of the DatasetVersion.
+func (r *ProjectsLocationsDatasetsDatasetVersionsService) Patch(name string, googlecloudaiplatformv1datasetversion *GoogleCloudAiplatformV1DatasetVersion) *ProjectsLocationsDatasetsDatasetVersionsPatchCall {
+	c := &ProjectsLocationsDatasetsDatasetVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudaiplatformv1datasetversion = googlecloudaiplatformv1datasetversion
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The update
+// mask applies to the resource. For the `FieldMask` definition, see
+// google.protobuf.FieldMask. Updatable fields: * `display_name`
+func (c *ProjectsLocationsDatasetsDatasetVersionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsDatasetVersionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsDatasetVersionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDatasetVersionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsDatasetVersionsPatchCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDatasetVersionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsDatasetVersionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDatasetVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudaiplatformv1datasetversion)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.datasets.datasetVersions.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1DatasetVersion.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDatasetVersionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1DatasetVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1DatasetVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsDatasetsDatasetVersionsRestoreCall struct {

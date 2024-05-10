@@ -11121,6 +11121,15 @@ func (s *PriceCompetitiveness) MarshalJSON() ([]byte, error) {
 // `PriceInsightsProductView`.
 // https://support.google.com/merchants/answer/11916926
 type PriceInsights struct {
+	// Effectiveness: The predicted effectiveness of applying the price suggestion,
+	// bucketed.
+	//
+	// Possible values:
+	//   "EFFECTIVENESS_UNSPECIFIED" - Effectiveness is unknown.
+	//   "LOW" - Effectiveness is low.
+	//   "MEDIUM" - Effectiveness is medium.
+	//   "HIGH" - Effectiveness is high.
+	Effectiveness string `json:"effectiveness,omitempty"`
 	// PredictedClicksChangeFraction: The predicted change in clicks as a fraction
 	// after introducing the suggested price compared to current active price. For
 	// example, 0.05 is a 5% predicted increase in clicks.
@@ -11153,15 +11162,15 @@ type PriceInsights struct {
 	// SuggestedPriceMicros: The latest suggested price in micros (1 millionth of a
 	// standard unit, 1 USD = 1000000 micros) for the product.
 	SuggestedPriceMicros int64 `json:"suggestedPriceMicros,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g.
-	// "PredictedClicksChangeFraction") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
+	// ForceSendFields is a list of field names (e.g. "Effectiveness") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PredictedClicksChangeFraction")
-	// to include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Effectiveness") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

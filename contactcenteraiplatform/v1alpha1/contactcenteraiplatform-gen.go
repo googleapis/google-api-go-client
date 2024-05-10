@@ -402,6 +402,12 @@ type InstanceConfig struct {
 	//   "STANDARD_2XLARGE" - Instance Size STANDARD_2XLARGE.
 	//   "STANDARD_3XLARGE" - Instance Size STANDARD_3XLARGE.
 	//   "DEV_XSMALL" - Instance Size DEV_EXTRA_SMALL.
+	//   "MULTIREGION_SMALL" - Instance Size MULTIREGION_SMALL
+	//   "MULTIREGION_MEDIUM" - Instance Size MULTIREGION_MEDIUM
+	//   "MULTIREGION_LARGE" - Instance Size MULTIREGION_LARGE
+	//   "MULTIREGION_XLARGE" - Instance Size MULTIREGION_XLARGE
+	//   "MULTIREGION_2XLARGE" - Instance Size MULTIREGION_2XLARGE.
+	//   "MULTIREGION_3XLARGE" - Instance Size MULTIREGION_3XLARGE.
 	InstanceSize string `json:"instanceSize,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InstanceSize") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -657,6 +663,12 @@ type Quota struct {
 	//   "STANDARD_2XLARGE" - Instance Size STANDARD_2XLARGE.
 	//   "STANDARD_3XLARGE" - Instance Size STANDARD_3XLARGE.
 	//   "DEV_XSMALL" - Instance Size DEV_EXTRA_SMALL.
+	//   "MULTIREGION_SMALL" - Instance Size MULTIREGION_SMALL
+	//   "MULTIREGION_MEDIUM" - Instance Size MULTIREGION_MEDIUM
+	//   "MULTIREGION_LARGE" - Instance Size MULTIREGION_LARGE
+	//   "MULTIREGION_XLARGE" - Instance Size MULTIREGION_XLARGE
+	//   "MULTIREGION_2XLARGE" - Instance Size MULTIREGION_2XLARGE.
+	//   "MULTIREGION_3XLARGE" - Instance Size MULTIREGION_3XLARGE.
 	ContactCenterInstanceSize string `json:"contactCenterInstanceSize,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContactCenterCountLimit") to
 	// unconditionally include in API requests. By default, fields with empty or

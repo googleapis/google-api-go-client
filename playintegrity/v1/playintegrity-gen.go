@@ -238,7 +238,36 @@ func (s *AccountDetails) MarshalJSON() ([]byte, error) {
 // AppAccessRiskVerdict: Contains signals about others apps on the device which
 // could be used to access or control the requesting app.
 type AppAccessRiskVerdict struct {
-	// OtherApps: App access risk verdict related to apps that are not installed by
+	// AppsDetected: List of detected app types signalled for App Access Risk.
+	//
+	// Possible values:
+	//   "APPS_DETECTED_UNSPECIFIED" - Apps detected is unspecified.
+	//   "KNOWN_INSTALLED" - One or more apps is installed by Google Play or
+	// preloaded on the system partition by the device manufacturer.
+	//   "KNOWN_CAPTURING" - One or more apps installed by Google Play or preloaded
+	// on the device is running that could be used to read or capture the
+	// requesting app, such as a screen recording app.
+	//   "KNOWN_OVERLAYS" - One or more apps installed by Google Play or preloaded
+	// on the device is running that could be used to display overlays over the
+	// requesting app.
+	//   "KNOWN_CONTROLLING" - One or more apps installed by Google Play or
+	// preloaded on the device is running that could be used to control the device,
+	// such as a remote support app.
+	//   "UNKNOWN_INSTALLED" - One or more unknown apps is installed, that were not
+	// installed by Google Play or preloaded on the system partition by the device
+	// manufacturer.
+	//   "UNKNOWN_CAPTURING" - One or more unknown apps, which were not installed
+	// by Google Play or preloaded on the device, is running that could be used to
+	// read or capture the requesting app, such as a screen recording app.
+	//   "UNKNOWN_OVERLAYS" - One or more unknown apps, which were not installed by
+	// Google Play or preloaded on the device, is running that could be used to
+	// display overlays over the requesting app.
+	//   "UNKNOWN_CONTROLLING" - One or more unknown apps, which were not installed
+	// by Google Play or preloaded on the device, is running that could be used to
+	// control the device, such as a remote support app.
+	AppsDetected []string `json:"appsDetected,omitempty"`
+	// OtherApps: Deprecated: this field will be removed, please use apps_detected
+	// instead. App access risk verdict related to apps that are not installed by
 	// Google Play, and are not preloaded on the system image by the device
 	// manufacturer.
 	//
@@ -257,7 +286,8 @@ type AppAccessRiskVerdict struct {
 	// control the device and inputs and outputs of the requesting app, such as
 	// remote controlling apps.
 	OtherApps string `json:"otherApps,omitempty"`
-	// PlayOrSystemApps: App access risk verdict related to apps that are not
+	// PlayOrSystemApps: Deprecated: this field will be removed, please use
+	// apps_detected instead. App access risk verdict related to apps that are not
 	// installed by the Google Play Store, and are not preloaded on the system
 	// image by the device manufacturer.
 	//
@@ -276,13 +306,13 @@ type AppAccessRiskVerdict struct {
 	// control the device and inputs and outputs of the requesting app, such as
 	// remote controlling apps.
 	PlayOrSystemApps string `json:"playOrSystemApps,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "OtherApps") to
+	// ForceSendFields is a list of field names (e.g. "AppsDetected") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "OtherApps") to include in API
+	// NullFields is a list of field names (e.g. "AppsDetected") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

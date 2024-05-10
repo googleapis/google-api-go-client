@@ -575,6 +575,8 @@ type CloudStorageConfig struct {
 	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
 	// because enforce_in_transit is set to true and the destination locations are
 	// not in the allowed regions.
+	//   "SCHEMA_MISMATCH" - Cannot write to the Cloud Storage bucket due to an
+	// incompatibility between the topic schema and subscription settings.
 	State string `json:"state,omitempty"`
 	// TextConfig: Optional. If set, message data will be written to Cloud Storage
 	// in text format.

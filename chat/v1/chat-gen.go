@@ -4521,11 +4521,11 @@ func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 // Space: A space in Google Chat. Spaces are conversations between two or more
 // users or 1:1 messages between a user and a Chat app.
 type Space struct {
-	// AdminInstalled: Output only. Whether the Chat app was installed by a Google
-	// Workspace administrator. Administrators can install a Chat app for their
-	// domain, organizational unit, or a group of users. Administrators can only
-	// install Chat apps for direct messaging between users and the app. To support
-	// admin install, your app must feature direct messaging.
+	// AdminInstalled: Output only. For direct message (DM) spaces with a Chat app,
+	// whether the space was created by a Google Workspace administrator.
+	// Administrators can install and set up a direct message with a Chat app on
+	// behalf of users in their organization. To support admin install, your Chat
+	// app must feature direct messaging.
 	AdminInstalled bool `json:"adminInstalled,omitempty"`
 	// CreateTime: Optional. Immutable. For spaces created in Chat, the time the
 	// space was created. This field is output only, except when used in import

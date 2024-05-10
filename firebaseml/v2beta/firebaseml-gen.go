@@ -776,6 +776,11 @@ func (s *GenerationConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleSearchRetrieval: Tool to retrieve public web data for grounding,
+// powered by Google.
+type GoogleSearchRetrieval struct {
+}
+
 // GroundingMetadata: Metadata returned to client when grounding is enabled.
 type GroundingMetadata struct {
 	// RetrievalQueries: Optional. Queries executed by the retrieval tools.
@@ -1224,6 +1229,9 @@ type Tool struct {
 	// will generate the final response back to the user. Maximum 64 function
 	// declarations can be provided.
 	FunctionDeclarations []*FunctionDeclaration `json:"functionDeclarations,omitempty"`
+	// GoogleSearchRetrieval: Optional. GoogleSearchRetrieval tool type.
+	// Specialized retrieval tool that is powered by Google search.
+	GoogleSearchRetrieval *GoogleSearchRetrieval `json:"googleSearchRetrieval,omitempty"`
 	// Retrieval: Optional. Retrieval tool type. System will always execute the
 	// provided retrieval tool(s) to get external knowledge to answer the prompt.
 	// Retrieval results are presented to the model for generation.

@@ -1551,6 +1551,8 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Build struct {
 	// The difference between finish_time and start_time is the duration of the
 	// build's execution.
 	FinishTime string `json:"finishTime,omitempty"`
+	// GitConfig: Optional. Configuration for git operations.
+	GitConfig *ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig `json:"gitConfig,omitempty"`
 	// Id: Output only. Unique identifier of the build.
 	Id string `json:"id,omitempty"`
 	// Images: A list of images to be pushed upon the successful completion of all
@@ -2087,6 +2089,36 @@ func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository) Marshal
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig: This
+// config defines the location of a source through Developer Connect.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig struct {
+	// Dir: Required. Directory, relative to the source root, in which to run the
+	// build.
+	Dir string `json:"dir,omitempty"`
+	// GitRepositoryLink: Required. The Developer Connect Git repository link,
+	// formatted as `projects/*/locations/*/connections/*/gitRepositoryLink/*`.
+	GitRepositoryLink string `json:"gitRepositoryLink,omitempty"`
+	// Revision: Required. The revision to fetch from the Git repository such as a
+	// branch, a tag, a commit SHA, or any Git ref.
+	Revision string `json:"revision,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dir") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dir") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes: Container message for
 // hashes of byte content of files, used in SourceProvenance messages to verify
 // integrity of source input to the build.
@@ -2108,6 +2140,53 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes struct {
 
 func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig: GitConfig is a
+// configuration for git operations.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig struct {
+	// Http: Configuration for HTTP related git operations.
+	Http *ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig `json:"http,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Http") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Http") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig: HttpConfig
+// is a configuration for HTTP related git operations.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig struct {
+	// ProxySecretVersionName: SecretVersion resource of the HTTP proxy URL. The
+	// proxy URL should be in format protocol://@]proxyhost[:port].
+	ProxySecretVersionName string `json:"proxySecretVersionName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProxySecretVersionName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProxySecretVersionName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2271,7 +2350,8 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Results struct {
 	// the order corresponding to build step indices. Cloud Builders
 	// (https://cloud.google.com/cloud-build/docs/cloud-builders) can produce this
 	// output by writing to `$BUILDER_OUTPUT/output`. Only the first 50KB of data
-	// is stored.
+	// is stored. Note that the `$BUILDER_OUTPUT` variable is read-only and can't
+	// be substituted.
 	BuildStepOutputs []string `json:"buildStepOutputs,omitempty"`
 	// Images: Container images that were built as a part of the build.
 	Images []*ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage `json:"images,omitempty"`
@@ -2398,6 +2478,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Source struct {
 	// ConnectedRepository: Optional. If provided, get the source from this 2nd-gen
 	// Google Cloud Build repository resource.
 	ConnectedRepository *ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository `json:"connectedRepository,omitempty"`
+	// DeveloperConnectConfig: If provided, get the source from this Developer
+	// Connect config.
+	DeveloperConnectConfig *ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig `json:"developerConnectConfig,omitempty"`
 	// GitSource: If provided, get the source from this Git repository.
 	GitSource *ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource `json:"gitSource,omitempty"`
 	// RepoSource: If provided, get the source from this location in a Cloud Source

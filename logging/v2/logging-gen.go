@@ -3058,6 +3058,9 @@ type LogMetric struct {
 	// name of a metric is "projects/my-project/metrics/nginx%2Frequests", this
 	// field's value is "nginx/requests".
 	Name string `json:"name,omitempty"`
+	// ResourceName: Output only. The resource name of the metric:
+	// "projects/[PROJECT_ID]/metrics/[METRIC_ID]"
+	ResourceName string `json:"resourceName,omitempty"`
 	// UpdateTime: Output only. The last update timestamp of the metric.This field
 	// may not be present for older metrics.
 	UpdateTime string `json:"updateTime,omitempty"`

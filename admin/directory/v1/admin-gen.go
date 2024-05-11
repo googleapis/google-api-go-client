@@ -1527,6 +1527,13 @@ type ChromeOsDevice struct {
 	// Chromebook developer information
 	// (https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/samsung-series-5-chromebook#TOC-Developer-switch).
 	BootMode string `json:"bootMode,omitempty"`
+	// ChromeOsType: Output only. Chrome OS type of the device.
+	//
+	// Possible values:
+	//   "chromeOsTypeUnspecified" - Chrome OS Type unspecified.
+	//   "chromeOsFlex" - Chrome OS Type Chrome OS Flex.
+	//   "chromeOs" - Chrome OS Type Chrome OS.
+	ChromeOsType string `json:"chromeOsType,omitempty"`
 	// CpuInfo: Information regarding CPU specs in the device.
 	CpuInfo []*ChromeOsDeviceCpuInfo `json:"cpuInfo,omitempty"`
 	// CpuStatusReports: Reports of CPU utilization and temperature (Read-only)
@@ -5953,7 +5960,7 @@ func (c *ChromeosdevicesListCall) IncludeChildOrgunits(includeChildOrgunits bool
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number of
-// results to return.
+// results to return, value should not exceed 300.
 func (c *ChromeosdevicesListCall) MaxResults(maxResults int64) *ChromeosdevicesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -6002,8 +6009,8 @@ func (c *ChromeosdevicesListCall) PageToken(pageToken string) *ChromeosdevicesLi
 	return c
 }
 
-// Projection sets the optional parameter "projection": Restrict information
-// returned to a set of selected fields.
+// Projection sets the optional parameter "projection": Determines whether the
+// response contains the full list of properties or only a subset.
 //
 // Possible values:
 //
@@ -6258,8 +6265,8 @@ func (r *ChromeosdevicesService) Patch(customerId string, deviceId string, chrom
 	return c
 }
 
-// Projection sets the optional parameter "projection": Restrict information
-// returned to a set of selected fields.
+// Projection sets the optional parameter "projection": Determines whether the
+// response contains the full list of properties or only a subset.
 //
 // Possible values:
 //
@@ -6384,8 +6391,8 @@ func (r *ChromeosdevicesService) Update(customerId string, deviceId string, chro
 	return c
 }
 
-// Projection sets the optional parameter "projection": Restrict information
-// returned to a set of selected fields.
+// Projection sets the optional parameter "projection": Determines whether the
+// response contains the full list of properties or only a subset.
 //
 // Possible values:
 //

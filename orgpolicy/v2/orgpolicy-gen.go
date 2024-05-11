@@ -479,6 +479,7 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	//   "DELETE" - Constraint applied when deleting the resource. Not supported
 	// yet.
 	//   "REMOVE_GRANT" - Constraint applied when removing an IAM grant.
+	//   "GOVERN_TAGS" - Constraint applied when enforcing forced tagging.
 	MethodTypes []string `json:"methodTypes,omitempty"`
 	// Name: Immutable. Name of the constraint. This is unique within the
 	// organization. Format of the name should be *

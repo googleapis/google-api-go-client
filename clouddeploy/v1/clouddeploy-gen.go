@@ -302,7 +302,7 @@ type AdvanceChildRolloutJob struct {
 type AdvanceChildRolloutJobRun struct {
 	// Rollout: Output only. Name of the `ChildRollout`. Format is
 	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}
-	// /releases/{release}/rollouts/a-z{0,62}`.
+	// /releases/{release}/rollouts/{rollout}`.
 	Rollout string `json:"rollout,omitempty"`
 	// RolloutPhaseId: Output only. the ID of the ChildRollout's Phase.
 	RolloutPhaseId string `json:"rolloutPhaseId,omitempty"`
@@ -389,7 +389,8 @@ type AdvanceRolloutRule struct {
 	// Condition: Output only. Information around the state of the Automation rule.
 	Condition *AutomationRuleCondition `json:"condition,omitempty"`
 	// Id: Required. ID of the rule. This id must be unique in the `Automation`
-	// resource to which this rule belongs. The format is `a-z{0,62}`.
+	// resource to which this rule belongs. The format is
+	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
 	Id string `json:"id,omitempty"`
 	// SourcePhases: Optional. Proceeds only after phase name matched any one in
 	// the list. This value must consist of lower-case letters, numbers, and
@@ -1306,7 +1307,7 @@ type CreateChildRolloutJob struct {
 type CreateChildRolloutJobRun struct {
 	// Rollout: Output only. Name of the `ChildRollout`. Format is
 	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}
-	// /releases/{release}/rollouts/a-z{0,62}`.
+	// /releases/{release}/rollouts/{rollout}`.
 	Rollout string `json:"rollout,omitempty"`
 	// RolloutPhaseId: Output only. The ID of the childRollout Phase initiated by
 	// this JobRun.
@@ -1489,7 +1490,9 @@ type CustomTargetType struct {
 	// bytes.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Optional. Name of the `CustomTargetType`. Format is
-	// `projects/{project}/locations/{location}/customTargetTypes/a-z{0,62}`.
+	// `projects/{project}/locations/{location}/customTargetTypes/{customTargetType}
+	// `. The `customTargetType` component must match
+	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
 	// Uid: Output only. Unique identifier of the `CustomTargetType`.
 	Uid string `json:"uid,omitempty"`
@@ -1613,7 +1616,9 @@ type DeliveryPipeline struct {
 	// bytes.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Optional. Name of the `DeliveryPipeline`. Format is
-	// `projects/{project}/locations/{location}/deliveryPipelines/a-z{0,62}`.
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}
+	// `. The `deliveryPipeline` component must match
+	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
 	// SerialPipeline: SerialPipeline defines a sequential set of stages for a
 	// `DeliveryPipeline`.
@@ -3268,7 +3273,8 @@ type PromoteReleaseRule struct {
 	// pipeline. * "@next", the next target in the promotion sequence.
 	DestinationTargetId string `json:"destinationTargetId,omitempty"`
 	// Id: Required. ID of the rule. This id must be unique in the `Automation`
-	// resource to which this rule belongs. The format is `a-z{0,62}`.
+	// resource to which this rule belongs. The format is
+	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
 	Id string `json:"id,omitempty"`
 	// Wait: Optional. How long the release need to be paused until being promoted
 	// to the next target.
@@ -3333,7 +3339,8 @@ type Release struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Optional. Name of the `Release`. Format is
 	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}
-	// /releases/a-z{0,62}`.
+	// /releases/{release}`. The `release` component must match
+	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
 	// RenderEndTime: Output only. Time at which the render completed.
 	RenderEndTime string `json:"renderEndTime,omitempty"`
@@ -3662,7 +3669,8 @@ type RepairRolloutRule struct {
 	// rule.
 	Condition *AutomationRuleCondition `json:"condition,omitempty"`
 	// Id: Required. ID of the rule. This id must be unique in the `Automation`
-	// resource to which this rule belongs. The format is `a-z{0,62}`.
+	// resource to which this rule belongs. The format is
+	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
 	Id string `json:"id,omitempty"`
 	// Jobs: Optional. Jobs to repair. Proceeds only after job name matched any one
 	// in the list, or for all jobs if unspecified or empty. The phase that
@@ -4013,7 +4021,7 @@ type Rollout struct {
 	ApproveTime string `json:"approveTime,omitempty"`
 	// ControllerRollout: Output only. Name of the `ControllerRollout`. Format is
 	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}
-	// /releases/{release}/rollouts/a-z{0,62}`.
+	// /releases/{release}/rollouts/{rollout}`.
 	ControllerRollout string `json:"controllerRollout,omitempty"`
 	// CreateTime: Output only. Time at which the `Rollout` was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -4072,7 +4080,8 @@ type Rollout struct {
 	Metadata *Metadata `json:"metadata,omitempty"`
 	// Name: Optional. Name of the `Rollout`. Format is
 	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}
-	// /releases/{release}/rollouts/a-z{0,62}`.
+	// /releases/{release}/rollouts/{rollout}`. The `rollout` component must match
+	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
 	// Phases: Output only. The phases that represent the workflows of this
 	// `Rollout`.
@@ -4708,7 +4717,8 @@ type Target struct {
 	// MultiTarget: Optional. Information specifying a multiTarget.
 	MultiTarget *MultiTarget `json:"multiTarget,omitempty"`
 	// Name: Optional. Name of the `Target`. Format is
-	// `projects/{project}/locations/{location}/targets/a-z{0,62}`.
+	// `projects/{project}/locations/{location}/targets/{target}`. The `target`
+	// component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
 	// RequireApproval: Optional. Whether or not the `Target` requires approval.
 	RequireApproval bool `json:"requireApproval,omitempty"`
@@ -6132,7 +6142,9 @@ type ProjectsLocationsCustomTargetTypesPatchCall struct {
 // Patch: Updates a single CustomTargetType.
 //
 //   - name: Optional. Name of the `CustomTargetType`. Format is
-//     `projects/{project}/locations/{location}/customTargetTypes/a-z{0,62}`.
+//     `projects/{project}/locations/{location}/customTargetTypes/{customTargetTyp
+//     e}`. The `customTargetType` component must match
+//     `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
 func (r *ProjectsLocationsCustomTargetTypesService) Patch(name string, customtargettype *CustomTargetType) *ProjectsLocationsCustomTargetTypesPatchCall {
 	c := &ProjectsLocationsCustomTargetTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7060,7 +7072,9 @@ type ProjectsLocationsDeliveryPipelinesPatchCall struct {
 // Patch: Updates the parameters of a single DeliveryPipeline.
 //
 //   - name: Optional. Name of the `DeliveryPipeline`. Format is
-//     `projects/{project}/locations/{location}/deliveryPipelines/a-z{0,62}`.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipelin
+//     e}`. The `deliveryPipeline` component must match
+//     `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
 func (r *ProjectsLocationsDeliveryPipelinesService) Patch(name string, deliverypipeline *DeliveryPipeline) *ProjectsLocationsDeliveryPipelinesPatchCall {
 	c := &ProjectsLocationsDeliveryPipelinesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11541,7 +11555,8 @@ type ProjectsLocationsTargetsPatchCall struct {
 // Patch: Updates the parameters of a single Target.
 //
 //   - name: Optional. Name of the `Target`. Format is
-//     `projects/{project}/locations/{location}/targets/a-z{0,62}`.
+//     `projects/{project}/locations/{location}/targets/{target}`. The `target`
+//     component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
 func (r *ProjectsLocationsTargetsService) Patch(name string, target *Target) *ProjectsLocationsTargetsPatchCall {
 	c := &ProjectsLocationsTargetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

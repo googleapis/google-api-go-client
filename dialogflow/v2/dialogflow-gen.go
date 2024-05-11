@@ -934,8 +934,14 @@ type GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings struct {
 	// the bot to drive business logic (e.g. when 3 is pressed, return the account
 	// balance).
 	Enabled bool `json:"enabled,omitempty"`
+	// EndpointingTimeoutDuration: Endpoint timeout setting for matching dtmf input
+	// to regex.
+	EndpointingTimeoutDuration string `json:"endpointingTimeoutDuration,omitempty"`
 	// FinishDigit: The digit that terminates a DTMF digit sequence.
 	FinishDigit string `json:"finishDigit,omitempty"`
+	// InterdigitTimeoutDuration: Interdigit timeout setting for matching dtmf
+	// input to regex.
+	InterdigitTimeoutDuration string `json:"interdigitTimeoutDuration,omitempty"`
 	// MaxDigits: Max length of DTMF digits.
 	MaxDigits int64 `json:"maxDigits,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
@@ -4366,8 +4372,14 @@ type GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings struct {
 	// the bot to drive business logic (e.g. when 3 is pressed, return the account
 	// balance).
 	Enabled bool `json:"enabled,omitempty"`
+	// EndpointingTimeoutDuration: Endpoint timeout setting for matching dtmf input
+	// to regex.
+	EndpointingTimeoutDuration string `json:"endpointingTimeoutDuration,omitempty"`
 	// FinishDigit: The digit that terminates a DTMF digit sequence.
 	FinishDigit string `json:"finishDigit,omitempty"`
+	// InterdigitTimeoutDuration: Interdigit timeout setting for matching dtmf
+	// input to regex.
+	InterdigitTimeoutDuration string `json:"interdigitTimeoutDuration,omitempty"`
 	// MaxDigits: Max length of DTMF digits.
 	MaxDigits int64 `json:"maxDigits,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally

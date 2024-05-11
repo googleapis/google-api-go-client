@@ -526,8 +526,14 @@ type GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings struct {
 	// the bot to drive business logic (e.g. when 3 is pressed, return the account
 	// balance).
 	Enabled bool `json:"enabled,omitempty"`
+	// EndpointingTimeoutDuration: Endpoint timeout setting for matching dtmf input
+	// to regex.
+	EndpointingTimeoutDuration string `json:"endpointingTimeoutDuration,omitempty"`
 	// FinishDigit: The digit that terminates a DTMF digit sequence.
 	FinishDigit string `json:"finishDigit,omitempty"`
+	// InterdigitTimeoutDuration: Interdigit timeout setting for matching dtmf
+	// input to regex.
+	InterdigitTimeoutDuration string `json:"interdigitTimeoutDuration,omitempty"`
 	// MaxDigits: Max length of DTMF digits.
 	MaxDigits int64 `json:"maxDigits,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
@@ -5456,7 +5462,7 @@ type GoogleCloudDialogflowCxV3Match struct {
 	//   "NO_MATCH" - No match was found for the query.
 	//   "NO_INPUT" - Indicates an empty query.
 	//   "EVENT" - The query directly triggered an event.
-	//   "LLM" - The query was handled by an LLM.
+	//   "PLAYBOOK" - The query was handled by a `Playbook`.
 	MatchType string `json:"matchType,omitempty"`
 	// Parameters: The collection of parameters extracted from the query. Depending
 	// on your protocol or client library language, this is a map, associative
@@ -6999,6 +7005,9 @@ type GoogleCloudDialogflowCxV3SecuritySettingsAudioExportSettings struct {
 	// Agent. API caller that tries to modify this field should have the permission
 	// of storage.buckets.setIamPolicy.
 	GcsBucket string `json:"gcsBucket,omitempty"`
+	// StoreTtsAudio: Whether to store TTS audio. By default, TTS audio from the
+	// virtual agent is not exported.
+	StoreTtsAudio bool `json:"storeTtsAudio,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioExportPattern") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8767,8 +8776,14 @@ type GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings struct {
 	// the bot to drive business logic (e.g. when 3 is pressed, return the account
 	// balance).
 	Enabled bool `json:"enabled,omitempty"`
+	// EndpointingTimeoutDuration: Endpoint timeout setting for matching dtmf input
+	// to regex.
+	EndpointingTimeoutDuration string `json:"endpointingTimeoutDuration,omitempty"`
 	// FinishDigit: The digit that terminates a DTMF digit sequence.
 	FinishDigit string `json:"finishDigit,omitempty"`
+	// InterdigitTimeoutDuration: Interdigit timeout setting for matching dtmf
+	// input to regex.
+	InterdigitTimeoutDuration string `json:"interdigitTimeoutDuration,omitempty"`
 	// MaxDigits: Max length of DTMF digits.
 	MaxDigits int64 `json:"maxDigits,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally

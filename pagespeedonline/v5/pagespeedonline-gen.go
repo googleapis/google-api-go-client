@@ -261,7 +261,7 @@ type Categories struct {
 	// audits.
 	Performance *LighthouseCategoryV5 `json:"performance,omitempty"`
 	// Pwa: The Progressive-Web-App (PWA) category, containing all pwa related
-	// audits.
+	// audits. This is deprecated in Lighthouse's 12.0 release.
 	Pwa *LighthouseCategoryV5 `json:"pwa,omitempty"`
 	// Seo: The Search-Engine-Optimization (SEO) category, containing all seo
 	// related audits.
@@ -1037,7 +1037,7 @@ func (c *PagespeedapiRunpagespeedCall) CaptchaToken(captchaToken string) *Pagesp
 //
 //	"PWA" - Progressive Web App (PWA), category pertaining to a website's
 //
-// ability to be run as a PWA.
+// ability to be run as a PWA. This is deprecated in Lighthouse's 12.0 release.
 //
 //	"SEO" - Search Engine Optimization (SEO), category pertaining to a
 //

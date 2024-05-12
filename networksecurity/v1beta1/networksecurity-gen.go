@@ -431,6 +431,14 @@ type AddressGroup struct {
 	// Name: Required. Name of the AddressGroup resource. It matches pattern
 	// `projects/*/locations/{location}/addressGroups/`.
 	Name string `json:"name,omitempty"`
+	// Purpose: Optional. List of supported purposes of the Address Group.
+	//
+	// Possible values:
+	//   "PURPOSE_UNSPECIFIED" - Default value. Should never happen.
+	//   "DEFAULT" - Address Group is distributed to VMC, and is usable in Firewall
+	// Policies and other systems that rely on VMC.
+	//   "CLOUD_ARMOR" - Address Group is usable in Cloud Armor.
+	Purpose []string `json:"purpose,omitempty"`
 	// SelfLink: Output only. Server-defined fully-qualified URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 	// Type: Required. The type of the Address Group. Possible values are "IPv4" or
@@ -2134,7 +2142,7 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 }
 
 // SecurityProfile: SecurityProfile is a resource that defines the behavior for
-// one of many ProfileTypes. Next ID: 9
+// one of many ProfileTypes. Next ID: 10
 type SecurityProfile struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2186,7 +2194,7 @@ func (s *SecurityProfile) MarshalJSON() ([]byte, error) {
 }
 
 // SecurityProfileGroup: SecurityProfileGroup is a resource that defines the
-// behavior for various ProfileTypes. Next ID: 8
+// behavior for various ProfileTypes. Next ID: 9
 type SecurityProfileGroup struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`

@@ -2134,7 +2134,7 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 }
 
 // SecurityProfile: SecurityProfile is a resource that defines the behavior for
-// one of many ProfileTypes. Next ID: 9
+// one of many ProfileTypes. Next ID: 10
 type SecurityProfile struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2186,7 +2186,7 @@ func (s *SecurityProfile) MarshalJSON() ([]byte, error) {
 }
 
 // SecurityProfileGroup: SecurityProfileGroup is a resource that defines the
-// behavior for various ProfileTypes. Next ID: 8
+// behavior for various ProfileTypes. Next ID: 9
 type SecurityProfileGroup struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`

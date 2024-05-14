@@ -719,15 +719,6 @@ type GenerationConfig struct {
 	// prompted to output the appropriate response type, otherwise the behavior is
 	// undefined. This is a preview feature.
 	ResponseMimeType string `json:"responseMimeType,omitempty"`
-	// ResponseStyle: Optional. Control Three levels of creativity in the model
-	// output. Default: RESPONSE_STYLE_BALANCED
-	//
-	// Possible values:
-	//   "RESPONSE_STYLE_UNSPECIFIED" - response style unspecified.
-	//   "RESPONSE_STYLE_PRECISE" - Precise response.
-	//   "RESPONSE_STYLE_BALANCED" - Default response style.
-	//   "RESPONSE_STYLE_CREATIVE" - Creative response style.
-	ResponseStyle string `json:"responseStyle,omitempty"`
 	// StopSequences: Optional. Stop sequences.
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.

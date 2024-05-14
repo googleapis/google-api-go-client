@@ -695,6 +695,63 @@ func (s *CohortsRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// Comparison: Defines an individual comparison. Most requests will include
+// multiple comparisons so that the report compares between the comparisons.
+type Comparison struct {
+	// Comparison: A saved comparison identified by the comparison's resource name.
+	// For example, 'comparisons/1234'.
+	Comparison string `json:"comparison,omitempty"`
+	// DimensionFilter: A basic comparison.
+	DimensionFilter *FilterExpression `json:"dimensionFilter,omitempty"`
+	// Name: Each comparison produces separate rows in the response. In the
+	// response, this comparison is identified by this name. If name is
+	// unspecified, we will use the saved comparisons display name.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Comparison") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comparison") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Comparison) MarshalJSON() ([]byte, error) {
+	type NoMethod Comparison
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ComparisonMetadata: The metadata for a single comparison.
+type ComparisonMetadata struct {
+	// ApiName: This comparison's resource name. Useable in Comparison
+	// (#Comparison)'s `comparison` field. For example, 'comparisons/1234'.
+	ApiName string `json:"apiName,omitempty"`
+	// Description: This comparison's description.
+	Description string `json:"description,omitempty"`
+	// UiName: This comparison's name within the Google Analytics user interface.
+	UiName string `json:"uiName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiName") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComparisonMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ComparisonMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // ConcatenateExpression: Used to combine dimension values to a single
 // dimension.
 type ConcatenateExpression struct {
@@ -1133,6 +1190,8 @@ func (s *ListAudienceExportsResponse) MarshalJSON() ([]byte, error) {
 // Metadata: The dimensions, metrics and comparisons currently accepted in
 // reporting methods.
 type Metadata struct {
+	// Comparisons: The comparison descriptions.
+	Comparisons []*ComparisonMetadata `json:"comparisons,omitempty"`
 	// Dimensions: The dimension descriptions.
 	Dimensions []*DimensionMetadata `json:"dimensions,omitempty"`
 	// Metrics: The metric descriptions.
@@ -1142,13 +1201,13 @@ type Metadata struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// ForceSendFields is a list of field names (e.g. "Comparisons") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// NullFields is a list of field names (e.g. "Comparisons") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2012,6 +2071,10 @@ type RunPivotReportRequest struct {
 	// CohortSpec: Cohort group associated with this request. If there is a cohort
 	// group in the request the 'cohort' dimension must be present.
 	CohortSpec *CohortSpec `json:"cohortSpec,omitempty"`
+	// Comparisons: Optional. The configuration of comparisons requested and
+	// displayed. The request requires both a comparisons field and a comparisons
+	// dimension to receive a comparison column in the response.
+	Comparisons []*Comparison `json:"comparisons,omitempty"`
 	// CurrencyCode: A currency code in ISO4217 format, such as "AED", "USD",
 	// "JPY". If the field is empty, the report uses the property's default
 	// currency.
@@ -2254,6 +2317,10 @@ type RunReportRequest struct {
 	// CohortSpec: Cohort group associated with this request. If there is a cohort
 	// group in the request the 'cohort' dimension must be present.
 	CohortSpec *CohortSpec `json:"cohortSpec,omitempty"`
+	// Comparisons: Optional. The configuration of comparisons requested and
+	// displayed. The request only requires a comparisons field in order to receive
+	// a comparison column in the response.
+	Comparisons []*Comparison `json:"comparisons,omitempty"`
 	// CurrencyCode: A currency code in ISO4217 format, such as "AED", "USD",
 	// "JPY". If the field is empty, the report uses the property's default
 	// currency.

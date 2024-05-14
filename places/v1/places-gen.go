@@ -686,6 +686,208 @@ func (s *GoogleMapsPlacesV1Circle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleMapsPlacesV1ContentBlock: A block of content that can be served
+// individually.
+type GoogleMapsPlacesV1ContentBlock struct {
+	// Content: Content related to the topic.
+	Content *GoogleTypeLocalizedText `json:"content,omitempty"`
+	// References: Experimental: See
+	// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+	// for more details. References that are related to this block of content.
+	References *GoogleMapsPlacesV1References `json:"references,omitempty"`
+	// Topic: The topic of the content, for example "overview" or "restaurant".
+	Topic string `json:"topic,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1ContentBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1ContentBlock
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1ContextualContent: Experimental: See
+// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+// for more details. Content that is contextual to the place query.
+type GoogleMapsPlacesV1ContextualContent struct {
+	// Justifications: Experimental: See
+	// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+	// for more details. Justifications for the place.
+	Justifications []*GoogleMapsPlacesV1ContextualContentJustification `json:"justifications,omitempty"`
+	// Photos: Information (including references) about photos of this place,
+	// contexual to the place query.
+	Photos []*GoogleMapsPlacesV1Photo `json:"photos,omitempty"`
+	// Reviews: List of reviews about this place, contexual to the place query.
+	Reviews []*GoogleMapsPlacesV1Review `json:"reviews,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Justifications") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Justifications") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1ContextualContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1ContextualContent
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1ContextualContentJustification: Experimental: See
+// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+// for more details. Justifications for the place. Justifications answers the
+// question of why a place could interest an end user.
+type GoogleMapsPlacesV1ContextualContentJustification struct {
+	// BusinessAvailabilityAttributesJustification: Experimental: See
+	// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+	// for more details.
+	BusinessAvailabilityAttributesJustification *GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification `json:"businessAvailabilityAttributesJustification,omitempty"`
+	// ReviewJustification: Experimental: See
+	// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+	// for more details.
+	ReviewJustification *GoogleMapsPlacesV1ContextualContentJustificationReviewJustification `json:"reviewJustification,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "BusinessAvailabilityAttributesJustification") to unconditionally include in
+	// API requests. By default, fields with empty or default values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "BusinessAvailabilityAttributesJustification") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1ContextualContentJustification) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1ContextualContentJustification
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttribute
+// sJustification: Experimental: See
+// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+// for more details. BusinessAvailabilityAttributes justifications. This shows
+// some attributes a business has that could interest an end user.
+type GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification struct {
+	// Delivery: If a place provides delivery.
+	Delivery bool `json:"delivery,omitempty"`
+	// DineIn: If a place provides dine-in.
+	DineIn bool `json:"dineIn,omitempty"`
+	// Takeout: If a place provides takeout.
+	Takeout bool `json:"takeout,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Delivery") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Delivery") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1ContextualContentJustificationBusinessAvailabilityAttributesJustification
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1ContextualContentJustificationReviewJustification:
+// Experimental: See
+// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+// for more details. User review justifications. This highlights a section of
+// the user review that would interest an end user. For instance, if the search
+// query is "firewood pizza", the review justification highlights the text
+// relevant to the search query.
+type GoogleMapsPlacesV1ContextualContentJustificationReviewJustification struct {
+	HighlightedText *GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedText `json:"highlightedText,omitempty"`
+	// Review: The review that the highlighted text is generated from.
+	Review *GoogleMapsPlacesV1Review `json:"review,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HighlightedText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HighlightedText") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1ContextualContentJustificationReviewJustification) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1ContextualContentJustificationReviewJustification
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlighte
+// dText: The text highlighted by the justification. This is a subset of the
+// review itself. The exact word to highlight is marked by the
+// HighlightedTextRange. There could be several words in the text being
+// highlighted.
+type GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedText struct {
+	// HighlightedTextRanges: The list of the ranges of the highlighted text.
+	HighlightedTextRanges []*GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedTextHighlightedTextRange `json:"highlightedTextRanges,omitempty"`
+	Text                  string                                                                                                    `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HighlightedTextRanges") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HighlightedTextRanges") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedText
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlighte
+// dTextHighlightedTextRange: The range of highlighted text.
+type GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedTextHighlightedTextRange struct {
+	EndIndex   int64 `json:"endIndex,omitempty"`
+	StartIndex int64 `json:"startIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedTextHighlightedTextRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1ContextualContentJustificationReviewJustificationHighlightedTextHighlightedTextRange
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleMapsPlacesV1EVChargeOptions: Information about the EV Charge Station
 // hosted in Place. Terminology follows
 // https://afdc.energy.gov/fuels/electricity_infrastructure.html One port could
@@ -945,6 +1147,10 @@ type GoogleMapsPlacesV1Place struct {
 	AdrFormatAddress string `json:"adrFormatAddress,omitempty"`
 	// AllowsDogs: Place allows dogs.
 	AllowsDogs bool `json:"allowsDogs,omitempty"`
+	// AreaSummary: Experimental: See
+	// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+	// for more details. AI-generated summary of the area that the place is in.
+	AreaSummary *GoogleMapsPlacesV1PlaceAreaSummary `json:"areaSummary,omitempty"`
 	// Attributions: A set of data provider that must be shown with this result.
 	Attributions []*GoogleMapsPlacesV1PlaceAttribution `json:"attributions,omitempty"`
 	// BusinessStatus: The business status for the place.
@@ -995,6 +1201,10 @@ type GoogleMapsPlacesV1Place struct {
 	// FuelOptions: The most recent information about fuel options in a gas
 	// station. This information is updated regularly.
 	FuelOptions *GoogleMapsPlacesV1FuelOptions `json:"fuelOptions,omitempty"`
+	// GenerativeSummary: Experimental: See
+	// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+	// for more details. AI-generated summary of the place.
+	GenerativeSummary *GoogleMapsPlacesV1PlaceGenerativeSummary `json:"generativeSummary,omitempty"`
 	// GoodForChildren: Place is good for children.
 	GoodForChildren bool `json:"goodForChildren,omitempty"`
 	// GoodForGroups: Place accommodates groups.
@@ -1220,6 +1430,31 @@ func (s *GoogleMapsPlacesV1PlaceAddressComponent) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleMapsPlacesV1PlaceAreaSummary: Experimental: See
+// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+// for more details. AI-generated summary of the area that the place is in.
+type GoogleMapsPlacesV1PlaceAreaSummary struct {
+	// ContentBlocks: Content blocks that compose the area summary. Each block has
+	// a separate topic about the area.
+	ContentBlocks []*GoogleMapsPlacesV1ContentBlock `json:"contentBlocks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentBlocks") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentBlocks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1PlaceAreaSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1PlaceAreaSummary
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleMapsPlacesV1PlaceAttribution: Information about data providers of this
 // place.
 type GoogleMapsPlacesV1PlaceAttribution struct {
@@ -1242,6 +1477,34 @@ type GoogleMapsPlacesV1PlaceAttribution struct {
 
 func (s *GoogleMapsPlacesV1PlaceAttribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceAttribution
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1PlaceGenerativeSummary: Experimental: See
+// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+// for more details. AI-generated summary of the place.
+type GoogleMapsPlacesV1PlaceGenerativeSummary struct {
+	// Description: The detailed description of the place.
+	Description *GoogleTypeLocalizedText `json:"description,omitempty"`
+	// Overview: The overview of the place.
+	Overview *GoogleTypeLocalizedText `json:"overview,omitempty"`
+	// References: References that are used to generate the summary description.
+	References *GoogleMapsPlacesV1References `json:"references,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1PlaceGenerativeSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1PlaceGenerativeSummary
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1512,6 +1775,33 @@ func (s *GoogleMapsPlacesV1PlaceSubDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleMapsPlacesV1References: Experimental: See
+// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+// for more details. Reference that the generative content is related to.
+type GoogleMapsPlacesV1References struct {
+	// Places: The list of resource names of the referenced places. This name can
+	// be used in other APIs that accept Place resource names.
+	Places []string `json:"places,omitempty"`
+	// Reviews: Reviews that serve as references.
+	Reviews []*GoogleMapsPlacesV1Review `json:"reviews,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Places") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Places") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1References) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1References
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleMapsPlacesV1Review: Information about a review of a place.
 type GoogleMapsPlacesV1Review struct {
 	// AuthorAttribution: This review's author.
@@ -1739,10 +2029,14 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// restriction which means results outside given location will not be returned.
 	// Cannot be set along with location_bias.
 	LocationRestriction *GoogleMapsPlacesV1SearchTextRequestLocationRestriction `json:"locationRestriction,omitempty"`
-	// MaxResultCount: Maximum number of results to return. It must be between 1
-	// and 20, inclusively. The default is 20. If the number is unset, it falls
-	// back to the upper limit. If the number is set to negative or exceeds the
-	// upper limit, an INVALID_ARGUMENT error is returned.
+	// MaxResultCount: Deprecated: Use `page_size` instead. The maximum number of
+	// results per page that can be returned. If the number of available results is
+	// larger than `max_result_count`, a `next_page_token` is returned which can be
+	// passed to `page_token` to get the next page of results in subsequent
+	// requests. If 0 or no value is provided, a default of 20 is used. The maximum
+	// value is 20; values above 20 will be coerced to 20. Negative values will
+	// return an INVALID_ARGUMENT error. If both `max_result_count` and `page_size`
+	// are specified, `max_result_count` will be ignored.
 	MaxResultCount int64 `json:"maxResultCount,omitempty"`
 	// MinRating: Filter out results whose average user rating is strictly less
 	// than this limit. A valid value must be a float between 0 and 5 (inclusively)
@@ -1753,6 +2047,21 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// OpenNow: Used to restrict the search to places that are currently open. The
 	// default is false.
 	OpenNow bool `json:"openNow,omitempty"`
+	// PageSize: Optional. The maximum number of results per page that can be
+	// returned. If the number of available results is larger than `page_size`, a
+	// `next_page_token` is returned which can be passed to `page_token` to get the
+	// next page of results in subsequent requests. If 0 or no value is provided, a
+	// default of 20 is used. The maximum value is 20; values above 20 will be set
+	// to 20. Negative values will return an INVALID_ARGUMENT error. If both
+	// `max_result_count` and `page_size` are specified, `max_result_count` will be
+	// ignored.
+	PageSize int64 `json:"pageSize,omitempty"`
+	// PageToken: Optional. A page token, received from a previous TextSearch call.
+	// Provide this to retrieve the subsequent page. When paginating, all
+	// parameters other than `page_token`, `page_size`, and `max_result_count`
+	// provided to TextSearch must match the initial call that provided the page
+	// token. Otherwise an INVALID_ARGUMENT error is returned.
+	PageToken string `json:"pageToken,omitempty"`
 	// PriceLevels: Used to restrict the search to places that are marked as
 	// certain price levels. Users can choose any combinations of price levels.
 	// Default to select all price levels.
@@ -1945,20 +2254,33 @@ func (s *GoogleMapsPlacesV1SearchTextRequestLocationRestriction) MarshalJSON() (
 
 // GoogleMapsPlacesV1SearchTextResponse: Response proto for SearchText.
 type GoogleMapsPlacesV1SearchTextResponse struct {
+	// ContextualContents: Experimental: See
+	// https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
+	// for more details. A list of contextual contents where each entry associates
+	// to the corresponding place in the same index in the places field. The
+	// contents that are relevant to the `text_query` in the request are preferred.
+	// If the contextual content is not available for one of the places, it will
+	// return non-contextual content. It will be empty only when the content is
+	// unavailable for this place. This list should have as many entries as the
+	// list of places if requested.
+	ContextualContents []*GoogleMapsPlacesV1ContextualContent `json:"contextualContents,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted or empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Places: A list of places that meet the user's text search criteria.
 	Places []*GoogleMapsPlacesV1Place `json:"places,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Places") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ContextualContents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Places") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ContextualContents") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2545,6 +2867,27 @@ func (c *PlacesSearchTextCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlac
 		return nil, err
 	}
 	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PlacesSearchTextCall) Pages(ctx context.Context, f func(*GoogleMapsPlacesV1SearchTextResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googlemapsplacesv1searchtextrequest.PageToken = pt }(c.googlemapsplacesv1searchtextrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googlemapsplacesv1searchtextrequest.PageToken = x.NextPageToken
+	}
 }
 
 type PlacesPhotosGetMediaCall struct {

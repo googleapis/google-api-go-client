@@ -475,6 +475,35 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// AutoAccept: The auto-accept setting for a group controls whether proposed
+// spokes are automatically attached to the hub. If auto-accept is enabled, the
+// spoke immediately is attached to the hub and becomes part of the group. In
+// this case, the new spoke is in the ACTIVE state. If auto-accept is disabled,
+// the spoke goes to the INACTIVE state, and it must be reviewed and accepted
+// by a hub administrator.
+type AutoAccept struct {
+	// AutoAcceptProjects: A list of project ids or project numbers for which you
+	// want to enable auto-accept. The auto-accept setting is applied to spokes
+	// being created or updated in these projects.
+	AutoAcceptProjects []string `json:"autoAcceptProjects,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AutoAcceptProjects") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoAcceptProjects") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoAccept) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoAccept
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -956,6 +985,8 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 
 // Group: A group represents a subset of spokes attached to a hub.
 type Group struct {
+	// AutoAccept: Optional. The auto-accept setting for this group.
+	AutoAccept *AutoAccept `json:"autoAccept,omitempty"`
 	// CreateTime: Output only. The time the group was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. The description of the group.
@@ -968,6 +999,11 @@ type Group struct {
 	// the following form:
 	// `projects/{project_number}/locations/global/hubs/{hub}/groups/{group_id}`
 	Name string `json:"name,omitempty"`
+	// RouteTable: Output only. The name of the route table that corresponds to
+	// this group. They use the following form:
+	// `projects/{project_number}/locations/global/hubs/{hub_id}/routeTables/{route_
+	// table_id}`
+	RouteTable string `json:"routeTable,omitempty"`
 	// State: Output only. The current lifecycle state of this group.
 	//
 	// Possible values:
@@ -992,13 +1028,13 @@ type Group struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "AutoAccept") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "AutoAccept") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1021,6 +1057,11 @@ type Hub struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: An optional description of the hub.
 	Description string `json:"description,omitempty"`
+	// ExportPsc: Optional. Whether Private Service Connect transitivity is enabled
+	// for the hub. If true, Private Service Connect endpoints in VPC spokes
+	// attached to the hub are made accessible to other VPC spokes attached to the
+	// hub. The default value is false.
+	ExportPsc bool `json:"exportPsc,omitempty"`
 	// Labels: Optional labels in key-value pair format. For more information about
 	// labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
@@ -1028,6 +1069,29 @@ type Hub struct {
 	// Name: Immutable. The name of the hub. Hub names must be unique. They use the
 	// following form: `projects/{project_number}/locations/global/hubs/{hub_id}`
 	Name string `json:"name,omitempty"`
+	// PolicyMode: Optional. The policy mode of this hub. This field can be either
+	// PRESET or CUSTOM. If unspecified, the policy_mode defaults to PRESET.
+	//
+	// Possible values:
+	//   "POLICY_MODE_UNSPECIFIED" - Policy mode is unspecified. It defaults to
+	// PRESET with preset_topology = MESH.
+	//   "PRESET" - Hub uses one of the preset topologies.
+	PolicyMode string `json:"policyMode,omitempty"`
+	// PresetTopology: Optional. The topology implemented in this hub. Currently,
+	// this field is only used when policy_mode = PRESET. The available preset
+	// topologies are MESH and STAR. If preset_topology is unspecified and
+	// policy_mode = PRESET, the preset_topology defaults to MESH. When policy_mode
+	// = CUSTOM, the preset_topology is set to PRESET_TOPOLOGY_UNSPECIFIED.
+	//
+	// Possible values:
+	//   "PRESET_TOPOLOGY_UNSPECIFIED" - Preset topology is unspecified. When
+	// policy_mode = PRESET, it defaults to MESH.
+	//   "MESH" - Mesh topology is implemented. Group `default` is automatically
+	// created. All spokes in the hub are added to group `default`.
+	//   "STAR" - Star topology is implemented. Two groups, `center` and `edge`,
+	// are automatically created along with hub creation. Spokes have to join one
+	// of the groups during creation.
+	PresetTopology string `json:"presetTopology,omitempty"`
 	// RouteTables: Output only. The route tables that belong to this hub. They use
 	// the following form:
 	// `projects/{project_number}/locations/global/hubs/{hub_id}/routeTables/{route_
@@ -5158,6 +5222,137 @@ func (c *ProjectsLocationsGlobalHubsGroupsListCall) Pages(ctx context.Context, f
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsGlobalHubsGroupsPatchCall struct {
+	s          *Service
+	name       string
+	group      *Group
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the parameters of a Network Connectivity Center group.
+//
+//   - name: Immutable. The name of the group. Group names must be unique. They
+//     use the following form:
+//     `projects/{project_number}/locations/global/hubs/{hub}/groups/{group_id}`.
+func (r *ProjectsLocationsGlobalHubsGroupsService) Patch(name string, group *Group) *ProjectsLocationsGlobalHubsGroupsPatchCall {
+	c := &ProjectsLocationsGlobalHubsGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.group = group
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that a request doesn't result in creation
+// of duplicate commitments for at least 60 minutes. For example, consider a
+// situation where you make an initial request and the request times out. If
+// you make the request again with the same request ID, the server can check to
+// see whether the original operation was received. If it was, the server
+// ignores the second request. This behavior prevents clients from mistakenly
+// creating duplicate commitments. The request ID must be a valid UUID, with
+// the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGlobalHubsGroupsPatchCall) RequestId(requestId string) *ProjectsLocationsGlobalHubsGroupsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": In the case of an
+// update to an existing group, field mask is used to specify the fields to be
+// overwritten. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field is overwritten if it is in the mask.
+// If the user does not provide a mask, then all fields are overwritten.
+func (c *ProjectsLocationsGlobalHubsGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalHubsGroupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlobalHubsGroupsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsGroupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlobalHubsGroupsPatchCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsGroupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlobalHubsGroupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.groups.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalHubsGroupsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsGlobalHubsGroupsSetIamPolicyCall struct {

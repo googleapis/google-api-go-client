@@ -725,6 +725,39 @@
           "resources": {
             "muteConfigs": {
               "methods": {
+                "create": {
+                  "description": "Creates a mute config.",
+                  "flatPath": "v1/folders/{foldersId}/locations/{locationsId}/muteConfigs",
+                  "httpMethod": "POST",
+                  "id": "securitycenter.folders.locations.muteConfigs.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "muteConfigId": {
+                      "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Resource name of the new mute configs's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+                      "location": "path",
+                      "pattern": "^folders/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/muteConfigs",
+                  "request": {
+                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "delete": {
                   "description": "Deletes an existing mute config.",
                   "flatPath": "v1/folders/{foldersId}/locations/{locationsId}/muteConfigs/{muteConfigsId}",
@@ -770,6 +803,42 @@
                   "path": "v1/{+name}",
                   "response": {
                     "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists mute configs.",
+                  "flatPath": "v1/folders/{foldersId}/locations/{locationsId}/muteConfigs",
+                  "httpMethod": "GET",
+                  "id": "securitycenter.folders.locations.muteConfigs.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of configs to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A page token, received from a previous `ListMuteConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMuteConfigs` must match the call that provided the page token.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent, which owns the collection of mute configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", \"projects/[project_id]\".",
+                      "location": "path",
+                      "pattern": "^folders/[^/]+/locations/[^/]+/muteConfigs$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}",
+                  "response": {
+                    "$ref": "ListMuteConfigsResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -2432,6 +2501,39 @@
           "resources": {
             "muteConfigs": {
               "methods": {
+                "create": {
+                  "description": "Creates a mute config.",
+                  "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/muteConfigs",
+                  "httpMethod": "POST",
+                  "id": "securitycenter.organizations.locations.muteConfigs.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "muteConfigId": {
+                      "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Resource name of the new mute configs's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/muteConfigs",
+                  "request": {
+                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "delete": {
                   "description": "Deletes an existing mute config.",
                   "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/muteConfigs/{muteConfigsId}",
@@ -2477,6 +2579,42 @@
                   "path": "v1/{+name}",
                   "response": {
                     "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists mute configs.",
+                  "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/muteConfigs",
+                  "httpMethod": "GET",
+                  "id": "securitycenter.organizations.locations.muteConfigs.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of configs to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A page token, received from a previous `ListMuteConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMuteConfigs` must match the call that provided the page token.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent, which owns the collection of mute configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", \"projects/[project_id]\".",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+/muteConfigs$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}",
+                  "response": {
+                    "$ref": "ListMuteConfigsResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -4822,6 +4960,39 @@
           "resources": {
             "muteConfigs": {
               "methods": {
+                "create": {
+                  "description": "Creates a mute config.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/muteConfigs",
+                  "httpMethod": "POST",
+                  "id": "securitycenter.projects.locations.muteConfigs.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "muteConfigId": {
+                      "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Resource name of the new mute configs's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/muteConfigs",
+                  "request": {
+                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "delete": {
                   "description": "Deletes an existing mute config.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/muteConfigs/{muteConfigsId}",
@@ -4867,6 +5038,42 @@
                   "path": "v1/{+name}",
                   "response": {
                     "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists mute configs.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/muteConfigs",
+                  "httpMethod": "GET",
+                  "id": "securitycenter.projects.locations.muteConfigs.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of configs to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A page token, received from a previous `ListMuteConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMuteConfigs` must match the call that provided the page token.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent, which owns the collection of mute configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", \"projects/[project_id]\".",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/muteConfigs$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}",
+                  "response": {
+                    "$ref": "ListMuteConfigsResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -5820,7 +6027,7 @@
       }
     }
   },
-  "revision": "20240506",
+  "revision": "20240513",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {

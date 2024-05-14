@@ -328,23 +328,33 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "CJIS" - Criminal Justice Information Services (CJIS) Security policies.
 	//   "FEDRAMP_HIGH" - FedRAMP High data protection controls
 	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
+	//   "REGIONAL_CONTROLS_PREMIUM_US" - Assured Workloads For US Regions data
+	// protection controls
 	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data protection
 	// controls
 	//   "HIPAA" - Health Insurance Portability and Accountability Act controls
 	//   "HITRUST" - Health Information Trust Alliance controls
+	//   "REGIONAL_CONTROLS_PREMIUM_EU" - Assured Workloads For EU Regions and
+	// Support controls
 	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and Support
 	// controls
+	//   "REGIONAL_CONTROLS_PREMIUM_CA" - Assured Workloads For Canada Regions and
+	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "REGIONAL_CONTROLS_PREMIUM_AU" - Assured Workloads for Australia Regions
+	// and Support controls
 	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia Regions and
 	// Support controls
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
-	//   "ISR_REGIONS" - Assured Workloads for Israel
+	//   "REGIONAL_CONTROLS_PREMIUM_ISR" - Assured Workloads for Israel
+	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	//   "IL5" - Information protection as per DoD IL5 requirements.
 	//   "IL2" - Information protection as per DoD IL2 requirements.
+	//   "REGIONAL_CONTROLS_PREMIUM_JP" - Assured Workloads for Japan Regions
 	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
 	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - KSA R5 Controls.
 	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls/Free Regions
@@ -861,23 +871,33 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "CJIS" - Criminal Justice Information Services (CJIS) Security policies.
 	//   "FEDRAMP_HIGH" - FedRAMP High data protection controls
 	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
+	//   "REGIONAL_CONTROLS_PREMIUM_US" - Assured Workloads For US Regions data
+	// protection controls
 	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data protection
 	// controls
 	//   "HIPAA" - Health Insurance Portability and Accountability Act controls
 	//   "HITRUST" - Health Information Trust Alliance controls
+	//   "REGIONAL_CONTROLS_PREMIUM_EU" - Assured Workloads For EU Regions and
+	// Support controls
 	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and Support
 	// controls
+	//   "REGIONAL_CONTROLS_PREMIUM_CA" - Assured Workloads For Canada Regions and
+	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "REGIONAL_CONTROLS_PREMIUM_AU" - Assured Workloads for Australia Regions
+	// and Support controls
 	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia Regions and
 	// Support controls
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
-	//   "ISR_REGIONS" - Assured Workloads for Israel
+	//   "REGIONAL_CONTROLS_PREMIUM_ISR" - Assured Workloads for Israel
+	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	//   "IL5" - Information protection as per DoD IL5 requirements.
 	//   "IL2" - Information protection as per DoD IL2 requirements.
+	//   "REGIONAL_CONTROLS_PREMIUM_JP" - Assured Workloads for Japan Regions
 	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
 	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - KSA R5 Controls.
 	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls/Free Regions

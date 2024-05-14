@@ -199,6 +199,8 @@ type Webfont struct {
 	Axes []*Axis `json:"axes,omitempty"`
 	// Category: The category of the font.
 	Category string `json:"category,omitempty"`
+	// ColorCapabilities: The color format(s) available for this family.
+	ColorCapabilities []string `json:"colorCapabilities,omitempty"`
 	// Family: The name of the font.
 	Family string `json:"family,omitempty"`
 	// Files: The font files (with all supported scripts) for each one of the

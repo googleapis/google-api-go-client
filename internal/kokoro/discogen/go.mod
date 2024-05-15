@@ -1,6 +1,6 @@
 module google.golang.org/api/internal/kokoro/discogen
 
-go 1.19
+go 1.20
 
 require (
 	github.com/google/go-github/v61 v61.0.0

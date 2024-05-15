@@ -2681,7 +2681,7 @@
       }
     }
   },
-  "revision": "20240508",
+  "revision": "20240514",
   "rootUrl": "https://walletobjects.googleapis.com/",
   "schemas": {
     "ActivationOptions": {
@@ -7024,21 +7024,24 @@
             "TEXT",
             "text",
             "EXPIRATION_NOTIFICATION",
-            "expirationNotification"
+            "expirationNotification",
+            "TEXT_AND_NOTIFY"
           ],
           "enumDeprecated": [
             false,
             false,
             true,
             false,
-            true
+            true,
+            false
           ],
           "enumDescriptions": [
             "",
             "Renders the message as text on the card details screen. This is the default message type.",
             "Legacy alias for `TEXT`. Deprecated.",
             "Note: This enum is currently not supported.",
-            "Legacy alias for `EXPIRATION_NOTIFICATION`. Deprecated."
+            "Legacy alias for `EXPIRATION_NOTIFICATION`. Deprecated.",
+            "Renders the message as text on the card details screen and as an Android notification."
           ],
           "type": "string"
         }

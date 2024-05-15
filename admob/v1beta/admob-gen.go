@@ -920,7 +920,7 @@ func (s *GenerateCampaignReportResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GenerateMediationReportRequest: Request to generate an AdMob mediation
+// GenerateMediationReportRequest: Request to generate an AdMob Mediation
 // report.
 type GenerateMediationReportRequest struct {
 	// ReportSpec: Network report specification.
@@ -944,7 +944,7 @@ func (s *GenerateMediationReportRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GenerateMediationReportResponse: The streaming response for the AdMob
-// mediation report where the first response contains the report header, then a
+// Mediation report where the first response contains the report header, then a
 // stream of row responses, and finally a footer as the last response message.
 // For example: [{ "header": { "date_range": { "start_date": {"year": 2018,
 // "month": 9, "day": 1}, "end_date": {"year": 2018, "month": 9, "day": 1} },
@@ -1383,7 +1383,7 @@ func (s *MediationAbExperimentExperimentMediationLine) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MediationGroup: Describes an AdMob mediation group.
+// MediationGroup: Describes an AdMob Mediation group.
 type MediationGroup struct {
 	// DisplayName: User provided name for the mediation group. The maximum length
 	// allowed is 120 characters.
@@ -4542,7 +4542,7 @@ type AccountsMediationReportGenerateCall struct {
 	header_                        http.Header
 }
 
-// Generate: Generates an AdMob mediation report based on the provided report
+// Generate: Generates an AdMob Mediation report based on the provided report
 // specification. Returns result of a server-side streaming RPC. The result is
 // returned in a sequence of responses.
 //

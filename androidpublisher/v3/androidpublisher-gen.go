@@ -1310,6 +1310,9 @@ type AutoRenewingPlan struct {
 	// AutoRenewEnabled: If the subscription is currently set to auto-renew, e.g.
 	// the user has not canceled the subscription
 	AutoRenewEnabled bool `json:"autoRenewEnabled,omitempty"`
+	// InstallmentDetails: The installment plan commitment and state related info
+	// for the auto renewing plan.
+	InstallmentDetails *InstallmentPlan `json:"installmentDetails,omitempty"`
 	// PriceChangeDetails: The information of the last price change for the item
 	// since subscription signup.
 	PriceChangeDetails *SubscriptionItemPriceChangeDetails `json:"priceChangeDetails,omitempty"`
@@ -1341,6 +1344,9 @@ type BasePlan struct {
 	// this ID can only contain lower-case letters (a-z), numbers (0-9), and
 	// hyphens (-), and be at most 63 characters.
 	BasePlanId string `json:"basePlanId,omitempty"`
+	// InstallmentsBasePlanType: Set for installments base plans where a user is
+	// committed to a specified number of payments.
+	InstallmentsBasePlanType *InstallmentsBasePlanType `json:"installmentsBasePlanType,omitempty"`
 	// OfferTags: List of up to 20 custom tags specified for this base plan, and
 	// returned to the app through the billing library. Subscription offers for
 	// this base plan will also receive these offer tags in the billing library.
@@ -3566,6 +3572,109 @@ func (s *InappproductsUpdateRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// InstallmentPlan: Information to a installment plan.
+type InstallmentPlan struct {
+	// InitialCommittedPaymentsCount: Total number of payments the user is
+	// initially committed for.
+	InitialCommittedPaymentsCount int64 `json:"initialCommittedPaymentsCount,omitempty"`
+	// PendingCancellation: If present, this installment plan is pending to be
+	// canceled. The cancellation will happen only after the user finished all
+	// committed payments.
+	PendingCancellation *PendingCancellation `json:"pendingCancellation,omitempty"`
+	// RemainingCommittedPaymentsCount: Total number of committed payments
+	// remaining to be paid for in this renewal cycle.
+	RemainingCommittedPaymentsCount int64 `json:"remainingCommittedPaymentsCount,omitempty"`
+	// SubsequentCommittedPaymentsCount: Total number of payments the user will be
+	// committed for after each commitment period. Empty means the installment plan
+	// will fall back to a normal auto-renew subscription after initial commitment.
+	SubsequentCommittedPaymentsCount int64 `json:"subsequentCommittedPaymentsCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "InitialCommittedPaymentsCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InitialCommittedPaymentsCount")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstallmentPlan) MarshalJSON() ([]byte, error) {
+	type NoMethod InstallmentPlan
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// InstallmentsBasePlanType: Represents an installments base plan where a user
+// commits to a specified number of payments.
+type InstallmentsBasePlanType struct {
+	// AccountHoldDuration: Optional. Account hold period of the subscription,
+	// specified exclusively in days and in ISO 8601 format. Acceptable values are
+	// P0D (zero days) to P30D (30days). If not specified, the default value is
+	// P30D (30 days).
+	AccountHoldDuration string `json:"accountHoldDuration,omitempty"`
+	// BillingPeriodDuration: Required. Subscription period, specified in ISO 8601
+	// format. For a list of acceptable billing periods, refer to the help center.
+	BillingPeriodDuration string `json:"billingPeriodDuration,omitempty"`
+	// CommittedPaymentsCount: Required. The number of payments the user is
+	// committed to.
+	CommittedPaymentsCount int64 `json:"committedPaymentsCount,omitempty"`
+	// GracePeriodDuration: Grace period of the subscription, specified in ISO 8601
+	// format. Acceptable values are P0D (zero days), P3D (3 days), P7D (7 days),
+	// P14D (14 days), and P30D (30 days). If not specified, a default value will
+	// be used based on the recurring period duration.
+	GracePeriodDuration string `json:"gracePeriodDuration,omitempty"`
+	// ProrationMode: The proration mode for the base plan determines what happens
+	// when a user switches to this plan from another base plan. If unspecified,
+	// defaults to CHARGE_ON_NEXT_BILLING_DATE.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_PRORATION_MODE_UNSPECIFIED" - Unspecified mode.
+	//   "SUBSCRIPTION_PRORATION_MODE_CHARGE_ON_NEXT_BILLING_DATE" - Users will be
+	// charged for their new base plan at the end of their current billing period.
+	//   "SUBSCRIPTION_PRORATION_MODE_CHARGE_FULL_PRICE_IMMEDIATELY" - Users will
+	// be charged for their new base plan immediately and in full. Any remaining
+	// period of their existing subscription will be used to extend the duration of
+	// the new billing plan.
+	ProrationMode string `json:"prorationMode,omitempty"`
+	// RenewalType: Required. Installments base plan renewal type. Determines the
+	// behavior at the end of the initial commitment.
+	//
+	// Possible values:
+	//   "RENEWAL_TYPE_UNSPECIFIED" - Unspecified state.
+	//   "RENEWAL_TYPE_RENEWS_WITHOUT_COMMITMENT" - Renews periodically for the
+	// billing period duration without commitment.
+	//   "RENEWAL_TYPE_RENEWS_WITH_COMMITMENT" - Renews with the commitment of the
+	// same duration as the initial one.
+	RenewalType string `json:"renewalType,omitempty"`
+	// ResubscribeState: Whether users should be able to resubscribe to this base
+	// plan in Google Play surfaces. Defaults to RESUBSCRIBE_STATE_ACTIVE if not
+	// specified.
+	//
+	// Possible values:
+	//   "RESUBSCRIBE_STATE_UNSPECIFIED" - Unspecified state.
+	//   "RESUBSCRIBE_STATE_ACTIVE" - Resubscribe is active.
+	//   "RESUBSCRIBE_STATE_INACTIVE" - Resubscribe is inactive.
+	ResubscribeState string `json:"resubscribeState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccountHoldDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccountHoldDuration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstallmentsBasePlanType) MarshalJSON() ([]byte, error) {
+	type NoMethod InstallmentsBasePlanType
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // InternalAppSharingArtifact: An artifact resource which gets created when
 // uploading an APK or Android App Bundle through internal app sharing.
 type InternalAppSharingArtifact struct {
@@ -4440,6 +4549,12 @@ type PausedStateContext struct {
 func (s *PausedStateContext) MarshalJSON() ([]byte, error) {
 	type NoMethod PausedStateContext
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// PendingCancellation: This is an indicator of whether there is a pending
+// cancellation on the virtual installment plan. The cancellation will happen
+// only after the user finished all committed payments.
+type PendingCancellation struct {
 }
 
 // PrepaidBasePlanType: Represents a base plan that does not automatically

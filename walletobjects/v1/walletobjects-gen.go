@@ -5059,6 +5059,8 @@ type Message struct {
 	//   "EXPIRATION_NOTIFICATION" - Note: This enum is currently not supported.
 	//   "expirationNotification" - Legacy alias for `EXPIRATION_NOTIFICATION`.
 	// Deprecated.
+	//   "TEXT_AND_NOTIFY" - Renders the message as text on the card details screen
+	// and as an Android notification.
 	MessageType string `json:"messageType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

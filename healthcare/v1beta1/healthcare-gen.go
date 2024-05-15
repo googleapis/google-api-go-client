@@ -3142,6 +3142,57 @@ func (s *ExportMessagesRequest) MarshalJSON() ([]byte, error) {
 type ExportMessagesResponse struct {
 }
 
+// ExportResourcesHistoryRequest: Request to export the history of resources.
+type ExportResourcesHistoryRequest struct {
+	// Since: If provided, only resources versions updated after this time are
+	// exported. The time uses the format YYYY-MM-DDThh:mm:ss.sss+zz:zz. For
+	// example, `2015-02-07T13:28:17.239+02:00` or `2017-01-01T00:00:00Z`. The time
+	// must be specified to the second and include a time zone.
+	Since string `json:"_since,omitempty"`
+	// Type: String of comma-delimited FHIR resource types. If provided, only
+	// resources of the specified resource type(s) are exported.
+	Type string `json:"_type,omitempty"`
+	// BigqueryDestination: The BigQuery output destination. The Cloud Healthcare
+	// Service Agent requires two IAM roles on the BigQuery location:
+	// `roles/bigquery.dataEditor` and `roles/bigquery.jobUser`. The output is one
+	// BigQuery table per resource type. Unlike when setting `BigQueryDestination`
+	// for `StreamConfig`, `ExportResources` does not create BigQuery views.
+	BigqueryDestination *GoogleCloudHealthcareV1beta1FhirBigQueryDestination `json:"bigqueryDestination,omitempty"`
+	// GcsDestination: The Cloud Storage output destination. The Healthcare Service
+	// Agent account requires the `roles/storage.objectAdmin` role on the Cloud
+	// Storage location. The exported outputs are organized by FHIR resource types.
+	// The server creates one or more objects per resource type depending on the
+	// volume of the resources exported. When there is only one object per resource
+	// type, the object name is in the form of
+	// `{operation_id})_history_{resource_type}`. When there are multiple objects
+	// for a given resource type, the object names are in the form of
+	// `{operation_id}_history_{resource_type}-{index}-of-{total}`. Each object
+	// contains newline delimited JSON, and each line is a FHIR history bundle
+	// containing the history for a single resource.
+	GcsDestination *GoogleCloudHealthcareV1beta1FhirGcsDestination `json:"gcsDestination,omitempty"`
+	// MaxResourceVersions: If provided and non-zero, places a limit on the number
+	// of resource versions that are returned for a given resource. For example, if
+	// the limit is `100` and a resource has over 100 versions, only the 100 most
+	// recent versions will be returned. Must be positive.
+	MaxResourceVersions int64 `json:"maxResourceVersions,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Since") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Since") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExportResourcesHistoryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportResourcesHistoryRequest
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // ExportResourcesRequest: Request to export resources.
 type ExportResourcesRequest struct {
 	// Since: If provided, only resources updated after this time are exported. The
@@ -4934,6 +4985,53 @@ func (s *ImportMessagesRequest) MarshalJSON() ([]byte, error) {
 // is included in the response to describe the detailed outcome. It is only
 // included when the operation finishes successfully.
 type ImportMessagesResponse struct {
+}
+
+// ImportResourcesHistoryRequest: Request to import the history of resources.
+type ImportResourcesHistoryRequest struct {
+	// ContentStructure: The content structure in the source location. If not
+	// specified, the server treats the input source files as BUNDLE.
+	//
+	// Possible values:
+	//   "CONTENT_STRUCTURE_UNSPECIFIED" - If the content structure is not
+	// specified, the default value `BUNDLE` is used.
+	//   "BUNDLE" - The source file contains one or more lines of newline-delimited
+	// JSON (ndjson). Each line is a bundle that contains one or more resources.
+	//   "RESOURCE" - The source file contains one or more lines of
+	// newline-delimited JSON (ndjson). Each line is a single resource.
+	//   "BUNDLE_PRETTY" - The entire file is one JSON bundle. The JSON can span
+	// multiple lines.
+	//   "RESOURCE_PRETTY" - The entire file is one JSON resource. The JSON can
+	// span multiple lines.
+	ContentStructure string `json:"contentStructure,omitempty"`
+	// GcsSource: Cloud Storage source data location and import configuration. The
+	// Cloud Healthcare Service Agent requires the `roles/storage.objectAdmin`
+	// Cloud IAM roles on the Cloud Storage location. The Healthcare Service Agent
+	// Each Cloud Storage object should be a text file that contains the format
+	// specified in ContentStructure.
+	GcsSource *GoogleCloudHealthcareV1beta1FhirGcsSource `json:"gcsSource,omitempty"`
+	// MaxErrorCount: The maximum number of errors before the server cancels the
+	// operation. If not specified or set to 0, defaults to 100. -1 means no
+	// maximum, the server tries to process all input. Since the server executes
+	// the operation in parallel, it might not stop the operation after exactly
+	// this number of errors occur.
+	MaxErrorCount int64 `json:"maxErrorCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ContentStructure") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentStructure") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportResourcesHistoryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportResourcesHistoryRequest
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportResourcesRequest: Request to import resources.
@@ -20101,6 +20199,118 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Do(opts ...googleapi.Cal
 	return ret, nil
 }
 
+type ProjectsLocationsDatasetsFhirStoresExportHistoryCall struct {
+	s                             *Service
+	name                          string
+	exportresourceshistoryrequest *ExportResourcesHistoryRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// ExportHistory: Export resources including historical versions from the FHIR
+// store to the specified destination. The exported resource, along with
+// previous versions, will be exported in one or more FHIR history bundles.
+// This method returns an Operation that can be used to track the status of the
+// export by calling GetOperation. Immediate fatal errors appear in the error
+// field, errors are also logged to Cloud Logging (see Viewing error logs in
+// Cloud Logging (https://cloud.google.com/healthcare/docs/how-tos/logging)).
+// Otherwise, when the operation finishes, a detailed response of type
+// ExportResourcesResponse is returned in the response field. The metadata
+// field type for this operation is OperationMetadata.
+//
+//   - name: The name of the FHIR store to export resource from, in the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
+//     ores/{fhir_store_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresService) ExportHistory(name string, exportresourceshistoryrequest *ExportResourcesHistoryRequest) *ProjectsLocationsDatasetsFhirStoresExportHistoryCall {
+	c := &ProjectsLocationsDatasetsFhirStoresExportHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.exportresourceshistoryrequest = exportresourceshistoryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresExportHistoryCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresExportHistoryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresExportHistoryCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresExportHistoryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresExportHistoryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresExportHistoryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportresourceshistoryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:exportHistory")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.exportHistory" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsFhirStoresExportHistoryCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsDatasetsFhirStoresGetCall struct {
 	s            *Service
 	name         string
@@ -20570,6 +20780,119 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) doRequest(alt string) (*
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDatasetsFhirStoresImportHistoryCall struct {
+	s                             *Service
+	name                          string
+	importresourceshistoryrequest *ImportResourcesHistoryRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// ImportHistory: Import resource historical versions from Cloud Storage source
+// to destination fhir store. The exported resource, along with previous
+// versions, will be exported in one or more FHIR history bundles. This method
+// returns an Operation that can be used to track the status of the export by
+// calling GetOperation. Immediate fatal errors appear in the error field,
+// errors are also logged to Cloud Logging (see Viewing error logs in Cloud
+// Logging (https://cloud.google.com/healthcare/docs/how-tos/logging)).
+// Otherwise, when the operation finishes, a detailed response of type
+// ImportResourcesResponse is returned in the response field. The metadata
+// field type for this operation is OperationMetadata.
+//
+//   - name: The name of the FHIR store to import FHIR resources to, in the
+//     format of
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
+//     ores/{fhir_store_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresService) ImportHistory(name string, importresourceshistoryrequest *ImportResourcesHistoryRequest) *ProjectsLocationsDatasetsFhirStoresImportHistoryCall {
+	c := &ProjectsLocationsDatasetsFhirStoresImportHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.importresourceshistoryrequest = importresourceshistoryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresImportHistoryCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresImportHistoryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresImportHistoryCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresImportHistoryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresImportHistoryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresImportHistoryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importresourceshistoryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:importHistory")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.importHistory" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsFhirStoresImportHistoryCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

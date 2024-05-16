@@ -4842,6 +4842,14 @@ func (c *ProjectsLocationsOsPolicyAssignmentsCreateCall) OsPolicyAssignmentId(os
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Restricted to 36 ASCII characters. A random UUID is
+// recommended. This request is only idempotent if a `request_id` is provided.
+func (c *ProjectsLocationsOsPolicyAssignmentsCreateCall) RequestId(requestId string) *ProjectsLocationsOsPolicyAssignmentsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -4944,6 +4952,14 @@ type ProjectsLocationsOsPolicyAssignmentsDeleteCall struct {
 func (r *ProjectsLocationsOsPolicyAssignmentsService) Delete(name string) *ProjectsLocationsOsPolicyAssignmentsDeleteCall {
 	c := &ProjectsLocationsOsPolicyAssignmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Restricted to 36 ASCII characters. A random UUID is
+// recommended. This request is only idempotent if a `request_id` is provided.
+func (c *ProjectsLocationsOsPolicyAssignmentsDeleteCall) RequestId(requestId string) *ProjectsLocationsOsPolicyAssignmentsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -5451,6 +5467,22 @@ func (r *ProjectsLocationsOsPolicyAssignmentsService) Patch(name string, ospolic
 	c := &ProjectsLocationsOsPolicyAssignmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.ospolicyassignment = ospolicyassignment
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to true, and
+// the OS policy assignment is not found, a new OS policy assignment will be
+// created. In this situation, `update_mask` is ignored.
+func (c *ProjectsLocationsOsPolicyAssignmentsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsOsPolicyAssignmentsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Restricted to 36 ASCII characters. A random UUID is
+// recommended. This request is only idempotent if a `request_id` is provided.
+func (c *ProjectsLocationsOsPolicyAssignmentsPatchCall) RequestId(requestId string) *ProjectsLocationsOsPolicyAssignmentsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 

@@ -4731,7 +4731,7 @@
       }
     }
   },
-  "revision": "20240514",
+  "revision": "20240515",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -8145,6 +8145,20 @@
       "properties": {},
       "type": "object"
     },
+    "RestrictedPaymentCountries": {
+      "description": "Countries where the purchase of this product is restricted to payment methods registered in the same country. If empty, no payment location restrictions are imposed.",
+      "id": "RestrictedPaymentCountries",
+      "properties": {
+        "regionCodes": {
+          "description": "Required. Region codes to impose payment restrictions on, as defined by ISO 3166-2, e.g. \"US\".",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Review": {
       "description": "An Android app review.",
       "id": "Review",
@@ -8479,6 +8493,10 @@
         "productId": {
           "description": "Immutable. Unique product ID of the product. Unique within the parent app. Product IDs must be composed of lower-case letters (a-z), numbers (0-9), underscores (_) and dots (.). It must start with a lower-case letter or number, and be between 1 and 40 (inclusive) characters in length.",
           "type": "string"
+        },
+        "restrictedPaymentCountries": {
+          "$ref": "RestrictedPaymentCountries",
+          "description": "Optional. Countries where the purchase of this subscription is restricted to payment methods registered in the same country. If empty, no payment location restrictions are imposed."
         },
         "taxAndComplianceSettings": {
           "$ref": "SubscriptionTaxAndComplianceSettings",

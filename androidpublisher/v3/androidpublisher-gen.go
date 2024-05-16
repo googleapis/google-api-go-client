@@ -5182,6 +5182,31 @@ func (s *RemoteInAppUpdateDataPerBundle) MarshalJSON() ([]byte, error) {
 type ReplacementCancellation struct {
 }
 
+// RestrictedPaymentCountries: Countries where the purchase of this product is
+// restricted to payment methods registered in the same country. If empty, no
+// payment location restrictions are imposed.
+type RestrictedPaymentCountries struct {
+	// RegionCodes: Required. Region codes to impose payment restrictions on, as
+	// defined by ISO 3166-2, e.g. "US".
+	RegionCodes []string `json:"regionCodes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RegionCodes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RegionCodes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestrictedPaymentCountries) MarshalJSON() ([]byte, error) {
+	type NoMethod RestrictedPaymentCountries
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // Review: An Android app review.
 type Review struct {
 	// AuthorName: The name of the user who wrote the review.
@@ -5641,6 +5666,10 @@ type Subscription struct {
 	// numbers (0-9), underscores (_) and dots (.). It must start with a lower-case
 	// letter or number, and be between 1 and 40 (inclusive) characters in length.
 	ProductId string `json:"productId,omitempty"`
+	// RestrictedPaymentCountries: Optional. Countries where the purchase of this
+	// subscription is restricted to payment methods registered in the same
+	// country. If empty, no payment location restrictions are imposed.
+	RestrictedPaymentCountries *RestrictedPaymentCountries `json:"restrictedPaymentCountries,omitempty"`
 	// TaxAndComplianceSettings: Details about taxes and legal compliance.
 	TaxAndComplianceSettings *SubscriptionTaxAndComplianceSettings `json:"taxAndComplianceSettings,omitempty"`
 

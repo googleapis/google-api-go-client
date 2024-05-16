@@ -4465,7 +4465,8 @@ type AccountsPolicyIssuesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all the policy issues for the specified account.
+// List: Lists all the policy issues where the specified account is involved,
+// both directly and through any AFP child accounts.
 //
 //   - parent: The account for which policy issues are being retrieved. Format:
 //     accounts/{account}.

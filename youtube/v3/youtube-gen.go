@@ -559,34 +559,10 @@ type YoutubeService struct {
 
 func NewYoutubeV3Service(s *Service) *YoutubeV3Service {
 	rs := &YoutubeV3Service{s: s}
-	rs.LiveChat = NewYoutubeV3LiveChatService(s)
 	return rs
 }
 
 type YoutubeV3Service struct {
-	s *Service
-
-	LiveChat *YoutubeV3LiveChatService
-}
-
-func NewYoutubeV3LiveChatService(s *Service) *YoutubeV3LiveChatService {
-	rs := &YoutubeV3LiveChatService{s: s}
-	rs.Messages = NewYoutubeV3LiveChatMessagesService(s)
-	return rs
-}
-
-type YoutubeV3LiveChatService struct {
-	s *Service
-
-	Messages *YoutubeV3LiveChatMessagesService
-}
-
-func NewYoutubeV3LiveChatMessagesService(s *Service) *YoutubeV3LiveChatMessagesService {
-	rs := &YoutubeV3LiveChatMessagesService{s: s}
-	return rs
-}
-
-type YoutubeV3LiveChatMessagesService struct {
 	s *Service
 }
 
@@ -13330,6 +13306,114 @@ func (c *LiveChatMessagesListCall) Pages(ctx context.Context, f func(*LiveChatMe
 	}
 }
 
+type LiveChatMessagesTransitionCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Transition: Transition a durable chat event.
+func (r *LiveChatMessagesService) Transition() *LiveChatMessagesTransitionCall {
+	c := &LiveChatMessagesTransitionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Id sets the optional parameter "id": The ID that uniquely identify the chat
+// message event to transition.
+func (c *LiveChatMessagesTransitionCall) Id(id string) *LiveChatMessagesTransitionCall {
+	c.urlParams_.Set("id", id)
+	return c
+}
+
+// Status sets the optional parameter "status": The status to which the chat
+// event is going to transition.
+//
+// Possible values:
+//
+//	"statusUnspecified" - Default unknown enum value.
+//	"closed" - The durable chat event is over.
+func (c *LiveChatMessagesTransitionCall) Status(status string) *LiveChatMessagesTransitionCall {
+	c.urlParams_.Set("status", status)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *LiveChatMessagesTransitionCall) Fields(s ...googleapi.Field) *LiveChatMessagesTransitionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *LiveChatMessagesTransitionCall) Context(ctx context.Context) *LiveChatMessagesTransitionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *LiveChatMessagesTransitionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LiveChatMessagesTransitionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/liveChat/messages/transition")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "youtube.liveChatMessages.transition" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LiveChatMessage.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LiveChatMessagesTransitionCall) Do(opts ...googleapi.CallOption) (*LiveChatMessage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LiveChatMessage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type LiveChatModeratorsDeleteCall struct {
 	s          *Service
 	urlParams_ gensupport.URLParams
@@ -19524,114 +19608,6 @@ func (c *YoutubeV3UpdateCommentThreadsCall) Do(opts ...googleapi.CallOption) (*C
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &CommentThread{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type YoutubeV3LiveChatMessagesTransitionCall struct {
-	s          *Service
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Transition: Transition a durable chat event.
-func (r *YoutubeV3LiveChatMessagesService) Transition() *YoutubeV3LiveChatMessagesTransitionCall {
-	c := &YoutubeV3LiveChatMessagesTransitionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// Id sets the optional parameter "id": The ID that uniquely identify the chat
-// message event to transition.
-func (c *YoutubeV3LiveChatMessagesTransitionCall) Id(id string) *YoutubeV3LiveChatMessagesTransitionCall {
-	c.urlParams_.Set("id", id)
-	return c
-}
-
-// Status sets the optional parameter "status": The status to which the chat
-// event is going to transition.
-//
-// Possible values:
-//
-//	"statusUnspecified" - Default unknown enum value.
-//	"closed" - The durable chat event is over.
-func (c *YoutubeV3LiveChatMessagesTransitionCall) Status(status string) *YoutubeV3LiveChatMessagesTransitionCall {
-	c.urlParams_.Set("status", status)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *YoutubeV3LiveChatMessagesTransitionCall) Fields(s ...googleapi.Field) *YoutubeV3LiveChatMessagesTransitionCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *YoutubeV3LiveChatMessagesTransitionCall) Context(ctx context.Context) *YoutubeV3LiveChatMessagesTransitionCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *YoutubeV3LiveChatMessagesTransitionCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *YoutubeV3LiveChatMessagesTransitionCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/liveChat/messages/transition")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "youtube.youtube.v3.liveChat.messages.transition" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *LiveChatMessage.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *YoutubeV3LiveChatMessagesTransitionCall) Do(opts ...googleapi.CallOption) (*LiveChatMessage, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &LiveChatMessage{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

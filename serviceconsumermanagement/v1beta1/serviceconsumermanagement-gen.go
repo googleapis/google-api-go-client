@@ -3440,16 +3440,15 @@ func (s *V1Beta1GenerateServiceIdentityResponse) MarshalJSON() ([]byte, error) {
 type V1Beta1ImportProducerOverridesRequest struct {
 	// Force: Whether to force the creation of the quota overrides. Setting the
 	// force parameter to 'true' ignores all quota safety checks that would fail
-	// the request. QuotaSafetyCheck lists all such validations. If force is set to
-	// true, it is recommended to include a case id in "X-Goog-Request-Reason"
-	// header when sending the request.
+	// the request. QuotaSafetyCheck lists all such validations.
 	Force bool `json:"force,omitempty"`
+	// ForceJustification: If force option is set to true, force_justification is
+	// suggested to be set to log the reason in audit logs.
+	ForceJustification string `json:"forceJustification,omitempty"`
 	// ForceOnly: The list of quota safety checks to ignore before the override
 	// mutation. Unlike 'force' field that ignores all the quota safety checks, the
 	// 'force_only' field ignores only the specified checks; other checks are still
-	// enforced. The 'force' and 'force_only' fields cannot both be set. If
-	// force_only is specified, it is recommended to include a case id in
-	// "X-Goog-Request-Reason" header when sending the request.
+	// enforced. The 'force' and 'force_only' fields cannot both be set.
 	//
 	// Possible values:
 	//   "QUOTA_SAFETY_CHECK_UNSPECIFIED" - Unspecified quota safety check.
@@ -4714,10 +4713,17 @@ func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Create(pare
 // Force sets the optional parameter "force": Whether to force the creation of
 // the quota override. Setting the force parameter to 'true' ignores all quota
 // safety checks that would fail the request. QuotaSafetyCheck lists all such
-// validations. If force is set to true, it is recommended to include a case id
-// in "X-Goog-Request-Reason" header when sending the request.
+// validations.
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// ForceJustification sets the optional parameter "forceJustification": If
+// force option is set to true, force_justification is suggested to be set to
+// log the reason in audit logs.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) ForceJustification(forceJustification string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall {
+	c.urlParams_.Set("forceJustification", forceJustification)
 	return c
 }
 
@@ -4725,9 +4731,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) Force(fo
 // checks to ignore before the override mutation. Unlike 'force' field that
 // ignores all the quota safety checks, the 'force_only' field ignores only the
 // specified checks; other checks are still enforced. The 'force' and
-// 'force_only' fields cannot both be set. If force_only is specified, it is
-// recommended to include a case id in "X-Goog-Request-Reason" header when
-// sending the request.
+// 'force_only' fields cannot both be set.
 //
 // Possible values:
 //
@@ -4852,10 +4856,17 @@ func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Delete(name
 // Force sets the optional parameter "force": Whether to force the deletion of
 // the quota override. Setting the force parameter to 'true' ignores all quota
 // safety checks that would fail the request. QuotaSafetyCheck lists all such
-// validations. If force is set to true, it is recommended to include a case id
-// in "X-Goog-Request-Reason" header when sending the request.
+// validations.
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// ForceJustification sets the optional parameter "forceJustification": If
+// force option is set to true, force_justification is suggested to be set to
+// log the reason in audit logs.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) ForceJustification(forceJustification string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall {
+	c.urlParams_.Set("forceJustification", forceJustification)
 	return c
 }
 
@@ -4863,9 +4874,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) Force(fo
 // checks to ignore before the override mutation. Unlike 'force' field that
 // ignores all the quota safety checks, the 'force_only' field ignores only the
 // specified checks; other checks are still enforced. The 'force' and
-// 'force_only' fields cannot both be set. If force_only is specified, it is
-// recommended to include a case id in "X-Goog-Request-Reason" header when
-// sending the request.
+// 'force_only' fields cannot both be set.
 //
 // Possible values:
 //
@@ -5135,10 +5144,17 @@ func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Patch(name 
 // Force sets the optional parameter "force": Whether to force the update of
 // the quota override. Setting the force parameter to 'true' ignores all quota
 // safety checks that would fail the request. QuotaSafetyCheck lists all such
-// validations. If force is set to true, it is recommended to include a case id
-// in "X-Goog-Request-Reason" header when sending the request.
+// validations.
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// ForceJustification sets the optional parameter "forceJustification": If
+// force option is set to true, force_justification is suggested to be set to
+// log the reason in audit logs.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) ForceJustification(forceJustification string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall {
+	c.urlParams_.Set("forceJustification", forceJustification)
 	return c
 }
 
@@ -5146,9 +5162,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) Force(for
 // checks to ignore before the override mutation. Unlike 'force' field that
 // ignores all the quota safety checks, the 'force_only' field ignores only the
 // specified checks; other checks are still enforced. The 'force' and
-// 'force_only' fields cannot both be set. If force_only is specified, it is
-// recommended to include a case id in "X-Goog-Request-Reason" header when
-// sending the request.
+// 'force_only' fields cannot both be set.
 //
 // Possible values:
 //

@@ -1406,9 +1406,9 @@ func (s *GooglePrivacyDlpV2CloudSqlDiscoveryTarget) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2CloudSqlIamCredential: Use IAM auth to connect. This
-// requires the Cloud SQL IAM feature to be enabled on the instance, which is
-// not the default for Cloud SQL. See
+// GooglePrivacyDlpV2CloudSqlIamCredential: Use IAM authentication to connect.
+// This requires the Cloud SQL IAM feature to be enabled on the instance, which
+// is not the default for Cloud SQL. See
 // https://cloud.google.com/sql/docs/postgres/authentication and
 // https://cloud.google.com/sql/docs/mysql/authentication.
 type GooglePrivacyDlpV2CloudSqlIamCredential struct {
@@ -1431,9 +1431,9 @@ type GooglePrivacyDlpV2CloudSqlProperties struct {
 	//
 	// Possible values:
 	//   "DATABASE_ENGINE_UNKNOWN" - An engine that is not currently supported by
-	// SDP.
+	// Sensitive Data Protection.
 	//   "DATABASE_ENGINE_MYSQL" - Cloud SQL for MySQL instance.
-	//   "DATABASE_ENGINE_POSTGRES" - Cloud SQL for Postgres instance.
+	//   "DATABASE_ENGINE_POSTGRES" - Cloud SQL for PostgreSQL instance.
 	DatabaseEngine string `json:"databaseEngine,omitempty"`
 	// MaxConnections: Required. DLP will limit its connections to max_connections.
 	// Must be 2 or greater.
@@ -1933,8 +1933,9 @@ type GooglePrivacyDlpV2Connection struct {
 	//   "AVAILABLE" - A configured connection that has not encountered any errors.
 	//   "ERROR" - A configured connection that encountered errors during its last
 	// use. It will not be used again until it is set to AVAILABLE. If the
-	// resolution requires external action, then a request to set the status to
-	// AVAILABLE will mark this connection for use. Otherwise, any changes to the
+	// resolution requires external action, then the client must send a request to
+	// set the status to AVAILABLE when the connection is ready for use. If the
+	// resolution doesn't require external action, then any changes to the
 	// connection properties will automatically mark it as AVAILABLE.
 	State string `json:"state,omitempty"`
 
@@ -2749,9 +2750,9 @@ type GooglePrivacyDlpV2DataProfilePubSubMessage struct {
 	// Possible values:
 	//   "EVENT_TYPE_UNSPECIFIED" - Unused.
 	//   "NEW_PROFILE" - New profile (not a re-profile).
-	//   "CHANGED_PROFILE" - Changed one of the following profile metrics: * Data
-	// risk score * Sensitivity score * Resource visibility * Encryption type *
-	// Predicted infoTypes * Other infoTypes
+	//   "CHANGED_PROFILE" - One of the following profile metrics changed: Data
+	// risk score, Sensitivity score, Resource visibility, Encryption type,
+	// Predicted infoTypes, Other infoTypes
 	//   "SCORE_INCREASED" - Table data risk score or sensitivity score increased.
 	//   "ERROR_CHANGED" - A user (non-internal) error occurred.
 	Event string `json:"event,omitempty"`
@@ -2865,19 +2866,24 @@ func (s *GooglePrivacyDlpV2DatabaseResourceCollection) MarshalJSON() ([]byte, er
 // GooglePrivacyDlpV2DatabaseResourceReference: Identifies a single database
 // resource, like a table within a database.
 type GooglePrivacyDlpV2DatabaseResourceReference struct {
+	// Database: Required. Name of a database within the instance.
+	Database string `json:"database,omitempty"`
+	// DatabaseResource: Required. Name of a database resource, for example, a
+	// table within the database.
+	DatabaseResource string `json:"databaseResource,omitempty"`
 	// Instance: Required. The instance where this resource is located. For
-	// example: Cloud SQL's instance id.
+	// example: Cloud SQL instance ID.
 	Instance string `json:"instance,omitempty"`
 	// ProjectId: Required. If within a project-level config, then this must match
-	// the config's project id.
+	// the config's project ID.
 	ProjectId string `json:"projectId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Instance") to
+	// ForceSendFields is a list of field names (e.g. "Database") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Instance") to include in API
+	// NullFields is a list of field names (e.g. "Database") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2906,7 +2912,7 @@ type GooglePrivacyDlpV2DatabaseResourceRegex struct {
 	// instances match.
 	InstanceRegex string `json:"instanceRegex,omitempty"`
 	// ProjectIdRegex: For organizations, if unset, will match all projects. Has no
-	// effect for Data Profile configurations created within a project.
+	// effect for configurations created within a project.
 	ProjectIdRegex string `json:"projectIdRegex,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatabaseRegex") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3663,6 +3669,10 @@ type GooglePrivacyDlpV2DiscoveryBigQueryFilter struct {
 	// configuration. If none is specified, a default one will be added
 	// automatically.
 	OtherTables *GooglePrivacyDlpV2AllOtherBigQueryTables `json:"otherTables,omitempty"`
+	// TableReference: The table to scan. Discovery configurations including this
+	// can only include one DiscoveryTarget (the DiscoveryTarget with this
+	// TableReference).
+	TableReference *GooglePrivacyDlpV2TableReference `json:"tableReference,omitempty"`
 	// Tables: A specific set of tables for this filter to apply to. A table
 	// collection must be specified in only one filter per config. If a table id or
 	// dataset is empty, Cloud DLP assumes all tables in that collection must be
@@ -3695,8 +3705,8 @@ type GooglePrivacyDlpV2DiscoveryCloudSqlConditions struct {
 	// Possible values:
 	//   "DATABASE_ENGINE_UNSPECIFIED" - Unused.
 	//   "ALL_SUPPORTED_DATABASE_ENGINES" - Include all supported database engines.
-	//   "MYSQL" - MySql database.
-	//   "POSTGRES" - PostGres database.
+	//   "MYSQL" - MySQL database.
+	//   "POSTGRES" - PostgreSQL database.
 	DatabaseEngines []string `json:"databaseEngines,omitempty"`
 	// Types: Data profiles will only be generated for the database resource types
 	// specified in this field. If not specified, defaults to
@@ -4018,6 +4028,10 @@ type GooglePrivacyDlpV2DiscoveryTarget struct {
 	// CloudSqlTarget: Cloud SQL target for Discovery. The first target to match a
 	// table will be the one applied.
 	CloudSqlTarget *GooglePrivacyDlpV2CloudSqlDiscoveryTarget `json:"cloudSqlTarget,omitempty"`
+	// SecretsTarget: Discovery target that looks for credentials and secrets
+	// stored in cloud resource metadata and reports them as vulnerabilities to
+	// Security Command Center. Only one target of this type is allowed.
+	SecretsTarget *GooglePrivacyDlpV2SecretsDiscoveryTarget `json:"secretsTarget,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BigQueryTarget") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5642,7 +5656,7 @@ func (s *GooglePrivacyDlpV2InspectionRuleSet) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2JobNotificationEmails struct {
 }
 
-// GooglePrivacyDlpV2JobTrigger: Contains a configuration to make api calls on
+// GooglePrivacyDlpV2JobTrigger: Contains a configuration to make API calls on
 // a repeating basis. See
 // https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
 // to learn more.
@@ -7157,9 +7171,9 @@ type GooglePrivacyDlpV2PubSubNotification struct {
 	// Possible values:
 	//   "EVENT_TYPE_UNSPECIFIED" - Unused.
 	//   "NEW_PROFILE" - New profile (not a re-profile).
-	//   "CHANGED_PROFILE" - Changed one of the following profile metrics: * Data
-	// risk score * Sensitivity score * Resource visibility * Encryption type *
-	// Predicted infoTypes * Other infoTypes
+	//   "CHANGED_PROFILE" - One of the following profile metrics changed: Data
+	// risk score, Sensitivity score, Resource visibility, Encryption type,
+	// Predicted infoTypes, Other infoTypes
 	//   "SCORE_INCREASED" - Table data risk score or sensitivity score increased.
 	//   "ERROR_CHANGED" - A user (non-internal) error occurred.
 	Event string `json:"event,omitempty"`
@@ -7865,8 +7879,8 @@ type GooglePrivacyDlpV2Result struct {
 	// InfoTypeStats: Statistics of how many instances of each info type were found
 	// during inspect job.
 	InfoTypeStats []*GooglePrivacyDlpV2InfoTypeStats `json:"infoTypeStats,omitempty"`
-	// NumRowsProcessed: Number of rows scanned post sampling and time filtering
-	// (Applicable for row based stores such as BigQuery).
+	// NumRowsProcessed: Number of rows scanned after sampling and time filtering
+	// (applicable for row based stores such as BigQuery).
 	NumRowsProcessed int64 `json:"numRowsProcessed,omitempty,string"`
 	// ProcessedBytes: Total size in bytes that were processed.
 	ProcessedBytes int64 `json:"processedBytes,omitempty,string"`
@@ -7992,8 +8006,8 @@ func (s *GooglePrivacyDlpV2Schedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2SchemaModifiedCadence: How frequency to modify the profile
-// when the table's schema is modified.
+// GooglePrivacyDlpV2SchemaModifiedCadence: How frequently to modify the
+// profile when the table's schema is modified.
 type GooglePrivacyDlpV2SchemaModifiedCadence struct {
 	// Frequency: Frequency to regenerate data profiles when the schema is
 	// modified. Defaults to monthly.
@@ -8012,7 +8026,7 @@ type GooglePrivacyDlpV2SchemaModifiedCadence struct {
 	//
 	// Possible values:
 	//   "SQL_SCHEMA_MODIFICATION_UNSPECIFIED" - Unused.
-	//   "NEW_COLUMNS" - New columns has appeared.
+	//   "NEW_COLUMNS" - New columns have appeared.
 	//   "REMOVED_COLUMNS" - Columns have been removed from the table.
 	Types []string `json:"types,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Frequency") to
@@ -8091,6 +8105,18 @@ type GooglePrivacyDlpV2SecretManagerCredential struct {
 func (s *GooglePrivacyDlpV2SecretManagerCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2SecretManagerCredential
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2SecretsDiscoveryTarget: Discovery target for credentials
+// and secrets in Cloud resource metadata. This target does not include any
+// filtering or frequency controls. Cloud DLP will scan Cloud resource metadata
+// for secrets daily. No inspect template should be included in the discovery
+// config for a security benchmarks scan. Instead, the built-in list of Secrets
+// and Credentials infoTypes will be used (see
+// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference#credentials_and_secrets).
+// Credentials and secrets discovered will be reported as vulnerabilities to
+// Security Command Center.
+type GooglePrivacyDlpV2SecretsDiscoveryTarget struct {
 }
 
 // GooglePrivacyDlpV2SelectedInfoTypes: Apply transformation to the selected
@@ -8542,8 +8568,8 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	//   "RESOURCE_VISIBILITY_UNSPECIFIED" - Unused.
 	//   "RESOURCE_VISIBILITY_PUBLIC" - Visible to any user.
 	//   "RESOURCE_VISIBILITY_INCONCLUSIVE" - May contain public items. For
-	// example, if a GCS bucket has uniform bucket level access disabled, some
-	// objects inside it may be public.
+	// example, if a Cloud Storage bucket has uniform bucket level access disabled,
+	// some objects inside it may be public.
 	//   "RESOURCE_VISIBILITY_RESTRICTED" - Visible only to specific users.
 	ResourceVisibility string `json:"resourceVisibility,omitempty"`
 	// RowCount: Number of rows in the table when the profile was generated. This
@@ -8638,6 +8664,31 @@ type GooglePrivacyDlpV2TableOptions struct {
 
 func (s *GooglePrivacyDlpV2TableOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TableOptions
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2TableReference: Message defining the location of a
+// BigQuery table with the projectId inferred from the parent project.
+type GooglePrivacyDlpV2TableReference struct {
+	// DatasetId: Dataset ID of the table.
+	DatasetId string `json:"datasetId,omitempty"`
+	// TableId: Name of the table.
+	TableId string `json:"tableId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatasetId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2TableReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TableReference
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11439,7 +11490,7 @@ func (r *OrganizationsLocationsConnectionsService) Search(parent string) *Organi
 	return c
 }
 
-// Filter sets the optional parameter "filter": * Supported fields/values -
+// Filter sets the optional parameter "filter": Supported field/value: -
 // `state` - MISSING|AVAILABLE|ERROR
 func (c *OrganizationsLocationsConnectionsSearchCall) Filter(filter string) *OrganizationsLocationsConnectionsSearchCall {
 	c.urlParams_.Set("filter", filter)
@@ -19832,8 +19883,8 @@ func (r *ProjectsLocationsConnectionsService) List(parent string) *ProjectsLocat
 	return c
 }
 
-// Filter sets the optional parameter "filter": * Supported fields/values -
-// `state` - MISSING|AVAILABLE|ERROR
+// Filter sets the optional parameter "filter": Supported field/value: `state`
+// - MISSING|AVAILABLE|ERROR
 func (c *ProjectsLocationsConnectionsListCall) Filter(filter string) *ProjectsLocationsConnectionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -20087,7 +20138,7 @@ func (r *ProjectsLocationsConnectionsService) Search(parent string) *ProjectsLoc
 	return c
 }
 
-// Filter sets the optional parameter "filter": * Supported fields/values -
+// Filter sets the optional parameter "filter": Supported field/value: -
 // `state` - MISSING|AVAILABLE|ERROR
 func (c *ProjectsLocationsConnectionsSearchCall) Filter(filter string) *ProjectsLocationsConnectionsSearchCall {
 	c.urlParams_.Set("filter", filter)

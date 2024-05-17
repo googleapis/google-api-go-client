@@ -330,9 +330,6 @@ type GoogleCloudOrgpolicyV2Constraint struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: The human readable name. Mutable.
 	DisplayName string `json:"displayName,omitempty"`
-	// GoogleManagedConstraint: Defines this constraint as being a
-	// GoogleManagedConstraint.
-	GoogleManagedConstraint *GoogleCloudOrgpolicyV2ConstraintGoogleManagedConstraint `json:"googleManagedConstraint,omitempty"`
 	// ListConstraint: Defines this constraint as being a ListConstraint.
 	ListConstraint *GoogleCloudOrgpolicyV2ConstraintListConstraint `json:"listConstraint,omitempty"`
 	// Name: Immutable. The resource name of the constraint. Must be in one of the
@@ -366,53 +363,6 @@ func (s *GoogleCloudOrgpolicyV2Constraint) MarshalJSON() ([]byte, error) {
 // `constraints/compute.disableSerialPortAccess`. If it is enforced on a VM
 // instance, serial port connections will not be opened to that instance.
 type GoogleCloudOrgpolicyV2ConstraintBooleanConstraint struct {
-}
-
-// GoogleCloudOrgpolicyV2ConstraintGoogleManagedConstraint: A Google managed
-// constraint. This represents a subset of fields missing from Constraint proto
-// that are required to describe CustomConstraint
-type GoogleCloudOrgpolicyV2ConstraintGoogleManagedConstraint struct {
-	// ActionType: Allow or deny type.
-	//
-	// Possible values:
-	//   "ACTION_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
-	//   "ALLOW" - Allowed action type.
-	//   "DENY" - Deny action type.
-	ActionType string `json:"actionType,omitempty"`
-	// Condition: Org policy condition/expression. For example:
-	// `resource.instanceName.matches("[production|test]_.*_(\d)+")` or,
-	// `resource.management.auto_upgrade == true` The max length of the condition
-	// is 1000 characters.
-	Condition string `json:"condition,omitempty"`
-	// MethodTypes: All the operations being applied for this constraint.
-	//
-	// Possible values:
-	//   "METHOD_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
-	//   "CREATE" - Constraint applied when creating the resource.
-	//   "UPDATE" - Constraint applied when updating the resource.
-	//   "DELETE" - Constraint applied when deleting the resource. Not supported
-	// yet.
-	MethodTypes []string `json:"methodTypes,omitempty"`
-	// ResourceTypes: The resource instance type on which this policy applies.
-	// Format will be of the form : `/` Example: *
-	// `compute.googleapis.com/Instance`.
-	ResourceTypes []string `json:"resourceTypes,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ActionType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActionType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudOrgpolicyV2ConstraintGoogleManagedConstraint) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudOrgpolicyV2ConstraintGoogleManagedConstraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2ConstraintListConstraint: A constraint that allows or

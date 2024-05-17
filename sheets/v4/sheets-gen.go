@@ -7535,124 +7535,30 @@ func (s *SetDataValidationRequest) MarshalJSON() ([]byte, error) {
 
 // Sheet: A sheet in a spreadsheet.
 type Sheet struct {
-	// BandedRanges: The banded (alternating colors) ranges on this sheet.
-	BandedRanges []*BandedRange `json:"bandedRanges,omitempty"`
-	// BasicFilter: The filter on this sheet, if any.
-	BasicFilter *BasicFilter `json:"basicFilter,omitempty"`
-	// Charts: The specifications of every chart on this sheet.
-	Charts []*EmbeddedChart `json:"charts,omitempty"`
-	// ColumnGroups: All column groups on this sheet, ordered by increasing range
-	// start index, then by group depth.
-	ColumnGroups []*DimensionGroup `json:"columnGroups,omitempty"`
-	// ConditionalFormats: The conditional format rules in this sheet.
-	ConditionalFormats []*ConditionalFormatRule `json:"conditionalFormats,omitempty"`
-	// Data: Data in the grid, if this is a grid sheet. The number of GridData
-	// objects returned is dependent on the number of ranges requested on this
-	// sheet. For example, if this is representing `Sheet1`, and the spreadsheet
-	// was requested with ranges `Sheet1!A1:C10` and `Sheet1!D15:E20`, then the
-	// first GridData will have a startRow/startColumn of `0`, while the second one
-	// will have `startRow 14` (zero-based row 15), and `startColumn 3` (zero-based
-	// column D). For a DATA_SOURCE sheet, you can not request a specific range,
-	// the GridData contains all the values.
-	Data []*GridData `json:"data,omitempty"`
-	// DeveloperMetadata: The developer metadata associated with a sheet.
-	DeveloperMetadata []*DeveloperMetadata `json:"developerMetadata,omitempty"`
-	// FilterViews: The filter views in this sheet.
-	FilterViews []*FilterView `json:"filterViews,omitempty"`
-	// Merges: The ranges that are merged together.
-	Merges []*GridRange `json:"merges,omitempty"`
 	// Properties: The properties of the sheet.
 	Properties *SheetProperties `json:"properties,omitempty"`
-	// ProtectedRanges: The protected ranges in this sheet.
-	ProtectedRanges []*ProtectedRange `json:"protectedRanges,omitempty"`
-	// RowGroups: All row groups on this sheet, ordered by increasing range start
-	// index, then by group depth.
-	RowGroups []*DimensionGroup `json:"rowGroups,omitempty"`
-	// Slicers: The slicers on this sheet.
-	Slicers []*Slicer `json:"slicers,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BandedRanges") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BandedRanges") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
 }
 
 func (s *Sheet) MarshalJSON() ([]byte, error) {
 	type NoMethod Sheet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), nil, nil)
 }
 
 // SheetProperties: Properties of a sheet.
 type SheetProperties struct {
-	// DataSourceSheetProperties: Output only. If present, the field contains
-	// DATA_SOURCE sheet specific properties.
-	DataSourceSheetProperties *DataSourceSheetProperties `json:"dataSourceSheetProperties,omitempty"`
-	// GridProperties: Additional properties of the sheet if this sheet is a grid.
-	// (If the sheet is an object sheet, containing a chart or image, then this
-	// field will be absent.) When writing it is an error to set any grid
-	// properties on non-grid sheets. If this sheet is a DATA_SOURCE sheet, this
-	// field is output only but contains the properties that reflect how a data
-	// source sheet is rendered in the UI, e.g. row_count.
-	GridProperties *GridProperties `json:"gridProperties,omitempty"`
-	// Hidden: True if the sheet is hidden in the UI, false if it's visible.
-	Hidden bool `json:"hidden,omitempty"`
-	// Index: The index of the sheet within the spreadsheet. When adding or
-	// updating sheet properties, if this field is excluded then the sheet is added
-	// or moved to the end of the sheet list. When updating sheet indices or
-	// inserting sheets, movement is considered in "before the move" indexes. For
-	// example, if there were three sheets (S1, S2, S3) in order to move S1 ahead
-	// of S2 the index would have to be set to 2. A sheet index update request is
-	// ignored if the requested index is identical to the sheets current index or
-	// if the requested new index is equal to the current sheet index + 1.
-	Index int64 `json:"index,omitempty"`
-	// RightToLeft: True if the sheet is an RTL sheet instead of an LTR sheet.
-	RightToLeft bool `json:"rightToLeft,omitempty"`
 	// SheetId: The ID of the sheet. Must be non-negative. This field cannot be
 	// changed once set.
 	SheetId int64 `json:"sheetId,omitempty"`
-	// SheetType: The type of sheet. Defaults to GRID. This field cannot be changed
-	// once set.
-	//
-	// Possible values:
-	//   "SHEET_TYPE_UNSPECIFIED" - Default value, do not use.
-	//   "GRID" - The sheet is a grid.
-	//   "OBJECT" - The sheet has no grid and instead has an object like a chart or
-	// image.
-	//   "DATA_SOURCE" - The sheet connects with an external DataSource and shows
-	// the preview of data.
-	SheetType string `json:"sheetType,omitempty"`
-	// TabColor: The color of the tab in the UI. Deprecated: Use tab_color_style.
-	TabColor *Color `json:"tabColor,omitempty"`
-	// TabColorStyle: The color of the tab in the UI. If tab_color is also set,
-	// this field takes precedence.
-	TabColorStyle *ColorStyle `json:"tabColorStyle,omitempty"`
 	// Title: The name of the sheet.
 	Title string `json:"title,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DataSourceSheetProperties")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DataSourceSheetProperties") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
 }
 
 func (s *SheetProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SheetProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), nil, nil)
 }
 
 // Slicer: A slicer in a sheet.
@@ -7844,41 +7750,16 @@ func (s *SourceAndDestination) MarshalJSON() ([]byte, error) {
 
 // Spreadsheet: Resource that represents a spreadsheet.
 type Spreadsheet struct {
-	// DataSourceSchedules: Output only. A list of data source refresh schedules.
-	DataSourceSchedules []*DataSourceRefreshSchedule `json:"dataSourceSchedules,omitempty"`
-	// DataSources: A list of external data sources connected with the spreadsheet.
-	DataSources []*DataSource `json:"dataSources,omitempty"`
-	// DeveloperMetadata: The developer metadata associated with a spreadsheet.
-	DeveloperMetadata []*DeveloperMetadata `json:"developerMetadata,omitempty"`
-	// NamedRanges: The named ranges defined in a spreadsheet.
-	NamedRanges []*NamedRange `json:"namedRanges,omitempty"`
-	// Properties: Overall properties of a spreadsheet.
-	Properties *SpreadsheetProperties `json:"properties,omitempty"`
 	// Sheets: The sheets that are part of a spreadsheet.
 	Sheets []*Sheet `json:"sheets,omitempty"`
-	// SpreadsheetId: The ID of the spreadsheet. This field is read-only.
-	SpreadsheetId string `json:"spreadsheetId,omitempty"`
-	// SpreadsheetUrl: The url of the spreadsheet. This field is read-only.
-	SpreadsheetUrl string `json:"spreadsheetUrl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DataSourceSchedules") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DataSourceSchedules") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
 }
 
 func (s *Spreadsheet) MarshalJSON() ([]byte, error) {
 	type NoMethod Spreadsheet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), nil, nil)
 }
 
 // SpreadsheetProperties: Properties of a spreadsheet.
@@ -9127,7 +9008,7 @@ type ValueRange struct {
 	// supported value types are: bool, string, and double. Null values will be
 	// skipped. To set a cell to an empty value, set the string value to an empty
 	// string.
-	Values [][]interface{} `json:"values,omitempty"`
+	Values PreallocatedSlice `json:"values,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -9142,6 +9023,21 @@ type ValueRange struct {
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
+}
+
+type PreallocatedSlice [][]interface{}
+
+func (ps *PreallocatedSlice) UnmarshalJSON(data []byte) error {
+	const estimatedSize = 1000
+	*ps = make([][]interface{}, 1000, estimatedSize)
+	x := ([][]interface{})(*ps)
+	for i :=0; i < estimatedSize; i++ {
+		x[i] = make([]interface{}, 0, 50)
+	}
+
+	// Use an alias to avoid infinite recursion in UnmarshalJSON.
+	type noMethod PreallocatedSlice
+	return json.Unmarshal(data, (*noMethod)(ps))
 }
 
 func (s *ValueRange) MarshalJSON() ([]byte, error) {

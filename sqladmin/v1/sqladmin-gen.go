@@ -838,6 +838,7 @@ type ConnectSettings struct {
 	// version is 39.
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
+	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1073,6 +1074,7 @@ type DatabaseInstance struct {
 	// version is 39.
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
+	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1167,8 +1169,8 @@ type DatabaseInstance struct {
 	// RootPassword: Initial root password. Use only on creation. You must set root
 	// passwords before you can connect to PostgreSQL instances.
 	RootPassword string `json:"rootPassword,omitempty"`
-	// SatisfiesPzs: The status indicating if instance satisfiesPzs. Reserved for
-	// future use.
+	// SatisfiesPzs: This status indicates whether the instance satisfies PZS. The
+	// status is reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ScheduledMaintenance: The start time of any upcoming scheduled maintenance
 	// for this instance.
@@ -1808,6 +1810,7 @@ type Flag struct {
 	// version is 39.
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
+	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -2961,7 +2964,8 @@ type Operation struct {
 	//   "AUTO_RESTART" - Performs auto-restart of an HA-enabled Cloud SQL database
 	// for auto recovery.
 	//   "REENCRYPT" - Re-encrypts CMEK instances with latest key version.
-	//   "SWITCHOVER" - Switches over to replica instance from primary.
+	//   "SWITCHOVER" - Switches the roles of the primary and replica pair. The
+	// target instance should be the replica.
 	//   "ACQUIRE_SSRS_LEASE" - Acquire a lease for the setup of SQL Server
 	// Reporting Services (SSRS).
 	//   "RELEASE_SSRS_LEASE" - Release a lease for the setup of SQL Server
@@ -2970,6 +2974,18 @@ type Operation struct {
 	// replica operation. Effect of a promote operation to the old primary is
 	// executed in this operation, asynchronously from the promote replica
 	// operation executed to the replica.
+	//   "CLUSTER_MAINTENANCE" - Indicates that the instance, its read replicas,
+	// and its cascading replicas are in maintenance. Maintenance typically gets
+	// initiated on groups of replicas first, followed by the primary instance. For
+	// each instance, maintenance typically causes the instance to be unavailable
+	// for 1-3 minutes.
+	//   "SELF_SERVICE_MAINTENANCE" - Indicates that the instance (and any of its
+	// replicas) are currently in maintenance. This is initiated as a self-service
+	// request by using SSM. Maintenance typically causes the instance to be
+	// unavailable for 1-3 minutes.
+	//   "SWITCHOVER_TO_REPLICA" - Switches a primary instance to a replica. This
+	// operation runs as part of a switchover operation to the original primary
+	// instance.
 	OperationType string `json:"operationType,omitempty"`
 	// SelfLink: The URI of this resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -3307,6 +3323,15 @@ type ReplicationCluster struct {
 	// replica name to designate a DR replica for a primary instance. Remove the
 	// replica name to remove the DR replica designation.
 	FailoverDrReplicaName string `json:"failoverDrReplicaName,omitempty"`
+	// PsaWriteEndpoint: Output only. If set, it indicates this instance has a
+	// private service access (PSA) dns endpoint that is pointing to the primary
+	// instance of the cluster. If this instance is the primary, the dns should be
+	// pointing to this instance. After Switchover or Replica failover, this DNS
+	// endpoint points to the promoted instance. This is a read-only field,
+	// returned to the user as information. This field can exist even if a
+	// standalone instance does not yet have a replica, or had a DR replica that
+	// was deleted.
+	PsaWriteEndpoint string `json:"psaWriteEndpoint,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DrReplica") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

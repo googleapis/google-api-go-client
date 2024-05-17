@@ -4731,7 +4731,7 @@
       }
     }
   },
-  "revision": "20240515",
+  "revision": "20240516",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -8976,7 +8976,8 @@
             "SUBSCRIPTION_STATE_IN_GRACE_PERIOD",
             "SUBSCRIPTION_STATE_ON_HOLD",
             "SUBSCRIPTION_STATE_CANCELED",
-            "SUBSCRIPTION_STATE_EXPIRED"
+            "SUBSCRIPTION_STATE_EXPIRED",
+            "SUBSCRIPTION_STATE_PENDING_PURCHASE_CANCELED"
           ],
           "enumDescriptions": [
             "Unspecified subscription state.",
@@ -8986,7 +8987,8 @@
             "Subscription is in grace period. The state is only available when the subscription is an auto renewing plan. In this state, all items are in grace period.",
             "Subscription is on hold (suspended). The state is only available when the subscription is an auto renewing plan. In this state, all items are on hold.",
             "Subscription is canceled but not expired yet. The state is only available when the subscription is an auto renewing plan. All items have auto_renew_enabled set to false.",
-            "Subscription is expired. All items have expiry_time in the past."
+            "Subscription is expired. All items have expiry_time in the past.",
+            "Pending transaction for subscription is canceled. If this pending purchase was for an existing subscription, use linked_purchase_token to get the current state of that subscription."
           ],
           "type": "string"
         },

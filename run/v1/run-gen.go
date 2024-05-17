@@ -2328,6 +2328,36 @@ func (s *GoogleDevtoolsCloudbuildV1FileHashes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevtoolsCloudbuildV1GCSLocation: Represents a storage location in
+// Cloud Storage
+type GoogleDevtoolsCloudbuildV1GCSLocation struct {
+	// Bucket: Cloud Storage bucket. See
+	// https://cloud.google.com/storage/docs/naming#requirements
+	Bucket string `json:"bucket,omitempty"`
+	// Generation: Cloud Storage generation for the object. If the generation is
+	// omitted, the latest generation will be used.
+	Generation int64 `json:"generation,omitempty,string"`
+	// Object: Cloud Storage object. See
+	// https://cloud.google.com/storage/docs/naming#objectnames
+	Object string `json:"object,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsCloudbuildV1GCSLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1GCSLocation
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevtoolsCloudbuildV1GitConfig: GitConfig is a configuration for git
 // operations.
 type GoogleDevtoolsCloudbuildV1GitConfig struct {
@@ -2423,6 +2453,9 @@ type GoogleDevtoolsCloudbuildV1HttpConfig struct {
 	// ProxySecretVersionName: SecretVersion resource of the HTTP proxy URL. The
 	// proxy URL should be in format protocol://@]proxyhost[:port].
 	ProxySecretVersionName string `json:"proxySecretVersionName,omitempty"`
+	// ProxySslCaInfo: Optional. Cloud Storage object storing the certificate to
+	// use with the HTTP proxy.
+	ProxySslCaInfo *GoogleDevtoolsCloudbuildV1GCSLocation `json:"proxySslCaInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProxySecretVersionName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

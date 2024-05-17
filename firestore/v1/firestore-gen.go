@@ -1542,6 +1542,26 @@ type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
 // GoogleFirestoreAdminV1DailyRecurrence: Represents a recurring schedule that
 // runs every day. The time zone is UTC.
 type GoogleFirestoreAdminV1DailyRecurrence struct {
+	// Time: Time of the day. The first run scheduled will be either on the same
+	// day if schedule creation time precedes time_of_day or the next day
+	// otherwise.
+	Time *TimeOfDay `json:"time,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Time") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Time") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1DailyRecurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1DailyRecurrence
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1Database: A Cloud Firestore Database.
@@ -1626,6 +1646,9 @@ type GoogleFirestoreAdminV1Database struct {
 	//   "POINT_IN_TIME_RECOVERY_DISABLED" - Reads are supported on any version of
 	// the data from within the past 1 hour.
 	PointInTimeRecoveryEnablement string `json:"pointInTimeRecoveryEnablement,omitempty"`
+	// PreviousId: Output only. The database resource's prior database ID. This
+	// field is only populated for deleted databases.
+	PreviousId string `json:"previousId,omitempty"`
 	// Type: The type of the database. See
 	// https://cloud.google.com/datastore/docs/firestore-or-datastore for
 	// information about how to choose.
@@ -2680,6 +2703,9 @@ type GoogleFirestoreAdminV1WeeklyRecurrence struct {
 	//   "SATURDAY" - Saturday
 	//   "SUNDAY" - Sunday
 	Day string `json:"day,omitempty"`
+	// Time: Time of the day. If day is today, the first run will happen today if
+	// schedule creation time precedes time_of_day, and the next week otherwise.
+	Time *TimeOfDay `json:"time,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3793,6 +3819,39 @@ type TargetChange struct {
 
 func (s *TargetChange) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetChange
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// TimeOfDay: Represents a time of day. The date and time zone are either not
+// significant or are specified elsewhere. An API may choose to allow leap
+// seconds. Related types are google.type.Date and `google.protobuf.Timestamp`.
+type TimeOfDay struct {
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
+	// choose to allow the value "24:00:00" for scenarios like business closing
+	// time.
+	Hours int64 `json:"hours,omitempty"`
+	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
+	// API may allow the value 60 if it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

@@ -2681,7 +2681,7 @@
       }
     }
   },
-  "revision": "20240514",
+  "revision": "20240516",
   "rootUrl": "https://walletobjects.googleapis.com/",
   "schemas": {
     "ActivationOptions": {
@@ -2772,7 +2772,7 @@
       "properties": {
         "androidAppLinkInfo": {
           "$ref": "AppLinkDataAppLinkInfo",
-          "description": "Optional information about the partner app link. If included, the app link link module will be rendered on the valuable details on the android client."
+          "description": "Optional information about the partner app link."
         },
         "iosAppLinkInfo": {
           "$ref": "AppLinkDataAppLinkInfo",
@@ -2781,7 +2781,7 @@
         },
         "webAppLinkInfo": {
           "$ref": "AppLinkDataAppLinkInfo",
-          "description": "Optional information about the partner app link. If included, the app link link module will be rendered on the valuable details on the web client."
+          "description": "Optional information about the partner web link."
         }
       },
       "type": "object"
@@ -2791,19 +2791,22 @@
       "properties": {
         "appLogoImage": {
           "$ref": "Image",
-          "description": "Optional image to be displayed in the App Link Module"
+          "deprecated": true,
+          "description": "Deprecated. Image isn't supported in the app link module."
         },
         "appTarget": {
           "$ref": "AppLinkDataAppLinkInfoAppTarget",
-          "description": "Url to follow when opening the App Link Module on clients. It will be used by partners to open their webpage or deeplink into their app."
+          "description": "Target to follow when opening the app link on clients. It will be used by partners to open their app or webpage."
         },
         "description": {
           "$ref": "LocalizedString",
-          "description": "String to be displayed in the description of the App Link Module Required"
+          "deprecated": true,
+          "description": "Deprecated. Description isn't supported in the app link module."
         },
         "title": {
           "$ref": "LocalizedString",
-          "description": "String to be displayed in the title of the App Link Module Required"
+          "deprecated": true,
+          "description": "Deprecated. Title isn't supported in the app link module."
         }
       },
       "type": "object"
@@ -4138,7 +4141,7 @@
       "properties": {
         "appLinkData": {
           "$ref": "AppLinkData",
-          "description": "Optional information about the partner app link."
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding class only object AppLinkData will be displayed."
         },
         "barcode": {
           "$ref": "Barcode",
@@ -4878,7 +4881,7 @@
       "properties": {
         "appLinkData": {
           "$ref": "AppLinkData",
-          "description": "Optional information about the partner app link."
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding class only object AppLinkData will be displayed."
         },
         "barcode": {
           "$ref": "Barcode",
@@ -5225,7 +5228,7 @@
       "properties": {
         "appLinkData": {
           "$ref": "AppLinkData",
-          "description": "Information about the partner app link. The maximum number of these fields displayed is 10."
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding class only object AppLinkData will be displayed."
         },
         "barcode": {
           "$ref": "Barcode",
@@ -5694,7 +5697,7 @@
       "properties": {
         "appLinkData": {
           "$ref": "AppLinkData",
-          "description": "Optional information about the partner app link."
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding class only object AppLinkData will be displayed."
         },
         "balance": {
           "$ref": "Money",
@@ -6523,7 +6526,7 @@
         },
         "appLinkData": {
           "$ref": "AppLinkData",
-          "description": "Optional information about the partner app link."
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding class only object AppLinkData will be displayed."
         },
         "barcode": {
           "$ref": "Barcode",
@@ -7456,7 +7459,7 @@
       "properties": {
         "appLinkData": {
           "$ref": "AppLinkData",
-          "description": "Optional information about the partner app link."
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding class only object AppLinkData will be displayed."
         },
         "barcode": {
           "$ref": "Barcode",
@@ -8782,7 +8785,7 @@
         },
         "appLinkData": {
           "$ref": "AppLinkData",
-          "description": "Optional information about the partner app link."
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding class only object AppLinkData will be displayed."
         },
         "barcode": {
           "$ref": "Barcode",

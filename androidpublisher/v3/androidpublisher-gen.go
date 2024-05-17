@@ -6247,6 +6247,10 @@ type SubscriptionPurchaseV2 struct {
 	// plan. All items have auto_renew_enabled set to false.
 	//   "SUBSCRIPTION_STATE_EXPIRED" - Subscription is expired. All items have
 	// expiry_time in the past.
+	//   "SUBSCRIPTION_STATE_PENDING_PURCHASE_CANCELED" - Pending transaction for
+	// subscription is canceled. If this pending purchase was for an existing
+	// subscription, use linked_purchase_token to get the current state of that
+	// subscription.
 	SubscriptionState string `json:"subscriptionState,omitempty"`
 	// TestPurchase: Only present if this subscription purchase is a test purchase.
 	TestPurchase *TestPurchase `json:"testPurchase,omitempty"`

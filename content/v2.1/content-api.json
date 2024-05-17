@@ -6219,7 +6219,7 @@
       }
     }
   },
-  "revision": "20240508",
+  "revision": "20240514",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -14574,6 +14574,10 @@
         },
         "certificationName": {
           "description": "The name of the certification, for example \"EPREL\". Maximum length is 2000 characters.",
+          "type": "string"
+        },
+        "certificationValue": {
+          "description": "The certification value (also known as class, level or grade), for example \"A+\", \"C\", \"gold\". Maximum length is 2000 characters.",
           "type": "string"
         }
       },

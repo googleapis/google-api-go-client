@@ -11574,6 +11574,9 @@ type ProductCertification struct {
 	// CertificationName: The name of the certification, for example "EPREL".
 	// Maximum length is 2000 characters.
 	CertificationName string `json:"certificationName,omitempty"`
+	// CertificationValue: The certification value (also known as class, level or
+	// grade), for example "A+", "C", "gold". Maximum length is 2000 characters.
+	CertificationValue string `json:"certificationValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CertificationAuthority") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

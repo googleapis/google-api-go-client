@@ -1933,7 +1933,7 @@ type KeyHandle struct {
 	// folder has a configured AutokeyConfig, the nearest of these configurations
 	// is used.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// Name: Output only. Identifier. Name of the KeyHandle resource, e.g.
+	// Name: Identifier. Name of the KeyHandle resource, e.g.
 	// `projects/{PROJECT_ID}/locations/{LOCATION}/keyHandles/{KEY_HANDLE_ID}`.
 	Name string `json:"name,omitempty"`
 	// ResourceTypeSelector: Required. Indicates the resource type that the

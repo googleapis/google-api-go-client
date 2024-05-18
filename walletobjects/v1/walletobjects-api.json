@@ -2681,7 +2681,7 @@
       }
     }
   },
-  "revision": "20240516",
+  "revision": "20240517",
   "rootUrl": "https://walletobjects.googleapis.com/",
   "schemas": {
     "ActivationOptions": {
@@ -3736,6 +3736,10 @@
           "description": "Deprecated. Use `multipleDevicesAndHoldersAllowedStatus` instead.",
           "type": "boolean"
         },
+        "appLinkData": {
+          "$ref": "AppLinkData",
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding object that will be used instead."
+        },
         "callbackOptions": {
           "$ref": "CallbackOptions",
           "description": "Callback options to be used to call the issuer back for every save/delete of an object for this class by the end-user. All objects of this class are eligible for the callback."
@@ -4531,6 +4535,10 @@
           "description": "Deprecated. Use `multipleDevicesAndHoldersAllowedStatus` instead.",
           "type": "boolean"
         },
+        "appLinkData": {
+          "$ref": "AppLinkData",
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding object that will be used instead."
+        },
         "boardingAndSeatingPolicy": {
           "$ref": "BoardingAndSeatingPolicy",
           "description": "Policies for boarding and seating. These will inform which labels will be shown to users."
@@ -5092,6 +5100,10 @@
       "description": "Generic Class",
       "id": "GenericClass",
       "properties": {
+        "appLinkData": {
+          "$ref": "AppLinkData",
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding object that will be used instead."
+        },
         "callbackOptions": {
           "$ref": "CallbackOptions",
           "description": "Callback options to be used to call the issuer back for every save/delete of an object for this class by the end-user. All objects of this class are eligible for the callback."
@@ -5430,6 +5442,10 @@
           "deprecated": true,
           "description": "Deprecated. Use `multipleDevicesAndHoldersAllowedStatus` instead.",
           "type": "boolean"
+        },
+        "appLinkData": {
+          "$ref": "AppLinkData",
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding object that will be used instead."
         },
         "callbackOptions": {
           "$ref": "CallbackOptions",
@@ -6231,6 +6247,10 @@
           "deprecated": true,
           "description": "Deprecated. Use `multipleDevicesAndHoldersAllowedStatus` instead.",
           "type": "boolean"
+        },
+        "appLinkData": {
+          "$ref": "AppLinkData",
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding object that will be used instead."
         },
         "callbackOptions": {
           "$ref": "CallbackOptions",
@@ -7143,6 +7163,10 @@
           "deprecated": true,
           "description": "Deprecated. Use `multipleDevicesAndHoldersAllowedStatus` instead.",
           "type": "boolean"
+        },
+        "appLinkData": {
+          "$ref": "AppLinkData",
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding object that will be used instead."
         },
         "callbackOptions": {
           "$ref": "CallbackOptions",
@@ -8416,6 +8440,10 @@
           "deprecated": true,
           "description": "Deprecated. Use `multipleDevicesAndHoldersAllowedStatus` instead.",
           "type": "boolean"
+        },
+        "appLinkData": {
+          "$ref": "AppLinkData",
+          "description": "Optional app or website link that will be displayed as a button on the front of the pass. If AppLinkData is provided for the corresponding object that will be used instead."
         },
         "callbackOptions": {
           "$ref": "CallbackOptions",

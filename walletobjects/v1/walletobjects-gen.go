@@ -1735,6 +1735,10 @@ type EventTicketClass struct {
 	// AllowMultipleUsersPerObject: Deprecated. Use
 	// `multipleDevicesAndHoldersAllowedStatus` instead.
 	AllowMultipleUsersPerObject bool `json:"allowMultipleUsersPerObject,omitempty"`
+	// AppLinkData: Optional app or website link that will be displayed as a button
+	// on the front of the pass. If AppLinkData is provided for the corresponding
+	// object that will be used instead.
+	AppLinkData *AppLinkData `json:"appLinkData,omitempty"`
 	// CallbackOptions: Callback options to be used to call the issuer back for
 	// every save/delete of an object for this class by the end-user. All objects
 	// of this class are eligible for the callback.
@@ -2472,6 +2476,10 @@ type FlightClass struct {
 	// AllowMultipleUsersPerObject: Deprecated. Use
 	// `multipleDevicesAndHoldersAllowedStatus` instead.
 	AllowMultipleUsersPerObject bool `json:"allowMultipleUsersPerObject,omitempty"`
+	// AppLinkData: Optional app or website link that will be displayed as a button
+	// on the front of the pass. If AppLinkData is provided for the corresponding
+	// object that will be used instead.
+	AppLinkData *AppLinkData `json:"appLinkData,omitempty"`
 	// BoardingAndSeatingPolicy: Policies for boarding and seating. These will
 	// inform which labels will be shown to users.
 	BoardingAndSeatingPolicy *BoardingAndSeatingPolicy `json:"boardingAndSeatingPolicy,omitempty"`
@@ -3029,6 +3037,10 @@ func (s *FrequentFlyerInfo) MarshalJSON() ([]byte, error) {
 
 // GenericClass: Generic Class
 type GenericClass struct {
+	// AppLinkData: Optional app or website link that will be displayed as a button
+	// on the front of the pass. If AppLinkData is provided for the corresponding
+	// object that will be used instead.
+	AppLinkData *AppLinkData `json:"appLinkData,omitempty"`
 	// CallbackOptions: Callback options to be used to call the issuer back for
 	// every save/delete of an object for this class by the end-user. All objects
 	// of this class are eligible for the callback.
@@ -3107,15 +3119,15 @@ type GenericClass struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CallbackOptions") to
+	// ForceSendFields is a list of field names (e.g. "AppLinkData") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CallbackOptions") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AppLinkData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3375,6 +3387,10 @@ type GiftCardClass struct {
 	// AllowMultipleUsersPerObject: Deprecated. Use
 	// `multipleDevicesAndHoldersAllowedStatus` instead.
 	AllowMultipleUsersPerObject bool `json:"allowMultipleUsersPerObject,omitempty"`
+	// AppLinkData: Optional app or website link that will be displayed as a button
+	// on the front of the pass. If AppLinkData is provided for the corresponding
+	// object that will be used instead.
+	AppLinkData *AppLinkData `json:"appLinkData,omitempty"`
 	// CallbackOptions: Callback options to be used to call the issuer back for
 	// every save/delete of an object for this class by the end-user. All objects
 	// of this class are eligible for the callback.
@@ -4285,6 +4301,10 @@ type LoyaltyClass struct {
 	// AllowMultipleUsersPerObject: Deprecated. Use
 	// `multipleDevicesAndHoldersAllowedStatus` instead.
 	AllowMultipleUsersPerObject bool `json:"allowMultipleUsersPerObject,omitempty"`
+	// AppLinkData: Optional app or website link that will be displayed as a button
+	// on the front of the pass. If AppLinkData is provided for the corresponding
+	// object that will be used instead.
+	AppLinkData *AppLinkData `json:"appLinkData,omitempty"`
 	// CallbackOptions: Callback options to be used to call the issuer back for
 	// every save/delete of an object for this class by the end-user. All objects
 	// of this class are eligible for the callback.
@@ -5222,6 +5242,10 @@ type OfferClass struct {
 	// AllowMultipleUsersPerObject: Deprecated. Use
 	// `multipleDevicesAndHoldersAllowedStatus` instead.
 	AllowMultipleUsersPerObject bool `json:"allowMultipleUsersPerObject,omitempty"`
+	// AppLinkData: Optional app or website link that will be displayed as a button
+	// on the front of the pass. If AppLinkData is provided for the corresponding
+	// object that will be used instead.
+	AppLinkData *AppLinkData `json:"appLinkData,omitempty"`
 	// CallbackOptions: Callback options to be used to call the issuer back for
 	// every save/delete of an object for this class by the end-user. All objects
 	// of this class are eligible for the callback.
@@ -6506,6 +6530,10 @@ type TransitClass struct {
 	// AllowMultipleUsersPerObject: Deprecated. Use
 	// `multipleDevicesAndHoldersAllowedStatus` instead.
 	AllowMultipleUsersPerObject bool `json:"allowMultipleUsersPerObject,omitempty"`
+	// AppLinkData: Optional app or website link that will be displayed as a button
+	// on the front of the pass. If AppLinkData is provided for the corresponding
+	// object that will be used instead.
+	AppLinkData *AppLinkData `json:"appLinkData,omitempty"`
 	// CallbackOptions: Callback options to be used to call the issuer back for
 	// every save/delete of an object for this class by the end-user. All objects
 	// of this class are eligible for the callback.

@@ -3623,6 +3623,10 @@ type GoogleCloudDatacatalogV1VertexModelSourceInfo struct {
 	//   "CUSTOM" - The Model is uploaded by user or custom training pipeline.
 	//   "BQML" - The Model is registered and sync'ed from BigQuery ML.
 	//   "MODEL_GARDEN" - The Model is saved or tuned from Model Garden.
+	//   "GENIE" - The Model is saved or tuned from Genie.
+	//   "CUSTOM_TEXT_EMBEDDING" - The Model is uploaded by text embedding
+	// finetuning pipeline.
+	//   "MARKETPLACE" - The Model is saved or tuned from Marketplace.
 	SourceType string `json:"sourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Copy") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -3431,6 +3431,7 @@ type TargetVMDetails struct {
 	//   "BALANCED" - An alternative to SSD persistent disks that balance
 	// performance and cost.
 	//   "SSD" - SSD hard disk type.
+	//   "HYPERDISK_BALANCED" - Hyperdusk balanced disk type.
 	DiskType string `json:"diskType,omitempty"`
 	// ExternalIp: The external IP to define in the VM.
 	ExternalIp string `json:"externalIp,omitempty"`

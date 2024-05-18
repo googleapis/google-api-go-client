@@ -1641,9 +1641,9 @@ func (s *DatabaseDeploymentDetailsAggregatedStats) MarshalJSON() ([]byte, error)
 
 // DatabaseDeploymentTopology: Details of database deployment's topology.
 type DatabaseDeploymentTopology struct {
-	// CoreCount: Optional. Number of total cores.
+	// CoreCount: Optional. Number of total logical cores.
 	CoreCount int64 `json:"coreCount,omitempty"`
-	// CoreLimit: Optional. Number of total cores limited by db deployment.
+	// CoreLimit: Optional. Number of total logical cores limited by db deployment.
 	CoreLimit int64 `json:"coreLimit,omitempty"`
 	// DiskAllocatedBytes: Optional. Disk allocated in bytes.
 	DiskAllocatedBytes int64 `json:"diskAllocatedBytes,omitempty,string"`
@@ -1730,8 +1730,6 @@ func (s *DatabaseDetailsParentDatabaseDeployment) MarshalJSON() ([]byte, error) 
 
 // DatabaseInstance: Details of a database instance.
 type DatabaseInstance struct {
-	// Hosts: Optional. The instance's hosts.
-	Hosts []*DatabaseInstanceHost `json:"hosts,omitempty"`
 	// InstanceName: The instance's name.
 	InstanceName string `json:"instanceName,omitempty"`
 	// Role: The instance role in the database engine.
@@ -1742,13 +1740,13 @@ type DatabaseInstance struct {
 	//   "SECONDARY" - Secondary.
 	//   "ARBITER" - Arbiter.
 	Role string `json:"role,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Hosts") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "InstanceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Hosts") to include in API
+	// NullFields is a list of field names (e.g. "InstanceName") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1757,28 +1755,6 @@ type DatabaseInstance struct {
 
 func (s *DatabaseInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// DatabaseInstanceHost: Details of a host of a database instance.
-type DatabaseInstanceHost struct {
-	// HostName: Optional. The host name of the host.
-	HostName string `json:"hostName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "HostName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "HostName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *DatabaseInstanceHost) MarshalJSON() ([]byte, error) {
-	type NoMethod DatabaseInstanceHost
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

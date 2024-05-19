@@ -347,8 +347,10 @@ type About struct {
 	MaxImportSizes map[string]string `json:"maxImportSizes,omitempty"`
 	// MaxUploadSize: The maximum upload size in bytes.
 	MaxUploadSize int64 `json:"maxUploadSize,omitempty,string"`
-	// StorageQuota: The user's storage quota limits and usage. All fields are
-	// measured in bytes.
+	// StorageQuota: The user's storage quota limits and usage. For users that are
+	// part of an organization with pooled storage, information about the limit and
+	// usage across all services is for the organization, rather than the
+	// individual user. All fields are measured in bytes.
 	StorageQuota *AboutStorageQuota `json:"storageQuota,omitempty"`
 	// TeamDriveThemes: Deprecated: Use `driveThemes` instead.
 	TeamDriveThemes []*AboutTeamDriveThemes `json:"teamDriveThemes,omitempty"`
@@ -400,13 +402,19 @@ func (s *AboutDriveThemes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AboutStorageQuota: The user's storage quota limits and usage. All fields are
-// measured in bytes.
+// AboutStorageQuota: The user's storage quota limits and usage. For users that
+// are part of an organization with pooled storage, information about the limit
+// and usage across all services is for the organization, rather than the
+// individual user. All fields are measured in bytes.
 type AboutStorageQuota struct {
 	// Limit: The usage limit, if applicable. This will not be present if the user
-	// has unlimited storage.
+	// has unlimited storage. For users that are part of an organization with
+	// pooled storage, this is the limit for the organization, rather than the
+	// individual user.
 	Limit int64 `json:"limit,omitempty,string"`
-	// Usage: The total usage across all services.
+	// Usage: The total usage across all services. For users that are part of an
+	// organization with pooled storage, this is the usage across all services for
+	// the organization, rather than the individual user.
 	Usage int64 `json:"usage,omitempty,string"`
 	// UsageInDrive: The usage by all files in Google Drive.
 	UsageInDrive int64 `json:"usageInDrive,omitempty,string"`

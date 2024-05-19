@@ -2519,7 +2519,7 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Filter(filter string) *Proj
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of files
-// to return.
+// to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesFilesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesFilesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3331,7 +3331,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Filter(filter string
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of tags
-// to return. Maximum page size is 10,000.
+// to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesPackagesTagsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

@@ -2462,6 +2462,7 @@ type Repository struct {
 	// source.
 	//   "AOSS_REPOSITORY" - An AOSS repository provides artifacts from AOSS
 	// upstreams.
+	//   "ASSURED_OSS_REPOSITORY" - Replacement of AOSS_REPOSITORY.
 	Mode string `json:"mode,omitempty"`
 	// Name: The name of the repository, for example:
 	// `projects/p1/locations/us-central1/repositories/repo1`. For each location in
@@ -2744,27 +2745,19 @@ type UploadGenericArtifactMetadata struct {
 // the resource name {parent}/files/package_id:version_id:filename.
 type UploadGenericArtifactRequest struct {
 	// Filename: The name of the file of the generic artifact to be uploaded. E.g.
-	// "example-file.zip" The filename should only include letters, numbers, and
-	// url safe characters, i.e. [a-zA-Z0-9-_.~@].
+	// `example-file.zip` The filename is limited to letters, numbers, and url safe
+	// characters, i.e. [a-zA-Z0-9-_.~@].
 	Filename string `json:"filename,omitempty"`
-	// Name: Deprecated. Use package_id, version_id and filename instead. The
-	// resource name of the generic artifact. E.g.
-	// "projects/math/locations/us/repositories/operations/genericArtifacts/addition
-	// /1.0.0/add.py"
-	Name string `json:"name,omitempty"`
 	// PackageId: The ID of the package of the generic artifact. If the package
-	// does not exist, a new package will be created. E.g. "pkg-1" The package_id
-	// must start with a letter, end with a letter or number, only contain letters,
-	// numbers, hyphens and periods i.e. [a-z0-9-.], and cannot exceed 256
-	// characters.
+	// does not exist, a new package will be created. The `package_id` must start
+	// with a letter, end with a letter or number, only contain letters, numbers,
+	// hyphens and periods i.e. [a-z0-9-.], and cannot exceed 256 characters.
 	PackageId string `json:"packageId,omitempty"`
 	// VersionId: The ID of the version of the generic artifact. If the version
-	// does not exist, a new version will be created. E.g."1.0.0" The version_id
-	// must start and end with a letter or number, can only contain lowercase
-	// letters, numbers, hyphens and periods, i.e. [a-z0-9-.] and cannot exceed a
-	// total of 128 characters. While "latest" is a well-known name for the latest
-	// version of a package, it is not yet supported and is reserved for future
-	// use. Creating a version called "latest" is not allowed.
+	// does not exist, a new version will be created. The version_id must start and
+	// end with a letter or number, can only contain lowercase letters, numbers,
+	// hyphens and periods, i.e. [a-z0-9-.] and cannot exceed a total of 128
+	// characters. Creating a version called `latest` is not allowed.
 	VersionId string `json:"versionId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filename") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3147,7 +3140,7 @@ func (s *Version) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// VirtualRepositoryConfig: LINT.IfChange Virtual repository configuration.
+// VirtualRepositoryConfig: Virtual repository configuration.
 type VirtualRepositoryConfig struct {
 	// UpstreamPolicies: Policies that configure the upstream artifacts distributed
 	// by the Virtual Repository. Upstream policies cannot be set on a standard
@@ -5349,7 +5342,7 @@ func (c *ProjectsLocationsRepositoriesDockerImagesListCall) OrderBy(orderBy stri
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// artifacts to return.
+// artifacts to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesDockerImagesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesDockerImagesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5744,7 +5737,7 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) OrderBy(orderBy string) *Pr
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of files
-// to return.
+// to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesFilesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesFilesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5878,10 +5871,10 @@ type ProjectsLocationsRepositoriesGenericArtifactsUploadCall struct {
 	header_                      http.Header
 }
 
-// Upload: Directly uploads a Generic artifact. The returned Operation will
-// complete once the resources are uploaded. Package, Version, and File
+// Upload: Directly uploads a Generic artifact. The returned operation will
+// complete once the resources are uploaded. Package, version, and file
 // resources are created based on the uploaded artifact. Uploaded artifacts
-// that conflict with existing resources will raise an ALREADY_EXISTS error.
+// that conflict with existing resources will raise an `ALREADY_EXISTS` error.
 //
 //   - parent: The resource name of the repository where the generic artifact
 //     will be uploaded.
@@ -6791,7 +6784,7 @@ func (r *ProjectsLocationsRepositoriesMavenArtifactsService) List(parent string)
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// artifacts to return.
+// artifacts to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesMavenArtifactsListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesMavenArtifactsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7041,7 +7034,7 @@ func (r *ProjectsLocationsRepositoriesNpmPackagesService) List(parent string) *P
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// artifacts to return.
+// artifacts to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesNpmPackagesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesNpmPackagesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7964,7 +7957,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Filter(filter string
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of tags
-// to return. Maximum page size is 10,000.
+// to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesPackagesTagsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -8829,7 +8822,7 @@ func (r *ProjectsLocationsRepositoriesPythonPackagesService) List(parent string)
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// artifacts to return.
+// artifacts to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesPythonPackagesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesPythonPackagesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

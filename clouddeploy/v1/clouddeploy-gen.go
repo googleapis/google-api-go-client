@@ -698,16 +698,16 @@ func (s *AutomationResourceSelector) MarshalJSON() ([]byte, error) {
 // AutomationRolloutMetadata: AutomationRolloutMetadata contains
 // Automation-related actions that were performed on a rollout.
 type AutomationRolloutMetadata struct {
-	// AdvanceAutomationRuns: Output only. The IDs of the AutomationRuns initiated
-	// by an advance rollout rule.
+	// AdvanceAutomationRuns: Output only. The names of the AutomationRuns
+	// initiated by an advance rollout rule.
 	AdvanceAutomationRuns []string `json:"advanceAutomationRuns,omitempty"`
 	// CurrentRepairAutomationRun: Output only. The current AutomationRun repairing
 	// the rollout.
 	CurrentRepairAutomationRun string `json:"currentRepairAutomationRun,omitempty"`
-	// PromoteAutomationRun: Output only. The ID of the AutomationRun initiated by
-	// a promote release rule.
+	// PromoteAutomationRun: Output only. The name of the AutomationRun initiated
+	// by a promote release rule.
 	PromoteAutomationRun string `json:"promoteAutomationRun,omitempty"`
-	// RepairAutomationRuns: Output only. The IDs of the AutomationRuns initiated
+	// RepairAutomationRuns: Output only. The names of the AutomationRuns initiated
 	// by a repair rollout rule.
 	RepairAutomationRuns []string `json:"repairAutomationRuns,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvanceAutomationRuns") to
@@ -1907,6 +1907,9 @@ type ExecutionConfig struct {
 	//   "PREDEPLOY" - Use for predeploy job execution.
 	//   "POSTDEPLOY" - Use for postdeploy job execution.
 	Usages []string `json:"usages,omitempty"`
+	// Verbose: Optional. If true, additional logging will be enabled when running
+	// builds in this execution environment.
+	Verbose bool `json:"verbose,omitempty"`
 	// WorkerPool: Optional. The resource name of the `WorkerPool`, with the format
 	// `projects/{project}/locations/{location}/workerPools/{worker_pool}`. If this
 	// optional field is unspecified, the default Cloud Build pool will be used.

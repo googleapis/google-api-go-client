@@ -3371,6 +3371,9 @@ type ListMembershipBindingsResponse struct {
 	// `ListMembershipBindings` method. The value of an empty string means that
 	// there are no more resources to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: List of locations that could not be reached while fetching this
+	// list.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -5122,6 +5125,8 @@ type SecurityPostureConfig struct {
 	//   "MODE_UNSPECIFIED" - Default value not specified.
 	//   "DISABLED" - Disables Security Posture features on the cluster.
 	//   "BASIC" - Applies Security Posture features on the cluster.
+	//   "ENTERPRISE" - Applies the Security Posture off cluster Enterprise level
+	// features.
 	Mode string `json:"mode,omitempty"`
 	// VulnerabilityMode: Sets which mode to use for vulnerability scanning.
 	//

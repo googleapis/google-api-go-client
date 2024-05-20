@@ -861,6 +861,8 @@ type Instance struct {
 	// Networks: VPC networks to which the instance is connected. For this version,
 	// only a single network is supported.
 	Networks []*NetworkConfig `json:"networks,omitempty"`
+	// Replication: Optional. Replicaition configuration.
+	Replication *Replication `json:"replication,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
@@ -1400,6 +1402,81 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ReplicaConfig: Replica configuration for the instance.
+type ReplicaConfig struct {
+	// LastActiveSyncTime: Output only. The timestamp of the latest replication
+	// snapshot taken on the active instance and is already replicated safely.
+	LastActiveSyncTime string `json:"lastActiveSyncTime,omitempty"`
+	// PeerInstance: Optional. The peer instance.
+	PeerInstance string `json:"peerInstance,omitempty"`
+	// State: Output only. The replica state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not set.
+	//   "CREATING" - The replica is being created.
+	//   "READY" - The replica is ready.
+	//   "REMOVING" - The replica is being removed.
+	//   "FAILED" - The replica is experiencing an issue and might be unusable. You
+	// can get further details from the `stateReasons` field of the `ReplicaConfig`
+	// object.
+	State string `json:"state,omitempty"`
+	// StateReasons: Output only. Additional information about the replication
+	// state, if available.
+	//
+	// Possible values:
+	//   "STATE_REASON_UNSPECIFIED" - Reason not specified.
+	//   "PEER_INSTANCE_UNREACHABLE" - The peer instance is unreachable.
+	StateReasons []string `json:"stateReasons,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastActiveSyncTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastActiveSyncTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplicaConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicaConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// Replication: Replication specifications.
+type Replication struct {
+	// Replicas: Optional. Replicas configuration on the instance. For now, only a
+	// single replica config is supported.
+	Replicas []*ReplicaConfig `json:"replicas,omitempty"`
+	// Role: Optional. The replication role.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Role not set.
+	//   "ACTIVE" - The instance is a Active replication member, functions as the
+	// replication source instance.
+	//   "STANDBY" - The instance is a Standby replication member, functions as the
+	// replication destination instance.
+	Role string `json:"role,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Replicas") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Replicas") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Replication) MarshalJSON() ([]byte, error) {
+	type NoMethod Replication
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

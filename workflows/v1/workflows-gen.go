@@ -503,6 +503,12 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // Workflow: Workflow program to be executed by Workflows.
 type Workflow struct {
+	// AllKmsKeys: Output only. A list of all KMS crypto keys used to encrypt or
+	// decrpt the data associated with the workflow.
+	AllKmsKeys []string `json:"allKmsKeys,omitempty"`
+	// AllKmsKeysVersions: Output only. A list of all KMS crypto keys versions used
+	// to encrypt or decrpt the data associated with the workflow.
+	AllKmsKeysVersions []string `json:"allKmsKeysVersions,omitempty"`
 	// CallLogLevel: Optional. Describes the level of platform logging to apply to
 	// calls and call responses during executions of this workflow. If both the
 	// workflow and the execution specify a logging level, the execution level
@@ -526,6 +532,11 @@ type Workflow struct {
 	// will infer the project from the account. If not provided, data associated
 	// with the workflow will not be CMEK-encrypted.
 	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
+	// CryptoKeyVersion: Output only. The resource name of a KMS crypto key version
+	// used to encrypt or decrypt the data associated with the workflow. Format:
+	// projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{crypto
+	// Key}/cryptoKeyVersions/{cryptoKeyVersion}
+	CryptoKeyVersion string `json:"cryptoKeyVersion,omitempty"`
 	// Description: Description of the workflow provided by the user. Must be at
 	// most 1000 Unicode characters long. This is a workflow-wide field and is not
 	// tied to a specific revision.
@@ -585,13 +596,13 @@ type Workflow struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CallLogLevel") to
+	// ForceSendFields is a list of field names (e.g. "AllKmsKeys") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CallLogLevel") to include in API
+	// NullFields is a list of field names (e.g. "AllKmsKeys") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

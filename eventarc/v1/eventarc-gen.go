@@ -1168,11 +1168,10 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// NetworkConfig: Represents a network config to be used for destination
-// resolution and connectivity.
+// NetworkConfig: Network Configuration that can be inherited by other protos.
 type NetworkConfig struct {
 	// NetworkAttachment: Required. Name of the NetworkAttachment that allows
-	// access to the destination VPC. Format:
+	// access to the customer's VPC. Format:
 	// `projects/{PROJECT_ID}/regions/{REGION}/networkAttachments/{NETWORK_ATTACHMEN
 	// T_NAME}`
 	NetworkAttachment string `json:"networkAttachment,omitempty"`

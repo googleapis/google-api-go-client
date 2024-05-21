@@ -7031,29 +7031,31 @@ func (s *MethodQuota) MarshalJSON() ([]byte, error) {
 // Metrics: Performance metrics. Values are only set for metrics requested
 // explicitly in the request's search query.
 type Metrics struct {
-	// Aos: Average order size - the average number of items in an order. **This
-	// metric cannot be segmented by product dimensions and
-	// customer_country_code.**
+	// Aos: *Deprecated*: This field is no longer supported and retrieving it
+	// returns 0 starting from May 2024. Average order size - the average number of
+	// items in an order. **This metric cannot be segmented by product dimensions
+	// and customer_country_code.**
 	Aos float64 `json:"aos,omitempty"`
-	// AovMicros: Average order value in micros (1 millionth of a standard unit, 1
-	// USD = 1000000 micros) - the average value (total price of items) of all
-	// placed orders. The currency of the returned value is stored in the
-	// currency_code segment. If this metric is selected, 'segments.currency_code'
-	// is automatically added to the SELECT clause in the search query (unless it
-	// is explicitly selected by the user) and the currency_code segment is
-	// populated in the response. **This metric cannot be segmented by product
-	// dimensions and customer_country_code.**
+	// AovMicros: *Deprecated*: This field is no longer supported and retrieving it
+	// returns 0 starting from May 2024. Average order value in micros (1 millionth
+	// of a standard unit, 1 USD = 1000000 micros) - the average value (total price
+	// of items) of all placed orders. The currency of the returned value is stored
+	// in the currency_code segment. If this metric is selected,
+	// 'segments.currency_code' is automatically added to the SELECT clause in the
+	// search query (unless it is explicitly selected by the user) and the
+	// currency_code segment is populated in the response. **This metric cannot be
+	// segmented by product dimensions and customer_country_code.**
 	AovMicros float64 `json:"aovMicros,omitempty"`
 	// Clicks: Number of clicks.
 	Clicks int64 `json:"clicks,omitempty,string"`
 	// ConversionRate: Number of conversions divided by the number of clicks,
 	// reported on the impression date. The metric is currently available only for
-	// the FREE_PRODUCT_LISTING program.
+	// the `FREE_PRODUCT_LISTING` program.
 	ConversionRate float64 `json:"conversionRate,omitempty"`
 	// ConversionValueMicros: Value of conversions in micros (1 millionth of a
 	// standard unit, 1 USD = 1000000 micros) attributed to the product, reported
 	// on the conversion date. The metric is currently available only for the
-	// FREE_PRODUCT_LISTING program. The currency of the returned value is stored
+	// `FREE_PRODUCT_LISTING` program. The currency of the returned value is stored
 	// in the currency_code segment. If this metric is selected,
 	// 'segments.currency_code' is automatically added to the SELECT clause in the
 	// search query (unless it is explicitly selected by the user) and the
@@ -7063,95 +7065,116 @@ type Metrics struct {
 	// the conversion date. Depending on the attribution model, a conversion might
 	// be distributed across multiple clicks, where each click gets its own credit
 	// assigned. This metric is a sum of all such credits. The metric is currently
-	// available only for the FREE_PRODUCT_LISTING program.
+	// available only for the `FREE_PRODUCT_LISTING` program.
 	Conversions float64 `json:"conversions,omitempty"`
 	// Ctr: Click-through rate - the number of clicks merchant's products receive
 	// (clicks) divided by the number of times the products are shown
 	// (impressions).
 	Ctr float64 `json:"ctr,omitempty"`
-	// DaysToShip: Average number of days between an order being placed and the
-	// order being fully shipped, reported on the last shipment date. **This metric
-	// cannot be segmented by product dimensions and customer_country_code.**
+	// DaysToShip: *Deprecated*: This field is no longer supported and retrieving
+	// it returns 0 starting from May 2024. Average number of days between an order
+	// being placed and the order being fully shipped, reported on the last
+	// shipment date. **This metric cannot be segmented by product dimensions and
+	// customer_country_code.**
 	DaysToShip float64 `json:"daysToShip,omitempty"`
 	// Impressions: Number of times merchant's products are shown.
 	Impressions int64 `json:"impressions,omitempty,string"`
-	// ItemDaysToShip: Average number of days between an item being ordered and the
-	// item being **This metric cannot be segmented by customer_country_code.**
+	// ItemDaysToShip: *Deprecated*: This field is no longer supported and
+	// retrieving it returns 0 starting from May 2024. Average number of days
+	// between an item being ordered and the item being **This metric cannot be
+	// segmented by customer_country_code.**
 	ItemDaysToShip float64 `json:"itemDaysToShip,omitempty"`
-	// ItemFillRate: Percentage of shipped items in relation to all finalized items
-	// (shipped or rejected by the merchant; unshipped items are not taken into
-	// account), reported on the order date. Item fill rate is lowered by merchant
-	// rejections. **This metric cannot be segmented by customer_country_code.**
+	// ItemFillRate: *Deprecated*: This field is no longer supported and retrieving
+	// it returns 0 starting from May 2024. Percentage of shipped items in relation
+	// to all finalized items (shipped or rejected by the merchant; unshipped items
+	// are not taken into account), reported on the order date. Item fill rate is
+	// lowered by merchant rejections. **This metric cannot be segmented by
+	// customer_country_code.**
 	ItemFillRate float64 `json:"itemFillRate,omitempty"`
-	// OrderedItemSalesMicros: Total price of ordered items in micros (1 millionth
-	// of a standard unit, 1 USD = 1000000 micros). Excludes shipping, taxes (US
-	// only), and customer cancellations that happened within 30 minutes of placing
-	// the order. The currency of the returned value is stored in the currency_code
-	// segment. If this metric is selected, 'segments.currency_code' is
-	// automatically added to the SELECT clause in the search query (unless it is
-	// explicitly selected by the user) and the currency_code segment is populated
-	// in the response. **This metric cannot be segmented by
-	// customer_country_code.**
-	OrderedItemSalesMicros int64 `json:"orderedItemSalesMicros,omitempty,string"`
-	// OrderedItems: Number of ordered items. Excludes customer cancellations that
-	// happened within 30 minutes of placing the order. **This metric cannot be
-	// segmented by customer_country_code.**
-	OrderedItems int64 `json:"orderedItems,omitempty,string"`
-	// Orders: Number of placed orders. Excludes customer cancellations that
-	// happened within 30 minutes of placing the order. **This metric cannot be
-	// segmented by product dimensions and customer_country_code.**
-	Orders int64 `json:"orders,omitempty,string"`
-	// RejectedItems: Number of ordered items canceled by the merchant, reported on
-	// the order date. **This metric cannot be segmented by
-	// customer_country_code.**
-	RejectedItems int64 `json:"rejectedItems,omitempty,string"`
-	// ReturnRate: Total price of returned items divided by the total price of
-	// shipped items, reported on the order date. If this metric is selected,
-	// 'segments.currency_code' is automatically added to the SELECT clause in the
-	// search query (unless it is explicitly selected by the user) and the
-	// currency_code segment is populated in the response. **This metric cannot be
-	// segmented by customer_country_code.**
-	ReturnRate float64 `json:"returnRate,omitempty"`
-	// ReturnedItems: Number of ordered items sent back for return, reported on the
-	// date when the merchant accepted the return. **This metric cannot be
-	// segmented by customer_country_code.**
-	ReturnedItems int64 `json:"returnedItems,omitempty,string"`
-	// ReturnsMicros: Total price of ordered items sent back for return in micros
-	// (1 millionth of a standard unit, 1 USD = 1000000 micros), reported on the
-	// date when the merchant accepted the return. The currency of the returned
-	// value is stored in the currency_code segment. If this metric is selected,
-	// 'segments.currency_code' is automatically added to the SELECT clause in the
-	// search query (unless it is explicitly selected by the user) and the
-	// currency_code segment is populated in the response. **This metric cannot be
-	// segmented by customer_country_code.**
-	ReturnsMicros int64 `json:"returnsMicros,omitempty,string"`
-	// ShippedItemSalesMicros: Total price of shipped items in micros (1 millionth
-	// of a standard unit, 1 USD = 1000000 micros), reported on the order date.
-	// Excludes shipping and taxes (US only). The currency of the returned value is
+	// OrderedItemSalesMicros: *Deprecated*: This field is no longer supported and
+	// retrieving it returns 0 starting from May 2024. Total price of ordered items
+	// in micros (1 millionth of a standard unit, 1 USD = 1000000 micros). Excludes
+	// shipping, taxes (US only), and customer cancellations that happened within
+	// 30 minutes of placing the order. The currency of the returned value is
 	// stored in the currency_code segment. If this metric is selected,
 	// 'segments.currency_code' is automatically added to the SELECT clause in the
 	// search query (unless it is explicitly selected by the user) and the
 	// currency_code segment is populated in the response. **This metric cannot be
 	// segmented by customer_country_code.**
-	ShippedItemSalesMicros int64 `json:"shippedItemSalesMicros,omitempty,string"`
-	// ShippedItems: Number of shipped items, reported on the shipment date. **This
+	OrderedItemSalesMicros int64 `json:"orderedItemSalesMicros,omitempty,string"`
+	// OrderedItems: *Deprecated*: This field is no longer supported and retrieving
+	// it returns 0 starting from May 2024. Number of ordered items. Excludes
+	// customer cancellations that happened within 30 minutes of placing the order.
+	// **This metric cannot be segmented by customer_country_code.**
+	OrderedItems int64 `json:"orderedItems,omitempty,string"`
+	// Orders: *Deprecated*: This field is no longer supported and retrieving it
+	// returns 0 starting from May 2024. Number of placed orders. Excludes customer
+	// cancellations that happened within 30 minutes of placing the order. **This
+	// metric cannot be segmented by product dimensions and
+	// customer_country_code.**
+	Orders int64 `json:"orders,omitempty,string"`
+	// RejectedItems: *Deprecated*: This field is no longer supported and
+	// retrieving it returns 0 starting from May 2024. Number of ordered items
+	// canceled by the merchant, reported on the order date. **This metric cannot
+	// be segmented by customer_country_code.**
+	RejectedItems int64 `json:"rejectedItems,omitempty,string"`
+	// ReturnRate: *Deprecated*: This field is no longer supported and retrieving
+	// it returns 0 starting from May 2024. Total price of returned items divided
+	// by the total price of shipped items, reported on the order date. If this
+	// metric is selected, 'segments.currency_code' is automatically added to the
+	// SELECT clause in the search query (unless it is explicitly selected by the
+	// user) and the currency_code segment is populated in the response. **This
 	// metric cannot be segmented by customer_country_code.**
+	ReturnRate float64 `json:"returnRate,omitempty"`
+	// ReturnedItems: *Deprecated*: This field is no longer supported and
+	// retrieving it returns 0 starting from May 2024. Number of ordered items sent
+	// back for return, reported on the date when the merchant accepted the return.
+	// **This metric cannot be segmented by customer_country_code.**
+	ReturnedItems int64 `json:"returnedItems,omitempty,string"`
+	// ReturnsMicros: *Deprecated*: This field is no longer supported and
+	// retrieving it returns 0 starting from May 2024. Total price of ordered items
+	// sent back for return in micros (1 millionth of a standard unit, 1 USD =
+	// 1000000 micros), reported on the date when the merchant accepted the return.
+	// The currency of the returned value is stored in the currency_code segment.
+	// If this metric is selected, 'segments.currency_code' is automatically added
+	// to the SELECT clause in the search query (unless it is explicitly selected
+	// by the user) and the currency_code segment is populated in the response.
+	// **This metric cannot be segmented by customer_country_code.**
+	ReturnsMicros int64 `json:"returnsMicros,omitempty,string"`
+	// ShippedItemSalesMicros: *Deprecated*: This field is no longer supported and
+	// retrieving it returns 0 starting from May 2024. Total price of shipped items
+	// in micros (1 millionth of a standard unit, 1 USD = 1000000 micros), reported
+	// on the order date. Excludes shipping and taxes (US only). The currency of
+	// the returned value is stored in the currency_code segment. If this metric is
+	// selected, 'segments.currency_code' is automatically added to the SELECT
+	// clause in the search query (unless it is explicitly selected by the user)
+	// and the currency_code segment is populated in the response. **This metric
+	// cannot be segmented by customer_country_code.**
+	ShippedItemSalesMicros int64 `json:"shippedItemSalesMicros,omitempty,string"`
+	// ShippedItems: *Deprecated*: This field is no longer supported and retrieving
+	// it returns 0 starting from May 2024. Number of shipped items, reported on
+	// the shipment date. **This metric cannot be segmented by
+	// customer_country_code.**
 	ShippedItems int64 `json:"shippedItems,omitempty,string"`
-	// ShippedOrders: Number of fully shipped orders, reported on the last shipment
-	// date. **This metric cannot be segmented by product dimensions and
-	// customer_country_code.**
+	// ShippedOrders: *Deprecated*: This field is no longer supported and
+	// retrieving it returns 0 starting from May 2024. Number of fully shipped
+	// orders, reported on the last shipment date. **This metric cannot be
+	// segmented by product dimensions and customer_country_code.**
 	ShippedOrders int64 `json:"shippedOrders,omitempty,string"`
-	// UnshippedItems: Number of ordered items not shipped up until the end of the
-	// queried day. If a multi-day period is specified in the search query, the
-	// returned value is the average number of unshipped items over the days in the
-	// queried period. **This metric cannot be segmented by
-	// customer_country_code.**
+	// UnshippedItems: *Deprecated*: This field is no longer supported and
+	// retrieving it returns 0 starting from May 2024. Number of ordered items not
+	// shipped up until the end of the queried day. If a multi-day period is
+	// specified in the search query, the returned value is the average number of
+	// unshipped items over the days in the queried period. **This metric cannot be
+	// segmented by customer_country_code.**
 	UnshippedItems float64 `json:"unshippedItems,omitempty"`
-	// UnshippedOrders: Number of orders not shipped or partially shipped up until
-	// the end of the queried day. If a multi-day period is specified in the search
-	// query, the returned value is the average number of unshipped orders over the
-	// days in the queried period. **This metric cannot be segmented by product
-	// dimensions and customer_country_code.**
+	// UnshippedOrders: *Deprecated*: This field is no longer supported and
+	// retrieving it returns 0 starting from May 2024. Number of orders not shipped
+	// or partially shipped up until the end of the queried day. If a multi-day
+	// period is specified in the search query, the returned value is the average
+	// number of unshipped orders over the days in the queried period. **This
+	// metric cannot be segmented by product dimensions and
+	// customer_country_code.**
 	UnshippedOrders float64 `json:"unshippedOrders,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Aos") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11367,8 +11390,15 @@ type Product struct {
 	// LinkTemplate: URL template for merchant hosted local storefront.
 	LinkTemplate string `json:"linkTemplate,omitempty"`
 	// LoyaltyProgram: Loyalty program information that is used to surface loyalty
-	// benefits ( for example pricing, points, etc) to the user for this item.
+	// benefits ( for example, better pricing, points, etc) to the user of this
+	// item. This signular field points to the latest uploaded loyalty program
+	// info. This field will be deprecated in the coming weeks and should not be
+	// used in favor of the plural 'LoyaltyProgram' field below.
 	LoyaltyProgram *LoyaltyProgram `json:"loyaltyProgram,omitempty"`
+	// LoyaltyPrograms: Optional. A list of loyalty program information that is
+	// used to surface loyalty benefits (for example, better pricing, points, etc)
+	// to the user of this item.
+	LoyaltyPrograms []*LoyaltyProgram `json:"loyaltyPrograms,omitempty"`
 	// Material: The material of which the item is made.
 	Material string `json:"material,omitempty"`
 	// MaxEnergyEfficiencyClass: The energy efficiency class as defined in EU
@@ -15138,7 +15168,9 @@ type Segments struct {
 	//   "SHOPPING_ADS" - Shopping Ads.
 	//   "FREE_PRODUCT_LISTING" - Free Product Listing.
 	//   "FREE_LOCAL_PRODUCT_LISTING" - Free Local Product Listing.
-	//   "BUY_ON_GOOGLE_LISTING" - Buy on Google Listing.
+	//   "BUY_ON_GOOGLE_LISTING" - *Deprecated*: This value is no longer supported.
+	// Retrieving all metrics for the `BUY_ON_GOOGLE_LISTING` program returns 0
+	// starting from May 2024. Buy on Google Listing.
 	Program string `json:"program,omitempty"`
 	// Title: Title of the product.
 	Title string `json:"title,omitempty"`

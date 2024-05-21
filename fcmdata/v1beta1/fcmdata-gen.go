@@ -220,10 +220,14 @@ func (s *GoogleFirebaseFcmDataV1beta1AndroidDeliveryData) MarshalJSON() ([]byte,
 
 // GoogleFirebaseFcmDataV1beta1Data: Data detailing messaging delivery
 type GoogleFirebaseFcmDataV1beta1Data struct {
-	// CountMessagesAccepted: Count of messages accepted by FCM intended to Android
-	// devices. The targeted device must have opted in to the collection of usage
-	// and diagnostic information.
+	// CountMessagesAccepted: Count of messages accepted by FCM intended for
+	// Android devices. The targeted device must have opted in to the collection of
+	// usage and diagnostic information.
 	CountMessagesAccepted int64 `json:"countMessagesAccepted,omitempty,string"`
+	// CountNotificationsAccepted: Count of notifications accepted by FCM intended
+	// for Android devices. The targeted device must have opted in to the
+	// collection of usage and diagnostic information.
+	CountNotificationsAccepted int64 `json:"countNotificationsAccepted,omitempty,string"`
 	// DeliveryPerformancePercents: Additional information about delivery
 	// performance for messages that were successfully delivered.
 	DeliveryPerformancePercents *GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents `json:"deliveryPerformancePercents,omitempty"`
@@ -232,6 +236,9 @@ type GoogleFirebaseFcmDataV1beta1Data struct {
 	// MessageOutcomePercents: Mutually exclusive breakdown of message delivery
 	// outcomes.
 	MessageOutcomePercents *GoogleFirebaseFcmDataV1beta1MessageOutcomePercents `json:"messageOutcomePercents,omitempty"`
+	// ProxyNotificationInsightPercents: Additional insights about proxy
+	// notification delivery.
+	ProxyNotificationInsightPercents *GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents `json:"proxyNotificationInsightPercents,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CountMessagesAccepted") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -463,6 +470,74 @@ func (s *GoogleFirebaseFcmDataV1beta1MessageOutcomePercents) UnmarshalJSON(data 
 	s.DroppedDeviceInactive = float64(s1.DroppedDeviceInactive)
 	s.DroppedTooManyPendingMessages = float64(s1.DroppedTooManyPendingMessages)
 	s.Pending = float64(s1.Pending)
+	return nil
+}
+
+// GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents: Additional
+// information about proxy notification delivery. All percentages are
+// calculated with countNotificationsAccepted as the denominator.
+type GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents struct {
+	// Failed: The percentage of accepted notifications that failed to be proxied.
+	// This is usually caused by exceptions that occurred while calling
+	// notifyAsPackage
+	// (https://developer.android.com/reference/android/app/NotificationManager#notifyAsPackage%28java.lang.String,%20java.lang.String,%20int,%20android.app.Notification%29).
+	Failed float64 `json:"failed,omitempty"`
+	// Proxied: The percentage of accepted notifications that were successfully
+	// proxied by Google Play services
+	// (https://developers.google.com/android/guides/overview).
+	Proxied float64 `json:"proxied,omitempty"`
+	// SkippedNotThrottled: The percentage of accepted notifications that were
+	// skipped because the messages were not throttled.
+	SkippedNotThrottled float64 `json:"skippedNotThrottled,omitempty"`
+	// SkippedOptedOut: The percentage of accepted notifications that were skipped
+	// because the app disallowed these messages to be proxied.
+	SkippedOptedOut float64 `json:"skippedOptedOut,omitempty"`
+	// SkippedUnconfigured: The percentage of accepted notifications that were
+	// skipped because configurations required for notifications to be proxied were
+	// missing.
+	SkippedUnconfigured float64 `json:"skippedUnconfigured,omitempty"`
+	// SkippedUnsupported: The percentage of accepted notifications that were
+	// skipped because proxy notification is unsupported for the recipient.
+	SkippedUnsupported float64 `json:"skippedUnsupported,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Failed") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Failed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents
+	var s1 struct {
+		Failed              gensupport.JSONFloat64 `json:"failed"`
+		Proxied             gensupport.JSONFloat64 `json:"proxied"`
+		SkippedNotThrottled gensupport.JSONFloat64 `json:"skippedNotThrottled"`
+		SkippedOptedOut     gensupport.JSONFloat64 `json:"skippedOptedOut"`
+		SkippedUnconfigured gensupport.JSONFloat64 `json:"skippedUnconfigured"`
+		SkippedUnsupported  gensupport.JSONFloat64 `json:"skippedUnsupported"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Failed = float64(s1.Failed)
+	s.Proxied = float64(s1.Proxied)
+	s.SkippedNotThrottled = float64(s1.SkippedNotThrottled)
+	s.SkippedOptedOut = float64(s1.SkippedOptedOut)
+	s.SkippedUnconfigured = float64(s1.SkippedUnconfigured)
+	s.SkippedUnsupported = float64(s1.SkippedUnsupported)
 	return nil
 }
 

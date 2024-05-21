@@ -1553,7 +1553,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// IndustryVertical: The industry vertical that the engine registers. The
 	// restriction of the Engine industry vertical is based on DataStore: If
 	// unspecified, default to `GENERIC`. Vertical on Engine has to match vertical
-	// of the DataStore liniked to the engine.
+	// of the DataStore linked to the engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -3520,7 +3520,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// IndustryVertical: The industry vertical that the engine registers. The
 	// restriction of the Engine industry vertical is based on DataStore: If
 	// unspecified, default to `GENERIC`. Vertical on Engine has to match vertical
-	// of the DataStore liniked to the engine.
+	// of the DataStore linked to the engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -4874,7 +4874,8 @@ func (s *GoogleCloudDiscoveryengineV1alphaSession) MarshalJSON() ([]byte, error)
 // GoogleCloudDiscoveryengineV1alphaSessionTurn: Represents a turn, including a
 // query from the user and a answer from service.
 type GoogleCloudDiscoveryengineV1alphaSessionTurn struct {
-	// Answer: The resource name of the answer to the user query.
+	// Answer: The resource name of the answer to the user query. Only set if the
+	// answer generation (/answer API call) happened in this turn.
 	Answer string `json:"answer,omitempty"`
 	// Query: The user query.
 	Query *GoogleCloudDiscoveryengineV1alphaQuery `json:"query,omitempty"`
@@ -5334,8 +5335,8 @@ type GoogleCloudDiscoveryengineV1betaAnswerQueryRequest struct {
 	SearchSpec *GoogleCloudDiscoveryengineV1betaAnswerQueryRequestSearchSpec `json:"searchSpec,omitempty"`
 	// Session: The session resource name. Not required. When session field is not
 	// set, the API is in sessionless mode. We support auto session mode: users can
-	// use the wildcard symbol “-” as session id. A new id will be
-	// automatically generated and assigned.
+	// use the wildcard symbol `-` as session ID. A new ID will be automatically
+	// generated and assigned.
 	Session string `json:"session,omitempty"`
 	// UserPseudoId: A unique identifier for tracking visitors. For example, this
 	// could be implemented with an HTTP cookie, which should be able to uniquely
@@ -7646,9 +7647,9 @@ type GoogleCloudDiscoveryengineV1betaDocumentInfo struct {
 	// this field is restricted to at most one ID.
 	PromotionIds []string `json:"promotionIds,omitempty"`
 	// Quantity: Quantity of the Document associated with the user event. Defaults
-	// to 1. For example, this field will be 2 if two quantities of the same
-	// Document are involved in a `add-to-cart` event. Required for events of the
-	// following event types: * `add-to-cart` * `purchase`
+	// to 1. For example, this field is 2 if two quantities of the same Document
+	// are involved in a `add-to-cart` event. Required for events of the following
+	// event types: * `add-to-cart` * `purchase`
 	Quantity int64 `json:"quantity,omitempty"`
 	// Uri: The Document URI - only allowed for website data stores.
 	Uri string `json:"uri,omitempty"`
@@ -7895,7 +7896,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// IndustryVertical: The industry vertical that the engine registers. The
 	// restriction of the Engine industry vertical is based on DataStore: If
 	// unspecified, default to `GENERIC`. Vertical on Engine has to match vertical
-	// of the DataStore liniked to the engine.
+	// of the DataStore linked to the engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -8211,8 +8212,8 @@ func (s *GoogleCloudDiscoveryengineV1betaFhirStoreSource) MarshalJSON() ([]byte,
 // GoogleCloudDiscoveryengineV1betaFirestoreSource: Firestore source import
 // data from.
 type GoogleCloudDiscoveryengineV1betaFirestoreSource struct {
-	// CollectionId: Required. The Firestore collection to copy the data from with
-	// a length limit of 1,500 characters.
+	// CollectionId: Required. The Firestore collection (or entity) to copy the
+	// data from with a length limit of 1,500 characters.
 	CollectionId string `json:"collectionId,omitempty"`
 	// DatabaseId: Required. The Firestore database to copy the data from with a
 	// length limit of 256 characters.
@@ -8258,11 +8259,11 @@ type GoogleCloudDiscoveryengineV1betaGcsSource struct {
 	// can only be used by the GENERIC Data Store vertical. * `csv`: A CSV file
 	// with header conforming to the defined Schema of the data store. Each entry
 	// after the header is imported as a Document. This can only be used by the
-	// GENERIC Data Store vertical. Supported values for user even imports: *
+	// GENERIC Data Store vertical. Supported values for user event imports: *
 	// `user_event` (default): One JSON UserEvent per line.
 	DataSchema string `json:"dataSchema,omitempty"`
-	// InputUris: Required. Cloud Storage URIs to input files. URI can be up to
-	// 2000 characters long. URIs can match the full object path (for example,
+	// InputUris: Required. Cloud Storage URIs to input files. Each URI can be up
+	// to 2000 characters long. URIs can match the full object path (for example,
 	// `gs://bucket/directory/object.json`) or a pattern matching one or more
 	// files, such as `gs://bucket/directory/*.json`. A request can contain at most
 	// 100 files (or 100,000 files if `data_schema` is `content`). Each file can be
@@ -9463,26 +9464,26 @@ type GoogleCloudDiscoveryengineV1betaRecommendRequest struct {
 	// instead of the above described tag-based syntax. Examples: * (launguage:
 	// ANY("en", "es")) AND NOT (categories: ANY("Movie")) * (available: true) AND
 	// (launguage: ANY("en", "es")) OR (categories: ANY("Movie")) If your filter
-	// blocks all results, the API will return generic (unfiltered) popular
-	// Documents. If you only want results strictly matching the filters, set
-	// `strictFiltering` to True in RecommendRequest.params to receive empty
-	// results instead. Note that the API will never return Documents with
-	// `storageStatus` of `EXPIRED` or `DELETED` regardless of filter choices.
+	// blocks all results, the API returns generic (unfiltered) popular Documents.
+	// If you only want results strictly matching the filters, set
+	// `strictFiltering` to `true` in RecommendRequest.params to receive empty
+	// results instead. Note that the API never returns Documents with
+	// `storageStatus` as `EXPIRED` or `DELETED` regardless of filter choices.
 	Filter string `json:"filter,omitempty"`
 	// PageSize: Maximum number of results to return. Set this property to the
-	// number of recommendation results needed. If zero, the service will choose a
-	// reasonable default. The maximum allowed value is 100. Values above 100 will
-	// be coerced to 100.
+	// number of recommendation results needed. If zero, the service chooses a
+	// reasonable default. The maximum allowed value is 100. Values above 100 are
+	// set to 100.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// Params: Additional domain specific parameters for the recommendations.
-	// Allowed values: * `returnDocument`: Boolean. If set to true, the associated
-	// Document object will be returned in
+	// Allowed values: * `returnDocument`: Boolean. If set to `true`, the
+	// associated Document object is returned in
 	// RecommendResponse.RecommendationResult.document. * `returnScore`: Boolean.
-	// If set to true, the recommendation 'score' corresponding to each returned
-	// Document will be set in RecommendResponse.RecommendationResult.metadata. The
-	// given 'score' indicates the probability of a Document conversion given the
+	// If set to true, the recommendation score corresponding to each returned
+	// Document is set in RecommendResponse.RecommendationResult.metadata. The
+	// given score indicates the probability of a Document conversion given the
 	// user's context and history. * `strictFiltering`: Boolean. True by default.
-	// If set to false, the service will return generic (unfiltered) popular
+	// If set to `false`, the service returns generic (unfiltered) popular
 	// Documents instead of empty if your filter blocks all recommendation results.
 	// * `diversityLevel`: String. Default empty. If set to be non-empty, then it
 	// needs to be one of: * `no-diversity` * `low-diversity` * `medium-diversity`
@@ -9515,7 +9516,7 @@ type GoogleCloudDiscoveryengineV1betaRecommendRequest struct {
 	// for more details.
 	UserLabels map[string]string `json:"userLabels,omitempty"`
 	// ValidateOnly: Use validate only mode for this recommendation query. If set
-	// to true, a fake model will be used that returns arbitrary Document IDs. Note
+	// to `true`, a fake model is used that returns arbitrary Document IDs. Note
 	// that the validate only mode should only be used for testing the API, or if
 	// the model is not ready.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
@@ -9581,7 +9582,7 @@ type GoogleCloudDiscoveryengineV1betaRecommendResponseRecommendationResult struc
 	Document *GoogleCloudDiscoveryengineV1betaDocument `json:"document,omitempty"`
 	// Id: Resource ID of the recommended Document.
 	Id string `json:"id,omitempty"`
-	// Metadata: Additional Document metadata / annotations. Possible values: *
+	// Metadata: Additional Document metadata or annotations. Possible values: *
 	// `score`: Recommendation score in double value. Is set if `returnScore` is
 	// set to true in RecommendRequest.params.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
@@ -9766,7 +9767,7 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchInfo) MarshalJSON() ([]byte, erro
 type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// BoostSpec: Boost specification to boost certain documents. For more
 	// information on boosting, see Boosting
-	// (https://cloud.google.com/retail/docs/boosting#boost)
+	// (https://cloud.google.com/generative-ai-app-builder/docs/boost-search-results)
 	BoostSpec *GoogleCloudDiscoveryengineV1betaSearchRequestBoostSpec `json:"boostSpec,omitempty"`
 	// Branch: The branch resource name, such as
 	// `projects/*/locations/global/collections/default_collection/dataStores/defaul
@@ -9785,7 +9786,10 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// ContentSearchSpec: A specification for configuring the behavior of content
 	// search.
 	ContentSearchSpec *GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpec `json:"contentSearchSpec,omitempty"`
-	// DataStoreSpecs: A list of data store specs to apply on a search call.
+	// DataStoreSpecs: Specs defining dataStores to filter on in a search call and
+	// configurations for those dataStores. This is only considered for engines
+	// with multiple dataStores use case. For single dataStore within an engine,
+	// they should use the specs at the top level.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// EmbeddingSpec: Uses the provided embedding to do additional semantic
 	// document retrieval. The retrieval is based on the dot product of
@@ -9840,12 +9844,12 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// Params: Additional search parameters. For public website search only,
 	// supported values are: * `user_country_code`: string. Default empty. If set
 	// to non-empty, results are restricted or boosted based on the location
-	// provided. Example: user_country_code: "au" For available codes see Country
-	// Codes
+	// provided. For example, `user_country_code: "au" For available codes see
+	// Country Codes
 	// (https://developers.google.com/custom-search/docs/json_api_reference#countryCodes)
 	// * `search_type`: double. Default empty. Enables non-webpage searching
 	// depending on the value. The only valid non-default value is 1, which enables
-	// image searching. Example: search_type: 1
+	// image searching. For example, `search_type: 1`
 	Params googleapi.RawMessage `json:"params,omitempty"`
 	// Query: Raw search query.
 	Query string `json:"query,omitempty"`
@@ -10021,7 +10025,7 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestBoostSpecConditionBoostSpecBoo
 	// duration between the current time and the date in the datetime field
 	// specified. The value must be formatted as an XSD `dayTimeDuration` value (a
 	// restricted subset of an ISO 8601 duration value). The pattern for this is:
-	// `nDnM]`. E.g. `5D`, `3DT12H30M`, `T24H`.
+	// `nDnM]`. For example, `5D`, `3DT12H30M`, `T24H`.
 	AttributeType string `json:"attributeType,omitempty"`
 	// ControlPoints: The control points used to define the curve. The monotonic
 	// function (defined through the interpolation_type above) passes through the
@@ -10345,7 +10349,9 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySp
 }
 
 // GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec: A struct to
-// define data stores to filter on in a search call.
+// define data stores to filter on in a search call and configurations for
+// those data stores. A maximum of 1 DataStoreSpec per data_store is allowed.
+// Otherwise, an `INVALID_ARGUMENT` error is returned.
 type GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec struct {
 	// DataStore: Required. Full resource name of DataStore, such as
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
@@ -10477,7 +10483,7 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestFacetSpec struct {
 	ExcludedFilterKeys []string `json:"excludedFilterKeys,omitempty"`
 	// FacetKey: Required. The facet key specification.
 	FacetKey *GoogleCloudDiscoveryengineV1betaSearchRequestFacetSpecFacetKey `json:"facetKey,omitempty"`
-	// Limit: Maximum of facet values that should be returned for this facet. If
+	// Limit: Maximum facet values that are returned for this facet. If
 	// unspecified, defaults to 20. The maximum allowed value is 300. Values above
 	// 300 are coerced to 300. If this field is negative, an `INVALID_ARGUMENT` is
 	// returned.
@@ -10506,10 +10512,10 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestFacetSpecFacetKey struct {
 	// CaseInsensitive: True to make facet keys case insensitive when getting
 	// faceting values with prefixes or contains; false otherwise.
 	CaseInsensitive bool `json:"caseInsensitive,omitempty"`
-	// Contains: Only get facet values that contains the given strings. For
-	// example, suppose "category" has three values "Action > 2022", "Action >
-	// 2021" and "Sci-Fi > 2022". If set "contains" to "2022", the "category" facet
-	// only contains "Action > 2022" and "Sci-Fi > 2022". Only supported on textual
+	// Contains: Only get facet values that contain the given strings. For example,
+	// suppose "category" has three values "Action > 2022", "Action > 2021" and
+	// "Sci-Fi > 2022". If set "contains" to "2022", the "category" facet only
+	// contains "Action > 2022" and "Sci-Fi > 2022". Only supported on textual
 	// fields. Maximum is 10.
 	Contains []string `json:"contains,omitempty"`
 	// Intervals: Set only if values should be bucketed into intervals. Must be set
@@ -10621,15 +10627,15 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchRequestQueryExpansionSpec) Marsha
 // GoogleCloudDiscoveryengineV1betaSearchRequestSpellCorrectionSpec: The
 // specification for query spell correction.
 type GoogleCloudDiscoveryengineV1betaSearchRequestSpellCorrectionSpec struct {
-	// Mode: The mode under which spell correction should take effect to replace
-	// the original search query. Default to Mode.AUTO.
+	// Mode: The mode under which spell correction replaces the original search
+	// query. Defaults to Mode.AUTO.
 	//
 	// Possible values:
 	//   "MODE_UNSPECIFIED" - Unspecified spell correction mode. In this case,
 	// server behavior defaults to Mode.AUTO.
-	//   "SUGGESTION_ONLY" - Search API will try to find a spell suggestion if
-	// there is any and put in the SearchResponse.corrected_query. The spell
-	// suggestion will not be used as the search query.
+	//   "SUGGESTION_ONLY" - Search API tries to find a spelling suggestion. If a
+	// suggestion is found, it is put in the SearchResponse.corrected_query. The
+	// spelling suggestion won't be used as the search query.
 	//   "AUTO" - Automatic spell correction built by the Search API. Search will
 	// be based on the corrected query if found.
 	Mode string `json:"mode,omitempty"`
@@ -10713,8 +10719,8 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchResponse) MarshalJSON() ([]byte, 
 type GoogleCloudDiscoveryengineV1betaSearchResponseFacet struct {
 	// DynamicFacet: Whether the facet is dynamically generated.
 	DynamicFacet bool `json:"dynamicFacet,omitempty"`
-	// Key: The key for this facet. E.g., "colors" or "price". It matches
-	// SearchRequest.FacetSpec.FacetKey.key.
+	// Key: The key for this facet. For example, "colors" or "price". It
+	// matches SearchRequest.FacetSpec.FacetKey.key.
 	Key string `json:"key,omitempty"`
 	// Values: The facet values for this field.
 	Values []*GoogleCloudDiscoveryengineV1betaSearchResponseFacetFacetValue `json:"values,omitempty"`
@@ -10820,9 +10826,11 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchResponseGuidedSearchResult) Marsh
 // GoogleCloudDiscoveryengineV1betaSearchResponseGuidedSearchResultRefinementAtt
 // ribute: Useful attribute for search result refinements.
 type GoogleCloudDiscoveryengineV1betaSearchResponseGuidedSearchResultRefinementAttribute struct {
-	// AttributeKey: Attribute key used to refine the results e.g. 'movie_type'.
+	// AttributeKey: Attribute key used to refine the results. For example,
+	// "movie_type".
 	AttributeKey string `json:"attributeKey,omitempty"`
-	// AttributeValue: Attribute value used to refine the results e.g. 'drama'.
+	// AttributeValue: Attribute value used to refine the results. For example,
+	// "drama".
 	AttributeValue string `json:"attributeValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttributeKey") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10874,7 +10882,7 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchResponseQueryExpansionInfo) Marsh
 // search results.
 type GoogleCloudDiscoveryengineV1betaSearchResponseSearchResult struct {
 	// Document: The document data snippet in the search response. Only fields that
-	// are marked as retrievable are populated.
+	// are marked as `retrievable` are populated.
 	Document *GoogleCloudDiscoveryengineV1betaDocument `json:"document,omitempty"`
 	// Id: Document.id of the searched Document.
 	Id string `json:"id,omitempty"`
@@ -10899,7 +10907,7 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResult) MarshalJSON
 }
 
 // GoogleCloudDiscoveryengineV1betaSearchResponseSummary: Summary of the top N
-// search result specified by the summary spec.
+// search results specified by the summary spec.
 type GoogleCloudDiscoveryengineV1betaSearchResponseSummary struct {
 	// SafetyAttributes: A collection of Safety Attribute categories and their
 	// associated confidence scores.
@@ -11410,7 +11418,8 @@ func (s *GoogleCloudDiscoveryengineV1betaSession) MarshalJSON() ([]byte, error) 
 // GoogleCloudDiscoveryengineV1betaSessionTurn: Represents a turn, including a
 // query from the user and a answer from service.
 type GoogleCloudDiscoveryengineV1betaSessionTurn struct {
-	// Answer: The resource name of the answer to the user query.
+	// Answer: The resource name of the answer to the user query. Only set if the
+	// answer generation (/answer API call) happened in this turn.
 	Answer string `json:"answer,omitempty"`
 	// Query: The user query.
 	Query *GoogleCloudDiscoveryengineV1betaQuery `json:"query,omitempty"`
@@ -12004,7 +12013,7 @@ func (s *GoogleCloudDiscoveryengineV1betaUpdateTargetSiteMetadata) MarshalJSON()
 
 // GoogleCloudDiscoveryengineV1betaUserEvent: UserEvent captures all metadata
 // information Discovery Engine API needs to know about how end users interact
-// with customers' website.
+// with your website.
 type GoogleCloudDiscoveryengineV1betaUserEvent struct {
 	// Attributes: Extra user event features to include in the recommendation
 	// model. These attributes must NOT contain data that needs to be parsed or
@@ -12106,7 +12115,7 @@ type GoogleCloudDiscoveryengineV1betaUserEvent struct {
 	SessionId string `json:"sessionId,omitempty"`
 	// TagIds: A list of identifiers for the independent experiment groups this
 	// user event belongs to. This is used to distinguish between user events
-	// associated with different experiment setups on the customer end.
+	// associated with different experiment setups.
 	TagIds []string `json:"tagIds,omitempty"`
 	// TransactionInfo: The transaction metadata (if any) associated with this user
 	// event.
@@ -13616,14 +13625,13 @@ func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Create(
 }
 
 // DocumentId sets the optional parameter "documentId": Required. The ID to use
-// for the Document, which will become the final component of the
-// Document.name. If the caller does not have permission to create the
-// Document, regardless of whether or not it exists, a `PERMISSION_DENIED`
-// error is returned. This field must be unique among all Documents with the
-// same parent. Otherwise, an `ALREADY_EXISTS` error is returned. This field
-// must conform to RFC-1034 (https://tools.ietf.org/html/rfc1034) standard with
-// a length limit of 63 characters. Otherwise, an `INVALID_ARGUMENT` error is
-// returned.
+// for the Document, which becomes the final component of the Document.name. If
+// the caller does not have permission to create the Document, regardless of
+// whether or not it exists, a `PERMISSION_DENIED` error is returned. This
+// field must be unique among all Documents with the same parent. Otherwise, an
+// `ALREADY_EXISTS` error is returned. This field must conform to RFC-1034
+// (https://tools.ietf.org/html/rfc1034) standard with a length limit of 63
+// characters. Otherwise, an `INVALID_ARGUMENT` error is returned.
 func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall) DocumentId(documentId string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall {
 	c.urlParams_.Set("documentId", documentId)
 	return c
@@ -13936,7 +13944,7 @@ type ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall struct {
 }
 
 // Import: Bulk import of multiple Documents. Request processing may be
-// synchronous. Non-existing items will be created. Note: It is possible for a
+// synchronous. Non-existing items are created. Note: It is possible for a
 // subset of the Documents to be successfully updated.
 //
 //   - parent: The parent branch resource name, such as
@@ -14057,8 +14065,8 @@ func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) List(pa
 
 // PageSize sets the optional parameter "pageSize": Maximum number of Documents
 // to return. If unspecified, defaults to 100. The maximum allowed value is
-// 1000. Values above 1000 will be coerced to 1000. If this field is negative,
-// an `INVALID_ARGUMENT` error is returned.
+// 1000. Values above 1000 are set to 1000. If this field is negative, an
+// `INVALID_ARGUMENT` error is returned.
 func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -14208,16 +14216,16 @@ func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Patch(n
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to true, and
-// the Document is not found, a new Document will be created.
+// AllowMissing sets the optional parameter "allowMissing": If set to `true`
+// and the Document is not found, a new Document is be created.
 func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // UpdateMask sets the optional parameter "updateMask": Indicates which fields
-// in the provided imported 'document' to update. If not set, will by default
-// update all fields.
+// in the provided imported 'document' to update. If not set, by default
+// updates all fields.
 func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -16138,9 +16146,9 @@ func (r *ProjectsLocationsCollectionsDataStoresSchemasService) Create(parent str
 }
 
 // SchemaId sets the optional parameter "schemaId": Required. The ID to use for
-// the Schema, which will become the final component of the Schema.name. This
-// field should conform to RFC-1034 (https://tools.ietf.org/html/rfc1034)
-// standard with a length limit of 63 characters.
+// the Schema, which becomes the final component of the Schema.name. This field
+// should conform to RFC-1034 (https://tools.ietf.org/html/rfc1034) standard
+// with a length limit of 63 characters.
 func (c *ProjectsLocationsCollectionsDataStoresSchemasCreateCall) SchemaId(schemaId string) *ProjectsLocationsCollectionsDataStoresSchemasCreateCall {
 	c.urlParams_.Set("schemaId", schemaId)
 	return c
@@ -16459,8 +16467,8 @@ func (r *ProjectsLocationsCollectionsDataStoresSchemasService) List(parent strin
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // Schemas to return. The service may return fewer than this value. If
-// unspecified, at most 100 Schemas will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// unspecified, at most 100 Schemas are returned. The maximum value is 1000;
+// values above 1000 are set to 1000.
 func (c *ProjectsLocationsCollectionsDataStoresSchemasListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsDataStoresSchemasListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -16609,7 +16617,7 @@ func (r *ProjectsLocationsCollectionsDataStoresSchemasService) Patch(name string
 }
 
 // AllowMissing sets the optional parameter "allowMissing": If set to true, and
-// the Schema is not found, a new Schema will be created. In this situation,
+// the Schema is not found, a new Schema is created. In this situation,
 // `update_mask` is ignored.
 func (c *ProjectsLocationsCollectionsDataStoresSchemasPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsCollectionsDataStoresSchemasPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
@@ -17452,8 +17460,8 @@ type ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall struct {
 //     `projects/*/locations/global/collections/*/engines/*/servingConfigs/*`, or
 //     `projects/*/locations/global/collections/*/dataStores/*/servingConfigs/*`
 //     One default serving config is created along with your recommendation
-//     engine creation. The engine ID will be used as the ID of the default
-//     serving config. For example, for Engine
+//     engine creation. The engine ID is used as the ID of the default serving
+//     config. For example, for Engine
 //     `projects/*/locations/global/collections/*/engines/my-engine`, you can use
 //     `projects/*/locations/global/collections/*/engines/my-engine/servingConfigs
 //     /my-engine` for your RecommendationService.Recommend requests.
@@ -20502,7 +20510,7 @@ type ProjectsLocationsCollectionsDataStoresUserEventsImportCall struct {
 	header_                                                 http.Header
 }
 
-// Import: Bulk import of User events. Request processing might be synchronous.
+// Import: Bulk import of user events. Request processing might be synchronous.
 // Events that already exist are skipped. Use this method for backfilling
 // historical user events. Operation.response is of type ImportResponse. Note
 // that it is possible for a subset of the items to be successfully inserted.
@@ -23064,8 +23072,8 @@ type ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall struct {
 //     `projects/*/locations/global/collections/*/engines/*/servingConfigs/*`, or
 //     `projects/*/locations/global/collections/*/dataStores/*/servingConfigs/*`
 //     One default serving config is created along with your recommendation
-//     engine creation. The engine ID will be used as the ID of the default
-//     serving config. For example, for Engine
+//     engine creation. The engine ID is used as the ID of the default serving
+//     config. For example, for Engine
 //     `projects/*/locations/global/collections/*/engines/my-engine`, you can use
 //     `projects/*/locations/global/collections/*/engines/my-engine/servingConfigs
 //     /my-engine` for your RecommendationService.Recommend requests.
@@ -25155,14 +25163,13 @@ func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Create(parent stri
 }
 
 // DocumentId sets the optional parameter "documentId": Required. The ID to use
-// for the Document, which will become the final component of the
-// Document.name. If the caller does not have permission to create the
-// Document, regardless of whether or not it exists, a `PERMISSION_DENIED`
-// error is returned. This field must be unique among all Documents with the
-// same parent. Otherwise, an `ALREADY_EXISTS` error is returned. This field
-// must conform to RFC-1034 (https://tools.ietf.org/html/rfc1034) standard with
-// a length limit of 63 characters. Otherwise, an `INVALID_ARGUMENT` error is
-// returned.
+// for the Document, which becomes the final component of the Document.name. If
+// the caller does not have permission to create the Document, regardless of
+// whether or not it exists, a `PERMISSION_DENIED` error is returned. This
+// field must be unique among all Documents with the same parent. Otherwise, an
+// `ALREADY_EXISTS` error is returned. This field must conform to RFC-1034
+// (https://tools.ietf.org/html/rfc1034) standard with a length limit of 63
+// characters. Otherwise, an `INVALID_ARGUMENT` error is returned.
 func (c *ProjectsLocationsDataStoresBranchesDocumentsCreateCall) DocumentId(documentId string) *ProjectsLocationsDataStoresBranchesDocumentsCreateCall {
 	c.urlParams_.Set("documentId", documentId)
 	return c
@@ -25475,7 +25482,7 @@ type ProjectsLocationsDataStoresBranchesDocumentsImportCall struct {
 }
 
 // Import: Bulk import of multiple Documents. Request processing may be
-// synchronous. Non-existing items will be created. Note: It is possible for a
+// synchronous. Non-existing items are created. Note: It is possible for a
 // subset of the Documents to be successfully updated.
 //
 //   - parent: The parent branch resource name, such as
@@ -25596,8 +25603,8 @@ func (r *ProjectsLocationsDataStoresBranchesDocumentsService) List(parent string
 
 // PageSize sets the optional parameter "pageSize": Maximum number of Documents
 // to return. If unspecified, defaults to 100. The maximum allowed value is
-// 1000. Values above 1000 will be coerced to 1000. If this field is negative,
-// an `INVALID_ARGUMENT` error is returned.
+// 1000. Values above 1000 are set to 1000. If this field is negative, an
+// `INVALID_ARGUMENT` error is returned.
 func (c *ProjectsLocationsDataStoresBranchesDocumentsListCall) PageSize(pageSize int64) *ProjectsLocationsDataStoresBranchesDocumentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -25747,16 +25754,16 @@ func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Patch(name string,
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to true, and
-// the Document is not found, a new Document will be created.
+// AllowMissing sets the optional parameter "allowMissing": If set to `true`
+// and the Document is not found, a new Document is be created.
 func (c *ProjectsLocationsDataStoresBranchesDocumentsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsDataStoresBranchesDocumentsPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // UpdateMask sets the optional parameter "updateMask": Indicates which fields
-// in the provided imported 'document' to update. If not set, will by default
-// update all fields.
+// in the provided imported 'document' to update. If not set, by default
+// updates all fields.
 func (c *ProjectsLocationsDataStoresBranchesDocumentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDataStoresBranchesDocumentsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -27566,9 +27573,9 @@ func (r *ProjectsLocationsDataStoresSchemasService) Create(parent string, google
 }
 
 // SchemaId sets the optional parameter "schemaId": Required. The ID to use for
-// the Schema, which will become the final component of the Schema.name. This
-// field should conform to RFC-1034 (https://tools.ietf.org/html/rfc1034)
-// standard with a length limit of 63 characters.
+// the Schema, which becomes the final component of the Schema.name. This field
+// should conform to RFC-1034 (https://tools.ietf.org/html/rfc1034) standard
+// with a length limit of 63 characters.
 func (c *ProjectsLocationsDataStoresSchemasCreateCall) SchemaId(schemaId string) *ProjectsLocationsDataStoresSchemasCreateCall {
 	c.urlParams_.Set("schemaId", schemaId)
 	return c
@@ -27887,8 +27894,8 @@ func (r *ProjectsLocationsDataStoresSchemasService) List(parent string) *Project
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // Schemas to return. The service may return fewer than this value. If
-// unspecified, at most 100 Schemas will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// unspecified, at most 100 Schemas are returned. The maximum value is 1000;
+// values above 1000 are set to 1000.
 func (c *ProjectsLocationsDataStoresSchemasListCall) PageSize(pageSize int64) *ProjectsLocationsDataStoresSchemasListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -28037,7 +28044,7 @@ func (r *ProjectsLocationsDataStoresSchemasService) Patch(name string, googleclo
 }
 
 // AllowMissing sets the optional parameter "allowMissing": If set to true, and
-// the Schema is not found, a new Schema will be created. In this situation,
+// the Schema is not found, a new Schema is created. In this situation,
 // `update_mask` is ignored.
 func (c *ProjectsLocationsDataStoresSchemasPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsDataStoresSchemasPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
@@ -28620,8 +28627,8 @@ type ProjectsLocationsDataStoresServingConfigsRecommendCall struct {
 //     `projects/*/locations/global/collections/*/engines/*/servingConfigs/*`, or
 //     `projects/*/locations/global/collections/*/dataStores/*/servingConfigs/*`
 //     One default serving config is created along with your recommendation
-//     engine creation. The engine ID will be used as the ID of the default
-//     serving config. For example, for Engine
+//     engine creation. The engine ID is used as the ID of the default serving
+//     config. For example, for Engine
 //     `projects/*/locations/global/collections/*/engines/my-engine`, you can use
 //     `projects/*/locations/global/collections/*/engines/my-engine/servingConfigs
 //     /my-engine` for your RecommendationService.Recommend requests.
@@ -30891,7 +30898,7 @@ type ProjectsLocationsDataStoresUserEventsImportCall struct {
 	header_                                                 http.Header
 }
 
-// Import: Bulk import of User events. Request processing might be synchronous.
+// Import: Bulk import of user events. Request processing might be synchronous.
 // Events that already exist are skipped. Use this method for backfilling
 // historical user events. Operation.response is of type ImportResponse. Note
 // that it is possible for a subset of the items to be successfully inserted.

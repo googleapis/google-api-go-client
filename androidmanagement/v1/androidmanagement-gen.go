@@ -1107,7 +1107,7 @@ func (s *ApplicationReportingSettings) MarshalJSON() ([]byte, error) {
 
 // BatchUsageLogEvents: Batched event logs of events from the device.
 type BatchUsageLogEvents struct {
-	// Device: The name of the device in the form
+	// Device: If present, the name of the device in the form
 	// ‘enterprises/{enterpriseId}/devices/{deviceId}’
 	Device string `json:"device,omitempty"`
 	// RetrievalTime: The device timestamp when the batch of events were collected
@@ -1116,8 +1116,8 @@ type BatchUsageLogEvents struct {
 	// UsageLogEvents: The list of UsageLogEvent that were reported by the device,
 	// sorted chronologically by the event time.
 	UsageLogEvents []*UsageLogEvent `json:"usageLogEvents,omitempty"`
-	// User: The resource name of the user that owns this device in the form
-	// ‘enterprises/{enterpriseId}/users/{userId}’.
+	// User: If present, the resource name of the user that owns this device in the
+	// form ‘enterprises/{enterpriseId}/users/{userId}’.
 	User string `json:"user,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Device") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1847,6 +1847,13 @@ type Device struct {
 	//   "PREPARING_FOR_MIGRATION" - The device is preparing for migrating to
 	// Android Management API. No further action is needed for the migration to
 	// continue.
+	//   "DEACTIVATED_BY_DEVICE_FINANCE" - This is a financed device that has been
+	// "locked" by the financing agent. This means certain policy settings have
+	// been applied which limit device functionality until the device has been
+	// "unlocked" by the financing agent. The device will continue to apply policy
+	// settings excluding those overridden by the financing agent. When the device
+	// is "locked", the state is reported in appliedState as
+	// DEACTIVATED_BY_DEVICE_FINANCE.
 	AppliedState string `json:"appliedState,omitempty"`
 	// CommonCriteriaModeInfo: Information about Common Criteria Mode—security
 	// standards defined in the Common Criteria for Information Technology Security
@@ -1968,6 +1975,13 @@ type Device struct {
 	//   "PREPARING_FOR_MIGRATION" - The device is preparing for migrating to
 	// Android Management API. No further action is needed for the migration to
 	// continue.
+	//   "DEACTIVATED_BY_DEVICE_FINANCE" - This is a financed device that has been
+	// "locked" by the financing agent. This means certain policy settings have
+	// been applied which limit device functionality until the device has been
+	// "unlocked" by the financing agent. The device will continue to apply policy
+	// settings excluding those overridden by the financing agent. When the device
+	// is "locked", the state is reported in appliedState as
+	// DEACTIVATED_BY_DEVICE_FINANCE.
 	State string `json:"state,omitempty"`
 	// SystemProperties: Map of selected system properties name and value related
 	// to the device. This information is only available if systemPropertiesEnabled
@@ -5251,7 +5265,8 @@ type ProvisioningInfo struct {
 	Brand string `json:"brand,omitempty"`
 	// Enterprise: The name of the enterprise in the form enterprises/{enterprise}.
 	Enterprise string `json:"enterprise,omitempty"`
-	// Imei: IMEI number of the GSM device. For example, A1000031212.
+	// Imei: For corporate-owned devices, IMEI number of the GSM device. For
+	// example, A1000031212.
 	Imei string `json:"imei,omitempty"`
 	// ManagementMode: The management mode of the device or profile.
 	//
@@ -5262,7 +5277,8 @@ type ProvisioningInfo struct {
 	//   "PROFILE_OWNER" - Profile owner. Android Device Policy has control over a
 	// managed profile on the device.
 	ManagementMode string `json:"managementMode,omitempty"`
-	// Meid: MEID number of the CDMA device. For example, A00000292788E1.
+	// Meid: For corporate-owned devices, MEID number of the CDMA device. For
+	// example, A00000292788E1.
 	Meid string `json:"meid,omitempty"`
 	// Model: The model of the device. For example, Asus Nexus 7.
 	Model string `json:"model,omitempty"`
@@ -5276,7 +5292,7 @@ type ProvisioningInfo struct {
 	//   "COMPANY_OWNED" - Device is company-owned.
 	//   "PERSONALLY_OWNED" - Device is personally-owned.
 	Ownership string `json:"ownership,omitempty"`
-	// SerialNumber: The device serial number.
+	// SerialNumber: For corporate-owned devices, The device serial number.
 	SerialNumber string `json:"serialNumber,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -10234,6 +10250,14 @@ type SignupUrlsCreateCall struct {
 // Create: Creates an enterprise signup URL.
 func (r *SignupUrlsService) Create() *SignupUrlsCreateCall {
 	c := &SignupUrlsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// AdminEmail sets the optional parameter "adminEmail": Email address used to
+// prefill the admin field of the enterprise signup form. This value is a hint
+// only and can be altered by the user.
+func (c *SignupUrlsCreateCall) AdminEmail(adminEmail string) *SignupUrlsCreateCall {
+	c.urlParams_.Set("adminEmail", adminEmail)
 	return c
 }
 

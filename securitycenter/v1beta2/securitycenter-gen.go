@@ -2690,9 +2690,9 @@ func (s *GoogleCloudSecuritycenterV1ResourceSelector) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1ResourceValueConfig: A resource value config
-// (RVC) is a mapping configuration of user's resources to resource values.
-// Used in Attack path simulations.
+// GoogleCloudSecuritycenterV1ResourceValueConfig: A resource value
+// configuration (RVC) is a mapping configuration of user's resources to
+// resource values. Used in Attack path simulations.
 type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	// CloudProvider: Cloud provider this configuration applies to
 	//
@@ -2702,21 +2702,22 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
 	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
 	CloudProvider string `json:"cloudProvider,omitempty"`
-	// CreateTime: Output only. Timestamp this resource value config was created.
+	// CreateTime: Output only. Timestamp this resource value configuration was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Description of the resource value config.
+	// Description: Description of the resource value configuration.
 	Description string `json:"description,omitempty"`
-	// Name: Name for the resource value config
+	// Name: Name for the resource value configuration
 	Name string `json:"name,omitempty"`
 	// ResourceLabelsSelector: List of resource labels to search for, evaluated
-	// with AND. E.g. "resource_labels_selector": {"key": "value", "env": "prod"}
-	// will match resources with labels "key": "value" AND "env": "prod"
+	// with AND. For example, "resource_labels_selector": {"key": "value", "env":
+	// "prod"} will match resources with labels "key": "value" AND "env": "prod"
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
 	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
 	// ResourceType: Apply resource_value only to resources that match
-	// resource_type. resource_type will be checked with "AND" of other resources.
-	// E.g. "storage.googleapis.com/Bucket" with resource_value "HIGH" will apply
-	// "HIGH" value only to "storage.googleapis.com/Bucket" resources.
+	// resource_type. resource_type will be checked with AND of other resources.
+	// For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will
+	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
 	ResourceType string `json:"resourceType,omitempty"`
 	// ResourceValue: Required. Resource value level this expression represents
 	//
@@ -2727,9 +2728,9 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	//   "LOW" - Low resource value
 	//   "NONE" - No resource value, e.g. ignore these resources
 	ResourceValue string `json:"resourceValue,omitempty"`
-	// Scope: Project or folder to scope this config to. For example, "project/456"
-	// would apply this config only to resources in "project/456" scope will be
-	// checked with "AND" of other resources.
+	// Scope: Project or folder to scope this configuration to. For example,
+	// "project/456" would apply this configuration only to resources in
+	// "project/456" scope will be checked with AND of other resources.
 	Scope string `json:"scope,omitempty"`
 	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
 	// Data Protection finding to resource values. This mapping can only be used in
@@ -2737,12 +2738,12 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
 	// TagValues: Required. Tag values combined with AND to check against. Values
-	// in the form "tagValues/123" E.g. [ "tagValues/123", "tagValues/456",
+	// in the form "tagValues/123" Example: [ "tagValues/123", "tagValues/456",
 	// "tagValues/789" ]
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
-	// UpdateTime: Output only. Timestamp this resource value config was last
-	// updated.
+	// UpdateTime: Output only. Timestamp this resource value configuration was
+	// last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudProvider") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5912,9 +5913,9 @@ func (s *GoogleCloudSecuritycenterV2ResourcePathNode) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV2ResourceValueConfig: A resource value config
-// (RVC) is a mapping configuration of user's resources to resource values.
-// Used in Attack path simulations.
+// GoogleCloudSecuritycenterV2ResourceValueConfig: A resource value
+// configuration (RVC) is a mapping configuration of user's resources to
+// resource values. Used in Attack path simulations.
 type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	// CloudProvider: Cloud provider this configuration applies to
 	//
@@ -5924,21 +5925,22 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
 	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
 	CloudProvider string `json:"cloudProvider,omitempty"`
-	// CreateTime: Output only. Timestamp this resource value config was created.
+	// CreateTime: Output only. Timestamp this resource value configuration was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Description of the resource value config.
+	// Description: Description of the resource value configuration.
 	Description string `json:"description,omitempty"`
-	// Name: Name for the resource value config
+	// Name: Name for the resource value configuration
 	Name string `json:"name,omitempty"`
 	// ResourceLabelsSelector: List of resource labels to search for, evaluated
-	// with AND. E.g. "resource_labels_selector": {"key": "value", "env": "prod"}
-	// will match resources with labels "key": "value" AND "env": "prod"
+	// with AND. For example, "resource_labels_selector": {"key": "value", "env":
+	// "prod"} will match resources with labels "key": "value" AND "env": "prod"
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
 	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
 	// ResourceType: Apply resource_value only to resources that match
-	// resource_type. resource_type will be checked with "AND" of other resources.
-	// E.g. "storage.googleapis.com/Bucket" with resource_value "HIGH" will apply
-	// "HIGH" value only to "storage.googleapis.com/Bucket" resources.
+	// resource_type. resource_type will be checked with AND of other resources.
+	// For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will
+	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
 	ResourceType string `json:"resourceType,omitempty"`
 	// ResourceValue: Resource value level this expression represents Only required
 	// when there is no SDP mapping in the request
@@ -5950,9 +5952,9 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	//   "LOW" - Low resource value
 	//   "NONE" - No resource value, e.g. ignore these resources
 	ResourceValue string `json:"resourceValue,omitempty"`
-	// Scope: Project or folder to scope this config to. For example, "project/456"
-	// would apply this config only to resources in "project/456" scope will be
-	// checked with "AND" of other resources.
+	// Scope: Project or folder to scope this configuration to. For example,
+	// "project/456" would apply this configuration only to resources in
+	// "project/456" scope will be checked with AND of other resources.
 	Scope string `json:"scope,omitempty"`
 	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
 	// Data Protection finding to resource values. This mapping can only be used in
@@ -5960,12 +5962,12 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
 	// TagValues: Required. Tag values combined with AND to check against. Values
-	// in the form "tagValues/123" E.g. [ "tagValues/123", "tagValues/456",
+	// in the form "tagValues/123" Example: [ "tagValues/123", "tagValues/456",
 	// "tagValues/789" ]
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
-	// UpdateTime: Output only. Timestamp this resource value config was last
-	// updated.
+	// UpdateTime: Output only. Timestamp this resource value configuration was
+	// last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudProvider") to
 	// unconditionally include in API requests. By default, fields with empty or

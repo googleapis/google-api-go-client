@@ -14013,7 +14013,7 @@ type UptimeCheckIpsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns the list of IP addresses that checkers run from
+// List: Returns the list of IP addresses that checkers run from.
 func (r *UptimeCheckIpsService) List() *UptimeCheckIpsListCall {
 	c := &UptimeCheckIpsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c

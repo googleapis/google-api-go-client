@@ -1372,6 +1372,8 @@ type GoogleAnalyticsAdminV1alphaAudience struct {
 	// AdsPersonalizationEnabled: Output only. It is automatically set by GA to
 	// false if this is an NPA Audience and is excluded from ads personalization.
 	AdsPersonalizationEnabled bool `json:"adsPersonalizationEnabled,omitempty"`
+	// CreateTime: Output only. Time when the Audience was created.
+	CreateTime string `json:"createTime,omitempty"`
 	// Description: Required. The description of the Audience.
 	Description string `json:"description,omitempty"`
 	// DisplayName: Required. The display name of the Audience.
@@ -2857,21 +2859,18 @@ func (s *GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse) MarshalJSON() 
 // GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest: Request message for
 // CreateSubproperty RPC.
 type GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest struct {
-	// Parent: Required. The ordinary property for which to create a subproperty.
-	// Format: properties/property_id Example: properties/123
-	Parent string `json:"parent,omitempty"`
 	// Subproperty: Required. The subproperty to create.
 	Subproperty *GoogleAnalyticsAdminV1alphaProperty `json:"subproperty,omitempty"`
 	// SubpropertyEventFilter: Optional. The subproperty event filter to create on
 	// an ordinary property.
 	SubpropertyEventFilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter `json:"subpropertyEventFilter,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Subproperty") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// NullFields is a list of field names (e.g. "Subproperty") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

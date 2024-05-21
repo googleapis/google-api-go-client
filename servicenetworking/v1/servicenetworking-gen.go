@@ -3659,7 +3659,8 @@ type PolicyBinding struct {
 	// project - 'roles/compute.securityAdmin' applied on the shared VPC host
 	// project - 'roles/compute.networkAdmin' applied on the shared VPC host
 	// project - 'roles/compute.xpnAdmin' applied on the shared VPC host project -
-	// 'roles/dns.admin' applied on the shared VPC host project
+	// 'roles/dns.admin' applied on the shared VPC host project -
+	// 'roles/logging.admin' applied on the shared VPC host project
 	Role string `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Member") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

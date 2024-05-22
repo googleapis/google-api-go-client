@@ -635,7 +635,7 @@ type Attachment struct {
 	// field is used with the Google Drive API.
 	DriveDataRef *DriveDataRef `json:"driveDataRef,omitempty"`
 	// Name: Resource name of the attachment, in the form
-	// `spaces/*/messages/*/attachments/*`.
+	// `spaces/{space}/messages/{message}/attachments/{attachment}`.
 	Name string `json:"name,omitempty"`
 	// Source: Output only. The source of the attachment.
 	//
@@ -6062,7 +6062,7 @@ type SpacesGetCall struct {
 // and user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
-//   - name: Resource name of the space, in the form "spaces/*". Format:
+//   - name: Resource name of the space, in the form `spaces/{space}`. Format:
 //     `spaces/{space}`.
 func (r *SpacesService) Get(name string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6177,7 +6177,9 @@ type SpacesListCall struct {
 // and user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 // Lists spaces visible to the caller or authenticated user. Group chats and
-// DMs aren't listed until the first message is sent.
+// DMs aren't listed until the first message is sent. To list all named spaces
+// by Google Workspace organization, use the `spaces.search()` method using
+// Workspace administrator privileges instead.
 func (r *SpacesService) List() *SpacesListCall {
 	c := &SpacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6977,13 +6979,16 @@ func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 // and type (`member.type`
 // (https://developers.google.com/workspace/chat/api/reference/rest/v1/User#type)).
 // To filter by role, set `role` to `ROLE_MEMBER` or `ROLE_MANAGER`. To filter
-// by type, set `member.type` to `HUMAN` or `BOT`. To filter by both role and
-// type, use the `AND` operator. To filter by either role or type, use the `OR`
-// operator. For example, the following queries are valid: ``` role =
-// "ROLE_MANAGER" OR role = "ROLE_MEMBER" member.type = "HUMAN" AND role =
-// "ROLE_MANAGER" ``` The following queries are invalid: ``` member.type =
-// "HUMAN" AND member.type = "BOT" role = "ROLE_MANAGER" AND role =
-// "ROLE_MEMBER" ``` Invalid queries are rejected by the server with an
+// by type, set `member.type` to `HUMAN` or `BOT`. Developer Preview: You can
+// also filter for `member.type` using the `!=` operator. To filter by both
+// role and type, use the `AND` operator. To filter by either role or type, use
+// the `OR` operator. Either `member.type = "HUMAN" or `member.type != "BOT"
+// is required when `use_admin_access` is set to true. Other member type
+// filters will be rejected. For example, the following queries are valid: ```
+// role = "ROLE_MANAGER" OR role = "ROLE_MEMBER" member.type = "HUMAN" AND role
+// = "ROLE_MANAGER" member.type != "BOT" ``` The following queries are invalid:
+// ``` member.type = "HUMAN" AND member.type = "BOT" role = "ROLE_MANAGER" AND
+// role = "ROLE_MEMBER" ``` Invalid queries are rejected by the server with an
 // `INVALID_ARGUMENT` error.
 func (c *SpacesMembersListCall) Filter(filter string) *SpacesMembersListCall {
 	c.urlParams_.Set("filter", filter)
@@ -8166,7 +8171,7 @@ type SpacesMessagesAttachmentsGetCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
 //
 //   - name: Resource name of the attachment, in the form
-//     `spaces/*/messages/*/attachments/*`.
+//     `spaces/{space}/messages/{message}/attachments/{attachment}`.
 func (r *SpacesMessagesAttachmentsService) Get(name string) *SpacesMessagesAttachmentsGetCall {
 	c := &SpacesMessagesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -1072,9 +1072,9 @@ type Service struct {
 	BusinessEntityName string `json:"businessEntityName,omitempty"`
 	// DisplayName: A human readable display name for this service.
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: The resource name for the service. Example: "services/DA34-426B-A397"
+	// Name: The resource name for the service. Example: "services/6F81-5844-456A"
 	Name string `json:"name,omitempty"`
-	// ServiceId: The identifier for the service. Example: "DA34-426B-A397"
+	// ServiceId: The identifier for the service. Example: "6F81-5844-456A"
 	ServiceId string `json:"serviceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BusinessEntityName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1123,7 +1123,7 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Sku: Encapsulates a single SKU in Google Cloud Platform
+// Sku: Encapsulates a single SKU in Google Cloud
 type Sku struct {
 	// Category: The category hierarchy of this SKU, purely for organizational
 	// purpose.
@@ -1134,7 +1134,7 @@ type Sku struct {
 	// GeoTaxonomy: The geographic taxonomy for this sku.
 	GeoTaxonomy *GeoTaxonomy `json:"geoTaxonomy,omitempty"`
 	// Name: The resource name for the SKU. Example:
-	// "services/DA34-426B-A397/skus/AA95-CD31-42FE"
+	// "services/6F81-5844-456A/skus/D041-B8A1-6E0B"
 	Name string `json:"name,omitempty"`
 	// PricingInfo: A timeline of pricing info for this SKU in chronological order.
 	PricingInfo []*PricingInfo `json:"pricingInfo,omitempty"`
@@ -1145,7 +1145,7 @@ type Sku struct {
 	// "asia-east1" Service regions can be found at
 	// https://cloud.google.com/about/locations/
 	ServiceRegions []string `json:"serviceRegions,omitempty"`
-	// SkuId: The identifier for the SKU. Example: "AA95-CD31-42FE"
+	// SkuId: The identifier for the SKU. Example: "D041-B8A1-6E0B"
 	SkuId string `json:"skuId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3408,7 +3408,7 @@ type ServicesSkusListCall struct {
 
 // List: Lists all publicly available SKUs for a given cloud service.
 //
-// - parent: The name of the service. Example: "services/DA34-426B-A397".
+// - parent: The name of the service. Example: "services/6F81-5844-456A".
 func (r *ServicesSkusService) List(parent string) *ServicesSkusListCall {
 	c := &ServicesSkusListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

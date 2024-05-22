@@ -1042,9 +1042,10 @@ type SasPortalInstallationParams struct {
 	// up (above horizontal). This parameter is optional for Category A devices and
 	// conditional for Category B devices.
 	AntennaDowntilt int64 `json:"antennaDowntilt,omitempty"`
-	// AntennaGain: Peak antenna gain in dBi. This parameter is an integer with a
-	// value between -127 and +128 (dBi) inclusive.
-	AntennaGain int64 `json:"antennaGain,omitempty"`
+	// AntennaGain: Peak antenna gain in dBi. This parameter is a double with a
+	// value between -127 and +128 (dBi) inclusive. Part of Release 2 to support
+	// floating-point value
+	AntennaGain float64 `json:"antennaGain,omitempty"`
 	// AntennaModel: If an external antenna is used, the antenna model is
 	// optionally provided in this field. The string has a maximum length of 128
 	// octets.
@@ -1112,6 +1113,7 @@ func (s *SasPortalInstallationParams) MarshalJSON() ([]byte, error) {
 func (s *SasPortalInstallationParams) UnmarshalJSON(data []byte) error {
 	type NoMethod SasPortalInstallationParams
 	var s1 struct {
+		AntennaGain        gensupport.JSONFloat64 `json:"antennaGain"`
 		Height             gensupport.JSONFloat64 `json:"height"`
 		HorizontalAccuracy gensupport.JSONFloat64 `json:"horizontalAccuracy"`
 		Latitude           gensupport.JSONFloat64 `json:"latitude"`
@@ -1123,6 +1125,7 @@ func (s *SasPortalInstallationParams) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.AntennaGain = float64(s1.AntennaGain)
 	s.Height = float64(s1.Height)
 	s.HorizontalAccuracy = float64(s1.HorizontalAccuracy)
 	s.Latitude = float64(s1.Latitude)

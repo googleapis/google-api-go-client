@@ -510,6 +510,10 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// Name: Output only. Identifier. The resource name for the Assessment in the
 	// format `projects/{project}/assessments/{assessment}`.
 	Name string `json:"name,omitempty"`
+	// PhoneFraudAssessment: Output only. Assessment returned when a site key, a
+	// token, and a phone number as `user_id` are provided. Account defender and
+	// SMS toll fraud protection need to be enabled.
+	PhoneFraudAssessment *GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment `json:"phoneFraudAssessment,omitempty"`
 	// PrivatePasswordLeakVerification: Optional. The private password leak
 	// verification field contains the parameters that are used to to check for
 	// leaks privately without sharing user credentials.
@@ -1409,6 +1413,30 @@ func (s *GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment: Assessment for Phone
+// Fraud
+type GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment struct {
+	// SmsTollFraudVerdict: Output only. Assessment of this phone event for risk of
+	// sms toll fraud.
+	SmsTollFraudVerdict *GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict `json:"smsTollFraudVerdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SmsTollFraudVerdict") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SmsTollFraudVerdict") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification: Private
 // password leak verification info.
 type GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification struct {
@@ -1748,6 +1776,50 @@ type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRespons
 func (s *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict: Information about sms
+// toll fraud
+type GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict struct {
+	// Reasons: Output only. Reasons contributing to the SMS toll fraud verdict.
+	//
+	// Possible values:
+	//   "SMS_TOLL_FRAUD_REASON_UNSPECIFIED" - Default unspecified reason
+	//   "INVALID_PHONE_NUMBER" - The provided phone number was invalid
+	Reasons []string `json:"reasons,omitempty"`
+	// Risk: Output only. Probability of an sms event being fraudulent. Values are
+	// from 0.0 (lowest) to 1.0 (highest).
+	Risk float64 `json:"risk,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Reasons") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Reasons") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict
+	var s1 struct {
+		Risk gensupport.JSONFloat64 `json:"risk"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Risk = float64(s1.Risk)
+	return nil
 }
 
 // GoogleCloudRecaptchaenterpriseV1TestingOptions: Options for user acceptance

@@ -6933,8 +6933,8 @@ func (s *RandomizeRangeRequest) MarshalJSON() ([]byte, error) {
 }
 
 // RefreshCancellationStatus: The status of a refresh cancellation. You can
-// send cancel request to explicitly cancel one or multiple data source object
-// refreshes.
+// send a cancel request to explicitly cancel one or multiple data source
+// object refreshes.
 type RefreshCancellationStatus struct {
 	// ErrorCode: The error code.
 	//

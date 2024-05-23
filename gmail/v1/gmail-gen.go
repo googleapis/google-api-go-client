@@ -2181,12 +2181,6 @@ func (r *UsersService) GetProfile(userId string) *UsersGetProfileCall {
 	return c
 }
 
-// TemporaryEeccBypass sets the optional parameter "temporaryEeccBypass":
-func (c *UsersGetProfileCall) TemporaryEeccBypass(temporaryEeccBypass bool) *UsersGetProfileCall {
-	c.urlParams_.Set("temporaryEeccBypass", fmt.Sprint(temporaryEeccBypass))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -4427,12 +4421,6 @@ func (c *UsersMessagesGetCall) MetadataHeaders(metadataHeaders ...string) *Users
 	return c
 }
 
-// TemporaryEeccBypass sets the optional parameter "temporaryEeccBypass":
-func (c *UsersMessagesGetCall) TemporaryEeccBypass(temporaryEeccBypass bool) *UsersMessagesGetCall {
-	c.urlParams_.Set("temporaryEeccBypass", fmt.Sprint(temporaryEeccBypass))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -4989,12 +4977,6 @@ func (c *UsersMessagesListCall) PageToken(pageToken string) *UsersMessagesListCa
 // cannot be used when accessing the api using the gmail.metadata scope.
 func (c *UsersMessagesListCall) Q(q string) *UsersMessagesListCall {
 	c.urlParams_.Set("q", q)
-	return c
-}
-
-// TemporaryEeccBypass sets the optional parameter "temporaryEeccBypass":
-func (c *UsersMessagesListCall) TemporaryEeccBypass(temporaryEeccBypass bool) *UsersMessagesListCall {
-	c.urlParams_.Set("temporaryEeccBypass", fmt.Sprint(temporaryEeccBypass))
 	return c
 }
 
@@ -5608,12 +5590,6 @@ func (r *UsersMessagesAttachmentsService) Get(userId string, messageId string, i
 	c.userId = userId
 	c.messageId = messageId
 	c.id = id
-	return c
-}
-
-// TemporaryEeccBypass sets the optional parameter "temporaryEeccBypass":
-func (c *UsersMessagesAttachmentsGetCall) TemporaryEeccBypass(temporaryEeccBypass bool) *UsersMessagesAttachmentsGetCall {
-	c.urlParams_.Set("temporaryEeccBypass", fmt.Sprint(temporaryEeccBypass))
 	return c
 }
 
@@ -10556,12 +10532,6 @@ func (c *UsersThreadsGetCall) MetadataHeaders(metadataHeaders ...string) *UsersT
 	return c
 }
 
-// TemporaryEeccBypass sets the optional parameter "temporaryEeccBypass":
-func (c *UsersThreadsGetCall) TemporaryEeccBypass(temporaryEeccBypass bool) *UsersThreadsGetCall {
-	c.urlParams_.Set("temporaryEeccBypass", fmt.Sprint(temporaryEeccBypass))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -10706,12 +10676,6 @@ func (c *UsersThreadsListCall) PageToken(pageToken string) *UsersThreadsListCall
 // cannot be used when accessing the api using the gmail.metadata scope.
 func (c *UsersThreadsListCall) Q(q string) *UsersThreadsListCall {
 	c.urlParams_.Set("q", q)
-	return c
-}
-
-// TemporaryEeccBypass sets the optional parameter "temporaryEeccBypass":
-func (c *UsersThreadsListCall) TemporaryEeccBypass(temporaryEeccBypass bool) *UsersThreadsListCall {
-	c.urlParams_.Set("temporaryEeccBypass", fmt.Sprint(temporaryEeccBypass))
 	return c
 }
 

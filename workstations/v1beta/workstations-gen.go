@@ -1361,6 +1361,31 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// PortRange: A PortsConfig defines a range of ports. Both first and last are
+// inclusive. To specify a single port, both first and last should be same.
+type PortRange struct {
+	// First: Required. Starting port number for the current range of ports.
+	First int64 `json:"first,omitempty"`
+	// Last: Required. Ending port number for the current range of ports.
+	Last int64 `json:"last,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "First") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "First") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *PortRange) MarshalJSON() ([]byte, error) {
+	type NoMethod PortRange
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // PrivateClusterConfig: Configuration options for private workstation
 // clusters.
 type PrivateClusterConfig struct {
@@ -1759,6 +1784,10 @@ func (s *WorkstationCluster) MarshalJSON() ([]byte, error) {
 // Management (IAM) (https://cloud.google.com/iam/docs/overview) rules to grant
 // access to teams or to individual developers.
 type WorkstationConfig struct {
+	// AllowedPorts: Optional. Single or Range of ports externally accessible in
+	// the workstation. If not specified defaults to ports 22, 80 and ports
+	// 1024-65535.
+	AllowedPorts []*PortRange `json:"allowedPorts,omitempty"`
 	// Annotations: Optional. Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// Conditions: Output only. Status conditions describing the current resource
@@ -1870,13 +1899,13 @@ type WorkstationConfig struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// ForceSendFields is a list of field names (e.g. "AllowedPorts") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// NullFields is a list of field names (e.g. "AllowedPorts") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

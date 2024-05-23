@@ -6,7 +6,7 @@
 
 // Package sourcerepo provides access to the Cloud Source Repositories API.
 //
-// For product documentation, see: https://cloud.google.com/source-repositories/docs/apis
+// For product documentation, see: https://cloud.google.com/source-repositories/docs
 //
 // # Library status
 //

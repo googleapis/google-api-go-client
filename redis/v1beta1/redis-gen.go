@@ -891,6 +891,18 @@ type DatabaseResourceHealthSignalData struct {
 	// transaction logs settings
 	//   "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES" - Performance impact of high
 	// joins without indexes
+	//   "SIGNAL_TYPE_SUPERUSER_WRITING_TO_USER_TABLES" - Detects events where a
+	// Cloud SQL superuser (postgres for PostgreSQL servers or root for MySQL
+	// users) writes to non-system tables.
+	//   "SIGNAL_TYPE_USER_GRANTED_ALL_PERMISSIONS" - Detects events where a
+	// database user or role has been granted all privileges to a database, or to
+	// all tables, procedures, or functions in a schema.
+	//   "SIGNAL_TYPE_DATA_EXPORT_TO_EXTERNAL_CLOUD_STORAGE_BUCKET" - Detects if
+	// database instance data exported to a Cloud Storage bucket outside of the
+	// organization.
+	//   "SIGNAL_TYPE_DATA_EXPORT_TO_PUBLIC_CLOUD_STORAGE_BUCKET" - Detects if
+	// database instance data exported to a Cloud Storage bucket that is owned by
+	// the organization and is publicly accessible.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1276,6 +1288,18 @@ type DatabaseResourceRecommendationSignalData struct {
 	// transaction logs settings
 	//   "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES" - Performance impact of high
 	// joins without indexes
+	//   "SIGNAL_TYPE_SUPERUSER_WRITING_TO_USER_TABLES" - Detects events where a
+	// Cloud SQL superuser (postgres for PostgreSQL servers or root for MySQL
+	// users) writes to non-system tables.
+	//   "SIGNAL_TYPE_USER_GRANTED_ALL_PERMISSIONS" - Detects events where a
+	// database user or role has been granted all privileges to a database, or to
+	// all tables, procedures, or functions in a schema.
+	//   "SIGNAL_TYPE_DATA_EXPORT_TO_EXTERNAL_CLOUD_STORAGE_BUCKET" - Detects if
+	// database instance data exported to a Cloud Storage bucket outside of the
+	// organization.
+	//   "SIGNAL_TYPE_DATA_EXPORT_TO_PUBLIC_CLOUD_STORAGE_BUCKET" - Detects if
+	// database instance data exported to a Cloud Storage bucket that is owned by
+	// the organization and is publicly accessible.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -719,6 +719,13 @@ type GenerationConfig struct {
 	// prompted to output the appropriate response type, otherwise the behavior is
 	// undefined. This is a preview feature.
 	ResponseMimeType string `json:"responseMimeType,omitempty"`
+	// ResponseSchema: Optional. The `Schema` object allows the definition of input
+	// and output data types. These types can be objects, but also primitives and
+	// arrays. Represents a select subset of an OpenAPI 3.0 schema object
+	// (https://spec.openapis.org/oas/v3.0.3#schema). If set, a compatible
+	// response_mime_type must also be set. Compatible mimetypes:
+	// `application/json`: Schema for JSON response.
+	ResponseSchema *Schema `json:"responseSchema,omitempty"`
 	// StopSequences: Optional. Stop sequences.
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.

@@ -821,7 +821,7 @@
       }
     }
   },
-  "revision": "20240425",
+  "revision": "20240509",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "AOFConfig": {
@@ -1403,7 +1403,11 @@
             "SIGNAL_TYPE_CONNECTIONS_PERFORMANCE_IMPACT",
             "SIGNAL_TYPE_TMP_TABLES_PERFORMANCE_IMPACT",
             "SIGNAL_TYPE_TRANS_LOGS_PERFORMANCE_IMPACT",
-            "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES"
+            "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES",
+            "SIGNAL_TYPE_SUPERUSER_WRITING_TO_USER_TABLES",
+            "SIGNAL_TYPE_USER_GRANTED_ALL_PERMISSIONS",
+            "SIGNAL_TYPE_DATA_EXPORT_TO_EXTERNAL_CLOUD_STORAGE_BUCKET",
+            "SIGNAL_TYPE_DATA_EXPORT_TO_PUBLIC_CLOUD_STORAGE_BUCKET"
           ],
           "enumDeprecated": [
             false,
@@ -1411,6 +1415,10 @@
             false,
             true,
             true,
+            false,
+            false,
+            false,
+            false,
             false,
             false,
             false,
@@ -1541,7 +1549,11 @@
             "Performance impact of connections settings",
             "Performance impact of temporary tables settings",
             "Performance impact of transaction logs settings",
-            "Performance impact of high joins without indexes"
+            "Performance impact of high joins without indexes",
+            "Detects events where a Cloud SQL superuser (postgres for PostgreSQL servers or root for MySQL users) writes to non-system tables.",
+            "Detects events where a database user or role has been granted all privileges to a database, or to all tables, procedures, or functions in a schema.",
+            "Detects if database instance data exported to a Cloud Storage bucket outside of the organization.",
+            "Detects if database instance data exported to a Cloud Storage bucket that is owned by the organization and is publicly accessible."
           ],
           "type": "string"
         },
@@ -1882,7 +1894,11 @@
             "SIGNAL_TYPE_CONNECTIONS_PERFORMANCE_IMPACT",
             "SIGNAL_TYPE_TMP_TABLES_PERFORMANCE_IMPACT",
             "SIGNAL_TYPE_TRANS_LOGS_PERFORMANCE_IMPACT",
-            "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES"
+            "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES",
+            "SIGNAL_TYPE_SUPERUSER_WRITING_TO_USER_TABLES",
+            "SIGNAL_TYPE_USER_GRANTED_ALL_PERMISSIONS",
+            "SIGNAL_TYPE_DATA_EXPORT_TO_EXTERNAL_CLOUD_STORAGE_BUCKET",
+            "SIGNAL_TYPE_DATA_EXPORT_TO_PUBLIC_CLOUD_STORAGE_BUCKET"
           ],
           "enumDeprecated": [
             false,
@@ -1890,6 +1906,10 @@
             false,
             true,
             true,
+            false,
+            false,
+            false,
+            false,
             false,
             false,
             false,
@@ -2020,7 +2040,11 @@
             "Performance impact of connections settings",
             "Performance impact of temporary tables settings",
             "Performance impact of transaction logs settings",
-            "Performance impact of high joins without indexes"
+            "Performance impact of high joins without indexes",
+            "Detects events where a Cloud SQL superuser (postgres for PostgreSQL servers or root for MySQL users) writes to non-system tables.",
+            "Detects events where a database user or role has been granted all privileges to a database, or to all tables, procedures, or functions in a schema.",
+            "Detects if database instance data exported to a Cloud Storage bucket outside of the organization.",
+            "Detects if database instance data exported to a Cloud Storage bucket that is owned by the organization and is publicly accessible."
           ],
           "type": "string"
         }

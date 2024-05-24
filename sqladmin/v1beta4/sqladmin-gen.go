@@ -414,6 +414,34 @@ func (s *ApiWarning) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// AvailableDatabaseVersion: An available database version. It can be a major
+// or a minor version.
+type AvailableDatabaseVersion struct {
+	// DisplayName: The database version's display name.
+	DisplayName string `json:"displayName,omitempty"`
+	// MajorVersion: The version's major version name.
+	MajorVersion string `json:"majorVersion,omitempty"`
+	// Name: The database version name. For MySQL 8.0, this string provides the
+	// database major and minor version.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AvailableDatabaseVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod AvailableDatabaseVersion
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupConfiguration: Database instance backup configuration.
 type BackupConfiguration struct {
 	// BackupRetentionSettings: Backup retention settings.
@@ -738,9 +766,14 @@ type CloneContext struct {
 	// PointInTime: Timestamp, if specified, identifies the time to which the
 	// source instance is cloned.
 	PointInTime string `json:"pointInTime,omitempty"`
-	// PreferredZone: Optional. (Point-in-time recovery for PostgreSQL only) Clone
-	// to an instance in the specified zone. If no zone is specified, clone to the
-	// same zone as the source instance.
+	// PreferredSecondaryZone: Optional. Copy clone and point-in-time recovery
+	// clone of a regional instance in the specified zones. If not specified, clone
+	// to the same secondary zone as the source instance. This value cannot be the
+	// same as the preferred_zone field.
+	PreferredSecondaryZone string `json:"preferredSecondaryZone,omitempty"`
+	// PreferredZone: Optional. Copy clone and point-in-time recovery clone of an
+	// instance to the specified zone. If no zone is specified, clone to the same
+	// primary zone as the source instance.
 	PreferredZone string `json:"preferredZone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -804,6 +837,7 @@ type ConnectSettings struct {
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
+	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
 	// version is 18.
@@ -838,6 +872,8 @@ type ConnectSettings struct {
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "MYSQL_8_4_0" - The database version is MySQL 8.4 and the patch version is
+	// 0.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1040,6 +1076,7 @@ type DatabaseInstance struct {
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
+	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
 	// version is 18.
@@ -1074,6 +1111,8 @@ type DatabaseInstance struct {
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "MYSQL_8_4_0" - The database version is MySQL 8.4 and the patch version is
+	// 0.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1226,6 +1265,9 @@ type DatabaseInstance struct {
 	//   "KMS_KEY_ISSUE" - The KMS key used by the instance is either revoked or
 	// denied access to
 	SuspensionReason []string `json:"suspensionReason,omitempty"`
+	// UpgradableDatabaseVersions: Output only. All database versions that are
+	// available for upgrade.
+	UpgradableDatabaseVersions []*AvailableDatabaseVersion `json:"upgradableDatabaseVersions,omitempty"`
 	// WriteEndpoint: Output only. The dns name of the primary instance in a
 	// replication group.
 	WriteEndpoint string `json:"writeEndpoint,omitempty"`
@@ -1778,6 +1820,7 @@ type Flag struct {
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
+	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
 	// version is 18.
@@ -1812,6 +1855,8 @@ type Flag struct {
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "MYSQL_8_4_0" - The database version is MySQL 8.4 and the patch version is
+	// 0.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -3459,8 +3504,8 @@ type Settings struct {
 	// ActiveDirectoryConfig: Active Directory configuration, relevant only for
 	// Cloud SQL for SQL Server.
 	ActiveDirectoryConfig *SqlActiveDirectoryConfig `json:"activeDirectoryConfig,omitempty"`
-	// AdvancedMachineFeatures: Specifies advance machine configuration for the
-	// instance relevant only for SQL Server.
+	// AdvancedMachineFeatures: Specifies advanced machine configuration for the
+	// instances relevant only for SQL Server.
 	AdvancedMachineFeatures *AdvancedMachineFeatures `json:"advancedMachineFeatures,omitempty"`
 	// AuthorizedGaeApplications: The App Engine app IDs that can access this
 	// instance. (Deprecated) Applied to First Generation instances only.

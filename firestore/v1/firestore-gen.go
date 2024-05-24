@@ -1606,8 +1606,8 @@ type GoogleFirestoreAdminV1Database struct {
 	//   "DELETE_PROTECTION_DISABLED" - Delete protection is disabled
 	//   "DELETE_PROTECTION_ENABLED" - Delete protection is enabled
 	DeleteProtectionState string `json:"deleteProtectionState,omitempty"`
-	// DeleteTime: Output only. The timestamp at which this database was soft
-	// deleted. Only set if the database has been soft deleted.
+	// DeleteTime: Output only. The timestamp at which this database was deleted.
+	// Only set if the database has been deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// EarliestVersionTime: Output only. The earliest timestamp at which older
 	// versions of the data can be read from the database. See
@@ -1784,7 +1784,7 @@ func (s *GoogleFirestoreAdminV1ExportDocumentsMetadata) MarshalJSON() ([]byte, e
 // FirestoreAdmin.ExportDocuments.
 type GoogleFirestoreAdminV1ExportDocumentsRequest struct {
 	// CollectionIds: Which collection ids to export. Unspecified means all
-	// collections.
+	// collections. Each collection id in this list must be unique.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 	// NamespaceIds: An empty list represents all namespaces. This is the preferred
 	// usage for databases that don't use namespaces. An empty string element
@@ -2017,7 +2017,8 @@ func (s *GoogleFirestoreAdminV1ImportDocumentsMetadata) MarshalJSON() ([]byte, e
 // FirestoreAdmin.ImportDocuments.
 type GoogleFirestoreAdminV1ImportDocumentsRequest struct {
 	// CollectionIds: Which collection ids to import. Unspecified means all
-	// collections included in the import.
+	// collections included in the import. Each collection id in this list must be
+	// unique.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 	// InputUriPrefix: Location of the exported files. This must match the
 	// output_uri_prefix of an ExportDocumentsResponse from an export that has

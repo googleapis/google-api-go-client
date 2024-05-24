@@ -395,6 +395,11 @@ type Backup struct {
 	// Name: Output only. The fully qualified name of the Backup.
 	// `projects/*/locations/*/backupPlans/*/backups/*`
 	Name string `json:"name,omitempty"`
+	// PermissiveMode: Output only. If false, Backup will fail when Backup for GKE
+	// detects Kubernetes configuration that is non-standard or requires additional
+	// setup to restore. Inherited from the parent BackupPlan's permissive_mode
+	// value.
+	PermissiveMode bool `json:"permissiveMode,omitempty"`
 	// PodCount: Output only. The total number of Kubernetes Pods contained in the
 	// Backup.
 	PodCount int64 `json:"podCount,omitempty"`
@@ -483,6 +488,10 @@ type BackupConfig struct {
 	// IncludeVolumeData: Optional. This flag specifies whether volume data should
 	// be backed up when PVCs are included in the scope of a Backup. Default: False
 	IncludeVolumeData bool `json:"includeVolumeData,omitempty"`
+	// PermissiveMode: Optional. If false, Backups will fail when Backup for GKE
+	// detects Kubernetes configuration that is non-standard or requires additional
+	// setup to restore. Default: False
+	PermissiveMode bool `json:"permissiveMode,omitempty"`
 	// SelectedApplications: If set, include just the resources referenced by the
 	// listed ProtectedApplications.
 	SelectedApplications *NamespacedNames `json:"selectedApplications,omitempty"`
@@ -974,6 +983,39 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// Filter: Defines the filter for `Restore`. This filter can be used to further
+// refine the resource selection of the `Restore` beyond the coarse-grained
+// scope defined in the `RestorePlan`. `exclusion_filters` take precedence over
+// `inclusion_filters`. If a resource matches both `inclusion_filters` and
+// `exclusion_filters`, it will not be restored.
+type Filter struct {
+	// ExclusionFilters: Optional. Excludes resources from restoration. If
+	// specified, a resource will not be restored if it matches any
+	// `ResourceSelector` of the `exclusion_filters`.
+	ExclusionFilters []*ResourceSelector `json:"exclusionFilters,omitempty"`
+	// InclusionFilters: Optional. Selects resources for restoration. If specified,
+	// only resources which match `inclusion_filters` will be selected for
+	// restoration. A resource will be selected if it matches any
+	// `ResourceSelector` of the `inclusion_filters`.
+	InclusionFilters []*ResourceSelector `json:"inclusionFilters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExclusionFilters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExclusionFilters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Filter) MarshalJSON() ([]byte, error) {
+	type NoMethod Filter
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GetBackupIndexDownloadUrlResponse: Response message for
 // GetBackupIndexDownloadUrl.
 type GetBackupIndexDownloadUrlResponse struct {
@@ -1141,6 +1183,32 @@ type GroupKind struct {
 
 func (s *GroupKind) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupKind
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GroupKindDependency: Defines a dependency between two group kinds.
+type GroupKindDependency struct {
+	// Requiring: Required. The requiring group kind requires that the other group
+	// kind be restored first.
+	Requiring *GroupKind `json:"requiring,omitempty"`
+	// Satisfying: Required. The satisfying group kind must be restored first in
+	// order to satisfy the dependency.
+	Satisfying *GroupKind `json:"satisfying,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requiring") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requiring") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GroupKindDependency) MarshalJSON() ([]byte, error) {
+	type NoMethod GroupKindDependency
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1628,6 +1696,51 @@ func (s *ResourceFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// ResourceSelector: Defines a selector to identify a single or a group of
+// resources. Conditions in the selector are optional, but at least one field
+// should be set to a non-empty value. If a condition is not specified, no
+// restrictions will be applied on that dimension. If more than one condition
+// is specified, a resource will be selected if and only if all conditions are
+// met.
+type ResourceSelector struct {
+	// GroupKind: Optional. Selects resources using their Kubernetes GroupKinds. If
+	// specified, only resources of provided GroupKind will be selected.
+	GroupKind *GroupKind `json:"groupKind,omitempty"`
+	// Labels: Optional. Selects resources using Kubernetes labels
+	// (https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/).
+	// If specified, a resource will be selected if and only if the resource has
+	// all of the provided labels and all the label values match.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Optional. Selects resources using their resource names. If specified,
+	// only resources with the provided name will be selected.
+	Name string `json:"name,omitempty"`
+	// Namespace: Optional. Selects resources using their namespaces. This only
+	// applies to namespace scoped resources and cannot be used for selecting
+	// cluster scoped resources. If specified, only resources in the provided
+	// namespace will be selected. If not specified, the filter will apply to both
+	// cluster scoped and namespace scoped resources (e.g. name or label). The
+	// Namespace (https://pkg.go.dev/k8s.io/api/core/v1#Namespace) resource itself
+	// will be restored if and only if any resources within the namespace are
+	// restored.
+	Namespace string `json:"namespace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupKind") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupKind") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceSelector
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // Restore: Represents both a request to Restore some portion of a Backup into
 // a target GKE cluster and a record of the restore operation itself.
 type Restore struct {
@@ -1658,6 +1771,14 @@ type Restore struct {
 	// `DeleteRestore` to ensure that their change will be applied to the same
 	// version of the resource.
 	Etag string `json:"etag,omitempty"`
+	// Filter: Optional. Immutable. Filters resources for `Restore`. If not
+	// specified, the scope of the restore will remain the same as defined in the
+	// `RestorePlan`. If this is specified, and no resources are matched by the
+	// `inclusion_filters` or everyting is excluded by the `exclusion_filters`,
+	// nothing will be restored. This filter can only be specified if the value of
+	// namespaced_resource_restore_mode is set to `MERGE_SKIP_ON_CONFLICT`,
+	// `MERGE_REPLACE_VOLUME_ON_CONFLICT` or `MERGE_REPLACE_ON_CONFLICT`.
+	Filter *Filter `json:"filter,omitempty"`
 	// Labels: A set of custom labels supplied by user.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. The full name of the Restore resource. Format:
@@ -1698,6 +1819,10 @@ type Restore struct {
 	// UpdateTime: Output only. The timestamp when this Restore resource was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// VolumeDataRestorePolicyOverrides: Optional. Immutable. Overrides the volume
+	// data restore policies selected in the Restore Config for override-scoped
+	// resources.
+	VolumeDataRestorePolicyOverrides []*VolumeDataRestorePolicyOverride `json:"volumeDataRestorePolicyOverrides,omitempty"`
 	// VolumesRestoredCount: Output only. Number of volumes restored during the
 	// restore execution.
 	VolumesRestoredCount int64 `json:"volumesRestoredCount,omitempty"`
@@ -1769,10 +1894,37 @@ type RestoreConfig struct {
 	// beginning of a restore process, the Restore will fail. If a conflict occurs
 	// during the restore process itself (e.g., because an out of band process
 	// creates conflicting resources), a conflict will be reported.
+	//   "MERGE_SKIP_ON_CONFLICT" - This mode merges the backup and the target
+	// cluster and skips the conflicting resources. If a single resource to restore
+	// exists in the cluster before restoration, the resource will be skipped,
+	// otherwise it will be restored.
+	//   "MERGE_REPLACE_VOLUME_ON_CONFLICT" - This mode merges the backup and the
+	// target cluster and skips the conflicting resources except volume data. If a
+	// PVC to restore already exists, this mode will restore/reconnect the volume
+	// without overwriting the PVC. It is similar to MERGE_SKIP_ON_CONFLICT except
+	// that it will apply the volume data policy for the conflicting PVCs: -
+	// RESTORE_VOLUME_DATA_FROM_BACKUP: restore data only and respect the reclaim
+	// policy of the original PV; - REUSE_VOLUME_HANDLE_FROM_BACKUP: reconnect and
+	// respect the reclaim policy of the original PV; - NO_VOLUME_DATA_RESTORATION:
+	// new provision and respect the reclaim policy of the original PV. Note that
+	// this mode could cause data loss as the original PV can be retained or
+	// deleted depending on its reclaim policy.
+	//   "MERGE_REPLACE_ON_CONFLICT" - This mode merges the backup and the target
+	// cluster and replaces the conflicting resources with the ones in the backup.
+	// If a single resource to restore exists in the cluster before restoration,
+	// the resource will be replaced with the one from the backup. To replace an
+	// existing resource, the first attempt is to update the resource to match the
+	// one from the backup; if the update fails, the second attempt is to delete
+	// the resource and restore it from the backup. Note that this mode could cause
+	// data loss as it replaces the existing resources in the target cluster, and
+	// the original PV can be retained or deleted depending on its reclaim policy.
 	NamespacedResourceRestoreMode string `json:"namespacedResourceRestoreMode,omitempty"`
 	// NoNamespaces: Do not restore any namespaced resources if set to "True".
 	// Specifying this field to "False" is not allowed.
 	NoNamespaces bool `json:"noNamespaces,omitempty"`
+	// RestoreOrder: Optional. RestoreOrder contains custom ordering to use on a
+	// Restore.
+	RestoreOrder *RestoreOrder `json:"restoreOrder,omitempty"`
 	// SelectedApplications: A list of selected ProtectedApplications to restore.
 	// The listed ProtectedApplications and all the resources to which they refer
 	// will be restored.
@@ -1812,6 +1964,11 @@ type RestoreConfig struct {
 	// either dynamically provisioning blank PVs or binding to statically
 	// provisioned PVs.
 	VolumeDataRestorePolicy string `json:"volumeDataRestorePolicy,omitempty"`
+	// VolumeDataRestorePolicyBindings: Optional. A table that binds volumes by
+	// their scope to a restore policy. Bindings must have a unique scope. Any
+	// volumes not scoped in the bindings are subject to the policy defined in
+	// volume_data_restore_policy.
+	VolumeDataRestorePolicyBindings []*VolumeDataRestorePolicyBinding `json:"volumeDataRestorePolicyBindings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllNamespaces") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1827,6 +1984,31 @@ type RestoreConfig struct {
 
 func (s *RestoreConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// RestoreOrder: Allows customers to specify dependencies between resources
+// that Backup for GKE can use to compute a resasonable restore order.
+type RestoreOrder struct {
+	// GroupKindDependencies: Optional. Contains a list of group kind dependency
+	// pairs provided by the customer, that is used by Backup for GKE to generate a
+	// group kind restore order.
+	GroupKindDependencies []*GroupKindDependency `json:"groupKindDependencies,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupKindDependencies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupKindDependencies") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestoreOrder) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreOrder
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2375,6 +2557,93 @@ type VolumeBackup struct {
 
 func (s *VolumeBackup) MarshalJSON() ([]byte, error) {
 	type NoMethod VolumeBackup
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// VolumeDataRestorePolicyBinding: Binds resources in the scope to the given
+// VolumeDataRestorePolicy.
+type VolumeDataRestorePolicyBinding struct {
+	// Policy: Required. The VolumeDataRestorePolicy to apply when restoring
+	// volumes in scope.
+	//
+	// Possible values:
+	//   "VOLUME_DATA_RESTORE_POLICY_UNSPECIFIED" - Unspecified (illegal).
+	//   "RESTORE_VOLUME_DATA_FROM_BACKUP" - For each PVC to be restored, create a
+	// new underlying volume and PV from the corresponding VolumeBackup contained
+	// within the Backup.
+	//   "REUSE_VOLUME_HANDLE_FROM_BACKUP" - For each PVC to be restored, attempt
+	// to reuse the original PV contained in the Backup (with its original
+	// underlying volume). This option is likely only usable when restoring a
+	// workload to its original cluster.
+	//   "NO_VOLUME_DATA_RESTORATION" - For each PVC to be restored, create PVC
+	// without any particular action to restore data. In this case, the normal
+	// Kubernetes provisioning logic would kick in, and this would likely result in
+	// either dynamically provisioning blank PVs or binding to statically
+	// provisioned PVs.
+	Policy string `json:"policy,omitempty"`
+	// VolumeType: The volume type, as determined by the PVC's bound PV, to apply
+	// the policy to.
+	//
+	// Possible values:
+	//   "VOLUME_TYPE_UNSPECIFIED" - Default
+	//   "GCE_PERSISTENT_DISK" - Compute Engine Persistent Disk volume
+	VolumeType string `json:"volumeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *VolumeDataRestorePolicyBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod VolumeDataRestorePolicyBinding
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// VolumeDataRestorePolicyOverride: Defines an override to apply a
+// VolumeDataRestorePolicy for scoped resources.
+type VolumeDataRestorePolicyOverride struct {
+	// Policy: Required. The VolumeDataRestorePolicy to apply when restoring
+	// volumes in scope.
+	//
+	// Possible values:
+	//   "VOLUME_DATA_RESTORE_POLICY_UNSPECIFIED" - Unspecified (illegal).
+	//   "RESTORE_VOLUME_DATA_FROM_BACKUP" - For each PVC to be restored, create a
+	// new underlying volume and PV from the corresponding VolumeBackup contained
+	// within the Backup.
+	//   "REUSE_VOLUME_HANDLE_FROM_BACKUP" - For each PVC to be restored, attempt
+	// to reuse the original PV contained in the Backup (with its original
+	// underlying volume). This option is likely only usable when restoring a
+	// workload to its original cluster.
+	//   "NO_VOLUME_DATA_RESTORATION" - For each PVC to be restored, create PVC
+	// without any particular action to restore data. In this case, the normal
+	// Kubernetes provisioning logic would kick in, and this would likely result in
+	// either dynamically provisioning blank PVs or binding to statically
+	// provisioned PVs.
+	Policy string `json:"policy,omitempty"`
+	// SelectedPvcs: A list of PVCs to apply the policy override to.
+	SelectedPvcs *NamespacedNames `json:"selectedPvcs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *VolumeDataRestorePolicyOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod VolumeDataRestorePolicyOverride
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

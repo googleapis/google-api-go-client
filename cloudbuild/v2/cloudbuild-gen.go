@@ -475,7 +475,7 @@ type BitbucketDataCenterConfig struct {
 	// AuthorizerCredential: Required. A http access token with the `REPO_ADMIN`
 	// scope access.
 	AuthorizerCredential *UserCredential `json:"authorizerCredential,omitempty"`
-	// HostUri: Required. The URI of the Bitbucket Data Center instance or cluster
+	// HostUri: Optional. The URI of the Bitbucket Data Center instance or cluster
 	// this connection is for.
 	HostUri string `json:"hostUri,omitempty"`
 	// ReadAuthorizerCredential: Required. A http access token with the `REPO_READ`
@@ -582,7 +582,8 @@ func (s *ChildStatusReference) MarshalJSON() ([]byte, error) {
 // Connection: A connection to a SCM like GitHub, GitHub Enterprise, Bitbucket
 // Data Center, Bitbucket Cloud or GitLab.
 type Connection struct {
-	// Annotations: Allows clients to store small amounts of arbitrary data.
+	// Annotations: Optional. Allows clients to store small amounts of arbitrary
+	// data.
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// BitbucketCloudConfig: Configuration for connections to Bitbucket Cloud.
 	BitbucketCloudConfig *BitbucketCloudConfig `json:"bitbucketCloudConfig,omitempty"`
@@ -592,9 +593,9 @@ type Connection struct {
 	// CreateTime: Output only. Server assigned timestamp for when the connection
 	// was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Disabled: If disabled is set to true, functionality is disabled for this
-	// connection. Repository based API methods and webhooks processing for
-	// repositories in this connection will be disabled.
+	// Disabled: Optional. If disabled is set to true, functionality is disabled
+	// for this connection. Repository based API methods and webhooks processing
+	// for repositories in this connection will be disabled.
 	Disabled bool `json:"disabled,omitempty"`
 	// Etag: This checksum is computed by the server based on the value of other
 	// fields, and may be sent on update and delete requests to ensure the client
@@ -930,12 +931,12 @@ func (s *FetchReadWriteTokenResponse) MarshalJSON() ([]byte, error) {
 
 // GitHubConfig: Configuration for connections to github.com.
 type GitHubConfig struct {
-	// AppInstallationId: GitHub App installation id.
+	// AppInstallationId: Optional. GitHub App installation id.
 	AppInstallationId int64 `json:"appInstallationId,omitempty,string"`
-	// AuthorizerCredential: OAuth credential of the account that authorized the
-	// Cloud Build GitHub App. It is recommended to use a robot account instead of
-	// a human user account. The OAuth token must be tied to the Cloud Build GitHub
-	// App.
+	// AuthorizerCredential: Optional. OAuth credential of the account that
+	// authorized the Cloud Build GitHub App. It is recommended to use a robot
+	// account instead of a human user account. The OAuth token must be tied to the
+	// Cloud Build GitHub App.
 	AuthorizerCredential *OAuthCredential `json:"authorizerCredential,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppInstallationId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1004,31 +1005,33 @@ func (s *GoogleDevtoolsCloudbuildV2Condition) MarshalJSON() ([]byte, error) {
 type GoogleDevtoolsCloudbuildV2GitHubEnterpriseConfig struct {
 	// ApiKey: Required. API Key used for authentication of webhook events.
 	ApiKey string `json:"apiKey,omitempty"`
-	// AppId: Id of the GitHub App created from the manifest.
+	// AppId: Optional. Id of the GitHub App created from the manifest.
 	AppId int64 `json:"appId,omitempty,string"`
-	// AppInstallationId: ID of the installation of the GitHub App.
+	// AppInstallationId: Optional. ID of the installation of the GitHub App.
 	AppInstallationId int64 `json:"appInstallationId,omitempty,string"`
-	// AppSlug: The URL-friendly name of the GitHub App.
+	// AppSlug: Optional. The URL-friendly name of the GitHub App.
 	AppSlug string `json:"appSlug,omitempty"`
 	// HostUri: Required. The URI of the GitHub Enterprise host this connection is
 	// for.
 	HostUri string `json:"hostUri,omitempty"`
-	// PrivateKeySecretVersion: SecretManager resource containing the private key
-	// of the GitHub App, formatted as `projects/*/secrets/*/versions/*`.
+	// PrivateKeySecretVersion: Optional. SecretManager resource containing the
+	// private key of the GitHub App, formatted as
+	// `projects/*/secrets/*/versions/*`.
 	PrivateKeySecretVersion string `json:"privateKeySecretVersion,omitempty"`
 	// ServerVersion: Output only. GitHub Enterprise version installed at the
 	// host_uri.
 	ServerVersion string `json:"serverVersion,omitempty"`
-	// ServiceDirectoryConfig: Configuration for using Service Directory to
-	// privately connect to a GitHub Enterprise server. This should only be set if
-	// the GitHub Enterprise server is hosted on-premises and not reachable by
+	// ServiceDirectoryConfig: Optional. Configuration for using Service Directory
+	// to privately connect to a GitHub Enterprise server. This should only be set
+	// if the GitHub Enterprise server is hosted on-premises and not reachable by
 	// public internet. If this field is left empty, calls to the GitHub Enterprise
 	// server will be made over the public internet.
 	ServiceDirectoryConfig *GoogleDevtoolsCloudbuildV2ServiceDirectoryConfig `json:"serviceDirectoryConfig,omitempty"`
-	// SslCa: SSL certificate to use for requests to GitHub Enterprise.
+	// SslCa: Optional. SSL certificate to use for requests to GitHub Enterprise.
 	SslCa string `json:"sslCa,omitempty"`
-	// WebhookSecretSecretVersion: SecretManager resource containing the webhook
-	// secret of the GitHub App, formatted as `projects/*/secrets/*/versions/*`.
+	// WebhookSecretSecretVersion: Optional. SecretManager resource containing the
+	// webhook secret of the GitHub App, formatted as
+	// `projects/*/secrets/*/versions/*`.
 	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1054,8 +1057,8 @@ type GoogleDevtoolsCloudbuildV2GitLabConfig struct {
 	// AuthorizerCredential: Required. A GitLab personal access token with the
 	// `api` scope access.
 	AuthorizerCredential *UserCredential `json:"authorizerCredential,omitempty"`
-	// HostUri: The URI of the GitLab Enterprise host this connection is for. If
-	// not specified, the default value is https://gitlab.com.
+	// HostUri: Optional. The URI of the GitLab Enterprise host this connection is
+	// for. If not specified, the default value is https://gitlab.com.
 	HostUri string `json:"hostUri,omitempty"`
 	// ReadAuthorizerCredential: Required. A GitLab personal access token with the
 	// minimum `read_api` scope access.
@@ -1063,13 +1066,13 @@ type GoogleDevtoolsCloudbuildV2GitLabConfig struct {
 	// ServerVersion: Output only. Version of the GitLab Enterprise server running
 	// on the `host_uri`.
 	ServerVersion string `json:"serverVersion,omitempty"`
-	// ServiceDirectoryConfig: Configuration for using Service Directory to
-	// privately connect to a GitLab Enterprise server. This should only be set if
-	// the GitLab Enterprise server is hosted on-premises and not reachable by
+	// ServiceDirectoryConfig: Optional. Configuration for using Service Directory
+	// to privately connect to a GitLab Enterprise server. This should only be set
+	// if the GitLab Enterprise server is hosted on-premises and not reachable by
 	// public internet. If this field is left empty, calls to the GitLab Enterprise
 	// server will be made over the public internet.
 	ServiceDirectoryConfig *GoogleDevtoolsCloudbuildV2ServiceDirectoryConfig `json:"serviceDirectoryConfig,omitempty"`
-	// SslCa: SSL certificate to use for requests to GitLab Enterprise.
+	// SslCa: Optional. SSL certificate to use for requests to GitLab Enterprise.
 	SslCa string `json:"sslCa,omitempty"`
 	// WebhookSecretSecretVersion: Required. Immutable. SecretManager resource
 	// containing the webhook secret of a GitLab Enterprise project, formatted as
@@ -1367,8 +1370,8 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // OAuthCredential: Represents an OAuth token of the account that authorized
 // the Connection, and associated metadata.
 type OAuthCredential struct {
-	// OauthTokenSecretVersion: A SecretManager resource containing the OAuth token
-	// that authorizes the Cloud Build connection. Format:
+	// OauthTokenSecretVersion: Optional. A SecretManager resource containing the
+	// OAuth token that authorizes the Cloud Build connection. Format:
 	// `projects/*/secrets/*/versions/*`.
 	OauthTokenSecretVersion string `json:"oauthTokenSecretVersion,omitempty"`
 	// Username: Output only. The username associated to this token.
@@ -2068,7 +2071,8 @@ func (s *Provenance) MarshalJSON() ([]byte, error) {
 
 // Repository: A repository associated to a parent connection.
 type Repository struct {
-	// Annotations: Allows clients to store small amounts of arbitrary data.
+	// Annotations: Optional. Allows clients to store small amounts of arbitrary
+	// data.
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// CreateTime: Output only. Server assigned timestamp for when the connection
 	// was created.

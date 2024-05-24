@@ -778,8 +778,8 @@ func (s *AssetList) MarshalJSON() ([]byte, error) {
 // AssetPerformanceData: Performance data for an asset.
 type AssetPerformanceData struct {
 	// DailyResourceUsageAggregations: Daily resource usage aggregations. Contains
-	// all of the data available for an asset, up to the last 40 days. Aggregations
-	// are sorted from oldest to most recent.
+	// all of the data available for an asset, up to the last 420 days.
+	// Aggregations are sorted from oldest to most recent.
 	DailyResourceUsageAggregations []*DailyResourceUsageAggregation `json:"dailyResourceUsageAggregations,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "DailyResourceUsageAggregations") to unconditionally include in API

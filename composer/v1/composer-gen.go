@@ -308,6 +308,46 @@ func (s *AllowedIpRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// CheckUpgradeRequest: Request to check whether image upgrade will succeed.
+type CheckUpgradeRequest struct {
+	// ImageVersion: Optional. The version of the software running in the
+	// environment. This encapsulates both the version of Cloud Composer
+	// functionality and the version of Apache Airflow. It must match the regular
+	// expression
+	// `composer-([0-9]+(\.[0-9]+\.[0-9]+(-preview\.[0-9]+)?)?|latest)-airflow-([0-9
+	// ]+(\.[0-9]+(\.[0-9]+)?)?)`. When used as input, the server also checks if
+	// the provided version is supported and denies the request for an unsupported
+	// version. The Cloud Composer portion of the image version is a full semantic
+	// version (https://semver.org), or an alias in the form of major version
+	// number or `latest`. When an alias is provided, the server replaces it with
+	// the current Cloud Composer version that satisfies the alias. The Apache
+	// Airflow portion of the image version is a full semantic version that points
+	// to one of the supported Apache Airflow versions, or an alias in the form of
+	// only major or major.minor versions specified. When an alias is provided, the
+	// server replaces it with the latest Apache Airflow version that satisfies the
+	// alias and is supported in the given Cloud Composer version. In all cases,
+	// the resolved image version is stored in the same field. See also version
+	// list (/composer/docs/concepts/versioning/composer-versions) and versioning
+	// overview (/composer/docs/concepts/versioning/composer-versioning-overview).
+	ImageVersion string `json:"imageVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckUpgradeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckUpgradeRequest
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // CheckUpgradeResponse: Message containing information about the result of an
 // upgrade check operation.
 type CheckUpgradeResponse struct {
@@ -2443,6 +2483,110 @@ type WorkloadsConfig struct {
 func (s *WorkloadsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadsConfig
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsLocationsEnvironmentsCheckUpgradeCall struct {
+	s                   *Service
+	environment         string
+	checkupgraderequest *CheckUpgradeRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// CheckUpgrade: Check if an upgrade operation on the environment will succeed.
+// In case of problems detailed info can be found in the returned Operation.
+//
+//   - environment: The resource name of the environment to check upgrade for, in
+//     the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environmentId}".
+func (r *ProjectsLocationsEnvironmentsService) CheckUpgrade(environment string, checkupgraderequest *CheckUpgradeRequest) *ProjectsLocationsEnvironmentsCheckUpgradeCall {
+	c := &ProjectsLocationsEnvironmentsCheckUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.environment = environment
+	c.checkupgraderequest = checkupgraderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEnvironmentsCheckUpgradeCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsCheckUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEnvironmentsCheckUpgradeCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsCheckUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEnvironmentsCheckUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsCheckUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.checkupgraderequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+environment}:checkUpgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"environment": c.environment,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.checkUpgrade" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsCheckUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsEnvironmentsCreateCall struct {

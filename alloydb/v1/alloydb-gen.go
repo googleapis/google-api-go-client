@@ -2357,7 +2357,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	//   "RECOMMENDATION_SIGNAL_DATA" - Database resource recommendation signal
 	// data
 	FeedType string `json:"feedType,omitempty"`
-	// RecommendationSignalData: More feed data would be added in subsequent CLs
+	// ObservabilityMetricData: More feed data would be added in subsequent CLs
+	ObservabilityMetricData  *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
 	RecommendationSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
 	ResourceHealthSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData         `json:"resourceHealthSignalData,omitempty"`
 	// ResourceId: Primary key associated with the Resource. resource_id is
@@ -2607,6 +2608,18 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// transaction logs settings
 	//   "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES" - Performance impact of high
 	// joins without indexes
+	//   "SIGNAL_TYPE_SUPERUSER_WRITING_TO_USER_TABLES" - Detects events where a
+	// Cloud SQL superuser (postgres for PostgreSQL servers or root for MySQL
+	// users) writes to non-system tables.
+	//   "SIGNAL_TYPE_USER_GRANTED_ALL_PERMISSIONS" - Detects events where a
+	// database user or role has been granted all privileges to a database, or to
+	// all tables, procedures, or functions in a schema.
+	//   "SIGNAL_TYPE_DATA_EXPORT_TO_EXTERNAL_CLOUD_STORAGE_BUCKET" - Detects if
+	// database instance data exported to a Cloud Storage bucket outside of the
+	// organization.
+	//   "SIGNAL_TYPE_DATA_EXPORT_TO_PUBLIC_CLOUD_STORAGE_BUCKET" - Detects if
+	// database instance data exported to a Cloud Storage bucket that is owned by
+	// the organization and is publicly accessible.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -2742,6 +2755,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	InstanceType string `json:"instanceType,omitempty"`
 	// Location: The resource location. REQUIRED
 	Location string `json:"location,omitempty"`
+	// MachineConfiguration: Machine configuration for this resource.
+	MachineConfiguration *StorageDatabasecenterPartnerapiV1mainMachineConfiguration `json:"machineConfiguration,omitempty"`
 	// PrimaryResourceId: Identifier for this resource's immediate parent/primary
 	// resource if the current resource is a replica or derived form of another
 	// Database resource. Else it would be NULL. REQUIRED if the immediate parent
@@ -2992,6 +3007,18 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	// transaction logs settings
 	//   "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES" - Performance impact of high
 	// joins without indexes
+	//   "SIGNAL_TYPE_SUPERUSER_WRITING_TO_USER_TABLES" - Detects events where a
+	// Cloud SQL superuser (postgres for PostgreSQL servers or root for MySQL
+	// users) writes to non-system tables.
+	//   "SIGNAL_TYPE_USER_GRANTED_ALL_PERMISSIONS" - Detects events where a
+	// database user or role has been granted all privileges to a database, or to
+	// all tables, procedures, or functions in a schema.
+	//   "SIGNAL_TYPE_DATA_EXPORT_TO_EXTERNAL_CLOUD_STORAGE_BUCKET" - Detects if
+	// database instance data exported to a Cloud Storage bucket outside of the
+	// organization.
+	//   "SIGNAL_TYPE_DATA_EXPORT_TO_PUBLIC_CLOUD_STORAGE_BUCKET" - Detects if
+	// database instance data exported to a Cloud Storage bucket that is owned by
+	// the organization and is publicly accessible.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3047,6 +3074,82 @@ type StorageDatabasecenterPartnerapiV1mainEntitlement struct {
 func (s *StorageDatabasecenterPartnerapiV1mainEntitlement) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainEntitlement
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// StorageDatabasecenterPartnerapiV1mainMachineConfiguration:
+// MachineConfiguration describes the configuration of a machine specific to
+// Database Resource.
+type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
+	// CpuCount: The number of CPUs.
+	CpuCount int64 `json:"cpuCount,omitempty"`
+	// MemorySizeInBytes: Memory size in bytes.
+	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CpuCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CpuCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainMachineConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainMachineConfiguration
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type StorageDatabasecenterPartnerapiV1mainObservabilityMetricData struct {
+	// MetricTimestamp: Required. The timestamp of the metric value.
+	MetricTimestamp string `json:"metricTimestamp,omitempty"`
+	// MetricType: Required. Type of metric like CPU, Memory, etc.
+	//
+	// Possible values:
+	//   "METRIC_TYPE_UNSPECIFIED"
+	//   "INSTANCE_PEAK_CPU_UTILISATION" - Peak CPU utilization for a DB instance
+	// as a fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases)
+	// List will keep increasing, e.g. PEAK_MEMORY_UTILISATION,
+	// NUMBER_OF_CONNECTIONS, SUCCESS_RATIO_FOR_QUERIES, etc.
+	MetricType string `json:"metricType,omitempty"`
+	// ResourceName: Required. Database resource name associated with the signal.
+	// Resource name to follow CAIS resource_name format as noted here
+	// go/condor-common-datamodel
+	ResourceName string `json:"resourceName,omitempty"`
+	// Value: Required. Value of the metric type.
+	Value float64 `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MetricTimestamp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MetricTimestamp") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainObservabilityMetricData
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData) UnmarshalJSON(data []byte) error {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainObservabilityMetricData
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
 }
 
 // StorageDatabasecenterPartnerapiV1mainOperationError: An error that occurred

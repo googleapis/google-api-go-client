@@ -773,8 +773,14 @@ func (s *ConnectivityTest) MarshalJSON() ([]byte, error) {
 type DeliverInfo struct {
 	// IpAddress: IP address of the target (if applicable).
 	IpAddress string `json:"ipAddress,omitempty"`
+	// PscGoogleApiTarget: PSC Google API target the packet is delivered to (if
+	// applicable).
+	PscGoogleApiTarget string `json:"pscGoogleApiTarget,omitempty"`
 	// ResourceUri: URI of the resource that the packet is delivered to.
 	ResourceUri string `json:"resourceUri,omitempty"`
+	// StorageBucket: Name of the Cloud Storage Bucket the packet is delivered to
+	// (if applicable).
+	StorageBucket string `json:"storageBucket,omitempty"`
 	// Target: Target type where the packet is delivered to.
 	//
 	// Possible values:
@@ -788,7 +794,7 @@ type DeliverInfo struct {
 	// Service
 	// Connect](https://cloud.google.com/vpc/docs/configure-private-service-connect-
 	// services).
-	//   "PSC_GOOGLE_API" - Target is all Google APIs that use [Private Service
+	//   "PSC_GOOGLE_API" - Target is Google APIs that use [Private Service
 	// Connect](https://cloud.google.com/vpc/docs/configure-private-service-connect-
 	// apis).
 	//   "PSC_VPC_SC" - Target is a VPC-SC that uses [Private Service
@@ -804,6 +810,8 @@ type DeliverInfo struct {
 	// for return traces.
 	//   "CLOUD_RUN_REVISION" - Target is a Cloud Run revision. Used only for
 	// return traces.
+	//   "GOOGLE_MANAGED_SERVICE" - Target is a Google-managed service. Used only
+	// for return traces.
 	Target string `json:"target,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -983,6 +991,9 @@ type DropInfo struct {
 	//   "CLOUD_NAT_NO_ADDRESSES" - Packet sent to Cloud Nat without active NAT
 	// IPs.
 	//   "ROUTING_LOOP" - Packet is stuck in a routing loop.
+	//   "DROPPED_INSIDE_GOOGLE_MANAGED_SERVICE" - Packet is dropped due to an
+	// unspecified reason inside a Google-managed service. Used only for return
+	// traces.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
@@ -1358,19 +1369,32 @@ func (s *ForwardInfo) MarshalJSON() ([]byte, error) {
 // ForwardingRuleInfo: For display only. Metadata associated with a Compute
 // Engine forwarding rule.
 type ForwardingRuleInfo struct {
-	// DisplayName: Name of a Compute Engine forwarding rule.
+	// DisplayName: Name of the forwarding rule.
 	DisplayName string `json:"displayName,omitempty"`
+	// LoadBalancerName: Name of the load balancer the forwarding rule belongs to.
+	// Empty for forwarding rules not related to load balancers (like PSC
+	// forwarding rules).
+	LoadBalancerName string `json:"loadBalancerName,omitempty"`
 	// MatchedPortRange: Port range defined in the forwarding rule that matches the
-	// test.
+	// packet.
 	MatchedPortRange string `json:"matchedPortRange,omitempty"`
 	// MatchedProtocol: Protocol defined in the forwarding rule that matches the
-	// test.
+	// packet.
 	MatchedProtocol string `json:"matchedProtocol,omitempty"`
-	// NetworkUri: Network URI. Only valid for Internal Load Balancer.
+	// NetworkUri: Network URI.
 	NetworkUri string `json:"networkUri,omitempty"`
+	// PscGoogleApiTarget: PSC Google API target this forwarding rule targets (if
+	// applicable).
+	PscGoogleApiTarget string `json:"pscGoogleApiTarget,omitempty"`
+	// PscServiceAttachmentUri: URI of the PSC service attachment this forwarding
+	// rule targets (if applicable).
+	PscServiceAttachmentUri string `json:"pscServiceAttachmentUri,omitempty"`
+	// Region: Region of the forwarding rule. Set only for regional forwarding
+	// rules.
+	Region string `json:"region,omitempty"`
 	// Target: Target type of the forwarding rule.
 	Target string `json:"target,omitempty"`
-	// Uri: URI of a Compute Engine forwarding rule.
+	// Uri: URI of the forwarding rule.
 	Uri string `json:"uri,omitempty"`
 	// Vip: VIP of the forwarding rule.
 	Vip string `json:"vip,omitempty"`
@@ -2363,6 +2387,29 @@ func (s *RouteInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// ServerlessNegInfo: For display only. Metadata associated with the serverless
+// network endpoint group backend.
+type ServerlessNegInfo struct {
+	// NegUri: URI of the serverless network endpoint group.
+	NegUri string `json:"negUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NegUri") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NegUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServerlessNegInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ServerlessNegInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
@@ -2482,6 +2529,9 @@ type Step struct {
 	ProxyConnection *ProxyConnectionInfo `json:"proxyConnection,omitempty"`
 	// Route: Display information of a Compute Engine route.
 	Route *RouteInfo `json:"route,omitempty"`
+	// ServerlessNeg: Display information of a Serverless network endpoint group
+	// backend. Used only for return traces.
+	ServerlessNeg *ServerlessNegInfo `json:"serverlessNeg,omitempty"`
 	// State: Each step is in one of the pre-defined states.
 	//
 	// Possible values:
@@ -2518,6 +2568,9 @@ type Step struct {
 	//   "START_FROM_PSC_PUBLISHED_SERVICE" - Initial state: packet originating
 	// from a published service that uses Private Service Connect. Used only for
 	// return traces.
+	//   "START_FROM_SERVERLESS_NEG" - Initial state: packet originating from a
+	// serverless network endpoint group backend. Used only for return traces. The
+	// serverless_neg information is populated.
 	//   "APPLY_INGRESS_FIREWALL_RULE" - Config checking state: verify ingress
 	// firewall rule.
 	//   "APPLY_EGRESS_FIREWALL_RULE" - Config checking state: verify egress

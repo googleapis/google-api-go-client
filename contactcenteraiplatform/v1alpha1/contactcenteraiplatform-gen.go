@@ -227,7 +227,33 @@ func (s *AdminUser) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
-// ContactCenter: Message describing ContactCenter object Next ID: 22
+// Component: Defines a logical CCAIP component that e.g. “EMAIL”, "CRM".
+// For more information see go/ccaip-private-path-v2. Each logical component is
+// associated with a list of service attachments.
+type Component struct {
+	// Name: Name of the component.
+	Name string `json:"name,omitempty"`
+	// ServiceAttachments: Associated service attachments.
+	ServiceAttachments []*ServiceAttachment `json:"serviceAttachments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Component) MarshalJSON() ([]byte, error) {
+	type NoMethod Component
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ContactCenter: Message describing ContactCenter object Next ID: 23
 type ContactCenter struct {
 	// AdminUser: Optional. Info about the first admin user, such as given name and
 	// family name.
@@ -237,6 +263,8 @@ type ContactCenter struct {
 	CcaipManagedUsers bool `json:"ccaipManagedUsers,omitempty"`
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
+	// Critical: Optional. Critical release channel.
+	Critical *Critical `json:"critical,omitempty"`
 	// CustomerDomainPrefix: Required. Immutable. At least 2 and max 16 char long,
 	// must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).
 	CustomerDomainPrefix string `json:"customerDomainPrefix,omitempty"`
@@ -256,6 +284,8 @@ type ContactCenter struct {
 	Name string `json:"name,omitempty"`
 	// Normal: Optional. Normal release channel.
 	Normal *Normal `json:"normal,omitempty"`
+	// PrivateAccess: Optional. VPC-SC related networking configuration.
+	PrivateAccess *PrivateAccess `json:"privateAccess,omitempty"`
 	// PrivateComponents: Output only. A list of UJET components that should be
 	// privately accessed. This field is set by reading settings from the data
 	// plane. For more information about the format of the component please refer
@@ -277,6 +307,15 @@ type ContactCenter struct {
 	//   "STATE_TERMINATING_FAILED" - State TERMINATING_FAILED
 	//   "STATE_TERMINATED" - State TERMINATED
 	//   "STATE_IN_GRACE_PERIOD" - State IN_GRACE_PERIOD
+	//   "STATE_FAILING_OVER" - State in STATE_FAILING_OVER. This State must ONLY
+	// be used by Multiregional Instances when a failover was triggered. Customers
+	// are not able to update instances in this state.
+	//   "STATE_DEGRADED" - State DEGRADED. This State must ONLY be used by
+	// Multiregional Instances after a failover was executed successfully.
+	// Customers are not able to update instances in this state.
+	//   "STATE_REPAIRING" - State REPAIRING. This State must ONLY be used by
+	// Multiregional Instances after a fallback was triggered. Customers are not
+	// able to update instancs in this state.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. [Output only] Update time stamp
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -336,7 +375,32 @@ func (s *ContactCenterQuota) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Early: First Channel to receive the updates. Meant to dev/test instances
+// Critical: Instances in this Channel will receive updates after all instances
+// in `Critical` were updated + 2 days. They also will only be updated outside
+// of their peak hours.
+type Critical struct {
+	// PeakHours: Required. Hours during which the instance should not be updated.
+	PeakHours []*WeeklySchedule `json:"peakHours,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PeakHours") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PeakHours") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Critical) MarshalJSON() ([]byte, error) {
+	type NoMethod Critical
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// Early: LINT.IfChange First Channel to receive the updates. Meant to dev/test
+// instances
 type Early struct {
 }
 
@@ -643,6 +707,33 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// PrivateAccess: Defines ingress and egress private traffic settings for CCAIP
+// instances.
+type PrivateAccess struct {
+	// EgressSettings: List of egress components that should not be accessed via
+	// the Internet. For more information see go/ccaip-private-path-v2.
+	EgressSettings []*Component `json:"egressSettings,omitempty"`
+	// IngressSettings: List of ingress components that should not be accessed via
+	// the Internet. For more information see go/ccaip-private-path-v2.
+	IngressSettings []*Component `json:"ingressSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EgressSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EgressSettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateAccess) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateAccess
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // Quota: Quota details.
 type Quota struct {
 	// ContactCenterCountLimit: Reflects the count limit of contact centers on a
@@ -690,6 +781,94 @@ func (s *Quota) MarshalJSON() ([]byte, error) {
 
 // SAMLParams: Message storing SAML params to enable Google as IDP.
 type SAMLParams struct {
+	// AuthenticationContexts: Additional contexts used for authentication.
+	//
+	// Possible values:
+	//   "AUTHENTICATION_CONTEXT_UNSPECIFIED" - The Unspecified class indicates
+	// that the authentication was performed by unspecified means.
+	//   "INTERNET_PROTOCOL" - The Internet Protocol class is applicable when a
+	// principal is authenticated through the use of a provided IP address.
+	//   "INTERNET_PROTOCOL_PASSWORD" - The Internet Protocol Password class is
+	// applicable when a principal is authenticated through the use of a provided
+	// IP address, in addition to a username/password.
+	//   "KERBEROS" - This class is applicable when the principal has authenticated
+	// using a password to a local authentication authority, in order to acquire a
+	// Kerberos ticket. That Kerberos ticket is then used for subsequent network
+	// authentication.
+	//   "MOBILE_ONE_FACTOR_UNREGISTERED" - Reflects no mobile customer
+	// registration procedures and an authentication of the mobile device without
+	// requiring explicit end-user interaction. This context class authenticates
+	// only the device and never the user; it is useful when services other than
+	// the mobile operator want to add a secure device authentication to their
+	// authentication process.
+	//   "MOBILE_TWO_FACTOR_UNREGISTERED" - Reflects no mobile customer
+	// registration procedures and a two-factor based authentication, such as
+	// secure device and user PIN. This context class is useful when a service
+	// other than the mobile operator wants to link their customer ID to a mobile
+	// supplied two-factor authentication service by capturing mobile phone data at
+	// enrollment.
+	//   "MOBILE_ONE_FACTOR_CONTRACT" - Reflects mobile contract customer
+	// registration procedures and a single factor authentication. For example, a
+	// digital signing device with tamper resistant memory for key storage, such as
+	// the mobile MSISDN, but no required PIN or biometric for real-time user
+	// authentication.
+	//   "MOBILE_TWO_FACTOR_CONTRACT" - Reflects mobile contract customer
+	// registration procedures and a two-factor based authentication. For example,
+	// a digital signing device with tamper resistant memory for key storage, such
+	// as a GSM SIM, that requires explicit proof of user identity and intent, such
+	// as a PIN or biometric.
+	//   "PASSWORD" - The Password class is applicable when a principal
+	// authenticates to an authentication authority through the presentation of a
+	// password over an unprotected HTTP session.
+	//   "PASSWORD_PROTECTED_TRANSPORT" - The PasswordProtectedTransport class is
+	// applicable when a principal authenticates to an authentication authority
+	// through the presentation of a password over a protected session.
+	//   "PREVIOUS_SESSION" - The PreviousSession class is applicable when a
+	// principal had authenticated to an authentication authority at some point in
+	// the past using any authentication context supported by that authentication
+	// authority
+	//   "PUBLIC_KEY_X509" - The X509 context class indicates that the principal
+	// authenticated by means of a digital signature where the key was validated as
+	// part of an X.509 Public Key Infrastructure.
+	//   "PUBLIC_KEY_PGP" - The PGP context class indicates that the principal
+	// authenticated by means of a digital signature where the key was validated as
+	// part of a PGP Public Key Infrastructure.
+	//   "PUBLIC_KEY_SPKI" - The SPKI context class indicates that the principal
+	// authenticated by means of a digital signature where the key was validated
+	// via an SPKI Infrastructure.
+	//   "PUBLIC_KEY_XML_DIGITAL_SIGNATURE" - This context class indicates that the
+	// principal authenticated by means of a digital signature according to the
+	// processing rules specified in the XML Digital Signature specification
+	// [XMLSig].
+	//   "SMARTCARD" - The Smartcard class is identified when a principal
+	// authenticates to an authentication authority using a smartcard.
+	//   "SMARTCARD_PKI" - The SmartcardPKI class is applicable when a principal
+	// authenticates to an authentication authority through a two-factor
+	// authentication mechanism using a smartcard with enclosed private key and a
+	// PIN.
+	//   "SOFTWARE_PKI" - The Software-PKI class is applicable when a principal
+	// uses an X.509 certificate stored in software to authenticate to the
+	// authentication authority.
+	//   "TELEPHONY" - This class is used to indicate that the principal
+	// authenticated via the provision of a fixed-line telephone number,
+	// transported via a telephony protocol such as ADSL.
+	//   "TELEPHONY_NOMADIC" - Indicates that the principal is "roaming" (perhaps
+	// using a phone card) and authenticates via the means of the line number, a
+	// user suffix, and a password element.
+	//   "TELEPHONY_PERSONALIZED" - This class is used to indicate that the
+	// principal authenticated via the provision of a fixed-line telephone number
+	// and a user suffix, transported via a telephony protocol such as ADSL.
+	//   "TELEPHONY_AUTHENTICATED" - Indicates that the principal authenticated via
+	// the means of the line number, a user suffix, and a password element.
+	//   "SECURE_REMOTE_PASSWORD" - The Secure Remote Password class is applicable
+	// when the authentication was performed by means of Secure Remote Password as
+	// specified in [RFC 2945].
+	//   "SSL_TLS_CERTIFICATE_BASED" - This class indicates that the principal
+	// authenticated by means of a client certificate, secured with the SSL/TLS
+	// transport.
+	//   "TIME_SYNC_TOKEN" - The TimeSyncToken class is applicable when a principal
+	// authenticates through a time synchronization token.
+	AuthenticationContexts []string `json:"authenticationContexts,omitempty"`
 	// Certificate: SAML certificate
 	Certificate string `json:"certificate,omitempty"`
 	// EmailMapping: IdP field that maps to the user’s email address
@@ -700,21 +879,46 @@ type SAMLParams struct {
 	SsoUri string `json:"ssoUri,omitempty"`
 	// UserEmail: Email address of the first admin users.
 	UserEmail string `json:"userEmail,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Certificate") to
+	// ForceSendFields is a list of field names (e.g. "AuthenticationContexts") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Certificate") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AuthenticationContexts") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SAMLParams) MarshalJSON() ([]byte, error) {
 	type NoMethod SAMLParams
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceAttachment: Container for the VPC-SC networking configurations.
+type ServiceAttachment struct {
+	// Name: The service attachment name that will be used for sending private
+	// traffic to the CCAIP tenant project. Example:
+	// "projects/${TENANT_PROJECT_ID}/regions/${REGION}/serviceAttachments/ingress-d
+	// efault".
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceAttachment) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceAttachment
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -752,6 +956,39 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// TimeOfDay: Represents a time of day. The date and time zone are either not
+// significant or are specified elsewhere. An API may choose to allow leap
+// seconds. Related types are google.type.Date and `google.protobuf.Timestamp`.
+type TimeOfDay struct {
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
+	// choose to allow the value "24:00:00" for scenarios like business closing
+	// time.
+	Hours int64 `json:"hours,omitempty"`
+	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
+	// API may allow the value 60 if it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // URIs: Message storing the URIs of the ContactCenter.
 type URIs struct {
 	// ChatBotUri: Chat Bot Uri of the ContactCenter
@@ -778,6 +1015,45 @@ type URIs struct {
 
 func (s *URIs) MarshalJSON() ([]byte, error) {
 	type NoMethod URIs
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// WeeklySchedule: Message representing a weekly schedule.
+type WeeklySchedule struct {
+	// Days: Required. Days of the week this schedule applies to.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	Days []string `json:"days,omitempty"`
+	// Duration: Optional. Duration of the schedule.
+	Duration string `json:"duration,omitempty"`
+	// EndTime: Optional. Daily end time of the schedule. If `end_time` is before
+	// `start_time`, the schedule will be considered as ending on the next day.
+	EndTime *TimeOfDay `json:"endTime,omitempty"`
+	// StartTime: Required. Daily start time of the schedule.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Days") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Days") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *WeeklySchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod WeeklySchedule
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

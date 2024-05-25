@@ -4018,6 +4018,8 @@ type MonitoringComponentConfig struct {
 	//   "DAEMONSET" - DaemonSet
 	//   "DEPLOYMENT" - Deployment
 	//   "STATEFULSET" - Statefulset
+	//   "CADVISOR" - CADVISOR
+	//   "KUBELET" - KUBELET
 	EnableComponents []string `json:"enableComponents,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableComponents") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -113,6 +113,10 @@ const (
 	// with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 
+	// See and download your Google Drive files that were created or edited by
+	// Google Meet.
+	DriveMeetReadonlyScope = "https://www.googleapis.com/auth/drive.meet.readonly"
+
 	// View and manage metadata of files in your Google Drive
 	DriveMetadataScope = "https://www.googleapis.com/auth/drive.metadata"
 
@@ -136,6 +140,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/drive.appdata",
 		"https://www.googleapis.com/auth/drive.apps.readonly",
 		"https://www.googleapis.com/auth/drive.file",
+		"https://www.googleapis.com/auth/drive.meet.readonly",
 		"https://www.googleapis.com/auth/drive.metadata",
 		"https://www.googleapis.com/auth/drive.metadata.readonly",
 		"https://www.googleapis.com/auth/drive.photos.readonly",

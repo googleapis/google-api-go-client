@@ -441,6 +441,8 @@ type AgentMetadata struct {
 	// InstancePreemptionNoticeReceived: If the GCP instance has received
 	// preemption notice.
 	InstancePreemptionNoticeReceived bool `json:"instancePreemptionNoticeReceived,omitempty"`
+	// MachineType: Optional. machine type of the VM
+	MachineType string `json:"machineType,omitempty"`
 	// OsRelease: parsed contents of /etc/os-release
 	OsRelease map[string]string `json:"osRelease,omitempty"`
 	// Version: agent binary version running on VM
@@ -634,9 +636,15 @@ func (s *AgentTaskRunnable) MarshalJSON() ([]byte, error) {
 type AgentTaskSpec struct {
 	// Environment: Environment variables to set before running the Task.
 	Environment *AgentEnvironment `json:"environment,omitempty"`
-	// MaxRunDuration: Maximum duration the task should run. The task will be
-	// killed and marked as FAILED if over this limit. The valid value range for
-	// max_run_duration in seconds is [0, 315576000000.999999999],
+	// MaxRunDuration: Maximum duration the task should run before being
+	// automatically retried (if enabled) or automatically failed. Format the value
+	// of this field as a time limit in seconds followed by `s`—for example,
+	// `3600s` for 1 hour. The field accepts any value between 0 and the maximum
+	// listed for the `Duration` field type at
+	// https://protobuf.dev/reference/protobuf/google.protobuf/#duration; however,
+	// the actual maximum run time for a job will be limited to the maximum run
+	// time for a job listed at
+	// https://cloud.google.com/batch/quotas#max-job-duration.
 	MaxRunDuration string `json:"maxRunDuration,omitempty"`
 	// Runnables: AgentTaskRunnable is runanbles that will be executed on the
 	// agent.
@@ -1167,11 +1175,11 @@ func (s *InstancePolicy) MarshalJSON() ([]byte, error) {
 // instance template. If undefined, Batch picks the type of VM to use and
 // doesn't include optional VM resources such as GPUs and extra disks.
 type InstancePolicyOrTemplate struct {
-	// InstallGpuDrivers: Set this field true if users want Batch to help fetch
+	// InstallGpuDrivers: Set this field true if you want Batch to help fetch
 	// drivers from a third party location and install them for GPUs specified in
-	// policy.accelerators or instance_template on their behalf. Default is false.
-	// For Container-Optimized Image cases, Batch will install the accelerator
-	// driver following milestones of
+	// `policy.accelerators` or `instance_template` on your behalf. Default is
+	// false. For Container-Optimized Image cases, Batch will install the
+	// accelerator driver following milestones of
 	// https://cloud.google.com/container-optimized-os/docs/release-notes. For non
 	// Container-Optimized Image cases, following
 	// https://github.com/GoogleCloudPlatform/compute-gpu-installation/blob/main/linux/install_gpu_driver.py.
@@ -2187,13 +2195,12 @@ func (s *Task) MarshalJSON() ([]byte, error) {
 type TaskExecution struct {
 	// ExitCode: The exit code of a finished task. If the task succeeded, the exit
 	// code will be 0. If the task failed but not due to the following reasons, the
-	// exit code will be 50000. Otherwise, it can be from different sources: -
-	// Batch known failures as
-	// https://cloud.google.com/batch/docs/troubleshooting#reserved-exit-codes. -
-	// Batch runnable execution failures: You can rely on Batch logs for further
+	// exit code will be 50000. Otherwise, it can be from different sources: *
+	// Batch known failures:
+	// https://cloud.google.com/batch/docs/troubleshooting#reserved-exit-codes. *
+	// Batch runnable execution failures; you can rely on Batch logs to further
 	// diagnose: https://cloud.google.com/batch/docs/analyze-job-using-logs. If
-	// there are multiple runnables failures, Batch only exposes the first error
-	// caught for now.
+	// there are multiple runnables failures, Batch only exposes the first error.
 	ExitCode int64 `json:"exitCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExitCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2328,9 +2335,15 @@ type TaskSpec struct {
 	// MaxRetryCount: Maximum number of retries on failures. The default, 0, which
 	// means never retry. The valid value range is [0, 10].
 	MaxRetryCount int64 `json:"maxRetryCount,omitempty"`
-	// MaxRunDuration: Maximum duration the task should run. The task will be
-	// killed and marked as FAILED if over this limit. The valid value range for
-	// max_run_duration in seconds is [0, 315576000000.999999999],
+	// MaxRunDuration: Maximum duration the task should run before being
+	// automatically retried (if enabled) or automatically failed. Format the value
+	// of this field as a time limit in seconds followed by `s`—for example,
+	// `3600s` for 1 hour. The field accepts any value between 0 and the maximum
+	// listed for the `Duration` field type at
+	// https://protobuf.dev/reference/protobuf/google.protobuf/#duration; however,
+	// the actual maximum run time for a job will be limited to the maximum run
+	// time for a job listed at
+	// https://cloud.google.com/batch/quotas#max-job-duration.
 	MaxRunDuration string `json:"maxRunDuration,omitempty"`
 	// Runnables: The sequence of scripts or containers to run for this Task. Each
 	// Task using this TaskSpec executes its list of runnables in order. The Task

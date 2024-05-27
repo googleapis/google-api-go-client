@@ -428,6 +428,35 @@ type BoostConfig struct {
 	// Accelerators: Optional. A list of the type and count of accelerator cards
 	// attached to the boost instance. Defaults to `none`.
 	Accelerators []*Accelerator `json:"accelerators,omitempty"`
+	// BootDiskSizeGb: Optional. The size of the boot disk for the VM in gigabytes
+	// (GB). The minimum boot disk size is `30` GB. Defaults to `50` GB.
+	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
+	// EnableNestedVirtualization: Optional. Whether to enable nested
+	// virtualization on boosted Cloud Workstations VMs running using this boost
+	// configuration. Nested virtualization lets you run virtual machine (VM)
+	// instances inside your workstation. Before enabling nested virtualization,
+	// consider the following important considerations. Cloud Workstations
+	// instances are subject to the same restrictions as Compute Engine instances
+	// (https://cloud.google.com/compute/docs/instances/nested-virtualization/overview#restrictions):
+	// * **Organization policy**: projects, folders, or organizations may be
+	// restricted from creating nested VMs if the **Disable VM nested
+	// virtualization** constraint is enforced in the organization policy. For more
+	// information, see the Compute Engine section, Checking whether nested
+	// virtualization is allowed
+	// (https://cloud.google.com/compute/docs/instances/nested-virtualization/managing-constraint#checking_whether_nested_virtualization_is_allowed).
+	// * **Performance**: nested VMs might experience a 10% or greater decrease in
+	// performance for workloads that are CPU-bound and possibly greater than a 10%
+	// decrease for workloads that are input/output bound. * **Machine Type**:
+	// nested virtualization can only be enabled on boost configurations that
+	// specify a machine_type in the N1 or N2 machine series. * **GPUs**: nested
+	// virtualization may not be enabled on boost configurations with accelerators.
+	// * **Operating System**: Because Container-Optimized OS
+	// (https://cloud.google.com/compute/docs/images/os-details#container-optimized_os_cos)
+	// does not support nested virtualization, when nested virtualization is
+	// enabled, the underlying Compute Engine VM instances boot from an Ubuntu LTS
+	// (https://cloud.google.com/compute/docs/images/os-details#ubuntu_lts) image.
+	// Defaults to false.
+	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
 	// Id: Optional. Required. The id to be used for the boost config.
 	Id string `json:"id,omitempty"`
 	// MachineType: Optional. The type of machine that boosted VM instances will
@@ -899,6 +928,12 @@ type GenerateAccessTokenRequest struct {
 	// at most 24 hours in the future. If a value is not specified, the token's
 	// expiration time will be set to a default value of 1 hour in the future.
 	ExpireTime string `json:"expireTime,omitempty"`
+	// Port: Optional. Port for which the access token should be generated. If
+	// specified, the generated access token will grant access only to the
+	// specified port of the workstation. If specified, values must be within the
+	// range [1 - 65535]. If not specified, the generated access token will grant
+	// access to all ports of the workstation.
+	Port int64 `json:"port,omitempty"`
 	// Ttl: Desired lifetime duration of the access token. This value must be at
 	// most 24 hours. If a value is not specified, the token's lifetime will be set
 	// to a default value of 1 hour.

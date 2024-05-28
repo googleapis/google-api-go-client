@@ -145,6 +145,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Jwks = NewJwksService(s)
+	s.OauthClients = NewOauthClientsService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -155,6 +156,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Jwks *JwksService
+
+	OauthClients *OauthClientsService
 
 	Projects *ProjectsService
 }
@@ -172,6 +175,15 @@ func NewJwksService(s *Service) *JwksService {
 }
 
 type JwksService struct {
+	s *Service
+}
+
+func NewOauthClientsService(s *Service) *OauthClientsService {
+	rs := &OauthClientsService{s: s}
+	return rs
+}
+
+type OauthClientsService struct {
 	s *Service
 }
 
@@ -1378,9 +1390,9 @@ type GoogleFirebaseAppcheckV1Service struct {
 	// launched yet, you should enable enforcement immediately, since there are no
 	// outdated clients in use. Some services require certain conditions to be met
 	// before they will work with App Check, such as requiring you to upgrade to a
-	// specific service tier or requiring you to enable the service first. Until
-	// those requirements are met for a service, this `ENFORCED` setting will have
-	// no effect and App Check will not work with that service.
+	// specific service tier. Until those requirements are met for a service, this
+	// `ENFORCED` setting will have no effect and App Check will not work with that
+	// service.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
 	// Name: Required. The relative resource name of the service configuration
 	// object, in the format: ``` projects/{project_number}/services/{service_id}
@@ -1554,6 +1566,443 @@ func (c *JwksGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFirebaseAppcheckV1PublicJwkSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OauthClientsExchangeAppAttestAssertionCall struct {
+	s                                                         *Service
+	appid                                                     string
+	googlefirebaseappcheckv1exchangeappattestassertionrequest *GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// ExchangeAppAttestAssertion: Accepts an App Attest assertion and an artifact
+// previously obtained from ExchangeAppAttestAttestation and verifies those
+// with Apple. If valid, returns an AppCheckToken.
+//
+//   - app: The relative resource name of the iOS app, in the format: ```
+//     projects/{project_number}/apps/{app_id} ``` If necessary, the
+//     `project_number` element can be replaced with the project ID of the
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+func (r *OauthClientsService) ExchangeAppAttestAssertion(appid string, googlefirebaseappcheckv1exchangeappattestassertionrequest *GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest) *OauthClientsExchangeAppAttestAssertionCall {
+	c := &OauthClientsExchangeAppAttestAssertionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appid = appid
+	c.googlefirebaseappcheckv1exchangeappattestassertionrequest = googlefirebaseappcheckv1exchangeappattestassertionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OauthClientsExchangeAppAttestAssertionCall) Fields(s ...googleapi.Field) *OauthClientsExchangeAppAttestAssertionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OauthClientsExchangeAppAttestAssertionCall) Context(ctx context.Context) *OauthClientsExchangeAppAttestAssertionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OauthClientsExchangeAppAttestAssertionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OauthClientsExchangeAppAttestAssertionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangeappattestassertionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangeAppAttestAssertion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"app": c.appid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.oauthClients.exchangeAppAttestAssertion" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1AppCheckToken.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OauthClientsExchangeAppAttestAssertionCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppCheckToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1AppCheckToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OauthClientsExchangeAppAttestAttestationCall struct {
+	s                                                           *Service
+	appid                                                       string
+	googlefirebaseappcheckv1exchangeappattestattestationrequest *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// ExchangeAppAttestAttestation: Accepts an App Attest CBOR attestation and
+// verifies it with Apple using your preconfigured team and bundle IDs. If
+// valid, returns an attestation artifact that can later be exchanged for an
+// AppCheckToken using ExchangeAppAttestAssertion. For convenience and
+// performance, this method's response object will also contain an
+// AppCheckToken (if the verification is successful).
+//
+//   - app: The relative resource name of the iOS app, in the format: ```
+//     projects/{project_number}/apps/{app_id} ``` If necessary, the
+//     `project_number` element can be replaced with the project ID of the
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+func (r *OauthClientsService) ExchangeAppAttestAttestation(appid string, googlefirebaseappcheckv1exchangeappattestattestationrequest *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest) *OauthClientsExchangeAppAttestAttestationCall {
+	c := &OauthClientsExchangeAppAttestAttestationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appid = appid
+	c.googlefirebaseappcheckv1exchangeappattestattestationrequest = googlefirebaseappcheckv1exchangeappattestattestationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OauthClientsExchangeAppAttestAttestationCall) Fields(s ...googleapi.Field) *OauthClientsExchangeAppAttestAttestationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OauthClientsExchangeAppAttestAttestationCall) Context(ctx context.Context) *OauthClientsExchangeAppAttestAttestationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OauthClientsExchangeAppAttestAttestationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OauthClientsExchangeAppAttestAttestationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangeappattestattestationrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangeAppAttestAttestation")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"app": c.appid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.oauthClients.exchangeAppAttestAttestation" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OauthClientsExchangeAppAttestAttestationCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OauthClientsExchangeDebugTokenCall struct {
+	s                                                 *Service
+	appid                                             string
+	googlefirebaseappcheckv1exchangedebugtokenrequest *GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// ExchangeDebugToken: Validates a debug token secret that you have previously
+// created using CreateDebugToken. If valid, returns an AppCheckToken. Note
+// that a restrictive quota is enforced on this method to prevent accidental
+// exposure of the app to abuse.
+//
+//   - app: The relative resource name of the app, in the format: ```
+//     projects/{project_number}/apps/{app_id} ``` If necessary, the
+//     `project_number` element can be replaced with the project ID of the
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+func (r *OauthClientsService) ExchangeDebugToken(appid string, googlefirebaseappcheckv1exchangedebugtokenrequest *GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest) *OauthClientsExchangeDebugTokenCall {
+	c := &OauthClientsExchangeDebugTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appid = appid
+	c.googlefirebaseappcheckv1exchangedebugtokenrequest = googlefirebaseappcheckv1exchangedebugtokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OauthClientsExchangeDebugTokenCall) Fields(s ...googleapi.Field) *OauthClientsExchangeDebugTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OauthClientsExchangeDebugTokenCall) Context(ctx context.Context) *OauthClientsExchangeDebugTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OauthClientsExchangeDebugTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OauthClientsExchangeDebugTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1exchangedebugtokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:exchangeDebugToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"app": c.appid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.oauthClients.exchangeDebugToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1AppCheckToken.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OauthClientsExchangeDebugTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1AppCheckToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1AppCheckToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OauthClientsGenerateAppAttestChallengeCall struct {
+	s                                                         *Service
+	appid                                                     string
+	googlefirebaseappcheckv1generateappattestchallengerequest *GoogleFirebaseAppcheckV1GenerateAppAttestChallengeRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// GenerateAppAttestChallenge: Generates a challenge that protects the
+// integrity of an immediately following call to ExchangeAppAttestAttestation
+// or ExchangeAppAttestAssertion. A challenge should not be reused for multiple
+// calls.
+//
+//   - app: The relative resource name of the iOS app, in the format: ```
+//     projects/{project_number}/apps/{app_id} ``` If necessary, the
+//     `project_number` element can be replaced with the project ID of the
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+func (r *OauthClientsService) GenerateAppAttestChallenge(appid string, googlefirebaseappcheckv1generateappattestchallengerequest *GoogleFirebaseAppcheckV1GenerateAppAttestChallengeRequest) *OauthClientsGenerateAppAttestChallengeCall {
+	c := &OauthClientsGenerateAppAttestChallengeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appid = appid
+	c.googlefirebaseappcheckv1generateappattestchallengerequest = googlefirebaseappcheckv1generateappattestchallengerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OauthClientsGenerateAppAttestChallengeCall) Fields(s ...googleapi.Field) *OauthClientsGenerateAppAttestChallengeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OauthClientsGenerateAppAttestChallengeCall) Context(ctx context.Context) *OauthClientsGenerateAppAttestChallengeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OauthClientsGenerateAppAttestChallengeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OauthClientsGenerateAppAttestChallengeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1generateappattestchallengerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:generateAppAttestChallenge")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"app": c.appid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.oauthClients.generateAppAttestChallenge" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OauthClientsGenerateAppAttestChallengeCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -4971,7 +5420,7 @@ type ProjectsAppsRecaptchaV3ConfigPatchCall struct {
 
 // Patch: Updates the RecaptchaV3Config for the specified app. While this
 // configuration is incomplete or invalid, the app will be unable to exchange
-// reCAPTCHA tokens for App Check tokens. For security reasons, the
+// reCAPTCHA V3 tokens for App Check tokens. For security reasons, the
 // `site_secret` field is never populated in the response.
 //
 //   - name: The relative resource name of the reCAPTCHA v3 configuration object,

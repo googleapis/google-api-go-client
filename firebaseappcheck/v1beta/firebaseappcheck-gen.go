@@ -683,9 +683,9 @@ type GoogleFirebaseAppcheckV1betaBatchUpdateServicesRequest struct {
 	// A maximum of 100 objects can be updated in a batch.
 	Requests []*GoogleFirebaseAppcheckV1betaUpdateServiceRequest `json:"requests,omitempty"`
 	// UpdateMask: Optional. A comma-separated list of names of fields in the
-	// Services to update. Example: `display_name`. If this field is present, the
-	// `update_mask` field in the UpdateServiceRequest messages must all match this
-	// field, or the entire batch fails and no updates will be committed.
+	// Services to update. Example: `display_name`. If the `update_mask` field is
+	// set in both this request and any of the UpdateServiceRequest messages, they
+	// must match or the entire batch fails and no updates will be committed.
 	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Requests") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1606,8 +1606,8 @@ type GoogleFirebaseAppcheckV1betaResourcePolicy struct {
 	// has an up-to-date value before proceeding. This etag is strongly validated
 	// as defined by RFC 7232.
 	Etag string `json:"etag,omitempty"`
-	// Name: Required. The relative name of the resource policy object, in the
-	// format: ```
+	// Name: Required. Identifier. The relative name of the resource policy object,
+	// in the format: ```
 	// projects/{project_number}/services/{service_id}/resourcePolicies/{resource_po
 	// licy_id} ``` Note that the `service_id` element must be a supported service
 	// ID. Currently, the following service IDs are supported: *
@@ -1808,8 +1808,9 @@ type GoogleFirebaseAppcheckV1betaUpdateServiceRequest struct {
 	// (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase
 	// Realtime Database) * `firestore.googleapis.com` (Cloud Firestore) *
 	// `identitytoolkit.googleapis.com` (Firebase Authentication with Identity
-	// Platform) For Firebase Authentication to work with App Check, you must first
-	// upgrade to Firebase Authentication with Identity Platform
+	// Platform) * `oauth2.googleapis.com` (Google Identity for iOS) For Firebase
+	// Authentication to work with App Check, you must first upgrade to Firebase
+	// Authentication with Identity Platform
 	// (https://firebase.google.com/docs/auth#identity-platform).
 	Service *GoogleFirebaseAppcheckV1betaService `json:"service,omitempty"`
 	// UpdateMask: Required. A comma-separated list of names of fields in the
@@ -7071,7 +7072,7 @@ type ProjectsServicesGetCall struct {
 //     (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase
 //     Realtime Database) * `firestore.googleapis.com` (Cloud Firestore) *
 //     `identitytoolkit.googleapis.com` (Firebase Authentication with Identity
-//     Platform).
+//     Platform) * `oauth2.googleapis.com` (Google Identity for iOS).
 func (r *ProjectsServicesService) Get(name string) *ProjectsServicesGetCall {
 	c := &ProjectsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7192,8 +7193,8 @@ func (r *ProjectsServicesService) List(parent string) *ProjectsServicesListCall 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // Services to return in the response. Only explicitly configured services are
 // returned. The server may return fewer than this at its own discretion. If no
-// value is specified or set to zero (or too large a value is specified), the
-// server will impose its own limit.
+// value is specified (or too large a value is specified), the server will
+// impose its own limit.
 func (c *ProjectsServicesListCall) PageSize(pageSize int64) *ProjectsServicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -8057,7 +8058,8 @@ type ProjectsServicesResourcePoliciesPatchCall struct {
 
 // Patch: Updates the specified ResourcePolicy configuration.
 //
-//   - name: The relative name of the resource policy object, in the format: ```
+//   - name: Identifier. The relative name of the resource policy object, in the
+//     format: ```
 //     projects/{project_number}/services/{service_id}/resourcePolicies/{resource_
 //     policy_id} ``` Note that the `service_id` element must be a supported
 //     service ID. Currently, the following service IDs are supported: *

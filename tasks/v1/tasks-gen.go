@@ -203,35 +203,36 @@ type Task struct {
 	Hidden bool `json:"hidden,omitempty"`
 	// Id: Task identifier.
 	Id string `json:"id,omitempty"`
-	// Kind: Type of the resource. This is always "tasks#task".
+	// Kind: Output only. Type of the resource. This is always "tasks#task".
 	Kind string `json:"kind,omitempty"`
-	// Links: Collection of links. This collection is read-only.
+	// Links: Output only. Collection of links. This collection is read-only.
 	Links []*TaskLinks `json:"links,omitempty"`
 	// Notes: Notes describing the task. Optional. Maximum length allowed: 8192
 	// characters.
 	Notes string `json:"notes,omitempty"`
-	// Parent: Parent task identifier. This field is omitted if it is a top-level
-	// task. This field is read-only. Use the "move" method to move the task under
-	// a different parent or to the top level.
+	// Parent: Output only. Parent task identifier. This field is omitted if it is
+	// a top-level task. This field is read-only. Use the "move" method to move the
+	// task under a different parent or to the top level.
 	Parent string `json:"parent,omitempty"`
-	// Position: String indicating the position of the task among its sibling tasks
-	// under the same parent task or at the top level. If this string is greater
-	// than another task's corresponding position string according to
+	// Position: Output only. String indicating the position of the task among its
+	// sibling tasks under the same parent task or at the top level. If this string
+	// is greater than another task's corresponding position string according to
 	// lexicographical ordering, the task is positioned after the other task under
-	// the same parent task (or at the top level). This field is read-only. Use the
-	// "move" method to move the task to another position.
+	// the same parent task (or at the top level). Use the "move" method to move
+	// the task to another position.
 	Position string `json:"position,omitempty"`
-	// SelfLink: URL pointing to this task. Used to retrieve, update, or delete
-	// this task.
+	// SelfLink: Output only. URL pointing to this task. Used to retrieve, update,
+	// or delete this task.
 	SelfLink string `json:"selfLink,omitempty"`
 	// Status: Status of the task. This is either "needsAction" or "completed".
 	Status string `json:"status,omitempty"`
 	// Title: Title of the task. Maximum length allowed: 1024 characters.
 	Title string `json:"title,omitempty"`
-	// Updated: Last modification time of the task (as a RFC 3339 timestamp).
+	// Updated: Output only. Last modification time of the task (as a RFC 3339
+	// timestamp).
 	Updated string `json:"updated,omitempty"`
-	// WebViewLink: An absolute link to the task in the Google Tasks Web UI. This
-	// field is read-only.
+	// WebViewLink: Output only. An absolute link to the task in the Google Tasks
+	// Web UI.
 	WebViewLink string `json:"webViewLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -285,14 +286,15 @@ type TaskList struct {
 	Etag string `json:"etag,omitempty"`
 	// Id: Task list identifier.
 	Id string `json:"id,omitempty"`
-	// Kind: Type of the resource. This is always "tasks#taskList".
+	// Kind: Output only. Type of the resource. This is always "tasks#taskList".
 	Kind string `json:"kind,omitempty"`
-	// SelfLink: URL pointing to this task list. Used to retrieve, update, or
-	// delete this task list.
+	// SelfLink: Output only. URL pointing to this task list. Used to retrieve,
+	// update, or delete this task list.
 	SelfLink string `json:"selfLink,omitempty"`
 	// Title: Title of the task list. Maximum length allowed: 1024 characters.
 	Title string `json:"title,omitempty"`
-	// Updated: Last modification time of the task list (as a RFC 3339 timestamp).
+	// Updated: Output only. Last modification time of the task list (as a RFC 3339
+	// timestamp).
 	Updated string `json:"updated,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

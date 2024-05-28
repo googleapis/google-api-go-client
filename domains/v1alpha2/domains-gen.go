@@ -1082,8 +1082,9 @@ type ManagementSettings struct {
 	//   "RENEWAL_DISABLED" - The domain won't be renewed and will expire at its
 	// expiration time.
 	RenewalMethod string `json:"renewalMethod,omitempty"`
-	// TransferLockState: Controls whether the domain can be transferred to another
-	// registrar.
+	// TransferLockState: This is the desired transfer lock state for this
+	// `Registration`. A transfer lock controls whether the domain can be
+	// transferred to another registrar.
 	//
 	// Possible values:
 	//   "TRANSFER_LOCK_STATE_UNSPECIFIED" - The state is unspecified.

@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20240521",
+  "revision": "20240524",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Blob": {
@@ -539,6 +539,10 @@
       "description": "Request message for [PredictionService.GenerateContent].",
       "id": "GenerateContentRequest",
       "properties": {
+        "cachedContent": {
+          "description": "Optional. The name of the cached content used as context to serve the prediction. Note: only used in explicit caching, where users can have control over caching (e.g. what content to cache) and enjoy guaranteed cost savings. Format: `projects/{project}/locations/{location}/cachedContents/{cachedContent}`",
+          "type": "string"
+        },
         "contents": {
           "description": "Required. The content of the current conversation with the model. For single-turn queries, this is a single instance. For multi-turn queries, this is a repeated field that contains conversation history + latest request.",
           "items": {

@@ -80,13 +80,31 @@ func credsNewAuth(ctx context.Context, settings *DialSettings) (*google.Credenti
 		aud = settings.DefaultAudience
 	}
 
+	// Determine configurations for the OAuth2 transport, which is separate from the API transport.
+	// The OAuth2 transport and endpoint will be configured for mTLS if applicable.
+	clientCertSource, err := getClientCertificateSource(settings)
+	if err != nil {
+		return nil, err
+	}
+	tokenURL := oAuth2Endpoint(clientCertSource)
+	var oauth2Client *http.Client
+	if clientCertSource != nil {
+		tlsConfig := &tls.Config{
+			GetClientCertificate: clientCertSource,
+		}
+		oauth2Client = customHTTPClient(tlsConfig)
+	} else {
+		oauth2Client = oauth2.NewClient(ctx, nil)
+	}
+
 	creds, err := credentials.DetectDefault(&credentials.DetectOptions{
 		Scopes:           scopes,
 		Audience:         aud,
 		CredentialsFile:  settings.CredentialsFile,
 		CredentialsJSON:  settings.CredentialsJSON,
 		UseSelfSignedJWT: useSelfSignedJWT,
-		Client:           oauth2.NewClient(ctx, nil),
+		TokenURL:         tokenURL,
+		Client:           oauth2Client,
 	})
 	if err != nil {
 		return nil, err

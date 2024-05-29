@@ -48,8 +48,24 @@ func SendRequest(ctx context.Context, client *http.Client, req *http.Request) (*
 	if ctx != nil {
 		headers := callctx.HeadersFromContext(ctx)
 		for k, vals := range headers {
-			for _, v := range vals {
-				req.Header.Add(k, v)
+			if k != "x-goog-api-client" {
+				for _, v := range vals {
+					req.Header.Add(k, v)
+				}
+			} else {
+				// Merge all values into a single "x-goog-api-client" header.
+				var mergedVal strings.Builder
+				baseXGoogHeader := req.Header.Get("X-Goog-Api-Client")
+				if baseXGoogHeader != "" {
+					mergedVal.WriteString(baseXGoogHeader)
+					mergedVal.WriteRune(' ')
+				}
+				for _, v := range vals {
+					mergedVal.WriteString(v)
+					mergedVal.WriteRune(' ')
+				}
+				// Remove the last space and replace the header on the request.
+				req.Header.Set(k, mergedVal.String()[:mergedVal.Len()-1])
 			}
 		}
 	}

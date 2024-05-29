@@ -2136,6 +2136,10 @@ func (s *SpecificStartPosition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// SqlServerChangeTables: Configuration to use Change Tables CDC read method.
+type SqlServerChangeTables struct {
+}
+
 // SqlServerColumn: SQLServer Column.
 type SqlServerColumn struct {
 	// Column: Column name.
@@ -2274,6 +2278,8 @@ func (s *SqlServerSchema) MarshalJSON() ([]byte, error) {
 
 // SqlServerSourceConfig: SQLServer data source configuration
 type SqlServerSourceConfig struct {
+	// ChangeTables: CDC reader reads from change tables.
+	ChangeTables *SqlServerChangeTables `json:"changeTables,omitempty"`
 	// ExcludeObjects: SQLServer objects to exclude from the stream.
 	ExcludeObjects *SqlServerRdbms `json:"excludeObjects,omitempty"`
 	// IncludeObjects: SQLServer objects to include in the stream.
@@ -2282,15 +2288,17 @@ type SqlServerSourceConfig struct {
 	MaxConcurrentBackfillTasks int64 `json:"maxConcurrentBackfillTasks,omitempty"`
 	// MaxConcurrentCdcTasks: Max concurrent CDC tasks.
 	MaxConcurrentCdcTasks int64 `json:"maxConcurrentCdcTasks,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// TransactionLogs: CDC reader reads from transaction logs.
+	TransactionLogs *SqlServerTransactionLogs `json:"transactionLogs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChangeTables") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExcludeObjects") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ChangeTables") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2323,6 +2331,11 @@ type SqlServerTable struct {
 func (s *SqlServerTable) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlServerTable
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerTransactionLogs: Configuration to use Transaction Logs CDC read
+// method.
+type SqlServerTransactionLogs struct {
 }
 
 // StartBackfillJobRequest: Request for manually initiating a backfill job for

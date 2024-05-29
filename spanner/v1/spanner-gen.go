@@ -877,6 +877,66 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// ChangeQuorumMetadata: Metadata type for the long-running operation returned
+// by ChangeQuorum.
+type ChangeQuorumMetadata struct {
+	// EndTime: If set, the time at which this operation failed or was completed
+	// successfully.
+	EndTime string `json:"endTime,omitempty"`
+	// Request: The request for ChangeQuorum.
+	Request *ChangeQuorumRequest `json:"request,omitempty"`
+	// StartTime: Time the request was received.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChangeQuorumMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ChangeQuorumMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ChangeQuorumRequest: The request for ChangeQuorum.
+type ChangeQuorumRequest struct {
+	// Etag: Optional. The etag is the hash of the QuorumInfo. The ChangeQuorum
+	// operation will only be performed if the etag matches that of the QuorumInfo
+	// in the current database resource. Otherwise the API will return an `ABORTED`
+	// error. The etag is used for optimistic concurrency control as a way to help
+	// prevent simultaneous change quorum requests that could create a race
+	// condition.
+	Etag string `json:"etag,omitempty"`
+	// Name: Required. Name of the database in which to apply the ChangeQuorum.
+	// Values are of the form `projects//instances//databases/`.
+	Name string `json:"name,omitempty"`
+	// QuorumType: Required. The type of this Quorum.
+	QuorumType *QuorumType `json:"quorumType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChangeQuorumRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ChangeQuorumRequest
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // ChildLink: Metadata associated with a parent-child relationship appearing in
 // a PlanNode.
 type ChildLink struct {
@@ -1569,6 +1629,9 @@ type Database struct {
 	// DATABASE` statement. This name can be passed to other API methods to
 	// identify the database.
 	Name string `json:"name,omitempty"`
+	// QuorumInfo: Output only. Applicable only for databases that use dual region
+	// instance configurations. Contains information about the quorum.
+	QuorumInfo *QuorumInfo `json:"quorumInfo,omitempty"`
 	// Reconciling: Output only. If true, the database is being updated. If false,
 	// there are no ongoing update operations for the database.
 	Reconciling bool `json:"reconciling,omitempty"`
@@ -1800,6 +1863,11 @@ type DirectedReadOptions struct {
 func (s *DirectedReadOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod DirectedReadOptions
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// DualRegionQuorum: Message type for a dual-region quorum. Currently this type
+// has no options.
+type DualRegionQuorum struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -2471,18 +2539,23 @@ type Instance struct {
 	// NodeCount: The number of nodes allocated to this instance. At most one of
 	// either node_count or processing_units should be present in the message.
 	// Users can set the node_count field to specify the target number of nodes
-	// allocated to the instance. This may be zero in API responses for instances
-	// that are not yet in state `READY`. See the documentation
+	// allocated to the instance. If autoscaling is enabled, node_count is treated
+	// as an OUTPUT_ONLY field and reflects the current number of nodes allocated
+	// to the instance. This may be zero in API responses for instances that are
+	// not yet in state `READY`. See the documentation
 	// (https://cloud.google.com/spanner/docs/compute-capacity) for more
 	// information about nodes and processing units.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// ProcessingUnits: The number of processing units allocated to this instance.
 	// At most one of processing_units or node_count should be present in the
 	// message. Users can set the processing_units field to specify the target
-	// number of processing units allocated to the instance. This may be zero in
-	// API responses for instances that are not yet in state `READY`. See the
-	// documentation (https://cloud.google.com/spanner/docs/compute-capacity) for
-	// more information about nodes and processing units.
+	// number of processing units allocated to the instance. If autoscaling is
+	// enabled, processing_units is treated as an OUTPUT_ONLY field and reflects
+	// the current number of processing units allocated to the instance. This may
+	// be zero in API responses for instances that are not yet in state `READY`.
+	// See the documentation
+	// (https://cloud.google.com/spanner/docs/compute-capacity) for more
+	// information about nodes and processing units.
 	ProcessingUnits int64 `json:"processingUnits,omitempty"`
 	// State: Output only. The current instance state. For CreateInstance, the
 	// state must be either omitted or set to `CREATING`. For UpdateInstance, the
@@ -2590,6 +2663,20 @@ type InstanceConfig struct {
 	// from for user managed configurations. Populated for Google managed
 	// configurations.
 	OptionalReplicas []*ReplicaInfo `json:"optionalReplicas,omitempty"`
+	// QuorumType: Output only. The `QuorumType` of the instance configuration.
+	//
+	// Possible values:
+	//   "QUORUM_TYPE_UNSPECIFIED" - Not specified.
+	//   "REGION" - An instance configuration tagged with REGION quorum type forms
+	// a write quorum in a single region.
+	//   "DUAL_REGION" - An instance configuration tagged with DUAL_REGION quorum
+	// type forms a write quorums with exactly two read-write regions in a
+	// multi-region configuration. This instance configurations requires
+	// reconfiguration in the event of regional failures.
+	//   "MULTI_REGION" - An instance configuration tagged with MULTI_REGION quorum
+	// type forms a write quorums from replicas are spread across more than one
+	// region in a multi-region configuration.
+	QuorumType string `json:"quorumType,omitempty"`
 	// Reconciling: Output only. If true, the instance config is being created or
 	// updated. If false, there are no ongoing operations for the instance config.
 	Reconciling bool `json:"reconciling,omitempty"`
@@ -3182,9 +3269,9 @@ type ListInstancePartitionsResponse struct {
 	// ListInstancePartitions call to fetch more of the matching instance
 	// partitions.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: The list of unreachable instance partitions. It includes the
-	// names of instance partitions whose metadata could not be retrieved within
-	// instance_partition_deadline.
+	// Unreachable: The list of unreachable instances or instance partitions. It
+	// includes the names of instances or instance partitions whose metadata could
+	// not be retrieved within instance_partition_deadline.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4229,6 +4316,68 @@ func (s *QueryPlan) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// QuorumInfo: Information about the dual region quorum.
+type QuorumInfo struct {
+	// Etag: Output only. The etag is used for optimistic concurrency control as a
+	// way to help prevent simultaneous ChangeQuorum requests that could create a
+	// race condition.
+	Etag string `json:"etag,omitempty"`
+	// Initiator: Output only. Whether this ChangeQuorum is a Google or User
+	// initiated.
+	//
+	// Possible values:
+	//   "INITIATOR_UNSPECIFIED" - Unspecified.
+	//   "GOOGLE" - ChangeQuorum initiated by Google.
+	//   "USER" - ChangeQuorum initiated by User.
+	Initiator string `json:"initiator,omitempty"`
+	// QuorumType: Output only. The type of this quorum. See QuorumType for more
+	// information about quorum type specifications.
+	QuorumType *QuorumType `json:"quorumType,omitempty"`
+	// StartTime: Output only. The timestamp when the request was triggered.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *QuorumInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod QuorumInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// QuorumType: Information about the database quorum type. this applies only
+// for dual region instance configs.
+type QuorumType struct {
+	// DualRegion: Dual region quorum type.
+	DualRegion *DualRegionQuorum `json:"dualRegion,omitempty"`
+	// SingleRegion: Single region quorum type.
+	SingleRegion *SingleRegionQuorum `json:"singleRegion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DualRegion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DualRegion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *QuorumType) MarshalJSON() ([]byte, error) {
+	type NoMethod QuorumType
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // ReadOnly: Message type to initiate a read-only transaction.
 type ReadOnly struct {
 	// ExactStaleness: Executes all reads at a timestamp that is `exact_staleness`
@@ -4976,6 +5125,33 @@ func (s *ShortRepresentation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// SingleRegionQuorum: Message type for a single-region quorum.
+type SingleRegionQuorum struct {
+	// ServingLocation: Required. The location of the serving region, e.g.
+	// "us-central1". The location must be one of the regions within the dual
+	// region instance configuration of your database. The list of valid locations
+	// is available via [GetInstanceConfig[InstanceAdmin.GetInstanceConfig] API.
+	// This should only be used if you plan to change quorum in single-region
+	// quorum type.
+	ServingLocation string `json:"servingLocation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServingLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServingLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *SingleRegionQuorum) MarshalJSON() ([]byte, error) {
+	type NoMethod SingleRegionQuorum
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // Statement: A single DML statement.
 type Statement struct {
 	// ParamTypes: It is not always possible for Cloud Spanner to infer the right
@@ -5176,7 +5352,7 @@ func (s *Transaction) MarshalJSON() ([]byte, error) {
 // have committed before the start of the read). Snapshot read-only
 // transactions do not need to be committed. Queries on change streams must be
 // performed with the snapshot read-only transaction mode, specifying a strong
-// read. Please see TransactionOptions.ReadOnly.strong for more details. 3.
+// read. See TransactionOptions.ReadOnly.strong for more details. 3.
 // Partitioned DML. This type of transaction is used to execute a single
 // Partitioned DML statement. Partitioned DML partitions the key space and runs
 // the DML statement over each partition in parallel using separate, internal
@@ -10696,6 +10872,115 @@ func (c *ProjectsInstancesDatabaseOperationsListCall) Pages(ctx context.Context,
 	}
 }
 
+type ProjectsInstancesDatabasesChangequorumCall struct {
+	s                   *Service
+	name                string
+	changequorumrequest *ChangeQuorumRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Changequorum: ChangeQuorum is strictly restricted to databases that use dual
+// region instance configurations. Initiates a background operation to change
+// quorum a database from dual-region mode to single-region mode and vice
+// versa. The returned long-running operation will have a name of the format
+// `projects//instances//databases//operations/` and can be used to track
+// execution of the ChangeQuorum. The metadata field type is
+// ChangeQuorumMetadata. Authorization requires
+// `spanner.databases.changequorum` permission on the resource database.
+//
+//   - name: Name of the database in which to apply the ChangeQuorum. Values are
+//     of the form `projects//instances//databases/`.
+func (r *ProjectsInstancesDatabasesService) Changequorum(name string, changequorumrequest *ChangeQuorumRequest) *ProjectsInstancesDatabasesChangequorumCall {
+	c := &ProjectsInstancesDatabasesChangequorumCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.changequorumrequest = changequorumrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesChangequorumCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesChangequorumCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesChangequorumCall) Context(ctx context.Context) *ProjectsInstancesDatabasesChangequorumCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesChangequorumCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesChangequorumCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.changequorumrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:changequorum")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.changequorum" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesChangequorumCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsInstancesDatabasesCreateCall struct {
 	s                     *Service
 	parent                string
@@ -15118,7 +15403,9 @@ type ProjectsInstancesInstancePartitionsListCall struct {
 // List: Lists all instance partitions for the given instance.
 //
 //   - parent: The instance whose instance partitions should be listed. Values
-//     are of the form `projects//instances/`.
+//     are of the form `projects//instances/`. Use `{instance} = '-'` to list
+//     instance partitions for all Instances in a project, e.g.,
+//     `projects/myproject/instances/-`.
 func (r *ProjectsInstancesInstancePartitionsService) List(parent string) *ProjectsInstancesInstancePartitionsListCall {
 	c := &ProjectsInstancesInstancePartitionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

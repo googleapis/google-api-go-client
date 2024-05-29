@@ -1291,7 +1291,7 @@ type PublishersModelsService struct {
 
 // CloudAiLargeModelsVisionFilteredText: Details for filtered input text.
 type CloudAiLargeModelsVisionFilteredText struct {
-	// Category: Confidence level
+	// Category: Filtered category
 	//
 	// Possible values:
 	//   "RAI_CATEGORY_UNSPECIFIED"
@@ -1313,6 +1313,7 @@ type CloudAiLargeModelsVisionFilteredText struct {
 	//   "SENSITIVE_WORD"
 	//   "PERSON_IMG"
 	//   "ICA_IMG"
+	//   "AGILE_ICA_IMG" - Agile ICA label currently for evaluation only.
 	//   "SEXUAL_IMG"
 	//   "IU_IMG"
 	//   "RACY_IMG"
@@ -1331,8 +1332,9 @@ type CloudAiLargeModelsVisionFilteredText struct {
 	//   "CELEBRITY_IMG"
 	//   "WATERMARK_IMG_REMOVAL" - Error message when user attempts to remove
 	// watermark from editing image
+	//   "RAID_IMG"
 	Category string `json:"category,omitempty"`
-	// Confidence: Filtered category
+	// Confidence: Confidence score
 	//
 	// Possible values:
 	//   "CONFIDENCE_UNSPECIFIED"
@@ -1554,20 +1556,21 @@ func (s *CloudAiLargeModelsVisionNamedBoundingBox) UnmarshalJSON(data []byte) er
 }
 
 type CloudAiLargeModelsVisionRaiInfo struct {
+	DetectedLabels []*CloudAiLargeModelsVisionRaiInfoDetectedLabels `json:"detectedLabels,omitempty"`
 	// RaiCategories: List of rai categories' information to return
 	RaiCategories []string `json:"raiCategories,omitempty"`
 	// Scores: List of rai scores mapping to the rai categories. Rounded to 1
 	// decimal place.
 	Scores []float64 `json:"scores,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RaiCategories") to
+	// ForceSendFields is a list of field names (e.g. "DetectedLabels") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RaiCategories") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DetectedLabels") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1579,6 +1582,50 @@ func (s *CloudAiLargeModelsVisionRaiInfo) MarshalJSON() ([]byte, error) {
 
 func (s *CloudAiLargeModelsVisionRaiInfo) UnmarshalJSON(data []byte) error {
 	type NoMethod CloudAiLargeModelsVisionRaiInfo
+	var s1 struct {
+		Scores []gensupport.JSONFloat64 `json:"scores"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Scores = make([]float64, len(s1.Scores))
+	for i := range s1.Scores {
+		s.Scores[i] = float64(s1.Scores[i])
+	}
+	return nil
+}
+
+// CloudAiLargeModelsVisionRaiInfoDetectedLabels: Filters which return labels
+// with confidence scores.
+type CloudAiLargeModelsVisionRaiInfoDetectedLabels struct {
+	// Descriptions: Descriptions of the detected labels.
+	Descriptions []string `json:"descriptions,omitempty"`
+	// RaiCategory: The RAI category for the deteceted labels.
+	RaiCategory string `json:"raiCategory,omitempty"`
+	// Scores: Confidence scores mapping to the labels.
+	Scores []float64 `json:"scores,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Descriptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Descriptions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudAiLargeModelsVisionRaiInfoDetectedLabels) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionRaiInfoDetectedLabels
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CloudAiLargeModelsVisionRaiInfoDetectedLabels) UnmarshalJSON(data []byte) error {
+	type NoMethod CloudAiLargeModelsVisionRaiInfoDetectedLabels
 	var s1 struct {
 		Scores []gensupport.JSONFloat64 `json:"scores"`
 		*NoMethod
@@ -5907,10 +5954,29 @@ type GoogleCloudAiplatformV1DeploymentResourcePool struct {
 	// DedicatedResources: Required. The underlying DedicatedResources that the
 	// DeploymentResourcePool uses.
 	DedicatedResources *GoogleCloudAiplatformV1DedicatedResources `json:"dedicatedResources,omitempty"`
+	// DisableContainerLogging: If the DeploymentResourcePool is deployed with
+	// custom-trained Models or AutoML Tabular Models, the container(s) of the
+	// DeploymentResourcePool will send `stderr` and `stdout` streams to Cloud
+	// Logging by default. Please note that the logs incur cost, which are subject
+	// to Cloud Logging pricing (https://cloud.google.com/logging/pricing). User
+	// can disable container logging by setting this flag to true.
+	DisableContainerLogging bool `json:"disableContainerLogging,omitempty"`
+	// EncryptionSpec: Customer-managed encryption key spec for a
+	// DeploymentResourcePool. If set, this DeploymentResourcePool will be secured
+	// by this key. Endpoints and the DeploymentResourcePool they deploy in need to
+	// have the same EncryptionSpec.
+	EncryptionSpec *GoogleCloudAiplatformV1EncryptionSpec `json:"encryptionSpec,omitempty"`
 	// Name: Immutable. The resource name of the DeploymentResourcePool. Format:
 	// `projects/{project}/locations/{location}/deploymentResourcePools/{deployment_
 	// resource_pool}`
 	Name string `json:"name,omitempty"`
+	// ServiceAccount: The service account that the DeploymentResourcePool's
+	// container(s) run as. Specify the email address of the service account. If
+	// this service account is not specified, the container(s) run as a service
+	// account that doesn't have access to the resource project. Users deploying
+	// the Models to this DeploymentResourcePool must have the
+	// `iam.serviceAccounts.actAs` permission on this service account.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -8050,6 +8116,7 @@ type GoogleCloudAiplatformV1Feature struct {
 	//   "STRING" - Used for Feature that is string.
 	//   "STRING_ARRAY" - Used for Feature that is a list of String.
 	//   "BYTES" - Used for Feature that is bytes.
+	//   "STRUCT" - Used for Feature that is struct.
 	ValueType string `json:"valueType,omitempty"`
 	// VersionColumnName: Only applicable for Vertex AI Feature Store. The name of
 	// the BigQuery Table/View column hosting data for this version. If no value is
@@ -8537,6 +8604,8 @@ type GoogleCloudAiplatformV1FeatureValue struct {
 	StringArrayValue *GoogleCloudAiplatformV1StringArray `json:"stringArrayValue,omitempty"`
 	// StringValue: String feature value.
 	StringValue string `json:"stringValue,omitempty"`
+	// StructValue: A struct type feature value.
+	StructValue *GoogleCloudAiplatformV1StructValue `json:"structValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoolArrayValue") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10106,15 +10175,6 @@ type GoogleCloudAiplatformV1GenerationConfig struct {
 	// prompted to output the appropriate response type, otherwise the behavior is
 	// undefined. This is a preview feature.
 	ResponseMimeType string `json:"responseMimeType,omitempty"`
-	// ResponseStyle: Optional. Control Three levels of creativity in the model
-	// output. Default: RESPONSE_STYLE_BALANCED
-	//
-	// Possible values:
-	//   "RESPONSE_STYLE_UNSPECIFIED" - response style unspecified.
-	//   "RESPONSE_STYLE_PRECISE" - Precise response.
-	//   "RESPONSE_STYLE_BALANCED" - Default response style.
-	//   "RESPONSE_STYLE_CREATIVE" - Creative response style.
-	ResponseStyle string `json:"responseStyle,omitempty"`
 	// StopSequences: Optional. Stop sequences.
 	StopSequences []string `json:"stopSequences,omitempty"`
 	// Temperature: Optional. Controls the randomness of predictions.
@@ -10215,6 +10275,11 @@ type GoogleCloudAiplatformV1GenieSource struct {
 func (s *GoogleCloudAiplatformV1GenieSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GenieSource
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1GoogleSearchRetrieval: Tool to retrieve public web
+// data for grounding, powered by Google.
+type GoogleCloudAiplatformV1GoogleSearchRetrieval struct {
 }
 
 // GoogleCloudAiplatformV1GroundingMetadata: Metadata returned to client when
@@ -12944,6 +13009,8 @@ func (s *GoogleCloudAiplatformV1MetadataSchema) MarshalJSON() ([]byte, error) {
 type GoogleCloudAiplatformV1MetadataStore struct {
 	// CreateTime: Output only. Timestamp when this MetadataStore was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataplexConfig: Optional. Dataplex integration settings.
+	DataplexConfig *GoogleCloudAiplatformV1MetadataStoreDataplexConfig `json:"dataplexConfig,omitempty"`
 	// Description: Description of the MetadataStore.
 	Description string `json:"description,omitempty"`
 	// EncryptionSpec: Customer-managed encryption key spec for a Metadata Store.
@@ -12974,6 +13041,30 @@ type GoogleCloudAiplatformV1MetadataStore struct {
 
 func (s *GoogleCloudAiplatformV1MetadataStore) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1MetadataStore
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1MetadataStoreDataplexConfig: Represents Dataplex
+// integration settings.
+type GoogleCloudAiplatformV1MetadataStoreDataplexConfig struct {
+	// EnabledPipelinesLineage: Optional. Whether or not Data Lineage
+	// synchronization is enabled for Vertex Pipelines.
+	EnabledPipelinesLineage bool `json:"enabledPipelinesLineage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnabledPipelinesLineage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnabledPipelinesLineage") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1MetadataStoreDataplexConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1MetadataStoreDataplexConfig
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15926,47 +16017,6 @@ func (s *GoogleCloudAiplatformV1NotebookIdleShutdownConfig) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAiplatformV1NotebookReservationAffinity: Notebook Reservation
-// Affinity for consuming Zonal reservation.
-type GoogleCloudAiplatformV1NotebookReservationAffinity struct {
-	// ConsumeReservationType: Required. Specifies the type of reservation from
-	// which this instance can consume resources: RESERVATION_ANY (default),
-	// RESERVATION_SPECIFIC, or RESERVATION_NONE. See Consuming reserved instances
-	// for examples.
-	//
-	// Possible values:
-	//   "RESERVATION_AFFINITY_TYPE_UNSPECIFIED" - Default type.
-	//   "RESERVATION_NONE" - Do not consume from any allocated capacity.
-	//   "RESERVATION_ANY" - Consume any reservation available.
-	//   "RESERVATION_SPECIFIC" - Must consume from a specific reservation. Must
-	// specify key value fields for specifying the reservations.
-	ConsumeReservationType string `json:"consumeReservationType,omitempty"`
-	// Key: Optional. Corresponds to the label key of a reservation resource. To
-	// target a RESERVATION_SPECIFIC by name, use
-	// compute.googleapis.com/reservation-name as the key and specify the name of
-	// your reservation as its value.
-	Key string `json:"key,omitempty"`
-	// Values: Optional. Corresponds to the label values of a reservation resource.
-	// This must be the full path name of Reservation.
-	Values []string `json:"values,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ConsumeReservationType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConsumeReservationType") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1NotebookReservationAffinity) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1NotebookReservationAffinity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudAiplatformV1NotebookRuntime: A runtime is a virtual machine
 // allocated to a particular user for a particular Notebook file on temporary
 // basis with lifetime limited to 24 hours.
@@ -15992,6 +16042,9 @@ type GoogleCloudAiplatformV1NotebookRuntime struct {
 	//   "UNHEALTHY" - NotebookRuntime is in unhealthy state. Applies to ACTIVE
 	// state.
 	HealthState string `json:"healthState,omitempty"`
+	// IdleShutdownConfig: Output only. The idle shutdown configuration of the
+	// notebook runtime.
+	IdleShutdownConfig *GoogleCloudAiplatformV1NotebookIdleShutdownConfig `json:"idleShutdownConfig,omitempty"`
 	// IsUpgradable: Output only. Whether NotebookRuntime is upgradable.
 	IsUpgradable bool `json:"isUpgradable,omitempty"`
 	// Labels: The labels with user-defined metadata to organize your
@@ -16030,9 +16083,6 @@ type GoogleCloudAiplatformV1NotebookRuntime struct {
 	// ProxyUri: Output only. The proxy endpoint used to access the
 	// NotebookRuntime.
 	ProxyUri string `json:"proxyUri,omitempty"`
-	// ReservationAffinity: Output only. Reservation Affinity of the notebook
-	// runtime.
-	ReservationAffinity *GoogleCloudAiplatformV1NotebookReservationAffinity `json:"reservationAffinity,omitempty"`
 	// RuntimeState: Output only. The runtime (instance) state of the
 	// NotebookRuntime.
 	//
@@ -16099,6 +16149,9 @@ type GoogleCloudAiplatformV1NotebookRuntimeTemplate struct {
 	// name can be up to 128 characters long and can consist of any UTF-8
 	// characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// EncryptionSpec: Customer-managed encryption key spec for the notebook
+	// runtime.
+	EncryptionSpec *GoogleCloudAiplatformV1EncryptionSpec `json:"encryptionSpec,omitempty"`
 	// Etag: Used to perform consistent read-modify-write updates. If not set, a
 	// blind "overwrite" update happens.
 	Etag string `json:"etag,omitempty"`
@@ -16137,9 +16190,6 @@ type GoogleCloudAiplatformV1NotebookRuntimeTemplate struct {
 	// user.
 	//   "ONE_CLICK" - runtime or template with system defined configurations.
 	NotebookRuntimeType string `json:"notebookRuntimeType,omitempty"`
-	// ReservationAffinity: Optional. Reservation Affinity of the notebook runtime
-	// template.
-	ReservationAffinity *GoogleCloudAiplatformV1NotebookReservationAffinity `json:"reservationAffinity,omitempty"`
 	// ServiceAccount: The service account that the runtime workload runs as. You
 	// can use any service account within the same project, but you must have the
 	// service account user permission to use the instance. If not specified, the
@@ -17183,7 +17233,7 @@ func (s *GoogleCloudAiplatformV1PrivateServiceConnectConfig) MarshalJSON() ([]by
 // against a container to determine whether it is alive or ready to receive
 // traffic.
 type GoogleCloudAiplatformV1Probe struct {
-	// Exec: Exec specifies the action to take.
+	// Exec: ExecAction probes the health of a container by executing a command.
 	Exec *GoogleCloudAiplatformV1ProbeExecAction `json:"exec,omitempty"`
 	// PeriodSeconds: How often (in seconds) to perform the probe. Default to 10
 	// seconds. Minimum value is 1. Must be less than timeout_seconds. Maps to
@@ -17983,11 +18033,71 @@ func (s *GoogleCloudAiplatformV1RawPredictRequest) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1RayMetricSpec: Configuration for the Ray metrics.
+type GoogleCloudAiplatformV1RayMetricSpec struct {
+	// Disabled: Optional. Flag to disable the Ray metrics collection.
+	Disabled bool `json:"disabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Disabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1RayMetricSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1RayMetricSpec
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1RaySpec: Configuration information for the Ray
 // cluster. For experimental launch, Ray cluster creation and Persistent
 // cluster creation are 1:1 mapping: We will provision all the nodes within the
 // Persistent cluster as Ray nodes.
 type GoogleCloudAiplatformV1RaySpec struct {
+	// HeadNodeResourcePoolId: Optional. This will be used to indicate which
+	// resource pool will serve as the Ray head node(the first node within that
+	// pool). Will use the machine from the first workerpool as the head node by
+	// default if this field isn't set.
+	HeadNodeResourcePoolId string `json:"headNodeResourcePoolId,omitempty"`
+	// ImageUri: Optional. Default image for user to choose a preferred ML
+	// framework (for example, TensorFlow or Pytorch) by choosing from Vertex
+	// prebuilt images
+	// (https://cloud.google.com/vertex-ai/docs/training/pre-built-containers).
+	// Either this or the resource_pool_images is required. Use this field if you
+	// need all the resource pools to have the same Ray image. Otherwise, use the
+	// {@code resource_pool_images} field.
+	ImageUri string `json:"imageUri,omitempty"`
+	// RayMetricSpec: Optional. Ray metrics configurations.
+	RayMetricSpec *GoogleCloudAiplatformV1RayMetricSpec `json:"rayMetricSpec,omitempty"`
+	// ResourcePoolImages: Optional. Required if image_uri isn't set. A map of
+	// resource_pool_id to prebuild Ray image if user need to use different images
+	// for different head/worker pools. This map needs to cover all the resource
+	// pool ids. Example: { "ray_head_node_pool": "head image"
+	// "ray_worker_node_pool1": "worker image" "ray_worker_node_pool2": "another
+	// worker image" }
+	ResourcePoolImages map[string]string `json:"resourcePoolImages,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HeadNodeResourcePoolId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HeadNodeResourcePoolId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1RaySpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1RaySpec
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ReadFeatureValuesRequest: Request message for
@@ -18519,6 +18629,26 @@ func (s *GoogleCloudAiplatformV1ResourcePoolAutoscalingSpec) MarshalJSON() ([]by
 // GoogleCloudAiplatformV1ResourceRuntime: Persistent Cluster runtime
 // information as output
 type GoogleCloudAiplatformV1ResourceRuntime struct {
+	// AccessUris: Output only. URIs for user to connect to the Cluster. Example: {
+	// "RAY_HEAD_NODE_INTERNAL_IP": "head-node-IP:10001" "RAY_DASHBOARD_URI":
+	// "ray-dashboard-address:8888" }
+	AccessUris map[string]string `json:"accessUris,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessUris") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessUris") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1ResourceRuntime) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ResourceRuntime
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ResourceRuntimeSpec: Configuration for the runtime on
@@ -22449,6 +22579,8 @@ type GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata struct {
 	GcsUri string `json:"gcsUri,omitempty"`
 	// GroundingConfig: Grounding checking configuration.
 	GroundingConfig *GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig `json:"groundingConfig,omitempty"`
+	// HasPromptVariable: Whether the prompt dataset has prompt variable.
+	HasPromptVariable bool `json:"hasPromptVariable,omitempty"`
 	// MaxOutputTokens: Value of the maximum number of tokens generated set when
 	// the dataset was saved.
 	MaxOutputTokens int64 `json:"maxOutputTokens,omitempty,string"`
@@ -26222,6 +26354,53 @@ func (s *GoogleCloudAiplatformV1StringArray) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1StructFieldValue: One field of a Struct (or object)
+// type feature value.
+type GoogleCloudAiplatformV1StructFieldValue struct {
+	// Name: Name of the field in the struct feature.
+	Name string `json:"name,omitempty"`
+	// Value: The value for this field.
+	Value *GoogleCloudAiplatformV1FeatureValue `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1StructFieldValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1StructFieldValue
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1StructValue: Struct (or object) type feature value.
+type GoogleCloudAiplatformV1StructValue struct {
+	// Values: A list of field values.
+	Values []*GoogleCloudAiplatformV1StructFieldValue `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1StructValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1StructValue
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1Study: A message representing a Study.
 type GoogleCloudAiplatformV1Study struct {
 	// CreateTime: Output only. Time at which the study was created.
@@ -28016,6 +28195,9 @@ type GoogleCloudAiplatformV1Tool struct {
 	// will generate the final response back to the user. Maximum 64 function
 	// declarations can be provided.
 	FunctionDeclarations []*GoogleCloudAiplatformV1FunctionDeclaration `json:"functionDeclarations,omitempty"`
+	// GoogleSearchRetrieval: Optional. GoogleSearchRetrieval tool type.
+	// Specialized retrieval tool that is powered by Google search.
+	GoogleSearchRetrieval *GoogleCloudAiplatformV1GoogleSearchRetrieval `json:"googleSearchRetrieval,omitempty"`
 	// Retrieval: Optional. Retrieval tool type. System will always execute the
 	// provided retrieval tool(s) to get external knowledge to answer the prompt.
 	// Retrieval results are presented to the model for generation.

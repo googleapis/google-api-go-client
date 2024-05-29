@@ -16238,7 +16238,7 @@
       }
     }
   },
-  "revision": "20240510",
+  "revision": "20240520",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionFilteredText": {
@@ -16246,7 +16246,7 @@
       "id": "CloudAiLargeModelsVisionFilteredText",
       "properties": {
         "category": {
-          "description": "Confidence level",
+          "description": "Filtered category",
           "enum": [
             "RAI_CATEGORY_UNSPECIFIED",
             "OBSCENE",
@@ -16267,6 +16267,7 @@
             "SENSITIVE_WORD",
             "PERSON_IMG",
             "ICA_IMG",
+            "AGILE_ICA_IMG",
             "SEXUAL_IMG",
             "IU_IMG",
             "RACY_IMG",
@@ -16283,7 +16284,8 @@
             "DANGEROUS_CONTENT",
             "RECITATION_TEXT",
             "CELEBRITY_IMG",
-            "WATERMARK_IMG_REMOVAL"
+            "WATERMARK_IMG_REMOVAL",
+            "RAID_IMG"
           ],
           "enumDescriptions": [
             "",
@@ -16305,6 +16307,7 @@
             "",
             "",
             "",
+            "Agile ICA label currently for evaluation only.",
             "",
             "",
             "",
@@ -16321,12 +16324,13 @@
             "Text category from SafetyCat v3",
             "",
             "",
-            "Error message when user attempts to remove watermark from editing image"
+            "Error message when user attempts to remove watermark from editing image",
+            ""
           ],
           "type": "string"
         },
         "confidence": {
-          "description": "Filtered category",
+          "description": "Confidence score",
           "enum": [
             "CONFIDENCE_UNSPECIFIED",
             "CONFIDENCE_LOW",
@@ -16494,6 +16498,12 @@
     "CloudAiLargeModelsVisionRaiInfo": {
       "id": "CloudAiLargeModelsVisionRaiInfo",
       "properties": {
+        "detectedLabels": {
+          "items": {
+            "$ref": "CloudAiLargeModelsVisionRaiInfoDetectedLabels"
+          },
+          "type": "array"
+        },
         "raiCategories": {
           "description": "List of rai categories' information to return",
           "items": {
@@ -16503,6 +16513,32 @@
         },
         "scores": {
           "description": "List of rai scores mapping to the rai categories. Rounded to 1 decimal place.",
+          "items": {
+            "format": "float",
+            "type": "number"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiLargeModelsVisionRaiInfoDetectedLabels": {
+      "description": "Filters which return labels with confidence scores.",
+      "id": "CloudAiLargeModelsVisionRaiInfoDetectedLabels",
+      "properties": {
+        "descriptions": {
+          "description": "Descriptions of the detected labels.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "raiCategory": {
+          "description": "The RAI category for the deteceted labels.",
+          "type": "string"
+        },
+        "scores": {
+          "description": "Confidence scores mapping to the labels.",
           "items": {
             "format": "float",
             "type": "number"
@@ -19407,8 +19443,20 @@
           "$ref": "GoogleCloudAiplatformV1DedicatedResources",
           "description": "Required. The underlying DedicatedResources that the DeploymentResourcePool uses."
         },
+        "disableContainerLogging": {
+          "description": "If the DeploymentResourcePool is deployed with custom-trained Models or AutoML Tabular Models, the container(s) of the DeploymentResourcePool will send `stderr` and `stdout` streams to Cloud Logging by default. Please note that the logs incur cost, which are subject to [Cloud Logging pricing](https://cloud.google.com/logging/pricing). User can disable container logging by setting this flag to true.",
+          "type": "boolean"
+        },
+        "encryptionSpec": {
+          "$ref": "GoogleCloudAiplatformV1EncryptionSpec",
+          "description": "Customer-managed encryption key spec for a DeploymentResourcePool. If set, this DeploymentResourcePool will be secured by this key. Endpoints and the DeploymentResourcePool they deploy in need to have the same EncryptionSpec."
+        },
         "name": {
           "description": "Immutable. The resource name of the DeploymentResourcePool. Format: `projects/{project}/locations/{location}/deploymentResourcePools/{deployment_resource_pool}`",
+          "type": "string"
+        },
+        "serviceAccount": {
+          "description": "The service account that the DeploymentResourcePool's container(s) run as. Specify the email address of the service account. If this service account is not specified, the container(s) run as a service account that doesn't have access to the resource project. Users deploying the Models to this DeploymentResourcePool must have the `iam.serviceAccounts.actAs` permission on this service account.",
           "type": "string"
         }
       },
@@ -20867,7 +20915,8 @@
             "INT64_ARRAY",
             "STRING",
             "STRING_ARRAY",
-            "BYTES"
+            "BYTES",
+            "STRUCT"
           ],
           "enumDescriptions": [
             "The value type is unspecified.",
@@ -20879,7 +20928,8 @@
             "Used for Feature that is a list of INT64.",
             "Used for Feature that is string.",
             "Used for Feature that is a list of String.",
-            "Used for Feature that is bytes."
+            "Used for Feature that is bytes.",
+            "Used for Feature that is struct."
           ],
           "type": "string"
         },
@@ -21214,6 +21264,10 @@
         "stringValue": {
           "description": "String feature value.",
           "type": "string"
+        },
+        "structValue": {
+          "$ref": "GoogleCloudAiplatformV1StructValue",
+          "description": "A struct type feature value."
         }
       },
       "type": "object"
@@ -22208,22 +22262,6 @@
           "description": "Optional. Output response mimetype of the generated candidate text. Supported mimetype: - `text/plain`: (default) Text output. - `application/json`: JSON response in the candidates. The model needs to be prompted to output the appropriate response type, otherwise the behavior is undefined. This is a preview feature.",
           "type": "string"
         },
-        "responseStyle": {
-          "description": "Optional. Control Three levels of creativity in the model output. Default: RESPONSE_STYLE_BALANCED",
-          "enum": [
-            "RESPONSE_STYLE_UNSPECIFIED",
-            "RESPONSE_STYLE_PRECISE",
-            "RESPONSE_STYLE_BALANCED",
-            "RESPONSE_STYLE_CREATIVE"
-          ],
-          "enumDescriptions": [
-            "response style unspecified.",
-            "Precise response.",
-            "Default response style.",
-            "Creative response style."
-          ],
-          "type": "string"
-        },
         "stopSequences": {
           "description": "Optional. Stop sequences.",
           "items": {
@@ -22285,6 +22323,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1GoogleSearchRetrieval": {
+      "description": "Tool to retrieve public web data for grounding, powered by Google.",
+      "id": "GoogleCloudAiplatformV1GoogleSearchRetrieval",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudAiplatformV1GroundingMetadata": {
@@ -24174,6 +24218,10 @@
           "readOnly": true,
           "type": "string"
         },
+        "dataplexConfig": {
+          "$ref": "GoogleCloudAiplatformV1MetadataStoreDataplexConfig",
+          "description": "Optional. Dataplex integration settings."
+        },
         "description": {
           "description": "Description of the MetadataStore.",
           "type": "string"
@@ -24197,6 +24245,17 @@
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1MetadataStoreDataplexConfig": {
+      "description": "Represents Dataplex integration settings.",
+      "id": "GoogleCloudAiplatformV1MetadataStoreDataplexConfig",
+      "properties": {
+        "enabledPipelinesLineage": {
+          "description": "Optional. Whether or not Data Lineage synchronization is enabled for Vertex Pipelines.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -26306,40 +26365,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudAiplatformV1NotebookReservationAffinity": {
-      "description": "Notebook Reservation Affinity for consuming Zonal reservation.",
-      "id": "GoogleCloudAiplatformV1NotebookReservationAffinity",
-      "properties": {
-        "consumeReservationType": {
-          "description": "Required. Specifies the type of reservation from which this instance can consume resources: RESERVATION_ANY (default), RESERVATION_SPECIFIC, or RESERVATION_NONE. See Consuming reserved instances for examples.",
-          "enum": [
-            "RESERVATION_AFFINITY_TYPE_UNSPECIFIED",
-            "RESERVATION_NONE",
-            "RESERVATION_ANY",
-            "RESERVATION_SPECIFIC"
-          ],
-          "enumDescriptions": [
-            "Default type.",
-            "Do not consume from any allocated capacity.",
-            "Consume any reservation available.",
-            "Must consume from a specific reservation. Must specify key value fields for specifying the reservations."
-          ],
-          "type": "string"
-        },
-        "key": {
-          "description": "Optional. Corresponds to the label key of a reservation resource. To target a RESERVATION_SPECIFIC by name, use compute.googleapis.com/reservation-name as the key and specify the name of your reservation as its value.",
-          "type": "string"
-        },
-        "values": {
-          "description": "Optional. Corresponds to the label values of a reservation resource. This must be the full path name of Reservation.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudAiplatformV1NotebookRuntime": {
       "description": "A runtime is a virtual machine allocated to a particular user for a particular Notebook file on temporary basis with lifetime limited to 24 hours.",
       "id": "GoogleCloudAiplatformV1NotebookRuntime",
@@ -26378,6 +26403,11 @@
           ],
           "readOnly": true,
           "type": "string"
+        },
+        "idleShutdownConfig": {
+          "$ref": "GoogleCloudAiplatformV1NotebookIdleShutdownConfig",
+          "description": "Output only. The idle shutdown configuration of the notebook runtime.",
+          "readOnly": true
         },
         "isUpgradable": {
           "description": "Output only. Whether NotebookRuntime is upgradable.",
@@ -26427,11 +26457,6 @@
           "description": "Output only. The proxy endpoint used to access the NotebookRuntime.",
           "readOnly": true,
           "type": "string"
-        },
-        "reservationAffinity": {
-          "$ref": "GoogleCloudAiplatformV1NotebookReservationAffinity",
-          "description": "Output only. Reservation Affinity of the notebook runtime.",
-          "readOnly": true
         },
         "runtimeState": {
           "description": "Output only. The runtime (instance) state of the NotebookRuntime.",
@@ -26513,6 +26538,10 @@
           "description": "Required. The display name of the NotebookRuntimeTemplate. The name can be up to 128 characters long and can consist of any UTF-8 characters.",
           "type": "string"
         },
+        "encryptionSpec": {
+          "$ref": "GoogleCloudAiplatformV1EncryptionSpec",
+          "description": "Customer-managed encryption key spec for the notebook runtime."
+        },
         "etag": {
           "description": "Used to perform consistent read-modify-write updates. If not set, a blind \"overwrite\" update happens.",
           "type": "string"
@@ -26569,10 +26598,6 @@
             "runtime or template with system defined configurations."
           ],
           "type": "string"
-        },
-        "reservationAffinity": {
-          "$ref": "GoogleCloudAiplatformV1NotebookReservationAffinity",
-          "description": "Optional. Reservation Affinity of the notebook runtime template."
         },
         "serviceAccount": {
           "description": "The service account that the runtime workload runs as. You can use any service account within the same project, but you must have the service account user permission to use the instance. If not specified, the [Compute Engine default service account](https://cloud.google.com/compute/docs/access/service-accounts#default_service_account) is used.",
@@ -27429,7 +27454,7 @@
       "properties": {
         "exec": {
           "$ref": "GoogleCloudAiplatformV1ProbeExecAction",
-          "description": "Exec specifies the action to take."
+          "description": "ExecAction probes the health of a container by executing a command."
         },
         "periodSeconds": {
           "description": "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Must be less than timeout_seconds. Maps to Kubernetes probe argument 'periodSeconds'.",
@@ -28024,10 +28049,41 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1RayMetricSpec": {
+      "description": "Configuration for the Ray metrics.",
+      "id": "GoogleCloudAiplatformV1RayMetricSpec",
+      "properties": {
+        "disabled": {
+          "description": "Optional. Flag to disable the Ray metrics collection.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1RaySpec": {
       "description": "Configuration information for the Ray cluster. For experimental launch, Ray cluster creation and Persistent cluster creation are 1:1 mapping: We will provision all the nodes within the Persistent cluster as Ray nodes.",
       "id": "GoogleCloudAiplatformV1RaySpec",
-      "properties": {},
+      "properties": {
+        "headNodeResourcePoolId": {
+          "description": "Optional. This will be used to indicate which resource pool will serve as the Ray head node(the first node within that pool). Will use the machine from the first workerpool as the head node by default if this field isn't set.",
+          "type": "string"
+        },
+        "imageUri": {
+          "description": "Optional. Default image for user to choose a preferred ML framework (for example, TensorFlow or Pytorch) by choosing from [Vertex prebuilt images](https://cloud.google.com/vertex-ai/docs/training/pre-built-containers). Either this or the resource_pool_images is required. Use this field if you need all the resource pools to have the same Ray image. Otherwise, use the {@code resource_pool_images} field.",
+          "type": "string"
+        },
+        "rayMetricSpec": {
+          "$ref": "GoogleCloudAiplatformV1RayMetricSpec",
+          "description": "Optional. Ray metrics configurations."
+        },
+        "resourcePoolImages": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. Required if image_uri isn't set. A map of resource_pool_id to prebuild Ray image if user need to use different images for different head/worker pools. This map needs to cover all the resource pool ids. Example: { \"ray_head_node_pool\": \"head image\" \"ray_worker_node_pool1\": \"worker image\" \"ray_worker_node_pool2\": \"another worker image\" }",
+          "type": "object"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudAiplatformV1ReadFeatureValuesRequest": {
@@ -28350,7 +28406,16 @@
     "GoogleCloudAiplatformV1ResourceRuntime": {
       "description": "Persistent Cluster runtime information as output",
       "id": "GoogleCloudAiplatformV1ResourceRuntime",
-      "properties": {},
+      "properties": {
+        "accessUris": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Output only. URIs for user to connect to the Cluster. Example: { \"RAY_HEAD_NODE_INTERNAL_IP\": \"head-node-IP:10001\" \"RAY_DASHBOARD_URI\": \"ray-dashboard-address:8888\" }",
+          "readOnly": true,
+          "type": "object"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudAiplatformV1ResourceRuntimeSpec": {
@@ -30879,6 +30944,10 @@
           "$ref": "GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig",
           "description": "Grounding checking configuration."
         },
+        "hasPromptVariable": {
+          "description": "Whether the prompt dataset has prompt variable.",
+          "type": "boolean"
+        },
         "maxOutputTokens": {
           "description": "Value of the maximum number of tokens generated set when the dataset was saved.",
           "format": "int64",
@@ -33155,6 +33224,35 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1StructFieldValue": {
+      "description": "One field of a Struct (or object) type feature value.",
+      "id": "GoogleCloudAiplatformV1StructFieldValue",
+      "properties": {
+        "name": {
+          "description": "Name of the field in the struct feature.",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "GoogleCloudAiplatformV1FeatureValue",
+          "description": "The value for this field."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1StructValue": {
+      "description": "Struct (or object) type feature value.",
+      "id": "GoogleCloudAiplatformV1StructValue",
+      "properties": {
+        "values": {
+          "description": "A list of field values.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1StructFieldValue"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1Study": {
       "description": "A message representing a Study.",
       "id": "GoogleCloudAiplatformV1Study",
@@ -34498,6 +34596,10 @@
             "$ref": "GoogleCloudAiplatformV1FunctionDeclaration"
           },
           "type": "array"
+        },
+        "googleSearchRetrieval": {
+          "$ref": "GoogleCloudAiplatformV1GoogleSearchRetrieval",
+          "description": "Optional. GoogleSearchRetrieval tool type. Specialized retrieval tool that is powered by Google search."
         },
         "retrieval": {
           "$ref": "GoogleCloudAiplatformV1Retrieval",

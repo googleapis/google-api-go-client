@@ -247,6 +247,7 @@ type ProjectsLocationsCollectionsDataConnectorOperationsService struct {
 func NewProjectsLocationsCollectionsDataStoresService(s *Service) *ProjectsLocationsCollectionsDataStoresService {
 	rs := &ProjectsLocationsCollectionsDataStoresService{s: s}
 	rs.Branches = NewProjectsLocationsCollectionsDataStoresBranchesService(s)
+	rs.Controls = NewProjectsLocationsCollectionsDataStoresControlsService(s)
 	rs.Conversations = NewProjectsLocationsCollectionsDataStoresConversationsService(s)
 	rs.CustomModels = NewProjectsLocationsCollectionsDataStoresCustomModelsService(s)
 	rs.Models = NewProjectsLocationsCollectionsDataStoresModelsService(s)
@@ -264,6 +265,8 @@ type ProjectsLocationsCollectionsDataStoresService struct {
 	s *Service
 
 	Branches *ProjectsLocationsCollectionsDataStoresBranchesService
+
+	Controls *ProjectsLocationsCollectionsDataStoresControlsService
 
 	Conversations *ProjectsLocationsCollectionsDataStoresConversationsService
 
@@ -328,6 +331,15 @@ func NewProjectsLocationsCollectionsDataStoresBranchesOperationsService(s *Servi
 }
 
 type ProjectsLocationsCollectionsDataStoresBranchesOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsDataStoresControlsService(s *Service) *ProjectsLocationsCollectionsDataStoresControlsService {
+	rs := &ProjectsLocationsCollectionsDataStoresControlsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresControlsService struct {
 	s *Service
 }
 
@@ -495,6 +507,7 @@ type ProjectsLocationsCollectionsDataStoresUserEventsService struct {
 
 func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocationsCollectionsEnginesService {
 	rs := &ProjectsLocationsCollectionsEnginesService{s: s}
+	rs.Controls = NewProjectsLocationsCollectionsEnginesControlsService(s)
 	rs.Conversations = NewProjectsLocationsCollectionsEnginesConversationsService(s)
 	rs.Operations = NewProjectsLocationsCollectionsEnginesOperationsService(s)
 	rs.ServingConfigs = NewProjectsLocationsCollectionsEnginesServingConfigsService(s)
@@ -505,6 +518,8 @@ func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocation
 type ProjectsLocationsCollectionsEnginesService struct {
 	s *Service
 
+	Controls *ProjectsLocationsCollectionsEnginesControlsService
+
 	Conversations *ProjectsLocationsCollectionsEnginesConversationsService
 
 	Operations *ProjectsLocationsCollectionsEnginesOperationsService
@@ -512,6 +527,15 @@ type ProjectsLocationsCollectionsEnginesService struct {
 	ServingConfigs *ProjectsLocationsCollectionsEnginesServingConfigsService
 
 	Sessions *ProjectsLocationsCollectionsEnginesSessionsService
+}
+
+func NewProjectsLocationsCollectionsEnginesControlsService(s *Service) *ProjectsLocationsCollectionsEnginesControlsService {
+	rs := &ProjectsLocationsCollectionsEnginesControlsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesControlsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsCollectionsEnginesConversationsService(s *Service) *ProjectsLocationsCollectionsEnginesConversationsService {
@@ -574,6 +598,7 @@ type ProjectsLocationsCollectionsOperationsService struct {
 func NewProjectsLocationsDataStoresService(s *Service) *ProjectsLocationsDataStoresService {
 	rs := &ProjectsLocationsDataStoresService{s: s}
 	rs.Branches = NewProjectsLocationsDataStoresBranchesService(s)
+	rs.Controls = NewProjectsLocationsDataStoresControlsService(s)
 	rs.Conversations = NewProjectsLocationsDataStoresConversationsService(s)
 	rs.Models = NewProjectsLocationsDataStoresModelsService(s)
 	rs.Operations = NewProjectsLocationsDataStoresOperationsService(s)
@@ -590,6 +615,8 @@ type ProjectsLocationsDataStoresService struct {
 	s *Service
 
 	Branches *ProjectsLocationsDataStoresBranchesService
+
+	Controls *ProjectsLocationsDataStoresControlsService
 
 	Conversations *ProjectsLocationsDataStoresConversationsService
 
@@ -652,6 +679,15 @@ func NewProjectsLocationsDataStoresBranchesOperationsService(s *Service) *Projec
 }
 
 type ProjectsLocationsDataStoresBranchesOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDataStoresControlsService(s *Service) *ProjectsLocationsDataStoresControlsService {
+	rs := &ProjectsLocationsDataStoresControlsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDataStoresControlsService struct {
 	s *Service
 }
 
@@ -1135,6 +1171,286 @@ type GoogleCloudDiscoveryengineV1BatchCreateTargetSitesResponse struct {
 
 func (s *GoogleCloudDiscoveryengineV1BatchCreateTargetSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1BatchCreateTargetSitesResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1Condition: Defines circumstances to be checked
+// before allowing a behavior
+type GoogleCloudDiscoveryengineV1Condition struct {
+	// ActiveTimeRange: Range of time(s) specifying when condition is active.
+	// Maximum of 10 time ranges.
+	ActiveTimeRange []*GoogleCloudDiscoveryengineV1ConditionTimeRange `json:"activeTimeRange,omitempty"`
+	// QueryTerms: Search only A list of terms to match the query on. Maximum of 10
+	// query terms.
+	QueryTerms []*GoogleCloudDiscoveryengineV1ConditionQueryTerm `json:"queryTerms,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActiveTimeRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActiveTimeRange") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1Condition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1Condition
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ConditionQueryTerm: Matcher for search request
+// query
+type GoogleCloudDiscoveryengineV1ConditionQueryTerm struct {
+	// FullMatch: Whether the search query needs to exactly match the query term.
+	FullMatch bool `json:"fullMatch,omitempty"`
+	// Value: The specific query value to match against Must be lowercase, must be
+	// UTF-8. Can have at most 3 space separated terms if full_match is true.
+	// Cannot be an empty string. Maximum length of 5000 characters.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FullMatch") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FullMatch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ConditionQueryTerm) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ConditionQueryTerm
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ConditionTimeRange: Used for time-dependent
+// conditions.
+type GoogleCloudDiscoveryengineV1ConditionTimeRange struct {
+	// EndTime: End of time range. Range is inclusive. Must be in the future.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: Start of time range. Range is inclusive.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ConditionTimeRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ConditionTimeRange
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1Control: Defines a conditioned behavior to
+// employ during serving. Must be attached to a ServingConfig to be considered
+// at serving time. Permitted actions dependent on `SolutionType`.
+type GoogleCloudDiscoveryengineV1Control struct {
+	// AssociatedServingConfigIds: Output only. List of all ServingConfig ids this
+	// control is attached to. May take up to 10 minutes to update after changes.
+	AssociatedServingConfigIds []string `json:"associatedServingConfigIds,omitempty"`
+	// BoostAction: Defines a boost-type control
+	BoostAction *GoogleCloudDiscoveryengineV1ControlBoostAction `json:"boostAction,omitempty"`
+	// Conditions: Determines when the associated action will trigger. Omit to
+	// always apply the action. Currently only a single condition may be specified.
+	// Otherwise an INVALID ARGUMENT error is thrown.
+	Conditions []*GoogleCloudDiscoveryengineV1Condition `json:"conditions,omitempty"`
+	// DisplayName: Required. Human readable name. The identifier used in UI views.
+	// Must be UTF-8 encoded string. Length limit is 128 characters. Otherwise an
+	// INVALID ARGUMENT error is thrown.
+	DisplayName string `json:"displayName,omitempty"`
+	// FilterAction: Defines a filter-type control Currently not supported by
+	// Recommendation
+	FilterAction *GoogleCloudDiscoveryengineV1ControlFilterAction `json:"filterAction,omitempty"`
+	// Name: Immutable. Fully qualified name
+	// `projects/*/locations/global/dataStore/*/controls/*`
+	Name string `json:"name,omitempty"`
+	// RedirectAction: Defines a redirect-type control.
+	RedirectAction *GoogleCloudDiscoveryengineV1ControlRedirectAction `json:"redirectAction,omitempty"`
+	// SolutionType: Required. Immutable. What solution the control belongs to.
+	// Must be compatible with vertical of resource. Otherwise an INVALID ARGUMENT
+	// error is thrown.
+	//
+	// Possible values:
+	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
+	//   "SOLUTION_TYPE_RECOMMENDATION" - Used for Recommendations AI.
+	//   "SOLUTION_TYPE_SEARCH" - Used for Discovery Search.
+	//   "SOLUTION_TYPE_CHAT" - Used for use cases related to the Generative AI
+	// agent.
+	//   "SOLUTION_TYPE_GENERATIVE_CHAT" - Used for use cases related to the
+	// Generative Chat agent. It's used for Generative chat engine only, the
+	// associated data stores must enrolled with `SOLUTION_TYPE_CHAT` solution.
+	SolutionType string `json:"solutionType,omitempty"`
+	// SynonymsAction: Treats a group of terms as synonyms of one another.
+	SynonymsAction *GoogleCloudDiscoveryengineV1ControlSynonymsAction `json:"synonymsAction,omitempty"`
+	// UseCases: Specifies the use case for the control. Affects what condition
+	// fields can be set. Only applies to SOLUTION_TYPE_SEARCH. Currently only
+	// allow one use case per control. Must be set when solution_type is
+	// SolutionType.SOLUTION_TYPE_SEARCH.
+	//
+	// Possible values:
+	//   "SEARCH_USE_CASE_UNSPECIFIED" - Value used when unset. Will not occur in
+	// CSS.
+	//   "SEARCH_USE_CASE_SEARCH" - Search use case. Expects the traffic has a
+	// non-empty query.
+	//   "SEARCH_USE_CASE_BROWSE" - Browse use case. Expects the traffic has an
+	// empty query.
+	UseCases []string `json:"useCases,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssociatedServingConfigIds")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssociatedServingConfigIds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1Control) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1Control
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ControlBoostAction: Adjusts order of products in
+// returned list.
+type GoogleCloudDiscoveryengineV1ControlBoostAction struct {
+	// Boost: Required. Strength of the boost, which should be in [-1, 1]. Negative
+	// boost means demotion. Default is 0.0 (No-op).
+	Boost float64 `json:"boost,omitempty"`
+	// DataStore: Required. Specifies which data store's documents can be boosted
+	// by this control. Full data store name e.g.
+	// projects/123/locations/global/collections/default_collection/dataStores/defau
+	// lt_data_store
+	DataStore string `json:"dataStore,omitempty"`
+	// Filter: Required. Specifies which products to apply the boost to. If no
+	// filter is provided all products will be boosted (No-op). Syntax
+	// documentation: https://cloud.google.com/retail/docs/filter-and-order Maximum
+	// length is 5000 characters. Otherwise an INVALID ARGUMENT error is thrown.
+	Filter string `json:"filter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Boost") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ControlBoostAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ControlBoostAction
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1ControlBoostAction) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1ControlBoostAction
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1ControlFilterAction: Specified which products
+// may be included in results. Uses same filter as boost.
+type GoogleCloudDiscoveryengineV1ControlFilterAction struct {
+	// DataStore: Required. Specifies which data store's documents can be filtered
+	// by this control. Full data store name e.g.
+	// projects/123/locations/global/collections/default_collection/dataStores/defau
+	// lt_data_store
+	DataStore string `json:"dataStore,omitempty"`
+	// Filter: Required. A filter to apply on the matching condition results.
+	// Required Syntax documentation:
+	// https://cloud.google.com/retail/docs/filter-and-order Maximum length is 5000
+	// characters. Otherwise an INVALID ARGUMENT error is thrown.
+	Filter string `json:"filter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ControlFilterAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ControlFilterAction
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ControlRedirectAction: Redirects a shopper to
+// the provided URI.
+type GoogleCloudDiscoveryengineV1ControlRedirectAction struct {
+	// RedirectUri: Required. The URI to which the shopper will be redirected.
+	// Required. URI must have length equal or less than 2000 characters. Otherwise
+	// an INVALID ARGUMENT error is thrown.
+	RedirectUri string `json:"redirectUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RedirectUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RedirectUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ControlRedirectAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ControlRedirectAction
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ControlSynonymsAction: Creates a set of terms
+// that will act as synonyms of one another. Example: "happy" will also be
+// considered as "glad", "glad" will also be considered as "happy".
+type GoogleCloudDiscoveryengineV1ControlSynonymsAction struct {
+	// Synonyms: Defines a set of synonyms. Can specify up to 100 synonyms. Must
+	// specify at least 2 synonyms. Otherwise an INVALID ARGUMENT error is thrown.
+	Synonyms []string `json:"synonyms,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Synonyms") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Synonyms") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ControlSynonymsAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ControlSynonymsAction
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1781,9 +2097,8 @@ func (s *GoogleCloudDiscoveryengineV1EngineChatEngineMetadata) MarshalJSON() ([]
 // GoogleCloudDiscoveryengineV1EngineCommonConfig: Common configurations for an
 // Engine.
 type GoogleCloudDiscoveryengineV1EngineCommonConfig struct {
-	// CompanyName: Immutable. The name of the company, business or entity that is
-	// associated with the engine. Setting this may help improve LLM related
-	// features.
+	// CompanyName: The name of the company, business or entity that is associated
+	// with the engine. Setting this may help improve LLM related features.
 	CompanyName string `json:"companyName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompanyName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2047,6 +2362,92 @@ type GoogleCloudDiscoveryengineV1ImportUserEventsResponse struct {
 func (s *GoogleCloudDiscoveryengineV1ImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ImportUserEventsResponse
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1Project: Metadata and configurations for a
+// Google Cloud project in the service.
+type GoogleCloudDiscoveryengineV1Project struct {
+	// CreateTime: Output only. The timestamp when this project is created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Output only. Full resource name of the project, for example
+	// `projects/{project_number}`. Note that when making requests, project number
+	// and project id are both acceptable, but the server will always respond in
+	// project number.
+	Name string `json:"name,omitempty"`
+	// ProvisionCompletionTime: Output only. The timestamp when this project is
+	// successfully provisioned. Empty value means this project is still
+	// provisioning and is not ready for use.
+	ProvisionCompletionTime string `json:"provisionCompletionTime,omitempty"`
+	// ServiceTermsMap: Output only. A map of terms of services. The key is the
+	// `id` of ServiceTerms.
+	ServiceTermsMap map[string]GoogleCloudDiscoveryengineV1ProjectServiceTerms `json:"serviceTermsMap,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1Project) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1Project
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ProjectServiceTerms: Metadata about the terms of
+// service.
+type GoogleCloudDiscoveryengineV1ProjectServiceTerms struct {
+	// AcceptTime: The last time when the project agreed to the terms of service.
+	AcceptTime string `json:"acceptTime,omitempty"`
+	// DeclineTime: The last time when the project declined or revoked the
+	// agreement to terms of service.
+	DeclineTime string `json:"declineTime,omitempty"`
+	// Id: The unique identifier of this terms of service. Available terms: *
+	// `GA_DATA_USE_TERMS`: Terms for data use
+	// (https://cloud.google.com/retail/data-use-terms). When using this as `id`,
+	// the acceptable version to provide is `2022-11-23`.
+	Id string `json:"id,omitempty"`
+	// State: Whether the project has accepted/rejected the service terms or it is
+	// still pending.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value of the enum. This value is not
+	// actually used.
+	//   "TERMS_ACCEPTED" - The project has given consent to the terms of service.
+	//   "TERMS_PENDING" - The project is pending to review and accept the terms of
+	// service.
+	//   "TERMS_DECLINED" - The project has declined or revoked the agreement to
+	// terms of service.
+	State string `json:"state,omitempty"`
+	// Version: The version string of the terms of service. For acceptable values,
+	// see the comments for id above.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceptTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceptTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1ProjectServiceTerms) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ProjectServiceTerms
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ProvisionProjectMetadata: Metadata associated
+// with a project provision operation.
+type GoogleCloudDiscoveryengineV1ProvisionProjectMetadata struct {
 }
 
 // GoogleCloudDiscoveryengineV1PurgeDocumentsMetadata: Metadata related to the
@@ -2610,6 +3011,11 @@ type GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestAnswerGenerationSpec str
 	// skip generating answers for adversarial queries and return fallback messages
 	// instead.
 	IgnoreAdversarialQuery bool `json:"ignoreAdversarialQuery,omitempty"`
+	// IgnoreLowRelevantContent: Specifies whether to filter out queries that have
+	// low relevance. If this field is set to `false`, all search results are used
+	// regardless of relevance to generate answers. If set to `true` or unset, the
+	// behavior will be determined automatically by the service.
+	IgnoreLowRelevantContent bool `json:"ignoreLowRelevantContent,omitempty"`
 	// IgnoreNonAnswerSeekingQuery: Specifies whether to filter out queries that
 	// are not answer-seeking. The default value is `false`. Google employs
 	// search-query classification to detect answer-seeking queries. No answer is
@@ -2849,6 +3255,11 @@ type GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestSearchSpecSearchParams s
 	BoostSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestBoostSpec `json:"boostSpec,omitempty"`
 	// CustomFineTuningSpec: Custom fine tuning configs.
 	CustomFineTuningSpec *GoogleCloudDiscoveryengineV1alphaCustomFineTuningSpec `json:"customFineTuningSpec,omitempty"`
+	// DataStoreSpecs: Specs defining dataStores to filter on in a search call and
+	// configurations for those dataStores. This is only considered for engines
+	// with multiple dataStores use case. For single dataStore within an engine,
+	// they should use the specs at the top level.
+	DataStoreSpecs []*GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// Filter: The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the documents being
 	// filtered. Filter expression is case-sensitive. This will be used to filter
@@ -3249,6 +3660,9 @@ type GoogleCloudDiscoveryengineV1alphaAnswerReferenceChunkInfoDocumentMetadata s
 	Document string `json:"document,omitempty"`
 	// PageIdentifier: Page identifier.
 	PageIdentifier string `json:"pageIdentifier,omitempty"`
+	// StructData: The structured JSON metadata for the document. It is populated
+	// from the struct data from the Chunk in search result.
+	StructData googleapi.RawMessage `json:"structData,omitempty"`
 	// Title: Title.
 	Title string `json:"title,omitempty"`
 	// Uri: URI for the document.
@@ -3278,6 +3692,9 @@ type GoogleCloudDiscoveryengineV1alphaAnswerReferenceUnstructuredDocumentInfo st
 	ChunkContents []*GoogleCloudDiscoveryengineV1alphaAnswerReferenceUnstructuredDocumentInfoChunkContent `json:"chunkContents,omitempty"`
 	// Document: Document resource name.
 	Document string `json:"document,omitempty"`
+	// StructData: The structured JSON metadata for the document. It is populated
+	// from the struct data from the Chunk in search result.
+	StructData googleapi.RawMessage `json:"structData,omitempty"`
 	// Title: Title.
 	Title string `json:"title,omitempty"`
 	// Uri: URI for the document.
@@ -4020,9 +4437,9 @@ type GoogleCloudDiscoveryengineV1alphaChunk struct {
 	Name string `json:"name,omitempty"`
 	// PageSpan: Page span of the chunk.
 	PageSpan *GoogleCloudDiscoveryengineV1alphaChunkPageSpan `json:"pageSpan,omitempty"`
-	// RelevanceScore: Represents the relevance score based on similarity. Higher
-	// score represents the chunk relevance. The score is in range [-1.0, 1.0].
-	// Only populated on SearchService.SearchResponse
+	// RelevanceScore: Output only. Represents the relevance score based on
+	// similarity. Higher score indicates higher chunk relevance. The score is in
+	// range [-1.0, 1.0]. Only populated on SearchService.SearchResponse.
 	RelevanceScore float64 `json:"relevanceScore,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4269,6 +4686,289 @@ type GoogleCloudDiscoveryengineV1alphaCompletionInfo struct {
 
 func (s *GoogleCloudDiscoveryengineV1alphaCompletionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaCompletionInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaCondition: Defines circumstances to be
+// checked before allowing a behavior
+type GoogleCloudDiscoveryengineV1alphaCondition struct {
+	// ActiveTimeRange: Range of time(s) specifying when condition is active.
+	// Maximum of 10 time ranges.
+	ActiveTimeRange []*GoogleCloudDiscoveryengineV1alphaConditionTimeRange `json:"activeTimeRange,omitempty"`
+	// QueryTerms: Search only A list of terms to match the query on. Maximum of 10
+	// query terms.
+	QueryTerms []*GoogleCloudDiscoveryengineV1alphaConditionQueryTerm `json:"queryTerms,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActiveTimeRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActiveTimeRange") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCondition
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaConditionQueryTerm: Matcher for search
+// request query
+type GoogleCloudDiscoveryengineV1alphaConditionQueryTerm struct {
+	// FullMatch: Whether the search query needs to exactly match the query term.
+	FullMatch bool `json:"fullMatch,omitempty"`
+	// Value: The specific query value to match against Must be lowercase, must be
+	// UTF-8. Can have at most 3 space separated terms if full_match is true.
+	// Cannot be an empty string. Maximum length of 5000 characters.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FullMatch") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FullMatch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaConditionQueryTerm) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaConditionQueryTerm
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaConditionTimeRange: Used for time-dependent
+// conditions.
+type GoogleCloudDiscoveryengineV1alphaConditionTimeRange struct {
+	// EndTime: End of time range. Range is inclusive. Must be in the future.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: Start of time range. Range is inclusive.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaConditionTimeRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaConditionTimeRange
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaControl: Defines a conditioned behavior to
+// employ during serving. Must be attached to a ServingConfig to be considered
+// at serving time. Permitted actions dependent on `SolutionType`.
+type GoogleCloudDiscoveryengineV1alphaControl struct {
+	// AssociatedServingConfigIds: Output only. List of all ServingConfig ids this
+	// control is attached to. May take up to 10 minutes to update after changes.
+	AssociatedServingConfigIds []string `json:"associatedServingConfigIds,omitempty"`
+	// BoostAction: Defines a boost-type control
+	BoostAction *GoogleCloudDiscoveryengineV1alphaControlBoostAction `json:"boostAction,omitempty"`
+	// Conditions: Determines when the associated action will trigger. Omit to
+	// always apply the action. Currently only a single condition may be specified.
+	// Otherwise an INVALID ARGUMENT error is thrown.
+	Conditions []*GoogleCloudDiscoveryengineV1alphaCondition `json:"conditions,omitempty"`
+	// DisplayName: Required. Human readable name. The identifier used in UI views.
+	// Must be UTF-8 encoded string. Length limit is 128 characters. Otherwise an
+	// INVALID ARGUMENT error is thrown.
+	DisplayName string `json:"displayName,omitempty"`
+	// FilterAction: Defines a filter-type control Currently not supported by
+	// Recommendation
+	FilterAction *GoogleCloudDiscoveryengineV1alphaControlFilterAction `json:"filterAction,omitempty"`
+	// Name: Immutable. Fully qualified name
+	// `projects/*/locations/global/dataStore/*/controls/*`
+	Name string `json:"name,omitempty"`
+	// RedirectAction: Defines a redirect-type control.
+	RedirectAction *GoogleCloudDiscoveryengineV1alphaControlRedirectAction `json:"redirectAction,omitempty"`
+	// SolutionType: Required. Immutable. What solution the control belongs to.
+	// Must be compatible with vertical of resource. Otherwise an INVALID ARGUMENT
+	// error is thrown.
+	//
+	// Possible values:
+	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
+	//   "SOLUTION_TYPE_RECOMMENDATION" - Used for Recommendations AI.
+	//   "SOLUTION_TYPE_SEARCH" - Used for Discovery Search.
+	//   "SOLUTION_TYPE_CHAT" - Used for use cases related to the Generative AI
+	// agent.
+	//   "SOLUTION_TYPE_GENERATIVE_CHAT" - Used for use cases related to the
+	// Generative Chat agent. It's used for Generative chat engine only, the
+	// associated data stores must enrolled with `SOLUTION_TYPE_CHAT` solution.
+	SolutionType string `json:"solutionType,omitempty"`
+	// SynonymsAction: Treats a group of terms as synonyms of one another.
+	SynonymsAction *GoogleCloudDiscoveryengineV1alphaControlSynonymsAction `json:"synonymsAction,omitempty"`
+	// UseCases: Specifies the use case for the control. Affects what condition
+	// fields can be set. Only applies to SOLUTION_TYPE_SEARCH. Currently only
+	// allow one use case per control. Must be set when solution_type is
+	// SolutionType.SOLUTION_TYPE_SEARCH.
+	//
+	// Possible values:
+	//   "SEARCH_USE_CASE_UNSPECIFIED" - Value used when unset. Will not occur in
+	// CSS.
+	//   "SEARCH_USE_CASE_SEARCH" - Search use case. Expects the traffic has a
+	// non-empty query.
+	//   "SEARCH_USE_CASE_BROWSE" - Browse use case. Expects the traffic has an
+	// empty query.
+	UseCases []string `json:"useCases,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AssociatedServingConfigIds")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssociatedServingConfigIds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaControl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaControl
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaControlBoostAction: Adjusts order of
+// products in returned list.
+type GoogleCloudDiscoveryengineV1alphaControlBoostAction struct {
+	// Boost: Required. Strength of the boost, which should be in [-1, 1]. Negative
+	// boost means demotion. Default is 0.0 (No-op).
+	Boost float64 `json:"boost,omitempty"`
+	// DataStore: Required. Specifies which data store's documents can be boosted
+	// by this control. Full data store name e.g.
+	// projects/123/locations/global/collections/default_collection/dataStores/defau
+	// lt_data_store
+	DataStore string `json:"dataStore,omitempty"`
+	// Filter: Required. Specifies which products to apply the boost to. If no
+	// filter is provided all products will be boosted (No-op). Syntax
+	// documentation: https://cloud.google.com/retail/docs/filter-and-order Maximum
+	// length is 5000 characters. Otherwise an INVALID ARGUMENT error is thrown.
+	Filter string `json:"filter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Boost") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaControlBoostAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaControlBoostAction
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaControlBoostAction) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaControlBoostAction
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaControlFilterAction: Specified which
+// products may be included in results. Uses same filter as boost.
+type GoogleCloudDiscoveryengineV1alphaControlFilterAction struct {
+	// DataStore: Required. Specifies which data store's documents can be filtered
+	// by this control. Full data store name e.g.
+	// projects/123/locations/global/collections/default_collection/dataStores/defau
+	// lt_data_store
+	DataStore string `json:"dataStore,omitempty"`
+	// Filter: Required. A filter to apply on the matching condition results.
+	// Required Syntax documentation:
+	// https://cloud.google.com/retail/docs/filter-and-order Maximum length is 5000
+	// characters. Otherwise an INVALID ARGUMENT error is thrown.
+	Filter string `json:"filter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaControlFilterAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaControlFilterAction
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaControlRedirectAction: Redirects a shopper
+// to the provided URI.
+type GoogleCloudDiscoveryengineV1alphaControlRedirectAction struct {
+	// RedirectUri: Required. The URI to which the shopper will be redirected.
+	// Required. URI must have length equal or less than 2000 characters. Otherwise
+	// an INVALID ARGUMENT error is thrown.
+	RedirectUri string `json:"redirectUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RedirectUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RedirectUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaControlRedirectAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaControlRedirectAction
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaControlSynonymsAction: Creates a set of
+// terms that will act as synonyms of one another. Example: "happy" will also
+// be considered as "glad", "glad" will also be considered as "happy".
+type GoogleCloudDiscoveryengineV1alphaControlSynonymsAction struct {
+	// Synonyms: Defines a set of synonyms. Can specify up to 100 synonyms. Must
+	// specify at least 2 synonyms. Otherwise an INVALID ARGUMENT error is thrown.
+	Synonyms []string `json:"synonyms,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Synonyms") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Synonyms") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaControlSynonymsAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaControlSynonymsAction
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4688,14 +5388,15 @@ type GoogleCloudDiscoveryengineV1alphaCustomTuningModel struct {
 	// `TRAINING_FAILED`).
 	//
 	// Possible values:
-	//   "MODEL_STATE_UNSPECIFIED"
+	//   "MODEL_STATE_UNSPECIFIED" - Default value.
 	//   "TRAINING_PAUSED" - The model is in a paused training state.
 	//   "TRAINING" - The model is currently training.
 	//   "TRAINING_COMPLETE" - The model has successfully completed training.
 	//   "READY_FOR_SERVING" - The model is ready for serving.
 	//   "TRAINING_FAILED" - The model training failed.
-	ModelState   string `json:"modelState,omitempty"`
-	ModelVersion int64  `json:"modelVersion,omitempty,string"`
+	ModelState string `json:"modelState,omitempty"`
+	// ModelVersion: The version of the model.
+	ModelVersion int64 `json:"modelVersion,omitempty,string"`
 	// Name: Required. The fully qualified resource name of the model. Format:
 	// `projects/{project_number}/locations/{location}/collections/{collection}/data
 	// Stores/{data_store}/customTuningModels/{custom_tuning_model}` model must be
@@ -5610,9 +6311,8 @@ func (s *GoogleCloudDiscoveryengineV1alphaEngineChatEngineMetadata) MarshalJSON(
 // GoogleCloudDiscoveryengineV1alphaEngineCommonConfig: Common configurations
 // for an Engine.
 type GoogleCloudDiscoveryengineV1alphaEngineCommonConfig struct {
-	// CompanyName: Immutable. The name of the company, business or entity that is
-	// associated with the engine. Setting this may help improve LLM related
-	// features.
+	// CompanyName: The name of the company, business or entity that is associated
+	// with the engine. Setting this may help improve LLM related features.
 	CompanyName string `json:"companyName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompanyName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6088,6 +6788,7 @@ type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
 	//   "ADVANCED_SITE_SEARCH_DATA_SOURCE_UNSPECIFIED" - Value used when unset.
 	//   "METATAGS" - Retrieve value from meta tag.
 	//   "PAGEMAP" - Retrieve value from page map.
+	//   "SCHEMA_ORG" - Retrieve value from schema.org data.
 	AdvancedSiteSearchDataSources []string `json:"advancedSiteSearchDataSources,omitempty"`
 	// CompletableOption: If completable_option is COMPLETABLE_ENABLED, field
 	// values are directly used and returned as suggestions for Autocomplete in
@@ -6196,6 +6897,15 @@ type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
 	//   "RETRIEVABLE_ENABLED" - Retrievable option enabled for a schema field.
 	//   "RETRIEVABLE_DISABLED" - Retrievable option disabled for a schema field.
 	RetrievableOption string `json:"retrievableOption,omitempty"`
+	// SchemaOrgPaths: Field paths for indexing custom attribute from schema.org
+	// data. More details of schema.org and its defined types can be found at
+	// schema.org (https://schema.org). It is only used on advanced site search
+	// schema. Currently only support full path from root. The full path to a field
+	// is constructed by concatenating field names, starting from `_root`, with a
+	// period `.` as the delimiter. Examples: * Publish date of the root:
+	// _root.datePublished * Publish date of the reviews:
+	// _root.review.datePublished
+	SchemaOrgPaths []string `json:"schemaOrgPaths,omitempty"`
 	// SearchableOption: If searchable_option is SEARCHABLE_ENABLED, field values
 	// are searchable by text queries in SearchService.Search. If
 	// SEARCHABLE_ENABLED but field type is numerical, field values will not be
@@ -6917,6 +7627,34 @@ type GoogleCloudDiscoveryengineV1alphaListChunksResponse struct {
 
 func (s *GoogleCloudDiscoveryengineV1alphaListChunksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaListChunksResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaListControlsResponse: Response for
+// ListControls method.
+type GoogleCloudDiscoveryengineV1alphaListControlsResponse struct {
+	// Controls: All the Controls for a given data store.
+	Controls []*GoogleCloudDiscoveryengineV1alphaControl `json:"controls,omitempty"`
+	// NextPageToken: Pagination token, if not returned indicates the last page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Controls") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Controls") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaListControlsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaListControlsResponse
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7806,6 +8544,19 @@ type GoogleCloudDiscoveryengineV1alphaRankRequest struct {
 	// TopN: The number of results to return. If this is unset or no bigger than
 	// zero, returns all results.
 	TopN int64 `json:"topN,omitempty"`
+	// UserLabels: The user labels applied to a resource must meet the following
+	// requirements: * Each resource can have multiple labels, up to a maximum of
+	// 64. * Each label must be a key-value pair. * Keys have a minimum length of 1
+	// character and a maximum length of 63 characters and cannot be empty. Values
+	// can be empty and have a maximum length of 63 characters. * Keys and values
+	// can contain only lowercase letters, numeric characters, underscores, and
+	// dashes. All characters must use UTF-8 encoding, and international characters
+	// are allowed. * The key portion of a label must be unique. However, you can
+	// use the same key with multiple resources. * Keys must start with a lowercase
+	// letter or international character. See Google Cloud Document
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
+	// for more details.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "IgnoreRecordDetailsInResponse") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -8726,10 +9477,7 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpec struct {
 	// there will be no extractive answer in the search response.
 	ExtractiveContentSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecExtractiveContentSpec `json:"extractiveContentSpec,omitempty"`
 	// SearchResultMode: Specifies the search result mode. If unspecified, the
-	// search result mode is based on
-	// DataStore.DocumentProcessingConfig.chunking_config: * If
-	// DataStore.DocumentProcessingConfig.chunking_config is specified, it defaults
-	// to `CHUNKS`. * Otherwise, it defaults to `DOCUMENTS`.
+	// search result mode defaults to `DOCUMENTS`.
 	//
 	// Possible values:
 	//   "SEARCH_RESULT_MODE_UNSPECIFIED" - Default value.
@@ -10716,6 +11464,13 @@ type GoogleCloudDiscoveryengineV1alphaUserEvent struct {
 	// event. This field should be set for `search` event when autocomplete
 	// function is enabled and the user clicks a suggestion for search.
 	CompletionInfo *GoogleCloudDiscoveryengineV1alphaCompletionInfo `json:"completionInfo,omitempty"`
+	// DataStore: The DataStore resource full name, of the form
+	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
+	// es/{data_store_id}`. Optional. Only required for user events whose data
+	// store can't by determined by UserEvent.engine or UserEvent.documents. If
+	// data store is set in the parent of write/import/collect user event requests,
+	// this field can be omitted.
+	DataStore string `json:"dataStore,omitempty"`
 	// DirectUserRequest: Should set to true if the request is made directly from
 	// the end user, in which case the UserEvent.user_info.user_agent can be
 	// populated from the HTTP request. This flag should be set only if the API
@@ -10733,6 +11488,11 @@ type GoogleCloudDiscoveryengineV1alphaUserEvent struct {
 	// for the same query, a new `search` event with different UserEvent.documents
 	// is desired.
 	Documents []*GoogleCloudDiscoveryengineV1alphaDocumentInfo `json:"documents,omitempty"`
+	// Engine: The Engine resource name, in the form of
+	// `projects/{project}/locations/{location}/collections/{collection_id}/engines/
+	// {engine_id}`. Optional. Only required for Engine produced user events. For
+	// example, user events from blended search.
+	Engine string `json:"engine,omitempty"`
 	// EventTime: Only required for UserEventService.ImportUserEvents method.
 	// Timestamp of when the user event happened.
 	EventTime string `json:"eventTime,omitempty"`
@@ -10905,6 +11665,286 @@ func (s *GoogleCloudDiscoveryengineV1betaBatchCreateTargetSitesResponse) Marshal
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaCondition: Defines circumstances to be
+// checked before allowing a behavior
+type GoogleCloudDiscoveryengineV1betaCondition struct {
+	// ActiveTimeRange: Range of time(s) specifying when condition is active.
+	// Maximum of 10 time ranges.
+	ActiveTimeRange []*GoogleCloudDiscoveryengineV1betaConditionTimeRange `json:"activeTimeRange,omitempty"`
+	// QueryTerms: Search only A list of terms to match the query on. Maximum of 10
+	// query terms.
+	QueryTerms []*GoogleCloudDiscoveryengineV1betaConditionQueryTerm `json:"queryTerms,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActiveTimeRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActiveTimeRange") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaCondition
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaConditionQueryTerm: Matcher for search
+// request query
+type GoogleCloudDiscoveryengineV1betaConditionQueryTerm struct {
+	// FullMatch: Whether the search query needs to exactly match the query term.
+	FullMatch bool `json:"fullMatch,omitempty"`
+	// Value: The specific query value to match against Must be lowercase, must be
+	// UTF-8. Can have at most 3 space separated terms if full_match is true.
+	// Cannot be an empty string. Maximum length of 5000 characters.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FullMatch") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FullMatch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaConditionQueryTerm) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaConditionQueryTerm
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaConditionTimeRange: Used for time-dependent
+// conditions.
+type GoogleCloudDiscoveryengineV1betaConditionTimeRange struct {
+	// EndTime: End of time range. Range is inclusive. Must be in the future.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: Start of time range. Range is inclusive.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaConditionTimeRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaConditionTimeRange
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaControl: Defines a conditioned behavior to
+// employ during serving. Must be attached to a ServingConfig to be considered
+// at serving time. Permitted actions dependent on `SolutionType`.
+type GoogleCloudDiscoveryengineV1betaControl struct {
+	// AssociatedServingConfigIds: Output only. List of all ServingConfig ids this
+	// control is attached to. May take up to 10 minutes to update after changes.
+	AssociatedServingConfigIds []string `json:"associatedServingConfigIds,omitempty"`
+	// BoostAction: Defines a boost-type control
+	BoostAction *GoogleCloudDiscoveryengineV1betaControlBoostAction `json:"boostAction,omitempty"`
+	// Conditions: Determines when the associated action will trigger. Omit to
+	// always apply the action. Currently only a single condition may be specified.
+	// Otherwise an INVALID ARGUMENT error is thrown.
+	Conditions []*GoogleCloudDiscoveryengineV1betaCondition `json:"conditions,omitempty"`
+	// DisplayName: Required. Human readable name. The identifier used in UI views.
+	// Must be UTF-8 encoded string. Length limit is 128 characters. Otherwise an
+	// INVALID ARGUMENT error is thrown.
+	DisplayName string `json:"displayName,omitempty"`
+	// FilterAction: Defines a filter-type control Currently not supported by
+	// Recommendation
+	FilterAction *GoogleCloudDiscoveryengineV1betaControlFilterAction `json:"filterAction,omitempty"`
+	// Name: Immutable. Fully qualified name
+	// `projects/*/locations/global/dataStore/*/controls/*`
+	Name string `json:"name,omitempty"`
+	// RedirectAction: Defines a redirect-type control.
+	RedirectAction *GoogleCloudDiscoveryengineV1betaControlRedirectAction `json:"redirectAction,omitempty"`
+	// SolutionType: Required. Immutable. What solution the control belongs to.
+	// Must be compatible with vertical of resource. Otherwise an INVALID ARGUMENT
+	// error is thrown.
+	//
+	// Possible values:
+	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
+	//   "SOLUTION_TYPE_RECOMMENDATION" - Used for Recommendations AI.
+	//   "SOLUTION_TYPE_SEARCH" - Used for Discovery Search.
+	//   "SOLUTION_TYPE_CHAT" - Used for use cases related to the Generative AI
+	// agent.
+	//   "SOLUTION_TYPE_GENERATIVE_CHAT" - Used for use cases related to the
+	// Generative Chat agent. It's used for Generative chat engine only, the
+	// associated data stores must enrolled with `SOLUTION_TYPE_CHAT` solution.
+	SolutionType string `json:"solutionType,omitempty"`
+	// SynonymsAction: Treats a group of terms as synonyms of one another.
+	SynonymsAction *GoogleCloudDiscoveryengineV1betaControlSynonymsAction `json:"synonymsAction,omitempty"`
+	// UseCases: Specifies the use case for the control. Affects what condition
+	// fields can be set. Only applies to SOLUTION_TYPE_SEARCH. Currently only
+	// allow one use case per control. Must be set when solution_type is
+	// SolutionType.SOLUTION_TYPE_SEARCH.
+	//
+	// Possible values:
+	//   "SEARCH_USE_CASE_UNSPECIFIED" - Value used when unset. Will not occur in
+	// CSS.
+	//   "SEARCH_USE_CASE_SEARCH" - Search use case. Expects the traffic has a
+	// non-empty query.
+	//   "SEARCH_USE_CASE_BROWSE" - Browse use case. Expects the traffic has an
+	// empty query.
+	UseCases []string `json:"useCases,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssociatedServingConfigIds")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssociatedServingConfigIds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaControl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaControl
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaControlBoostAction: Adjusts order of
+// products in returned list.
+type GoogleCloudDiscoveryengineV1betaControlBoostAction struct {
+	// Boost: Required. Strength of the boost, which should be in [-1, 1]. Negative
+	// boost means demotion. Default is 0.0 (No-op).
+	Boost float64 `json:"boost,omitempty"`
+	// DataStore: Required. Specifies which data store's documents can be boosted
+	// by this control. Full data store name e.g.
+	// projects/123/locations/global/collections/default_collection/dataStores/defau
+	// lt_data_store
+	DataStore string `json:"dataStore,omitempty"`
+	// Filter: Required. Specifies which products to apply the boost to. If no
+	// filter is provided all products will be boosted (No-op). Syntax
+	// documentation: https://cloud.google.com/retail/docs/filter-and-order Maximum
+	// length is 5000 characters. Otherwise an INVALID ARGUMENT error is thrown.
+	Filter string `json:"filter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Boost") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaControlBoostAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaControlBoostAction
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaControlBoostAction) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaControlBoostAction
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaControlFilterAction: Specified which
+// products may be included in results. Uses same filter as boost.
+type GoogleCloudDiscoveryengineV1betaControlFilterAction struct {
+	// DataStore: Required. Specifies which data store's documents can be filtered
+	// by this control. Full data store name e.g.
+	// projects/123/locations/global/collections/default_collection/dataStores/defau
+	// lt_data_store
+	DataStore string `json:"dataStore,omitempty"`
+	// Filter: Required. A filter to apply on the matching condition results.
+	// Required Syntax documentation:
+	// https://cloud.google.com/retail/docs/filter-and-order Maximum length is 5000
+	// characters. Otherwise an INVALID ARGUMENT error is thrown.
+	Filter string `json:"filter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaControlFilterAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaControlFilterAction
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaControlRedirectAction: Redirects a shopper
+// to the provided URI.
+type GoogleCloudDiscoveryengineV1betaControlRedirectAction struct {
+	// RedirectUri: Required. The URI to which the shopper will be redirected.
+	// Required. URI must have length equal or less than 2000 characters. Otherwise
+	// an INVALID ARGUMENT error is thrown.
+	RedirectUri string `json:"redirectUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RedirectUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RedirectUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaControlRedirectAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaControlRedirectAction
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaControlSynonymsAction: Creates a set of
+// terms that will act as synonyms of one another. Example: "happy" will also
+// be considered as "glad", "glad" will also be considered as "happy".
+type GoogleCloudDiscoveryengineV1betaControlSynonymsAction struct {
+	// Synonyms: Defines a set of synonyms. Can specify up to 100 synonyms. Must
+	// specify at least 2 synonyms. Otherwise an INVALID ARGUMENT error is thrown.
+	Synonyms []string `json:"synonyms,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Synonyms") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Synonyms") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaControlSynonymsAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaControlSynonymsAction
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaCreateDataStoreMetadata: Metadata related to
 // the progress of the DataStoreService.CreateDataStore operation. This will be
 // returned by the google.longrunning.Operation.metadata field.
@@ -11023,14 +12063,15 @@ type GoogleCloudDiscoveryengineV1betaCustomTuningModel struct {
 	// `TRAINING_FAILED`).
 	//
 	// Possible values:
-	//   "MODEL_STATE_UNSPECIFIED"
+	//   "MODEL_STATE_UNSPECIFIED" - Default value.
 	//   "TRAINING_PAUSED" - The model is in a paused training state.
 	//   "TRAINING" - The model is currently training.
 	//   "TRAINING_COMPLETE" - The model has successfully completed training.
 	//   "READY_FOR_SERVING" - The model is ready for serving.
 	//   "TRAINING_FAILED" - The model training failed.
-	ModelState   string `json:"modelState,omitempty"`
-	ModelVersion int64  `json:"modelVersion,omitempty,string"`
+	ModelState string `json:"modelState,omitempty"`
+	// ModelVersion: The version of the model.
+	ModelVersion int64 `json:"modelVersion,omitempty,string"`
 	// Name: Required. The fully qualified resource name of the model. Format:
 	// `projects/{project_number}/locations/{location}/collections/{collection}/data
 	// Stores/{data_store}/customTuningModels/{custom_tuning_model}` model must be
@@ -11592,9 +12633,8 @@ func (s *GoogleCloudDiscoveryengineV1betaEngineChatEngineMetadata) MarshalJSON()
 // GoogleCloudDiscoveryengineV1betaEngineCommonConfig: Common configurations
 // for an Engine.
 type GoogleCloudDiscoveryengineV1betaEngineCommonConfig struct {
-	// CompanyName: Immutable. The name of the company, business or entity that is
-	// associated with the engine. Setting this may help improve LLM related
-	// features.
+	// CompanyName: The name of the company, business or entity that is associated
+	// with the engine. Setting this may help improve LLM related features.
 	CompanyName string `json:"companyName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompanyName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11881,6 +12921,92 @@ type GoogleCloudDiscoveryengineV1betaListCustomModelsResponse struct {
 func (s *GoogleCloudDiscoveryengineV1betaListCustomModelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaListCustomModelsResponse
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaProject: Metadata and configurations for a
+// Google Cloud project in the service.
+type GoogleCloudDiscoveryengineV1betaProject struct {
+	// CreateTime: Output only. The timestamp when this project is created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Output only. Full resource name of the project, for example
+	// `projects/{project_number}`. Note that when making requests, project number
+	// and project id are both acceptable, but the server will always respond in
+	// project number.
+	Name string `json:"name,omitempty"`
+	// ProvisionCompletionTime: Output only. The timestamp when this project is
+	// successfully provisioned. Empty value means this project is still
+	// provisioning and is not ready for use.
+	ProvisionCompletionTime string `json:"provisionCompletionTime,omitempty"`
+	// ServiceTermsMap: Output only. A map of terms of services. The key is the
+	// `id` of ServiceTerms.
+	ServiceTermsMap map[string]GoogleCloudDiscoveryengineV1betaProjectServiceTerms `json:"serviceTermsMap,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaProject) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaProject
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaProjectServiceTerms: Metadata about the
+// terms of service.
+type GoogleCloudDiscoveryengineV1betaProjectServiceTerms struct {
+	// AcceptTime: The last time when the project agreed to the terms of service.
+	AcceptTime string `json:"acceptTime,omitempty"`
+	// DeclineTime: The last time when the project declined or revoked the
+	// agreement to terms of service.
+	DeclineTime string `json:"declineTime,omitempty"`
+	// Id: The unique identifier of this terms of service. Available terms: *
+	// `GA_DATA_USE_TERMS`: Terms for data use
+	// (https://cloud.google.com/retail/data-use-terms). When using this as `id`,
+	// the acceptable version to provide is `2022-11-23`.
+	Id string `json:"id,omitempty"`
+	// State: Whether the project has accepted/rejected the service terms or it is
+	// still pending.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value of the enum. This value is not
+	// actually used.
+	//   "TERMS_ACCEPTED" - The project has given consent to the terms of service.
+	//   "TERMS_PENDING" - The project is pending to review and accept the terms of
+	// service.
+	//   "TERMS_DECLINED" - The project has declined or revoked the agreement to
+	// terms of service.
+	State string `json:"state,omitempty"`
+	// Version: The version string of the terms of service. For acceptable values,
+	// see the comments for id above.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceptTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceptTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaProjectServiceTerms) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaProjectServiceTerms
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaProvisionProjectMetadata: Metadata
+// associated with a project provision operation.
+type GoogleCloudDiscoveryengineV1betaProvisionProjectMetadata struct {
 }
 
 // GoogleCloudDiscoveryengineV1betaPurgeDocumentsMetadata: Metadata related to
@@ -14139,7 +15265,7 @@ func (r *ProjectsLocationsCollectionsDataStoresService) List(parent string) *Pro
 }
 
 // Filter sets the optional parameter "filter": Filter by solution type . For
-// example: filter = 'solution_type:SOLUTION_TYPE_SEARCH'
+// example: `filter = 'solution_type:SOLUTION_TYPE_SEARCH'`
 func (c *ProjectsLocationsCollectionsDataStoresListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -16214,6 +17340,597 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesOperationsListCall) Pages
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsCollectionsDataStoresControlsCreateCall struct {
+	s                                        *Service
+	parent                                   string
+	googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Create: Creates a Control. By default 1000 controls are allowed for a data
+// store. A request can be submitted to adjust this limit. If the Control to
+// create already exists, an ALREADY_EXISTS error is returned.
+//
+//   - parent: Full resource name of parent data store. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}`.
+func (r *ProjectsLocationsCollectionsDataStoresControlsService) Create(parent string, googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl) *ProjectsLocationsCollectionsDataStoresControlsCreateCall {
+	c := &ProjectsLocationsCollectionsDataStoresControlsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphacontrol = googleclouddiscoveryenginev1alphacontrol
+	return c
+}
+
+// ControlId sets the optional parameter "controlId": Required. The ID to use
+// for the Control, which will become the final component of the Control's
+// resource name. This value must be within 1-63 characters. Valid characters
+// are /a-z-_/.
+func (c *ProjectsLocationsCollectionsDataStoresControlsCreateCall) ControlId(controlId string) *ProjectsLocationsCollectionsDataStoresControlsCreateCall {
+	c.urlParams_.Set("controlId", controlId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresControlsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresControlsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresControlsCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresControlsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresControlsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresControlsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphacontrol)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/controls")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.controls.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaControl.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresControlsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaControl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataStoresControlsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Control. If the Control to delete does not exist, a
+// NOT_FOUND error is returned.
+//
+//   - name: The resource name of the Control to delete. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+func (r *ProjectsLocationsCollectionsDataStoresControlsService) Delete(name string) *ProjectsLocationsCollectionsDataStoresControlsDeleteCall {
+	c := &ProjectsLocationsCollectionsDataStoresControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresControlsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresControlsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresControlsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresControlsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresControlsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresControlsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.controls.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresControlsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataStoresControlsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a Control.
+//
+//   - name: The resource name of the Control to get. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+func (r *ProjectsLocationsCollectionsDataStoresControlsService) Get(name string) *ProjectsLocationsCollectionsDataStoresControlsGetCall {
+	c := &ProjectsLocationsCollectionsDataStoresControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresControlsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresControlsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsDataStoresControlsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresControlsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresControlsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresControlsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresControlsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresControlsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.controls.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaControl.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresControlsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaControl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataStoresControlsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Controls by their parent DataStore.
+//
+//   - parent: The data store resource name. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}`.
+func (r *ProjectsLocationsCollectionsDataStoresControlsService) List(parent string) *ProjectsLocationsCollectionsDataStoresControlsListCall {
+	c := &ProjectsLocationsCollectionsDataStoresControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to apply on the list
+// results. Supported features: * List all the products under the parent branch
+// if filter is unset. Currently this field is unsupported.
+func (c *ProjectsLocationsCollectionsDataStoresControlsListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresControlsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of results
+// to return. If unspecified, defaults to 50. Max allowed value is 1000.
+func (c *ProjectsLocationsCollectionsDataStoresControlsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsDataStoresControlsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListControls` call. Provide this to retrieve the subsequent
+// page.
+func (c *ProjectsLocationsCollectionsDataStoresControlsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataStoresControlsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresControlsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresControlsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsDataStoresControlsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresControlsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresControlsListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresControlsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresControlsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresControlsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/controls")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.controls.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaListControlsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresControlsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaListControlsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaListControlsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsDataStoresControlsListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaListControlsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsCollectionsDataStoresControlsPatchCall struct {
+	s                                        *Service
+	name                                     string
+	googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Patch: Updates a Control. Control action type cannot be changed. If the
+// Control to update does not exist, a NOT_FOUND error is returned.
+//
+//   - name: Immutable. Fully qualified name
+//     `projects/*/locations/global/dataStore/*/controls/*`.
+func (r *ProjectsLocationsCollectionsDataStoresControlsService) Patch(name string, googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl) *ProjectsLocationsCollectionsDataStoresControlsPatchCall {
+	c := &ProjectsLocationsCollectionsDataStoresControlsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphacontrol = googleclouddiscoveryenginev1alphacontrol
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which fields
+// in the provided Control to update. The following are NOT supported: *
+// Control.name * Control.solution_type If not set or empty, all supported
+// fields are updated.
+func (c *ProjectsLocationsCollectionsDataStoresControlsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCollectionsDataStoresControlsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresControlsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresControlsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresControlsPatchCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresControlsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresControlsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresControlsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphacontrol)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.controls.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaControl.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresControlsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaControl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsCollectionsDataStoresConversationsConverseCall struct {
@@ -22164,6 +23881,14 @@ func (r *ProjectsLocationsCollectionsDataStoresUserEventsService) Write(parent s
 	return c
 }
 
+// WriteAsync sets the optional parameter "writeAsync": If set to true, the
+// user event is written asynchronously after validation, and the API responds
+// without waiting for the write.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall) WriteAsync(writeAsync bool) *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall {
+	c.urlParams_.Set("writeAsync", fmt.Sprint(writeAsync))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -23138,6 +24863,597 @@ func (c *ProjectsLocationsCollectionsEnginesTuneCall) Do(opts ...googleapi.CallO
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesControlsCreateCall struct {
+	s                                        *Service
+	parent                                   string
+	googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Create: Creates a Control. By default 1000 controls are allowed for a data
+// store. A request can be submitted to adjust this limit. If the Control to
+// create already exists, an ALREADY_EXISTS error is returned.
+//
+//   - parent: Full resource name of parent data store. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}`.
+func (r *ProjectsLocationsCollectionsEnginesControlsService) Create(parent string, googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl) *ProjectsLocationsCollectionsEnginesControlsCreateCall {
+	c := &ProjectsLocationsCollectionsEnginesControlsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphacontrol = googleclouddiscoveryenginev1alphacontrol
+	return c
+}
+
+// ControlId sets the optional parameter "controlId": Required. The ID to use
+// for the Control, which will become the final component of the Control's
+// resource name. This value must be within 1-63 characters. Valid characters
+// are /a-z-_/.
+func (c *ProjectsLocationsCollectionsEnginesControlsCreateCall) ControlId(controlId string) *ProjectsLocationsCollectionsEnginesControlsCreateCall {
+	c.urlParams_.Set("controlId", controlId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesControlsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesControlsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesControlsCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesControlsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesControlsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesControlsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphacontrol)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/controls")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.controls.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaControl.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesControlsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaControl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesControlsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Control. If the Control to delete does not exist, a
+// NOT_FOUND error is returned.
+//
+//   - name: The resource name of the Control to delete. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+func (r *ProjectsLocationsCollectionsEnginesControlsService) Delete(name string) *ProjectsLocationsCollectionsEnginesControlsDeleteCall {
+	c := &ProjectsLocationsCollectionsEnginesControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesControlsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesControlsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesControlsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesControlsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesControlsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesControlsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.controls.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesControlsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesControlsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a Control.
+//
+//   - name: The resource name of the Control to get. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+func (r *ProjectsLocationsCollectionsEnginesControlsService) Get(name string) *ProjectsLocationsCollectionsEnginesControlsGetCall {
+	c := &ProjectsLocationsCollectionsEnginesControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesControlsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesControlsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesControlsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesControlsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesControlsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesControlsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesControlsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesControlsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.controls.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaControl.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesControlsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaControl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesControlsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Controls by their parent DataStore.
+//
+//   - parent: The data store resource name. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}`.
+func (r *ProjectsLocationsCollectionsEnginesControlsService) List(parent string) *ProjectsLocationsCollectionsEnginesControlsListCall {
+	c := &ProjectsLocationsCollectionsEnginesControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to apply on the list
+// results. Supported features: * List all the products under the parent branch
+// if filter is unset. Currently this field is unsupported.
+func (c *ProjectsLocationsCollectionsEnginesControlsListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesControlsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of results
+// to return. If unspecified, defaults to 50. Max allowed value is 1000.
+func (c *ProjectsLocationsCollectionsEnginesControlsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsEnginesControlsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListControls` call. Provide this to retrieve the subsequent
+// page.
+func (c *ProjectsLocationsCollectionsEnginesControlsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsEnginesControlsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesControlsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesControlsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesControlsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesControlsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesControlsListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesControlsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesControlsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesControlsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/controls")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.controls.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaListControlsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesControlsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaListControlsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaListControlsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsEnginesControlsListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaListControlsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsCollectionsEnginesControlsPatchCall struct {
+	s                                        *Service
+	name                                     string
+	googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Patch: Updates a Control. Control action type cannot be changed. If the
+// Control to update does not exist, a NOT_FOUND error is returned.
+//
+//   - name: Immutable. Fully qualified name
+//     `projects/*/locations/global/dataStore/*/controls/*`.
+func (r *ProjectsLocationsCollectionsEnginesControlsService) Patch(name string, googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl) *ProjectsLocationsCollectionsEnginesControlsPatchCall {
+	c := &ProjectsLocationsCollectionsEnginesControlsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphacontrol = googleclouddiscoveryenginev1alphacontrol
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which fields
+// in the provided Control to update. The following are NOT supported: *
+// Control.name * Control.solution_type If not set or empty, all supported
+// fields are updated.
+func (c *ProjectsLocationsCollectionsEnginesControlsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCollectionsEnginesControlsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesControlsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesControlsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesControlsPatchCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesControlsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesControlsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesControlsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphacontrol)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.controls.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaControl.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesControlsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaControl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaControl{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -26532,7 +28848,7 @@ func (r *ProjectsLocationsDataStoresService) List(parent string) *ProjectsLocati
 }
 
 // Filter sets the optional parameter "filter": Filter by solution type . For
-// example: filter = 'solution_type:SOLUTION_TYPE_SEARCH'
+// example: `filter = 'solution_type:SOLUTION_TYPE_SEARCH'`
 func (c *ProjectsLocationsDataStoresListCall) Filter(filter string) *ProjectsLocationsDataStoresListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -28502,6 +30818,597 @@ func (c *ProjectsLocationsDataStoresBranchesOperationsListCall) Pages(ctx contex
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsDataStoresControlsCreateCall struct {
+	s                                        *Service
+	parent                                   string
+	googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Create: Creates a Control. By default 1000 controls are allowed for a data
+// store. A request can be submitted to adjust this limit. If the Control to
+// create already exists, an ALREADY_EXISTS error is returned.
+//
+//   - parent: Full resource name of parent data store. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}`.
+func (r *ProjectsLocationsDataStoresControlsService) Create(parent string, googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl) *ProjectsLocationsDataStoresControlsCreateCall {
+	c := &ProjectsLocationsDataStoresControlsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphacontrol = googleclouddiscoveryenginev1alphacontrol
+	return c
+}
+
+// ControlId sets the optional parameter "controlId": Required. The ID to use
+// for the Control, which will become the final component of the Control's
+// resource name. This value must be within 1-63 characters. Valid characters
+// are /a-z-_/.
+func (c *ProjectsLocationsDataStoresControlsCreateCall) ControlId(controlId string) *ProjectsLocationsDataStoresControlsCreateCall {
+	c.urlParams_.Set("controlId", controlId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresControlsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresControlsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresControlsCreateCall) Context(ctx context.Context) *ProjectsLocationsDataStoresControlsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresControlsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresControlsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphacontrol)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/controls")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.controls.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaControl.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresControlsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaControl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresControlsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Control. If the Control to delete does not exist, a
+// NOT_FOUND error is returned.
+//
+//   - name: The resource name of the Control to delete. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+func (r *ProjectsLocationsDataStoresControlsService) Delete(name string) *ProjectsLocationsDataStoresControlsDeleteCall {
+	c := &ProjectsLocationsDataStoresControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresControlsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresControlsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresControlsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDataStoresControlsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresControlsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresControlsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.controls.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresControlsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresControlsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a Control.
+//
+//   - name: The resource name of the Control to get. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+func (r *ProjectsLocationsDataStoresControlsService) Get(name string) *ProjectsLocationsDataStoresControlsGetCall {
+	c := &ProjectsLocationsDataStoresControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresControlsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresControlsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDataStoresControlsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataStoresControlsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresControlsGetCall) Context(ctx context.Context) *ProjectsLocationsDataStoresControlsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresControlsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresControlsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.controls.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaControl.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresControlsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaControl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresControlsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Controls by their parent DataStore.
+//
+//   - parent: The data store resource name. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/dataStores/{data_store_id}`.
+func (r *ProjectsLocationsDataStoresControlsService) List(parent string) *ProjectsLocationsDataStoresControlsListCall {
+	c := &ProjectsLocationsDataStoresControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to apply on the list
+// results. Supported features: * List all the products under the parent branch
+// if filter is unset. Currently this field is unsupported.
+func (c *ProjectsLocationsDataStoresControlsListCall) Filter(filter string) *ProjectsLocationsDataStoresControlsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of results
+// to return. If unspecified, defaults to 50. Max allowed value is 1000.
+func (c *ProjectsLocationsDataStoresControlsListCall) PageSize(pageSize int64) *ProjectsLocationsDataStoresControlsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListControls` call. Provide this to retrieve the subsequent
+// page.
+func (c *ProjectsLocationsDataStoresControlsListCall) PageToken(pageToken string) *ProjectsLocationsDataStoresControlsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresControlsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresControlsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDataStoresControlsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataStoresControlsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresControlsListCall) Context(ctx context.Context) *ProjectsLocationsDataStoresControlsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresControlsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresControlsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/controls")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.controls.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaListControlsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresControlsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaListControlsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaListControlsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDataStoresControlsListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaListControlsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDataStoresControlsPatchCall struct {
+	s                                        *Service
+	name                                     string
+	googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Patch: Updates a Control. Control action type cannot be changed. If the
+// Control to update does not exist, a NOT_FOUND error is returned.
+//
+//   - name: Immutable. Fully qualified name
+//     `projects/*/locations/global/dataStore/*/controls/*`.
+func (r *ProjectsLocationsDataStoresControlsService) Patch(name string, googleclouddiscoveryenginev1alphacontrol *GoogleCloudDiscoveryengineV1alphaControl) *ProjectsLocationsDataStoresControlsPatchCall {
+	c := &ProjectsLocationsDataStoresControlsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphacontrol = googleclouddiscoveryenginev1alphacontrol
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which fields
+// in the provided Control to update. The following are NOT supported: *
+// Control.name * Control.solution_type If not set or empty, all supported
+// fields are updated.
+func (c *ProjectsLocationsDataStoresControlsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDataStoresControlsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresControlsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresControlsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresControlsPatchCall) Context(ctx context.Context) *ProjectsLocationsDataStoresControlsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresControlsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresControlsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphacontrol)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.controls.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaControl.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresControlsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaControl, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsDataStoresConversationsConverseCall struct {
@@ -33302,6 +36209,14 @@ func (r *ProjectsLocationsDataStoresUserEventsService) Write(parent string, goog
 	return c
 }
 
+// WriteAsync sets the optional parameter "writeAsync": If set to true, the
+// user event is written asynchronously after validation, and the API responds
+// without waiting for the write.
+func (c *ProjectsLocationsDataStoresUserEventsWriteCall) WriteAsync(writeAsync bool) *ProjectsLocationsDataStoresUserEventsWriteCall {
+	c.urlParams_.Set("writeAsync", fmt.Sprint(writeAsync))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -34093,6 +37008,14 @@ func (r *ProjectsLocationsUserEventsService) Write(parent string, googleclouddis
 	c := &ProjectsLocationsUserEventsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.googleclouddiscoveryenginev1alphauserevent = googleclouddiscoveryenginev1alphauserevent
+	return c
+}
+
+// WriteAsync sets the optional parameter "writeAsync": If set to true, the
+// user event is written asynchronously after validation, and the API responds
+// without waiting for the write.
+func (c *ProjectsLocationsUserEventsWriteCall) WriteAsync(writeAsync bool) *ProjectsLocationsUserEventsWriteCall {
+	c.urlParams_.Set("writeAsync", fmt.Sprint(writeAsync))
 	return c
 }
 

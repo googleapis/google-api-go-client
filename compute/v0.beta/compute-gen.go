@@ -3108,12 +3108,12 @@ type AttachedDisk struct {
 	// on disk
 	ShieldedInstanceInitialState *InitialStateConfig `json:"shieldedInstanceInitialState,omitempty"`
 	// Source: Specifies a valid partial or full URL to an existing Persistent Disk
-	// resource. When creating a new instance, one of initializeParams.sourceImage
-	// or initializeParams.sourceSnapshot or disks.source is required except for
-	// local SSD. If desired, you can also attach existing non-root persistent
-	// disks using this property. This field is only applicable for persistent
-	// disks. Note that for InstanceTemplate, specify the disk name for zonal disk,
-	// and the URL for regional disk.
+	// resource. When creating a new instance boot disk, one of
+	// initializeParams.sourceImage or initializeParams.sourceSnapshot or
+	// disks.source is required. If desired, you can also attach existing non-root
+	// persistent disks using this property. This field is only applicable for
+	// persistent disks. Note that for InstanceTemplate, specify the disk name for
+	// zonal disk, and the URL for regional disk.
 	Source string `json:"source,omitempty"`
 	// Type: Specifies the type of the disk, either SCRATCH or PERSISTENT. If not
 	// specified, the default is PERSISTENT.
@@ -3235,13 +3235,12 @@ type AttachedDiskInitializeParams struct {
 	// template, specify only the resource policy name.
 	ResourcePolicies []string `json:"resourcePolicies,omitempty"`
 	// SourceImage: The source image to create this disk. When creating a new
-	// instance, one of initializeParams.sourceImage or
-	// initializeParams.sourceSnapshot or disks.source is required except for local
-	// SSD. To create a disk with one of the public operating system images,
-	// specify the image by its family name. For example, specify family/debian-9
-	// to use the latest Debian 9 image:
-	// projects/debian-cloud/global/images/family/debian-9 Alternatively, use a
-	// specific version of a public operating system image:
+	// instance boot disk, one of initializeParams.sourceImage or
+	// initializeParams.sourceSnapshot or disks.source is required. To create a
+	// disk with one of the public operating system images, specify the image by
+	// its family name. For example, specify family/debian-9 to use the latest
+	// Debian 9 image: projects/debian-cloud/global/images/family/debian-9
+	// Alternatively, use a specific version of a public operating system image:
 	// projects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD To create a
 	// disk with a custom image that you created, specify the image name in the
 	// following format: global/images/my-custom-image You can also specify a
@@ -3258,19 +3257,19 @@ type AttachedDiskInitializeParams struct {
 	// keys.
 	SourceImageEncryptionKey *CustomerEncryptionKey `json:"sourceImageEncryptionKey,omitempty"`
 	// SourceInstantSnapshot: The source instant-snapshot to create this disk. When
-	// creating a new instance, one of initializeParams.sourceSnapshot or
+	// creating a new instance boot disk, one of initializeParams.sourceSnapshot or
 	// initializeParams.sourceInstantSnapshot initializeParams.sourceImage or
-	// disks.source is required except for local SSD. To create a disk with a
-	// snapshot that you created, specify the snapshot name in the following
-	// format: us-central1-a/instantSnapshots/my-backup If the source
-	// instant-snapshot is deleted later, this field will not be set.
+	// disks.source is required. To create a disk with a snapshot that you created,
+	// specify the snapshot name in the following format:
+	// us-central1-a/instantSnapshots/my-backup If the source instant-snapshot is
+	// deleted later, this field will not be set.
 	SourceInstantSnapshot string `json:"sourceInstantSnapshot,omitempty"`
 	// SourceSnapshot: The source snapshot to create this disk. When creating a new
-	// instance, one of initializeParams.sourceSnapshot or
-	// initializeParams.sourceImage or disks.source is required except for local
-	// SSD. To create a disk with a snapshot that you created, specify the snapshot
-	// name in the following format: global/snapshots/my-backup If the source
-	// snapshot is deleted later, this field will not be set.
+	// instance boot disk, one of initializeParams.sourceSnapshot or
+	// initializeParams.sourceImage or disks.source is required. To create a disk
+	// with a snapshot that you created, specify the snapshot name in the following
+	// format: global/snapshots/my-backup If the source snapshot is deleted later,
+	// this field will not be set.
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
 	// SourceSnapshotEncryptionKey: The customer-supplied encryption key of the
 	// source snapshot.
@@ -17422,6 +17421,10 @@ type InstanceGroupManager struct {
 	// Region: [Output Only] The URL of the region where the managed instance group
 	// resides (for regional resources).
 	Region string `json:"region,omitempty"`
+	// SatisfiesPzi: [Output Only] Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: [Output Only] Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SelfLink: [Output Only] The URL for this managed instance group. The server
 	// defines this URL.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -17782,6 +17785,9 @@ type InstanceGroupManagerInstanceFlexibilityPolicy struct {
 	// InstanceSelections: Named instance selections configuring properties that
 	// the group will use when creating new VMs.
 	InstanceSelections map[string]InstanceGroupManagerInstanceFlexibilityPolicyInstanceSelection `json:"instanceSelections,omitempty"`
+	// ProvisioningModelMix: Provisioning model configuration used by this managed
+	// instance group to create instances.
+	ProvisioningModelMix *InstanceGroupManagerInstanceFlexibilityPolicyProvisioningModelMix `json:"provisioningModelMix,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InstanceSelectionLists") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -17823,6 +17829,35 @@ type InstanceGroupManagerInstanceFlexibilityPolicyInstanceSelection struct {
 
 func (s *InstanceGroupManagerInstanceFlexibilityPolicyInstanceSelection) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceGroupManagerInstanceFlexibilityPolicyInstanceSelection
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type InstanceGroupManagerInstanceFlexibilityPolicyProvisioningModelMix struct {
+	// StandardCapacityBase: The base capacity that will always use Standard VMs to
+	// avoid risk of more preemption than the minimum capacity user needs. MIG will
+	// create only Standard VMs until it reaches standard_capacity_base and only
+	// then will start using standard_capacity_percent_above_base to mix Spot with
+	// Standard VMs.
+	StandardCapacityBase int64 `json:"standardCapacityBase,omitempty"`
+	// StandardCapacityPercentAboveBase: The percentage of target capacity that
+	// should use Standard VM. The remaining percentage will use Spot VMs. The
+	// percentage applies only to the capacity above standard_capacity_base.
+	StandardCapacityPercentAboveBase int64 `json:"standardCapacityPercentAboveBase,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StandardCapacityBase") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StandardCapacityBase") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagerInstanceFlexibilityPolicyProvisioningModelMix) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceGroupManagerInstanceFlexibilityPolicyProvisioningModelMix
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -26571,6 +26606,13 @@ func (s *ManagedInstanceLastAttemptErrorsErrorsErrorDetails) MarshalJSON() ([]by
 type ManagedInstancePropertiesFromFlexibilityPolicy struct {
 	// MachineType: The machine type to be used for this instance.
 	MachineType string `json:"machineType,omitempty"`
+	// ProvisioningModel: The provisioning model to be used for this instance.
+	//
+	// Possible values:
+	//   "SPOT" - Heavily discounted, no guaranteed runtime.
+	//   "STANDARD" - Standard provisioning with user controlled runtime, no
+	// discounts.
+	ProvisioningModel string `json:"provisioningModel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MachineType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -56705,7 +56747,7 @@ func (s *XpnResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // Zone: Represents a Zone resource. A zone is a deployment area. These
-// deployment areas are subsets of a region. For example the zone us-east1-a is
+// deployment areas are subsets of a region. For example the zone us-east1-b is
 // located in the us-east1 region. For more information, read Regions and
 // Zones.
 type Zone struct {

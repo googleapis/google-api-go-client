@@ -4794,6 +4794,9 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
+	// migrating to this version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13102,6 +13105,10 @@ type ReviewStatusInfo struct {
 	// ExchangeReviewStatuses: Exchange review statuses for the creative.
 	ExchangeReviewStatuses []*ExchangeReviewStatus `json:"exchangeReviewStatuses,omitempty"`
 	// PublisherReviewStatuses: Publisher review statuses for the creative.
+	// **Warning:** This field will be deprecated on June 26th, 2024. After this
+	// date, this field will be empty. Read our feature deprecation announcement
+	// (/display-video/api/deprecations#features.creative_publisher_review_statuses)
+	//  for more information.
 	PublisherReviewStatuses []*PublisherReviewStatus `json:"publisherReviewStatuses,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApprovalStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13181,6 +13188,9 @@ type SdfConfig struct {
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
+	// migrating to this version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13251,6 +13261,9 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_5_5" - SDF version 5.5
 	//   "SDF_VERSION_6" - SDF version 6
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
+	// migrating to this version.
+	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
 	Version string `json:"version,omitempty"`

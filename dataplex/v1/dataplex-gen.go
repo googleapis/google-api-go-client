@@ -2502,7 +2502,7 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	// contained by a specified set.
 	SetExpectation *GoogleCloudDataplexV1DataQualityRuleSetExpectation `json:"setExpectation,omitempty"`
 	// SqlAssertion: Aggregate rule which evaluates the number of rows returned for
-	// the provided statement.
+	// the provided statement. If any rows are returned, this rule fails.
 	SqlAssertion *GoogleCloudDataplexV1DataQualityRuleSqlAssertion `json:"sqlAssertion,omitempty"`
 	// StatisticRangeExpectation: Aggregate rule which evaluates whether the column
 	// aggregate statistic lies between a specified range.
@@ -2615,8 +2615,8 @@ func (s *GoogleCloudDataplexV1DataQualityRuleRegexExpectation) MarshalJSON() ([]
 // GoogleCloudDataplexV1DataQualityRuleResult: DataQualityRuleResult provides a
 // more detailed, per-rule view of the results.
 type GoogleCloudDataplexV1DataQualityRuleResult struct {
-	// AssertionRowCount: Output only. The number of rows returned by the sql
-	// statement in the SqlAssertion rule.This field is only valid for SqlAssertion
+	// AssertionRowCount: Output only. The number of rows returned by the SQL
+	// statement in a SQL assertion rule.This field is only valid for SQL assertion
 	// rules.
 	AssertionRowCount int64 `json:"assertionRowCount,omitempty,string"`
 	// EvaluatedCount: The number of rows a rule was evaluated against.This field
@@ -2720,13 +2720,16 @@ func (s *GoogleCloudDataplexV1DataQualityRuleSetExpectation) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1DataQualityRuleSqlAssertion: Queries for rows returned
-// by the provided SQL statement. If any rows are are returned, this rule
-// fails.The SQL statement needs to use BigQuery standard SQL syntax, and must
-// not contain any semicolons.${data()} can be used to reference the rows being
-// evaluated, i.e. the table after all additional filters (row filters,
-// incremental data filters, sampling) are applied.Example: SELECT * FROM
-// ${data()} WHERE price < 0
+// GoogleCloudDataplexV1DataQualityRuleSqlAssertion: A SQL statement that is
+// evaluated to return rows that match an invalid state. If any rows are are
+// returned, this rule fails.The SQL statement must use BigQuery standard SQL
+// syntax, and must not contain any semicolons.You can use the data reference
+// parameter ${data()} to reference the source table with all of its
+// precondition filters applied. Examples of precondition filters include row
+// filters, incremental data filters, and sampling. For more information, see
+// Data reference parameter
+// (https://cloud.google.com/dataplex/docs/auto-data-quality-overview#data-reference-parameter).Example:
+// SELECT * FROM ${data()} WHERE price < 0
 type GoogleCloudDataplexV1DataQualityRuleSqlAssertion struct {
 	// SqlStatement: Optional. The SQL statement.
 	SqlStatement string `json:"sqlStatement,omitempty"`
@@ -2827,8 +2830,8 @@ type GoogleCloudDataplexV1DataQualityRuleUniquenessExpectation struct {
 // of a data quality rule for data quality scan. The monitored resource is
 // 'DataScan'.
 type GoogleCloudDataplexV1DataQualityScanRuleResult struct {
-	// AssertionRowCount: The number of rows returned by the sql statement in the
-	// SqlAssertion rule. This field is only valid for SqlAssertion rules.
+	// AssertionRowCount: The number of rows returned by the SQL statement in a SQL
+	// assertion rule. This field is only valid for SQL assertion rules.
 	AssertionRowCount int64 `json:"assertionRowCount,omitempty,string"`
 	// Column: The column which this rule is evaluated against.
 	Column string `json:"column,omitempty"`
@@ -2866,24 +2869,17 @@ type GoogleCloudDataplexV1DataQualityScanRuleResult struct {
 	//
 	// Possible values:
 	//   "RULE_TYPE_UNSPECIFIED" - An unspecified rule type.
-	//   "NON_NULL_EXPECTATION" - Please see
-	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#nonnullexpectation.
-	//   "RANGE_EXPECTATION" - Please see
-	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#rangeexpectation.
-	//   "REGEX_EXPECTATION" - Please see
-	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#regexexpectation.
-	//   "ROW_CONDITION_EXPECTATION" - Please see
-	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#rowconditionexpectation.
-	//   "SET_EXPECTATION" - Please see
-	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#setexpectation.
-	//   "STATISTIC_RANGE_EXPECTATION" - Please see
-	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#statisticrangeexpectation.
-	//   "TABLE_CONDITION_EXPECTATION" - Please see
-	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#tableconditionexpectation.
-	//   "UNIQUENESS_EXPECTATION" - Please see
-	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#uniquenessexpectation.
-	//   "SQL_ASSERTION" - Please see
-	// https://cloud.google.com/dataplex/docs/reference/rest/v1/DataQualityRule#sqlAssertion.
+	//   "NON_NULL_EXPECTATION" - See DataQualityRule.NonNullExpectation.
+	//   "RANGE_EXPECTATION" - See DataQualityRule.RangeExpectation.
+	//   "REGEX_EXPECTATION" - See DataQualityRule.RegexExpectation.
+	//   "ROW_CONDITION_EXPECTATION" - See DataQualityRule.RowConditionExpectation.
+	//   "SET_EXPECTATION" - See DataQualityRule.SetExpectation.
+	//   "STATISTIC_RANGE_EXPECTATION" - See
+	// DataQualityRule.StatisticRangeExpectation.
+	//   "TABLE_CONDITION_EXPECTATION" - See
+	// DataQualityRule.TableConditionExpectation.
+	//   "UNIQUENESS_EXPECTATION" - See DataQualityRule.UniquenessExpectation.
+	//   "SQL_ASSERTION" - See DataQualityRule.SqlAssertion.
 	RuleType string `json:"ruleType,omitempty"`
 	// ThresholdPercent: The passing threshold (0.0, 100.0) of the data quality
 	// rule.
@@ -5930,7 +5926,6 @@ func (s *GoogleCloudDataplexV1SearchEntriesResponse) MarshalJSON() ([]byte, erro
 // GoogleCloudDataplexV1SearchEntriesResult: A single result of a SearchEntries
 // request.
 type GoogleCloudDataplexV1SearchEntriesResult struct {
-	// DataplexEntry: Entry format of the result.
 	DataplexEntry *GoogleCloudDataplexV1Entry `json:"dataplexEntry,omitempty"`
 	// LinkedResource: Linked resource name.
 	LinkedResource string `json:"linkedResource,omitempty"`

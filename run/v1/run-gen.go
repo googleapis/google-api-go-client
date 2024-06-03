@@ -1816,7 +1816,7 @@ type GoogleDevtoolsCloudbuildV1Build struct {
 	// `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. ACCOUNT can be email
 	// address or uniqueId of the service account.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
-	// Source: The location of the source files to build.
+	// Source: Optional. The location of the source files to build.
 	Source *GoogleDevtoolsCloudbuildV1Source `json:"source,omitempty"`
 	// SourceProvenance: Output only. A permanent fixed identifier for source.
 	SourceProvenance *GoogleDevtoolsCloudbuildV1SourceProvenance `json:"sourceProvenance,omitempty"`
@@ -1955,7 +1955,7 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// this is *NOT* "disk free"; some of the space will be used by the operating
 	// system and build utilities. Also note that this is the minimum disk size
 	// that will be allocated for the build -- the build may run with a larger disk
-	// than requested. At present, the maximum disk size is 2000GB; builds that
+	// than requested. At present, the maximum disk size is 4000GB; builds that
 	// request more than the maximum are rejected with an error.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 	// DynamicSubstitutions: Option to specify whether or not to apply bash style
@@ -2214,13 +2214,14 @@ func (s *GoogleDevtoolsCloudbuildV1BuiltImage) MarshalJSON() ([]byte, error) {
 // GoogleDevtoolsCloudbuildV1ConnectedRepository: Location of the source in a
 // 2nd-gen Google Cloud Build repository resource.
 type GoogleDevtoolsCloudbuildV1ConnectedRepository struct {
-	// Dir: Directory, relative to the source root, in which to run the build.
+	// Dir: Optional. Directory, relative to the source root, in which to run the
+	// build.
 	Dir string `json:"dir,omitempty"`
 	// Repository: Required. Name of the Google Cloud Build repository, formatted
 	// as `projects/*/locations/*/connections/*/repositories/*`.
 	Repository string `json:"repository,omitempty"`
-	// Revision: The revision to fetch from the Git repository such as a branch, a
-	// tag, a commit SHA, or any Git ref.
+	// Revision: Required. The revision to fetch from the Git repository such as a
+	// branch, a tag, a commit SHA, or any Git ref.
 	Revision string `json:"revision,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dir") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2384,20 +2385,20 @@ func (s *GoogleDevtoolsCloudbuildV1GitConfig) MarshalJSON() ([]byte, error) {
 // GoogleDevtoolsCloudbuildV1GitSource: Location of the source in any
 // accessible Git repository.
 type GoogleDevtoolsCloudbuildV1GitSource struct {
-	// Dir: Directory, relative to the source root, in which to run the build. This
-	// must be a relative path. If a step's `dir` is specified and is an absolute
-	// path, this value is ignored for that step's execution.
+	// Dir: Optional. Directory, relative to the source root, in which to run the
+	// build. This must be a relative path. If a step's `dir` is specified and is
+	// an absolute path, this value is ignored for that step's execution.
 	Dir string `json:"dir,omitempty"`
-	// Revision: The revision to fetch from the Git repository such as a branch, a
-	// tag, a commit SHA, or any Git ref. Cloud Build uses `git fetch` to fetch the
-	// revision from the Git repository; therefore make sure that the string you
-	// provide for `revision` is parsable by the command. For information on string
-	// values accepted by `git fetch`, see
+	// Revision: Optional. The revision to fetch from the Git repository such as a
+	// branch, a tag, a commit SHA, or any Git ref. Cloud Build uses `git fetch` to
+	// fetch the revision from the Git repository; therefore make sure that the
+	// string you provide for `revision` is parsable by the command. For
+	// information on string values accepted by `git fetch`, see
 	// https://git-scm.com/docs/gitrevisions#_specifying_revisions. For information
 	// on `git fetch`, see https://git-scm.com/docs/git-fetch.
 	Revision string `json:"revision,omitempty"`
-	// Url: Location of the Git repo to build. This will be used as a `git remote`,
-	// see https://git-scm.com/docs/git-remote.
+	// Url: Required. Location of the Git repo to build. This will be used as a
+	// `git remote`, see https://git-scm.com/docs/git-remote.
 	Url string `json:"url,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dir") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2639,20 +2640,20 @@ type GoogleDevtoolsCloudbuildV1RepoSource struct {
 	BranchName string `json:"branchName,omitempty"`
 	// CommitSha: Explicit commit SHA to build.
 	CommitSha string `json:"commitSha,omitempty"`
-	// Dir: Directory, relative to the source root, in which to run the build. This
-	// must be a relative path. If a step's `dir` is specified and is an absolute
-	// path, this value is ignored for that step's execution.
+	// Dir: Optional. Directory, relative to the source root, in which to run the
+	// build. This must be a relative path. If a step's `dir` is specified and is
+	// an absolute path, this value is ignored for that step's execution.
 	Dir string `json:"dir,omitempty"`
-	// InvertRegex: Only trigger a build if the revision regex does NOT match the
-	// revision regex.
+	// InvertRegex: Optional. Only trigger a build if the revision regex does NOT
+	// match the revision regex.
 	InvertRegex bool `json:"invertRegex,omitempty"`
-	// ProjectId: ID of the project that owns the Cloud Source Repository. If
-	// omitted, the project ID requesting the build is assumed.
+	// ProjectId: Optional. ID of the project that owns the Cloud Source
+	// Repository. If omitted, the project ID requesting the build is assumed.
 	ProjectId string `json:"projectId,omitempty"`
-	// RepoName: Name of the Cloud Source Repository.
+	// RepoName: Required. Name of the Cloud Source Repository.
 	RepoName string `json:"repoName,omitempty"`
-	// Substitutions: Substitutions to use in a triggered build. Should only be
-	// used with RunBuildTrigger
+	// Substitutions: Optional. Substitutions to use in a triggered build. Should
+	// only be used with RunBuildTrigger
 	Substitutions map[string]string `json:"substitutions,omitempty"`
 	// TagName: Regex matching tags to build. The syntax of the regular expressions
 	// accepted is the syntax accepted by RE2 and described at
@@ -2904,12 +2905,12 @@ type GoogleDevtoolsCloudbuildV1StorageSource struct {
 	// Requirements
 	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
 	Bucket string `json:"bucket,omitempty"`
-	// Generation: Cloud Storage generation for the object. If the generation is
-	// omitted, the latest generation will be used.
+	// Generation: Optional. Cloud Storage generation for the object. If the
+	// generation is omitted, the latest generation will be used.
 	Generation int64 `json:"generation,omitempty,string"`
-	// Object: Cloud Storage object containing the source. This object must be a
-	// zipped (`.zip`) or gzipped archive file (`.tar.gz`) containing source to
-	// build.
+	// Object: Required. Cloud Storage object containing the source. This object
+	// must be a zipped (`.zip`) or gzipped archive file (`.tar.gz`) containing
+	// source to build.
 	Object string `json:"object,omitempty"`
 	// SourceFetcher: Optional. Option to specify the tool to fetch the source file
 	// for the build.
@@ -2942,15 +2943,15 @@ func (s *GoogleDevtoolsCloudbuildV1StorageSource) MarshalJSON() ([]byte, error) 
 // manifest in Cloud Storage. This feature is in Preview; see description here
 // (https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).
 type GoogleDevtoolsCloudbuildV1StorageSourceManifest struct {
-	// Bucket: Cloud Storage bucket containing the source manifest (see Bucket Name
-	// Requirements
+	// Bucket: Required. Cloud Storage bucket containing the source manifest (see
+	// Bucket Name Requirements
 	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
 	Bucket string `json:"bucket,omitempty"`
 	// Generation: Cloud Storage generation for the object. If the generation is
 	// omitted, the latest generation will be used.
 	Generation int64 `json:"generation,omitempty,string"`
-	// Object: Cloud Storage object containing the source manifest. This object
-	// must be a JSON file.
+	// Object: Required. Cloud Storage object containing the source manifest. This
+	// object must be a JSON file.
 	Object string `json:"object,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5657,7 +5658,7 @@ type NamespacesConfigurationsListCall struct {
 	header_      http.Header
 }
 
-// List: List configurations.
+// List: List configurations. Results are sorted by creation time, descending.
 //
 //   - parent: The namespace from which the configurations should be listed. For
 //     Cloud Run, replace {namespace_id} with the project ID or number.
@@ -6660,7 +6661,7 @@ type NamespacesExecutionsListCall struct {
 	header_      http.Header
 }
 
-// List: List executions.
+// List: List executions. Results are sorted by creation time, descending.
 //
 //   - parent: The namespace from which the executions should be listed. Replace
 //     {namespace} with the project ID or number. It takes the form
@@ -7152,7 +7153,7 @@ type NamespacesJobsListCall struct {
 	header_      http.Header
 }
 
-// List: List jobs.
+// List: List jobs. Results are sorted by creation time, descending.
 //
 //   - parent: The namespace from which the jobs should be listed. Replace
 //     {namespace} with the project ID or number. It takes the form
@@ -7756,7 +7757,7 @@ type NamespacesRevisionsListCall struct {
 	header_      http.Header
 }
 
-// List: List revisions.
+// List: List revisions. Results are sorted by creation time, descending.
 //
 //   - parent: The namespace from which the revisions should be listed. For Cloud
 //     Run (fully managed), replace {namespace} with the project ID or number. It
@@ -8029,7 +8030,7 @@ type NamespacesRoutesListCall struct {
 	header_      http.Header
 }
 
-// List: List routes.
+// List: List routes. Results are sorted by creation time, descending.
 //
 //   - parent: The namespace from which the routes should be listed. For Cloud
 //     Run (fully managed), replace {namespace} with the project ID or number. It
@@ -8553,7 +8554,8 @@ type NamespacesServicesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists services for the given project and region.
+// List: Lists services for the given project and region. Results are sorted by
+// creation time, descending.
 //
 //   - parent: The parent from where the resources should be listed. In Cloud
 //     Run, it may be one of the following: * `{project_id_or_number}` *
@@ -9664,7 +9666,7 @@ type ProjectsLocationsConfigurationsListCall struct {
 	header_      http.Header
 }
 
-// List: List configurations.
+// List: List configurations. Results are sorted by creation time, descending.
 //
 //   - parent: The namespace from which the configurations should be listed. For
 //     Cloud Run, replace {namespace_id} with the project ID or number.
@@ -11383,7 +11385,7 @@ type ProjectsLocationsRevisionsListCall struct {
 	header_      http.Header
 }
 
-// List: List revisions.
+// List: List revisions. Results are sorted by creation time, descending.
 //
 //   - parent: The namespace from which the revisions should be listed. For Cloud
 //     Run (fully managed), replace {namespace} with the project ID or number. It
@@ -11656,7 +11658,7 @@ type ProjectsLocationsRoutesListCall struct {
 	header_      http.Header
 }
 
-// List: List routes.
+// List: List routes. Results are sorted by creation time, descending.
 //
 //   - parent: The namespace from which the routes should be listed. For Cloud
 //     Run (fully managed), replace {namespace} with the project ID or number. It
@@ -12308,7 +12310,8 @@ type ProjectsLocationsServicesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists services for the given project and region.
+// List: Lists services for the given project and region. Results are sorted by
+// creation time, descending.
 //
 //   - parent: The parent from where the resources should be listed. In Cloud
 //     Run, it may be one of the following: * `{project_id_or_number}` *

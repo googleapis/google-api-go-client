@@ -702,9 +702,9 @@ type Message struct {
 	Condition string `json:"condition,omitempty"`
 	// Data: Input only. Arbitrary key/value payload, which must be UTF-8 encoded.
 	// The key should not be a reserved word ("from", "message_type", or any word
-	// starting with "google" or "gcm"). When sending payloads containing only data
-	// fields to iOS devices, only normal priority ("apns-priority": "5") is
-	// allowed in `ApnsConfig`
+	// starting with "google." or "gcm.notification."). When sending payloads
+	// containing only data fields to iOS devices, only normal priority
+	// ("apns-priority": "5") is allowed in `ApnsConfig`
 	// (/docs/reference/fcm/rest/v1/projects.messages#apnsconfig).
 	Data map[string]string `json:"data,omitempty"`
 	// FcmOptions: Input only. Template for FCM SDK feature options to use across

@@ -1035,6 +1035,8 @@ func (s *ConnectionStatus) MarshalJSON() ([]byte, error) {
 // Connector: Connectors indicates a specific connector type, e.x. Salesforce,
 // SAP etc.
 type Connector struct {
+	// Category: Output only. Category of the connector.
+	Category string `json:"category,omitempty"`
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Output only. Description of the resource.
@@ -1066,6 +1068,8 @@ type Connector struct {
 	// projects/{project}/locations/{location}/providers/{provider}/connectors/{conn
 	// ector} Only global location is supported for Connector resource.
 	Name string `json:"name,omitempty"`
+	// Tags: Output only. Tags of the connector.
+	Tags []string `json:"tags,omitempty"`
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// WebAssetsLocation: Output only. Cloud storage location of icons etc consumed
@@ -1074,13 +1078,13 @@ type Connector struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "Category") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

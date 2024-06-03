@@ -205,6 +205,7 @@ type ProjectsLocationsConnectionsActionsService struct {
 func NewProjectsLocationsConnectionsEntityTypesService(s *Service) *ProjectsLocationsConnectionsEntityTypesService {
 	rs := &ProjectsLocationsConnectionsEntityTypesService{s: s}
 	rs.Entities = NewProjectsLocationsConnectionsEntityTypesEntitiesService(s)
+	rs.Entitieswithacls = NewProjectsLocationsConnectionsEntityTypesEntitieswithaclsService(s)
 	return rs
 }
 
@@ -212,6 +213,8 @@ type ProjectsLocationsConnectionsEntityTypesService struct {
 	s *Service
 
 	Entities *ProjectsLocationsConnectionsEntityTypesEntitiesService
+
+	Entitieswithacls *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsService
 }
 
 func NewProjectsLocationsConnectionsEntityTypesEntitiesService(s *Service) *ProjectsLocationsConnectionsEntityTypesEntitiesService {
@@ -220,6 +223,15 @@ func NewProjectsLocationsConnectionsEntityTypesEntitiesService(s *Service) *Proj
 }
 
 type ProjectsLocationsConnectionsEntityTypesEntitiesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsConnectionsEntityTypesEntitieswithaclsService(s *Service) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsService {
+	rs := &ProjectsLocationsConnectionsEntityTypesEntitieswithaclsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsConnectionsEntityTypesEntitieswithaclsService struct {
 	s *Service
 }
 
@@ -247,6 +259,30 @@ type AccessCredentials struct {
 
 func (s *AccessCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessCredentials
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// AclInfo: AclInfo has a list of readers for a resource. This is defined as
+// per the below docs
+// https://cloud.google.com/generative-ai-app-builder/docs/reference/rest/v1alpha/projects.locations.collections.dataStores.branches.documents#aclinfo
+type AclInfo struct {
+	// Readers: A list of readers for a resource.
+	Readers []*Readers `json:"readers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Readers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Readers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AclInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AclInfo
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -526,6 +562,32 @@ type EntityType struct {
 
 func (s *EntityType) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityType
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// EntityWithACL: EntityWithACL refers to a single row of an entity type with
+// ACL information.
+type EntityWithACL struct {
+	// AclInfo: ACL information of the entity.
+	AclInfo *AclInfo `json:"acl_info,omitempty"`
+	Id      string   `json:"id,omitempty"`
+	// JsonData: Entity data in JSON format.
+	JsonData string `json:"jsonData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AclInfo") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AclInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *EntityWithACL) MarshalJSON() ([]byte, error) {
+	type NoMethod EntityWithACL
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1114,6 +1176,34 @@ func (s *ListEntitiesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// ListEntitiesWithACLsResponse: Response message for
+// EntityService.ListEntitiesWithACLs
+type ListEntitiesWithACLsResponse struct {
+	// EntitiesWithAcl: List containing entity rows.
+	EntitiesWithAcl []*EntityWithACL `json:"entitiesWithAcl,omitempty"`
+	// NextPageToken: Next page token if more records are available.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EntitiesWithAcl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntitiesWithAcl") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEntitiesWithACLsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEntitiesWithACLsResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // ListEntityTypesResponse: Response message for EntityService.ListEntityTypes
 type ListEntityTypesResponse struct {
 	// NextPageToken: Next page token if more entity types available.
@@ -1379,6 +1469,30 @@ func (s *PerSliSloEligibility) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// Principal: Principal is a user or group that has access to a resource.
+type Principal struct {
+	// GroupId: The group that has access to a resource.
+	GroupId string `json:"group_id,omitempty"`
+	// UserId: The user that has access to a resource.
+	UserId string `json:"user_id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Principal) MarshalJSON() ([]byte, error) {
+	type NoMethod Principal
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // ProvisionedResource: Describes provisioned dataplane resources.
 type ProvisionedResource struct {
 	// ResourceType: Type of the resource. This can be either a GCP resource or a
@@ -1507,6 +1621,29 @@ type QueryParameter struct {
 
 func (s *QueryParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryParameter
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// Readers: Readers is a list of principals that have read access to a
+// resource.
+type Readers struct {
+	// Principals: A list of principals that have read access to a resource.
+	Principals []*Principal `json:"principals,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Principals") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Principals") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Readers) MarshalJSON() ([]byte, error) {
+	type NoMethod Readers
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3865,4 +4002,180 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesUpdateEntitiesWithCondit
 		return nil, err
 	}
 	return ret, nil
+}
+
+type ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists entity rows with ACLs of a particular entity type contained in
+// the request. Note: 1. Currently, only max of one 'sort_by' column is
+// supported. 2. If no 'sort_by' column is provided, the primary key of the
+// table is used. If zero or more than one primary key is available, we default
+// to the unpaginated list entities logic which only returns the first page. 3.
+// The values of the 'sort_by' columns must uniquely identify an entity row,
+// otherwise undefined behaviors may be observed during pagination. 4. Since
+// transactions are not supported, any updates, inserts or deletes during
+// pagination can lead to stale data being returned or other unexpected
+// behaviors.
+//
+//   - parent: Resource name of the Entity Type. Format:
+//     projects/{project}/locations/{location}/connections/{connection}/entityType
+//     s/{type}.
+func (r *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsService) List(parent string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
+	c := &ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Conditions sets the optional parameter "conditions": Conditions to be used
+// when listing entities. From a proto standpoint, There are no restrictions on
+// what can be passed using this field. The connector documentation should have
+// information about what format of filters/conditions are supported.
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Conditions(conditions string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
+	c.urlParams_.Set("conditions", conditions)
+	return c
+}
+
+// GsutilUri sets the optional parameter "gsutilUri": Format: gs://object_path
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) GsutilUri(gsutilUri string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
+	c.urlParams_.Set("gsutilUri", gsutilUri)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of entity rows to
+// return. Defaults page size = 25. Max page size = 200.
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) PageSize(pageSize int64) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token value if
+// available from a previous request.
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) PageToken(pageToken string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// SortBy sets the optional parameter "sortBy": List of 'sort_by' columns to
+// use when returning the results.
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) SortBy(sortBy ...string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
+	c.urlParams_.SetMulti("sortBy", append([]string{}, sortBy...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/entitieswithacls")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.entityTypes.entitieswithacls.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListEntitiesWithACLsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Do(opts ...googleapi.CallOption) (*ListEntitiesWithACLsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEntitiesWithACLsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectionsEntityTypesEntitieswithaclsListCall) Pages(ctx context.Context, f func(*ListEntitiesWithACLsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

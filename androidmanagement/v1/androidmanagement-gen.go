@@ -981,6 +981,21 @@ type ApplicationPolicy struct {
 	// values override the default_permission_policy and permission_grants which
 	// apply to all apps.
 	PermissionGrants []*PermissionGrant `json:"permissionGrants,omitempty"`
+	// UserControlSettings: Optional. Specifies whether user control is permitted
+	// for the app. User control includes user actions like force-stopping and
+	// clearing app data. Supported on Android 11 and above.
+	//
+	// Possible values:
+	//   "USER_CONTROL_SETTINGS_UNSPECIFIED" - Uses the default behaviour of the
+	// app to determine if user control is allowed or disallowed. For most apps,
+	// user control is allowed by default, but for some critical apps such as
+	// companion apps (extensionConfig set to true), kiosk apps and other critical
+	// system apps, user control is disallowed.
+	//   "USER_CONTROL_ALLOWED" - User control is allowed for the app. Kiosk apps
+	// can use this to allow user control.
+	//   "USER_CONTROL_DISALLOWED" - User control is disallowed for the app.
+	// API_LEVEL is reported if the Android version is less than 11.
+	UserControlSettings string `json:"userControlSettings,omitempty"`
 	// WorkProfileWidgets: Specifies whether the app installed in the work profile
 	// is allowed to add widgets to the home screen.
 	//
@@ -2404,6 +2419,9 @@ type EnrollmentToken struct {
 	// specified
 	//   "PERSONAL_USAGE_ALLOWED" - Personal usage is allowed
 	//   "PERSONAL_USAGE_DISALLOWED" - Personal usage is disallowed
+	//   "PERSONAL_USAGE_DISALLOWED_USERLESS" - Device is not associated with a
+	// single user, and thus both personal usage and corporate identity
+	// authentication are not expected.
 	AllowPersonalUsage string `json:"allowPersonalUsage,omitempty"`
 	// Duration: The length of time the enrollment token is valid, ranging from 1
 	// minute to Durations.MAX_VALUE
@@ -2484,6 +2502,9 @@ type Enterprise struct {
 	// EnterpriseDisplayName: The name of the enterprise displayed to users. This
 	// field has a maximum length of 100 characters.
 	EnterpriseDisplayName string `json:"enterpriseDisplayName,omitempty"`
+	// GoogleAuthenticationSettings: Settings for Google-provided user
+	// authentication.
+	GoogleAuthenticationSettings *GoogleAuthenticationSettings `json:"googleAuthenticationSettings,omitempty"`
 	// Logo: An image displayed as a logo during device provisioning. Supported
 	// types are: image/bmp, image/gif, image/x-ico, image/jpeg, image/png,
 	// image/webp, image/vnd.wap.wbmp, image/x-adobe-dng.
@@ -2681,6 +2702,40 @@ type FreezePeriod struct {
 
 func (s *FreezePeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod FreezePeriod
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAuthenticationSettings: Contains settings for Google-provided user
+// authentication.
+type GoogleAuthenticationSettings struct {
+	// GoogleAuthenticationRequired: Output only. Whether users need to be
+	// authenticated by Google during the enrollment process. IT admin can specify
+	// if Google authentication is enabled for the enterprise for knowledge worker
+	// devices. This value can be set only via the Google Admin Console. Google
+	// authentication can be used with signin_url In the case where Google
+	// authentication is required and a signin_url is specified, Google
+	// authentication will be launched before signin_url.
+	//
+	// Possible values:
+	//   "GOOGLE_AUTHENTICATION_REQUIRED_UNSPECIFIED" - This value is not used.
+	//   "NOT_REQUIRED" - Google authentication is not required.
+	//   "REQUIRED" - User is required to be successfully authenticated by Google.
+	GoogleAuthenticationRequired string `json:"googleAuthenticationRequired,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "GoogleAuthenticationRequired") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoogleAuthenticationRequired") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAuthenticationSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAuthenticationSettings
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5473,6 +5528,9 @@ type SigninDetail struct {
 	// specified
 	//   "PERSONAL_USAGE_ALLOWED" - Personal usage is allowed
 	//   "PERSONAL_USAGE_DISALLOWED" - Personal usage is disallowed
+	//   "PERSONAL_USAGE_DISALLOWED_USERLESS" - Device is not associated with a
+	// single user, and thus both personal usage and corporate identity
+	// authentication are not expected.
 	AllowPersonalUsage string `json:"allowPersonalUsage,omitempty"`
 	// QrCode: A JSON string whose UTF-8 representation can be used to generate a
 	// QR code to enroll a device with this enrollment token. To enroll a device

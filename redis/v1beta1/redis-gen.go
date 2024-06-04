@@ -476,6 +476,9 @@ type Cluster struct {
 	TransitEncryptionMode string `json:"transitEncryptionMode,omitempty"`
 	// Uid: Output only. System assigned, unique identifier for the cluster.
 	Uid string `json:"uid,omitempty"`
+	// ZoneDistributionConfig: Optional. This config will be used to determine how
+	// the customer wants us to distribute cluster resources within the region.
+	ZoneDistributionConfig *ZoneDistributionConfig `json:"zoneDistributionConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2190,17 +2193,23 @@ type ObservabilityMetricData struct {
 	//
 	// Possible values:
 	//   "AGGREGATION_TYPE_UNSPECIFIED" - Unspecified aggregation type.
-	//   "MAXIMUM" - Maximum aggregation type.
+	//   "PEAK" - PEAK aggregation type.
+	//   "P99" - P99 aggregation type.
+	//   "P95" - P95 aggregation type.
+	//   "CURRENT" - current aggregation type.
 	AggregationType string `json:"aggregationType,omitempty"`
 	// MetricType: Required. Type of metric like CPU, Memory, etc.
 	//
 	// Possible values:
-	//   "METRIC_TYPE_UNSPECIFIED"
+	//   "METRIC_TYPE_UNSPECIFIED" - Unspecified metric type.
 	//   "CPU_UTILIZATION" - CPU utilization for a resource. The value is a
 	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
 	//   "MEMORY_UTILIZATION" - Memory utilization for a resource. The value is a
 	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
 	//   "NETWORK_CONNECTIONS" - Number of network connections for a resource.
+	//   "STORAGE_UTILIZATION" - Storage utilization for a resource. The value is a
+	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
+	//   "STORAGE_USED_BYTES" - Sotrage used by a resource.
 	MetricType string `json:"metricType,omitempty"`
 	// ObservationTime: Required. The time the metric value was observed.
 	ObservationTime string `json:"observationTime,omitempty"`
@@ -2812,10 +2821,14 @@ func (s *TlsCertificate) MarshalJSON() ([]byte, error) {
 // TypedValue: TypedValue represents the value of a metric type. It can either
 // be a double, an int64, a string or a bool.
 type TypedValue struct {
-	BoolValue   bool    `json:"boolValue,omitempty"`
+	// BoolValue: For boolean value
+	BoolValue bool `json:"boolValue,omitempty"`
+	// DoubleValue: For double value
 	DoubleValue float64 `json:"doubleValue,omitempty"`
-	Int64Value  int64   `json:"int64Value,omitempty,string"`
-	StringValue string  `json:"stringValue,omitempty"`
+	// Int64Value: For integer value
+	Int64Value int64 `json:"int64Value,omitempty,string"`
+	// StringValue: For string value
+	StringValue string `json:"stringValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2953,6 +2966,41 @@ type WeeklyMaintenanceWindow struct {
 
 func (s *WeeklyMaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod WeeklyMaintenanceWindow
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ZoneDistributionConfig: Zone distribution config for allocation of cluster
+// resources.
+type ZoneDistributionConfig struct {
+	// Mode: Optional. The mode of zone distribution. Defaults to MULTI_ZONE, when
+	// not specified.
+	//
+	// Possible values:
+	//   "ZONE_DISTRIBUTION_MODE_UNSPECIFIED" - Not Set. Default: MULTI_ZONE
+	//   "MULTI_ZONE" - Distribute all resources across 3 zones picked at random,
+	// within the region.
+	//   "SINGLE_ZONE" - Distribute all resources in a single zone. The zone field
+	// must be specified, when this mode is selected.
+	Mode string `json:"mode,omitempty"`
+	// Zone: Optional. When SINGLE ZONE distribution is selected, zone field would
+	// be used to allocate all resources in that zone. This is not applicable to
+	// MULTI_ZONE, and would be ignored for MULTI_ZONE clusters.
+	Zone string `json:"zone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ZoneDistributionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ZoneDistributionConfig
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

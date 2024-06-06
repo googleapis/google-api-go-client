@@ -134,7 +134,9 @@ func sendAndRetry(ctx context.Context, client *http.Client, req *http.Request, r
 	var err error
 	attempts := 1
 	invocationID := uuid.New().String()
-	baseXGoogHeader := req.Header.Get("X-Goog-Api-Client")
+
+	xGoogHeaderVals := req.Header.Values("X-Goog-Api-Client")
+	baseXGoogHeader := strings.Join(xGoogHeaderVals, " ")
 
 	// Loop to retry the request, up to the context deadline.
 	var pause time.Duration

@@ -38,17 +38,17 @@ func TestSendRequestWithRetry(t *testing.T) {
 
 type headerRoundTripper struct {
 	wantHeader        http.Header
-	wantXgoogApiRegex string // test x-goog-api-client separately
+	wantXgoogAPIRegex string // test x-goog-api-client separately
 }
 
 func (rt *headerRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 	// Test x-goog-api-client with a regex, since invocation ids are randomly generated
-	match, err := regexp.MatchString(rt.wantXgoogApiRegex, r.Header.Get("X-Goog-Api-Client"))
+	match, err := regexp.MatchString(rt.wantXgoogAPIRegex, r.Header.Get("X-Goog-Api-Client"))
 	if err != nil {
 		return nil, fmt.Errorf("compiling regexp: %v", err)
 	}
 	if !match {
-		return nil, fmt.Errorf("X-Goog-Api-Client header has wrong format\ngot %v\nwant regex matching %v", r.Header.Get("X-Goog-Api-Client"), rt.wantXgoogApiRegex)
+		return nil, fmt.Errorf("X-Goog-Api-Client header has wrong format\ngot %v\nwant regex matching %v", r.Header.Get("X-Goog-Api-Client"), rt.wantXgoogAPIRegex)
 	}
 
 	// Ignore x-goog headers sent by SendRequestWithRetry
@@ -76,7 +76,7 @@ func TestSendRequestHeader(t *testing.T) {
 	}
 
 	// SendRequestWithRetry adds retry and idempotency headers
-	transport.wantXgoogApiRegex = "^gccl-invocation-id/.{36} gccl-attempt-count/[0-9]+ $"
+	transport.wantXgoogAPIRegex = "^gccl-invocation-id/.{36} gccl-attempt-count/[0-9]+ $"
 	req2, _ := http.NewRequest("GET", "url", nil)
 	if _, err := SendRequestWithRetry(ctx, &client, req2, nil); err != nil {
 		t.Errorf("SendRequestWithRetry: %v", err)
@@ -92,7 +92,7 @@ func TestSendRequestXgoogHeaderxxx(t *testing.T) {
 
 	transport := &headerRoundTripper{
 		wantHeader:        map[string][]string{"Bar": {"200"}},
-		wantXgoogApiRegex: "^val/1 val/2 val/11 val/22$",
+		wantXgoogAPIRegex: "^val/1 val/2 val/11 val/22$",
 	}
 	client := http.Client{Transport: transport}
 
@@ -102,7 +102,7 @@ func TestSendRequestXgoogHeaderxxx(t *testing.T) {
 	}
 
 	// SendRequestWithRetry adds retry and idempotency headers
-	transport.wantXgoogApiRegex = fmt.Sprintf("^gccl-invocation-id/.{36} gccl-attempt-count/[0-9]+ %s$", transport.wantXgoogApiRegex[1:len(transport.wantXgoogApiRegex)-1])
+	transport.wantXgoogAPIRegex = fmt.Sprintf("^gccl-invocation-id/.{36} gccl-attempt-count/[0-9]+ %s$", transport.wantXgoogAPIRegex[1:len(transport.wantXgoogAPIRegex)-1])
 	req2, _ := http.NewRequest("GET", "url", nil)
 	if _, err := SendRequestWithRetry(ctx, &client, req2, nil); err != nil {
 		t.Errorf("SendRequestWithRetry: %v", err)

@@ -435,6 +435,80 @@ func (s *GoogleChromeManagementV1AppDetails) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleChromeManagementV1AppReport: App report.
+type GoogleChromeManagementV1AppReport struct {
+	// ReportTime: Timestamp when the report was collected.
+	ReportTime string `json:"reportTime,omitempty"`
+	// UsageData: App usage data.
+	UsageData []*GoogleChromeManagementV1AppUsageData `json:"usageData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReportTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReportTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1AppReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1AppReport
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1AppUsageData: App usage data.
+type GoogleChromeManagementV1AppUsageData struct {
+	// AppId: App id.
+	AppId string `json:"appId,omitempty"`
+	// AppInstanceId: Application instance id. This will be unique per
+	// window/instance.
+	AppInstanceId string `json:"appInstanceId,omitempty"`
+	// AppType: Type of app.
+	//
+	// Possible values:
+	//   "TELEMETRY_APPLICATION_TYPE_UNSPECIFIED" - Application type unknown.
+	//   "APPLICATION_TYPE_ARC" - Application type arc (Android app).
+	//   "APPLICATION_TYPE_BUILT_IN" - Application type built-in.
+	//   "APPLICATION_TYPE_CROSTINI" - Application type Linux (via Crostini).
+	//   "APPLICATION_TYPE_CHROME_APP" - Application type Chrome app.
+	//   "APPLICATION_TYPE_WEB" - Application type web.
+	//   "APPLICATION_TYPE_MAC_OS" - Application type Mac OS.
+	//   "APPLICATION_TYPE_PLUGIN_VM" - Application type Plugin VM.
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Application type standalone
+	// browser (Lacros browser app).
+	//   "APPLICATION_TYPE_REMOTE" - Application type remote.
+	//   "APPLICATION_TYPE_BOREALIS" - Application type borealis.
+	//   "APPLICATION_TYPE_SYSTEM_WEB" - Application type system web.
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Application type
+	// standalone browser chrome app (hosted in Lacros).
+	//   "APPLICATION_TYPE_EXTENSION" - Application type extension.
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Application type
+	// standalone browser extension.
+	//   "APPLICATION_TYPE_BRUSCHETTA" - Application type bruschetta.
+	AppType string `json:"appType,omitempty"`
+	// RunningDuration: App foreground running time.
+	RunningDuration string `json:"runningDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1AppUsageData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1AppUsageData
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1AudioStatusReport: Status data for storage. * This
 // field is telemetry information and this will change over time as the device
 // is utilized. * Data for this field is controlled via policy:
@@ -3020,6 +3094,9 @@ type GoogleChromeManagementV1TelemetryAudioSevereUnderrunEvent struct {
 // GoogleChromeManagementV1TelemetryDevice: Telemetry data collected from a
 // managed device. * Granular permission needed: TELEMETRY_API_DEVICE
 type GoogleChromeManagementV1TelemetryDevice struct {
+	// AppReport: Output only. App reports collected periodically sorted in a
+	// decreasing order of report_time.
+	AppReport []*GoogleChromeManagementV1AppReport `json:"appReport,omitempty"`
 	// AudioStatusReport: Output only. Audio reports collected periodically sorted
 	// in a decreasing order of report_time.
 	AudioStatusReport []*GoogleChromeManagementV1AudioStatusReport `json:"audioStatusReport,omitempty"`
@@ -3093,15 +3170,15 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AudioStatusReport") to
+	// ForceSendFields is a list of field names (e.g. "AppReport") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AudioStatusReport") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AppReport") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3494,6 +3571,9 @@ func (s *GoogleChromeManagementV1TelemetryUser) MarshalJSON() ([]byte, error) {
 // GoogleChromeManagementV1TelemetryUserDevice: Telemetry data collected for a
 // managed user and device. * Granular permission needed: TELEMETRY_API_DEVICE
 type GoogleChromeManagementV1TelemetryUserDevice struct {
+	// AppReport: Output only. App reports collected periodically sorted in a
+	// decreasing order of report_time.
+	AppReport []*GoogleChromeManagementV1AppReport `json:"appReport,omitempty"`
 	// AudioStatusReport: Output only. Audio reports collected periodically sorted
 	// in a decreasing order of report_time.
 	AudioStatusReport []*GoogleChromeManagementV1AudioStatusReport `json:"audioStatusReport,omitempty"`
@@ -3509,15 +3589,15 @@ type GoogleChromeManagementV1TelemetryUserDevice struct {
 	// PeripheralsReport: Output only. Peripherals reports collected periodically
 	// sorted in a decreasing order of report_time.
 	PeripheralsReport []*GoogleChromeManagementV1PeripheralsReport `json:"peripheralsReport,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AudioStatusReport") to
+	// ForceSendFields is a list of field names (e.g. "AppReport") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AudioStatusReport") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AppReport") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

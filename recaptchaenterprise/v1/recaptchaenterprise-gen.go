@@ -1417,7 +1417,7 @@ func (s *GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest) MarshalJSON() ([]byt
 // Fraud
 type GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment struct {
 	// SmsTollFraudVerdict: Output only. Assessment of this phone event for risk of
-	// sms toll fraud.
+	// SMS toll fraud.
 	SmsTollFraudVerdict *GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict `json:"smsTollFraudVerdict,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SmsTollFraudVerdict") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1778,8 +1778,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRes
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict: Information about sms
-// toll fraud
+// GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict: Information about SMS
+// toll fraud.
 type GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict struct {
 	// Reasons: Output only. Reasons contributing to the SMS toll fraud verdict.
 	//
@@ -1787,7 +1787,7 @@ type GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict struct {
 	//   "SMS_TOLL_FRAUD_REASON_UNSPECIFIED" - Default unspecified reason
 	//   "INVALID_PHONE_NUMBER" - The provided phone number was invalid
 	Reasons []string `json:"reasons,omitempty"`
-	// Risk: Output only. Probability of an sms event being fraudulent. Values are
+	// Risk: Output only. Probability of an SMS event being fraudulent. Values are
 	// from 0.0 (lowest) to 1.0 (highest).
 	Risk float64 `json:"risk,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Reasons") to unconditionally

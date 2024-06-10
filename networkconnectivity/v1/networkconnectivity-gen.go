@@ -620,6 +620,10 @@ type ConsumerPscConfig struct {
 	// Project: The consumer project where PSC connections are allowed to be
 	// created in.
 	Project string `json:"project,omitempty"`
+	// ServiceAttachmentIpAddressMap: Output only. A map to store mapping between
+	// customer vip and target service attachment. Only service attachment with
+	// producer specified ip addresses are stored here.
+	ServiceAttachmentIpAddressMap map[string]string `json:"serviceAttachmentIpAddressMap,omitempty"`
 	// State: Output only. Overall state of PSC Connections management for this
 	// consumer psc config.
 	//
@@ -792,7 +796,8 @@ type Filter struct {
 	// to. Valid values are 'TCP', 'UDP', and 'ALL'. Default is 'ALL'.
 	IpProtocol string `json:"ipProtocol,omitempty"`
 	// ProtocolVersion: Required. Internet protocol versions this policy-based
-	// route applies to. For this version, only IPV4 is supported.
+	// route applies to. For this version, only IPV4 is supported. IPV6 is
+	// supported in preview.
 	//
 	// Possible values:
 	//   "PROTOCOL_VERSION_UNSPECIFIED" - Default value.
@@ -1910,6 +1915,95 @@ func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// NextHopInterconnectAttachment: A route next hop that leads to an
+// interconnect attachment resource.
+type NextHopInterconnectAttachment struct {
+	// SiteToSiteDataTransfer: Indicates whether site-to-site data transfer is
+	// allowed for this interconnect attachment resource. Data transfer is
+	// available only in supported locations
+	// (https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/locations).
+	SiteToSiteDataTransfer bool `json:"siteToSiteDataTransfer,omitempty"`
+	// Uri: The URI of the interconnect attachment resource.
+	Uri string `json:"uri,omitempty"`
+	// VpcNetwork: The VPC network where this interconnect attachment is located.
+	VpcNetwork string `json:"vpcNetwork,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *NextHopInterconnectAttachment) MarshalJSON() ([]byte, error) {
+	type NoMethod NextHopInterconnectAttachment
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// NextHopRouterApplianceInstance: A route next hop that leads to a Router
+// appliance instance.
+type NextHopRouterApplianceInstance struct {
+	// SiteToSiteDataTransfer: Indicates whether site-to-site data transfer is
+	// allowed for this Router appliance instance resource. Data transfer is
+	// available only in supported locations
+	// (https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/locations).
+	SiteToSiteDataTransfer bool `json:"siteToSiteDataTransfer,omitempty"`
+	// Uri: The URI of the Router appliance instance.
+	Uri string `json:"uri,omitempty"`
+	// VpcNetwork: The VPC network where this VM is located.
+	VpcNetwork string `json:"vpcNetwork,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *NextHopRouterApplianceInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod NextHopRouterApplianceInstance
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// NextHopVPNTunnel: A route next hop that leads to a VPN tunnel resource.
+type NextHopVPNTunnel struct {
+	// SiteToSiteDataTransfer: Indicates whether site-to-site data transfer is
+	// allowed for this VPN tunnel resource. Data transfer is available only in
+	// supported locations
+	// (https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/locations).
+	SiteToSiteDataTransfer bool `json:"siteToSiteDataTransfer,omitempty"`
+	// Uri: The URI of the VPN tunnel resource.
+	Uri string `json:"uri,omitempty"`
+	// VpcNetwork: The VPC network where this VPN tunnel is located.
+	VpcNetwork string `json:"vpcNetwork,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *NextHopVPNTunnel) MarshalJSON() ([]byte, error) {
+	type NoMethod NextHopVPNTunnel
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 type NextHopVpcNetwork struct {
 	// Uri: The URI of the VPC network resource
 	Uri string `json:"uri,omitempty"`
@@ -2064,7 +2158,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // PolicyBasedRoute: Policy-based routes route L4 network traffic based on not
 // just destination IP address, but also source IP address, protocol, and more.
 // If a policy-based route conflicts with other types of routes, the
-// policy-based route always take precedence.
+// policy-based route always takes precedence.
 type PolicyBasedRoute struct {
 	// CreateTime: Output only. Time when the policy-based route was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2099,8 +2193,8 @@ type PolicyBasedRoute struct {
 	//   "OTHER_ROUTES_UNSPECIFIED" - Default value.
 	//   "DEFAULT_ROUTING" - Use the routes from the default routing tables
 	// (system-generated routes, custom routes, peering route) to determine the
-	// next hop. This will effectively exclude matching packets being applied on
-	// other PBRs with a lower priority.
+	// next hop. This effectively excludes matching packets being applied on other
+	// PBRs with a lower priority.
 	NextHopOtherRoutes string `json:"nextHopOtherRoutes,omitempty"`
 	// Priority: Optional. The priority of this policy-based route. Priority is
 	// used to break ties in cases where there are more than one matching
@@ -2112,8 +2206,8 @@ type PolicyBasedRoute struct {
 	SelfLink string `json:"selfLink,omitempty"`
 	// UpdateTime: Output only. Time when the policy-based route was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// VirtualMachine: Optional. VM instances to which this policy-based route
-	// applies to.
+	// VirtualMachine: Optional. VM instances that this policy-based route applies
+	// to.
 	VirtualMachine *VirtualMachine `json:"virtualMachine,omitempty"`
 	// Warnings: Output only. If potential misconfigurations are detected for this
 	// route, this field will be populated with warning messages.
@@ -2402,9 +2496,22 @@ type Route struct {
 	// `projects/{project_number}/locations/global/hubs/{hub}/routeTables/{route_tab
 	// le_id}/routes/{route_id}`
 	Name string `json:"name,omitempty"`
+	// NextHopInterconnectAttachment: Immutable. The next-hop VLAN attachment for
+	// packets on this route.
+	NextHopInterconnectAttachment *NextHopInterconnectAttachment `json:"nextHopInterconnectAttachment,omitempty"`
+	// NextHopRouterApplianceInstance: Immutable. The next-hop Router appliance
+	// instance for packets on this route.
+	NextHopRouterApplianceInstance *NextHopRouterApplianceInstance `json:"nextHopRouterApplianceInstance,omitempty"`
 	// NextHopVpcNetwork: Immutable. The destination VPC network for packets on
 	// this route.
 	NextHopVpcNetwork *NextHopVpcNetwork `json:"nextHopVpcNetwork,omitempty"`
+	// NextHopVpnTunnel: Immutable. The next-hop VPN tunnel for packets on this
+	// route.
+	NextHopVpnTunnel *NextHopVPNTunnel `json:"nextHopVpnTunnel,omitempty"`
+	// Priority: Output only. The priority of this route. Priority is used to break
+	// ties in cases where a destination matches more than one route. In these
+	// cases the route with the lowest-numbered priority value wins.
+	Priority int64 `json:"priority,omitempty,string"`
 	// Spoke: Immutable. The spoke that this route leads to. Example:
 	// projects/12345/locations/global/spokes/SPOKE
 	Spoke string `json:"spoke,omitempty"`
@@ -2431,6 +2538,9 @@ type Route struct {
 	// address range of the VPC network's subnet.
 	//   "VPC_SECONDARY_SUBNET" - The route leads to a destination within the
 	// secondary address range of the VPC network's subnet.
+	//   "DYNAMIC_ROUTE" - The route leads to a destination in a dynamic route.
+	// Dynamic routes are derived from Border Gateway Protocol (BGP) advertisements
+	// received from an NCC hybrid spoke.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. The Google-generated UUID for the route. This value is
 	// unique across all Network Connectivity Center route resources. If a route is
@@ -3133,11 +3243,11 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// VirtualMachine: VM instances to which this policy-based route applies to.
+// VirtualMachine: VM instances that this policy-based route applies to.
 type VirtualMachine struct {
-	// Tags: Optional. A list of VM instance tags the this policy-based route
-	// applies to. VM instances that have ANY of tags specified here will install
-	// this PBR.
+	// Tags: Optional. A list of VM instance tags that this policy-based route
+	// applies to. VM instances that have ANY of tags specified here installs this
+	// PBR.
 	Tags []string `json:"tags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Tags") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3164,7 +3274,7 @@ type Warnings struct {
 	// Possible values:
 	//   "WARNING_UNSPECIFIED" - Default value.
 	//   "RESOURCE_NOT_ACTIVE" - The policy-based route is not active and
-	// functioning. Common causes are the dependent network was deleted or the
+	// functioning. Common causes are that the dependent network was deleted or the
 	// resource project was turned off.
 	//   "RESOURCE_BEING_MODIFIED" - The policy-based route is being modified (e.g.
 	// created/deleted) at this time.
@@ -6123,13 +6233,13 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) PolicyBasedRouteId(
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) RequestId(requestId string) *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall {
@@ -6239,13 +6349,13 @@ func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) Delete(name string) *P
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes after the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall) RequestId(requestId string) *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall {

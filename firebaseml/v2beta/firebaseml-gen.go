@@ -630,6 +630,12 @@ func (s *FunctionResponse) MarshalJSON() ([]byte, error) {
 // GenerateContentRequest: Request message for
 // [PredictionService.GenerateContent].
 type GenerateContentRequest struct {
+	// CachedContent: Optional. The name of the cached content used as context to
+	// serve the prediction. Note: only used in explicit caching, where users can
+	// have control over caching (e.g. what content to cache) and enjoy guaranteed
+	// cost savings. Format:
+	// `projects/{project}/locations/{location}/cachedContents/{cachedContent}`
+	CachedContent string `json:"cachedContent,omitempty"`
 	// Contents: Required. The content of the current conversation with the model.
 	// For single-turn queries, this is a single instance. For multi-turn queries,
 	// this is a repeated field that contains conversation history + latest
@@ -652,13 +658,13 @@ type GenerateContentRequest struct {
 	// with external systems to perform an action, or set of actions, outside of
 	// knowledge and scope of the model.
 	Tools []*Tool `json:"tools,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// ForceSendFields is a list of field names (e.g. "CachedContent") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Contents") to include in API
+	// NullFields is a list of field names (e.g. "CachedContent") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

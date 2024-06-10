@@ -433,6 +433,8 @@ type Release struct {
 	// "{product}/platforms/{platform}/channels/{channel}/versions/{version}/release
 	// s/{release}"
 	Name string `json:"name,omitempty"`
+	// Pinnable: Whether or not the release was available for version pinning.
+	Pinnable bool `json:"pinnable,omitempty"`
 	// Serving: Timestamp interval of when the release was live. If end_time is
 	// unspecified, the release is currently live.
 	Serving *Interval `json:"serving,omitempty"`

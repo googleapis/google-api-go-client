@@ -406,7 +406,8 @@ func (s *GoogleCloudIdentitytoolkitAdminV2Anonymous) MarshalJSON() ([]byte, erro
 // SignInWithApple.
 type GoogleCloudIdentitytoolkitAdminV2AppleSignInConfig struct {
 	// BundleIds: A list of Bundle ID's usable by this project
-	BundleIds      []string                                         `json:"bundleIds,omitempty"`
+	BundleIds []string `json:"bundleIds,omitempty"`
+	// CodeFlowConfig: Additional config for Apple for code flow.
 	CodeFlowConfig *GoogleCloudIdentitytoolkitAdminV2CodeFlowConfig `json:"codeFlowConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BundleIds") to
 	// unconditionally include in API requests. By default, fields with empty or

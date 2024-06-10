@@ -3783,6 +3783,13 @@ type SqlExternalSyncSettingError struct {
 	//   "INSUFFICIENT_MACHINE_TIER" - The data size of the source instance is
 	// greater than 1 TB, the number of cores of the replica instance is less than
 	// 8, and the memory of the replica is less than 32 GB.
+	//   "UNSUPPORTED_EXTENSIONS_NOT_MIGRATED" - The warning message indicates the
+	// unsupported extensions will not be migrated to the destination.
+	//   "EXTENSIONS_NOT_MIGRATED" - The warning message indicates the pg_cron
+	// extension and settings will not be migrated to the destination.
+	//   "PG_CRON_FLAG_ENABLED_IN_REPLICA" - The error message indicates that
+	// pg_cron flags are enabled on the destination which is not supported during
+	// the migration.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -475,7 +475,7 @@ type BitbucketDataCenterConfig struct {
 	// AuthorizerCredential: Required. A http access token with the `REPO_ADMIN`
 	// scope access.
 	AuthorizerCredential *UserCredential `json:"authorizerCredential,omitempty"`
-	// HostUri: Optional. The URI of the Bitbucket Data Center instance or cluster
+	// HostUri: Required. The URI of the Bitbucket Data Center instance or cluster
 	// this connection is for.
 	HostUri string `json:"hostUri,omitempty"`
 	// ReadAuthorizerCredential: Required. A http access token with the `REPO_READ`

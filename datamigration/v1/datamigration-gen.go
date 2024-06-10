@@ -795,6 +795,7 @@ type CloudSqlSettings struct {
 	//   "POSTGRES_13" - PostgreSQL 13.
 	//   "POSTGRES_14" - PostgreSQL 14.
 	//   "POSTGRES_15" - PostgreSQL 15.
+	//   "POSTGRES_16" - PostgreSQL 16.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// Edition: Optional. The edition of the given Cloud SQL instance.
 	//
@@ -4355,6 +4356,8 @@ type SqlServerHomogeneousMigrationJobConfig struct {
 	BackupFilePattern string `json:"backupFilePattern,omitempty"`
 	// DatabaseBackups: Required. Backup details per database in Cloud Storage.
 	DatabaseBackups []*SqlServerDatabaseBackup `json:"databaseBackups,omitempty"`
+	// UseDiffBackup: Optional. Enable differential backups.
+	UseDiffBackup bool `json:"useDiffBackup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupFilePattern") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

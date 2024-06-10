@@ -1104,7 +1104,8 @@ type PolicyName struct {
 	// be set to "local".
 	Region string `json:"region,omitempty"`
 	// Type: Resource type. Types are defined in IAM's .service files. Valid values
-	// for type might be 'gce', 'gcs', 'project', 'account' etc.
+	// for type might be 'storage_buckets', 'compute_instances',
+	// 'resourcemanager_customers', 'billing_accounts', etc.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

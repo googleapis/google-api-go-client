@@ -1531,7 +1531,7 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // OnDeployUpdatePolicy: Security patches are only applied when a function is
 // redeployed.
 type OnDeployUpdatePolicy struct {
-	// RuntimeVersion: Output only. contains the runtime version which was used
+	// RuntimeVersion: Output only. Contains the runtime version which was used
 	// during latest function deployment.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RuntimeVersion") to

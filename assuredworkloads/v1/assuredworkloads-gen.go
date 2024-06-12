@@ -751,6 +751,8 @@ type GoogleCloudAssuredworkloadsV1ViolationRemediation struct {
 	// Remediation type for gcp.restrictCmekCryptoKeyProjects
 	//   "REMEDIATION_RESOURCE_VIOLATION" - Remediation type for resource
 	// violation.
+	//   "REMEDIATION_RESOURCE_VIOLATION_NON_CMEK_SERVICES" - Remediation type for
+	// resource violation due to gcp.restrictNonCmekServices
 	RemediationType string `json:"remediationType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompliantValues") to
 	// unconditionally include in API requests. By default, fields with empty or

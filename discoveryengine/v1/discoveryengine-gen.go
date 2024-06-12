@@ -1039,6 +1039,48 @@ func (s *GoogleCloudDiscoveryengineLoggingSourceLocation) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1AlloyDbSource: AlloyDB source import data from.
+type GoogleCloudDiscoveryengineV1AlloyDbSource struct {
+	// ClusterId: Required. The AlloyDB cluster to copy the data from with a length
+	// limit of 256 characters.
+	ClusterId string `json:"clusterId,omitempty"`
+	// DatabaseId: Required. The AlloyDB database to copy the data from with a
+	// length limit of 256 characters.
+	DatabaseId string `json:"databaseId,omitempty"`
+	// GcsStagingDir: Intermediate Cloud Storage directory used for the import with
+	// a length limit of 2,000 characters. Can be specified if one wants to have
+	// the AlloyDB export to a specific Cloud Storage directory. Ensure that the
+	// AlloyDB service account has the necessary Cloud Storage Admin permissions to
+	// access the specified Cloud Storage directory.
+	GcsStagingDir string `json:"gcsStagingDir,omitempty"`
+	// LocationId: Required. The AlloyDB location to copy the data from with a
+	// length limit of 256 characters.
+	LocationId string `json:"locationId,omitempty"`
+	// ProjectId: The project ID that the AlloyDB source is in with a length limit
+	// of 128 characters. If not specified, inherits the project ID from the parent
+	// request.
+	ProjectId string `json:"projectId,omitempty"`
+	// TableId: Required. The AlloyDB table to copy the data from with a length
+	// limit of 256 characters.
+	TableId string `json:"tableId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClusterId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClusterId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1AlloyDbSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AlloyDbSource
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1Answer: Defines an answer.
 type GoogleCloudDiscoveryengineV1Answer struct {
 	// AnswerSkippedReasons: Additional answer-skipped reasons. This provides the
@@ -1180,6 +1222,19 @@ type GoogleCloudDiscoveryengineV1AnswerQueryRequest struct {
 	// use the wildcard symbol `-` as session ID. A new ID will be automatically
 	// generated and assigned.
 	Session string `json:"session,omitempty"`
+	// UserLabels: The user labels applied to a resource must meet the following
+	// requirements: * Each resource can have multiple labels, up to a maximum of
+	// 64. * Each label must be a key-value pair. * Keys have a minimum length of 1
+	// character and a maximum length of 63 characters and cannot be empty. Values
+	// can be empty and have a maximum length of 63 characters. * Keys and values
+	// can contain only lowercase letters, numeric characters, underscores, and
+	// dashes. All characters must use UTF-8 encoding, and international characters
+	// are allowed. * The key portion of a label must be unique. However, you can
+	// use the same key with multiple resources. * Keys must start with a lowercase
+	// letter or international character. See Google Cloud Document
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
+	// for more details.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
 	// UserPseudoId: A unique identifier for tracking visitors. For example, this
 	// could be implemented with an HTTP cookie, which should be able to uniquely
 	// identify a visitor on a single device. This unique identifier should not
@@ -3767,6 +3822,8 @@ func (s *GoogleCloudDiscoveryengineV1DocumentInfo) MarshalJSON() ([]byte, error)
 // DataStoreService.UpdateDocumentProcessingConfig method will initialize the
 // config.
 type GoogleCloudDiscoveryengineV1DocumentProcessingConfig struct {
+	// ChunkingConfig: Whether chunking mode is enabled.
+	ChunkingConfig *GoogleCloudDiscoveryengineV1DocumentProcessingConfigChunkingConfig `json:"chunkingConfig,omitempty"`
 	// DefaultParsingConfig: Configurations for default Document parser. If not
 	// specified, we will configure it as default DigitalParsingConfig, and the
 	// default parsing config will be applied to all file types for Document
@@ -3783,15 +3840,15 @@ type GoogleCloudDiscoveryengineV1DocumentProcessingConfig struct {
 	// parsing config for DOCX files, only digital parsing and or layout parsing
 	// are supported.
 	ParsingConfigOverrides map[string]GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfig `json:"parsingConfigOverrides,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DefaultParsingConfig") to
+	// ForceSendFields is a list of field names (e.g. "ChunkingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DefaultParsingConfig") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ChunkingConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3801,11 +3858,64 @@ func (s *GoogleCloudDiscoveryengineV1DocumentProcessingConfig) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1DocumentProcessingConfigChunkingConfig:
+// Configuration for chunking config.
+type GoogleCloudDiscoveryengineV1DocumentProcessingConfigChunkingConfig struct {
+	// LayoutBasedChunkingConfig: Configuration for the layout based chunking.
+	LayoutBasedChunkingConfig *GoogleCloudDiscoveryengineV1DocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig `json:"layoutBasedChunkingConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LayoutBasedChunkingConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LayoutBasedChunkingConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1DocumentProcessingConfigChunkingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DocumentProcessingConfigChunkingConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DocumentProcessingConfigChunkingConfigLayoutBased
+// ChunkingConfig: Configuration for the layout based chunking.
+type GoogleCloudDiscoveryengineV1DocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig struct {
+	// ChunkSize: The token size limit for each chunk. Supported values: 100-500
+	// (inclusive). Default value: 500.
+	ChunkSize int64 `json:"chunkSize,omitempty"`
+	// IncludeAncestorHeadings: Whether to include appending different levels of
+	// headings to chunks from the middle of the document to prevent context loss.
+	// Default value: False.
+	IncludeAncestorHeadings bool `json:"includeAncestorHeadings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChunkSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChunkSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1DocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfig: Related
 // configurations applied to a specific type of document parser.
 type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfig struct {
 	// DigitalParsingConfig: Configurations applied to digital parser.
 	DigitalParsingConfig *GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigDigitalParsingConfig `json:"digitalParsingConfig,omitempty"`
+	// LayoutParsingConfig: Configurations applied to layout parser.
+	LayoutParsingConfig *GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutParsingConfig `json:"layoutParsingConfig,omitempty"`
 	// OcrParsingConfig: Configurations applied to OCR parser. Currently it only
 	// applies to PDFs.
 	OcrParsingConfig *GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigOcrParsingConfig `json:"ocrParsingConfig,omitempty"`
@@ -3830,6 +3940,11 @@ func (s *GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfig) Mars
 // GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigDigitalParsi
 // ngConfig: The digital parsing configurations for documents.
 type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigDigitalParsingConfig struct {
+}
+
+// GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutParsin
+// gConfig: The layout parsing configurations for documents.
+type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutParsingConfig struct {
 }
 
 // GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigOcrParsingCo
@@ -4375,6 +4490,8 @@ func (s *GoogleCloudDiscoveryengineV1ImportDocumentsMetadata) MarshalJSON() ([]b
 // GoogleCloudDiscoveryengineV1ImportDocumentsRequest: Request message for
 // Import methods.
 type GoogleCloudDiscoveryengineV1ImportDocumentsRequest struct {
+	// AlloyDbSource: AlloyDB input source.
+	AlloyDbSource *GoogleCloudDiscoveryengineV1AlloyDbSource `json:"alloyDbSource,omitempty"`
 	// AutoGenerateIds: Whether to automatically generate IDs for the documents if
 	// absent. If set to `true`, Document.ids are automatically generated based on
 	// the hash of the payload, where IDs may not be consistent during multiple
@@ -4436,15 +4553,15 @@ type GoogleCloudDiscoveryengineV1ImportDocumentsRequest struct {
 	// UpdateMask: Indicates which fields in the provided imported documents to
 	// update. If not set, the default is to update all fields.
 	UpdateMask string `json:"updateMask,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AutoGenerateIds") to
+	// ForceSendFields is a list of field names (e.g. "AlloyDbSource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AutoGenerateIds") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AlloyDbSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -11492,6 +11609,8 @@ type GoogleCloudDiscoveryengineV1betaDisableAdvancedSiteSearchResponse struct {
 // DataStoreService.UpdateDocumentProcessingConfig method will initialize the
 // config.
 type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfig struct {
+	// ChunkingConfig: Whether chunking mode is enabled.
+	ChunkingConfig *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigChunkingConfig `json:"chunkingConfig,omitempty"`
 	// DefaultParsingConfig: Configurations for default Document parser. If not
 	// specified, we will configure it as default DigitalParsingConfig, and the
 	// default parsing config will be applied to all file types for Document
@@ -11508,15 +11627,15 @@ type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfig struct {
 	// parsing config for DOCX files, only digital parsing and or layout parsing
 	// are supported.
 	ParsingConfigOverrides map[string]GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfig `json:"parsingConfigOverrides,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DefaultParsingConfig") to
+	// ForceSendFields is a list of field names (e.g. "ChunkingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DefaultParsingConfig") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ChunkingConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -11526,11 +11645,64 @@ func (s *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfig) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigChunkingConfig:
+// Configuration for chunking config.
+type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigChunkingConfig struct {
+	// LayoutBasedChunkingConfig: Configuration for the layout based chunking.
+	LayoutBasedChunkingConfig *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig `json:"layoutBasedChunkingConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LayoutBasedChunkingConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LayoutBasedChunkingConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigChunkingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigChunkingConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigChunkingConfigLayoutB
+// asedChunkingConfig: Configuration for the layout based chunking.
+type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig struct {
+	// ChunkSize: The token size limit for each chunk. Supported values: 100-500
+	// (inclusive). Default value: 500.
+	ChunkSize int64 `json:"chunkSize,omitempty"`
+	// IncludeAncestorHeadings: Whether to include appending different levels of
+	// headings to chunks from the middle of the document to prevent context loss.
+	// Default value: False.
+	IncludeAncestorHeadings bool `json:"includeAncestorHeadings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChunkSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChunkSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfig:
 // Related configurations applied to a specific type of document parser.
 type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfig struct {
 	// DigitalParsingConfig: Configurations applied to digital parser.
 	DigitalParsingConfig *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigDigitalParsingConfig `json:"digitalParsingConfig,omitempty"`
+	// LayoutParsingConfig: Configurations applied to layout parser.
+	LayoutParsingConfig *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayoutParsingConfig `json:"layoutParsingConfig,omitempty"`
 	// OcrParsingConfig: Configurations applied to OCR parser. Currently it only
 	// applies to PDFs.
 	OcrParsingConfig *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigOcrParsingConfig `json:"ocrParsingConfig,omitempty"`
@@ -11555,6 +11727,11 @@ func (s *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfig) 
 // GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigDigitalP
 // arsingConfig: The digital parsing configurations for documents.
 type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigDigitalParsingConfig struct {
+}
+
+// GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayoutPa
+// rsingConfig: The layout parsing configurations for documents.
+type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayoutParsingConfig struct {
 }
 
 // GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigOcrParsi
@@ -15240,7 +15417,9 @@ type ProjectsLocationsCollectionsDataStoresControlsCreateCall struct {
 //
 //   - parent: Full resource name of parent data store. Format:
 //     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}`.
+//     id}/dataStores/{data_store_id}` or
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/engines/{engine_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresControlsService) Create(parent string, googleclouddiscoveryenginev1control *GoogleCloudDiscoveryengineV1Control) *ProjectsLocationsCollectionsDataStoresControlsCreateCall {
 	c := &ProjectsLocationsCollectionsDataStoresControlsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15562,7 +15741,9 @@ type ProjectsLocationsCollectionsDataStoresControlsListCall struct {
 //
 //   - parent: The data store resource name. Format:
 //     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}`.
+//     id}/dataStores/{data_store_id}` or
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/engines/{engine_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresControlsService) List(parent string) *ProjectsLocationsCollectionsDataStoresControlsListCall {
 	c := &ProjectsLocationsCollectionsDataStoresControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21868,7 +22049,9 @@ type ProjectsLocationsCollectionsEnginesControlsCreateCall struct {
 //
 //   - parent: Full resource name of parent data store. Format:
 //     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}`.
+//     id}/dataStores/{data_store_id}` or
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/engines/{engine_id}`.
 func (r *ProjectsLocationsCollectionsEnginesControlsService) Create(parent string, googleclouddiscoveryenginev1control *GoogleCloudDiscoveryengineV1Control) *ProjectsLocationsCollectionsEnginesControlsCreateCall {
 	c := &ProjectsLocationsCollectionsEnginesControlsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22190,7 +22373,9 @@ type ProjectsLocationsCollectionsEnginesControlsListCall struct {
 //
 //   - parent: The data store resource name. Format:
 //     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}`.
+//     id}/dataStores/{data_store_id}` or
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/engines/{engine_id}`.
 func (r *ProjectsLocationsCollectionsEnginesControlsService) List(parent string) *ProjectsLocationsCollectionsEnginesControlsListCall {
 	c := &ProjectsLocationsCollectionsEnginesControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26798,7 +26983,9 @@ type ProjectsLocationsDataStoresControlsCreateCall struct {
 //
 //   - parent: Full resource name of parent data store. Format:
 //     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}`.
+//     id}/dataStores/{data_store_id}` or
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/engines/{engine_id}`.
 func (r *ProjectsLocationsDataStoresControlsService) Create(parent string, googleclouddiscoveryenginev1control *GoogleCloudDiscoveryengineV1Control) *ProjectsLocationsDataStoresControlsCreateCall {
 	c := &ProjectsLocationsDataStoresControlsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27120,7 +27307,9 @@ type ProjectsLocationsDataStoresControlsListCall struct {
 //
 //   - parent: The data store resource name. Format:
 //     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}`.
+//     id}/dataStores/{data_store_id}` or
+//     `projects/{project_number}/locations/{location_id}/collections/{collection_
+//     id}/engines/{engine_id}`.
 func (r *ProjectsLocationsDataStoresControlsService) List(parent string) *ProjectsLocationsDataStoresControlsListCall {
 	c := &ProjectsLocationsDataStoresControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

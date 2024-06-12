@@ -11,8 +11,6 @@ import (
 	"net"
 	"net/url"
 	"testing"
-
-	"golang.org/x/xerrors"
 )
 
 func TestShouldRetry(t *testing.T) {
@@ -80,7 +78,7 @@ func TestShouldRetry(t *testing.T) {
 		},
 		{
 			desc:        "wrapped non-retryable error",
-			inputErr:    xerrors.Errorf("Test unwrapping of a non-retriable error: %w", io.EOF),
+			inputErr:    fmt.Errorf("Test unwrapping of a non-retriable error: %w", io.EOF),
 			shouldRetry: false,
 		},
 		{

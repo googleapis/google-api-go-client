@@ -2559,16 +2559,16 @@ func (meth *Method) IsProtoStructResponse() bool {
 
 // isProtoStruct determines if the Schema represents a
 // [google.golang.org/protobuf/types/known/structpb.Struct].
-func isProtoStruct(s *Schema) bool {
-  if s == nil {
-    return false
-  }
+func isProtoStruct(s *disco.Schema) bool {
+	if s == nil {
+		return false
+	}
 
-  if s.Ref == "GoogleProtobufStruct" {
-    return true
-  }
-  
-  return false
+	if s.Ref == "GoogleProtobufStruct" {
+		return true
+	}
+
+	return false
 }
 
 func (meth *Method) IsRawResponse() bool {

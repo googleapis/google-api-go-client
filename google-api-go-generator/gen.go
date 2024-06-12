@@ -2540,25 +2540,35 @@ func (meth *Method) IsRawRequest() bool {
 // IsProtoStructRequest determines if the method request type is a
 // [google.golang.org/protobuf/types/known/structpb.Struct].
 func (meth *Method) IsProtoStructRequest() bool {
-	if meth == nil || meth.m == nil || meth.m.Request == nil {
+	if meth == nil || meth.m == nil {
 		return false
 	}
-	if meth.m.Request.Ref == "GoogleProtobufStruct" {
-		return true
-	}
-	return false
+
+	return isProtoStruct(meth.m.Request)
 }
 
 // IsProtoStructResponse determines if the method response type is a
 // [google.golang.org/protobuf/types/known/structpb.Struct].
 func (meth *Method) IsProtoStructResponse() bool {
-	if meth == nil || meth.m == nil || meth.m.Response == nil {
+	if meth == nil || meth.m == nil {
 		return false
 	}
-	if meth.m.Response.Ref == "GoogleProtobufStruct" {
-		return true
-	}
-	return false
+
+	return isProtoStruct(meth.m.Response)
+}
+
+// isProtoStruct determines if the Schema represents a
+// [google.golang.org/protobuf/types/known/structpb.Struct].
+func isProtoStruct(s *Schema) bool {
+  if s == nil {
+    return false
+  }
+
+  if s.Ref == "GoogleProtobufStruct" {
+    return true
+  }
+  
+  return false
 }
 
 func (meth *Method) IsRawResponse() bool {

@@ -1,5 +1,19 @@
 # Changes
 
+## [0.184.0](https://github.com/googleapis/google-api-go-client/compare/v0.183.0...v0.184.0) (2024-06-12)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2624](https://github.com/googleapis/google-api-go-client/issues/2624)) ([7fccba6](https://github.com/googleapis/google-api-go-client/commit/7fccba6a6fce5ebedabf5d85601779318fe5c26e))
+* Regen cloudcommerceprocurement v1 from updated discovery file ([#2627](https://github.com/googleapis/google-api-go-client/issues/2627)) ([7e30ed2](https://github.com/googleapis/google-api-go-client/commit/7e30ed210c23e9eaa9d45e5dc972ecf4e00b80c6))
+* Support structpb.Struct as req/resp ([#2632](https://github.com/googleapis/google-api-go-client/issues/2632)) ([ebc44d1](https://github.com/googleapis/google-api-go-client/commit/ebc44d15955116f5647020142005c34e6a8d1d47)), refs [#2601](https://github.com/googleapis/google-api-go-client/issues/2601)
+
+
+### Bug Fixes
+
+* **cba:** Update credsNewAuth to support oauth2 over mTLS ([#2610](https://github.com/googleapis/google-api-go-client/issues/2610)) ([953f728](https://github.com/googleapis/google-api-go-client/commit/953f7289417d9dc6e6b5405678434073e078c90a))
+
 ## [0.183.0](https://github.com/googleapis/google-api-go-client/compare/v0.182.0...v0.183.0) (2024-06-04)
 
 

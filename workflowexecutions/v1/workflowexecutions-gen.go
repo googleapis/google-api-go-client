@@ -850,6 +850,9 @@ func (s *StepEntry) MarshalJSON() ([]byte, error) {
 // StepEntryMetadata: StepEntryMetadata contains metadata information about
 // this step.
 type StepEntryMetadata struct {
+	// ExpectedIteration: Expected iteration represents the expected number of
+	// iterations in the step's progress.
+	ExpectedIteration int64 `json:"expectedIteration,omitempty,string"`
 	// ProgressNumber: Progress number represents the current state of the current
 	// progress. eg: A step entry represents the 4th iteration in a progress of
 	// PROGRESS_TYPE_FOR.
@@ -870,13 +873,13 @@ type StepEntryMetadata struct {
 	ProgressType string `json:"progressType,omitempty"`
 	// ThreadId: Child thread id that this step entry belongs to.
 	ThreadId string `json:"threadId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ProgressNumber") to
+	// ForceSendFields is a list of field names (e.g. "ExpectedIteration") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ProgressNumber") to include in
+	// NullFields is a list of field names (e.g. "ExpectedIteration") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

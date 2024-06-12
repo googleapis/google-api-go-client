@@ -598,6 +598,10 @@ type ManagementServer struct {
 	// (see openid specification
 	// https://openid.net/specs/openid-connect-core-1_0.html#IDToken).
 	Oauth2ClientId string `json:"oauth2ClientId,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The ManagementServer state.
 	//
 	// Possible values:

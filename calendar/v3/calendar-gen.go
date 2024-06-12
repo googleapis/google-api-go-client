@@ -1121,6 +1121,7 @@ type Event struct {
 	// - "outOfOffice" - An out-of-office event.
 	// - "focusTime" - A focus-time event.
 	// - "workingLocation" - A working location event.
+	// - "fromGmail" - An event from Gmail. This type of event cannot be created.
 	EventType string `json:"eventType,omitempty"`
 	// ExtendedProperties: Extended properties of the event.
 	ExtendedProperties *EventExtendedProperties `json:"extendedProperties,omitempty"`
@@ -5285,6 +5286,7 @@ func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsList
 //
 //	"default" - Regular events.
 //	"focusTime" - Focus time events.
+//	"fromGmail" - Events from Gmail.
 //	"outOfOffice" - Out of office events.
 //	"workingLocation" - Working location events.
 func (c *EventsListCall) EventTypes(eventTypes ...string) *EventsListCall {
@@ -5601,8 +5603,8 @@ type EventsMoveCall struct {
 }
 
 // Move: Moves an event to another calendar, i.e. changes an event's organizer.
-// Note that only default events can be moved; outOfOffice, focusTime and
-// workingLocation events cannot be moved.
+// Note that only default events can be moved; outOfOffice, focusTime,
+// workingLocation and fromGmail events cannot be moved.
 //
 //   - calendarId: Calendar identifier of the source calendar where the event
 //     currently is on.
@@ -6235,6 +6237,7 @@ func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWat
 //
 //	"default" - Regular events.
 //	"focusTime" - Focus time events.
+//	"fromGmail" - Events from Gmail.
 //	"outOfOffice" - Out of office events.
 //	"workingLocation" - Working location events.
 func (c *EventsWatchCall) EventTypes(eventTypes ...string) *EventsWatchCall {

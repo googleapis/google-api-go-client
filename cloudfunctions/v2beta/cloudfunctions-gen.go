@@ -1930,6 +1930,9 @@ type ServiceConfig struct {
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	// a full description.
 	AvailableMemory string `json:"availableMemory,omitempty"`
+	// BinaryAuthorizationPolicy: Optional. The binary authorization policy to be
+	// checked when deploying the Cloud Run service.
+	BinaryAuthorizationPolicy string `json:"binaryAuthorizationPolicy,omitempty"`
 	// EnvironmentVariables: Environment variables that shall be available during
 	// function execution.
 	EnvironmentVariables map[string]string `json:"environmentVariables,omitempty"`
@@ -2168,6 +2171,10 @@ type StorageSource struct {
 	// Object: Google Cloud Storage object containing the source. This object must
 	// be a gzipped archive file (`.tar.gz`) containing source to build.
 	Object string `json:"object,omitempty"`
+	// SourceUploadUrl: When the specified storage bucket is a 1st gen function
+	// uploard url bucket, this field should be set as the generated upload url for
+	// 1st gen deployment.
+	SourceUploadUrl string `json:"sourceUploadUrl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

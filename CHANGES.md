@@ -1,5 +1,21 @@
 # Changes
 
+## [0.183.0](https://github.com/googleapis/google-api-go-client/compare/v0.182.0...v0.183.0) (2024-06-04)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2611](https://github.com/googleapis/google-api-go-client/issues/2611)) ([1de148b](https://github.com/googleapis/google-api-go-client/commit/1de148b049cad72efb924df7f3435bcbca7d214f))
+* **all:** Auto-regenerate discovery clients ([#2616](https://github.com/googleapis/google-api-go-client/issues/2616)) ([5f21214](https://github.com/googleapis/google-api-go-client/commit/5f21214e2284f5162d89383f528326325091796c))
+* **all:** Auto-regenerate discovery clients ([#2617](https://github.com/googleapis/google-api-go-client/issues/2617)) ([08fdd71](https://github.com/googleapis/google-api-go-client/commit/08fdd71cae0bbfd16ed7e13a00c8bc7dd596ce94))
+* **all:** Auto-regenerate discovery clients ([#2619](https://github.com/googleapis/google-api-go-client/issues/2619)) ([c7f1614](https://github.com/googleapis/google-api-go-client/commit/c7f161413cf50b50db98ba483afc2f2344e0896f))
+* **all:** Auto-regenerate discovery clients ([#2622](https://github.com/googleapis/google-api-go-client/issues/2622)) ([0077748](https://github.com/googleapis/google-api-go-client/commit/007774894a48d24634ace7b9e09def4d61433f7f))
+
+
+### Bug Fixes
+
+* Add another temporary dep on genproto ([#2614](https://github.com/googleapis/google-api-go-client/issues/2614)) ([4f98211](https://github.com/googleapis/google-api-go-client/commit/4f9821115b5b14b2a32a4cdcbbb84bed018dac2c)), refs [#2559](https://github.com/googleapis/google-api-go-client/issues/2559) [#2613](https://github.com/googleapis/google-api-go-client/issues/2613)
+
 ## [0.182.0](https://github.com/googleapis/google-api-go-client/compare/v0.181.0...v0.182.0) (2024-05-28)
 
 

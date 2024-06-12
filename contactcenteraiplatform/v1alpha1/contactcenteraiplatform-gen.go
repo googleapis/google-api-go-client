@@ -899,20 +899,24 @@ func (s *SAMLParams) MarshalJSON() ([]byte, error) {
 
 // ServiceAttachment: Container for the VPC-SC networking configurations.
 type ServiceAttachment struct {
+	// AllowedProjectIds: The list of project ids that are allowed to send traffic
+	// to the service attachment. This field should be filled only for the ingress
+	// service attachments.
+	AllowedProjectIds []string `json:"allowedProjectIds,omitempty"`
 	// Name: The service attachment name that will be used for sending private
 	// traffic to the CCAIP tenant project. Example:
 	// "projects/${TENANT_PROJECT_ID}/regions/${REGION}/serviceAttachments/ingress-d
 	// efault".
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AllowedProjectIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AllowedProjectIds") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

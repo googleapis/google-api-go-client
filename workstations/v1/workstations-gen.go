@@ -509,9 +509,9 @@ func (s *CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DomainConfig: Configuration options for a custom domain.
+// DomainConfig: Configuration options for private workstation clusters.
 type DomainConfig struct {
-	// Domain: Immutable. Domain used by Workstations for HTTP ingress.
+	// Domain: Immutable. Whether Workstations endpoint is private.
 	Domain string `json:"domain,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -669,7 +669,7 @@ type GceInstance struct {
 	// nested virtualization can only be enabled on workstation configurations that
 	// specify a machine_type in the N1 or N2 machine series. * **GPUs**: nested
 	// virtualization may not be enabled on workstation configurations with
-	// accelerators. * **Operating System**: Because Container-Optimized OS
+	// accelerators. * **Operating System**: because Container-Optimized OS
 	// (https://cloud.google.com/compute/docs/images/os-details#container-optimized_os_cos)
 	// does not support nested virtualization, when nested virtualization is
 	// enabled, the underlying Compute Engine VM instances boot from an Ubuntu LTS
@@ -1384,27 +1384,11 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PrivateClusterConfig: Configuration options for private workstation
-// clusters.
 type PrivateClusterConfig struct {
-	// AllowedProjects: Optional. Additional projects that are allowed to attach to
-	// the workstation cluster's service attachment. By default, the workstation
-	// cluster's project and the VPC host project (if different) are allowed.
-	AllowedProjects []string `json:"allowedProjects,omitempty"`
-	// ClusterHostname: Output only. Hostname for the workstation cluster. This
-	// field will be populated only when private endpoint is enabled. To access
-	// workstations in the workstation cluster, create a new DNS zone mapping this
-	// domain name to an internal IP address and a forwarding rule mapping that
-	// address to the service attachment.
-	ClusterHostname string `json:"clusterHostname,omitempty"`
-	// EnablePrivateEndpoint: Immutable. Whether Workstations endpoint is private.
-	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
-	// ServiceAttachmentUri: Output only. Service attachment URI for the
-	// workstation cluster. The service attachemnt is created when private endpoint
-	// is enabled. To access workstations in the workstation cluster, configure
-	// access to the managed service using Private Service Connect
-	// (https://cloud.google.com/vpc/docs/configure-private-service-connect-services).
-	ServiceAttachmentUri string `json:"serviceAttachmentUri,omitempty"`
+	AllowedProjects       []string `json:"allowedProjects,omitempty"`
+	ClusterHostname       string   `json:"clusterHostname,omitempty"`
+	EnablePrivateEndpoint bool     `json:"enablePrivateEndpoint,omitempty"`
+	ServiceAttachmentUri  string   `json:"serviceAttachmentUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedProjects") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

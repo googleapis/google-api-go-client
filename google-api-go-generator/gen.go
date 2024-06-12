@@ -1971,6 +1971,8 @@ func (meth *Method) generateCode() {
 	retType := responseType(a, meth.m)
 	if meth.IsRawResponse() {
 		retType = "*http.Response"
+	} else if meth.IsProtoStructResponse() {
+		retType = "map[string]any"
 	}
 	retTypeComma := retType
 	if retTypeComma != "" {
@@ -2247,6 +2249,10 @@ func (meth *Method) generateCode() {
 	pn("var body io.Reader = nil")
 	if meth.IsRawRequest() {
 		pn("body = c.body_")
+	} else if meth.IsProtoStructRequest() {
+		pn("protoBytes, err := json.Marshal(c.req)")
+		pn("if err != nil { return nil, err }")
+		pn("body = bytes.NewReader(protoBytes)")
 	} else {
 		if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
 			if meth.m.ID == "ml.projects.predict" {
@@ -2384,7 +2390,9 @@ func (meth *Method) generateCode() {
 		if retTypeComma == "" {
 			pn("return nil")
 		} else {
-			if mapRetType {
+			if meth.IsProtoStructResponse() {
+				pn("var ret map[string]any")
+			} else if mapRetType {
 				pn("var ret %s", responseType(a, meth.m))
 			} else {
 				pn("ret := &%s{", responseTypeLiteral(a, meth.m))
@@ -2529,6 +2537,40 @@ func (meth *Method) IsRawRequest() bool {
 	return meth.m.Request.Ref == "HttpBody"
 }
 
+// IsProtoStructRequest determines if the method request type is a
+// [google.golang.org/protobuf/types/known/structpb.Struct].
+func (meth *Method) IsProtoStructRequest() bool {
+	if meth == nil || meth.m == nil {
+		return false
+	}
+
+	return isProtoStruct(meth.m.Request)
+}
+
+// IsProtoStructResponse determines if the method response type is a
+// [google.golang.org/protobuf/types/known/structpb.Struct].
+func (meth *Method) IsProtoStructResponse() bool {
+	if meth == nil || meth.m == nil {
+		return false
+	}
+
+	return isProtoStruct(meth.m.Response)
+}
+
+// isProtoStruct determines if the Schema represents a
+// [google.golang.org/protobuf/types/known/structpb.Struct].
+func isProtoStruct(s *disco.Schema) bool {
+	if s == nil {
+		return false
+	}
+
+	if s.Ref == "GoogleProtobufStruct" {
+		return true
+	}
+
+	return false
+}
+
 func (meth *Method) IsRawResponse() bool {
 	if meth.m.Response == nil {
 		return false
@@ -2566,6 +2608,11 @@ func (meth *Method) NewArguments() *arguments {
 			args.AddArg(&argument{
 				goname: "body_",
 				gotype: "io.Reader",
+			})
+		} else if meth.IsProtoStructRequest() {
+			args.AddArg(&argument{
+				goname: "req",
+				gotype: "map[string]any",
 			})
 		} else {
 			args.AddArg(meth.NewBodyArg(rs))

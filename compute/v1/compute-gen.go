@@ -3053,12 +3053,12 @@ type AttachedDisk struct {
 	// on disk
 	ShieldedInstanceInitialState *InitialStateConfig `json:"shieldedInstanceInitialState,omitempty"`
 	// Source: Specifies a valid partial or full URL to an existing Persistent Disk
-	// resource. When creating a new instance, one of initializeParams.sourceImage
-	// or initializeParams.sourceSnapshot or disks.source is required except for
-	// local SSD. If desired, you can also attach existing non-root persistent
-	// disks using this property. This field is only applicable for persistent
-	// disks. Note that for InstanceTemplate, specify the disk name for zonal disk,
-	// and the URL for regional disk.
+	// resource. When creating a new instance boot disk, one of
+	// initializeParams.sourceImage or initializeParams.sourceSnapshot or
+	// disks.source is required. If desired, you can also attach existing non-root
+	// persistent disks using this property. This field is only applicable for
+	// persistent disks. Note that for InstanceTemplate, specify the disk name for
+	// zonal disk, and the URL for regional disk.
 	Source string `json:"source,omitempty"`
 	// Type: Specifies the type of the disk, either SCRATCH or PERSISTENT. If not
 	// specified, the default is PERSISTENT.
@@ -3168,13 +3168,12 @@ type AttachedDiskInitializeParams struct {
 	// template, specify only the resource policy name.
 	ResourcePolicies []string `json:"resourcePolicies,omitempty"`
 	// SourceImage: The source image to create this disk. When creating a new
-	// instance, one of initializeParams.sourceImage or
-	// initializeParams.sourceSnapshot or disks.source is required except for local
-	// SSD. To create a disk with one of the public operating system images,
-	// specify the image by its family name. For example, specify family/debian-9
-	// to use the latest Debian 9 image:
-	// projects/debian-cloud/global/images/family/debian-9 Alternatively, use a
-	// specific version of a public operating system image:
+	// instance boot disk, one of initializeParams.sourceImage or
+	// initializeParams.sourceSnapshot or disks.source is required. To create a
+	// disk with one of the public operating system images, specify the image by
+	// its family name. For example, specify family/debian-9 to use the latest
+	// Debian 9 image: projects/debian-cloud/global/images/family/debian-9
+	// Alternatively, use a specific version of a public operating system image:
 	// projects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD To create a
 	// disk with a custom image that you created, specify the image name in the
 	// following format: global/images/my-custom-image You can also specify a
@@ -3191,11 +3190,11 @@ type AttachedDiskInitializeParams struct {
 	// keys.
 	SourceImageEncryptionKey *CustomerEncryptionKey `json:"sourceImageEncryptionKey,omitempty"`
 	// SourceSnapshot: The source snapshot to create this disk. When creating a new
-	// instance, one of initializeParams.sourceSnapshot or
-	// initializeParams.sourceImage or disks.source is required except for local
-	// SSD. To create a disk with a snapshot that you created, specify the snapshot
-	// name in the following format: global/snapshots/my-backup If the source
-	// snapshot is deleted later, this field will not be set.
+	// instance boot disk, one of initializeParams.sourceSnapshot or
+	// initializeParams.sourceImage or disks.source is required. To create a disk
+	// with a snapshot that you created, specify the snapshot name in the following
+	// format: global/snapshots/my-backup If the source snapshot is deleted later,
+	// this field will not be set.
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
 	// SourceSnapshotEncryptionKey: The customer-supplied encryption key of the
 	// source snapshot.
@@ -16032,6 +16031,10 @@ type InstanceGroupManager struct {
 	// Region: [Output Only] The URL of the region where the managed instance group
 	// resides (for regional resources).
 	Region string `json:"region,omitempty"`
+	// SatisfiesPzi: [Output Only] Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: [Output Only] Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SelfLink: [Output Only] The URL for this managed instance group. The server
 	// defines this URL.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -47034,6 +47037,36 @@ type TargetHttpsProxy struct {
 	// TargetHttpsProxy resource. If not set, the TargetHttpsProxy resource has no
 	// SSL policy configured.
 	SslPolicy string `json:"sslPolicy,omitempty"`
+	// TlsEarlyData:  Specifies whether TLS 1.3 0-RTT Data ("Early Data") should be
+	// accepted for this service. Early Data allows a TLS resumption handshake to
+	// include the initial application payload (a HTTP request) alongside the
+	// handshake, reducing the effective round trips to "zero". This applies to TLS
+	// 1.3 connections over TCP (HTTP/2) as well as over UDP (QUIC/h3). This can
+	// improve application performance, especially on networks where interruptions
+	// may be common, such as on mobile. Requests with Early Data will have the
+	// "Early-Data" HTTP header set on the request, with a value of "1", to allow
+	// the backend to determine whether Early Data was included. Note: TLS Early
+	// Data may allow requests to be replayed, as the data is sent to the backend
+	// before the handshake has fully completed. Applications that allow idempotent
+	// HTTP methods to make non-idempotent changes, such as a GET request updating
+	// a database, should not accept Early Data on those requests, and reject
+	// requests with the "Early-Data: 1" HTTP header by returning a HTTP 425 (Too
+	// Early) status code, in order to remain RFC compliant. The default value is
+	// DISABLED.
+	//
+	// Possible values:
+	//   "DISABLED" - TLS 1.3 Early Data is not advertised, and any (invalid)
+	// attempts to send Early Data will be rejected by closing the connection.
+	//   "PERMISSIVE" - This enables TLS 1.3 0-RTT, and only allows Early Data to
+	// be included on requests with safe HTTP methods (GET, HEAD, OPTIONS, TRACE).
+	// This mode does not enforce any other limitations for requests with Early
+	// Data. The application owner should validate that Early Data is acceptable
+	// for a given request path.
+	//   "STRICT" - This enables TLS 1.3 0-RTT, and only allows Early Data to be
+	// included on requests with safe HTTP methods (GET, HEAD, OPTIONS, TRACE)
+	// without query parameters. Requests that send Early Data with non-idempotent
+	// HTTP methods or with query parameters will be rejected with a HTTP 425.
+	TlsEarlyData string `json:"tlsEarlyData,omitempty"`
 	// UrlMap: A fully-qualified or valid partial URL to the UrlMap resource that
 	// defines the mapping from URL to the BackendService. For example, the
 	// following are all valid URLs for specifying a URL map: -
@@ -53178,7 +53211,7 @@ func (s *XpnResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // Zone: Represents a Zone resource. A zone is a deployment area. These
-// deployment areas are subsets of a region. For example the zone us-east1-a is
+// deployment areas are subsets of a region. For example the zone us-east1-b is
 // located in the us-east1 region. For more information, read Regions and
 // Zones.
 type Zone struct {

@@ -1197,6 +1197,30 @@ func (s *EventUpdateResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GamePlayerToken: Recall tokens for a game.
+type GamePlayerToken struct {
+	// ApplicationId: The application that this player identifier is for.
+	ApplicationId string `json:"applicationId,omitempty"`
+	// Token: Recall token data.
+	Token []*RecallToken `json:"token,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApplicationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplicationId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GamePlayerToken) MarshalJSON() ([]byte, error) {
+	type NoMethod GamePlayerToken
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GamesAchievementIncrement: The payload to request to increment an
 // achievement.
 type GamesAchievementIncrement struct {
@@ -2454,6 +2478,34 @@ type RetrieveDeveloperGamesLastPlayerTokenResponse struct {
 
 func (s *RetrieveDeveloperGamesLastPlayerTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetrieveDeveloperGamesLastPlayerTokenResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// RetrieveGamesPlayerTokensResponse: A list of recall token data returned from
+// the RetrieveGamesPlayerTokens RPC
+type RetrieveGamesPlayerTokensResponse struct {
+	// ApplicationRecallTokens: The requested applications along with the recall
+	// tokens for the player. If the player does not have recall tokens for an
+	// application, that application is not included in the response.
+	ApplicationRecallTokens []*GamePlayerToken `json:"applicationRecallTokens,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ApplicationRecallTokens") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplicationRecallTokens") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RetrieveGamesPlayerTokensResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RetrieveGamesPlayerTokensResponse
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5477,6 +5529,125 @@ func (c *PlayersListCall) Pages(ctx context.Context, f func(*PlayerListResponse)
 	}
 }
 
+type RecallGamesPlayerTokensCall struct {
+	s            *Service
+	sessionId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GamesPlayerTokens: Retrieve the Recall tokens from all requested games that
+// is associated with the PGS Player encoded in the provided recall session id.
+// The API is only available for users that have an active PGS Player profile.
+//
+//   - sessionId: Opaque server-generated string that encodes all the necessary
+//     information to identify the PGS player / Google user and application.
+func (r *RecallService) GamesPlayerTokens(sessionId string) *RecallGamesPlayerTokensCall {
+	c := &RecallGamesPlayerTokensCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sessionId = sessionId
+	return c
+}
+
+// ApplicationIds sets the optional parameter "applicationIds": Required. The
+// application IDs from the Google Play developer console for the games to
+// return scoped ids for.
+func (c *RecallGamesPlayerTokensCall) ApplicationIds(applicationIds ...string) *RecallGamesPlayerTokensCall {
+	c.urlParams_.SetMulti("applicationIds", append([]string{}, applicationIds...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RecallGamesPlayerTokensCall) Fields(s ...googleapi.Field) *RecallGamesPlayerTokensCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RecallGamesPlayerTokensCall) IfNoneMatch(entityTag string) *RecallGamesPlayerTokensCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RecallGamesPlayerTokensCall) Context(ctx context.Context) *RecallGamesPlayerTokensCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RecallGamesPlayerTokensCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RecallGamesPlayerTokensCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "games/v1/recall/gamesPlayerTokens/{sessionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"sessionId": c.sessionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "games.recall.gamesPlayerTokens" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RetrieveGamesPlayerTokensResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RecallGamesPlayerTokensCall) Do(opts ...googleapi.CallOption) (*RetrieveGamesPlayerTokensResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RetrieveGamesPlayerTokensResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type RecallLastTokenFromAllDeveloperGamesCall struct {
 	s            *Service
 	sessionId    string
@@ -5487,9 +5658,9 @@ type RecallLastTokenFromAllDeveloperGamesCall struct {
 }
 
 // LastTokenFromAllDeveloperGames: Retrieve the last Recall token from all
-// developer games that is associated with the PGS Player principal encoded in
-// the provided recall session id. The API is only available for users that
-// have active PGS Player profile.
+// developer games that is associated with the PGS Player encoded in the
+// provided recall session id. The API is only available for users that have
+// active PGS Player profile.
 //
 //   - sessionId: Opaque server-generated string that encodes all the necessary
 //     information to identify the PGS player / Google user and application.
@@ -5791,8 +5962,8 @@ type RecallRetrieveTokensCall struct {
 }
 
 // RetrieveTokens: Retrieve all Recall tokens associated with the PGS Player
-// principal encoded in the provided recall session id. The API is only
-// available for users that have active PGS Player profile.
+// encoded in the provided recall session id. The API is only available for
+// users that have active PGS Player profile.
 //
 //   - sessionId: Opaque server-generated string that encodes all the necessary
 //     information to identify the PGS player / Google user and application.

@@ -623,7 +623,7 @@ type GdataMedia struct {
 	// Hash: Deprecated, use one of explicit hash type fields instead. These two
 	// hash related fields will only be populated on Scotty based media uploads and
 	// will contain the content of the hash group in the NotificationRequest:
-	// http://cs/#google3/uploader/service/proto/upload_listener.proto&q=class:Hash
+	// http://cs/#google3/blobstore2/api/scotty/service/proto/upload_listener.proto&q=class:Hash
 	// Hex encoded hash value of the uploaded media.
 	Hash string `json:"hash,omitempty"`
 	// HashVerified: For Scotty uploads only. If a user sends a hash code and the

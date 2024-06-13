@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package cloudcommerceprocurement provides access to the Cloud Commerce Partner Procurement API.
 //
 // For product documentation, see: https://cloud.google.com/marketplace/docs/partners/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	cloudcommerceprocurementService, err := cloudcommerceprocurement.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	cloudcommerceprocurementService, err := cloudcommerceprocurement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	cloudcommerceprocurementService, err := cloudcommerceprocurement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package cloudcommerceprocurement // import "google.golang.org/api/cloudcommerceprocurement/v1"
 
 import (
@@ -71,17 +84,19 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "cloudcommerceprocurement:v1"
 const apiName = "cloudcommerceprocurement"
 const apiVersion = "v1"
 const basePath = "https://cloudcommerceprocurement.googleapis.com/"
+const basePathTemplate = "https://cloudcommerceprocurement.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudcommerceprocurement.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -93,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -170,88 +187,73 @@ type ProvidersEntitlementsService struct {
 	s *Service
 }
 
-// Account: Represents an account that was established by the customer
-// on the service provider's system.
+// Account: Represents an account that was established by the customer on the
+// service provider's system.
 type Account struct {
-	// Approvals: Output only. The approvals for this account. These
-	// approvals are used to track actions that are permitted or have been
-	// completed by a customer within the context of the provider. This
-	// might include a sign up flow or a provisioning step, for example,
-	// that the provider can admit to having happened.
+	// Approvals: Output only. The approvals for this account. These approvals are
+	// used to track actions that are permitted or have been completed by a
+	// customer within the context of the provider. This might include a sign up
+	// flow or a provisioning step, for example, that the provider can admit to
+	// having happened.
 	Approvals []*Approval `json:"approvals,omitempty"`
-
 	// CreateTime: Output only. The creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// InputProperties: Output only. The custom properties that were
-	// collected from the user to create this account.
+	// InputProperties: Output only. The custom properties that were collected from
+	// the user to create this account.
 	InputProperties googleapi.RawMessage `json:"inputProperties,omitempty"`
-
-	// Name: Output only. The resource name of the account. Account names
-	// have the form `accounts/{account_id}`.
+	// Name: Output only. The resource name of the account. Account names have the
+	// form `accounts/{account_id}`.
 	Name string `json:"name,omitempty"`
-
-	// Provider: Output only. The identifier of the service provider that
-	// this account was created against. Each service provider is assigned a
-	// unique provider value when they onboard with Cloud Commerce platform.
+	// Provider: Output only. The identifier of the service provider that this
+	// account was created against. Each service provider is assigned a unique
+	// provider value when they onboard with Cloud Commerce platform.
 	Provider string `json:"provider,omitempty"`
-
-	// State: Output only. The state of the account. This is used to decide
-	// whether the customer is in good standing with the provider and is
-	// able to make purchases. An account might not be able to make a
-	// purchase if the billing account is suspended, for example.
+	// State: Output only. The state of the account. This is used to decide whether
+	// the customer is in good standing with the provider and is able to make
+	// purchases. An account might not be able to make a purchase if the billing
+	// account is suspended, for example.
 	//
 	// Possible values:
-	//   "ACCOUNT_STATE_UNSPECIFIED" - Default state of the account. It's
-	// only set to this value when the account is first created and has not
-	// been initialized.
-	//   "ACCOUNT_ACTIVATION_REQUESTED" - The customer has requested the
-	// creation of the account resource, and the provider notification
-	// message is dispatched. This state has been deprecated, as accounts
-	// now immediately transition to AccountState.ACCOUNT_ACTIVE.
-	//   "ACCOUNT_ACTIVE" - The account is active and ready for use. The
-	// next possible states are: - Account getting deleted: After the user
-	// invokes delete from another API.
+	//   "ACCOUNT_STATE_UNSPECIFIED" - Default state of the account. It's only set
+	// to this value when the account is first created and has not been
+	// initialized.
+	//   "ACCOUNT_ACTIVATION_REQUESTED" - The customer has requested the creation
+	// of the account resource, and the provider notification message is
+	// dispatched. This state has been deprecated, as accounts now immediately
+	// transition to AccountState.ACCOUNT_ACTIVE.
+	//   "ACCOUNT_ACTIVE" - The account is active and ready for use. The next
+	// possible states are: - Account getting deleted: After the user invokes
+	// delete from another API.
 	State string `json:"state,omitempty"`
-
 	// UpdateTime: Output only. The last update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Approvals") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Approvals") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Approvals") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Account) MarshalJSON() ([]byte, error) {
 	type NoMethod Account
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Approval: An approval for some action on an account.
 type Approval struct {
 	// Name: Output only. The name of the approval.
 	Name string `json:"name,omitempty"`
-
 	// Reason: Output only. An explanation for the state of the approval.
 	Reason string `json:"reason,omitempty"`
-
 	// State: Output only. The state of the approval.
 	//
 	// Possible values:
@@ -260,378 +262,335 @@ type Approval struct {
 	// approval state can transition to Account.Approval.State.APPROVED or
 	// Account.Approval.State.REJECTED.
 	//   "APPROVED" - The approval has been granted by the provider.
-	//   "REJECTED" - The approval has been rejected by the provider. A
-	// provider may choose to approve a previously rejected approval, so is
-	// it possible to transition to Account.Approval.State.APPROVED.
+	//   "REJECTED" - The approval has been rejected by the provider. A provider
+	// may choose to approve a previously rejected approval, so is it possible to
+	// transition to Account.Approval.State.APPROVED.
 	State string `json:"state,omitempty"`
-
 	// UpdateTime: Optional. The last update timestamp of the approval.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Approval) MarshalJSON() ([]byte, error) {
 	type NoMethod Approval
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveAccountRequest: Request message for
 // PartnerProcurementService.ApproveAccount.
 type ApproveAccountRequest struct {
-	// ApprovalName: The name of the approval being approved. If absent and
-	// there is only one approval possible, that approval will be granted.
-	// If absent and there are many approvals possible, the request will
-	// fail with a 400 Bad Request. Optional.
+	// ApprovalName: The name of the approval being approved. If absent and there
+	// is only one approval possible, that approval will be granted. If absent and
+	// there are many approvals possible, the request will fail with a 400 Bad
+	// Request. Optional.
 	ApprovalName string `json:"approvalName,omitempty"`
-
-	// Properties: Set of properties that should be associated with the
-	// account. Optional.
+	// Properties: Set of properties that should be associated with the account.
+	// Optional.
 	Properties map[string]string `json:"properties,omitempty"`
-
-	// Reason: Free form text string explaining the approval reason.
-	// Optional. Max allowed length: 256 bytes. Longer strings will be
-	// truncated.
+	// Reason: Free form text string explaining the approval reason. Optional. Max
+	// allowed length: 256 bytes. Longer strings will be truncated.
 	Reason string `json:"reason,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ApprovalName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApprovalName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApprovalName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ApproveAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveAccountRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveEntitlementPlanChangeRequest: Request message for
 // [PartnerProcurementService.ApproveEntitlementPlanChange[].
 type ApproveEntitlementPlanChangeRequest struct {
-	// PendingPlanName: Name of the pending plan that is being approved.
-	// Required.
+	// PendingPlanName: Required. Name of the pending plan that's being approved.
 	PendingPlanName string `json:"pendingPlanName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PendingPlanName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PendingPlanName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PendingPlanName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ApproveEntitlementPlanChangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveEntitlementPlanChangeRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveEntitlementRequest: Request message for
 // [PartnerProcurementService.ApproveEntitlement[].
 type ApproveEntitlementRequest struct {
-	// EntitlementMigrated: Optional. The resource name of the entitlement
-	// that was migrated. Format:
-	// providers/{provider_id}/entitlements/{entitlement_id}. Should only be
-	// sent when resources have been migrated from entitlement_migrated to
-	// the new entitlement. Optional.
+	// EntitlementMigrated: Optional. The resource name of the entitlement that was
+	// migrated, with the format
+	// `providers/{provider_id}/entitlements/{entitlement_id}`. Should only be sent
+	// when resources have been migrated from entitlement_migrated to the new
+	// entitlement. Optional.
 	EntitlementMigrated string `json:"entitlementMigrated,omitempty"`
-
 	// Properties: Set of properties that should be associated with the
 	// entitlement. Optional.
 	Properties map[string]string `json:"properties,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EntitlementMigrated")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EntitlementMigrated") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EntitlementMigrated") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EntitlementMigrated") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ApproveEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveEntitlementRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Consumer: A resource using (consuming) this entitlement.
 type Consumer struct {
 	// Project: A project name with format `projects/`.
 	Project string `json:"project,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Project") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Project") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Project") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Project") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Consumer) MarshalJSON() ([]byte, error) {
 	type NoMethod Consumer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
 // Entitlement: Represents a procured product of a customer.
 type Entitlement struct {
-	// Account: Output only. The resource name of the account that this
-	// entitlement is based on, if any.
+	// Account: Output only. The resource name of the account that this entitlement
+	// is based on, if any.
 	Account string `json:"account,omitempty"`
-
-	// Consumers: Output only. The resources using this entitlement, if
-	// applicable.
+	// CancellationReason: Output only. The reason the entitlement was cancelled.
+	// If this entitlement wasn't cancelled, this field is empty. Possible values
+	// include "unknown", "expired", "user-cancelled", "account-closed",
+	// "billing-disabled" (if the customer has manually disabled billing to their
+	// resources), "user-aborted", and "migrated" (if the entitlement has migrated
+	// across products). Values of this field are subject to change, and we
+	// recommend that you don't build your technical integration to rely on these
+	// fields.
+	CancellationReason string `json:"cancellationReason,omitempty"`
+	// Consumers: Output only. The resources using this entitlement, if applicable.
 	Consumers []*Consumer `json:"consumers,omitempty"`
-
 	// CreateTime: Output only. The creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// InputProperties: Output only. The custom properties that were
-	// collected from the user to create this entitlement.
+	// EntitlementBenefitIds: Output only. The entitlement benefit IDs associated
+	// with the purchase.
+	EntitlementBenefitIds []string `json:"entitlementBenefitIds,omitempty"`
+	// InputProperties: Output only. The custom properties that were collected from
+	// the user to create this entitlement.
 	InputProperties googleapi.RawMessage `json:"inputProperties,omitempty"`
-
-	// MessageToUser: Provider-supplied message that is displayed to the end
-	// user. Currently this is used to communicate progress and ETA for
-	// provisioning. This field can be updated only when a user is waiting
-	// for an action from the provider, i.e. entitlement state is
+	// MessageToUser: Provider-supplied message that is displayed to the end user.
+	// Currently this is used to communicate progress and ETA for provisioning.
+	// This field can be updated only when a user is waiting for an action from the
+	// provider, i.e. entitlement state is
 	// EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED or
-	// EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL. This field
-	// is cleared automatically when the entitlement state changes.
+	// EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL. This field is
+	// cleared automatically when the entitlement state changes.
 	MessageToUser string `json:"messageToUser,omitempty"`
-
-	// Name: Output only. The resource name of the entitlement. Entitlement
-	// names have the form
-	// `providers/{provider_id}/entitlements/{entitlement_id}`.
+	// Name: Output only. The resource name of the entitlement. Entitlement names
+	// have the form `providers/{provider_id}/entitlements/{entitlement_id}`.
 	Name string `json:"name,omitempty"`
-
-	// NewPendingOffer: Output only. The name of the offer the entitlement
-	// is switching to upon a pending plan change. Only exists if the
-	// pending plan change is moving to an offer. Format:
+	// NewOfferEndTime: Output only. The end time of the new offer. If the offer
+	// was created with a term instead of a specified end date, this field is
+	// empty. This field is populated even if the entitlement isn't active yet. If
+	// there's no upcoming offer, the field is be empty.
+	NewOfferEndTime string `json:"newOfferEndTime,omitempty"`
+	// NewOfferStartTime: Output only. The timestamp when the new offer becomes
+	// effective. This field is populated even if the entitlement isn't active yet.
+	// If there's no upcoming offer, the field is empty.
+	NewOfferStartTime string `json:"newOfferStartTime,omitempty"`
+	// NewPendingOffer: Output only. The name of the offer the entitlement is
+	// switching to upon a pending plan change. Only exists if the pending plan
+	// change is moving to an offer. This field isn't populated for entitlements
+	// which aren't active yet. Format:
 	// 'projects/{project}/services/{service}/privateOffers/{offer-id}' OR
-	// 'projects/{project}/services/{service}/standardOffers/{offer-id}',
-	// depending on whether the offer is private or public.
+	// 'projects/{project}/services/{service}/standardOffers/{offer-id}', depending
+	// on whether the offer is private or public. The {service} in the name is the
+	// listing service of the offer. It could be either the product service that
+	// the offer is referencing, or a generic private offer parent service. We
+	// recommend that you don't build your integration to rely on the meaning of
+	// this {service} part.
 	NewPendingOffer string `json:"newPendingOffer,omitempty"`
-
-	// NewPendingOfferDuration: Output only. The offer duration of the new
-	// offer in ISO 8601 duration format. Field is empty if the pending plan
-	// change is not moving to an offer since the entitlement is not
-	// pending, only the plan change is pending.
+	// NewPendingOfferDuration: Output only. The duration of the new offer, in ISO
+	// 8601 duration format. This field isn't populated for entitlements which
+	// aren't active yet, only for pending offer changes. If the offer was created
+	// with a specified end date instead of a duration, this field is empty.
 	NewPendingOfferDuration string `json:"newPendingOfferDuration,omitempty"`
-
 	// NewPendingPlan: Output only. The identifier of the pending new plan.
-	// Required if the product has plans and the entitlement has a pending
-	// plan change.
+	// Required if the product has plans and the entitlement has a pending plan
+	// change.
 	NewPendingPlan string `json:"newPendingPlan,omitempty"`
-
-	// Offer: Output only. The name of the offer that was procured. Field is
-	// empty if order was not made using an offer. Format:
+	// Offer: Output only. The name of the offer that was procured. Field is empty
+	// if order was not made using an offer. Format:
 	// 'projects/{project}/services/{service}/privateOffers/{offer-id}' OR
-	// 'projects/{project}/services/{service}/standardOffers/{offer-id}',
-	// depending on whether the offer is private or public.
+	// 'projects/{project}/services/{service}/standardOffers/{offer-id}', depending
+	// on whether the offer is private or public. The {service} in the name is the
+	// listing service of the offer. It could be either the product service that
+	// the offer is referencing, or a generic private offer parent service. We
+	// recommend that you don't build your integration to rely on the meaning of
+	// this {service} part.
 	Offer string `json:"offer,omitempty"`
-
-	// OfferDuration: Output only. The offer duration of the current offer
-	// in ISO 8601 duration format. Field is empty if entitlement was not
-	// made using an offer.
+	// OfferDuration: Output only. The offer duration of the current offer in ISO
+	// 8601 duration format. Field is empty if entitlement was not made using an
+	// offer. If the offer was created with a specified end date instead of a
+	// duration, this field is empty.
 	OfferDuration string `json:"offerDuration,omitempty"`
-
-	// OfferEndTime: Output only. End time for the Offer association
-	// corresponding to this entitlement. The field is only populated if the
-	// entitlement is currently associated with an Offer.
+	// OfferEndTime: Output only. End time for the Offer association corresponding
+	// to this entitlement. The field is only populated if the entitlement is
+	// currently associated with an Offer.
 	OfferEndTime string `json:"offerEndTime,omitempty"`
-
-	// Plan: Output only. The identifier of the plan that was procured.
-	// Required if the product has plans.
+	// OrderId: Output only. The order ID of this entitlement, without any
+	// `orders/` resource name prefix.
+	OrderId string `json:"orderId,omitempty"`
+	// Plan: Output only. The identifier of the plan that was procured. Required if
+	// the product has plans.
 	Plan string `json:"plan,omitempty"`
-
-	// Product: Output only. The identifier of the entity that was
-	// purchased. This may actually represent a product, quote, or offer. It
-	// is highly recommended to use the more explicit fields
-	// productExternalName, quoteExternalName, or offer listed below based
-	// on your needs.
+	// Product: Output only. The identifier of the entity that was purchased. This
+	// may actually represent a product, quote, or offer. We strongly recommend
+	// that you use the following more explicit fields: productExternalName,
+	// quoteExternalName, or offer.
 	Product string `json:"product,omitempty"`
-
-	// ProductExternalName: Output only. The identifier of the product that
-	// was procured.
+	// ProductExternalName: Output only. The identifier of the product that was
+	// procured.
 	ProductExternalName string `json:"productExternalName,omitempty"`
-
-	// Provider: Output only. The identifier of the service provider that
-	// this entitlement was created against. Each service provider is
-	// assigned a unique provider value when they onboard with Cloud
-	// Commerce platform.
+	// Provider: Output only. The identifier of the service provider that this
+	// entitlement was created against. Each service provider is assigned a unique
+	// provider value when they onboard with Cloud Commerce platform.
 	Provider string `json:"provider,omitempty"`
-
-	// QuoteExternalName: Output only. The identifier of the quote that was
-	// used to procure. Empty if the order is not purchased using a quote.
+	// QuoteExternalName: Output only. The identifier of the quote that was used to
+	// procure. Empty if the order is not purchased using a quote.
 	QuoteExternalName string `json:"quoteExternalName,omitempty"`
-
 	// State: Output only. The state of the entitlement.
 	//
 	// Possible values:
-	//   "ENTITLEMENT_STATE_UNSPECIFIED" - Default state of the entitlement.
-	// It's only set to this value when the entitlement is first created and
-	// has not been initialized.
-	//   "ENTITLEMENT_ACTIVATION_REQUESTED" - Indicates that the entitlement
-	// is being created and the backend has sent a notification to the
-	// provider for the activation approval. If the provider approves, then
-	// the entitlement will transition to the
-	// EntitlementState.ENTITLEMENT_ACTIVE state. Otherwise, the entitlement
-	// will be removed. Plan changes are not allowed in this state. Instead
-	// the entitlement is cancelled and re-created with a new plan name.
-	//   "ENTITLEMENT_ACTIVE" - Indicates that the entitlement is active.
-	// The procured item is now usable and any associated billing events
-	// will start occurring. Entitlements in this state WILL renew. The
-	// analogous state for an unexpired but non-renewing entitlement is
-	// ENTITLEMENT_PENDING_CANCELLATION. In this state, the customer can
-	// decide to cancel the entitlement, which would change the state to
-	// EntitlementState.ENTITLEMENT_PENDING_CANCELLATION, and then
-	// EntitlementState.ENTITLEMENT_CANCELLED. The user can also request a
+	//   "ENTITLEMENT_STATE_UNSPECIFIED" - Default state of the entitlement. It's
+	// only set to this value when the entitlement is first created and has not
+	// been initialized.
+	//   "ENTITLEMENT_ACTIVATION_REQUESTED" - Indicates that the entitlement is
+	// being created and the backend has sent a notification to the provider for
+	// the activation approval. If the provider approves, then the entitlement will
+	// transition to the EntitlementState.ENTITLEMENT_ACTIVE state. Otherwise, the
+	// entitlement will be removed. Plan changes are not allowed in this state.
+	// Instead the entitlement is cancelled and re-created with a new plan name.
+	//   "ENTITLEMENT_ACTIVE" - Indicates that the entitlement is active. The
+	// procured item is now usable and any associated billing events will start
+	// occurring. Entitlements in this state WILL renew. The analogous state for an
+	// unexpired but non-renewing entitlement is ENTITLEMENT_PENDING_CANCELLATION.
+	// In this state, the customer can decide to cancel the entitlement, which
+	// would change the state to EntitlementState.ENTITLEMENT_PENDING_CANCELLATION,
+	// and then EntitlementState.ENTITLEMENT_CANCELLED. The user can also request a
 	// change of plan, which will transition the state to
 	// EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE, and then back to
 	// EntitlementState.ENTITLEMENT_ACTIVE.
-	//   "ENTITLEMENT_PENDING_CANCELLATION" - Indicates that the entitlement
-	// will expire at the end of its term. This could mean the customer has
-	// elected not to renew this entitlement or the customer elected to
-	// cancel an entitlement that only expires at term end. The entitlement
-	// typically stays in this state if the entitlement/plan allows use of
-	// the underlying resource until the end of the current billing cycle.
-	// Once the billing cycle completes, the resource will transition to
-	// EntitlementState.ENTITLEMENT_CANCELLED state. The resource cannot be
-	// modified during this state.
-	//   "ENTITLEMENT_CANCELLED" - Indicates that the entitlement was
-	// cancelled. The entitlement can now be deleted.
-	//   "ENTITLEMENT_PENDING_PLAN_CHANGE" - Indicates that the entitlement
-	// is currently active, but there is a pending plan change that is
-	// requested by the customer. The entitlement typically stays in this
-	// state, if the entitlement/plan requires the completion of the current
-	// billing cycle before the plan can be changed. Once the billing cycle
-	// completes, the resource will transition to
-	// EntitlementState.ENTITLEMENT_ACTIVE, with its plan changed.
+	//   "ENTITLEMENT_PENDING_CANCELLATION" - Indicates that the entitlement will
+	// expire at the end of its term. This could mean the customer has elected not
+	// to renew this entitlement or the customer elected to cancel an entitlement
+	// that only expires at term end. The entitlement typically stays in this state
+	// if the entitlement/plan allows use of the underlying resource until the end
+	// of the current billing cycle. Once the billing cycle completes, the resource
+	// will transition to EntitlementState.ENTITLEMENT_CANCELLED state. The
+	// resource cannot be modified during this state.
+	//   "ENTITLEMENT_CANCELLED" - Indicates that the entitlement was cancelled.
+	// The entitlement can now be deleted.
+	//   "ENTITLEMENT_PENDING_PLAN_CHANGE" - Indicates that the entitlement is
+	// currently active, but there is a pending plan change that is requested by
+	// the customer. The entitlement typically stays in this state, if the
+	// entitlement/plan requires the completion of the current billing cycle before
+	// the plan can be changed. Once the billing cycle completes, the resource will
+	// transition to EntitlementState.ENTITLEMENT_ACTIVE, with its plan changed.
 	//   "ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL" - Indicates that the
-	// entitlement is currently active, but there is a plan change request
-	// pending provider approval. If the provider approves the plan change,
-	// then the entitlement will transition either to
-	// EntitlementState.ENTITLEMENT_ACTIVE or
+	// entitlement is currently active, but there is a plan change request pending
+	// provider approval. If the provider approves the plan change, then the
+	// entitlement will transition either to EntitlementState.ENTITLEMENT_ACTIVE or
 	// EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE depending on whether
-	// current plan requires that the billing cycle completes. If the
-	// provider rejects the plan change, then the pending plan change
-	// request is removed and the entitlement stays in
-	// EntitlementState.ENTITLEMENT_ACTIVE state with the old plan.
-	//   "ENTITLEMENT_SUSPENDED" - Indicates that the entitlement is
-	// suspended either by Google or provider request. This can be triggered
-	// for various external reasons (e.g. expiration of credit card on the
-	// billing account, violation of terms-of-service of the provider etc.).
-	// As such, any remediating action needs to be taken externally, before
-	// the entitlement can be activated. This is not yet supported.
+	// current plan requires that the billing cycle completes. If the provider
+	// rejects the plan change, then the pending plan change request is removed and
+	// the entitlement stays in EntitlementState.ENTITLEMENT_ACTIVE state with the
+	// old plan.
+	//   "ENTITLEMENT_SUSPENDED" - Indicates that the entitlement is suspended
+	// either by Google or provider request. This can be triggered for various
+	// external reasons (e.g. expiration of credit card on the billing account,
+	// violation of terms-of-service of the provider etc.). As such, any
+	// remediating action needs to be taken externally, before the entitlement can
+	// be activated. This is not yet supported.
 	State string `json:"state,omitempty"`
-
 	// SubscriptionEndTime: Output only. End time for the subscription
 	// corresponding to this entitlement.
 	SubscriptionEndTime string `json:"subscriptionEndTime,omitempty"`
-
 	// UpdateTime: Output only. The last update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// UsageReportingId: Output only. The consumerId to use when reporting
-	// usage through the Service Control API. See the consumerId field at
-	// Reporting Metrics
-	// (https://cloud.google.com/service-control/reporting-metrics) for more
-	// details. This field is present only if the product has usage-based
+	// UsageReportingId: Output only. The consumerId to use when reporting usage
+	// through the Service Control API. See the consumerId field at Reporting
+	// Metrics (https://cloud.google.com/service-control/reporting-metrics) for
+	// more details. This field is present only if the product has usage-based
 	// billing configured.
 	UsageReportingId string `json:"usageReportingId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Account") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Account") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Account") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Entitlement) MarshalJSON() ([]byte, error) {
 	type NoMethod Entitlement
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountsResponse: Response message for
@@ -639,35 +598,27 @@ func (s *Entitlement) MarshalJSON() ([]byte, error) {
 type ListAccountsResponse struct {
 	// Accounts: The list of accounts in this response.
 	Accounts []*Account `json:"accounts,omitempty"`
-
 	// NextPageToken: The token for fetching the next page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Accounts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Accounts") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Accounts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEntitlementsResponse: Response message for
@@ -675,175 +626,136 @@ func (s *ListAccountsResponse) MarshalJSON() ([]byte, error) {
 type ListEntitlementsResponse struct {
 	// Entitlements: The list of entitlements in this response.
 	Entitlements []*Entitlement `json:"entitlements,omitempty"`
-
 	// NextPageToken: The token for fetching the next page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Entitlements") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entitlements") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entitlements") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListEntitlementsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEntitlementsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RejectAccountRequest: Request message for
 // PartnerProcurementService.RejectAccount.
 type RejectAccountRequest struct {
-	// ApprovalName: The name of the approval being rejected. If absent and
-	// there is only one approval possible, that approval will be rejected.
-	// If absent and there are many approvals possible, the request will
-	// fail with a 400 Bad Request. Optional.
+	// ApprovalName: The name of the approval being rejected. If absent and there
+	// is only one approval possible, that approval will be rejected. If absent and
+	// there are many approvals possible, the request will fail with a 400 Bad
+	// Request. Optional.
 	ApprovalName string `json:"approvalName,omitempty"`
-
-	// Reason: Free form text string explaining the rejection reason. Max
-	// allowed length: 256 bytes. Longer strings will be truncated.
+	// Reason: Free form text string explaining the rejection reason. Max allowed
+	// length: 256 bytes. Longer strings will be truncated.
 	Reason string `json:"reason,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ApprovalName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApprovalName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApprovalName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RejectAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectAccountRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RejectEntitlementPlanChangeRequest: Request message for
 // PartnerProcurementService.RejectEntitlementPlanChange.
 type RejectEntitlementPlanChangeRequest struct {
-	// PendingPlanName: Name of the pending plan that is being rejected.
-	// Required.
+	// PendingPlanName: Required. Name of the pending plan that is being rejected.
 	PendingPlanName string `json:"pendingPlanName,omitempty"`
-
-	// Reason: Free form text string explaining the rejection reason. Max
-	// allowed length: 256 bytes. Longer strings will be truncated.
+	// Reason: Free form text string explaining the rejection reason. Max allowed
+	// length: 256 bytes. Longer strings will be truncated.
 	Reason string `json:"reason,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PendingPlanName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PendingPlanName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PendingPlanName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RejectEntitlementPlanChangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectEntitlementPlanChangeRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RejectEntitlementRequest: Request message for
 // PartnerProcurementService.RejectEntitlement.
 type RejectEntitlementRequest struct {
-	// Reason: Free form text string explaining the rejection reason. Max
-	// allowed length: 256 bytes. Longer strings will be truncated.
+	// Reason: Free form text string explaining the rejection reason. Max allowed
+	// length: 256 bytes. Longer strings will be truncated.
 	Reason string `json:"reason,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Reason") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Reason") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RejectEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectEntitlementRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ResetAccountRequest: Request message for for
+// ResetAccountRequest: Request message for
 // PartnerProcurementService.ResetAccount.
 type ResetAccountRequest struct {
 }
 
 // SuspendEntitlementRequest: Request message for
-// ParterProcurementService.SuspendEntitlement. This is not yet
-// supported.
+// ParterProcurementService.SuspendEntitlement. This is not yet supported.
 type SuspendEntitlementRequest struct {
-	// Reason: A free-form reason string, explaining the reason for
-	// suspension request.
+	// Reason: A free-form reason string, explaining the reason for suspension
+	// request.
 	Reason string `json:"reason,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Reason") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Reason") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SuspendEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SuspendEntitlementRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "cloudcommerceprocurement.providers.accounts.approve":
 
 type ProvidersAccountsApproveCall struct {
 	s                     *Service
@@ -856,7 +768,8 @@ type ProvidersAccountsApproveCall struct {
 
 // Approve: Grants an approval on an Account.
 //
-// - name: The resource name of the account.
+//   - name: The resource name of the account, with the format
+//     `providers/{providerId}/accounts/{accountId}`.
 func (r *ProvidersAccountsService) Approve(name string, approveaccountrequest *ApproveAccountRequest) *ProvidersAccountsApproveCall {
 	c := &ProvidersAccountsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -865,23 +778,21 @@ func (r *ProvidersAccountsService) Approve(name string, approveaccountrequest *A
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersAccountsApproveCall) Fields(s ...googleapi.Field) *ProvidersAccountsApproveCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersAccountsApproveCall) Context(ctx context.Context) *ProvidersAccountsApproveCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersAccountsApproveCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -890,18 +801,12 @@ func (c *ProvidersAccountsApproveCall) Header() http.Header {
 }
 
 func (c *ProvidersAccountsApproveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.approveaccountrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:approve")
@@ -918,12 +823,10 @@ func (c *ProvidersAccountsApproveCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "cloudcommerceprocurement.providers.accounts.approve" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProvidersAccountsApproveCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -931,17 +834,17 @@ func (c *ProvidersAccountsApproveCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -954,38 +857,7 @@ func (c *ProvidersAccountsApproveCall) Do(opts ...googleapi.CallOption) (*Empty,
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Grants an approval on an Account.",
-	//   "flatPath": "v1/providers/{providersId}/accounts/{accountsId}:approve",
-	//   "httpMethod": "POST",
-	//   "id": "cloudcommerceprocurement.providers.accounts.approve",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the account. Required.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+/accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:approve",
-	//   "request": {
-	//     "$ref": "ApproveAccountRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudcommerceprocurement.providers.accounts.get":
 
 type ProvidersAccountsGetCall struct {
 	s            *Service
@@ -1006,33 +878,29 @@ func (r *ProvidersAccountsService) Get(name string) *ProvidersAccountsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersAccountsGetCall) Fields(s ...googleapi.Field) *ProvidersAccountsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProvidersAccountsGetCall) IfNoneMatch(entityTag string) *ProvidersAccountsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersAccountsGetCall) Context(ctx context.Context) *ProvidersAccountsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersAccountsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1041,12 +909,7 @@ func (c *ProvidersAccountsGetCall) Header() http.Header {
 }
 
 func (c *ProvidersAccountsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1067,12 +930,10 @@ func (c *ProvidersAccountsGetCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.accounts.get" call.
-// Exactly one of *Account or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Account.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Account.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProvidersAccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1080,17 +941,17 @@ func (c *ProvidersAccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Account{
 		ServerResponse: googleapi.ServerResponse{
@@ -1103,35 +964,7 @@ func (c *ProvidersAccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a requested Account resource.",
-	//   "flatPath": "v1/providers/{providersId}/accounts/{accountsId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudcommerceprocurement.providers.accounts.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the account to retrieve.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+/accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Account"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudcommerceprocurement.providers.accounts.list":
 
 type ProvidersAccountsListCall struct {
 	s            *Service
@@ -1151,49 +984,45 @@ func (r *ProvidersAccountsService) List(parent string) *ProvidersAccountsListCal
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested The default page size is 25 and the
-// maximum page size is 200.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entries that are requested. The default page size is 25 and the maximum page
+// size is 200.
 func (c *ProvidersAccountsListCall) PageSize(pageSize int64) *ProvidersAccountsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The token for
-// fetching the next page.
+// PageToken sets the optional parameter "pageToken": The token for fetching
+// the next page.
 func (c *ProvidersAccountsListCall) PageToken(pageToken string) *ProvidersAccountsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersAccountsListCall) Fields(s ...googleapi.Field) *ProvidersAccountsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProvidersAccountsListCall) IfNoneMatch(entityTag string) *ProvidersAccountsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersAccountsListCall) Context(ctx context.Context) *ProvidersAccountsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersAccountsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1202,12 +1031,7 @@ func (c *ProvidersAccountsListCall) Header() http.Header {
 }
 
 func (c *ProvidersAccountsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1228,12 +1052,11 @@ func (c *ProvidersAccountsListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "cloudcommerceprocurement.providers.accounts.list" call.
-// Exactly one of *ListAccountsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListAccountsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAccountsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProvidersAccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1241,17 +1064,17 @@ func (c *ProvidersAccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAccountsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1264,43 +1087,6 @@ func (c *ProvidersAccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists Accounts that the provider has access to.",
-	//   "flatPath": "v1/providers/{providersId}/accounts",
-	//   "httpMethod": "GET",
-	//   "id": "cloudcommerceprocurement.providers.accounts.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested The default page size is 25 and the maximum page size is 200.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The token for fetching the next page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/accounts",
-	//   "response": {
-	//     "$ref": "ListAccountsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1308,7 +1094,7 @@ func (c *ProvidersAccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccou
 // The provided context supersedes any context provided to the Context method.
 func (c *ProvidersAccountsListCall) Pages(ctx context.Context, f func(*ListAccountsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1323,8 +1109,6 @@ func (c *ProvidersAccountsListCall) Pages(ctx context.Context, f func(*ListAccou
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "cloudcommerceprocurement.providers.accounts.reject":
 
 type ProvidersAccountsRejectCall struct {
 	s                    *Service
@@ -1346,23 +1130,21 @@ func (r *ProvidersAccountsService) Reject(name string, rejectaccountrequest *Rej
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersAccountsRejectCall) Fields(s ...googleapi.Field) *ProvidersAccountsRejectCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersAccountsRejectCall) Context(ctx context.Context) *ProvidersAccountsRejectCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersAccountsRejectCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1371,18 +1153,12 @@ func (c *ProvidersAccountsRejectCall) Header() http.Header {
 }
 
 func (c *ProvidersAccountsRejectCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rejectaccountrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:reject")
@@ -1399,12 +1175,10 @@ func (c *ProvidersAccountsRejectCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "cloudcommerceprocurement.providers.accounts.reject" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProvidersAccountsRejectCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1412,17 +1186,17 @@ func (c *ProvidersAccountsRejectCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1435,38 +1209,7 @@ func (c *ProvidersAccountsRejectCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Rejects an approval on an Account.",
-	//   "flatPath": "v1/providers/{providersId}/accounts/{accountsId}:reject",
-	//   "httpMethod": "POST",
-	//   "id": "cloudcommerceprocurement.providers.accounts.reject",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the account. Required.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+/accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:reject",
-	//   "request": {
-	//     "$ref": "RejectAccountRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudcommerceprocurement.providers.accounts.reset":
 
 type ProvidersAccountsResetCall struct {
 	s                   *Service
@@ -1477,9 +1220,8 @@ type ProvidersAccountsResetCall struct {
 	header_             http.Header
 }
 
-// Reset: Resets an Account and cancel all associated Entitlements.
-// Partner can only reset accounts they own rather than customer
-// accounts.
+// Reset: Resets an Account and cancels all associated Entitlements. Partner
+// can only reset accounts they own rather than customer accounts.
 //
 // - name: The resource name of the account.
 func (r *ProvidersAccountsService) Reset(name string, resetaccountrequest *ResetAccountRequest) *ProvidersAccountsResetCall {
@@ -1490,23 +1232,21 @@ func (r *ProvidersAccountsService) Reset(name string, resetaccountrequest *Reset
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersAccountsResetCall) Fields(s ...googleapi.Field) *ProvidersAccountsResetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersAccountsResetCall) Context(ctx context.Context) *ProvidersAccountsResetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersAccountsResetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1515,18 +1255,12 @@ func (c *ProvidersAccountsResetCall) Header() http.Header {
 }
 
 func (c *ProvidersAccountsResetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resetaccountrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:reset")
@@ -1543,12 +1277,10 @@ func (c *ProvidersAccountsResetCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "cloudcommerceprocurement.providers.accounts.reset" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProvidersAccountsResetCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1556,17 +1288,17 @@ func (c *ProvidersAccountsResetCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1579,38 +1311,7 @@ func (c *ProvidersAccountsResetCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Resets an Account and cancel all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.",
-	//   "flatPath": "v1/providers/{providersId}/accounts/{accountsId}:reset",
-	//   "httpMethod": "POST",
-	//   "id": "cloudcommerceprocurement.providers.accounts.reset",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the account. Required.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+/accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:reset",
-	//   "request": {
-	//     "$ref": "ResetAccountRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudcommerceprocurement.providers.entitlements.approve":
 
 type ProvidersEntitlementsApproveCall struct {
 	s                         *Service
@@ -1622,11 +1323,11 @@ type ProvidersEntitlementsApproveCall struct {
 }
 
 // Approve: Approves an entitlement that is in the
-// EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method
-// is invoked by the provider to approve the creation of the entitlement
-// resource.
+// EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is
+// invoked by the provider to approve the creation of the entitlement resource.
 //
-// - name: The resource name of the entitlement.
+//   - name: The resource name of the entitlement, with the format
+//     `providers/{providerId}/entitlements/{entitlementId}`.
 func (r *ProvidersEntitlementsService) Approve(name string, approveentitlementrequest *ApproveEntitlementRequest) *ProvidersEntitlementsApproveCall {
 	c := &ProvidersEntitlementsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1635,23 +1336,21 @@ func (r *ProvidersEntitlementsService) Approve(name string, approveentitlementre
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersEntitlementsApproveCall) Fields(s ...googleapi.Field) *ProvidersEntitlementsApproveCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersEntitlementsApproveCall) Context(ctx context.Context) *ProvidersEntitlementsApproveCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersEntitlementsApproveCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1660,18 +1359,12 @@ func (c *ProvidersEntitlementsApproveCall) Header() http.Header {
 }
 
 func (c *ProvidersEntitlementsApproveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.approveentitlementrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:approve")
@@ -1688,12 +1381,10 @@ func (c *ProvidersEntitlementsApproveCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.approve" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProvidersEntitlementsApproveCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1701,17 +1392,17 @@ func (c *ProvidersEntitlementsApproveCall) Do(opts ...googleapi.CallOption) (*Em
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1724,38 +1415,7 @@ func (c *ProvidersEntitlementsApproveCall) Do(opts ...googleapi.CallOption) (*Em
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Approves an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to approve the creation of the entitlement resource.",
-	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}:approve",
-	//   "httpMethod": "POST",
-	//   "id": "cloudcommerceprocurement.providers.entitlements.approve",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the entitlement. Required.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:approve",
-	//   "request": {
-	//     "$ref": "ApproveEntitlementRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudcommerceprocurement.providers.entitlements.approvePlanChange":
 
 type ProvidersEntitlementsApprovePlanChangeCall struct {
 	s                                   *Service
@@ -1767,9 +1427,9 @@ type ProvidersEntitlementsApprovePlanChangeCall struct {
 }
 
 // ApprovePlanChange: Approves an entitlement plan change that is in the
-// EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This
-// method is invoked by the provider to approve the plan change on the
-// entitlement resource.
+// EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method
+// is invoked by the provider to approve the plan change on the entitlement
+// resource.
 //
 // - name: The resource name of the entitlement.
 func (r *ProvidersEntitlementsService) ApprovePlanChange(name string, approveentitlementplanchangerequest *ApproveEntitlementPlanChangeRequest) *ProvidersEntitlementsApprovePlanChangeCall {
@@ -1780,23 +1440,21 @@ func (r *ProvidersEntitlementsService) ApprovePlanChange(name string, approveent
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersEntitlementsApprovePlanChangeCall) Fields(s ...googleapi.Field) *ProvidersEntitlementsApprovePlanChangeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersEntitlementsApprovePlanChangeCall) Context(ctx context.Context) *ProvidersEntitlementsApprovePlanChangeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersEntitlementsApprovePlanChangeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1805,18 +1463,12 @@ func (c *ProvidersEntitlementsApprovePlanChangeCall) Header() http.Header {
 }
 
 func (c *ProvidersEntitlementsApprovePlanChangeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.approveentitlementplanchangerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:approvePlanChange")
@@ -1833,12 +1485,10 @@ func (c *ProvidersEntitlementsApprovePlanChangeCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.approvePlanChange" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProvidersEntitlementsApprovePlanChangeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1846,17 +1496,17 @@ func (c *ProvidersEntitlementsApprovePlanChangeCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1869,38 +1519,7 @@ func (c *ProvidersEntitlementsApprovePlanChangeCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Approves an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to approve the plan change on the entitlement resource.",
-	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}:approvePlanChange",
-	//   "httpMethod": "POST",
-	//   "id": "cloudcommerceprocurement.providers.entitlements.approvePlanChange",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the entitlement. Required.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:approvePlanChange",
-	//   "request": {
-	//     "$ref": "ApproveEntitlementPlanChangeRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudcommerceprocurement.providers.entitlements.get":
 
 type ProvidersEntitlementsGetCall struct {
 	s            *Service
@@ -1921,33 +1540,29 @@ func (r *ProvidersEntitlementsService) Get(name string) *ProvidersEntitlementsGe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersEntitlementsGetCall) Fields(s ...googleapi.Field) *ProvidersEntitlementsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProvidersEntitlementsGetCall) IfNoneMatch(entityTag string) *ProvidersEntitlementsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersEntitlementsGetCall) Context(ctx context.Context) *ProvidersEntitlementsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersEntitlementsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1956,12 +1571,7 @@ func (c *ProvidersEntitlementsGetCall) Header() http.Header {
 }
 
 func (c *ProvidersEntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1982,12 +1592,10 @@ func (c *ProvidersEntitlementsGetCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.get" call.
-// Exactly one of *Entitlement or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Entitlement.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Entitlement.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProvidersEntitlementsGetCall) Do(opts ...googleapi.CallOption) (*Entitlement, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1995,17 +1603,17 @@ func (c *ProvidersEntitlementsGetCall) Do(opts ...googleapi.CallOption) (*Entitl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Entitlement{
 		ServerResponse: googleapi.ServerResponse{
@@ -2018,35 +1626,7 @@ func (c *ProvidersEntitlementsGetCall) Do(opts ...googleapi.CallOption) (*Entitl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a requested Entitlement resource.",
-	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudcommerceprocurement.providers.entitlements.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the entitlement to retrieve.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Entitlement"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudcommerceprocurement.providers.entitlements.list":
 
 type ProvidersEntitlementsListCall struct {
 	s            *Service
@@ -2066,80 +1646,77 @@ func (r *ProvidersEntitlementsService) List(parent string) *ProvidersEntitlement
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter that can be
-// used to limit the list request. The filter is a query string that can
-// match a selected set of attributes with string values. For example
+// Filter sets the optional parameter "filter": The filter that can be used to
+// limit the list request. The filter is a query string that can match a
+// selected set of attributes with string values. For example
 // `account=E-1234-5678-ABCD-EFGH`, `state=pending_cancellation`, and
 // `plan!=foo-plan`. Supported query attributes are * `account` *
 // `customer_billing_account` with value in the format of:
-// `billingAccounts/{id}` * `product_external_name` *
-// `quote_external_name` * `offer` * `new_pending_offer` * `plan` *
-// `newPendingPlan` or `new_pending_plan` * `state` *
-// `consumers.project` Note that the consumers match works on repeated
-// structures, so equality (`consumers.project=projects/123456789`) is
-// not supported. Set membership can be expressed with the `:` operator.
-// For example, `consumers.project:projects/123456789` finds
-// entitlements with at least one consumer with project field equal to
-// `projects/123456789`. Also note that the state name match is
-// case-insensitive and query can omit the prefix "ENTITLEMENT_". For
-// example, `state=active` is equivalent to `state=ENTITLEMENT_ACTIVE`.
-// If the query contains some special characters other than letters,
-// underscore, or digits, the phrase must be quoted with double quotes.
-// For example, `product="providerId:productId", where the product name
-// needs to be quoted because it contains special character colon.
-// Queries can be combined with `AND`, `OR`, and `NOT` to form more
-// complex queries. They can also be grouped to force a desired
-// evaluation order. For example, `state=active AND (account=E-1234 OR
-// account=5678) AND NOT (product=foo-product)`. Connective `AND` can be
-// omitted between two predicates. For example `account=E-1234
+// `billingAccounts/{id}` * `product_external_name` * `quote_external_name` *
+// `offer` * `new_pending_offer` * `plan` * `newPendingPlan` or
+// `new_pending_plan` * `state` * `consumers.project` *
+// `change_history.new_offer` Note that the consumers and
+// change_history.new_offer match works on repeated structures, so equality
+// (`consumers.project=projects/123456789`) is not supported. Set membership
+// can be expressed with the `:` operator. For example,
+// `consumers.project:projects/123456789` finds entitlements with at least one
+// consumer with project field equal to `projects/123456789`.
+// `change_history.new_offer` retrieves all entitlements that were once
+// associated or are currently active with the offer. Also note that the state
+// name match is case-insensitive and query can omit the prefix "ENTITLEMENT_".
+// For example, `state=active` is equivalent to `state=ENTITLEMENT_ACTIVE`. If
+// the query contains some special characters other than letters, underscore,
+// or digits, the phrase must be quoted with double quotes. For example,
+// `product="providerId:productId", where the product name needs to be quoted
+// because it contains special character colon. Queries can be combined with
+// `AND`, `OR`, and `NOT` to form more complex queries. They can also be
+// grouped to force a desired evaluation order. For example, `state=active AND
+// (account=E-1234 OR account=5678) AND NOT (product=foo-product)`. Connective
+// `AND` can be omitted between two predicates. For example `account=E-1234
 // state=active` is equivalent to `account=E-1234 AND state=active`.
 func (c *ProvidersEntitlementsListCall) Filter(filter string) *ProvidersEntitlementsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested. The default page size is 200.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entries that are requested. The default page size is 200.
 func (c *ProvidersEntitlementsListCall) PageSize(pageSize int64) *ProvidersEntitlementsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The token for
-// fetching the next page.
+// PageToken sets the optional parameter "pageToken": The token for fetching
+// the next page.
 func (c *ProvidersEntitlementsListCall) PageToken(pageToken string) *ProvidersEntitlementsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersEntitlementsListCall) Fields(s ...googleapi.Field) *ProvidersEntitlementsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProvidersEntitlementsListCall) IfNoneMatch(entityTag string) *ProvidersEntitlementsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersEntitlementsListCall) Context(ctx context.Context) *ProvidersEntitlementsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersEntitlementsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2148,12 +1725,7 @@ func (c *ProvidersEntitlementsListCall) Header() http.Header {
 }
 
 func (c *ProvidersEntitlementsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2174,12 +1746,11 @@ func (c *ProvidersEntitlementsListCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.list" call.
-// Exactly one of *ListEntitlementsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListEntitlementsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProvidersEntitlementsListCall) Do(opts ...googleapi.CallOption) (*ListEntitlementsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2187,17 +1758,17 @@ func (c *ProvidersEntitlementsListCall) Do(opts ...googleapi.CallOption) (*ListE
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListEntitlementsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2210,48 +1781,6 @@ func (c *ProvidersEntitlementsListCall) Do(opts ...googleapi.CallOption) (*ListE
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists Entitlements for which the provider has read access.",
-	//   "flatPath": "v1/providers/{providersId}/entitlements",
-	//   "httpMethod": "GET",
-	//   "id": "cloudcommerceprocurement.providers.entitlements.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The filter that can be used to limit the list request. The filter is a query string that can match a selected set of attributes with string values. For example `account=E-1234-5678-ABCD-EFGH`, `state=pending_cancellation`, and `plan!=foo-plan`. Supported query attributes are * `account` * `customer_billing_account` with value in the format of: `billingAccounts/{id}` * `product_external_name` * `quote_external_name` * `offer` * `new_pending_offer` * `plan` * `newPendingPlan` or `new_pending_plan` * `state` * `consumers.project` Note that the consumers match works on repeated structures, so equality (`consumers.project=projects/123456789`) is not supported. Set membership can be expressed with the `:` operator. For example, `consumers.project:projects/123456789` finds entitlements with at least one consumer with project field equal to `projects/123456789`. Also note that the state name match is case-insensitive and query can omit the prefix \"ENTITLEMENT_\". For example, `state=active` is equivalent to `state=ENTITLEMENT_ACTIVE`. If the query contains some special characters other than letters, underscore, or digits, the phrase must be quoted with double quotes. For example, `product=\"providerId:productId\"`, where the product name needs to be quoted because it contains special character colon. Queries can be combined with `AND`, `OR`, and `NOT` to form more complex queries. They can also be grouped to force a desired evaluation order. For example, `state=active AND (account=E-1234 OR account=5678) AND NOT (product=foo-product)`. Connective `AND` can be omitted between two predicates. For example `account=E-1234 state=active` is equivalent to `account=E-1234 AND state=active`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested. The default page size is 200.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The token for fetching the next page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource name.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/entitlements",
-	//   "response": {
-	//     "$ref": "ListEntitlementsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2259,7 +1788,7 @@ func (c *ProvidersEntitlementsListCall) Do(opts ...googleapi.CallOption) (*ListE
 // The provided context supersedes any context provided to the Context method.
 func (c *ProvidersEntitlementsListCall) Pages(ctx context.Context, f func(*ListEntitlementsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2274,8 +1803,6 @@ func (c *ProvidersEntitlementsListCall) Pages(ctx context.Context, f func(*ListE
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "cloudcommerceprocurement.providers.entitlements.patch":
 
 type ProvidersEntitlementsPatchCall struct {
 	s           *Service
@@ -2296,8 +1823,8 @@ func (r *ProvidersEntitlementsService) Patch(name string, entitlement *Entitleme
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// that applies to the resource. See the [FieldMask definition]
+// UpdateMask sets the optional parameter "updateMask": The update mask that
+// applies to the resource. See the [FieldMask definition]
 // (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask)
 // for more details.
 func (c *ProvidersEntitlementsPatchCall) UpdateMask(updateMask string) *ProvidersEntitlementsPatchCall {
@@ -2306,23 +1833,21 @@ func (c *ProvidersEntitlementsPatchCall) UpdateMask(updateMask string) *Provider
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersEntitlementsPatchCall) Fields(s ...googleapi.Field) *ProvidersEntitlementsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersEntitlementsPatchCall) Context(ctx context.Context) *ProvidersEntitlementsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersEntitlementsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2331,18 +1856,12 @@ func (c *ProvidersEntitlementsPatchCall) Header() http.Header {
 }
 
 func (c *ProvidersEntitlementsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entitlement)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -2359,12 +1878,10 @@ func (c *ProvidersEntitlementsPatchCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.patch" call.
-// Exactly one of *Entitlement or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Entitlement.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Entitlement.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProvidersEntitlementsPatchCall) Do(opts ...googleapi.CallOption) (*Entitlement, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2372,17 +1889,17 @@ func (c *ProvidersEntitlementsPatchCall) Do(opts ...googleapi.CallOption) (*Enti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Entitlement{
 		ServerResponse: googleapi.ServerResponse{
@@ -2395,44 +1912,7 @@ func (c *ProvidersEntitlementsPatchCall) Do(opts ...googleapi.CallOption) (*Enti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing Entitlement.",
-	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudcommerceprocurement.providers.entitlements.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the entitlement to update.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The update mask that applies to the resource. See the [FieldMask definition] (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask) for more details.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "Entitlement"
-	//   },
-	//   "response": {
-	//     "$ref": "Entitlement"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudcommerceprocurement.providers.entitlements.reject":
 
 type ProvidersEntitlementsRejectCall struct {
 	s                        *Service
@@ -2444,9 +1924,8 @@ type ProvidersEntitlementsRejectCall struct {
 }
 
 // Reject: Rejects an entitlement that is in the
-// EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method
-// is invoked by the provider to reject the creation of the entitlement
-// resource.
+// EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is
+// invoked by the provider to reject the creation of the entitlement resource.
 //
 // - name: The resource name of the entitlement.
 func (r *ProvidersEntitlementsService) Reject(name string, rejectentitlementrequest *RejectEntitlementRequest) *ProvidersEntitlementsRejectCall {
@@ -2457,23 +1936,21 @@ func (r *ProvidersEntitlementsService) Reject(name string, rejectentitlementrequ
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersEntitlementsRejectCall) Fields(s ...googleapi.Field) *ProvidersEntitlementsRejectCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersEntitlementsRejectCall) Context(ctx context.Context) *ProvidersEntitlementsRejectCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersEntitlementsRejectCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2482,18 +1959,12 @@ func (c *ProvidersEntitlementsRejectCall) Header() http.Header {
 }
 
 func (c *ProvidersEntitlementsRejectCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rejectentitlementrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:reject")
@@ -2510,12 +1981,10 @@ func (c *ProvidersEntitlementsRejectCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.reject" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProvidersEntitlementsRejectCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2523,17 +1992,17 @@ func (c *ProvidersEntitlementsRejectCall) Do(opts ...googleapi.CallOption) (*Emp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2546,38 +2015,7 @@ func (c *ProvidersEntitlementsRejectCall) Do(opts ...googleapi.CallOption) (*Emp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Rejects an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to reject the creation of the entitlement resource.",
-	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}:reject",
-	//   "httpMethod": "POST",
-	//   "id": "cloudcommerceprocurement.providers.entitlements.reject",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the entitlement. Required.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:reject",
-	//   "request": {
-	//     "$ref": "RejectEntitlementRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudcommerceprocurement.providers.entitlements.rejectPlanChange":
 
 type ProvidersEntitlementsRejectPlanChangeCall struct {
 	s                                  *Service
@@ -2589,9 +2027,9 @@ type ProvidersEntitlementsRejectPlanChangeCall struct {
 }
 
 // RejectPlanChange: Rejects an entitlement plan change that is in the
-// EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This
-// method is invoked by the provider to reject the plan change on the
-// entitlement resource.
+// EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method
+// is invoked by the provider to reject the plan change on the entitlement
+// resource.
 //
 // - name: The resource name of the entitlement.
 func (r *ProvidersEntitlementsService) RejectPlanChange(name string, rejectentitlementplanchangerequest *RejectEntitlementPlanChangeRequest) *ProvidersEntitlementsRejectPlanChangeCall {
@@ -2602,23 +2040,21 @@ func (r *ProvidersEntitlementsService) RejectPlanChange(name string, rejectentit
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersEntitlementsRejectPlanChangeCall) Fields(s ...googleapi.Field) *ProvidersEntitlementsRejectPlanChangeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersEntitlementsRejectPlanChangeCall) Context(ctx context.Context) *ProvidersEntitlementsRejectPlanChangeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersEntitlementsRejectPlanChangeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2627,18 +2063,12 @@ func (c *ProvidersEntitlementsRejectPlanChangeCall) Header() http.Header {
 }
 
 func (c *ProvidersEntitlementsRejectPlanChangeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rejectentitlementplanchangerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:rejectPlanChange")
@@ -2655,12 +2085,10 @@ func (c *ProvidersEntitlementsRejectPlanChangeCall) doRequest(alt string) (*http
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.rejectPlanChange" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProvidersEntitlementsRejectPlanChangeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2668,17 +2096,17 @@ func (c *ProvidersEntitlementsRejectPlanChangeCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2691,38 +2119,7 @@ func (c *ProvidersEntitlementsRejectPlanChangeCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Rejects an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to reject the plan change on the entitlement resource.",
-	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}:rejectPlanChange",
-	//   "httpMethod": "POST",
-	//   "id": "cloudcommerceprocurement.providers.entitlements.rejectPlanChange",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the entitlement. Required.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:rejectPlanChange",
-	//   "request": {
-	//     "$ref": "RejectEntitlementPlanChangeRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudcommerceprocurement.providers.entitlements.suspend":
 
 type ProvidersEntitlementsSuspendCall struct {
 	s                         *Service
@@ -2733,8 +2130,8 @@ type ProvidersEntitlementsSuspendCall struct {
 	header_                   http.Header
 }
 
-// Suspend: Requests suspension of an active Entitlement. This is not
-// yet supported.
+// Suspend: Requests suspension of an active Entitlement. This is not yet
+// supported.
 //
 // - name: The name of the entitlement to suspend.
 func (r *ProvidersEntitlementsService) Suspend(name string, suspendentitlementrequest *SuspendEntitlementRequest) *ProvidersEntitlementsSuspendCall {
@@ -2745,23 +2142,21 @@ func (r *ProvidersEntitlementsService) Suspend(name string, suspendentitlementre
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProvidersEntitlementsSuspendCall) Fields(s ...googleapi.Field) *ProvidersEntitlementsSuspendCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProvidersEntitlementsSuspendCall) Context(ctx context.Context) *ProvidersEntitlementsSuspendCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProvidersEntitlementsSuspendCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2770,18 +2165,12 @@ func (c *ProvidersEntitlementsSuspendCall) Header() http.Header {
 }
 
 func (c *ProvidersEntitlementsSuspendCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.suspendentitlementrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:suspend")
@@ -2798,12 +2187,10 @@ func (c *ProvidersEntitlementsSuspendCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.suspend" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProvidersEntitlementsSuspendCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2811,17 +2198,17 @@ func (c *ProvidersEntitlementsSuspendCall) Do(opts ...googleapi.CallOption) (*Em
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2834,33 +2221,4 @@ func (c *ProvidersEntitlementsSuspendCall) Do(opts ...googleapi.CallOption) (*Em
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Requests suspension of an active Entitlement. This is not yet supported.",
-	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}:suspend",
-	//   "httpMethod": "POST",
-	//   "id": "cloudcommerceprocurement.providers.entitlements.suspend",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the entitlement to suspend.",
-	//       "location": "path",
-	//       "pattern": "^providers/[^/]+/entitlements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:suspend",
-	//   "request": {
-	//     "$ref": "SuspendEntitlementRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

@@ -933,6 +933,10 @@ type Instance struct {
 	// associated with the private service access connection for example,
 	// "test-default" associated with IP range 10.0.0.0/29.
 	ReservedIpRangeId []string `json:"reservedIpRangeId,omitempty"`
+	// SatisfiesPzi: Optional. Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Optional. Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The state of this Memcached instance.
 	//
 	// Possible values:

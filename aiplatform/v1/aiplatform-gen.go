@@ -16014,7 +16014,7 @@ type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataRecordError st
 	//   "INVALID_SPARSE_DIMENSIONS" - Error parsing sparse dimensions field.
 	//   "INVALID_TOKEN_VALUE" - Token restrict value is invalid.
 	//   "INVALID_SPARSE_EMBEDDING" - Invalid sparse embedding.
-	//   "INVALID_EMBEDDING" - Invalid embedding.
+	//   "INVALID_EMBEDDING" - Invalid dense embedding.
 	ErrorType string `json:"errorType,omitempty"`
 	// RawRecord: The original content of this record.
 	RawRecord string `json:"rawRecord,omitempty"`
@@ -17658,9 +17658,6 @@ type GoogleCloudAiplatformV1PublisherModelCallToAction struct {
 	Deploy *GoogleCloudAiplatformV1PublisherModelCallToActionDeploy `json:"deploy,omitempty"`
 	// DeployGke: Optional. Deploy PublisherModel to Google Kubernetes Engine.
 	DeployGke *GoogleCloudAiplatformV1PublisherModelCallToActionDeployGke `json:"deployGke,omitempty"`
-	// FineTune: Optional. Fine tune the PublisherModel with the third-party model
-	// tuning UI.
-	FineTune *GoogleCloudAiplatformV1PublisherModelCallToActionRegionalResourceReferences `json:"fineTune,omitempty"`
 	// OpenEvaluationPipeline: Optional. Open evaluation pipeline of the
 	// PublisherModel.
 	OpenEvaluationPipeline *GoogleCloudAiplatformV1PublisherModelCallToActionRegionalResourceReferences `json:"openEvaluationPipeline,omitempty"`

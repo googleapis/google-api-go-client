@@ -665,7 +665,7 @@ func (s *Connection) MarshalJSON() ([]byte, error) {
 // ConnectorConfiguration: Represents concrete parameter values for Connector
 // Configuration.
 type ConnectorConfiguration struct {
-	// Asset: Optional. Data asset.
+	// Asset: Data asset.
 	Asset *ConnectorConfigurationAsset `json:"asset,omitempty"`
 	// Authentication: Client authentication.
 	Authentication *ConnectorConfigurationAuthentication `json:"authentication,omitempty"`
@@ -699,7 +699,7 @@ func (s *ConnectorConfiguration) MarshalJSON() ([]byte, error) {
 // system, reachable under specified endpoint. For example a database name in a
 // SQL DB.
 type ConnectorConfigurationAsset struct {
-	// Database: Optional. Name of the database.
+	// Database: Name of the database.
 	Database string `json:"database,omitempty"`
 	// GoogleCloudResource: Full Google Cloud resource name -
 	// https://cloud.google.com/apis/design/resource_names#full_resource_name.
@@ -725,15 +725,21 @@ func (s *ConnectorConfigurationAsset) MarshalJSON() ([]byte, error) {
 
 // ConnectorConfigurationAuthentication: Client authentication.
 type ConnectorConfigurationAuthentication struct {
+	// ServiceAccount: Output only. Google-managed service account associated with
+	// this connection, e.g.,
+	// `service-{project_number}@gcp-sa-bigqueryconnection.iam.gserviceaccount.com`.
+	//  BigQuery jobs using this connection will act as `service_account` identity
+	// while connecting to the datasource.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// UsernamePassword: Username/password authentication.
 	UsernamePassword *ConnectorConfigurationUsernamePassword `json:"usernamePassword,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "UsernamePassword") to
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "UsernamePassword") to include in
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

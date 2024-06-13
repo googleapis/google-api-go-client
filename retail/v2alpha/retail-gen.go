@@ -1881,7 +1881,8 @@ func (s *GoogleCloudRetailV2alphaBigQuerySource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2alphaBranch: A data branch that stores Products.
+// GoogleCloudRetailV2alphaBranch: A data branch that stores all instances of
+// Products.
 type GoogleCloudRetailV2alphaBranch struct {
 	// DisplayName: Output only. Human readable name of the branch to display in
 	// the UI.
@@ -8005,32 +8006,6 @@ func (s *GoogleCloudRetailV2betaBigQueryOutputResult) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata: Common
-// metadata related to the progress of the operations.
-type GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata struct {
-	// CreateTime: Operation create time.
-	CreateTime string `json:"createTime,omitempty"`
-	// UpdateTime: Operation last update time. If the operation is done, this is
-	// also the finish time.
-	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudRetailV2betaCreateModelMetadata: Metadata associated with a
 // create operation.
 type GoogleCloudRetailV2betaCreateModelMetadata struct {
@@ -8362,105 +8337,6 @@ type GoogleCloudRetailV2betaImportUserEventsResponse struct {
 
 func (s *GoogleCloudRetailV2betaImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaImportUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2betaMerchantCenterAccountLink: Represents a link between
-// a Merchant Center account and a branch. After a link is established,
-// products from the linked Merchant Center account are streamed to the linked
-// branch.
-type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
-	// BranchId: Required. The branch ID (e.g. 0/1/2) within the catalog that
-	// products from merchant_center_account_id are streamed to. When updating this
-	// field, an empty value will use the currently configured default branch.
-	// However, changing the default branch later on won't change the linked branch
-	// here. A single branch ID can only have one linked Merchant Center account
-	// ID.
-	BranchId string `json:"branchId,omitempty"`
-	// FeedFilters: Criteria for the Merchant Center feeds to be ingested via the
-	// link. All offers will be ingested if the list is empty. Otherwise the offers
-	// will be ingested from selected feeds.
-	FeedFilters []*GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter `json:"feedFilters,omitempty"`
-	// FeedLabel: The FeedLabel used to perform filtering. Note: this replaces
-	// region_id
-	// (https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.feed_label).
-	// Example value: `US`. Example value: `FeedLabel1`.
-	FeedLabel string `json:"feedLabel,omitempty"`
-	// Id: Output only. Immutable. MerchantCenterAccountLink identifier, which is
-	// the final component of name. This field is auto generated and follows the
-	// convention: `BranchId_MerchantCenterAccountId`.
-	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAccountLi
-	// nks/id_1`.
-	Id string `json:"id,omitempty"`
-	// LanguageCode: Language of the title/description and other string attributes.
-	// Use language tags defined by BCP 47
-	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). ISO 639-1. This specifies
-	// the language of offers in Merchant Center that will be accepted. If empty,
-	// no language filtering will be performed. Example value: `en`.
-	LanguageCode string `json:"languageCode,omitempty"`
-	// MerchantCenterAccountId: Required. The linked Merchant center account id
-	// (https://developers.google.com/shopping-content/guides/accountstatuses). The
-	// account must be a standalone account or a sub-account of a MCA.
-	MerchantCenterAccountId int64 `json:"merchantCenterAccountId,omitempty,string"`
-	// Name: Output only. Immutable. Full resource name of the Merchant Center
-	// Account Link, such as
-	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAccountLi
-	// nks/merchant_center_account_link`.
-	Name string `json:"name,omitempty"`
-	// ProjectId: Output only. Google Cloud project ID.
-	ProjectId string `json:"projectId,omitempty"`
-	// Source: Optional. An optional arbitrary string that could be used as a tag
-	// for tracking link source.
-	Source string `json:"source,omitempty"`
-	// State: Output only. Represents the state of the link.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value.
-	//   "PENDING" - Link is created and LRO is not complete.
-	//   "ACTIVE" - Link is active.
-	//   "FAILED" - Link creation failed.
-	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BranchId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BranchId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2betaMerchantCenterAccountLink) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2betaMerchantCenterAccountLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter:
-// Merchant Center Feed filter criterion.
-type GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter struct {
-	// PrimaryFeedId: Merchant Center primary feed ID.
-	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
-	// PrimaryFeedName: Merchant Center primary feed name. The name is used for the
-	// display purposes only.
-	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PrimaryFeedId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PrimaryFeedId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9763,8 +9639,8 @@ func (r *ProjectsService) UpdateLoggingConfig(name string, googlecloudretailv2al
 // UpdateMask sets the optional parameter "updateMask": Indicates which fields
 // in the provided LoggingConfig to update. The following are the only
 // supported fields: * LoggingConfig.default_log_generation_rule *
-// LoggingConfig.per_service_log_generation_rules If not set, all supported
-// fields are updated.
+// LoggingConfig.service_log_generation_rules If not set, all supported fields
+// are updated.
 func (c *ProjectsUpdateLoggingConfigCall) UpdateMask(updateMask string) *ProjectsUpdateLoggingConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -9901,8 +9777,8 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType strin
 
 // EnableAttributeSuggestions sets the optional parameter
 // "enableAttributeSuggestions": If true, attribute suggestions are enabled and
-// provided in response. This field is only available for "cloud-retail"
-// dataset.
+// provided in the response. This field is only available for the
+// "cloud-retail" dataset.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) EnableAttributeSuggestions(enableAttributeSuggestions bool) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("enableAttributeSuggestions", fmt.Sprint(enableAttributeSuggestions))
 	return c
@@ -11668,7 +11544,7 @@ type ProjectsLocationsCatalogsBranchesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all Branchs under the specified parent Catalog.
+// List: Lists all instances of Branch under the specified parent Catalog.
 //
 // - parent: The parent catalog resource name.
 func (r *ProjectsLocationsCatalogsBranchesService) List(parent string) *ProjectsLocationsCatalogsBranchesListCall {

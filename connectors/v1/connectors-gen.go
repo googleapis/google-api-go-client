@@ -773,6 +773,9 @@ type ConfigVariableTemplate struct {
 	//   "QUERY_PARAM" - Request query param.
 	//   "PATH_PARAM" - Request path param.
 	LocationType string `json:"locationType,omitempty"`
+	// MultipleSelectConfig: Optional. MultipleSelectConfig represents the multiple
+	// options for a config variable.
+	MultipleSelectConfig *MultipleSelectConfig `json:"multipleSelectConfig,omitempty"`
 	// Required: Flag represents that this `ConfigVariable` must be provided for a
 	// connection.
 	Required bool `json:"required,omitempty"`
@@ -803,6 +806,7 @@ type ConfigVariableTemplate struct {
 	//   "ENUM" - Value type is enum.
 	//   "AUTHORIZATION_CODE" - Value type is authorization code.
 	//   "ENCRYPTION_KEY" - Encryption Key.
+	//   "MULTIPLE_SELECT" - Value type is multiple select.
 	ValueType string `json:"valueType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorizationCodeLink") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3608,6 +3612,62 @@ type ManagedZone struct {
 
 func (s *ManagedZone) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedZone
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// MultipleSelectConfig: MultipleSelectConfig represents the multiple options
+// for a config variable.
+type MultipleSelectConfig struct {
+	// AllowCustomValues: Optional. Allow custom values.
+	AllowCustomValues bool `json:"allowCustomValues,omitempty"`
+	// MultipleSelectOptions: Required. Multiple select options.
+	MultipleSelectOptions []*MultipleSelectOption `json:"multipleSelectOptions,omitempty"`
+	// ValueSeparator: Required. Value separator.
+	ValueSeparator string `json:"valueSeparator,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowCustomValues") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowCustomValues") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultipleSelectConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MultipleSelectConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// MultipleSelectOption: MultiplSelecteOption represents the single option for
+// a config variable.
+type MultipleSelectOption struct {
+	// Description: Optional. Value of the option.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Required. Display name of the option.
+	DisplayName string `json:"displayName,omitempty"`
+	// Key: Required. Key of the option.
+	Key string `json:"key,omitempty"`
+	// Preselected: Optional. Indicates if the option is preselected.
+	Preselected bool `json:"preselected,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultipleSelectOption) MarshalJSON() ([]byte, error) {
+	type NoMethod MultipleSelectOption
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

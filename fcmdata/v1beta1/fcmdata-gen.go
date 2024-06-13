@@ -487,8 +487,10 @@ func (s *GoogleFirebaseFcmDataV1beta1MessageOutcomePercents) UnmarshalJSON(data 
 }
 
 // GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents: Additional
-// information about proxy notification delivery. All percentages are
-// calculated with countNotificationsAccepted as the denominator.
+// information about proxy notification
+// (https://firebase.google.com/docs/cloud-messaging/android/message-priority#proxy)
+// delivery. All percentages are calculated with countNotificationsAccepted as
+// the denominator.
 type GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents struct {
 	// Failed: The percentage of accepted notifications that failed to be proxied.
 	// This is usually caused by exceptions that occurred while calling

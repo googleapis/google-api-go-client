@@ -5960,7 +5960,7 @@ func (c *ChromeosdevicesListCall) IncludeChildOrgunits(includeChildOrgunits bool
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number of
-// results to return, value should not exceed 300.
+// results to return. Value should not exceed 300.
 func (c *ChromeosdevicesListCall) MaxResults(maxResults int64) *ChromeosdevicesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -17330,7 +17330,7 @@ func (c *UsersListCall) CustomFieldMask(customFieldMask string) *UsersListCall {
 
 // Customer sets the optional parameter "customer": The unique ID for the
 // customer's Google Workspace account. In case of a multi-domain account, to
-// fetch all groups for a customer, use this field instead of `domain`. You can
+// fetch all users for a customer, use this field instead of `domain`. You can
 // also use the `my_customer` alias to represent your account's `customerId`.
 // The `customerId` is also returned as part of the Users
 // (/admin-sdk/directory/v1/reference/users) resource. You must provide either
@@ -17341,7 +17341,7 @@ func (c *UsersListCall) Customer(customer string) *UsersListCall {
 }
 
 // Domain sets the optional parameter "domain": The domain name. Use this field
-// to get groups from only one domain. To return all domains for a customer
+// to get users from only one domain. To return all domains for a customer
 // account, use the `customer` query parameter instead. Either the `customer`
 // or the `domain` parameter must be provided.
 func (c *UsersListCall) Domain(domain string) *UsersListCall {

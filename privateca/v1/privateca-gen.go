@@ -515,17 +515,18 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CaOptions: Describes values that are relevant in a CA certificate.
+// CaOptions: Describes the X.509 basic constraints extension, per RFC 5280
+// section 4.2.1.9 (https://tools.ietf.org/html/rfc5280#section-4.2.1.9)
 type CaOptions struct {
-	// IsCa: Optional. Refers to the "CA" X.509 extension, which is a boolean
-	// value. When this value is missing, the extension will be omitted from the CA
-	// certificate.
+	// IsCa: Optional. Refers to the "CA" boolean field in the X.509 extension.
+	// When this value is missing, the basic constraints extension will be omitted
+	// from the certificate.
 	IsCa bool `json:"isCa,omitempty"`
-	// MaxIssuerPathLength: Optional. Refers to the path length restriction X.509
-	// extension. For a CA certificate, this value describes the depth of
+	// MaxIssuerPathLength: Optional. Refers to the path length constraint field in
+	// the X.509 extension. For a CA certificate, this value describes the depth of
 	// subordinate CA certificates that are allowed. If this value is less than 0,
 	// the request will fail. If this value is missing, the max path length will be
-	// omitted from the CA certificate.
+	// omitted from the certificate.
 	MaxIssuerPathLength int64 `json:"maxIssuerPathLength,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IsCa") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2867,7 +2868,8 @@ type X509Parameters struct {
 	// extension in the certificate.
 	AiaOcspServers []string `json:"aiaOcspServers,omitempty"`
 	// CaOptions: Optional. Describes options in this X509Parameters that are
-	// relevant in a CA certificate.
+	// relevant in a CA certificate. If not specified, a default basic constraints
+	// extension with `is_ca=false` will be added for leaf certificates.
 	CaOptions *CaOptions `json:"caOptions,omitempty"`
 	// KeyUsage: Optional. Indicates the intended use for keys that correspond to a
 	// certificate.

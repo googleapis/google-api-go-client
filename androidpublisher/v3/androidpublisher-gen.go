@@ -7485,7 +7485,7 @@ type VoidedPurchase struct {
 	VoidedQuantity int64 `json:"voidedQuantity,omitempty"`
 	// VoidedReason: The reason why the purchase was voided, possible values are:
 	// 0. Other 1. Remorse 2. Not_received 3. Defective 4. Accidental_purchase 5.
-	// Fraud 6. Friendly_fraud 7. Chargeback
+	// Fraud 6. Friendly_fraud 7. Chargeback 8. Unacknowledged_purchase
 	VoidedReason int64 `json:"voidedReason,omitempty"`
 	// VoidedSource: The initiator of voided purchase, possible values are: 0. User
 	// 1. Developer 2. Google

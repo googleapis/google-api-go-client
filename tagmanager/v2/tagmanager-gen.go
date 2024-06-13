@@ -737,8 +737,7 @@ type Condition struct {
 	//   "less"
 	//   "lessOrEquals"
 	//   "cssSelector"
-	//   "urlMatches" - NOTE(lanzone): When defining a ConditionType here, don't
-	// forget to also define a matching PredicateType (in condition.proto).
+	//   "urlMatches"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Parameter") to
 	// unconditionally include in API requests. By default, fields with empty or

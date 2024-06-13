@@ -177,6 +177,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.GroundingConfigs = NewProjectsLocationsGroundingConfigsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.RankingConfigs = NewProjectsLocationsRankingConfigsService(s)
+	rs.Requirements = NewProjectsLocationsRequirementsService(s)
 	rs.SampleQuerySets = NewProjectsLocationsSampleQuerySetsService(s)
 	rs.UserEvents = NewProjectsLocationsUserEventsService(s)
 	return rs
@@ -196,6 +197,8 @@ type ProjectsLocationsService struct {
 	Operations *ProjectsLocationsOperationsService
 
 	RankingConfigs *ProjectsLocationsRankingConfigsService
+
+	Requirements *ProjectsLocationsRequirementsService
 
 	SampleQuerySets *ProjectsLocationsSampleQuerySetsService
 
@@ -856,6 +859,15 @@ type ProjectsLocationsRankingConfigsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsRequirementsService(s *Service) *ProjectsLocationsRequirementsService {
+	rs := &ProjectsLocationsRequirementsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRequirementsService struct {
+	s *Service
+}
+
 func NewProjectsLocationsSampleQuerySetsService(s *Service) *ProjectsLocationsSampleQuerySetsService {
 	rs := &ProjectsLocationsSampleQuerySetsService{s: s}
 	rs.Operations = NewProjectsLocationsSampleQuerySetsOperationsService(s)
@@ -893,6 +905,355 @@ func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
 
 type ProjectsOperationsService struct {
 	s *Service
+}
+
+// GoogleApiDistribution: `Distribution` contains summary statistics for a
+// population of values. It optionally contains a histogram representing the
+// distribution of those values across a set of buckets. The summary statistics
+// are the count, mean, sum of the squared deviation from the mean, the
+// minimum, and the maximum of the set of population of values. The histogram
+// is based on a sequence of buckets and gives a count of values that fall into
+// each bucket. The boundaries of the buckets are given either explicitly or by
+// formulas for buckets of fixed or exponentially increasing widths. Although
+// it is not forbidden, it is generally a bad idea to include non-finite values
+// (infinities or NaNs) in the population of values, as this will render the
+// `mean` and `sum_of_squared_deviation` fields meaningless.
+type GoogleApiDistribution struct {
+	// BucketCounts: The number of values in each bucket of the histogram, as
+	// described in `bucket_options`. If the distribution does not have a
+	// histogram, then omit this field. If there is a histogram, then the sum of
+	// the values in `bucket_counts` must equal the value in the `count` field of
+	// the distribution. If present, `bucket_counts` should contain N values, where
+	// N is the number of buckets specified in `bucket_options`. If you supply
+	// fewer than N values, the remaining values are assumed to be 0. The order of
+	// the values in `bucket_counts` follows the bucket numbering schemes described
+	// for the three bucket types. The first value must be the count for the
+	// underflow bucket (number 0). The next N-2 values are the counts for the
+	// finite buckets (number 1 through N-2). The N'th value in `bucket_counts` is
+	// the count for the overflow bucket (number N-1).
+	BucketCounts googleapi.Int64s `json:"bucketCounts,omitempty"`
+	// BucketOptions: Defines the histogram bucket boundaries. If the distribution
+	// does not contain a histogram, then omit this field.
+	BucketOptions *GoogleApiDistributionBucketOptions `json:"bucketOptions,omitempty"`
+	// Count: The number of values in the population. Must be non-negative. This
+	// value must equal the sum of the values in `bucket_counts` if a histogram is
+	// provided.
+	Count int64 `json:"count,omitempty,string"`
+	// Exemplars: Must be in increasing order of `value` field.
+	Exemplars []*GoogleApiDistributionExemplar `json:"exemplars,omitempty"`
+	// Mean: The arithmetic mean of the values in the population. If `count` is
+	// zero then this field must be zero.
+	Mean float64 `json:"mean,omitempty"`
+	// Range: If specified, contains the range of the population values. The field
+	// must not be present if the `count` is zero.
+	Range *GoogleApiDistributionRange `json:"range,omitempty"`
+	// SumOfSquaredDeviation: The sum of squared deviations from the mean of the
+	// values in the population. For values x_i this is: Sumi=1..n ((x_i - mean)^2)
+	// Knuth, "The Art of Computer Programming", Vol. 2, page 232, 3rd edition
+	// describes Welford's method for accumulating this sum in one pass. If `count`
+	// is zero then this field must be zero.
+	SumOfSquaredDeviation float64 `json:"sumOfSquaredDeviation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BucketCounts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BucketCounts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiDistribution) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistribution
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistribution) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistribution
+	var s1 struct {
+		Mean                  gensupport.JSONFloat64 `json:"mean"`
+		SumOfSquaredDeviation gensupport.JSONFloat64 `json:"sumOfSquaredDeviation"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Mean = float64(s1.Mean)
+	s.SumOfSquaredDeviation = float64(s1.SumOfSquaredDeviation)
+	return nil
+}
+
+// GoogleApiDistributionBucketOptions: `BucketOptions` describes the bucket
+// boundaries used to create a histogram for the distribution. The buckets can
+// be in a linear sequence, an exponential sequence, or each bucket can be
+// specified explicitly. `BucketOptions` does not include the number of values
+// in each bucket. A bucket has an inclusive lower bound and exclusive upper
+// bound for the values that are counted for that bucket. The upper bound of a
+// bucket must be strictly greater than the lower bound. The sequence of N
+// buckets for a distribution consists of an underflow bucket (number 0), zero
+// or more finite buckets (number 1 through N - 2) and an overflow bucket
+// (number N - 1). The buckets are contiguous: the lower bound of bucket i (i >
+// 0) is the same as the upper bound of bucket i - 1. The buckets span the
+// whole range of finite values: lower bound of the underflow bucket is
+// -infinity and the upper bound of the overflow bucket is +infinity. The
+// finite buckets are so-called because both bounds are finite.
+type GoogleApiDistributionBucketOptions struct {
+	// ExplicitBuckets: The explicit buckets.
+	ExplicitBuckets *GoogleApiDistributionBucketOptionsExplicit `json:"explicitBuckets,omitempty"`
+	// ExponentialBuckets: The exponential buckets.
+	ExponentialBuckets *GoogleApiDistributionBucketOptionsExponential `json:"exponentialBuckets,omitempty"`
+	// LinearBuckets: The linear bucket.
+	LinearBuckets *GoogleApiDistributionBucketOptionsLinear `json:"linearBuckets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExplicitBuckets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExplicitBuckets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiDistributionBucketOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionBucketOptions
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiDistributionBucketOptionsExplicit: Specifies a set of buckets with
+// arbitrary widths. There are `size(bounds) + 1` (= N) buckets. Bucket `i` has
+// the following boundaries: Upper bound (0 <= i < N-1): bounds[i] Lower bound
+// (1 <= i < N); bounds[i - 1] The `bounds` field must contain at least one
+// element. If `bounds` has only one element, then there are no finite buckets,
+// and that single element is the common boundary of the overflow and underflow
+// buckets.
+type GoogleApiDistributionBucketOptionsExplicit struct {
+	// Bounds: The values must be monotonically increasing.
+	Bounds []float64 `json:"bounds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bounds") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bounds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiDistributionBucketOptionsExplicit) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionBucketOptionsExplicit
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistributionBucketOptionsExplicit) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistributionBucketOptionsExplicit
+	var s1 struct {
+		Bounds []gensupport.JSONFloat64 `json:"bounds"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Bounds = make([]float64, len(s1.Bounds))
+	for i := range s1.Bounds {
+		s.Bounds[i] = float64(s1.Bounds[i])
+	}
+	return nil
+}
+
+// GoogleApiDistributionBucketOptionsExponential: Specifies an exponential
+// sequence of buckets that have a width that is proportional to the value of
+// the lower bound. Each bucket represents a constant relative uncertainty on a
+// specific value in the bucket. There are `num_finite_buckets + 2` (= N)
+// buckets. Bucket `i` has the following boundaries: Upper bound (0 <= i <
+// N-1): scale * (growth_factor ^ i). Lower bound (1 <= i < N): scale *
+// (growth_factor ^ (i - 1)).
+type GoogleApiDistributionBucketOptionsExponential struct {
+	// GrowthFactor: Must be greater than 1.
+	GrowthFactor float64 `json:"growthFactor,omitempty"`
+	// NumFiniteBuckets: Must be greater than 0.
+	NumFiniteBuckets int64 `json:"numFiniteBuckets,omitempty"`
+	// Scale: Must be greater than 0.
+	Scale float64 `json:"scale,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GrowthFactor") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GrowthFactor") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiDistributionBucketOptionsExponential) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionBucketOptionsExponential
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistributionBucketOptionsExponential) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistributionBucketOptionsExponential
+	var s1 struct {
+		GrowthFactor gensupport.JSONFloat64 `json:"growthFactor"`
+		Scale        gensupport.JSONFloat64 `json:"scale"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.GrowthFactor = float64(s1.GrowthFactor)
+	s.Scale = float64(s1.Scale)
+	return nil
+}
+
+// GoogleApiDistributionBucketOptionsLinear: Specifies a linear sequence of
+// buckets that all have the same width (except overflow and underflow). Each
+// bucket represents a constant absolute uncertainty on the specific value in
+// the bucket. There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has
+// the following boundaries: Upper bound (0 <= i < N-1): offset + (width * i).
+// Lower bound (1 <= i < N): offset + (width * (i - 1)).
+type GoogleApiDistributionBucketOptionsLinear struct {
+	// NumFiniteBuckets: Must be greater than 0.
+	NumFiniteBuckets int64 `json:"numFiniteBuckets,omitempty"`
+	// Offset: Lower bound of the first bucket.
+	Offset float64 `json:"offset,omitempty"`
+	// Width: Must be greater than 0.
+	Width float64 `json:"width,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NumFiniteBuckets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NumFiniteBuckets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiDistributionBucketOptionsLinear) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionBucketOptionsLinear
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistributionBucketOptionsLinear) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistributionBucketOptionsLinear
+	var s1 struct {
+		Offset gensupport.JSONFloat64 `json:"offset"`
+		Width  gensupport.JSONFloat64 `json:"width"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Offset = float64(s1.Offset)
+	s.Width = float64(s1.Width)
+	return nil
+}
+
+// GoogleApiDistributionExemplar: Exemplars are example points that may be used
+// to annotate aggregated distribution values. They are metadata that gives
+// information about a particular value added to a Distribution bucket, such as
+// a trace ID that was active when a value was added. They may contain further
+// information, such as a example values and timestamps, origin, etc.
+type GoogleApiDistributionExemplar struct {
+	// Attachments: Contextual information about the example value. Examples are:
+	// Trace: type.googleapis.com/google.monitoring.v3.SpanContext Literal string:
+	// type.googleapis.com/google.protobuf.StringValue Labels dropped during
+	// aggregation: type.googleapis.com/google.monitoring.v3.DroppedLabels There
+	// may be only a single attachment of any given message type in a single
+	// exemplar, and this is enforced by the system.
+	Attachments []googleapi.RawMessage `json:"attachments,omitempty"`
+	// Timestamp: The observation (sampling) time of the above value.
+	Timestamp string `json:"timestamp,omitempty"`
+	// Value: Value of the exemplar point. This value determines to which bucket
+	// the exemplar belongs.
+	Value float64 `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attachments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attachments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiDistributionExemplar) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionExemplar
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistributionExemplar) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistributionExemplar
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
+// GoogleApiDistributionRange: The range of the population values.
+type GoogleApiDistributionRange struct {
+	// Max: The maximum of the population values.
+	Max float64 `json:"max,omitempty"`
+	// Min: The minimum of the population values.
+	Min float64 `json:"min,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Max") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Max") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiDistributionRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionRange
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistributionRange) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistributionRange
+	var s1 struct {
+		Max gensupport.JSONFloat64 `json:"max"`
+		Min gensupport.JSONFloat64 `json:"min"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Max = float64(s1.Max)
+	s.Min = float64(s1.Min)
+	return nil
 }
 
 // GoogleApiHttpBody: Message that represents an arbitrary HTTP body. It should
@@ -939,6 +1300,46 @@ type GoogleApiHttpBody struct {
 
 func (s *GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiHttpBody
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiMonitoredResource: An object representing a resource that can be
+// used for monitoring, logging, billing, or other purposes. Examples include
+// virtual machine instances, databases, and storage devices such as disks. The
+// `type` field identifies a MonitoredResourceDescriptor object that describes
+// the resource's schema. Information in the `labels` field identifies the
+// actual resource and its attributes according to the schema. For example, a
+// particular Compute Engine VM instance could be represented by the following
+// object, because the MonitoredResourceDescriptor for "gce_instance" has
+// labels "project_id", "instance_id" and "zone": { "type":
+// "gce_instance", "labels": { "project_id": "my-project", "instance_id":
+// "12345678901234", "zone": "us-central1-a" }}
+type GoogleApiMonitoredResource struct {
+	// Labels: Required. Values for all of the labels listed in the associated
+	// monitored resource descriptor. For example, Compute Engine VM instances use
+	// the labels "project_id", "instance_id", and "zone".
+	Labels map[string]string `json:"labels,omitempty"`
+	// Type: Required. The monitored resource type. This field must match the
+	// `type` field of a MonitoredResourceDescriptor object. For example, the type
+	// of a Compute Engine VM instance is `gce_instance`. Some descriptors include
+	// the service name in the type; for example, the type of a Datastream stream
+	// is `datastream.googleapis.com/Stream`.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiMonitoredResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiMonitoredResource
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4529,6 +4930,110 @@ func (s *GoogleCloudDiscoveryengineV1alphaCheckGroundingSpec) UnmarshalJSON(data
 	}
 	s.CitationThreshold = float64(s1.CitationThreshold)
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaCheckRequirementRequest: Request for
+// CheckRequirement method.
+type GoogleCloudDiscoveryengineV1alphaCheckRequirementRequest struct {
+	// RequirementType: A Requirement.type specifying the requirement to check.
+	RequirementType string `json:"requirementType,omitempty"`
+	// Resources: The resources to be checked for this requirement.
+	Resources []*GoogleApiMonitoredResource `json:"resources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequirementType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequirementType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaCheckRequirementRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCheckRequirementRequest
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaCheckRequirementResponse: Response for
+// CheckRequirement method.
+type GoogleCloudDiscoveryengineV1alphaCheckRequirementResponse struct {
+	// MetricResults: Metric results.
+	MetricResults []*GoogleCloudDiscoveryengineV1alphaCheckRequirementResponseMetricQueryResult `json:"metricResults,omitempty"`
+	// OldestMetricTimestamp: Timestamp of the oldest calculated metric (i.e. the
+	// most stale metric). Indicates that the `requirement_result` may not
+	// accurately reflect any Event and Product Catalog updates performed after
+	// this time.
+	OldestMetricTimestamp string `json:"oldestMetricTimestamp,omitempty"`
+	// Requirement: Requirement definition.
+	Requirement *GoogleCloudDiscoveryengineV1alphaRequirement `json:"requirement,omitempty"`
+	// RequirementCondition: The condition for evaluating the requirement result.
+	RequirementCondition *GoogleTypeExpr `json:"requirementCondition,omitempty"`
+	// RequirementResult: Requirement result, e.g. pass or fail.
+	//
+	// Possible values:
+	//   "UNKNOWN" - The requirement is unknown.
+	//   "SUCCESS" - The requirement check is passed.
+	//   "FAILURE" - The requirement check fails to meet at least one blocking
+	// threshold.
+	//   "WARNING" - The requirement check fails at least one warning threshold,
+	// but passes all blocking thresholds.
+	RequirementResult string `json:"requirementResult,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MetricResults") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MetricResults") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaCheckRequirementResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCheckRequirementResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaCheckRequirementResponseMetricQueryResult:
+// Metric result. The metric are in the requirement_condition.
+type GoogleCloudDiscoveryengineV1alphaCheckRequirementResponseMetricQueryResult struct {
+	// MetricType: Type identifier of the metric corresponding to this query
+	// result.
+	MetricType string `json:"metricType,omitempty"`
+	// Name: This metric query name is mapping to variables in the
+	// requirement_condition.
+	Name string `json:"name,omitempty"`
+	// Timestamp: Time corresponding to when this metric value was calculated.
+	Timestamp string `json:"timestamp,omitempty"`
+	// Unit: The unit in which this metric is reported. Follows The Unified Code
+	// for Units of Measure (https://unitsofmeasure.org/ucum.html) standard.
+	Unit string `json:"unit,omitempty"`
+	// Value: Value of the metric query.
+	Value *GoogleMonitoringV3TypedValue `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MetricType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MetricType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaCheckRequirementResponseMetricQueryResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCheckRequirementResponseMetricQueryResult
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaChunk: Chunk captures all raw metadata
@@ -9158,6 +9663,166 @@ func (s *GoogleCloudDiscoveryengineV1alphaReportConsentChangeRequest) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaRequirement: A data requirement.
+type GoogleCloudDiscoveryengineV1alphaRequirement struct {
+	// Condition: The condition for evaluating the requirement result. Variables in
+	// the expression should be provided by `metrics_bindings` or
+	// `threshold_bindings`. Where `metrics_bindings` are used for computed metrics
+	// and `threshold_bindings` are used to define thresholds for corresponding
+	// `metric_bindings`.
+	Condition *GoogleTypeExpr `json:"condition,omitempty"`
+	// Description: The description of the requirement.
+	Description string `json:"description,omitempty"`
+	// DisplayName: The name of the requirement.
+	DisplayName string `json:"displayName,omitempty"`
+	// MetricBindings: A list of the metric bindings to be used in `condition`.
+	MetricBindings []*GoogleCloudDiscoveryengineV1alphaRequirementMetricBinding `json:"metricBindings,omitempty"`
+	// ThresholdBindings: A list of threshold bindings to be used in `condition`.
+	ThresholdBindings []*GoogleCloudDiscoveryengineV1alphaRequirementThresholdBinding `json:"thresholdBindings,omitempty"`
+	// Type: The requirement type, used as an identifier. Must be unique. The type
+	// should prefix with service name to avoid possible collision. It's encoraged
+	// to use natural hierarchical grouping for similar requirements. Examples: *
+	// `library.googleapis.com/books/min_available_books` *
+	// `discoveryengine.googleapis.com/media_rec/recommended_for_you/conversion_rate
+	// `
+	Type string `json:"type,omitempty"`
+	// ViolationSamplesBindings: A list of the metric bindings to be used in
+	// `condition`.
+	ViolationSamplesBindings []*GoogleCloudDiscoveryengineV1alphaRequirementViolationSamplesBinding `json:"violationSamplesBindings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRequirement) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRequirement
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRequirementMetricBinding: Specifies a
+// metrics query and bind its result to a variable which will be used in the
+// `condition`.
+type GoogleCloudDiscoveryengineV1alphaRequirementMetricBinding struct {
+	// Category: The category of the metric's target resource. Example: "Events"
+	Category string `json:"category,omitempty"`
+	// Description: Human readable description of the corresponding metric filter.
+	Description string `json:"description,omitempty"`
+	// MetricFilter: The filter string used for metrics query. Example:
+	// "metric.type = \"discoveryengine.googleapis.com/events/day_count\" AND "
+	// "metric.conditions.time_range = \"NINETY_DAYS\""
+	MetricFilter string `json:"metricFilter,omitempty"`
+	// ResourceType: The resource being monitored for the metric.
+	ResourceType string `json:"resourceType,omitempty"`
+	// VariableId: The variable id to be referenced in `condition`.
+	VariableId string `json:"variableId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRequirementMetricBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRequirementMetricBinding
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRequirementThresholdBinding: Specifies a
+// multi-level threshold to apply to apply to a `metric_bindings` in the
+// `condition` CEL expression.
+type GoogleCloudDiscoveryengineV1alphaRequirementThresholdBinding struct {
+	// BlockingThreshold: Threshold to trigger a blocking failure. If not met, the
+	// requirement will evaluate as a `FAILURE`.
+	BlockingThreshold float64 `json:"blockingThreshold,omitempty"`
+	// Description: Human readable description of the corresponding threshold and
+	// sub-requirement.
+	Description string `json:"description,omitempty"`
+	// VariableId: The variable id to be referenced in `condition`. Must be unique
+	// across all `metric_bindings` and `threshold_bindings`.
+	VariableId string `json:"variableId,omitempty"`
+	// WarningThreshold: Threshold to trigger a warning. If not met, the
+	// requirement will evaluate as a `WARNING`.
+	WarningThreshold float64 `json:"warningThreshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BlockingThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlockingThreshold") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRequirementThresholdBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRequirementThresholdBinding
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRequirementThresholdBinding) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRequirementThresholdBinding
+	var s1 struct {
+		BlockingThreshold gensupport.JSONFloat64 `json:"blockingThreshold"`
+		WarningThreshold  gensupport.JSONFloat64 `json:"warningThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BlockingThreshold = float64(s1.BlockingThreshold)
+	s.WarningThreshold = float64(s1.WarningThreshold)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaRequirementViolationSamplesBinding:
+// Specifies a samples query and bind its result to a variable which will be
+// used in the `condition`.
+type GoogleCloudDiscoveryengineV1alphaRequirementViolationSamplesBinding struct {
+	// Description: Description of this sample binding. Used by the UI to render
+	// user friendly descriptions for each requirement condition. Should be less
+	// than 128 characters long.
+	Description string `json:"description,omitempty"`
+	// SampleFilter: The filter string used for samples query. Example:
+	// "sample.type = \"retail.googleapis.com/user_event\" AND "
+	// "sample.labels.event_type = \"PURCHASE\" "
+	SampleFilter string `json:"sampleFilter,omitempty"`
+	// VariableId: The variable id to be referenced in `condition`.
+	VariableId string `json:"variableId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRequirementViolationSamplesBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRequirementViolationSamplesBinding
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaResumeEngineRequest: Request for resuming
 // training of an engine.
 type GoogleCloudDiscoveryengineV1alphaResumeEngineRequest struct {
@@ -13718,6 +14383,51 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleMonitoringV3TypedValue: A single strongly-typed value.
+type GoogleMonitoringV3TypedValue struct {
+	// BoolValue: A Boolean value: `true` or `false`.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// DistributionValue: A distribution value.
+	DistributionValue *GoogleApiDistribution `json:"distributionValue,omitempty"`
+	// DoubleValue: A 64-bit double-precision floating-point number. Its magnitude
+	// is approximately ±10±300 and it has 16 significant digits of precision.
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+	// Int64Value: A 64-bit integer. Its range is approximately ±9.2x1018.
+	Int64Value int64 `json:"int64Value,omitempty,string"`
+	// StringValue: A variable-length string value.
+	StringValue string `json:"stringValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMonitoringV3TypedValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMonitoringV3TypedValue
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleMonitoringV3TypedValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleMonitoringV3TypedValue
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	return nil
+}
+
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
 // defining duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For instance:
@@ -13797,6 +14507,54 @@ type GoogleTypeDate struct {
 
 func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeExpr: Represents a textual expression in the Common Expression
+// Language (CEL) syntax. CEL is a C-like expression language. The syntax and
+// semantics of CEL are documented at https://github.com/google/cel-spec.
+// Example (Comparison): title: "Summary size limit" description: "Determines
+// if a summary is less than 100 chars" expression: "document.summary.size() <
+// 100" Example (Equality): title: "Requestor is owner" description:
+// "Determines if requestor is the document owner" expression: "document.owner
+// == request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly visible"
+// expression: "document.type != 'private' && document.type != 'internal'"
+// Example (Data Manipulation): title: "Notification string" description:
+// "Create a notification string with a timestamp." expression: "'New message
+// received at ' + string(document.create_time)" The exact variables and
+// functions that may be referenced within an expression are determined by the
+// service that evaluates it. See the service documentation for additional
+// information.
+type GoogleTypeExpr struct {
+	// Description: Optional. Description of the expression. This is a longer text
+	// which describes the expression, e.g. when hovered over it in a UI.
+	Description string `json:"description,omitempty"`
+	// Expression: Textual representation of an expression in Common Expression
+	// Language syntax.
+	Expression string `json:"expression,omitempty"`
+	// Location: Optional. String indicating the location of the expression for
+	// error reporting, e.g. a file name and a position in the file.
+	Location string `json:"location,omitempty"`
+	// Title: Optional. Title for the expression, i.e. a short string describing
+	// its purpose. This can be used e.g. in UIs which allow to enter the
+	// expression.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeExpr
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -37070,6 +37828,109 @@ func (c *ProjectsLocationsRankingConfigsRankCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 }
 
+type ProjectsLocationsRequirementsCheckRequirementCall struct {
+	s                                                        *Service
+	location                                                 string
+	googleclouddiscoveryenginev1alphacheckrequirementrequest *GoogleCloudDiscoveryengineV1alphaCheckRequirementRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// CheckRequirement: Check a particular requirement.
+//
+//   - location: Full resource name of the location. Format
+//     `projects/{project_number_or_id}/locations/{location}`.
+func (r *ProjectsLocationsRequirementsService) CheckRequirement(location string, googleclouddiscoveryenginev1alphacheckrequirementrequest *GoogleCloudDiscoveryengineV1alphaCheckRequirementRequest) *ProjectsLocationsRequirementsCheckRequirementCall {
+	c := &ProjectsLocationsRequirementsCheckRequirementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	c.googleclouddiscoveryenginev1alphacheckrequirementrequest = googleclouddiscoveryenginev1alphacheckrequirementrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRequirementsCheckRequirementCall) Fields(s ...googleapi.Field) *ProjectsLocationsRequirementsCheckRequirementCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRequirementsCheckRequirementCall) Context(ctx context.Context) *ProjectsLocationsRequirementsCheckRequirementCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRequirementsCheckRequirementCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRequirementsCheckRequirementCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphacheckrequirementrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+location}/requirements:checkRequirement")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.requirements.checkRequirement" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaCheckRequirementResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRequirementsCheckRequirementCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaCheckRequirementResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaCheckRequirementResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsSampleQuerySetsOperationsGetCall struct {
 	s            *Service
 	name         string
@@ -37168,6 +38029,143 @@ func (c *ProjectsLocationsSampleQuerySetsOperationsGetCall) Do(opts ...googleapi
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsUserEventsCollectCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Collect: Writes a single user event from the browser. This uses a GET
+// request to due to browser restriction of POST-ing to a third-party domain.
+// This method is used only by the Discovery Engine API JavaScript pixel and
+// Google Tag Manager. Users should not call this method directly.
+//
+//   - parent: The parent DataStore resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store}`.
+func (r *ProjectsLocationsUserEventsService) Collect(parent string) *ProjectsLocationsUserEventsCollectCall {
+	c := &ProjectsLocationsUserEventsCollectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Ets sets the optional parameter "ets": The event timestamp in milliseconds.
+// This prevents browser caching of otherwise identical get requests. The name
+// is abbreviated to reduce the payload bytes.
+func (c *ProjectsLocationsUserEventsCollectCall) Ets(ets int64) *ProjectsLocationsUserEventsCollectCall {
+	c.urlParams_.Set("ets", fmt.Sprint(ets))
+	return c
+}
+
+// Uri sets the optional parameter "uri": The URL including cgi-parameters but
+// excluding the hash fragment with a length limit of 5,000 characters. This is
+// often more useful than the referer URL, because many browsers only send the
+// domain for third-party requests.
+func (c *ProjectsLocationsUserEventsCollectCall) Uri(uri string) *ProjectsLocationsUserEventsCollectCall {
+	c.urlParams_.Set("uri", uri)
+	return c
+}
+
+// UserEvent sets the optional parameter "userEvent": Required. URL encoded
+// UserEvent proto with a length limit of 2,000,000 characters.
+func (c *ProjectsLocationsUserEventsCollectCall) UserEvent(userEvent string) *ProjectsLocationsUserEventsCollectCall {
+	c.urlParams_.Set("userEvent", userEvent)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUserEventsCollectCall) Fields(s ...googleapi.Field) *ProjectsLocationsUserEventsCollectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsUserEventsCollectCall) IfNoneMatch(entityTag string) *ProjectsLocationsUserEventsCollectCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUserEventsCollectCall) Context(ctx context.Context) *ProjectsLocationsUserEventsCollectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUserEventsCollectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUserEventsCollectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/userEvents:collect")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.userEvents.collect" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleApiHttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsUserEventsCollectCall) Do(opts ...googleapi.CallOption) (*GoogleApiHttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleApiHttpBody{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

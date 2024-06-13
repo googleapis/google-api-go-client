@@ -809,7 +809,8 @@ type ApplicationPolicy struct {
 	// time.
 	//   "AUTO_UPDATE_HIGH_PRIORITY" - The app is updated as soon as possible. No
 	// constraints are applied.The device is notified as soon as possible about a
-	// new update after it becomes available.
+	// new update after it becomes available.*NOTE:* Updates to apps with larger
+	// deployments across Android's ecosystem can take up to 24h.
 	AutoUpdateMode string `json:"autoUpdateMode,omitempty"`
 	// ConnectedWorkAndPersonalApp: Controls whether the app can communicate with
 	// itself across a device’s work and personal profiles, subject to user
@@ -5316,6 +5317,9 @@ type ProvisioningInfo struct {
 	// ApiLevel: The API level of the Android platform version running on the
 	// device.
 	ApiLevel int64 `json:"apiLevel,omitempty"`
+	// AuthenticatedUserEmail: The email address of the authenticated user (only
+	// present for Google Account provisioning method).
+	AuthenticatedUserEmail string `json:"authenticatedUserEmail,omitempty"`
 	// Brand: The brand of the device. For example, Google.
 	Brand string `json:"brand,omitempty"`
 	// Enterprise: The name of the enterprise in the form enterprises/{enterprise}.
@@ -8452,12 +8456,12 @@ type EnterprisesEnrollmentTokensGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an active, unexpired enrollment token. Only a partial view of
-// EnrollmentToken is returned: all the fields but name and
-// expiration_timestamp are empty. This method is meant to help manage active
-// enrollment tokens lifecycle. For security reasons, it's recommended to
-// delete active enrollment tokens as soon as they're not intended to be used
-// anymore.
+// Get: Gets an active, unexpired enrollment token. A partial view of the
+// enrollment token is returned. Only the following fields are populated: name,
+// expirationTimestamp, allowPersonalUsage, value, qrCode. This method is meant
+// to help manage active enrollment tokens lifecycle. For security reasons,
+// it's recommended to delete active enrollment tokens as soon as they're not
+// intended to be used anymore.
 //
 //   - name: The name of the enrollment token in the form
 //     enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
@@ -8567,11 +8571,12 @@ type EnterprisesEnrollmentTokensListCall struct {
 }
 
 // List: Lists active, unexpired enrollment tokens for a given enterprise. The
-// list items contain only a partial view of EnrollmentToken: all the fields
-// but name and expiration_timestamp are empty. This method is meant to help
-// manage active enrollment tokens lifecycle. For security reasons, it's
-// recommended to delete active enrollment tokens as soon as they're not
-// intended to be used anymore.
+// list items contain only a partial view of EnrollmentToken object. Only the
+// following fields are populated: name, expirationTimestamp,
+// allowPersonalUsage, value, qrCode. This method is meant to help manage
+// active enrollment tokens lifecycle. For security reasons, it's recommended
+// to delete active enrollment tokens as soon as they're not intended to be
+// used anymore.
 //
 // - parent: The name of the enterprise in the form enterprises/{enterpriseId}.
 func (r *EnterprisesEnrollmentTokensService) List(parent string) *EnterprisesEnrollmentTokensListCall {

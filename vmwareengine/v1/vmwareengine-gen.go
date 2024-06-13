@@ -1033,6 +1033,7 @@ type Hcx struct {
 	// value.
 	//   "ACTIVE" - The appliance is operational and can be used.
 	//   "CREATING" - The appliance is being deployed.
+	//   "ACTIVATING" - The appliance is being activated.
 	State string `json:"state,omitempty"`
 	// Version: Version of the appliance.
 	Version string `json:"version,omitempty"`
@@ -2026,6 +2027,8 @@ type NetworkPeering struct {
 	// reverse peering on the VPC network associated with the third-party service.
 	//   "DELL_POWERSCALE" - Peering connection used for connecting to Dell
 	// PowerScale Filers
+	//   "GOOGLE_CLOUD_NETAPP_VOLUMES" - Peering connection used for connecting to
+	// Google Cloud NetApp Volumes.
 	PeerNetworkType string `json:"peerNetworkType,omitempty"`
 	// State: Output only. State of the network peering. This field has a value of
 	// 'ACTIVE' when there's a matching configuration in the peer network. New

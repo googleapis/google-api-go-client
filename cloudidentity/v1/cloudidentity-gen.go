@@ -302,6 +302,27 @@ type InboundSsoAssignmentsService struct {
 // AddIdpCredentialOperationMetadata: LRO response metadata for
 // InboundSamlSsoProfilesService.AddIdpCredential.
 type AddIdpCredentialOperationMetadata struct {
+	// State: State of this Operation Will be "awaiting-multi-party-approval" when
+	// the operation is deferred due to the target customer having enabled
+	// Multi-party approval for sensitive actions
+	// (https://support.google.com/a/answer/13790448).
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddIdpCredentialOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AddIdpCredentialOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AddIdpCredentialRequest: The request for creating an IdpCredential with its
@@ -369,6 +390,27 @@ type CreateGroupMetadata struct {
 // CreateInboundSamlSsoProfileOperationMetadata: LRO response metadata for
 // InboundSamlSsoProfilesService.CreateInboundSamlSsoProfile.
 type CreateInboundSamlSsoProfileOperationMetadata struct {
+	// State: State of this Operation Will be "awaiting-multi-party-approval" when
+	// the operation is deferred due to the target customer having enabled
+	// Multi-party approval for sensitive actions
+	// (https://support.google.com/a/answer/13790448).
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateInboundSamlSsoProfileOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateInboundSamlSsoProfileOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateInboundSsoAssignmentOperationMetadata: LRO response metadata for
@@ -3036,6 +3078,27 @@ type UpdateGroupMetadata struct {
 // UpdateInboundSamlSsoProfileOperationMetadata: LRO response metadata for
 // InboundSamlSsoProfilesService.UpdateInboundSamlSsoProfile.
 type UpdateInboundSamlSsoProfileOperationMetadata struct {
+	// State: State of this Operation Will be "awaiting-multi-party-approval" when
+	// the operation is deferred due to the target customer having enabled
+	// Multi-party approval for sensitive actions
+	// (https://support.google.com/a/answer/13790448).
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateInboundSamlSsoProfileOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateInboundSamlSsoProfileOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInboundSsoAssignmentOperationMetadata: LRO response metadata for
@@ -8517,7 +8580,11 @@ type InboundSamlSsoProfilesCreateCall struct {
 	header_               http.Header
 }
 
-// Create: Creates an InboundSamlSsoProfile for a customer.
+// Create: Creates an InboundSamlSsoProfile for a customer. When the target
+// customer has enabled Multi-party approval for sensitive actions
+// (https://support.google.com/a/answer/13790448), the `Operation` in the
+// response will have "done": false`, it will not have a response, and the
+// metadata will have "state": "awaiting-multi-party-approval".
 func (r *InboundSamlSsoProfilesService) Create(inboundsamlssoprofile *InboundSamlSsoProfile) *InboundSamlSsoProfilesCreateCall {
 	c := &InboundSamlSsoProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inboundsamlssoprofile = inboundsamlssoprofile
@@ -8975,7 +9042,11 @@ type InboundSamlSsoProfilesPatchCall struct {
 	header_               http.Header
 }
 
-// Patch: Updates an InboundSamlSsoProfile.
+// Patch: Updates an InboundSamlSsoProfile. When the target customer has
+// enabled Multi-party approval for sensitive actions
+// (https://support.google.com/a/answer/13790448), the `Operation` in the
+// response will have "done": false`, it will not have a response, and the
+// metadata will have "state": "awaiting-multi-party-approval".
 //
 //   - name: Output only. Resource name
 //     (https://cloud.google.com/apis/design/resource_names) of the SAML SSO
@@ -9085,7 +9156,11 @@ type InboundSamlSsoProfilesIdpCredentialsAddCall struct {
 	header_                 http.Header
 }
 
-// Add: Adds an IdpCredential. Up to 2 credentials are allowed.
+// Add: Adds an IdpCredential. Up to 2 credentials are allowed. When the target
+// customer has enabled Multi-party approval for sensitive actions
+// (https://support.google.com/a/answer/13790448), the `Operation` in the
+// response will have "done": false`, it will not have a response, and the
+// metadata will have "state": "awaiting-multi-party-approval".
 //
 //   - parent: The InboundSamlSsoProfile that owns the IdpCredential. Format:
 //     `inboundSamlSsoProfiles/{sso_profile_id}`.

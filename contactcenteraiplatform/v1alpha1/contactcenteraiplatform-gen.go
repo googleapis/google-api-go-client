@@ -233,8 +233,12 @@ type CancelOperationRequest struct {
 type Component struct {
 	// Name: Name of the component.
 	Name string `json:"name,omitempty"`
-	// ServiceAttachments: Associated service attachments.
-	ServiceAttachments []*ServiceAttachment `json:"serviceAttachments,omitempty"`
+	// ServiceAttachmentNames: Associated service attachments. The service
+	// attachment names that will be used for sending private traffic to the CCAIP
+	// tenant project. Example service attachment name:
+	// "projects/${TENANT_PROJECT_ID}/regions/${REGION}/serviceAttachments/ingress-d
+	// efault".
+	ServiceAttachmentNames []string `json:"serviceAttachmentNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -716,6 +720,8 @@ type PrivateAccess struct {
 	// IngressSettings: List of ingress components that should not be accessed via
 	// the Internet. For more information see go/ccaip-private-path-v2.
 	IngressSettings []*Component `json:"ingressSettings,omitempty"`
+	// PscSetting: Private service connect settings.
+	PscSetting *PscSetting `json:"pscSetting,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EgressSettings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -731,6 +737,30 @@ type PrivateAccess struct {
 
 func (s *PrivateAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateAccess
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// PscSetting: Private service connect settings.
+type PscSetting struct {
+	// AllowedConsumerProjectIds: The list of project ids that are allowed to send
+	// traffic to the service attachment. This field should be filled only for the
+	// ingress components.
+	AllowedConsumerProjectIds []string `json:"allowedConsumerProjectIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedConsumerProjectIds")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedConsumerProjectIds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *PscSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod PscSetting
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -894,35 +924,6 @@ type SAMLParams struct {
 
 func (s *SAMLParams) MarshalJSON() ([]byte, error) {
 	type NoMethod SAMLParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// ServiceAttachment: Container for the VPC-SC networking configurations.
-type ServiceAttachment struct {
-	// AllowedProjectIds: The list of project ids that are allowed to send traffic
-	// to the service attachment. This field should be filled only for the ingress
-	// service attachments.
-	AllowedProjectIds []string `json:"allowedProjectIds,omitempty"`
-	// Name: The service attachment name that will be used for sending private
-	// traffic to the CCAIP tenant project. Example:
-	// "projects/${TENANT_PROJECT_ID}/regions/${REGION}/serviceAttachments/ingress-d
-	// efault".
-	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AllowedProjectIds") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AllowedProjectIds") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *ServiceAttachment) MarshalJSON() ([]byte, error) {
-	type NoMethod ServiceAttachment
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

@@ -313,6 +313,19 @@ type AccessApprovalSettings struct {
 	// personnel, but can be overridden if said personnel deems necessary. The
 	// approver ultimately can set the expiration at approval time.
 	PreferredRequestExpirationDays int64 `json:"preferredRequestExpirationDays,omitempty"`
+	// RequestScopeMaxWidthPreference: Optional. A setting to indicate the maximum
+	// width of an Access Approval request.
+	//
+	// Possible values:
+	//   "REQUEST_SCOPE_MAX_WIDTH_PREFERENCE_UNSPECIFIED" - Default value for
+	// proto, shouldn't be used.
+	//   "ORGANIZATION" - This is the widest scope possible. It means the customer
+	// has no scope restriction when it comes to Access Approval requests.
+	//   "FOLDER" - Customer allows the scope of Access Approval requests as broad
+	// as the Folder level.
+	//   "PROJECT" - Customer allows the scope of Access Approval requests as broad
+	// as the Project level.
+	RequestScopeMaxWidthPreference string `json:"requestScopeMaxWidthPreference,omitempty"`
 	// RequireCustomerVisibleJustification: Optional. A setting to require approval
 	// request justifications to be customer visible.
 	RequireCustomerVisibleJustification bool `json:"requireCustomerVisibleJustification,omitempty"`

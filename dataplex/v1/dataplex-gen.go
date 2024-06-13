@@ -4137,6 +4137,11 @@ type GoogleCloudDataplexV1EntrySource struct {
 	// Labels: User-defined labels. The maximum size of keys and values is 128
 	// characters each.
 	Labels map[string]string `json:"labels,omitempty"`
+	// Location: Output only. Location of the resource in the source system. Entry
+	// will be searchable by this location. By default, this should match the
+	// location of the EntryGroup containing this entry. A different value allows
+	// capturing source location for data external to GCP.
+	Location string `json:"location,omitempty"`
 	// Platform: The platform containing the source system. The maximum size of the
 	// field is 64 characters.
 	Platform string `json:"platform,omitempty"`
@@ -4528,15 +4533,16 @@ func (s *GoogleCloudDataplexV1EnvironmentSessionStatus) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1GenerateDataQualityRulesRequest: Generate recommended
-// DataQualityRules request.
+// GoogleCloudDataplexV1GenerateDataQualityRulesRequest: Request details for
+// generating data quality rule recommendations.
 type GoogleCloudDataplexV1GenerateDataQualityRulesRequest struct {
 }
 
-// GoogleCloudDataplexV1GenerateDataQualityRulesResponse: Generate recommended
-// DataQualityRules response.
+// GoogleCloudDataplexV1GenerateDataQualityRulesResponse: Response details for
+// data quality rule recommendations.
 type GoogleCloudDataplexV1GenerateDataQualityRulesResponse struct {
-	// Rule: Generated recommended {@link DataQualityRule}s.
+	// Rule: The data quality rules that Dataplex generates based on the results of
+	// a data profiling scan.
 	Rule []*GoogleCloudDataplexV1DataQualityRule `json:"rule,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -10221,12 +10227,14 @@ type ProjectsLocationsDataScansGenerateDataQualityRulesCall struct {
 	header_                                              http.Header
 }
 
-// GenerateDataQualityRules: Generates recommended DataQualityRule from a data
-// profiling DataScan.
+// GenerateDataQualityRules: Generates recommended data quality rules based on
+// the results of a data profiling scan.Use the recommendations to build rules
+// for a data quality scan.
 //
-//   - name: The name should be either * the name of a datascan with at least one
-//     successful completed data profiling job, or * the name of a successful
-//     completed data profiling datascan job.
+//   - name: The name must be one of the following: The name of a data scan with
+//     at least one successful, completed data profiling job The name of a
+//     successful, completed data profiling job (a data scan job where the job
+//     type is data profiling).
 func (r *ProjectsLocationsDataScansService) GenerateDataQualityRules(name string, googleclouddataplexv1generatedataqualityrulesrequest *GoogleCloudDataplexV1GenerateDataQualityRulesRequest) *ProjectsLocationsDataScansGenerateDataQualityRulesCall {
 	c := &ProjectsLocationsDataScansGenerateDataQualityRulesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11179,12 +11187,14 @@ type ProjectsLocationsDataScansJobsGenerateDataQualityRulesCall struct {
 	header_                                              http.Header
 }
 
-// GenerateDataQualityRules: Generates recommended DataQualityRule from a data
-// profiling DataScan.
+// GenerateDataQualityRules: Generates recommended data quality rules based on
+// the results of a data profiling scan.Use the recommendations to build rules
+// for a data quality scan.
 //
-//   - name: The name should be either * the name of a datascan with at least one
-//     successful completed data profiling job, or * the name of a successful
-//     completed data profiling datascan job.
+//   - name: The name must be one of the following: The name of a data scan with
+//     at least one successful, completed data profiling job The name of a
+//     successful, completed data profiling job (a data scan job where the job
+//     type is data profiling).
 func (r *ProjectsLocationsDataScansJobsService) GenerateDataQualityRules(name string, googleclouddataplexv1generatedataqualityrulesrequest *GoogleCloudDataplexV1GenerateDataQualityRulesRequest) *ProjectsLocationsDataScansJobsGenerateDataQualityRulesCall {
 	c := &ProjectsLocationsDataScansJobsGenerateDataQualityRulesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

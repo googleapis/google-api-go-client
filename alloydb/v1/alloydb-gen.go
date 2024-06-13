@@ -2486,12 +2486,27 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// violates CIS GCP Foundation 1.1.
 	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_0" - Represents if a resource
 	// violates CIS GCP Foundation 1.0.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_CONTROLS_V8_0" - Represents if a resource
+	// violates CIS Controls 8.0.
 	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53" - Represents if a resource violates
 	// NIST 800-53.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53_R5" - Represents if a resource violates
+	// NIST 800-53 R5.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_CYBERSECURITY_FRAMEWORK_V1_0" - Represents if a
+	// resource violates NIST Cybersecurity Framework 1.0.
 	//   "SIGNAL_TYPE_VIOLATES_ISO_27001" - Represents if a resource violates
 	// ISO-27001.
+	//   "SIGNAL_TYPE_VIOLATES_ISO_27001_V2022" - Represents if a resource violates
+	// ISO 27001 2022.
 	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V3_2_1" - Represents if a resource violates
 	// PCI-DSS v3.2.1.
+	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V4_0" - Represents if a resource violates
+	// PCI-DSS v4.0.
+	//   "SIGNAL_TYPE_VIOLATES_CLOUD_CONTROLS_MATRIX_V4" - Represents if a resource
+	// violates Cloud Controls Matrix v4.0.
+	//   "SIGNAL_TYPE_VIOLATES_HIPAA" - Represents if a resource violates HIPAA.
+	//   "SIGNAL_TYPE_VIOLATES_SOC2_V2017" - Represents if a resource violates SOC2
+	// v2017.
 	//   "SIGNAL_TYPE_LOGS_NOT_OPTIMIZED_FOR_TROUBLESHOOTING" - Represents if
 	// log_checkpoints database flag for a Cloud SQL for PostgreSQL instance is not
 	// set to on.
@@ -2780,9 +2795,6 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	UpdationTime string `json:"updationTime,omitempty"`
 	// UserLabelSet: User-provided labels associated with the resource
 	UserLabelSet *StorageDatabasecenterPartnerapiV1mainUserLabels `json:"userLabelSet,omitempty"`
-	// UserLabels: User-provided labels, represented as a dictionary where each
-	// label is a single key value pair.
-	UserLabels map[string]string `json:"userLabels,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AvailabilityConfiguration")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2885,12 +2897,27 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	// violates CIS GCP Foundation 1.1.
 	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_0" - Represents if a resource
 	// violates CIS GCP Foundation 1.0.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_CONTROLS_V8_0" - Represents if a resource
+	// violates CIS Controls 8.0.
 	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53" - Represents if a resource violates
 	// NIST 800-53.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53_R5" - Represents if a resource violates
+	// NIST 800-53 R5.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_CYBERSECURITY_FRAMEWORK_V1_0" - Represents if a
+	// resource violates NIST Cybersecurity Framework 1.0.
 	//   "SIGNAL_TYPE_VIOLATES_ISO_27001" - Represents if a resource violates
 	// ISO-27001.
+	//   "SIGNAL_TYPE_VIOLATES_ISO_27001_V2022" - Represents if a resource violates
+	// ISO 27001 2022.
 	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V3_2_1" - Represents if a resource violates
 	// PCI-DSS v3.2.1.
+	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V4_0" - Represents if a resource violates
+	// PCI-DSS v4.0.
+	//   "SIGNAL_TYPE_VIOLATES_CLOUD_CONTROLS_MATRIX_V4" - Represents if a resource
+	// violates Cloud Controls Matrix v4.0.
+	//   "SIGNAL_TYPE_VIOLATES_HIPAA" - Represents if a resource violates HIPAA.
+	//   "SIGNAL_TYPE_VIOLATES_SOC2_V2017" - Represents if a resource violates SOC2
+	// v2017.
 	//   "SIGNAL_TYPE_LOGS_NOT_OPTIMIZED_FOR_TROUBLESHOOTING" - Represents if
 	// log_checkpoints database flag for a Cloud SQL for PostgreSQL instance is not
 	// set to on.
@@ -3080,9 +3107,11 @@ func (s *StorageDatabasecenterPartnerapiV1mainEntitlement) MarshalJSON() ([]byte
 // MachineConfiguration describes the configuration of a machine specific to
 // Database Resource.
 type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
-	// CpuCount: The number of CPUs.
+	// CpuCount: The number of CPUs. TODO(b/342344482, b/342346271) add proto
+	// validations again after bug fix.
 	CpuCount int64 `json:"cpuCount,omitempty"`
-	// MemorySizeInBytes: Memory size in bytes.
+	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482, b/342346271) add
+	// proto validations again after bug fix.
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3103,30 +3132,37 @@ func (s *StorageDatabasecenterPartnerapiV1mainMachineConfiguration) MarshalJSON(
 }
 
 type StorageDatabasecenterPartnerapiV1mainObservabilityMetricData struct {
-	// MetricTimestamp: Required. The timestamp of the metric value.
-	MetricTimestamp string `json:"metricTimestamp,omitempty"`
+	// AggregationType: Required. Type of aggregation performed on the metric.
+	//
+	// Possible values:
+	//   "AGGREGATION_TYPE_UNSPECIFIED" - Unspecified aggregation type.
+	//   "MAXIMUM" - Maximum aggregation type.
+	AggregationType string `json:"aggregationType,omitempty"`
 	// MetricType: Required. Type of metric like CPU, Memory, etc.
 	//
 	// Possible values:
-	//   "METRIC_TYPE_UNSPECIFIED"
-	//   "INSTANCE_PEAK_CPU_UTILISATION" - Peak CPU utilization for a DB instance
-	// as a fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases)
-	// List will keep increasing, e.g. PEAK_MEMORY_UTILISATION,
-	// NUMBER_OF_CONNECTIONS, SUCCESS_RATIO_FOR_QUERIES, etc.
+	//   "METRIC_TYPE_UNSPECIFIED" - Unspecified metric type.
+	//   "CPU_UTILIZATION" - CPU utilization for a resource. The value is a
+	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
+	//   "MEMORY_UTILIZATION" - Memory utilization for a resource. The value is a
+	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
+	//   "NETWORK_CONNECTIONS" - Number of network connections for a resource.
 	MetricType string `json:"metricType,omitempty"`
+	// ObservationTime: Required. The time the metric value was observed.
+	ObservationTime string `json:"observationTime,omitempty"`
 	// ResourceName: Required. Database resource name associated with the signal.
 	// Resource name to follow CAIS resource_name format as noted here
 	// go/condor-common-datamodel
 	ResourceName string `json:"resourceName,omitempty"`
 	// Value: Required. Value of the metric type.
-	Value float64 `json:"value,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MetricTimestamp") to
+	Value *StorageDatabasecenterProtoCommonTypedValue `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AggregationType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MetricTimestamp") to include in
+	// NullFields is a list of field names (e.g. "AggregationType") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3136,20 +3172,6 @@ type StorageDatabasecenterPartnerapiV1mainObservabilityMetricData struct {
 func (s *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainObservabilityMetricData
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData) UnmarshalJSON(data []byte) error {
-	type NoMethod StorageDatabasecenterPartnerapiV1mainObservabilityMetricData
-	var s1 struct {
-		Value gensupport.JSONFloat64 `json:"value"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Value = float64(s1.Value)
-	return nil
 }
 
 // StorageDatabasecenterPartnerapiV1mainOperationError: An error that occurred
@@ -3310,6 +3332,49 @@ type StorageDatabasecenterProtoCommonProduct struct {
 func (s *StorageDatabasecenterProtoCommonProduct) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterProtoCommonProduct
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// StorageDatabasecenterProtoCommonTypedValue: TypedValue represents the value
+// of a metric type. It can either be a double, an int64, a string or a bool.
+type StorageDatabasecenterProtoCommonTypedValue struct {
+	// BoolValue: For boolean value
+	BoolValue bool `json:"boolValue,omitempty"`
+	// DoubleValue: For double value
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+	// Int64Value: For integer value
+	Int64Value int64 `json:"int64Value,omitempty,string"`
+	// StringValue: For string value
+	StringValue string `json:"stringValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterProtoCommonTypedValue) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterProtoCommonTypedValue
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *StorageDatabasecenterProtoCommonTypedValue) UnmarshalJSON(data []byte) error {
+	type NoMethod StorageDatabasecenterProtoCommonTypedValue
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	return nil
 }
 
 // StringRestrictions: Restrictions on STRING type values

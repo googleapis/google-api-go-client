@@ -2642,7 +2642,7 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	// Description: Description of the `AccessLevel` and its use. Does not affect
 	// behavior.
 	Description string `json:"description,omitempty"`
-	// Name: Resource name for the `AccessLevel`. Format:
+	// Name: Identifier. Resource name for the `AccessLevel`. Format:
 	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
 	// `access_level` component must begin with a letter, followed by alphanumeric
 	// characters or `_`. Its maximum length is 50 characters. After you create an
@@ -2677,10 +2677,10 @@ func (s *GoogleIdentityAccesscontextmanagerV1AccessLevel) MarshalJSON() ([]byte,
 type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// Etag: Output only. An opaque identifier for the current version of the
 	// `AccessPolicy`. This will always be a strongly validated etag, meaning that
-	// two Access Polices will be identical if and only if their etags are
+	// two Access Policies will be identical if and only if their etags are
 	// identical. Clients should not expect this to be in any specific format.
 	Etag string `json:"etag,omitempty"`
-	// Name: Output only. Resource name of the `AccessPolicy`. Format:
+	// Name: Output only. Identifier. Resource name of the `AccessPolicy`. Format:
 	// `accessPolicies/{access_policy}`
 	Name string `json:"name,omitempty"`
 	// Parent: Required. The parent of this `AccessPolicy` in the Cloud Resource
@@ -3344,7 +3344,7 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// Description: Description of the `ServicePerimeter` and its use. Does not
 	// affect behavior.
 	Description string `json:"description,omitempty"`
-	// Name: Resource name for the `ServicePerimeter`. Format:
+	// Name: Identifier. Resource name for the `ServicePerimeter`. Format:
 	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The
 	// `service_perimeter` component must begin with a letter, followed by
 	// alphanumeric characters or `_`. After you create a `ServicePerimeter`, you
@@ -4944,7 +4944,7 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 }
 
 // ResourceSearchResult: A result of Resource Search, containing information of
-// a cloud resource. Next ID: 34
+// a cloud resource. Next ID: 36
 type ResourceSearchResult struct {
 	// AdditionalAttributes: The additional searchable attributes of this resource.
 	// The attributes may vary from one resource type to another. Examples:
@@ -5029,8 +5029,8 @@ type ResourceSearchResult struct {
 	// it. To search against the `kms_keys`: * Use a field query. Example:
 	// `kmsKeys:key` * Use a free text query. Example: `key`
 	KmsKeys []string `json:"kmsKeys,omitempty"`
-	// Labels: Labels associated with this resource. See Labelling and grouping
-	// Google Cloud resources
+	// Labels: User labels associated with this resource. See Labelling and
+	// grouping Google Cloud resources
 	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
 	// for more information. This field is available only when the resource's
 	// Protobuf contains it. To search against the `labels`: * Use a field query: -

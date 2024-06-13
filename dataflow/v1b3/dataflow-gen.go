@@ -3892,9 +3892,14 @@ type ParameterMetadata struct {
 	//   "BOOLEAN" - The parameter specifies a boolean input.
 	//   "ENUM" - The parameter specifies an enum input.
 	//   "NUMBER" - The parameter specifies a number input.
-	//   "KAFKA_TOPIC" - The parameter specifies the fully-qualified name of an
-	// Apache Kafka topic. This can be either a Google Managed Kafka topic or a
+	//   "KAFKA_TOPIC" - Deprecated. Please use KAFKA_READ_TOPIC instead.
+	//   "KAFKA_READ_TOPIC" - The parameter specifies the fully-qualified name of
+	// an Apache Kafka topic. This can be either a Google Managed Kafka topic or a
 	// non-managed Kafka topic.
+	//   "KAFKA_WRITE_TOPIC" - The parameter specifies the fully-qualified name of
+	// an Apache Kafka topic. This can be an existing Google Managed Kafka topic,
+	// the name for a new Google Managed Kafka topic, or an existing non-managed
+	// Kafka topic.
 	ParamType string `json:"paramType,omitempty"`
 	// ParentName: Optional. Specifies the name of the parent parameter. Used in
 	// conjunction with 'parent_trigger_values' to make this parameter conditional

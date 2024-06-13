@@ -2441,6 +2441,16 @@ type Step struct {
 	Image string `json:"image,omitempty"`
 	// Name: Name of the container specified as a DNS_LABEL.
 	Name string `json:"name,omitempty"`
+	// OnError: Optional. OnError defines the exiting behavior on error can be set
+	// to [ continue | stopAndFail ]
+	//
+	// Possible values:
+	//   "ON_ERROR_TYPE_UNSPECIFIED" - Default enum type; should not be used.
+	//   "STOP_AND_FAIL" - StopAndFail indicates exit if the step/task exits with
+	// non-zero exit code
+	//   "CONTINUE" - Continue indicates continue executing the rest of the
+	// steps/tasks irrespective of the exit code
+	OnError string `json:"onError,omitempty"`
 	// Params: Optional. Optional parameters passed to the StepAction.
 	Params []*Param `json:"params,omitempty"`
 	// Ref: Optional. Optional reference to a remote StepAction.

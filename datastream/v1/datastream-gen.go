@@ -549,6 +549,9 @@ type DiscoverConnectionProfileRequest struct {
 	// PostgresqlRdbms: PostgreSQL RDBMS to enrich with child data objects and
 	// metadata.
 	PostgresqlRdbms *PostgresqlRdbms `json:"postgresqlRdbms,omitempty"`
+	// SqlServerRdbms: SQLServer RDBMS to enrich with child data objects and
+	// metadata.
+	SqlServerRdbms *SqlServerRdbms `json:"sqlServerRdbms,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConnectionProfile") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -575,6 +578,8 @@ type DiscoverConnectionProfileResponse struct {
 	OracleRdbms *OracleRdbms `json:"oracleRdbms,omitempty"`
 	// PostgresqlRdbms: Enriched PostgreSQL RDBMS object.
 	PostgresqlRdbms *PostgresqlRdbms `json:"postgresqlRdbms,omitempty"`
+	// SqlServerRdbms: Enriched SQLServer RDBMS object.
+	SqlServerRdbms *SqlServerRdbms `json:"sqlServerRdbms,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

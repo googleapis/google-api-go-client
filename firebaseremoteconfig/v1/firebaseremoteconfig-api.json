@@ -125,7 +125,7 @@
               "type": "string"
             }
           },
-          "path": "v1/{+project}/remoteConfig",
+          "path": "v1/projects/{+project}/remoteConfig",
           "response": {
             "$ref": "RemoteConfig"
           }
@@ -152,7 +152,7 @@
               "type": "boolean"
             }
           },
-          "path": "v1/{+project}/remoteConfig",
+          "path": "v1/projects/{+project}/remoteConfig",
           "request": {
             "$ref": "RemoteConfig"
           },

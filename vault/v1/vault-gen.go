@@ -594,6 +594,9 @@ func (s *CloudStorageSink) MarshalJSON() ([]byte, error) {
 
 // CorpusQuery: Service-specific options for holds.
 type CorpusQuery struct {
+	// CalendarQuery: Service-specific options for Calendar holds. If set,
+	// **CorpusType** must be **CALENDAR**.
+	CalendarQuery *HeldCalendarQuery `json:"calendarQuery,omitempty"`
 	// DriveQuery: Service-specific options for Drive holds. If set, **CorpusType**
 	// must be **DRIVE**.
 	DriveQuery *HeldDriveQuery `json:"driveQuery,omitempty"`
@@ -609,13 +612,13 @@ type CorpusQuery struct {
 	// VoiceQuery: Service-specific options for Voice holds. If set, **CorpusType**
 	// must be **VOICE**.
 	VoiceQuery *HeldVoiceQuery `json:"voiceQuery,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DriveQuery") to
+	// ForceSendFields is a list of field names (e.g. "CalendarQuery") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DriveQuery") to include in API
+	// NullFields is a list of field names (e.g. "CalendarQuery") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1096,6 +1099,10 @@ type HeldAccount struct {
 func (s *HeldAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod HeldAccount
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// HeldCalendarQuery: Options for Calendar holds.
+type HeldCalendarQuery struct {
 }
 
 // HeldDriveQuery: Options for Drive holds.

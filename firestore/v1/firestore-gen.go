@@ -1860,21 +1860,20 @@ type GoogleFirestoreAdminV1Field struct {
 	// To explicitly remove all indexes for this field, specify an index config
 	// with an empty list of indexes.
 	IndexConfig *GoogleFirestoreAdminV1IndexConfig `json:"indexConfig,omitempty"`
-	// Name: Required. A field name of the form
+	// Name: Required. A field name of the form:
 	// `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_i
-	// d}/fields/{field_path}` A field path may be a simple field name, e.g.
-	// `address` or a path to fields within map_value , e.g. `address.city`, or a
+	// d}/fields/{field_path}` A field path can be a simple field name, e.g.
+	// `address` or a path to fields within `map_value` , e.g. `address.city`, or a
 	// special field path. The only valid special field is `*`, which represents
-	// any field. Field paths may be quoted using ` (backtick). The only character
-	// that needs to be escaped within a quoted field path is the backtick
+	// any field. Field paths can be quoted using `` ` `` (backtick). The only
+	// character that must be escaped within a quoted field path is the backtick
 	// character itself, escaped using a backslash. Special characters in field
-	// paths that must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as
-	// well as any ascii symbolic characters. Examples: (Note: Comments here are
-	// written in markdown syntax, so there is an additional layer of backticks to
-	// represent a code block) `\`address.city\`` represents a field named
-	// `address.city`, not the map key `city` in the field `address`. `\`*\``
-	// represents a field named `*`, not any field. A special `Field` contains the
-	// default indexing settings for all fields. This field's resource name is:
+	// paths that must be quoted include: `*`, `.`, `` ` `` (backtick), `[`, `]`,
+	// as well as any ascii symbolic characters. Examples: `` `address.city` ``
+	// represents a field named `address.city`, not the map key `city` in the field
+	// `address`. `` `*` `` represents a field named `*`, not any field. A special
+	// `Field` contains the default indexing settings for all fields. This field's
+	// resource name is:
 	// `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/f
 	// ields/*` Indexes defined on this `Field` will be applied to all fields which
 	// do not have their own `Field` index configuration.
@@ -2542,6 +2541,21 @@ type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
 	// must exist and have enabled PITR. The restored database will be created in
 	// the same location as the source database.
 	DatabaseSnapshot *GoogleFirestoreAdminV1DatabaseSnapshot `json:"databaseSnapshot,omitempty"`
+	// KmsKeyName: Use Customer Managed Encryption Keys (CMEK) for encryption. Only
+	// keys in the same location as this database are allowed to be used for
+	// encryption. For Firestore's nam5 multi-region, this corresponds to Cloud KMS
+	// multi-region us. For Firestore's eur3 multi-region, this corresponds to
+	// Cloud KMS multi-region europe. See
+	// https://cloud.google.com/kms/docs/locations. The expected format is
+	// `projects/{project_id}/locations/{kms_location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// UseBackupEncryption: The restored database will use the same encryption
+	// configuration as the backup. This is the default option when no
+	// `encryption_config` is specified.
+	UseBackupEncryption *Empty `json:"useBackupEncryption,omitempty"`
+	// UseGoogleDefaultEncryption: Use Google default encryption.
+	UseGoogleDefaultEncryption *Empty `json:"useGoogleDefaultEncryption,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5833,22 +5847,20 @@ type ProjectsDatabasesCollectionGroupsFieldsPatchCall struct {
 // `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/f
 // ields/*`.
 //
-//   - name: A field name of the form
+//   - name: A field name of the form:
 //     `projects/{project_id}/databases/{database_id}/collectionGroups/{collection
-//     _id}/fields/{field_path}` A field path may be a simple field name, e.g.
-//     `address` or a path to fields within map_value , e.g. `address.city`, or a
-//     special field path. The only valid special field is `*`, which represents
-//     any field. Field paths may be quoted using ` (backtick). The only
-//     character that needs to be escaped within a quoted field path is the
+//     _id}/fields/{field_path}` A field path can be a simple field name, e.g.
+//     `address` or a path to fields within `map_value` , e.g. `address.city`, or
+//     a special field path. The only valid special field is `*`, which
+//     represents any field. Field paths can be quoted using “ ` “ (backtick).
+//     The only character that must be escaped within a quoted field path is the
 //     backtick character itself, escaped using a backslash. Special characters
-//     in field paths that must be quoted include: `*`, `.`, ``` (backtick), `[`,
-//     `]`, as well as any ascii symbolic characters. Examples: (Note: Comments
-//     here are written in markdown syntax, so there is an additional layer of
-//     backticks to represent a code block) `\`address.city\“ represents a field
-//     named `address.city`, not the map key `city` in the field `address`.
-//     `\`*\“ represents a field named `*`, not any field. A special `Field`
-//     contains the default indexing settings for all fields. This field's
-//     resource name is:
+//     in field paths that must be quoted include: `*`, `.`, “ ` “ (backtick),
+//     `[`, `]`, as well as any ascii symbolic characters. Examples: “
+//     `address.city` “ represents a field named `address.city`, not the map key
+//     `city` in the field `address`. “ `*` “ represents a field named `*`, not
+//     any field. A special `Field` contains the default indexing settings for
+//     all fields. This field's resource name is:
 //     `projects/{project_id}/databases/{database_id}/collectionGroups/__default__
 //     /fields/*` Indexes defined on this `Field` will be applied to all fields
 //     which do not have their own `Field` index configuration.

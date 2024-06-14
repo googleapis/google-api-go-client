@@ -193,6 +193,7 @@ type ServicesConsumerQuotaMetricsService struct {
 func NewServicesConsumerQuotaMetricsLimitsService(s *APIService) *ServicesConsumerQuotaMetricsLimitsService {
 	rs := &ServicesConsumerQuotaMetricsLimitsService{s: s}
 	rs.ProducerOverrides = NewServicesConsumerQuotaMetricsLimitsProducerOverridesService(s)
+	rs.ProducerQuotaPolicies = NewServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesService(s)
 	return rs
 }
 
@@ -200,6 +201,8 @@ type ServicesConsumerQuotaMetricsLimitsService struct {
 	s *APIService
 
 	ProducerOverrides *ServicesConsumerQuotaMetricsLimitsProducerOverridesService
+
+	ProducerQuotaPolicies *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesService
 }
 
 func NewServicesConsumerQuotaMetricsLimitsProducerOverridesService(s *APIService) *ServicesConsumerQuotaMetricsLimitsProducerOverridesService {
@@ -208,6 +211,15 @@ func NewServicesConsumerQuotaMetricsLimitsProducerOverridesService(s *APIService
 }
 
 type ServicesConsumerQuotaMetricsLimitsProducerOverridesService struct {
+	s *APIService
+}
+
+func NewServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesService(s *APIService) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesService {
+	rs := &ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesService{s: s}
+	return rs
+}
+
+type ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesService struct {
 	s *APIService
 }
 
@@ -3500,6 +3512,41 @@ func (s *V1Beta1ImportProducerOverridesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// V1Beta1ImportProducerQuotaPoliciesRequest: Request message for
+// ImportProducerQuotaPolicies
+type V1Beta1ImportProducerQuotaPoliciesRequest struct {
+	// Force: Whether to force the import of the quota policies. If the policy
+	// import would decrease the default limit of any consumer tier by more than 10
+	// percent, the call is rejected, as a safety measure to avoid accidentally
+	// decreasing quota too quickly. Setting the force parameter to true ignores
+	// this restriction.
+	Force bool `json:"force,omitempty"`
+	// ForceJustification: If force option is set to true, force_justification is
+	// suggested to be set to log the reason in audit logs.
+	ForceJustification string `json:"forceJustification,omitempty"`
+	// InlineSource: The import data is specified in the request message itself
+	InlineSource *V1Beta1PolicyInlineSource `json:"inlineSource,omitempty"`
+	// ValidateOnly: If set to true, validate the request, but do not actually
+	// update.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Force") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Force") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1ImportProducerQuotaPoliciesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1ImportProducerQuotaPoliciesRequest
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // V1Beta1ImportProducerQuotaPoliciesResponse: Response message for
 // ImportProducerQuotaPolicies
 type V1Beta1ImportProducerQuotaPoliciesResponse struct {
@@ -3581,6 +3628,35 @@ func (s *V1Beta1ListProducerOverridesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// V1Beta1ListProducerQuotaPoliciesResponse: Response message for
+// ListProducerQuotaPolicies.
+type V1Beta1ListProducerQuotaPoliciesResponse struct {
+	// NextPageToken: Token identifying which result to start with; returned by a
+	// previous list call.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// ProducerQuotaPolicies: Producer policies on this limit.
+	ProducerQuotaPolicies []*V1Beta1ProducerQuotaPolicy `json:"producerQuotaPolicies,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1ListProducerQuotaPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1ListProducerQuotaPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // V1Beta1OverrideInlineSource: Import data embedded in the request message
 type V1Beta1OverrideInlineSource struct {
 	// Overrides: The overrides to create. Each override must have a value for
@@ -3603,6 +3679,30 @@ type V1Beta1OverrideInlineSource struct {
 
 func (s *V1Beta1OverrideInlineSource) MarshalJSON() ([]byte, error) {
 	type NoMethod V1Beta1OverrideInlineSource
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// V1Beta1PolicyInlineSource: Import data embedded in the request message
+type V1Beta1PolicyInlineSource struct {
+	// Policies: The policies to create. Each policy must have a value for 'metric'
+	// and 'unit', to specify which metric and which limit the policy should be
+	// applied to.
+	Policies []*V1Beta1ProducerQuotaPolicy `json:"policies,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policies") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1PolicyInlineSource) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1PolicyInlineSource
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4343,6 +4443,110 @@ func (c *ServicesConsumerQuotaMetricsImportProducerOverridesCall) doRequest(alt 
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ServicesConsumerQuotaMetricsImportProducerOverridesCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ServicesConsumerQuotaMetricsImportProducerQuotaPoliciesCall struct {
+	s                                         *APIService
+	parent                                    string
+	v1beta1importproducerquotapoliciesrequest *V1Beta1ImportProducerQuotaPoliciesRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// ImportProducerQuotaPolicies: Create or update multiple producer quota
+// policies atomically, all on the same ancestor, but on many different metrics
+// or limits. The name field in the quota policy message should not be set.
+//
+//   - parent: The resource name of the consumer. An example name would be:
+//     `services/compute.googleapis.com/organizations/123`.
+func (r *ServicesConsumerQuotaMetricsService) ImportProducerQuotaPolicies(parent string, v1beta1importproducerquotapoliciesrequest *V1Beta1ImportProducerQuotaPoliciesRequest) *ServicesConsumerQuotaMetricsImportProducerQuotaPoliciesCall {
+	c := &ServicesConsumerQuotaMetricsImportProducerQuotaPoliciesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.v1beta1importproducerquotapoliciesrequest = v1beta1importproducerquotapoliciesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ServicesConsumerQuotaMetricsImportProducerQuotaPoliciesCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsImportProducerQuotaPoliciesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ServicesConsumerQuotaMetricsImportProducerQuotaPoliciesCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsImportProducerQuotaPoliciesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ServicesConsumerQuotaMetricsImportProducerQuotaPoliciesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsImportProducerQuotaPoliciesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.v1beta1importproducerquotapoliciesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/consumerQuotaMetrics:importProducerQuotaPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.consumerQuotaMetrics.importProducerQuotaPolicies" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsImportProducerQuotaPoliciesCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5237,6 +5441,548 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) doRequest
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall struct {
+	s                          *APIService
+	parent                     string
+	v1beta1producerquotapolicy *V1Beta1ProducerQuotaPolicy
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Create: Creates a producer quota policy. A producer quota policy is applied
+// by the owner or administrator of a service at an org or folder node to set
+// the default quota limit for all consumers under the node where the policy is
+// created. To create multiple policies at once, use
+// ImportProducerQuotaPolicies instead. If a policy with the specified
+// dimensions already exists, this call will fail. To overwrite an existing
+// policy if one is already present ("upsert" semantics), use
+// ImportProducerQuotaPolicies instead.
+//
+//   - parent: The resource name of the parent quota limit. An example name would
+//     be:
+//     `services/compute.googleapis.com/organizations/123/consumerQuotaMetrics/com
+//     pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
+func (r *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesService) Create(parent string, v1beta1producerquotapolicy *V1Beta1ProducerQuotaPolicy) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall {
+	c := &ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.v1beta1producerquotapolicy = v1beta1producerquotapolicy
+	return c
+}
+
+// Force sets the optional parameter "force": Whether to force the creation of
+// the quota policy. If the policy creation would decrease the default limit of
+// any consumer tier by more than 10 percent, the call is rejected, as a safety
+// measure to avoid accidentally decreasing quota too quickly. Setting the
+// force parameter to true ignores this restriction.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// ForceJustification sets the optional parameter "forceJustification": If
+// force option is set to true, force_justification is suggested to be set to
+// log the reason in audit logs.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall) ForceJustification(forceJustification string) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall {
+	c.urlParams_.Set("forceJustification", forceJustification)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to true,
+// validate the request, but do not actually update.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall) ValidateOnly(validateOnly bool) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.v1beta1producerquotapolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/producerQuotaPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.consumerQuotaMetrics.limits.producerQuotaPolicies.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall struct {
+	s          *APIService
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a producer quota policy.
+//
+//   - name: The resource name of the policy to delete. An example name would be:
+//     `services/compute.googleapis.com/organizations/123/consumerQuotaMetrics/com
+//     pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerQuotaPolicies
+//     /4a3f2c1d`.
+func (r *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesService) Delete(name string) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall {
+	c := &ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": Whether to force the deletion of
+// the quota policy. If the policy deletion would decrease the default limit of
+// any consumer tier by more than 10 percent, the call is rejected, as a safety
+// measure to avoid accidentally decreasing quota too quickly. Setting the
+// force parameter to true ignores this restriction.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// ForceJustification sets the optional parameter "forceJustification": If
+// force option is set to true, force_justification is suggested to be set to
+// log the reason in audit logs.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall) ForceJustification(forceJustification string) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall {
+	c.urlParams_.Set("forceJustification", forceJustification)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to true,
+// validate the request, but do not actually update.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall) ValidateOnly(validateOnly bool) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.consumerQuotaMetrics.limits.producerQuotaPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all producer policies created at current consumer node for a
+// limit.
+//
+//   - parent: The resource name of the parent quota limit. An example name would
+//     be:
+//     `services/compute.googleapis.com/organizations/123/consumerQuotaMetrics/com
+//     pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
+func (r *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesService) List(parent string) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall {
+	c := &ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested size of the next
+// page of data.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall) PageSize(pageSize int64) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token identifying which
+// result to start with; returned by a previous list call.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall) PageToken(pageToken string) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall) IfNoneMatch(entityTag string) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/producerQuotaPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.consumerQuotaMetrics.limits.producerQuotaPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *V1Beta1ListProducerQuotaPoliciesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall) Do(opts ...googleapi.CallOption) (*V1Beta1ListProducerQuotaPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &V1Beta1ListProducerQuotaPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesListCall) Pages(ctx context.Context, f func(*V1Beta1ListProducerQuotaPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall struct {
+	s                          *APIService
+	name                       string
+	v1beta1producerquotapolicy *V1Beta1ProducerQuotaPolicy
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Patch: Updates a producer quota policy.
+//
+//   - name: The resource name of the producer policy. An example name would be:
+//     `services/compute.googleapis.com/organizations/123/consumerQuotaMetrics/com
+//     pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerQuotaPolicies
+//     /4a3f2c1d`.
+func (r *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesService) Patch(name string, v1beta1producerquotapolicy *V1Beta1ProducerQuotaPolicy) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall {
+	c := &ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.v1beta1producerquotapolicy = v1beta1producerquotapolicy
+	return c
+}
+
+// Force sets the optional parameter "force": Whether to force the update of
+// the quota policy. If the policy update would decrease the default limit of
+// any consumer tier by more than 10 percent, the call is rejected, as a safety
+// measure to avoid accidentally decreasing quota too quickly. Setting the
+// force parameter to true ignores this restriction.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// ForceJustification sets the optional parameter "forceJustification": If
+// force option is set to true, force_justification is suggested to be set to
+// log the reason in audit logs.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall) ForceJustification(forceJustification string) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall {
+	c.urlParams_.Set("forceJustification", forceJustification)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Update only the
+// specified fields. If unset, all modifiable fields will be updated.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall) UpdateMask(updateMask string) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to true,
+// validate the request, but do not actually update.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall) ValidateOnly(validateOnly bool) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.v1beta1producerquotapolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.consumerQuotaMetrics.limits.producerQuotaPolicies.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerQuotaPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

@@ -1280,15 +1280,15 @@ func (s *ListPlatformPoliciesResponse) MarshalJSON() ([]byte, error) {
 type PkixPublicKey struct {
 	// KeyId: Optional. The ID of this public key. Signatures verified by Binary
 	// Authorization must include the ID of the public key that can be used to
-	// verify them, and that ID must match the contents of this field exactly. This
-	// may be explicitly provided by the caller, but it MUST be a valid RFC3986
-	// URI. If `key_id` is left blank and this `PkixPublicKey` is not used in the
-	// context of a wrapper (see next paragraph), a default key ID will be computed
-	// based on the digest of the DER encoding of the public key. If this
-	// `PkixPublicKey` is used in the context of a wrapper that has its own notion
-	// of key ID (e.g. `AttestorPublicKey`), then this field can either: * Match
-	// that value exactly. * Or be left blank, in which case it behaves exactly as
-	// though it is equal to that wrapper value.
+	// verify them. The ID must match exactly contents of the `key_id` field
+	// exactly. The ID may be explicitly provided by the caller, but it MUST be a
+	// valid RFC3986 URI. If `key_id` is left blank and this `PkixPublicKey` is not
+	// used in the context of a wrapper (see next paragraph), a default key ID will
+	// be computed based on the digest of the DER encoding of the public key. If
+	// this `PkixPublicKey` is used in the context of a wrapper that has its own
+	// notion of key ID (e.g. `AttestorPublicKey`), then this field can either
+	// match that value exactly, or be left blank, in which case it behaves exactly
+	// as though it is equal to that wrapper value.
 	KeyId string `json:"keyId,omitempty"`
 	// PublicKeyPem: A PEM-encoded public key, as described in
 	// https://tools.ietf.org/html/rfc7468#section-13

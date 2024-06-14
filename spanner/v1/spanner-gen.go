@@ -2657,7 +2657,8 @@ type InstanceConfig struct {
 	// databases in instances that use this instance configuration.
 	LeaderOptions []string `json:"leaderOptions,omitempty"`
 	// Name: A unique identifier for the instance configuration. Values are of the
-	// form `projects//instanceConfigs/a-z*`.
+	// form `projects//instanceConfigs/a-z*`. User instance config must start with
+	// `custom-`.
 	Name string `json:"name,omitempty"`
 	// OptionalReplicas: Output only. The available optional replicas to choose
 	// from for user managed configurations. Populated for Google managed
@@ -2681,7 +2682,10 @@ type InstanceConfig struct {
 	// updated. If false, there are no ongoing operations for the instance config.
 	Reconciling bool `json:"reconciling,omitempty"`
 	// Replicas: The geographic placement of nodes in this instance configuration
-	// and their replication properties.
+	// and their replication properties. To create user managed configurations,
+	// input `replicas` must include all replicas in `replicas` of the
+	// `base_config` and include one or more replicas in the `optional_replicas` of
+	// the `base_config`.
 	Replicas []*ReplicaInfo `json:"replicas,omitempty"`
 	// State: Output only. The current instance config state. Applicable only for
 	// USER_MANAGED configs.
@@ -4466,6 +4470,59 @@ type ReadRequest struct {
 	// `limit` is zero, the default is no limit. A limit cannot be specified if
 	// `partition_token` is set.
 	Limit int64 `json:"limit,omitempty,string"`
+	// LockHint: Optional. Lock Hint for the request, it can only be used with
+	// read-write transactions.
+	//
+	// Possible values:
+	//   "LOCK_HINT_UNSPECIFIED" - Default value. LOCK_HINT_UNSPECIFIED is
+	// equivalent to LOCK_HINT_SHARED.
+	//   "LOCK_HINT_SHARED" - Acquire shared locks. By default when you perform a
+	// read as part of a read-write transaction, Spanner acquires shared read
+	// locks, which allows other reads to still access the data until your
+	// transaction is ready to commit. When your transaction is committing and
+	// writes are being applied, the transaction attempts to upgrade to an
+	// exclusive lock for any data you are writing. For more information about
+	// locks, see [Lock
+	// modes](https://cloud.google.com/spanner/docs/introspection/lock-statistics#ex
+	// plain-lock-modes).
+	//   "LOCK_HINT_EXCLUSIVE" - Acquire exclusive locks. Requesting exclusive
+	// locks is beneficial if you observe high write contention, which means you
+	// notice that multiple transactions are concurrently trying to read and write
+	// to the same data, resulting in a large number of aborts. This problem occurs
+	// when two transactions initially acquire shared locks and then both try to
+	// upgrade to exclusive locks at the same time. In this situation both
+	// transactions are waiting for the other to give up their lock, resulting in a
+	// deadlocked situation. Spanner is able to detect this occurring and force one
+	// of the transactions to abort. However, this is a slow and expensive
+	// operation and results in lower performance. In this case it makes sense to
+	// acquire exclusive locks at the start of the transaction because then when
+	// multiple transactions try to act on the same data, they automatically get
+	// serialized. Each transaction waits its turn to acquire the lock and avoids
+	// getting into deadlock situations. Because the exclusive lock hint is just a
+	// hint, it should not be considered equivalent to a mutex. In other words, you
+	// should not use Spanner exclusive locks as a mutual exclusion mechanism for
+	// the execution of code outside of Spanner. **Note:** Request exclusive locks
+	// judiciously because they block others from reading that data for the entire
+	// transaction, rather than just when the writes are being performed. Unless
+	// you observe high write contention, you should use the default of shared read
+	// locks so you don't prematurely block other clients from reading the data
+	// that you're writing to.
+	LockHint string `json:"lockHint,omitempty"`
+	// OrderBy: Optional. Order for the returned rows. By default, Spanner will
+	// return result rows in primary key order except for PartitionRead requests.
+	// For applications that do not require rows to be returned in primary key
+	// (`ORDER_BY_PRIMARY_KEY`) order, setting `ORDER_BY_NO_ORDER` option allows
+	// Spanner to optimize row retrieval, resulting in lower latencies in certain
+	// cases (e.g. bulk point lookups).
+	//
+	// Possible values:
+	//   "ORDER_BY_UNSPECIFIED" - Default value. ORDER_BY_UNSPECIFIED is equivalent
+	// to ORDER_BY_PRIMARY_KEY.
+	//   "ORDER_BY_PRIMARY_KEY" - Read rows are returned in primary key order. In
+	// the event that this option is used in conjunction with the `partition_token`
+	// field, the API will return an `INVALID_ARGUMENT` error.
+	//   "ORDER_BY_NO_ORDER" - Read rows are returned in any order.
+	OrderBy string `json:"orderBy,omitempty"`
 	// PartitionToken: If present, results will be restricted to the specified
 	// partition previously created using PartitionRead(). There must be an exact
 	// match for the values of fields common to this message and the
@@ -5040,12 +5097,12 @@ type Session struct {
 	// with a given session. See https://goo.gl/xmQnxf for more information on and
 	// examples of labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Multiplexed: Optional. If true, specifies a multiplexed session. A
-	// multiplexed session may be used for multiple, concurrent read-only
-	// operations but can not be used for read-write transactions, partitioned
-	// reads, or partitioned queries. Multiplexed sessions can be created via
-	// CreateSession but not via BatchCreateSessions. Multiplexed sessions may not
-	// be deleted nor listed.
+	// Multiplexed: Optional. If true, specifies a multiplexed session. Use a
+	// multiplexed session for multiple, concurrent read-only operations. Don't use
+	// them for read-write transactions, partitioned reads, or partitioned queries.
+	// Use CreateSession to create multiplexed sessions. Don't use
+	// BatchCreateSessions to create a multiplexed session. You can't delete or
+	// list multiplexed sessions.
 	Multiplexed bool `json:"multiplexed,omitempty"`
 	// Name: Output only. The name of the session. This is always system-assigned.
 	Name string `json:"name,omitempty"`
@@ -6671,6 +6728,7 @@ type ProjectsInstanceConfigsListCall struct {
 }
 
 // List: Lists the supported instance configurations for a given project.
+// Returns both Google managed configs and user managed configs.
 //
 //   - parent: The name of the project for which a list of supported instance
 //     configurations is requested. Values are of the form `projects/`.
@@ -6836,7 +6894,8 @@ type ProjectsInstanceConfigsPatchCall struct {
 // permission on the resource name.
 //
 //   - name: A unique identifier for the instance configuration. Values are of
-//     the form `projects//instanceConfigs/a-z*`.
+//     the form `projects//instanceConfigs/a-z*`. User instance config must start
+//     with `custom-`.
 func (r *ProjectsInstanceConfigsService) Patch(nameid string, updateinstanceconfigrequest *UpdateInstanceConfigRequest) *ProjectsInstanceConfigsPatchCall {
 	c := &ProjectsInstanceConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid

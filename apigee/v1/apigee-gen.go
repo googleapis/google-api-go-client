@@ -1487,7 +1487,8 @@ type GoogleCloudApigeeV1ActivateNatAddressRequest struct {
 type GoogleCloudApigeeV1AddonsConfig struct {
 	// AdvancedApiOpsConfig: Configuration for the Advanced API Ops add-on.
 	AdvancedApiOpsConfig *GoogleCloudApigeeV1AdvancedApiOpsConfig `json:"advancedApiOpsConfig,omitempty"`
-	// AnalyticsConfig: Configuration for the Analytics add-on.
+	// AnalyticsConfig: Configuration for the Analytics add-on. Only used in
+	// organizations.environments.addonsConfig.
 	AnalyticsConfig *GoogleCloudApigeeV1AnalyticsConfig `json:"analyticsConfig,omitempty"`
 	// ApiSecurityConfig: Configuration for the API Security add-on.
 	ApiSecurityConfig *GoogleCloudApigeeV1ApiSecurityConfig `json:"apiSecurityConfig,omitempty"`

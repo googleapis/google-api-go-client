@@ -2177,12 +2177,11 @@ type GitHubEnterpriseConfig struct {
 	// CreateTime: Output only. Time when the installation was associated with the
 	// project.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Name to display for this config.
+	// DisplayName: Optional. Name to display for this config.
 	DisplayName string `json:"displayName,omitempty"`
 	// HostUrl: The URL of the github enterprise host the configuration is for.
 	HostUrl string `json:"hostUrl,omitempty"`
-	// Name: Optional. The full resource name for the GitHubEnterpriseConfig For
-	// example:
+	// Name: The full resource name for the GitHubEnterpriseConfig For example:
 	// "projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$co
 	// nfig_id}"
 	Name string `json:"name,omitempty"`
@@ -2195,7 +2194,7 @@ type GitHubEnterpriseConfig struct {
 	// `projects/{project}/global/networks/{network}`, where {project} is a project
 	// number or id and {network} is the name of a VPC network in the project.
 	PeeredNetwork string `json:"peeredNetwork,omitempty"`
-	// Secrets: Names of secrets in Secret Manager.
+	// Secrets: Optional. Names of secrets in Secret Manager.
 	Secrets *GitHubEnterpriseSecrets `json:"secrets,omitempty"`
 	// SslCa: Optional. SSL certificate to use for requests to GitHub Enterprise.
 	SslCa string `json:"sslCa,omitempty"`
@@ -2269,8 +2268,8 @@ func (s *GitHubEnterpriseSecrets) MarshalJSON() ([]byte, error) {
 // GitHubEventsConfig: GitHubEventsConfig describes the configuration of a
 // trigger that creates a build whenever a GitHub event is received.
 type GitHubEventsConfig struct {
-	// EnterpriseConfigResourceName: Optional. The resource name of the github
-	// enterprise config that should be applied to this installation. For example:
+	// EnterpriseConfigResourceName: The resource name of the github enterprise
+	// config that should be applied to this installation. For example:
 	// "projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$co
 	// nfig_id}"
 	EnterpriseConfigResourceName string `json:"enterpriseConfigResourceName,omitempty"`
@@ -3269,8 +3268,8 @@ type PubsubConfig struct {
 	// Subscription: Output only. Name of the subscription. Format is
 	// `projects/{project}/subscriptions/{subscription}`.
 	Subscription string `json:"subscription,omitempty"`
-	// Topic: The name of the topic from which this subscription is receiving
-	// messages. Format is `projects/{project}/topics/{topic}`.
+	// Topic: Optional. The name of the topic from which this subscription is
+	// receiving messages. Format is `projects/{project}/topics/{topic}`.
 	Topic string `json:"topic,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ServiceAccountEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4264,8 +4263,8 @@ type WorkerConfig struct {
 	// Specify a value of up to 2000. If `0` is specified, Cloud Build will use a
 	// standard disk size.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
-	// MachineType: Machine type of a worker, such as `e2-medium`. See Worker pool
-	// config file
+	// MachineType: Optional. Machine type of a worker, such as `e2-medium`. See
+	// Worker pool config file
 	// (https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema).
 	// If left blank, Cloud Build will use a sensible default.
 	MachineType string `json:"machineType,omitempty"`
@@ -5994,8 +5993,7 @@ type ProjectsGithubEnterpriseConfigsPatchCall struct {
 // Patch: Update an association between a GCP project and a GitHub Enterprise
 // server.
 //
-//   - name: Optional. The full resource name for the GitHubEnterpriseConfig For
-//     example:
+//   - name: The full resource name for the GitHubEnterpriseConfig For example:
 //     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$
 //     config_id}".
 func (r *ProjectsGithubEnterpriseConfigsService) Patch(name string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsGithubEnterpriseConfigsPatchCall {
@@ -9266,8 +9264,7 @@ type ProjectsLocationsGithubEnterpriseConfigsPatchCall struct {
 // Patch: Update an association between a GCP project and a GitHub Enterprise
 // server.
 //
-//   - name: Optional. The full resource name for the GitHubEnterpriseConfig For
-//     example:
+//   - name: The full resource name for the GitHubEnterpriseConfig For example:
 //     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$
 //     config_id}".
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Patch(name string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsLocationsGithubEnterpriseConfigsPatchCall {

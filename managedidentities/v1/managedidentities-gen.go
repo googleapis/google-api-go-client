@@ -396,7 +396,11 @@ type Binding struct {
 	// ol-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 	// Role: Role that is assigned to the list of `members`, or principals. For
-	// example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview
+	// of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -640,9 +644,11 @@ type Domain struct {
 	Fqdn string `json:"fqdn,omitempty"`
 	// Labels: Optional. Resource labels that can contain user-provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Locations: Required. Locations where domain needs to be provisioned. regions
-	// e.g. us-west1 or us-east4 Service supports up to 4 locations at once. Each
-	// location will use a /26 block.
+	// Locations: Required. Locations where domain needs to be provisioned. The
+	// locations can be specified according to
+	// https://cloud.google.com/compute/docs/regions-zones, such as `us-west1` or
+	// `us-east4`. Each domain supports up to 4 locations, separated by commas.
+	// Each location will use a /26 block.
 	Locations []string `json:"locations,omitempty"`
 	// Name: Required. The unique name of the domain using the form:
 	// `projects/{project_id}/locations/global/domains/{domain_name}`.
@@ -1629,8 +1635,7 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MaintenancePolicy: LINT.IfChange Defines policies to service maintenance
-// events.
+// MaintenancePolicy: Defines policies to service maintenance events.
 type MaintenancePolicy struct {
 	// CreateTime: Output only. The time when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`

@@ -1498,8 +1498,9 @@ func (r *ProjectsLocationsWorkflowsExecutionsService) List(parent string) *Proje
 // `[Executions.ListExecutions]` results. The following fields are supported
 // for filtering: `executionId`, `state`, `createTime`, `startTime`, `endTime`,
 // `duration`, `workflowRevisionId`, `stepName`, and `label`. For details, see
-// AIP-160. For example, if you are using the Google APIs Explorer:
-// `state="SUCCEEDED" or `startTime>"2023-08-01" AND state="FAILED"
+// AIP-160. For more information, see Filter executions. For example, if you
+// are using the Google APIs Explorer: `state="SUCCEEDED" or
+// `startTime>"2023-08-01" AND state="FAILED"
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) Filter(filter string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

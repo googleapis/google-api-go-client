@@ -243,6 +243,33 @@ func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// AccessConfig: An access configuration attached to an instance's network
+// interface.
+type AccessConfig struct {
+	// ExternalIp: An external IP address associated with this instance. Specify an
+	// unused static external IP address available to the project or leave this
+	// field undefined to use an IP from a shared ephemeral IP address pool. If you
+	// specify a static external IP address, it must live in the same region as the
+	// zone of the instance.
+	ExternalIp string `json:"externalIp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalIp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalIp") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -887,6 +914,10 @@ type Instance struct {
 	// ProxyUri: Output only. The proxy endpoint that is used to access the Jupyter
 	// notebook.
 	ProxyUri string `json:"proxyUri,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use for Zone Isolation.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use for Zone Separation.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The state of this instance.
 	//
 	// Possible values:
@@ -1060,6 +1091,11 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // NetworkInterface: The definition of a network interface resource attached to
 // a VM.
 type NetworkInterface struct {
+	// AccessConfigs: Optional. An array of configurations for this interface.
+	// Currently, only one access config, ONE_TO_ONE_NAT, is supported. If no
+	// accessConfigs specified, the instance will have an external internet access
+	// through an ephemeral external IP address.
+	AccessConfigs []*AccessConfig `json:"accessConfigs,omitempty"`
 	// Network: Optional. The name of the VPC that this VM instance is in. Format:
 	// `projects/{project_id}/global/networks/{network_id}`
 	Network string `json:"network,omitempty"`
@@ -1074,13 +1110,13 @@ type NetworkInterface struct {
 	// Subnet: Optional. The name of the subnet that this VM instance is in.
 	// Format: `projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}`
 	Subnet string `json:"subnet,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Network") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AccessConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Network") to include in API
+	// NullFields is a list of field names (e.g. "AccessConfigs") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

@@ -271,176 +271,6 @@ type ProjectsLocationsViewsService struct {
 	s *Service
 }
 
-// GoogleCloudContactcenterinsightsV1AgentCoachingInstruction: Agent Coaching
-// instructions that customer can configure.
-type GoogleCloudContactcenterinsightsV1AgentCoachingInstruction struct {
-	// AgentAction: Optional. The action that human agent should take. For example,
-	// "apologize for the slow shipping". If the users only want to use agent
-	// coaching for intent detection, agent_action can be empty
-	AgentAction string `json:"agentAction,omitempty"`
-	// Condition: Optional. The condition of the instruction. For example, "the
-	// customer wants to cancel an order". If the users want the instruction to be
-	// triggered unconditionally, the condition can be empty.
-	Condition string `json:"condition,omitempty"`
-	// Description: Optional. The detailed description of this instruction.
-	Description string `json:"description,omitempty"`
-	// DisplayName: Optional. Display name for the instruction.
-	DisplayName string `json:"displayName,omitempty"`
-	// Metadata: Optional. Additional information attached to this instruction.
-	Metadata map[string]string `json:"metadata,omitempty"`
-	// SystemAction: Optional. The action that system should take. For example,
-	// "call GetOrderTime with order_number={order number provided by the
-	// customer}". If the users don't have plugins or don't want to trigger
-	// plugins, the system_action can be empty
-	SystemAction string `json:"systemAction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentAction") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentAction") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1AgentCoachingInstruction) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1AgentCoachingInstruction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1AgentCoachingSuggestion: Suggestion for
-// coaching agents.
-type GoogleCloudContactcenterinsightsV1AgentCoachingSuggestion struct {
-	// AgentActionSuggestions: Optional. Suggested actions for the agent to take.
-	AgentActionSuggestions []*GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentActionSuggestion `json:"agentActionSuggestions,omitempty"`
-	// ApplicableInstructions: Optional. Instructions applicable based on the
-	// current context.
-	ApplicableInstructions []*GoogleCloudContactcenterinsightsV1AgentCoachingInstruction `json:"applicableInstructions,omitempty"`
-	// SampleResponses: Optional. Sample response for the Agent.
-	SampleResponses []*GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionSampleResponse `json:"sampleResponses,omitempty"`
-	// SuggestionEval: Self evaluation of the suggestion.
-	SuggestionEval *GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentCoachingSuggestionEval `json:"suggestionEval,omitempty"`
-	// SuggestionReasoning: Reasoning for the suggestion.
-	SuggestionReasoning *GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentCoachingSuggestionReasoning `json:"suggestionReasoning,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentActionSuggestions") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentActionSuggestions") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1AgentCoachingSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1AgentCoachingSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentActionSuggestio
-// n: Actions suggested for the agent. This is based on applicable
-// instructions.
-type GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentActionSuggestion struct {
-	// AgentAction: Optional. The suggested action for the agent.
-	AgentAction string `json:"agentAction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentAction") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentAction") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentActionSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentActionSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentCoachingSuggest
-// ionEval: Self evaluations of the suggestion.
-type GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentCoachingSuggestionEval struct {
-	// ActionActionSuggestionEval: Optional. Eval for Agent action suggestion.
-	ActionActionSuggestionEval string `json:"actionActionSuggestionEval,omitempty"`
-	// SampleResponseEval: Optional. Eval for sample response.
-	SampleResponseEval string `json:"sampleResponseEval,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ActionActionSuggestionEval")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActionActionSuggestionEval") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentCoachingSuggestionEval) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentCoachingSuggestionEval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentCoachingSuggest
-// ionReasoning: Reasoning for the suggestion.
-type GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentCoachingSuggestionReasoning struct {
-	// AgentActionTaken: Optional. The actions that the agent has taken already.
-	AgentActionTaken string `json:"agentActionTaken,omitempty"`
-	// IssueSummary: Optional. Summary of the issue.
-	IssueSummary string `json:"issueSummary,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentActionTaken") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentActionTaken") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentCoachingSuggestionReasoning) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionAgentCoachingSuggestionReasoning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionSampleResponse:
-// Sample response that the agent can use. This could be based on applicable
-// instructions and ingested data from other systems.
-type GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionSampleResponse struct {
-	// ResponseText: Optional. Sample response for Agent in text.
-	ResponseText string `json:"responseText,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ResponseText") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResponseText") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionSampleResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1AgentCoachingSuggestionSampleResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudContactcenterinsightsV1Analysis: The analysis resource.
 type GoogleCloudContactcenterinsightsV1Analysis struct {
 	// AnalysisResult: Output only. The result of the analysis, which is populated
@@ -2270,31 +2100,6 @@ func (s *GoogleCloudContactcenterinsightsV1FaqAnswerData) UnmarshalJSON(data []b
 	return nil
 }
 
-// GoogleCloudContactcenterinsightsV1FreeFormSuggestion: Suggestion generated
-// using free form generator.
-type GoogleCloudContactcenterinsightsV1FreeFormSuggestion struct {
-	// Labels: Optional. Labels for the generator.
-	Labels []string `json:"labels,omitempty"`
-	// Response: Required. Free form suggestion.
-	Response string `json:"response,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Labels") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1FreeFormSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1FreeFormSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudContactcenterinsightsV1GcsSource: A Cloud Storage source of
 // conversation data.
 type GoogleCloudContactcenterinsightsV1GcsSource struct {
@@ -2320,278 +2125,6 @@ type GoogleCloudContactcenterinsightsV1GcsSource struct {
 func (s *GoogleCloudContactcenterinsightsV1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1GcsSource
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1GeneratorSuggestion: Suggestion generated
-// using a Generator.
-type GoogleCloudContactcenterinsightsV1GeneratorSuggestion struct {
-	// AgentCoachingSuggestion: Optional. Suggestion to coach the agent.
-	AgentCoachingSuggestion *GoogleCloudContactcenterinsightsV1AgentCoachingSuggestion `json:"agentCoachingSuggestion,omitempty"`
-	// FreeFormSuggestion: Optional. Free form suggestion.
-	FreeFormSuggestion *GoogleCloudContactcenterinsightsV1FreeFormSuggestion `json:"freeFormSuggestion,omitempty"`
-	// SummarySuggestion: Optional. Suggested summary.
-	SummarySuggestion *GoogleCloudContactcenterinsightsV1SummarySuggestion `json:"summarySuggestion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentCoachingSuggestion") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentCoachingSuggestion") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1GeneratorSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1GeneratorSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1GetGeneratorSuggestionResponse: Represents
-// response from generators.
-type GoogleCloudContactcenterinsightsV1GetGeneratorSuggestionResponse struct {
-	// GeneratorSuggestion: The suggestion generated from the Generator.
-	GeneratorSuggestion *GoogleCloudContactcenterinsightsV1GeneratorSuggestion `json:"generatorSuggestion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GeneratorSuggestion") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GeneratorSuggestion") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1GetGeneratorSuggestionResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1GetGeneratorSuggestionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponse: Response for
-// Knowledge Assist. Contains suggested query and optionally includes an answer
-// for the query.
-type GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponse struct {
-	// SuggestedQuery: The query suggested based on the context. Suggestion is made
-	// only if it is different from the previous suggestion.
-	SuggestedQuery *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseSuggestedQuery `json:"suggestedQuery,omitempty"`
-	// SuggestedQueryAnswer: The answer generated for the suggested query. Whether
-	// or not an answer is generated depends on how confident we are about the
-	// generated query.
-	SuggestedQueryAnswer *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswer `json:"suggestedQueryAnswer,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SuggestedQuery") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SuggestedQuery") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswer:
-// Represents an answer from Knowledge. Cuurently supports FAQ and Generative
-// answers.
-type GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswer struct {
-	// AnswerText: The piece of text from the `source` that answers this suggested
-	// query.
-	AnswerText string `json:"answerText,omitempty"`
-	// FaqSource: Populated if the prediction came from FAQ.
-	FaqSource *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerFaqSource `json:"faqSource,omitempty"`
-	// GenerativeSource: Populated if the prediction was Generative.
-	GenerativeSource *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSource `json:"generativeSource,omitempty"`
-	// IntentMatchingSource: Populated if the prediction was from intent matching.
-	IntentMatchingSource *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerIntentMatchingSource `json:"intentMatchingSource,omitempty"`
-	// MatchConfidence: The system's confidence score that this answer is a good
-	// match for this conversational query. The range is from 0.0 (completely
-	// uncertain) to 1.0 (completely certain).
-	MatchConfidence float64 `json:"matchConfidence,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AnswerText") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AnswerText") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswer) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswer) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswer
-	var s1 struct {
-		MatchConfidence gensupport.JSONFloat64 `json:"matchConfidence"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.MatchConfidence = float64(s1.MatchConfidence)
-	return nil
-}
-
-// GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerFa
-// qSource: Details about source of FAQ answer.
-type GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerFaqSource struct {
-	// Document: Indicates which Knowledge Document this answer was extracted from.
-	// Format: `projects//knowledgeBases//documents/`.
-	Document string `json:"document,omitempty"`
-	// Question: The corresponding FAQ question.
-	Question string `json:"question,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Document") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Document") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerFaqSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerFaqSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerGe
-// nerativeSource: Details about source of Generative answer.
-type GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSource struct {
-	// Snippets: All snippets used for this Generative Prediction, with their
-	// source URI and data.
-	Snippets []*GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSourceSnippet `json:"snippets,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Snippets") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Snippets") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerGe
-// nerativeSourceSnippet: Snippet Source for a Generative Prediction.
-type GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSourceSnippet struct {
-	// Document: Indicates which Knowledge Document this snippet was extracted
-	// from. Format: `projects//knowledgeBases//documents/`.
-	Document string `json:"document,omitempty"`
-	// Text: text taken from that URI.
-	Text string `json:"text,omitempty"`
-	// Title: Title of the document.
-	Title string `json:"title,omitempty"`
-	// Uri: URI the data is sourced from.
-	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Document") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Document") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSourceSnippet) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSourceSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerIn
-// tentMatchingSource: Details about source of Intent Matching answer.
-type GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerIntentMatchingSource struct {
-	// Title: Title of the document.
-	Title string `json:"title,omitempty"`
-	// Uri: URI the data is sourced from.
-	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Title") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Title") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerIntentMatchingSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseKnowledgeAnswerIntentMatchingSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseSuggestedQuery:
-// Represents a suggested query.
-type GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseSuggestedQuery struct {
-	// QueryText: Suggested query text.
-	QueryText string `json:"queryText,omitempty"`
-	// Score: Suggested query score.
-	Score float64 `json:"score,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "QueryText") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "QueryText") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseSuggestedQuery) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseSuggestedQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseSuggestedQuery) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponseSuggestedQuery
-	var s1 struct {
-		Score gensupport.JSONFloat64 `json:"score"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Score = float64(s1.Score)
-	return nil
 }
 
 // GoogleCloudContactcenterinsightsV1HoldData: The data for a hold annotation.
@@ -3653,12 +3186,6 @@ type GoogleCloudContactcenterinsightsV1RuntimeAnnotation struct {
 	EndBoundary *GoogleCloudContactcenterinsightsV1AnnotationBoundary `json:"endBoundary,omitempty"`
 	// FaqAnswer: Agent Assist FAQ answer data.
 	FaqAnswer *GoogleCloudContactcenterinsightsV1FaqAnswerData `json:"faqAnswer,omitempty"`
-	// GeneratorSuggestionResult: The generator suggestion result.
-	GeneratorSuggestionResult *GoogleCloudContactcenterinsightsV1GetGeneratorSuggestionResponse `json:"generatorSuggestionResult,omitempty"`
-	// KnowledgeAssistResult: The Knowledge Assist result.
-	KnowledgeAssistResult *GoogleCloudContactcenterinsightsV1GetKnowledgeAssistResponse `json:"knowledgeAssistResult,omitempty"`
-	// KnowledgeSearchResult: The Knowledge Search result.
-	KnowledgeSearchResult *GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswer `json:"knowledgeSearchResult,omitempty"`
 	// SmartComposeSuggestion: Agent Assist Smart Compose suggestion data.
 	SmartComposeSuggestion *GoogleCloudContactcenterinsightsV1SmartComposeSuggestionData `json:"smartComposeSuggestion,omitempty"`
 	// SmartReply: Agent Assist Smart Reply data.
@@ -3666,6 +3193,8 @@ type GoogleCloudContactcenterinsightsV1RuntimeAnnotation struct {
 	// StartBoundary: The boundary in the conversation where the annotation starts,
 	// inclusive.
 	StartBoundary *GoogleCloudContactcenterinsightsV1AnnotationBoundary `json:"startBoundary,omitempty"`
+	// UserInput: Explicit input used for generating the answer
+	UserInput *GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput `json:"userInput,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnnotationId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3684,86 +3213,30 @@ func (s *GoogleCloudContactcenterinsightsV1RuntimeAnnotation) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswer: Represents a
-// SearchKnowledge answer.
-type GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswer struct {
-	// Answer: The piece of text from the knowledge base documents that answers the
-	// search query
-	Answer string `json:"answer,omitempty"`
-	// AnswerRecord: The name of the answer record. Format:
-	// `projects//locations//answer Records/`
-	AnswerRecord string `json:"answerRecord,omitempty"`
-	// AnswerSources: All sources used to generate the answer.
-	AnswerSources []*GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswerAnswerSource `json:"answerSources,omitempty"`
-	// AnswerType: The type of the answer.
-	//
-	// Possible values:
-	//   "ANSWER_TYPE_UNSPECIFIED" - The answer has a unspecified type.
-	//   "FAQ" - The answer is from FAQ documents.
-	//   "GENERATIVE" - The answer is from generative model.
-	//   "INTENT" - The answer is from intent matching.
-	AnswerType string `json:"answerType,omitempty"`
-	// ConfidenceScore: The confidence score in [0.0, 1.0] range.
-	ConfidenceScore float64 `json:"confidenceScore,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Answer") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswer) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswer) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswer
-	var s1 struct {
-		ConfidenceScore gensupport.JSONFloat64 `json:"confidenceScore"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.ConfidenceScore = float64(s1.ConfidenceScore)
-	return nil
-}
-
-// GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswerAnswerSource: The
-// sources of the answers.
-type GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswerAnswerSource struct {
-	// Document: The document from which the snippet was extracted. Format:
-	// `projects//knowledgeBases//documents/`
-	Document string `json:"document,omitempty"`
-	// Snippet: The relevant snippet of the article.
-	Snippet string `json:"snippet,omitempty"`
-	// Title: The title of the article.
-	Title string `json:"title,omitempty"`
-	// Uri: The URI of the article.
-	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Document") to
+// GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput: Explicit input
+// used for generating the answer
+type GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput struct {
+	// GeneratorName: The resource name of associated generator. Format:
+	// `projects//locations//generators/`
+	GeneratorName string `json:"generatorName,omitempty"`
+	// Query: Query text. Article Search uses this to store the input query used to
+	// generate the search results.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GeneratorName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Document") to include in API
+	// NullFields is a list of field names (e.g. "GeneratorName") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswerAnswerSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1SearchKnowledgeAnswerAnswerSource
+func (s *GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1RuntimeAnnotationUserInput
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4049,54 +3522,6 @@ func (s *GoogleCloudContactcenterinsightsV1SpeechConfig) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudContactcenterinsightsV1SummarySuggestion: Suggested summary of
-// the conversation.
-type GoogleCloudContactcenterinsightsV1SummarySuggestion struct {
-	// SummarySections: Required. All the parts of generated summary.
-	SummarySections []*GoogleCloudContactcenterinsightsV1SummarySuggestionSummarySection `json:"summarySections,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SummarySections") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SummarySections") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1SummarySuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1SummarySuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1SummarySuggestionSummarySection: A
-// component of the generated summary.
-type GoogleCloudContactcenterinsightsV1SummarySuggestionSummarySection struct {
-	// Section: Required. Name of the section.
-	Section string `json:"section,omitempty"`
-	// Summary: Required. Summary text for the section.
-	Summary string `json:"summary,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Section") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Section") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1SummarySuggestionSummarySection) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1SummarySuggestionSummarySection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudContactcenterinsightsV1UndeployIssueModelMetadata: Metadata for
 // undeploying an issue model.
 type GoogleCloudContactcenterinsightsV1UndeployIssueModelMetadata struct {
@@ -4253,176 +3678,6 @@ type GoogleCloudContactcenterinsightsV1View struct {
 
 func (s *GoogleCloudContactcenterinsightsV1View) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1View
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1AgentCoachingInstruction: Agent
-// Coaching instructions that customer can configure.
-type GoogleCloudContactcenterinsightsV1alpha1AgentCoachingInstruction struct {
-	// AgentAction: Optional. The action that human agent should take. For example,
-	// "apologize for the slow shipping". If the users only want to use agent
-	// coaching for intent detection, agent_action can be empty
-	AgentAction string `json:"agentAction,omitempty"`
-	// Condition: Optional. The condition of the instruction. For example, "the
-	// customer wants to cancel an order". If the users want the instruction to be
-	// triggered unconditionally, the condition can be empty.
-	Condition string `json:"condition,omitempty"`
-	// Description: Optional. The detailed description of this instruction.
-	Description string `json:"description,omitempty"`
-	// DisplayName: Optional. Display name for the instruction.
-	DisplayName string `json:"displayName,omitempty"`
-	// Metadata: Optional. Additional information attached to this instruction.
-	Metadata map[string]string `json:"metadata,omitempty"`
-	// SystemAction: Optional. The action that system should take. For example,
-	// "call GetOrderTime with order_number={order number provided by the
-	// customer}". If the users don't have plugins or don't want to trigger
-	// plugins, the system_action can be empty
-	SystemAction string `json:"systemAction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentAction") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentAction") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1AgentCoachingInstruction) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AgentCoachingInstruction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestion: Suggestion
-// for coaching agents.
-type GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestion struct {
-	// AgentActionSuggestions: Optional. Suggested actions for the agent to take.
-	AgentActionSuggestions []*GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentActionSuggestion `json:"agentActionSuggestions,omitempty"`
-	// ApplicableInstructions: Optional. Instructions applicable based on the
-	// current context.
-	ApplicableInstructions []*GoogleCloudContactcenterinsightsV1alpha1AgentCoachingInstruction `json:"applicableInstructions,omitempty"`
-	// SampleResponses: Optional. Sample response for the Agent.
-	SampleResponses []*GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionSampleResponse `json:"sampleResponses,omitempty"`
-	// SuggestionEval: Self evaluation of the suggestion.
-	SuggestionEval *GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentCoachingSuggestionEval `json:"suggestionEval,omitempty"`
-	// SuggestionReasoning: Reasoning for the suggestion.
-	SuggestionReasoning *GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentCoachingSuggestionReasoning `json:"suggestionReasoning,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentActionSuggestions") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentActionSuggestions") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentActionSug
-// gestion: Actions suggested for the agent. This is based on applicable
-// instructions.
-type GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentActionSuggestion struct {
-	// AgentAction: Optional. The suggested action for the agent.
-	AgentAction string `json:"agentAction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentAction") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentAction") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentActionSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentActionSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentCoachingS
-// uggestionEval: Self evaluations of the suggestion.
-type GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentCoachingSuggestionEval struct {
-	// ActionActionSuggestionEval: Optional. Eval for Agent action suggestion.
-	ActionActionSuggestionEval string `json:"actionActionSuggestionEval,omitempty"`
-	// SampleResponseEval: Optional. Eval for sample response.
-	SampleResponseEval string `json:"sampleResponseEval,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ActionActionSuggestionEval")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActionActionSuggestionEval") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentCoachingSuggestionEval) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentCoachingSuggestionEval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentCoachingS
-// uggestionReasoning: Reasoning for the suggestion.
-type GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentCoachingSuggestionReasoning struct {
-	// AgentActionTaken: Optional. The actions that the agent has taken already.
-	AgentActionTaken string `json:"agentActionTaken,omitempty"`
-	// IssueSummary: Optional. Summary of the issue.
-	IssueSummary string `json:"issueSummary,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentActionTaken") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentActionTaken") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentCoachingSuggestionReasoning) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionAgentCoachingSuggestionReasoning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionSampleResponse
-// : Sample response that the agent can use. This could be based on applicable
-// instructions and ingested data from other systems.
-type GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionSampleResponse struct {
-	// ResponseText: Optional. Sample response for Agent in text.
-	ResponseText string `json:"responseText,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ResponseText") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResponseText") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionSampleResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestionSampleResponse
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6101,31 +5356,6 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData) UnmarshalJSON(da
 	return nil
 }
 
-// GoogleCloudContactcenterinsightsV1alpha1FreeFormSuggestion: Suggestion
-// generated using free form generator.
-type GoogleCloudContactcenterinsightsV1alpha1FreeFormSuggestion struct {
-	// Labels: Optional. Labels for the generator.
-	Labels []string `json:"labels,omitempty"`
-	// Response: Required. Free form suggestion.
-	Response string `json:"response,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Labels") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1FreeFormSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1FreeFormSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudContactcenterinsightsV1alpha1GcsSource: A Cloud Storage source of
 // conversation data.
 type GoogleCloudContactcenterinsightsV1alpha1GcsSource struct {
@@ -6151,278 +5381,6 @@ type GoogleCloudContactcenterinsightsV1alpha1GcsSource struct {
 func (s *GoogleCloudContactcenterinsightsV1alpha1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GcsSource
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1GeneratorSuggestion: Suggestion
-// generated using a Generator.
-type GoogleCloudContactcenterinsightsV1alpha1GeneratorSuggestion struct {
-	// AgentCoachingSuggestion: Optional. Suggestion to coach the agent.
-	AgentCoachingSuggestion *GoogleCloudContactcenterinsightsV1alpha1AgentCoachingSuggestion `json:"agentCoachingSuggestion,omitempty"`
-	// FreeFormSuggestion: Optional. Free form suggestion.
-	FreeFormSuggestion *GoogleCloudContactcenterinsightsV1alpha1FreeFormSuggestion `json:"freeFormSuggestion,omitempty"`
-	// SummarySuggestion: Optional. Suggested summary.
-	SummarySuggestion *GoogleCloudContactcenterinsightsV1alpha1SummarySuggestion `json:"summarySuggestion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentCoachingSuggestion") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentCoachingSuggestion") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1GeneratorSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GeneratorSuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1GetGeneratorSuggestionResponse:
-// Represents response from generators.
-type GoogleCloudContactcenterinsightsV1alpha1GetGeneratorSuggestionResponse struct {
-	// GeneratorSuggestion: The suggestion generated from the Generator.
-	GeneratorSuggestion *GoogleCloudContactcenterinsightsV1alpha1GeneratorSuggestion `json:"generatorSuggestion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GeneratorSuggestion") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GeneratorSuggestion") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1GetGeneratorSuggestionResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GetGeneratorSuggestionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponse: Response
-// for Knowledge Assist. Contains suggested query and optionally includes an
-// answer for the query.
-type GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponse struct {
-	// SuggestedQuery: The query suggested based on the context. Suggestion is made
-	// only if it is different from the previous suggestion.
-	SuggestedQuery *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseSuggestedQuery `json:"suggestedQuery,omitempty"`
-	// SuggestedQueryAnswer: The answer generated for the suggested query. Whether
-	// or not an answer is generated depends on how confident we are about the
-	// generated query.
-	SuggestedQueryAnswer *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswer `json:"suggestedQueryAnswer,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SuggestedQuery") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SuggestedQuery") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAn
-// swer: Represents an answer from Knowledge. Cuurently supports FAQ and
-// Generative answers.
-type GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswer struct {
-	// AnswerText: The piece of text from the `source` that answers this suggested
-	// query.
-	AnswerText string `json:"answerText,omitempty"`
-	// FaqSource: Populated if the prediction came from FAQ.
-	FaqSource *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerFaqSource `json:"faqSource,omitempty"`
-	// GenerativeSource: Populated if the prediction was Generative.
-	GenerativeSource *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSource `json:"generativeSource,omitempty"`
-	// IntentMatchingSource: Populated if the prediction was from intent matching.
-	IntentMatchingSource *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerIntentMatchingSource `json:"intentMatchingSource,omitempty"`
-	// MatchConfidence: The system's confidence score that this answer is a good
-	// match for this conversational query. The range is from 0.0 (completely
-	// uncertain) to 1.0 (completely certain).
-	MatchConfidence float64 `json:"matchConfidence,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AnswerText") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AnswerText") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswer) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswer) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswer
-	var s1 struct {
-		MatchConfidence gensupport.JSONFloat64 `json:"matchConfidence"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.MatchConfidence = float64(s1.MatchConfidence)
-	return nil
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAn
-// swerFaqSource: Details about source of FAQ answer.
-type GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerFaqSource struct {
-	// Document: Indicates which Knowledge Document this answer was extracted from.
-	// Format: `projects//knowledgeBases//documents/`.
-	Document string `json:"document,omitempty"`
-	// Question: The corresponding FAQ question.
-	Question string `json:"question,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Document") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Document") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerFaqSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerFaqSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAn
-// swerGenerativeSource: Details about source of Generative answer.
-type GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSource struct {
-	// Snippets: All snippets used for this Generative Prediction, with their
-	// source URI and data.
-	Snippets []*GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSourceSnippet `json:"snippets,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Snippets") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Snippets") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAn
-// swerGenerativeSourceSnippet: Snippet Source for a Generative Prediction.
-type GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSourceSnippet struct {
-	// Document: Indicates which Knowledge Document this snippet was extracted
-	// from. Format: `projects//knowledgeBases//documents/`.
-	Document string `json:"document,omitempty"`
-	// Text: text taken from that URI.
-	Text string `json:"text,omitempty"`
-	// Title: Title of the document.
-	Title string `json:"title,omitempty"`
-	// Uri: URI the data is sourced from.
-	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Document") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Document") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSourceSnippet) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerGenerativeSourceSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAn
-// swerIntentMatchingSource: Details about source of Intent Matching answer.
-type GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerIntentMatchingSource struct {
-	// Title: Title of the document.
-	Title string `json:"title,omitempty"`
-	// Uri: URI the data is sourced from.
-	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Title") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Title") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerIntentMatchingSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseKnowledgeAnswerIntentMatchingSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseSuggestedQu
-// ery: Represents a suggested query.
-type GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseSuggestedQuery struct {
-	// QueryText: Suggested query text.
-	QueryText string `json:"queryText,omitempty"`
-	// Score: Suggested query score.
-	Score float64 `json:"score,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "QueryText") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "QueryText") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseSuggestedQuery) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseSuggestedQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseSuggestedQuery) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponseSuggestedQuery
-	var s1 struct {
-		Score gensupport.JSONFloat64 `json:"score"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Score = float64(s1.Score)
-	return nil
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1HoldData: The data for a hold
@@ -7124,12 +6082,6 @@ type GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotation struct {
 	EndBoundary *GoogleCloudContactcenterinsightsV1alpha1AnnotationBoundary `json:"endBoundary,omitempty"`
 	// FaqAnswer: Agent Assist FAQ answer data.
 	FaqAnswer *GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData `json:"faqAnswer,omitempty"`
-	// GeneratorSuggestionResult: The generator suggestion result.
-	GeneratorSuggestionResult *GoogleCloudContactcenterinsightsV1alpha1GetGeneratorSuggestionResponse `json:"generatorSuggestionResult,omitempty"`
-	// KnowledgeAssistResult: The Knowledge Assist result.
-	KnowledgeAssistResult *GoogleCloudContactcenterinsightsV1alpha1GetKnowledgeAssistResponse `json:"knowledgeAssistResult,omitempty"`
-	// KnowledgeSearchResult: The Knowledge Search result.
-	KnowledgeSearchResult *GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswer `json:"knowledgeSearchResult,omitempty"`
 	// SmartComposeSuggestion: Agent Assist Smart Compose suggestion data.
 	SmartComposeSuggestion *GoogleCloudContactcenterinsightsV1alpha1SmartComposeSuggestionData `json:"smartComposeSuggestion,omitempty"`
 	// SmartReply: Agent Assist Smart Reply data.
@@ -7137,6 +6089,8 @@ type GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotation struct {
 	// StartBoundary: The boundary in the conversation where the annotation starts,
 	// inclusive.
 	StartBoundary *GoogleCloudContactcenterinsightsV1alpha1AnnotationBoundary `json:"startBoundary,omitempty"`
+	// UserInput: Explicit input used for generating the answer
+	UserInput *GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput `json:"userInput,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnnotationId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7155,86 +6109,30 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotation) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswer: Represents a
-// SearchKnowledge answer.
-type GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswer struct {
-	// Answer: The piece of text from the knowledge base documents that answers the
-	// search query
-	Answer string `json:"answer,omitempty"`
-	// AnswerRecord: The name of the answer record. Format:
-	// `projects//locations//answer Records/`
-	AnswerRecord string `json:"answerRecord,omitempty"`
-	// AnswerSources: All sources used to generate the answer.
-	AnswerSources []*GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswerAnswerSource `json:"answerSources,omitempty"`
-	// AnswerType: The type of the answer.
-	//
-	// Possible values:
-	//   "ANSWER_TYPE_UNSPECIFIED" - The answer has a unspecified type.
-	//   "FAQ" - The answer is from FAQ documents.
-	//   "GENERATIVE" - The answer is from generative model.
-	//   "INTENT" - The answer is from intent matching.
-	AnswerType string `json:"answerType,omitempty"`
-	// ConfidenceScore: The confidence score in [0.0, 1.0] range.
-	ConfidenceScore float64 `json:"confidenceScore,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Answer") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswer) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswer) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswer
-	var s1 struct {
-		ConfidenceScore gensupport.JSONFloat64 `json:"confidenceScore"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.ConfidenceScore = float64(s1.ConfidenceScore)
-	return nil
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswerAnswerSource:
-// The sources of the answers.
-type GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswerAnswerSource struct {
-	// Document: The document from which the snippet was extracted. Format:
-	// `projects//knowledgeBases//documents/`
-	Document string `json:"document,omitempty"`
-	// Snippet: The relevant snippet of the article.
-	Snippet string `json:"snippet,omitempty"`
-	// Title: The title of the article.
-	Title string `json:"title,omitempty"`
-	// Uri: The URI of the article.
-	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Document") to
+// GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput: Explicit
+// input used for generating the answer
+type GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput struct {
+	// GeneratorName: The resource name of associated generator. Format:
+	// `projects//locations//generators/`
+	GeneratorName string `json:"generatorName,omitempty"`
+	// Query: Query text. Article Search uses this to store the input query used to
+	// generate the search results.
+	Query string `json:"query,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GeneratorName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Document") to include in API
+	// NullFields is a list of field names (e.g. "GeneratorName") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswerAnswerSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SearchKnowledgeAnswerAnswerSource
+func (s *GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotationUserInput
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7403,54 +6301,6 @@ type GoogleCloudContactcenterinsightsV1alpha1SpeechConfig struct {
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1SpeechConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SpeechConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1SummarySuggestion: Suggested summary
-// of the conversation.
-type GoogleCloudContactcenterinsightsV1alpha1SummarySuggestion struct {
-	// SummarySections: Required. All the parts of generated summary.
-	SummarySections []*GoogleCloudContactcenterinsightsV1alpha1SummarySuggestionSummarySection `json:"summarySections,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SummarySections") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SummarySections") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1SummarySuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SummarySuggestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1SummarySuggestionSummarySection: A
-// component of the generated summary.
-type GoogleCloudContactcenterinsightsV1alpha1SummarySuggestionSummarySection struct {
-	// Section: Required. Name of the section.
-	Section string `json:"section,omitempty"`
-	// Summary: Required. Summary text for the section.
-	Summary string `json:"summary,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Section") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Section") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudContactcenterinsightsV1alpha1SummarySuggestionSummarySection) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SummarySuggestionSummarySection
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

@@ -959,7 +959,7 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	// Description: Description of the `AccessLevel` and its use. Does not affect
 	// behavior.
 	Description string `json:"description,omitempty"`
-	// Name: Resource name for the `AccessLevel`. Format:
+	// Name: Identifier. Resource name for the `AccessLevel`. Format:
 	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
 	// `access_level` component must begin with a letter, followed by alphanumeric
 	// characters or `_`. Its maximum length is 50 characters. After you create an
@@ -994,10 +994,10 @@ func (s *GoogleIdentityAccesscontextmanagerV1AccessLevel) MarshalJSON() ([]byte,
 type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// Etag: Output only. An opaque identifier for the current version of the
 	// `AccessPolicy`. This will always be a strongly validated etag, meaning that
-	// two Access Polices will be identical if and only if their etags are
+	// two Access Policies will be identical if and only if their etags are
 	// identical. Clients should not expect this to be in any specific format.
 	Etag string `json:"etag,omitempty"`
-	// Name: Output only. Resource name of the `AccessPolicy`. Format:
+	// Name: Output only. Identifier. Resource name of the `AccessPolicy`. Format:
 	// `accessPolicies/{access_policy}`
 	Name string `json:"name,omitempty"`
 	// Parent: Required. The parent of this `AccessPolicy` in the Cloud Resource
@@ -1661,7 +1661,7 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// Description: Description of the `ServicePerimeter` and its use. Does not
 	// affect behavior.
 	Description string `json:"description,omitempty"`
-	// Name: Resource name for the `ServicePerimeter`. Format:
+	// Name: Identifier. Resource name for the `ServicePerimeter`. Format:
 	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The
 	// `service_perimeter` component must begin with a letter, followed by
 	// alphanumeric characters or `_`. After you create a `ServicePerimeter`, you

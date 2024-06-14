@@ -1360,6 +1360,9 @@ type LinkedVpcNetwork struct {
 	// ExcludeExportRanges: Optional. IP ranges encompassing the subnets to be
 	// excluded from peering.
 	ExcludeExportRanges []string `json:"excludeExportRanges,omitempty"`
+	// IncludeExportRanges: Optional. IP ranges allowed to be included from
+	// peering.
+	IncludeExportRanges []string `json:"includeExportRanges,omitempty"`
 	// Uri: Required. The URI of the VPC network resource.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludeExportRanges") to

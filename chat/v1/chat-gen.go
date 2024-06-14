@@ -100,6 +100,25 @@ const mtlsBasePath = "https://chat.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Delete conversations and spaces owned by your organization and remove access
+	// to associated files in Google Chat
+	ChatAdminDeleteScope = "https://www.googleapis.com/auth/chat.admin.delete"
+
+	// View, add, update and remove members and managers in conversations owned by
+	// your organization
+	ChatAdminMembershipsScope = "https://www.googleapis.com/auth/chat.admin.memberships"
+
+	// View members and managers in conversations owned by your organization
+	ChatAdminMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.admin.memberships.readonly"
+
+	// View or edit display name, description, and other metadata for all Google
+	// Chat conversations owned by your organization
+	ChatAdminSpacesScope = "https://www.googleapis.com/auth/chat.admin.spaces"
+
+	// View display name, description, and other metadata for all Google Chat
+	// conversations owned by your organization
+	ChatAdminSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.admin.spaces.readonly"
+
 	// Private Service: https://www.googleapis.com/auth/chat.bot
 	ChatBotScope = "https://www.googleapis.com/auth/chat.bot"
 
@@ -158,6 +177,11 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/chat.admin.delete",
+		"https://www.googleapis.com/auth/chat.admin.memberships",
+		"https://www.googleapis.com/auth/chat.admin.memberships.readonly",
+		"https://www.googleapis.com/auth/chat.admin.spaces",
+		"https://www.googleapis.com/auth/chat.admin.spaces.readonly",
 		"https://www.googleapis.com/auth/chat.bot",
 		"https://www.googleapis.com/auth/chat.delete",
 		"https://www.googleapis.com/auth/chat.import",
@@ -1026,7 +1050,7 @@ type CommonEventObject struct {
 	//   "SHEETS" - The add-on launches from Google Sheets.
 	//   "SLIDES" - The add-on launches from Google Slides.
 	//   "DRAWINGS" - The add-on launches from Google Drawings.
-	//   "CHAT" - A Google Chat app. Not used for Google Workspace Add-ons.
+	//   "CHAT" - A Google Chat app.
 	HostApp string `json:"hostApp,omitempty"`
 	// InvokedFunction: Name of the invoked function associated with the widget.
 	// Only set for Chat apps.
@@ -2564,6 +2588,7 @@ type GoogleAppsCardV1PlatformDataSource struct {
 	//   "UNKNOWN" - Default value. Don't use.
 	//   "USER" - Google Workspace users. The user can only view and select users
 	// from their Google Workspace organization.
+	//   "DRIVE" - Represents a data source from Google Drive OnePick.
 	CommonDataSource string `json:"commonDataSource,omitempty"`
 	// HostAppDataSource: A data source that's unique to a Google Workspace host
 	// application, such spaces in Google Chat.
@@ -6178,8 +6203,9 @@ type SpacesListCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 // Lists spaces visible to the caller or authenticated user. Group chats and
 // DMs aren't listed until the first message is sent. To list all named spaces
-// by Google Workspace organization, use the `spaces.search()` method using
-// Workspace administrator privileges instead.
+// by Google Workspace organization, use the `spaces.search()`
+// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces/search)
+// method using Workspace administrator privileges instead.
 func (r *SpacesService) List() *SpacesListCall {
 	c := &SpacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c

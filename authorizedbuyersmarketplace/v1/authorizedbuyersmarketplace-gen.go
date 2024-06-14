@@ -5238,7 +5238,7 @@ type BuyersFinalizedDealsPauseCall struct {
 // Pause: Pauses serving of the given finalized deal. This call only pauses the
 // serving status, and does not affect other fields of the finalized deal.
 // Calling this method for an already paused deal has no effect. This method
-// only applies to programmatic guaranteed deals.
+// only applies to programmatic guaranteed deals and preferred deals.
 //
 // - name: Format: `buyers/{accountId}/finalizedDeals/{dealId}`.
 func (r *BuyersFinalizedDealsService) Pause(name string, pausefinalizeddealrequest *PauseFinalizedDealRequest) *BuyersFinalizedDealsPauseCall {
@@ -5343,7 +5343,7 @@ type BuyersFinalizedDealsResumeCall struct {
 // an running deal has no effect. If a deal is initially paused by the seller,
 // calling this method will not resume serving of the deal until the seller
 // also resumes the deal. This method only applies to programmatic guaranteed
-// deals.
+// deals and preferred deals.
 //
 // - name: Format: `buyers/{accountId}/finalizedDeals/{dealId}`.
 func (r *BuyersFinalizedDealsService) Resume(name string, resumefinalizeddealrequest *ResumeFinalizedDealRequest) *BuyersFinalizedDealsResumeCall {

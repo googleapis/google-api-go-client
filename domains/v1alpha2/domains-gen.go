@@ -690,6 +690,50 @@ func (s *Domain) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// DomainForwarding: Domain forwarding configuration.
+type DomainForwarding struct {
+	// PathForwarding: If true, forwards the path after the domain name to the same
+	// path at the new address.
+	PathForwarding bool `json:"pathForwarding,omitempty"`
+	// PemCertificate: The PEM-encoded certificate chain.
+	PemCertificate string `json:"pemCertificate,omitempty"`
+	// RedirectType: The redirect type.
+	//
+	// Possible values:
+	//   "REDIRECT_TYPE_UNSPECIFIED" - Redirect Type is unspecified.
+	//   "TEMPORARY" - 301 redirect. Allows to propagate changes to the forwarding
+	// address quickly.
+	//   "PERMANENT" - 302 redirect. Allows browsers to cache the forwarding
+	// address. This may help the address resolve more quickly. Changes may take
+	// longer to propagate
+	RedirectType string `json:"redirectType,omitempty"`
+	// SslEnabled: If true, the forwarding works also over HTTPS.
+	SslEnabled bool `json:"sslEnabled,omitempty"`
+	// Subdomain: The subdomain of the registered domain that is being forwarded.
+	// E.g. `www.example.com`, `example.com` (i.e. the registered domain itself) or
+	// `*.example.com` (i.e. all subdomains).
+	Subdomain string `json:"subdomain,omitempty"`
+	// TargetUri: The target of the domain forwarding, i.e. the path to redirect
+	// the `subdomain` to.
+	TargetUri string `json:"targetUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PathForwarding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PathForwarding") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *DomainForwarding) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainForwarding
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // DsRecord: Defines a Delegation Signer (DS) record, which is needed to enable
 // DNSSEC for a domain. It contains a digest (hash) of a DNSKEY record that
 // must be present in the domain's DNS zone.
@@ -747,6 +791,32 @@ type DsRecord struct {
 
 func (s *DsRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod DsRecord
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// EmailForwarding: Email forwarding configuration.
+type EmailForwarding struct {
+	// Alias: An alias recipient email that forwards emails to the
+	// `target_email_address`. For example, `admin@example.com` or `*@example.com`
+	// (wildcard alias forwards all the emails under the registered domain).
+	Alias string `json:"alias,omitempty"`
+	// TargetEmailAddress: Target email that receives emails sent to the `alias`.
+	TargetEmailAddress string `json:"targetEmailAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Alias") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *EmailForwarding) MarshalJSON() ([]byte, error) {
+	type NoMethod EmailForwarding
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -915,6 +985,29 @@ func (s *ImportDomainRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// InitiatePushTransferRequest: Request for the `InitiatePushTransfer` method.
+type InitiatePushTransferRequest struct {
+	// Tag: Required. The Tag of the new registrar. Can be found at List of
+	// registrars (https://nominet.uk/registrar-list/).
+	Tag string `json:"tag,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Tag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Tag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *InitiatePushTransferRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InitiatePushTransferRequest
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // ListLocationsResponse: The response message for Locations.ListLocations.
 type ListLocationsResponse struct {
 	// Locations: A list of locations that matches the specified filter in the
@@ -1041,6 +1134,16 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // ManagementSettings: Defines renewal, billing, and transfer settings for a
 // `Registration`.
 type ManagementSettings struct {
+	// EffectiveTransferLockState: Output only. The actual transfer lock state for
+	// this `Registration`.
+	//
+	// Possible values:
+	//   "TRANSFER_LOCK_STATE_UNSPECIFIED" - The state is unspecified.
+	//   "UNLOCKED" - The domain is unlocked and can be transferred to another
+	// registrar.
+	//   "LOCKED" - The domain is locked and cannot be transferred to another
+	// registrar.
+	EffectiveTransferLockState string `json:"effectiveTransferLockState,omitempty"`
 	// PreferredRenewalMethod: Optional. The desired renewal method for this
 	// `Registration`. The actual `renewal_method` is automatically updated to
 	// reflect this choice. If unset or equal to `RENEWAL_METHOD_UNSPECIFIED`, the
@@ -1084,7 +1187,12 @@ type ManagementSettings struct {
 	RenewalMethod string `json:"renewalMethod,omitempty"`
 	// TransferLockState: This is the desired transfer lock state for this
 	// `Registration`. A transfer lock controls whether the domain can be
-	// transferred to another registrar.
+	// transferred to another registrar. The transfer lock state of the domain is
+	// returned in the `effective_transfer_lock_state` property. The transfer lock
+	// state values might be different for the following reasons: *
+	// `transfer_lock_state` was updated only a short time ago. * Domains with the
+	// `TRANSFER_LOCK_UNSUPPORTED_BY_REGISTRY` state are in the list of
+	// `domain_properties`. These domains are always in the `UNLOCKED` state.
 	//
 	// Possible values:
 	//   "TRANSFER_LOCK_STATE_UNSPECIFIED" - The state is unspecified.
@@ -1093,13 +1201,13 @@ type ManagementSettings struct {
 	//   "LOCKED" - The domain is locked and cannot be transferred to another
 	// registrar.
 	TransferLockState string `json:"transferLockState,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PreferredRenewalMethod") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "EffectiveTransferLockState")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PreferredRenewalMethod") to
+	// NullFields is a list of field names (e.g. "EffectiveTransferLockState") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1572,6 +1680,24 @@ type Registration struct {
 	// DomainName: Required. Immutable. The domain name. Unicode domain names must
 	// be expressed in Punycode format.
 	DomainName string `json:"domainName,omitempty"`
+	// DomainProperties: Output only. Special properties of the domain.
+	//
+	// Possible values:
+	//   "DOMAIN_PROPERTY_UNSPECIFIED" - The property is undefined.
+	//   "TRANSFER_LOCK_UNSUPPORTED_BY_REGISTRY" - The domain does not support
+	// transfer locks due to restrictions of the registry. Such domains are
+	// effectively always unlocked and any change made to
+	// `management_settings.transfer_lock_state` is ignored.
+	//   "REQUIRE_PUSH_TRANSFER" - The domain uses an alternative `Push Transfer`
+	// process to transfer the domain to another registrar. There are two important
+	// consequences: * Cloud Domains does not supply the authorization codes. * To
+	// initiate the process to transfer the domain to another registrar, you must
+	// provide a tag of the registrar you want to transfer to. You can do this by
+	// using the `InitiatePushTransfer` method. For more information, see [Transfer
+	// a registered domain to another
+	// registrar](https://cloud.google.com/domains/docs/transfer-domain-to-another-r
+	// egistrar).
+	DomainProperties []string `json:"domainProperties,omitempty"`
 	// ExpireTime: Output only. The expiration timestamp of the `Registration`.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Issues: Output only. The set of issues with the `Registration` that require
@@ -1592,6 +1718,14 @@ type Registration struct {
 	//   "PROBLEM_WITH_BILLING" - The billing account is not in good standing. The
 	// domain is not automatically renewed at its expiration time unless you
 	// resolve problems with your billing account.
+	//   "DNS_NOT_ACTIVATED" - The registry failed to validate your DNS
+	// configuration and activate your domain. The failure might happen for the
+	// following reasons: * You recently registered the domain (wait up to 72
+	// hours). * You provided invalid name servers or name servers that correspond
+	// to a newly created DNS zone. Verify your DNS configuration. If the
+	// configuration is incorrect, you must fix it. If the configuration is
+	// correct, either wait or call the ConfigureDnsSettings method to retry the
+	// registry validation.
 	Issues []string `json:"issues,omitempty"`
 	// Labels: Set of labels associated with the `Registration`.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1727,9 +1861,70 @@ func (s *Registration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// RenewDomainRequest: Request for the `RenewDomain` method.
+type RenewDomainRequest struct {
+	// ValidateOnly: Optional. When true, only validation is performed, without
+	// actually renewing the domain. For more information, see Request validation
+	// (https://cloud.google.com/apis/design/design_patterns#request_validation)
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// YearlyPrice: Required. Acknowledgement of the price to renew the domain for
+	// one year. To get the price, see Cloud Domains pricing
+	// (https://cloud.google.com/domains/pricing). If not provided, the expected
+	// price is returned in the error message.
+	YearlyPrice *Money `json:"yearlyPrice,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ValidateOnly") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ValidateOnly") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RenewDomainRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RenewDomainRequest
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // ResetAuthorizationCodeRequest: Request for the `ResetAuthorizationCode`
 // method.
 type ResetAuthorizationCodeRequest struct {
+}
+
+// RetrieveGoogleDomainsForwardingConfigResponse: Response for the
+// `RetrieveGoogleDomainsForwardingConfig` method.
+type RetrieveGoogleDomainsForwardingConfigResponse struct {
+	// DomainForwardings: The list of domain forwarding configurations. A
+	// forwarding configuration might not work correctly if the required DNS
+	// records are not present in the domain's authoritative DNS zone.
+	DomainForwardings []*DomainForwarding `json:"domainForwardings,omitempty"`
+	// EmailForwardings: The list of email forwarding configurations. A forwarding
+	// configuration might not work correctly if the required DNS records are not
+	// present in the domain's authoritative DNS zone.
+	EmailForwardings []*EmailForwarding `json:"emailForwardings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DomainForwardings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DomainForwardings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RetrieveGoogleDomainsForwardingConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RetrieveGoogleDomainsForwardingConfigResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RetrieveImportableDomainsResponse: Deprecated: For more information, see
@@ -3479,6 +3674,117 @@ func (c *ProjectsLocationsRegistrationsImportCall) Do(opts ...googleapi.CallOpti
 	return ret, nil
 }
 
+type ProjectsLocationsRegistrationsInitiatePushTransferCall struct {
+	s                           *Service
+	registration                string
+	initiatepushtransferrequest *InitiatePushTransferRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// InitiatePushTransfer: Initiates the `Push Transfer` process to transfer the
+// domain to another registrar. The process might complete instantly or might
+// require confirmation or additional work. Check the emails sent to the email
+// address of the registrant. The process is aborted after a timeout if it's
+// not completed. This method is only supported for domains that have the
+// `REQUIRE_PUSH_TRANSFER` property in the list of `domain_properties`. The
+// domain must also be unlocked before it can be transferred to a different
+// registrar. For more information, see Transfer a registered domain to another
+// registrar
+// (https://cloud.google.com/domains/docs/transfer-domain-to-another-registrar).
+//
+//   - registration: The name of the `Registration` for which the push transfer
+//     is initiated, in the format `projects/*/locations/*/registrations/*`.
+func (r *ProjectsLocationsRegistrationsService) InitiatePushTransfer(registration string, initiatepushtransferrequest *InitiatePushTransferRequest) *ProjectsLocationsRegistrationsInitiatePushTransferCall {
+	c := &ProjectsLocationsRegistrationsInitiatePushTransferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.registration = registration
+	c.initiatepushtransferrequest = initiatepushtransferrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRegistrationsInitiatePushTransferCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistrationsInitiatePushTransferCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRegistrationsInitiatePushTransferCall) Context(ctx context.Context) *ProjectsLocationsRegistrationsInitiatePushTransferCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRegistrationsInitiatePushTransferCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistrationsInitiatePushTransferCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.initiatepushtransferrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha2/{+registration}:initiatePushTransfer")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"registration": c.registration,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "domains.projects.locations.registrations.initiatePushTransfer" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegistrationsInitiatePushTransferCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsRegistrationsListCall struct {
 	s            *Service
 	parent       string
@@ -3865,6 +4171,111 @@ func (c *ProjectsLocationsRegistrationsRegisterCall) Do(opts ...googleapi.CallOp
 	return ret, nil
 }
 
+type ProjectsLocationsRegistrationsRenewDomainCall struct {
+	s                  *Service
+	registration       string
+	renewdomainrequest *RenewDomainRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// RenewDomain: Renews a recently expired domain. This method can only be
+// called on domains that expired in the previous 30 days. After the renewal,
+// the new expiration time of the domain is one year after the old expiration
+// time and you are charged a `yearly_price` for the renewal.
+//
+//   - registration: The name of the `Registration` whish is being renewed, in
+//     the format `projects/*/locations/*/registrations/*`.
+func (r *ProjectsLocationsRegistrationsService) RenewDomain(registration string, renewdomainrequest *RenewDomainRequest) *ProjectsLocationsRegistrationsRenewDomainCall {
+	c := &ProjectsLocationsRegistrationsRenewDomainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.registration = registration
+	c.renewdomainrequest = renewdomainrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRegistrationsRenewDomainCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistrationsRenewDomainCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRegistrationsRenewDomainCall) Context(ctx context.Context) *ProjectsLocationsRegistrationsRenewDomainCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRegistrationsRenewDomainCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistrationsRenewDomainCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.renewdomainrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha2/{+registration}:renewDomain")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"registration": c.registration,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "domains.projects.locations.registrations.renewDomain" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegistrationsRenewDomainCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsRegistrationsResetAuthorizationCodeCall struct {
 	s                             *Service
 	registration                  string
@@ -3876,7 +4287,10 @@ type ProjectsLocationsRegistrationsResetAuthorizationCodeCall struct {
 
 // ResetAuthorizationCode: Resets the authorization code of the `Registration`
 // to a new random string. You can call this method only after 60 days have
-// elapsed since the initial domain registration.
+// elapsed since the initial domain registration. Domains that have the
+// `REQUIRE_PUSH_TRANSFER` property in the list of `domain_properties` don't
+// support authorization codes and must use the `InitiatePushTransfer` method
+// to initiate the process to transfer the domain to a different registrar.
 //
 //   - registration: The name of the `Registration` whose authorization code is
 //     being reset, in the format `projects/*/locations/*/registrations/*`.
@@ -3982,7 +4396,10 @@ type ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall struct {
 // RetrieveAuthorizationCode: Gets the authorization code of the `Registration`
 // for the purpose of transferring the domain to another registrar. You can
 // call this method only after 60 days have elapsed since the initial domain
-// registration.
+// registration. Domains that have the `REQUIRE_PUSH_TRANSFER` property in the
+// list of `domain_properties` don't support authorization codes and must use
+// the `InitiatePushTransfer` method to initiate the process to transfer the
+// domain to a different registrar.
 //
 //   - registration: The name of the `Registration` whose authorization code is
 //     being retrieved, in the format `projects/*/locations/*/registrations/*`.
@@ -4070,6 +4487,122 @@ func (c *ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall) Do(opts ..
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &AuthorizationCode{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall struct {
+	s            *Service
+	registration string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveGoogleDomainsForwardingConfig: Lists the deprecated domain and email
+// forwarding configurations you set up in the deprecated Google Domains UI.
+// The configuration is present only for domains with the
+// `google_domains_redirects_data_available` set to `true` in the
+// `Registration`'s `dns_settings`. A forwarding configuration might not work
+// correctly if required DNS records are not present in the domain's
+// authoritative DNS Zone.
+//
+//   - registration: The name of the `Registration` whose Google Domains
+//     forwarding configuration details are being retrieved, in the format
+//     `projects/*/locations/*/registrations/*`.
+func (r *ProjectsLocationsRegistrationsService) RetrieveGoogleDomainsForwardingConfig(registration string) *ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall {
+	c := &ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.registration = registration
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall) Context(ctx context.Context) *ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha2/{+registration}:retrieveGoogleDomainsForwardingConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"registration": c.registration,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "domains.projects.locations.registrations.retrieveGoogleDomainsForwardingConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RetrieveGoogleDomainsForwardingConfigResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegistrationsRetrieveGoogleDomainsForwardingConfigCall) Do(opts ...googleapi.CallOption) (*RetrieveGoogleDomainsForwardingConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RetrieveGoogleDomainsForwardingConfigResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

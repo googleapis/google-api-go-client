@@ -519,6 +519,34 @@ func (s *AutoscalingPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// AutotuningConfig: Autotuning configuration of the workload.
+type AutotuningConfig struct {
+	// Scenarios: Optional. Scenarios for which tunings are applied.
+	//
+	// Possible values:
+	//   "SCENARIO_UNSPECIFIED" - Default value.
+	//   "SCALING" - Scaling recommendations such as initialExecutors.
+	//   "BROADCAST_HASH_JOIN" - Adding hints for potential relation broadcasts.
+	//   "MEMORY" - Memory management for workloads.
+	Scenarios []string `json:"scenarios,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scenarios") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scenarios") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutotuningConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AutotuningConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // AuxiliaryNodeGroup: Node group identification and configuration information.
 type AuxiliaryNodeGroup struct {
 	// NodeGroup: Required. Node group configuration.
@@ -3619,6 +3647,8 @@ type NodeGroupOperationMetadata struct {
 	//   "RESIZE" - Resize node group operation type.
 	//   "REPAIR" - Repair node group operation type.
 	//   "UPDATE_LABELS" - Update node group label operation type.
+	//   "START" - Start node group operation type.
+	//   "STOP" - Stop node group operation type.
 	OperationType string `json:"operationType,omitempty"`
 	// Status: Output only. Current operation status.
 	Status *ClusterOperationStatus `json:"status,omitempty"`
@@ -4391,6 +4421,11 @@ func (s *ResizeNodeGroupRequest) MarshalJSON() ([]byte, error) {
 
 // RuntimeConfig: Runtime configuration for a workload.
 type RuntimeConfig struct {
+	// AutotuningConfig: Optional. Autotuning configuration of the workload.
+	AutotuningConfig *AutotuningConfig `json:"autotuningConfig,omitempty"`
+	// Cohort: Optional. Cohort identifier. Identifies families of the workloads
+	// having the same shape, e.g. daily ETL jobs.
+	Cohort string `json:"cohort,omitempty"`
 	// ContainerImage: Optional. Optional custom container image for the job
 	// runtime environment. If not specified, a default container image will be
 	// used.
@@ -4402,13 +4437,13 @@ type RuntimeConfig struct {
 	RepositoryConfig *RepositoryConfig `json:"repositoryConfig,omitempty"`
 	// Version: Optional. Version of the batch runtime.
 	Version string `json:"version,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ContainerImage") to
+	// ForceSendFields is a list of field names (e.g. "AutotuningConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ContainerImage") to include in
+	// NullFields is a list of field names (e.g. "AutotuningConfig") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

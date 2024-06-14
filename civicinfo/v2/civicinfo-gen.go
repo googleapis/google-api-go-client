@@ -1341,10 +1341,14 @@ type ElectionsVoterInfoQueryCall struct {
 
 // VoterInfoQuery: Looks up information relevant to a voter based on the
 // voter's registered address.
-//
-// - address: The registered address of the voter to look up.
-func (r *ElectionsService) VoterInfoQuery(address string) *ElectionsVoterInfoQueryCall {
+func (r *ElectionsService) VoterInfoQuery() *ElectionsVoterInfoQueryCall {
 	c := &ElectionsVoterInfoQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Address sets the optional parameter "address": The registered address of the
+// voter to look up.
+func (c *ElectionsVoterInfoQueryCall) Address(address string) *ElectionsVoterInfoQueryCall {
 	c.urlParams_.Set("address", address)
 	return c
 }

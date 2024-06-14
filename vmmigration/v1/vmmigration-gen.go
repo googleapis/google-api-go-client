@@ -463,11 +463,11 @@ func (s *AvailableUpdates) MarshalJSON() ([]byte, error) {
 
 // AwsDiskDetails: The details of an AWS instance disk.
 type AwsDiskDetails struct {
-	// DiskNumber: The ordinal number of the disk.
+	// DiskNumber: Output only. The ordinal number of the disk.
 	DiskNumber int64 `json:"diskNumber,omitempty"`
-	// SizeGb: Size in GB.
+	// SizeGb: Output only. Size in GB.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
-	// VolumeId: AWS volume ID.
+	// VolumeId: Output only. AWS volume ID.
 	VolumeId string `json:"volumeId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskNumber") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -567,11 +567,12 @@ func (s *AwsSourceDetails) MarshalJSON() ([]byte, error) {
 
 // AwsSourceVmDetails: Represent the source AWS VM details.
 type AwsSourceVmDetails struct {
-	// CommittedStorageBytes: The total size of the disks being migrated in bytes.
+	// CommittedStorageBytes: Output only. The total size of the disks being
+	// migrated in bytes.
 	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
-	// Disks: The disks attached to the source VM.
+	// Disks: Output only. The disks attached to the source VM.
 	Disks []*AwsDiskDetails `json:"disks,omitempty"`
-	// Firmware: The firmware type of the source VM.
+	// Firmware: Output only. The firmware type of the source VM.
 	//
 	// Possible values:
 	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
@@ -707,11 +708,11 @@ func (s *AwsVmsDetails) MarshalJSON() ([]byte, error) {
 
 // AzureDiskDetails: The details of an Azure VM disk.
 type AzureDiskDetails struct {
-	// DiskId: Azure disk ID.
+	// DiskId: Output only. Azure disk ID.
 	DiskId string `json:"diskId,omitempty"`
-	// DiskNumber: The ordinal number of the disk.
+	// DiskNumber: Output only. The ordinal number of the disk.
 	DiskNumber int64 `json:"diskNumber,omitempty"`
-	// SizeGb: Size in GB.
+	// SizeGb: Output only. Size in GB.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "DiskId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -783,11 +784,12 @@ func (s *AzureSourceDetails) MarshalJSON() ([]byte, error) {
 
 // AzureSourceVmDetails: Represent the source Azure VM details.
 type AzureSourceVmDetails struct {
-	// CommittedStorageBytes: The total size of the disks being migrated in bytes.
+	// CommittedStorageBytes: Output only. The total size of the disks being
+	// migrated in bytes.
 	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
-	// Disks: The disks attached to the source VM.
+	// Disks: Output only. The disks attached to the source VM.
 	Disks []*AzureDiskDetails `json:"disks,omitempty"`
-	// Firmware: The firmware type of the source VM.
+	// Firmware: Output only. The firmware type of the source VM.
 	//
 	// Possible values:
 	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
@@ -2754,7 +2756,7 @@ func (s *MigrationError) MarshalJSON() ([]byte, error) {
 // be used with google.rpc.Status message. MigrationWarning is used to present
 // the user with warning information in migration operations.
 type MigrationWarning struct {
-	// ActionItem: Suggested action for solving the warning.
+	// ActionItem: Output only. Suggested action for solving the warning.
 	ActionItem *LocalizedMessage `json:"actionItem,omitempty"`
 	// Code: The warning code.
 	//
@@ -2762,10 +2764,10 @@ type MigrationWarning struct {
 	//   "WARNING_CODE_UNSPECIFIED" - Default value. This value is not used.
 	//   "ADAPTATION_WARNING" - A warning originated from OS Adaptation.
 	Code string `json:"code,omitempty"`
-	// HelpLinks: URL(s) pointing to additional information on handling the current
-	// warning.
+	// HelpLinks: Output only. URL(s) pointing to additional information on
+	// handling the current warning.
 	HelpLinks []*Link `json:"helpLinks,omitempty"`
-	// WarningMessage: The localized warning message.
+	// WarningMessage: Output only. The localized warning message.
 	WarningMessage *LocalizedMessage `json:"warningMessage,omitempty"`
 	// WarningTime: The time the warning occurred.
 	WarningTime string `json:"warningTime,omitempty"`
@@ -2789,10 +2791,11 @@ func (s *MigrationWarning) MarshalJSON() ([]byte, error) {
 
 // NetworkInterface: NetworkInterface represents a NIC of a VM.
 type NetworkInterface struct {
-	// ExternalIp: The external IP to define in the NIC.
+	// ExternalIp: Optional. The external IP to define in the NIC.
 	ExternalIp string `json:"externalIp,omitempty"`
-	// InternalIp: The internal IP to define in the NIC. The formats accepted are:
-	// `ephemeral` \ ipv4 address \ a named address resource full path.
+	// InternalIp: Optional. The internal IP to define in the NIC. The formats
+	// accepted are: `ephemeral` \ ipv4 address \ a named address resource full
+	// path.
 	InternalIp string `json:"internalIp,omitempty"`
 	// Network: The network to connect the NIC to.
 	Network string `json:"network,omitempty"`
@@ -3094,7 +3097,8 @@ type ReplicationCycle struct {
 	CycleNumber int64 `json:"cycleNumber,omitempty"`
 	// EndTime: The time the replication cycle has ended.
 	EndTime string `json:"endTime,omitempty"`
-	// Error: Provides details on the state of the cycle in case of an error.
+	// Error: Output only. Provides details on the state of the cycle in case of an
+	// error.
 	Error *Status `json:"error,omitempty"`
 	// Name: The identifier of the ReplicationCycle.
 	Name string `json:"name,omitempty"`
@@ -3320,9 +3324,9 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // Tag: Tag is an AWS tag representation.
 type Tag struct {
-	// Key: Key of tag.
+	// Key: Required. Key of tag.
 	Key string `json:"key,omitempty"`
-	// Value: Value of tag.
+	// Value: Required. Value of tag.
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3413,8 +3417,8 @@ func (s *UpgradeApplianceRequest) MarshalJSON() ([]byte, error) {
 // UpgradeStatus: UpgradeStatus contains information about upgradeAppliance
 // operation.
 type UpgradeStatus struct {
-	// Error: Provides details on the state of the upgrade operation in case of an
-	// error.
+	// Error: Output only. Provides details on the state of the upgrade operation
+	// in case of an error.
 	Error *Status `json:"error,omitempty"`
 	// PreviousVersion: The version from which we upgraded.
 	PreviousVersion string `json:"previousVersion,omitempty"`
@@ -3640,11 +3644,11 @@ func (s *VmUtilizationMetrics) MarshalJSON() ([]byte, error) {
 
 // VmwareDiskDetails: The details of a Vmware VM disk.
 type VmwareDiskDetails struct {
-	// DiskNumber: The ordinal number of the disk.
+	// DiskNumber: Output only. The ordinal number of the disk.
 	DiskNumber int64 `json:"diskNumber,omitempty"`
-	// Label: The disk label.
+	// Label: Output only. The disk label.
 	Label string `json:"label,omitempty"`
-	// SizeGb: Size in GB.
+	// SizeGb: Output only. Size in GB.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "DiskNumber") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3698,11 +3702,12 @@ func (s *VmwareSourceDetails) MarshalJSON() ([]byte, error) {
 
 // VmwareSourceVmDetails: Represent the source Vmware VM details.
 type VmwareSourceVmDetails struct {
-	// CommittedStorageBytes: The total size of the disks being migrated in bytes.
+	// CommittedStorageBytes: Output only. The total size of the disks being
+	// migrated in bytes.
 	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
-	// Disks: The disks attached to the source VM.
+	// Disks: Output only. The disks attached to the source VM.
 	Disks []*VmwareDiskDetails `json:"disks,omitempty"`
-	// Firmware: The firmware type of the source VM.
+	// Firmware: Output only. The firmware type of the source VM.
 	//
 	// Possible values:
 	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.

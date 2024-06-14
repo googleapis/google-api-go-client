@@ -649,7 +649,6 @@ type AutomationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
-	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -701,9 +700,6 @@ type AutomationRolloutMetadata struct {
 	// AdvanceAutomationRuns: Output only. The names of the AutomationRuns
 	// initiated by an advance rollout rule.
 	AdvanceAutomationRuns []string `json:"advanceAutomationRuns,omitempty"`
-	// CurrentRepairAutomationRun: Output only. The current AutomationRun repairing
-	// the rollout.
-	CurrentRepairAutomationRun string `json:"currentRepairAutomationRun,omitempty"`
 	// PromoteAutomationRun: Output only. The name of the AutomationRun initiated
 	// by a promote release rule.
 	PromoteAutomationRun string `json:"promoteAutomationRun,omitempty"`
@@ -890,7 +886,6 @@ type AutomationRunEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
-	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -1673,7 +1668,6 @@ type DeliveryPipelineNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
-	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -2030,6 +2024,10 @@ type GkeCluster struct {
 	// cluster
 	// (https://cloud.google.com/kubernetes-engine/docs/concepts/private-cluster-concept).
 	InternalIp bool `json:"internalIp,omitempty"`
+	// ProxyUrl: Optional. If set, used to configure a proxy
+	// (https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/#proxy)
+	// to the Kubernetes server.
+	ProxyUrl string `json:"proxyUrl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cluster") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2232,7 +2230,6 @@ type JobRunNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
-	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -3450,7 +3447,6 @@ type ReleaseNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
-	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -3533,7 +3529,6 @@ type ReleaseRenderEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
-	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -3581,32 +3576,8 @@ func (s *RenderMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RepairMode: Configuration of the repair action.
-type RepairMode struct {
-	// Retry: Optional. Retries a failed job.
-	Retry *Retry `json:"retry,omitempty"`
-	// Rollback: Optional. Rolls back a `Rollout`.
-	Rollback *Rollback `json:"rollback,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Retry") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Retry") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *RepairMode) MarshalJSON() ([]byte, error) {
-	type NoMethod RepairMode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // RepairPhase: RepairPhase tracks the repair attempts that have been made for
-// each `RepairMode` specified in the `Automation` resource.
+// each `RepairPhaseConfig` specified in the `Automation` resource.
 type RepairPhase struct {
 	// Retry: Output only. Records of the retry attempts for retry repair mode.
 	Retry *RetryPhase `json:"retry,omitempty"`
@@ -3633,9 +3604,6 @@ func (s *RepairPhase) MarshalJSON() ([]byte, error) {
 // RepairRolloutOperation: Contains the information for an automated `repair
 // rollout` operation.
 type RepairRolloutOperation struct {
-	// CurrentRepairModeIndex: Output only. The index of the current repair action
-	// in the repair sequence.
-	CurrentRepairModeIndex int64 `json:"currentRepairModeIndex,omitempty,string"`
 	// JobId: Output only. The job ID for the Job to repair.
 	JobId string `json:"jobId,omitempty"`
 	// PhaseId: Output only. The phase ID of the phase that includes the job being
@@ -3647,15 +3615,15 @@ type RepairRolloutOperation struct {
 	// Rollout: Output only. The name of the rollout that initiates the
 	// `AutomationRun`.
 	Rollout string `json:"rollout,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CurrentRepairModeIndex") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "JobId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CurrentRepairModeIndex") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "JobId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3683,16 +3651,6 @@ type RepairRolloutRule struct {
 	// characters. In other words, it must match the following regex: `^a-z
 	// ([a-z0-9-]{0,61}[a-z0-9])?$`.
 	Jobs []string `json:"jobs,omitempty"`
-	// RepairModes: Required. Defines the types of automatic repair actions for
-	// failed jobs.
-	RepairModes []*RepairMode `json:"repairModes,omitempty"`
-	// SourcePhases: Optional. Phases within which jobs are subject to automatic
-	// repair actions on failure. Proceeds only after phase name matched any one in
-	// the list, or for all phases if unspecified. This value must consist of
-	// lower-case letters, numbers, and hyphens, start with a letter and end with a
-	// letter or a number, and have a max length of 63 characters. In other words,
-	// it must match the following regex: `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
-	SourcePhases []string `json:"sourcePhases,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3711,40 +3669,6 @@ func (s *RepairRolloutRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Retry: Retries the failed job.
-type Retry struct {
-	// Attempts: Required. Total number of retries. Retry is skipped if set to 0;
-	// The minimum value is 1, and the maximum value is 10.
-	Attempts int64 `json:"attempts,omitempty,string"`
-	// BackoffMode: Optional. The pattern of how wait time will be increased.
-	// Default is linear. Backoff mode will be ignored if `wait` is 0.
-	//
-	// Possible values:
-	//   "BACKOFF_MODE_UNSPECIFIED" - No WaitMode is specified.
-	//   "BACKOFF_MODE_LINEAR" - Increases the wait time linearly.
-	//   "BACKOFF_MODE_EXPONENTIAL" - Increases the wait time exponentially.
-	BackoffMode string `json:"backoffMode,omitempty"`
-	// Wait: Optional. How long to wait for the first retry. Default is 0, and the
-	// maximum value is 14d.
-	Wait string `json:"wait,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Attempts") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Attempts") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *Retry) MarshalJSON() ([]byte, error) {
-	type NoMethod Retry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // RetryAttempt: RetryAttempt represents an action of retrying the failed Cloud
 // Deploy job.
 type RetryAttempt struct {
@@ -3759,7 +3683,6 @@ type RetryAttempt struct {
 	//   "REPAIR_STATE_FAILED" - The `repair` action has failed.
 	//   "REPAIR_STATE_IN_PROGRESS" - The `repair` action is in progress.
 	//   "REPAIR_STATE_PENDING" - The `repair` action is pending.
-	//   "REPAIR_STATE_SKIPPED" - The `repair` action was skipped.
 	//   "REPAIR_STATE_ABORTED" - The `repair` action was aborted.
 	State string `json:"state,omitempty"`
 	// StateDesc: Output only. Description of the state of the Retry.
@@ -3827,11 +3750,6 @@ type RetryPhase struct {
 	//   "BACKOFF_MODE_LINEAR" - Increases the wait time linearly.
 	//   "BACKOFF_MODE_EXPONENTIAL" - Increases the wait time exponentially.
 	BackoffMode string `json:"backoffMode,omitempty"`
-	// JobId: Output only. The job ID for the Job to retry.
-	JobId string `json:"jobId,omitempty"`
-	// PhaseId: Output only. The phase ID of the phase that includes the job being
-	// retried.
-	PhaseId string `json:"phaseId,omitempty"`
 	// TotalAttempts: Output only. The number of attempts that have been made.
 	TotalAttempts int64 `json:"totalAttempts,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Attempts") to
@@ -3852,29 +3770,6 @@ func (s *RetryPhase) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Rollback: Rolls back a `Rollout`.
-type Rollback struct {
-	// DestinationPhase: Optional. The starting phase ID for the `Rollout`. If
-	// unspecified, the `Rollout` will start in the stable phase.
-	DestinationPhase string `json:"destinationPhase,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DestinationPhase") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DestinationPhase") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *Rollback) MarshalJSON() ([]byte, error) {
-	type NoMethod Rollback
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // RollbackAttempt: RollbackAttempt represents an action of rolling back a
 // Cloud Deploy 'Target'.
 type RollbackAttempt struct {
@@ -3892,7 +3787,6 @@ type RollbackAttempt struct {
 	//   "REPAIR_STATE_FAILED" - The `repair` action has failed.
 	//   "REPAIR_STATE_IN_PROGRESS" - The `repair` action is in progress.
 	//   "REPAIR_STATE_PENDING" - The `repair` action is pending.
-	//   "REPAIR_STATE_SKIPPED" - The `repair` action was skipped.
 	//   "REPAIR_STATE_ABORTED" - The `repair` action was aborted.
 	State string `json:"state,omitempty"`
 	// StateDesc: Output only. Description of the state of the Rollback.
@@ -4166,7 +4060,6 @@ type RolloutNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
-	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4235,7 +4128,6 @@ type RolloutUpdateEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
-	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4833,7 +4725,6 @@ type TargetNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
-	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`

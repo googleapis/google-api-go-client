@@ -9354,6 +9354,20 @@ type InsertionOrder struct {
 	Kpi *Kpi `json:"kpi,omitempty"`
 	// Name: Output only. The resource name of the insertion order.
 	Name string `json:"name,omitempty"`
+	// OptimizationObjective: Optional. The optimization objective of the insertion
+	// order.
+	//
+	// Possible values:
+	//   "OPTIMIZATION_OBJECTIVE_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "CONVERSION" - Prioritize impressions that increase sales and conversions.
+	//   "CLICK" - Prioritize impressions that increase website traffic, apps, app
+	// stores.
+	//   "BRAND_AWARENESS" - Prioritize impressions of specific quality.
+	//   "CUSTOM" - Objective is defined by the assigned custom bidding algorithm.
+	//   "NO_OBJECTIVE" - Objective is not defined. Any KPI or bidding strategy can
+	// be used.
+	OptimizationObjective string `json:"optimizationObjective,omitempty"`
 	// Pacing: Required. The budget spending speed setting of the insertion order.
 	Pacing *Pacing `json:"pacing,omitempty"`
 	// PartnerCosts: The partner costs associated with the insertion order. If

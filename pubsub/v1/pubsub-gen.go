@@ -273,6 +273,9 @@ func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 // AvroConfig: Configuration for writing message data in Avro format. Message
 // payloads and metadata will be written to files as an Avro binary.
 type AvroConfig struct {
+	// UseTopicSchema: Optional. When true, the output Cloud Storage file will be
+	// serialized using the topic schema, if it exists.
+	UseTopicSchema bool `json:"useTopicSchema,omitempty"`
 	// WriteMetadata: Optional. When true, write the subscription name, message_id,
 	// publish_time, attributes, and ordering_key as additional fields in the
 	// output. The subscription name, message_id, and publish_time fields are put
@@ -280,15 +283,15 @@ type AvroConfig struct {
 	// example, an ordering_key, if present) are added as entries in the attributes
 	// map.
 	WriteMetadata bool `json:"writeMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "WriteMetadata") to
+	// ForceSendFields is a list of field names (e.g. "UseTopicSchema") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "WriteMetadata") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "UseTopicSchema") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

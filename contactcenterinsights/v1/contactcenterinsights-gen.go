@@ -1998,9 +1998,9 @@ func (s *GoogleCloudContactcenterinsightsV1ExportIssueModelMetadata) MarshalJSON
 // GoogleCloudContactcenterinsightsV1ExportIssueModelRequest: Request to export
 // an issue model.
 type GoogleCloudContactcenterinsightsV1ExportIssueModelRequest struct {
-	// GcsDestination: Google Cloud Storage URI to export the Issue Model to.
+	// GcsDestination: Google Cloud Storage URI to export the issue model to.
 	GcsDestination *GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestination `json:"gcsDestination,omitempty"`
-	// Name: Required. The issue model to export
+	// Name: Required. The issue model to export.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2161,7 +2161,7 @@ func (s *GoogleCloudContactcenterinsightsV1ImportIssueModelMetadata) MarshalJSON
 // GoogleCloudContactcenterinsightsV1ImportIssueModelRequest: Request to import
 // an issue model.
 type GoogleCloudContactcenterinsightsV1ImportIssueModelRequest struct {
-	// CreateNewModel: Optional. If set to true, will create a new issue model from
+	// CreateNewModel: Optional. If set to true, will create an issue model from
 	// the imported file with randomly generated IDs for the issue model and
 	// corresponding issues. Otherwise, replaces an existing model with the same ID
 	// as the file.
@@ -2298,8 +2298,8 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequest struct {
 	RedactionConfig *GoogleCloudContactcenterinsightsV1RedactionConfig `json:"redactionConfig,omitempty"`
 	// SampleSize: Optional. If set, this fields indicates the number of objects to
 	// ingest from the Cloud Storage bucket. If empty, the entire bucket will be
-	// ingested. Note that conversations produced via sampling will not be ingested
-	// by subsequent ingest requests unless they are first deleted.
+	// ingested. Unless they are first deleted, conversations produced through
+	// sampling won't be ingested by subsequent ingest requests.
 	SampleSize int64 `json:"sampleSize,omitempty"`
 	// SpeechConfig: Optional. Default Speech-to-Text configuration. Optional, will
 	// default to the config specified in Settings.
@@ -2334,7 +2334,7 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationCon
 	AgentChannel int64 `json:"agentChannel,omitempty"`
 	// AgentId: Optional. An opaque, user-specified string representing a human
 	// agent who handled all conversations in the import. Note that this will be
-	// overridden if per-conversation metadata is provided via the
+	// overridden if per-conversation metadata is provided through the
 	// `metadata_bucket_uri`.
 	AgentId string `json:"agentId,omitempty"`
 	// CustomerChannel: Optional. Indicates which of the channels, 1 or 2, contains
@@ -2378,10 +2378,13 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource struc
 	// field will be ignored. Note that there is a limit of 20 labels per
 	// conversation.
 	CustomMetadataKeys []string `json:"customMetadataKeys,omitempty"`
-	// MetadataBucketUri: Optional. The Cloud Storage path to the source object
-	// metadata. Note that: [1] metadata files are expected to be in JSON format
-	// [2] metadata and source objects must be in separate buckets [3] a source
-	// object's metadata object must share the same name to be properly ingested
+	// MetadataBucketUri: Optional. The Cloud Storage path to the conversation
+	// metadata. Note that: [1] Metadata files are expected to be in JSON format.
+	// [2] Metadata and source files (transcripts or audio) must be in separate
+	// buckets. [3] A source file and its corresponding metadata file must share
+	// the same name to be properly ingested, E.g.
+	// `gs://bucket/audio/conversation1.mp3` and
+	// `gs://bucket/metadata/conversation1.json`.
 	MetadataBucketUri string `json:"metadataBucketUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BucketObjectType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3130,12 +3133,12 @@ func (s *GoogleCloudContactcenterinsightsV1PhraseMatcher) MarshalJSON() ([]byte,
 
 // GoogleCloudContactcenterinsightsV1RedactionConfig: DLP resources used for
 // redaction while ingesting conversations. DLP settings are applied to
-// conversations ingested from the UploadConversation and IngestConversations
-// endpoints, including conversation coming from CCAI Platform. They are not
-// applied to conversations ingested from the CreateConversation endpoint or
-// the Dialogflow / Agent Assist runtime integrations. When using Dialogflow /
-// Agent Assist runtime integrations redaction should be performed in
-// Dialogflow / Agent Assist.
+// conversations ingested from the `UploadConversation` and
+// `IngestConversations` endpoints, including conversation coming from CCAI
+// Platform. They are not applied to conversations ingested from the
+// `CreateConversation` endpoint or the Dialogflow / Agent Assist runtime
+// integrations. When using Dialogflow / Agent Assist runtime integrations,
+// redaction should be performed in Dialogflow / Agent Assist.
 type GoogleCloudContactcenterinsightsV1RedactionConfig struct {
 	// DeidentifyTemplate: The fully-qualified DLP deidentify template resource
 	// name. Format: `projects/{project}/deidentifyTemplates/{template}`
@@ -3282,7 +3285,12 @@ func (s *GoogleCloudContactcenterinsightsV1SentimentData) UnmarshalJSON(data []b
 	return nil
 }
 
-// GoogleCloudContactcenterinsightsV1Settings: The settings resource.
+// GoogleCloudContactcenterinsightsV1Settings: The CCAI Insights project wide
+// settings. Use these settings to configure the behavior of Insights. View
+// these settings with `getsettings`
+// (https://cloud.google.com/contact-center/insights/docs/reference/rest/v1/projects.locations/getSettings)
+// and change the settings with `updateSettings`
+// (https://cloud.google.com/contact-center/insights/docs/reference/rest/v1/projects.locations/updateSettings).
 type GoogleCloudContactcenterinsightsV1Settings struct {
 	// AnalysisConfig: Default analysis settings.
 	AnalysisConfig *GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig `json:"analysisConfig,omitempty"`
@@ -3308,22 +3316,22 @@ type GoogleCloudContactcenterinsightsV1Settings struct {
 	// occurs. * "create-analysis": Notify each time an analysis is created. *
 	// "create-conversation": Notify each time a conversation is created. *
 	// "export-insights-data": Notify each time an export is complete. *
-	// "ingest-conversations": Notify each time an IngestConversations LRO
-	// completes. * "update-conversation": Notify each time a conversation is
+	// "ingest-conversations": Notify each time an IngestConversations LRO is
+	// complete. * "update-conversation": Notify each time a conversation is
 	// updated via UpdateConversation. * "upload-conversation": Notify when an
-	// UploadConversation LRO completes. Values are Pub/Sub topics. The format of
+	// UploadConversation LRO is complete. Values are Pub/Sub topics. The format of
 	// each Pub/Sub topic is: projects/{project}/topics/{topic}
 	PubsubNotificationSettings map[string]string `json:"pubsubNotificationSettings,omitempty"`
 	// RedactionConfig: Default DLP redaction resources to be applied while
 	// ingesting conversations. This applies to conversations ingested from the
-	// UploadConversation and IngestConversations endpoints, including
+	// `UploadConversation` and `IngestConversations` endpoints, including
 	// conversations coming from CCAI Platform.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1RedactionConfig `json:"redactionConfig,omitempty"`
-	// SpeechConfig: Optional. Default Speech-to-Text resources to be used while
+	// SpeechConfig: Optional. Default Speech-to-Text resources to use while
 	// ingesting audio files. Optional, CCAI Insights will create a default if not
-	// provided. This applies to conversations ingested from the UploadConversation
-	// and IngestConversations endpoints, including conversations coming from CCAI
-	// Platform.
+	// provided. This applies to conversations ingested from the
+	// `UploadConversation` and `IngestConversations` endpoints, including
+	// conversations coming from CCAI Platform.
 	SpeechConfig *GoogleCloudContactcenterinsightsV1SpeechConfig `json:"speechConfig,omitempty"`
 	// UpdateTime: Output only. The time at which the settings were last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -3497,9 +3505,9 @@ func (s *GoogleCloudContactcenterinsightsV1SmartReplyData) UnmarshalJSON(data []
 
 // GoogleCloudContactcenterinsightsV1SpeechConfig: Speech-to-Text
 // configuration. Speech-to-Text settings are applied to conversations ingested
-// from the UploadConversation and IngestConversations endpoints, including
+// from the `UploadConversation` and `IngestConversations` endpoints, including
 // conversation coming from CCAI Platform. They are not applied to
-// conversations ingested from the CreateConversation endpoint.
+// conversations ingested from the `CreateConversation` endpoint.
 type GoogleCloudContactcenterinsightsV1SpeechConfig struct {
 	// SpeechRecognizer: The fully-qualified Speech Recognizer resource name.
 	// Format: `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
@@ -3578,7 +3586,7 @@ type GoogleCloudContactcenterinsightsV1UndeployIssueModelResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1UploadConversationMetadata: The metadata
-// for an UploadConversation operation.
+// for an `UploadConversation` operation.
 type GoogleCloudContactcenterinsightsV1UploadConversationMetadata struct {
 	// AnalysisOperation: Output only. The operation name for a successfully
 	// created analysis operation, if any.
@@ -5254,9 +5262,9 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelMetadata) Marsh
 // GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest: Request to
 // export an issue model.
 type GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest struct {
-	// GcsDestination: Google Cloud Storage URI to export the Issue Model to.
+	// GcsDestination: Google Cloud Storage URI to export the issue model to.
 	GcsDestination *GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDestination `json:"gcsDestination,omitempty"`
-	// Name: Required. The issue model to export
+	// Name: Required. The issue model to export.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5418,7 +5426,7 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelMetadata) Marsh
 // GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest: Request to
 // import an issue model.
 type GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest struct {
-	// CreateNewModel: Optional. If set to true, will create a new issue model from
+	// CreateNewModel: Optional. If set to true, will create an issue model from
 	// the imported file with randomly generated IDs for the issue model and
 	// corresponding issues. Otherwise, replaces an existing model with the same ID
 	// as the file.
@@ -5555,8 +5563,8 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest struct {
 	RedactionConfig *GoogleCloudContactcenterinsightsV1alpha1RedactionConfig `json:"redactionConfig,omitempty"`
 	// SampleSize: Optional. If set, this fields indicates the number of objects to
 	// ingest from the Cloud Storage bucket. If empty, the entire bucket will be
-	// ingested. Note that conversations produced via sampling will not be ingested
-	// by subsequent ingest requests unless they are first deleted.
+	// ingested. Unless they are first deleted, conversations produced through
+	// sampling won't be ingested by subsequent ingest requests.
 	SampleSize int64 `json:"sampleSize,omitempty"`
 	// SpeechConfig: Optional. Default Speech-to-Text configuration. Optional, will
 	// default to the config specified in Settings.
@@ -5591,7 +5599,7 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversat
 	AgentChannel int64 `json:"agentChannel,omitempty"`
 	// AgentId: Optional. An opaque, user-specified string representing a human
 	// agent who handled all conversations in the import. Note that this will be
-	// overridden if per-conversation metadata is provided via the
+	// overridden if per-conversation metadata is provided through the
 	// `metadata_bucket_uri`.
 	AgentId string `json:"agentId,omitempty"`
 	// CustomerChannel: Optional. Indicates which of the channels, 1 or 2, contains
@@ -5635,10 +5643,13 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource
 	// field will be ignored. Note that there is a limit of 20 labels per
 	// conversation.
 	CustomMetadataKeys []string `json:"customMetadataKeys,omitempty"`
-	// MetadataBucketUri: Optional. The Cloud Storage path to the source object
-	// metadata. Note that: [1] metadata files are expected to be in JSON format
-	// [2] metadata and source objects must be in separate buckets [3] a source
-	// object's metadata object must share the same name to be properly ingested
+	// MetadataBucketUri: Optional. The Cloud Storage path to the conversation
+	// metadata. Note that: [1] Metadata files are expected to be in JSON format.
+	// [2] Metadata and source files (transcripts or audio) must be in separate
+	// buckets. [3] A source file and its corresponding metadata file must share
+	// the same name to be properly ingested, E.g.
+	// `gs://bucket/audio/conversation1.mp3` and
+	// `gs://bucket/metadata/conversation1.json`.
 	MetadataBucketUri string `json:"metadataBucketUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BucketObjectType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6026,12 +6037,12 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1PhraseMatchData) MarshalJSON() 
 
 // GoogleCloudContactcenterinsightsV1alpha1RedactionConfig: DLP resources used
 // for redaction while ingesting conversations. DLP settings are applied to
-// conversations ingested from the UploadConversation and IngestConversations
-// endpoints, including conversation coming from CCAI Platform. They are not
-// applied to conversations ingested from the CreateConversation endpoint or
-// the Dialogflow / Agent Assist runtime integrations. When using Dialogflow /
-// Agent Assist runtime integrations redaction should be performed in
-// Dialogflow / Agent Assist.
+// conversations ingested from the `UploadConversation` and
+// `IngestConversations` endpoints, including conversation coming from CCAI
+// Platform. They are not applied to conversations ingested from the
+// `CreateConversation` endpoint or the Dialogflow / Agent Assist runtime
+// integrations. When using Dialogflow / Agent Assist runtime integrations,
+// redaction should be performed in Dialogflow / Agent Assist.
 type GoogleCloudContactcenterinsightsV1alpha1RedactionConfig struct {
 	// DeidentifyTemplate: The fully-qualified DLP deidentify template resource
 	// name. Format: `projects/{project}/deidentifyTemplates/{template}`
@@ -6279,9 +6290,9 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1SmartReplyData) UnmarshalJSON(d
 
 // GoogleCloudContactcenterinsightsV1alpha1SpeechConfig: Speech-to-Text
 // configuration. Speech-to-Text settings are applied to conversations ingested
-// from the UploadConversation and IngestConversations endpoints, including
+// from the `UploadConversation` and `IngestConversations` endpoints, including
 // conversation coming from CCAI Platform. They are not applied to
-// conversations ingested from the CreateConversation endpoint.
+// conversations ingested from the `CreateConversation` endpoint.
 type GoogleCloudContactcenterinsightsV1alpha1SpeechConfig struct {
 	// SpeechRecognizer: The fully-qualified Speech Recognizer resource name.
 	// Format: `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
@@ -6360,7 +6371,7 @@ type GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1UploadConversationMetadata: The
-// metadata for an UploadConversation operation.
+// metadata for an `UploadConversation` operation.
 type GoogleCloudContactcenterinsightsV1alpha1UploadConversationMetadata struct {
 	// AnalysisOperation: Output only. The operation name for a successfully
 	// created analysis operation, if any.
@@ -7097,8 +7108,8 @@ type ProjectsLocationsConversationsCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates a conversation. DEPRECATED: Use UploadConversation instead.
-// CreateConversation does not support audio transcription or DLP redaction.
+// Create: Creates a conversation. Does not support audio transcription or DLP
+// redaction. Use `conversations.upload` instead.
 //
 // - parent: The parent resource of the conversation.
 func (r *ProjectsLocationsConversationsService) Create(parent string, googlecloudcontactcenterinsightsv1conversation *GoogleCloudContactcenterinsightsV1Conversation) *ProjectsLocationsConversationsCreateCall {
@@ -7563,8 +7574,8 @@ func (c *ProjectsLocationsConversationsListCall) Filter(filter string) *Projects
 // by descending creation time. Supported values are one of the following: *
 // create_time * customer_satisfaction_rating * duration * latest_analysis *
 // start_time * turn_count The default sort order is ascending. To specify
-// order, append `asc` or `desc`, i.e. `create_time desc`. See
-// https://google.aip.dev/132#ordering for more details.
+// order, append `asc` or `desc` (`create_time desc`). For more details, see
+// Google AIPs Ordering (https://google.aip.dev/132#ordering).
 func (c *ProjectsLocationsConversationsListCall) OrderBy(orderBy string) *ProjectsLocationsConversationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -7841,9 +7852,9 @@ type ProjectsLocationsConversationsUploadCall struct {
 	header_                                                     http.Header
 }
 
-// Upload: Create a longrunning conversation upload operation. This method
-// differs from CreateConversation by allowing audio transcription and optional
-// DLP redaction.
+// Upload: Create a long-running conversation upload operation. This method
+// differs from `CreateConversation` by allowing audio transcription and
+// optional DLP redaction.
 //
 // - parent: The parent resource of the conversation.
 func (r *ProjectsLocationsConversationsService) Upload(parent string, googlecloudcontactcenterinsightsv1uploadconversationrequest *GoogleCloudContactcenterinsightsV1UploadConversationRequest) *ProjectsLocationsConversationsUploadCall {

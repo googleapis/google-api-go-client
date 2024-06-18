@@ -5591,7 +5591,7 @@
       }
     }
   },
-  "revision": "20240607",
+  "revision": "20240612",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -9336,6 +9336,10 @@
           "$ref": "GoogleCloudDiscoveryengineV1SearchRequestImageQuery",
           "description": "Raw image query."
         },
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see [Standard fields](https://cloud.google.com/apis/design/standard_fields). This field helps to better interpret the query. If a value isn't specified, the query language code is automatically detected, which may not be accurate.",
+          "type": "string"
+        },
         "offset": {
           "description": "A 0-indexed integer that specifies the current offset (that is, starting result location, amongst the Documents deemed by the API as relevant) in search results. This field is only considered if page_token is unset. If this field is negative, an `INVALID_ARGUMENT` is returned.",
           "format": "int32",
@@ -11349,6 +11353,10 @@
           ],
           "type": "string"
         },
+        "languageInfo": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaLanguageInfo",
+          "description": "Language info for DataStore."
+        },
         "name": {
           "description": "Immutable. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
           "type": "string"
@@ -12265,6 +12273,32 @@
         "unjoinedEventsCount": {
           "description": "Count of user events imported, but with Document information not found in the existing Branch.",
           "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaLanguageInfo": {
+      "description": "Language info for DataStore.",
+      "id": "GoogleCloudDiscoveryengineV1alphaLanguageInfo",
+      "properties": {
+        "language": {
+          "description": "Output only. Language part of normalized_language_code. E.g.: `en-US` -\u003e `en`, `zh-Hans-HK` -\u003e `zh`, `en` -\u003e `en`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "languageCode": {
+          "description": "The language code for the DataStore.",
+          "type": "string"
+        },
+        "normalizedLanguageCode": {
+          "description": "Output only. This is the normalized form of language_code. E.g.: language_code of `en-GB`, `en_GB`, `en-UK` or `en-gb` will have normalized_language_code of `en-GB`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "region": {
+          "description": "Output only. Region part of normalized_language_code, if present. E.g.: `en-US` -\u003e `US`, `zh-Hans-HK` -\u003e `HK`, `en` -\u003e ``.",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -13334,6 +13368,10 @@
           ],
           "type": "string"
         },
+        "languageInfo": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaLanguageInfo",
+          "description": "Language info for DataStore."
+        },
         "name": {
           "description": "Immutable. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
           "type": "string"
@@ -13916,6 +13954,32 @@
         "unjoinedEventsCount": {
           "description": "Count of user events imported, but with Document information not found in the existing Branch.",
           "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaLanguageInfo": {
+      "description": "Language info for DataStore.",
+      "id": "GoogleCloudDiscoveryengineV1betaLanguageInfo",
+      "properties": {
+        "language": {
+          "description": "Output only. Language part of normalized_language_code. E.g.: `en-US` -\u003e `en`, `zh-Hans-HK` -\u003e `zh`, `en` -\u003e `en`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "languageCode": {
+          "description": "The language code for the DataStore.",
+          "type": "string"
+        },
+        "normalizedLanguageCode": {
+          "description": "Output only. This is the normalized form of language_code. E.g.: language_code of `en-GB`, `en_GB`, `en-UK` or `en-gb` will have normalized_language_code of `en-GB`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "region": {
+          "description": "Output only. Region part of normalized_language_code, if present. E.g.: `en-US` -\u003e `US`, `zh-Hans-HK` -\u003e `HK`, `en` -\u003e ``.",
+          "readOnly": true,
           "type": "string"
         }
       },

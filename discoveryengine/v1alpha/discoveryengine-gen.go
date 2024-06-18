@@ -6087,6 +6087,8 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// LanguageInfo: Language info for DataStore.
+	LanguageInfo *GoogleCloudDiscoveryengineV1alphaLanguageInfo `json:"languageInfo,omitempty"`
 	// Name: Immutable. The full resource name of the data store. Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
@@ -8223,6 +8225,38 @@ func (s *GoogleCloudDiscoveryengineV1alphaInterval) UnmarshalJSON(data []byte) e
 	return nil
 }
 
+// GoogleCloudDiscoveryengineV1alphaLanguageInfo: Language info for DataStore.
+type GoogleCloudDiscoveryengineV1alphaLanguageInfo struct {
+	// Language: Output only. Language part of normalized_language_code. E.g.:
+	// `en-US` -> `en`, `zh-Hans-HK` -> `zh`, `en` -> `en`.
+	Language string `json:"language,omitempty"`
+	// LanguageCode: The language code for the DataStore.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// NormalizedLanguageCode: Output only. This is the normalized form of
+	// language_code. E.g.: language_code of `en-GB`, `en_GB`, `en-UK` or `en-gb`
+	// will have normalized_language_code of `en-GB`.
+	NormalizedLanguageCode string `json:"normalizedLanguageCode,omitempty"`
+	// Region: Output only. Region part of normalized_language_code, if present.
+	// E.g.: `en-US` -> `US`, `zh-Hans-HK` -> `HK`, `en` -> ``.
+	Region string `json:"region,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Language") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Language") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaLanguageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaLanguageInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaListChunksResponse: Response message for
 // ChunkService.ListChunks method.
 type GoogleCloudDiscoveryengineV1alphaListChunksResponse struct {
@@ -9961,6 +9995,12 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	Filter string `json:"filter,omitempty"`
 	// ImageQuery: Raw image query.
 	ImageQuery *GoogleCloudDiscoveryengineV1alphaSearchRequestImageQuery `json:"imageQuery,omitempty"`
+	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn". For
+	// more information, see Standard fields
+	// (https://cloud.google.com/apis/design/standard_fields). This field helps to
+	// better interpret the query. If a value isn't specified, the query language
+	// code is automatically detected, which may not be accurate.
+	LanguageCode string `json:"languageCode,omitempty"`
 	// Offset: A 0-indexed integer that specifies the current offset (that is,
 	// starting result location, amongst the Documents deemed by the API as
 	// relevant) in search results. This field is only considered if page_token is
@@ -10013,6 +10053,11 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// If document has an embedding field doc_embedding, the ranking expression
 	// could be `0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)`.
 	RankingExpression string `json:"rankingExpression,omitempty"`
+	// RegionCode: The Unicode country/region code (CLDR) of a location, such as
+	// "US" and "419". For more information, see Standard fields
+	// (https://cloud.google.com/apis/design/standard_fields). If set, then results
+	// will be boosted based on the region_code provided.
+	RegionCode string `json:"regionCode,omitempty"`
 	// SafeSearch: Whether to turn on safe search. This is only supported for
 	// website search.
 	SafeSearch bool `json:"safeSearch,omitempty"`
@@ -12917,6 +12962,8 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// LanguageInfo: Language info for DataStore.
+	LanguageInfo *GoogleCloudDiscoveryengineV1betaLanguageInfo `json:"languageInfo,omitempty"`
 	// Name: Immutable. The full resource name of the data store. Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
@@ -13743,6 +13790,38 @@ type GoogleCloudDiscoveryengineV1betaImportUserEventsResponse struct {
 
 func (s *GoogleCloudDiscoveryengineV1betaImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaImportUserEventsResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaLanguageInfo: Language info for DataStore.
+type GoogleCloudDiscoveryengineV1betaLanguageInfo struct {
+	// Language: Output only. Language part of normalized_language_code. E.g.:
+	// `en-US` -> `en`, `zh-Hans-HK` -> `zh`, `en` -> `en`.
+	Language string `json:"language,omitempty"`
+	// LanguageCode: The language code for the DataStore.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// NormalizedLanguageCode: Output only. This is the normalized form of
+	// language_code. E.g.: language_code of `en-GB`, `en_GB`, `en-UK` or `en-gb`
+	// will have normalized_language_code of `en-GB`.
+	NormalizedLanguageCode string `json:"normalizedLanguageCode,omitempty"`
+	// Region: Output only. Region part of normalized_language_code, if present.
+	// E.g.: `en-US` -> `US`, `zh-Hans-HK` -> `HK`, `en` -> ``.
+	Region string `json:"region,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Language") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Language") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaLanguageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaLanguageInfo
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

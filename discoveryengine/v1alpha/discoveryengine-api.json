@@ -6641,7 +6641,7 @@
       }
     }
   },
-  "revision": "20240607",
+  "revision": "20240612",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -10335,6 +10335,10 @@
           ],
           "type": "string"
         },
+        "languageInfo": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaLanguageInfo",
+          "description": "Language info for DataStore."
+        },
         "name": {
           "description": "Immutable. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
           "type": "string"
@@ -11819,6 +11823,32 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaLanguageInfo": {
+      "description": "Language info for DataStore.",
+      "id": "GoogleCloudDiscoveryengineV1alphaLanguageInfo",
+      "properties": {
+        "language": {
+          "description": "Output only. Language part of normalized_language_code. E.g.: `en-US` -\u003e `en`, `zh-Hans-HK` -\u003e `zh`, `en` -\u003e `en`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "languageCode": {
+          "description": "The language code for the DataStore.",
+          "type": "string"
+        },
+        "normalizedLanguageCode": {
+          "description": "Output only. This is the normalized form of language_code. E.g.: language_code of `en-GB`, `en_GB`, `en-UK` or `en-gb` will have normalized_language_code of `en-GB`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "region": {
+          "description": "Output only. Region part of normalized_language_code, if present. E.g.: `en-US` -\u003e `US`, `zh-Hans-HK` -\u003e `HK`, `en` -\u003e ``.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaListChunksResponse": {
       "description": "Response message for ChunkService.ListChunks method.",
       "id": "GoogleCloudDiscoveryengineV1alphaListChunksResponse",
@@ -12995,6 +13025,10 @@
           "$ref": "GoogleCloudDiscoveryengineV1alphaSearchRequestImageQuery",
           "description": "Raw image query."
         },
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see [Standard fields](https://cloud.google.com/apis/design/standard_fields). This field helps to better interpret the query. If a value isn't specified, the query language code is automatically detected, which may not be accurate.",
+          "type": "string"
+        },
         "offset": {
           "description": "A 0-indexed integer that specifies the current offset (that is, starting result location, amongst the Documents deemed by the API as relevant) in search results. This field is only considered if page_token is unset. If this field is negative, an `INVALID_ARGUMENT` is returned.",
           "format": "int32",
@@ -13030,6 +13064,10 @@
         },
         "rankingExpression": {
           "description": "The ranking expression controls the customized ranking on retrieval documents. This overrides ServingConfig.ranking_expression. The ranking expression is a single function or multiple functions that are joint by \"+\". * ranking_expression = function, { \" + \", function }; Supported functions: * double * relevance_score * double * dotProduct(embedding_field_path) Function variables: `relevance_score`: pre-defined keywords, used for measure relevance between query and document. `embedding_field_path`: the document embedding field used with query embedding vector. `dotProduct`: embedding function between embedding_field_path and query embedding vector. Example ranking expression: If document has an embedding field doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)`.",
+          "type": "string"
+        },
+        "regionCode": {
+          "description": "The Unicode country/region code (CLDR) of a location, such as \"US\" and \"419\". For more information, see [Standard fields](https://cloud.google.com/apis/design/standard_fields). If set, then results will be boosted based on the region_code provided.",
           "type": "string"
         },
         "safeSearch": {
@@ -15016,6 +15054,10 @@
           ],
           "type": "string"
         },
+        "languageInfo": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaLanguageInfo",
+          "description": "Language info for DataStore."
+        },
         "name": {
           "description": "Immutable. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
           "type": "string"
@@ -15598,6 +15640,32 @@
         "unjoinedEventsCount": {
           "description": "Count of user events imported, but with Document information not found in the existing Branch.",
           "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaLanguageInfo": {
+      "description": "Language info for DataStore.",
+      "id": "GoogleCloudDiscoveryengineV1betaLanguageInfo",
+      "properties": {
+        "language": {
+          "description": "Output only. Language part of normalized_language_code. E.g.: `en-US` -\u003e `en`, `zh-Hans-HK` -\u003e `zh`, `en` -\u003e `en`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "languageCode": {
+          "description": "The language code for the DataStore.",
+          "type": "string"
+        },
+        "normalizedLanguageCode": {
+          "description": "Output only. This is the normalized form of language_code. E.g.: language_code of `en-GB`, `en_GB`, `en-UK` or `en-gb` will have normalized_language_code of `en-GB`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "region": {
+          "description": "Output only. Region part of normalized_language_code, if present. E.g.: `en-US` -\u003e `US`, `zh-Hans-HK` -\u003e `HK`, `en` -\u003e ``.",
+          "readOnly": true,
           "type": "string"
         }
       },

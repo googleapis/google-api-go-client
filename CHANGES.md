@@ -1,5 +1,18 @@
 # Changes
 
+## [0.185.0](https://github.com/googleapis/google-api-go-client/compare/v0.184.0...v0.185.0) (2024-06-18)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2636](https://github.com/googleapis/google-api-go-client/issues/2636)) ([51ff8a4](https://github.com/googleapis/google-api-go-client/commit/51ff8a4794fbc56944a6db1edd0f06e30990392f))
+* **all:** Auto-regenerate discovery clients ([#2638](https://github.com/googleapis/google-api-go-client/issues/2638)) ([0c868b2](https://github.com/googleapis/google-api-go-client/commit/0c868b2608ca697ac82144d37db3452b2af5a827))
+
+
+### Bug Fixes
+
+* **internal/gensupport:** Update shouldRetry for GCS uploads ([#2634](https://github.com/googleapis/google-api-go-client/issues/2634)) ([ea513cb](https://github.com/googleapis/google-api-go-client/commit/ea513cb749aad28620ee92ac2d5c57822e7ef8fe))
+
 ## [0.184.0](https://github.com/googleapis/google-api-go-client/compare/v0.183.0...v0.184.0) (2024-06-12)
 
 

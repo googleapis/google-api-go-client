@@ -3,7 +3,7 @@ module google.golang.org/api
 go 1.20
 
 require (
-	cloud.google.com/go v0.114.0
+	cloud.google.com/go v0.115.0
 	cloud.google.com/go/auth v0.5.1
 	cloud.google.com/go/auth/oauth2adapt v0.2.2
 	cloud.google.com/go/compute/metadata v0.3.0
@@ -19,11 +19,11 @@ require (
 	golang.org/x/oauth2 v0.21.0
 	golang.org/x/sync v0.7.0
 	golang.org/x/time v0.5.0
-	google.golang.org/genproto v0.0.0-20240604185151-ef581f913117
-	google.golang.org/genproto/googleapis/bytestream v0.0.0-20240604185151-ef581f913117
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240604185151-ef581f913117
+	google.golang.org/genproto v0.0.0-20240617180043-68d350f18fd4
+	google.golang.org/genproto/googleapis/bytestream v0.0.0-20240617180043-68d350f18fd4
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240617180043-68d350f18fd4
 	google.golang.org/grpc v1.64.0
-	google.golang.org/protobuf v1.34.1
+	google.golang.org/protobuf v1.34.2
 )
 
 require (

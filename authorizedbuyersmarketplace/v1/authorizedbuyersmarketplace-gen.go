@@ -5662,7 +5662,9 @@ type BuyersProposalsAddNoteCall struct {
 	header_        http.Header
 }
 
-// AddNote: Creates a note for this proposal and sends to the seller.
+// AddNote: Creates a note for this proposal and sends to the seller. This
+// method is not supported for proposals with DealType set to
+// 'PRIVATE_AUCTION'.
 //
 //   - proposal: Name of the proposal. Format:
 //     `buyers/{accountId}/proposals/{proposalId}`.

@@ -26114,7 +26114,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
-//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
+//     `TARGETING_TYPE_KEYWORD`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -26232,7 +26233,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsListCall struct {
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
-//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
+//     `TARGETING_TYPE_KEYWORD`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, targetingType string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId

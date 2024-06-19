@@ -5873,18 +5873,34 @@ func (s *ReservationInfo) MarshalJSON() ([]byte, error) {
 }
 
 type Resources struct {
-	EventTicketClasses []*EventTicketClass  `json:"eventTicketClasses,omitempty"`
+	// EventTicketClasses: A list of event ticket classes.
+	EventTicketClasses []*EventTicketClass `json:"eventTicketClasses,omitempty"`
+	// EventTicketObjects: A list of event ticket objects.
 	EventTicketObjects []*EventTicketObject `json:"eventTicketObjects,omitempty"`
-	FlightClasses      []*FlightClass       `json:"flightClasses,omitempty"`
-	FlightObjects      []*FlightObject      `json:"flightObjects,omitempty"`
-	GiftCardClasses    []*GiftCardClass     `json:"giftCardClasses,omitempty"`
-	GiftCardObjects    []*GiftCardObject    `json:"giftCardObjects,omitempty"`
-	LoyaltyClasses     []*LoyaltyClass      `json:"loyaltyClasses,omitempty"`
-	LoyaltyObjects     []*LoyaltyObject     `json:"loyaltyObjects,omitempty"`
-	OfferClasses       []*OfferClass        `json:"offerClasses,omitempty"`
-	OfferObjects       []*OfferObject       `json:"offerObjects,omitempty"`
-	TransitClasses     []*TransitClass      `json:"transitClasses,omitempty"`
-	TransitObjects     []*TransitObject     `json:"transitObjects,omitempty"`
+	// FlightClasses: A list of flight classes.
+	FlightClasses []*FlightClass `json:"flightClasses,omitempty"`
+	// FlightObjects: A list of flight objects.
+	FlightObjects []*FlightObject `json:"flightObjects,omitempty"`
+	// GenericClasses: A list of generic classes.
+	GenericClasses []*GenericClass `json:"genericClasses,omitempty"`
+	// GenericObjects: A list of generic objects.
+	GenericObjects []*GenericObject `json:"genericObjects,omitempty"`
+	// GiftCardClasses: A list of gift card classes.
+	GiftCardClasses []*GiftCardClass `json:"giftCardClasses,omitempty"`
+	// GiftCardObjects: A list of gift card objects.
+	GiftCardObjects []*GiftCardObject `json:"giftCardObjects,omitempty"`
+	// LoyaltyClasses: A list of loyalty classes.
+	LoyaltyClasses []*LoyaltyClass `json:"loyaltyClasses,omitempty"`
+	// LoyaltyObjects: A list of loyalty objects.
+	LoyaltyObjects []*LoyaltyObject `json:"loyaltyObjects,omitempty"`
+	// OfferClasses: A list of offer classes.
+	OfferClasses []*OfferClass `json:"offerClasses,omitempty"`
+	// OfferObjects: A list of offer objects.
+	OfferObjects []*OfferObject `json:"offerObjects,omitempty"`
+	// TransitClasses: A list of transit classes.
+	TransitClasses []*TransitClass `json:"transitClasses,omitempty"`
+	// TransitObjects: A list of transit objects.
+	TransitObjects []*TransitObject `json:"transitObjects,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventTicketClasses") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

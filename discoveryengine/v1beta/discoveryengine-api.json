@@ -800,6 +800,66 @@
                         }
                       }
                     },
+                    "completionSuggestions": {
+                      "methods": {
+                        "import": {
+                          "description": "Imports CompletionSuggestions for a DataStore.",
+                          "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/completionSuggestions:import",
+                          "httpMethod": "POST",
+                          "id": "discoveryengine.projects.locations.collections.dataStores.completionSuggestions.import",
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "parameters": {
+                            "parent": {
+                              "description": "Required. The parent data store resource name for which to import customer autocomplete suggestions. Follows pattern `projects/*/locations/*/collections/*/dataStores/*`",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta/{+parent}/completionSuggestions:import",
+                          "request": {
+                            "$ref": "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsRequest"
+                          },
+                          "response": {
+                            "$ref": "GoogleLongrunningOperation"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        },
+                        "purge": {
+                          "description": "Permanently deletes all CompletionSuggestions for a DataStore.",
+                          "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/completionSuggestions:purge",
+                          "httpMethod": "POST",
+                          "id": "discoveryengine.projects.locations.collections.dataStores.completionSuggestions.purge",
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "parameters": {
+                            "parent": {
+                              "description": "Required. The parent data store resource name for which to purge completion suggestions. Follows pattern projects/*/locations/*/collections/*/dataStores/*.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta/{+parent}/completionSuggestions:purge",
+                          "request": {
+                            "$ref": "GoogleCloudDiscoveryengineV1betaPurgeCompletionSuggestionsRequest"
+                          },
+                          "response": {
+                            "$ref": "GoogleLongrunningOperation"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        }
+                      }
+                    },
                     "controls": {
                       "methods": {
                         "create": {
@@ -4242,6 +4302,66 @@
                     }
                   }
                 },
+                "completionSuggestions": {
+                  "methods": {
+                    "import": {
+                      "description": "Imports CompletionSuggestions for a DataStore.",
+                      "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/completionSuggestions:import",
+                      "httpMethod": "POST",
+                      "id": "discoveryengine.projects.locations.dataStores.completionSuggestions.import",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The parent data store resource name for which to import customer autocomplete suggestions. Follows pattern `projects/*/locations/*/collections/*/dataStores/*`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta/{+parent}/completionSuggestions:import",
+                      "request": {
+                        "$ref": "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "purge": {
+                      "description": "Permanently deletes all CompletionSuggestions for a DataStore.",
+                      "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/completionSuggestions:purge",
+                      "httpMethod": "POST",
+                      "id": "discoveryengine.projects.locations.dataStores.completionSuggestions.purge",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The parent data store resource name for which to purge completion suggestions. Follows pattern projects/*/locations/*/collections/*/dataStores/*.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta/{+parent}/completionSuggestions:purge",
+                      "request": {
+                        "$ref": "GoogleCloudDiscoveryengineV1betaPurgeCompletionSuggestionsRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                },
                 "controls": {
                   "methods": {
                     "create": {
@@ -5989,7 +6109,7 @@
       }
     }
   },
-  "revision": "20240612",
+  "revision": "20240617",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -6916,6 +7036,51 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1ImportCompletionSuggestionsMetadata": {
+      "description": "Metadata related to the progress of the ImportCompletionSuggestions operation. This will be returned by the google.longrunning.Operation.metadata field.",
+      "id": "GoogleCloudDiscoveryengineV1ImportCompletionSuggestionsMetadata",
+      "properties": {
+        "createTime": {
+          "description": "Operation create time.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "failureCount": {
+          "description": "Count of CompletionSuggestions that failed to be imported.",
+          "format": "int64",
+          "type": "string"
+        },
+        "successCount": {
+          "description": "Count of CompletionSuggestions successfully imported.",
+          "format": "int64",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Operation last update time. If the operation is done, this is also the finish time.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1ImportCompletionSuggestionsResponse": {
+      "description": "Response of the CompletionService.ImportCompletionSuggestions method. If the long running operation is done, this message is returned by the google.longrunning.Operations.response field if the operation is successful.",
+      "id": "GoogleCloudDiscoveryengineV1ImportCompletionSuggestionsResponse",
+      "properties": {
+        "errorConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1ImportErrorConfig",
+          "description": "The desired location of errors incurred during the Import."
+        },
+        "errorSamples": {
+          "description": "A sample of errors encountered while processing the request.",
+          "items": {
+            "$ref": "GoogleRpcStatus"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1ImportDocumentsMetadata": {
       "description": "Metadata related to the progress of the ImportDocuments operation. This is returned by the google.longrunning.Operation.metadata field.",
       "id": "GoogleCloudDiscoveryengineV1ImportDocumentsMetadata",
@@ -7150,6 +7315,41 @@
       "description": "Metadata associated with a project provision operation.",
       "id": "GoogleCloudDiscoveryengineV1ProvisionProjectMetadata",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1PurgeCompletionSuggestionsMetadata": {
+      "description": "Metadata related to the progress of the PurgeCompletionSuggestions operation. This is returned by the google.longrunning.Operation.metadata field.",
+      "id": "GoogleCloudDiscoveryengineV1PurgeCompletionSuggestionsMetadata",
+      "properties": {
+        "createTime": {
+          "description": "Operation create time.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Operation last update time. If the operation is done, this is also the finish time.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1PurgeCompletionSuggestionsResponse": {
+      "description": "Response message for CompletionService.PurgeCompletionSuggestions method.",
+      "id": "GoogleCloudDiscoveryengineV1PurgeCompletionSuggestionsResponse",
+      "properties": {
+        "errorSamples": {
+          "description": "A sample of errors encountered while processing the request.",
+          "items": {
+            "$ref": "GoogleRpcStatus"
+          },
+          "type": "array"
+        },
+        "purgeSucceeded": {
+          "description": "Whether the completion suggestions were successfully purged.",
+          "type": "boolean"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudDiscoveryengineV1PurgeDocumentsMetadata": {
@@ -7453,14 +7653,16 @@
               "ADVERSARIAL_QUERY_IGNORED",
               "NON_ANSWER_SEEKING_QUERY_IGNORED",
               "OUT_OF_DOMAIN_QUERY_IGNORED",
-              "POTENTIAL_POLICY_VIOLATION"
+              "POTENTIAL_POLICY_VIOLATION",
+              "NO_RELEVANT_CONTENT"
             ],
             "enumDescriptions": [
               "Default value. The answer skipped reason is not specified.",
               "The adversarial query ignored case.",
               "The non-answer seeking query ignored case.",
               "The out-of-domain query ignored case. Google skips the answer if there are no high-relevance search results.",
-              "The potential policy violation case. Google skips the answer if there is a potential policy violation detected. This includes content that may be violent or toxic."
+              "The potential policy violation case. Google skips the answer if there is a potential policy violation detected. This includes content that may be violent or toxic.",
+              "The no relevant content case. Google skips the answer if there is no relevant content in the retrieved search results."
             ],
             "type": "string"
           },
@@ -9050,6 +9252,51 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaImportCompletionSuggestionsMetadata": {
+      "description": "Metadata related to the progress of the ImportCompletionSuggestions operation. This will be returned by the google.longrunning.Operation.metadata field.",
+      "id": "GoogleCloudDiscoveryengineV1alphaImportCompletionSuggestionsMetadata",
+      "properties": {
+        "createTime": {
+          "description": "Operation create time.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "failureCount": {
+          "description": "Count of CompletionSuggestions that failed to be imported.",
+          "format": "int64",
+          "type": "string"
+        },
+        "successCount": {
+          "description": "Count of CompletionSuggestions successfully imported.",
+          "format": "int64",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Operation last update time. If the operation is done, this is also the finish time.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaImportCompletionSuggestionsResponse": {
+      "description": "Response of the CompletionService.ImportCompletionSuggestions method. If the long running operation is done, this message is returned by the google.longrunning.Operations.response field if the operation is successful.",
+      "id": "GoogleCloudDiscoveryengineV1alphaImportCompletionSuggestionsResponse",
+      "properties": {
+        "errorConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaImportErrorConfig",
+          "description": "The desired location of errors incurred during the Import."
+        },
+        "errorSamples": {
+          "description": "A sample of errors encountered while processing the request.",
+          "items": {
+            "$ref": "GoogleRpcStatus"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaImportDocumentsMetadata": {
       "description": "Metadata related to the progress of the ImportDocuments operation. This is returned by the google.longrunning.Operation.metadata field.",
       "id": "GoogleCloudDiscoveryengineV1alphaImportDocumentsMetadata",
@@ -9324,6 +9571,41 @@
       "description": "Metadata associated with a project provision operation.",
       "id": "GoogleCloudDiscoveryengineV1alphaProvisionProjectMetadata",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaPurgeCompletionSuggestionsMetadata": {
+      "description": "Metadata related to the progress of the PurgeCompletionSuggestions operation. This is returned by the google.longrunning.Operation.metadata field.",
+      "id": "GoogleCloudDiscoveryengineV1alphaPurgeCompletionSuggestionsMetadata",
+      "properties": {
+        "createTime": {
+          "description": "Operation create time.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Operation last update time. If the operation is done, this is also the finish time.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaPurgeCompletionSuggestionsResponse": {
+      "description": "Response message for CompletionService.PurgeCompletionSuggestions method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaPurgeCompletionSuggestionsResponse",
+      "properties": {
+        "errorSamples": {
+          "description": "A sample of errors encountered while processing the request.",
+          "items": {
+            "$ref": "GoogleRpcStatus"
+          },
+          "type": "array"
+        },
+        "purgeSucceeded": {
+          "description": "Whether the completion suggestions were successfully purged.",
+          "type": "boolean"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudDiscoveryengineV1alphaPurgeDocumentsMetadata": {
@@ -9942,14 +10224,16 @@
               "ADVERSARIAL_QUERY_IGNORED",
               "NON_ANSWER_SEEKING_QUERY_IGNORED",
               "OUT_OF_DOMAIN_QUERY_IGNORED",
-              "POTENTIAL_POLICY_VIOLATION"
+              "POTENTIAL_POLICY_VIOLATION",
+              "NO_RELEVANT_CONTENT"
             ],
             "enumDescriptions": [
               "Default value. The answer skipped reason is not specified.",
               "The adversarial query ignored case.",
               "The non-answer seeking query ignored case.",
               "The out-of-domain query ignored case. Google skips the answer if there are no high-relevance search results.",
-              "The potential policy violation case. Google skips the answer if there is a potential policy violation detected. This includes content that may be violent or toxic."
+              "The potential policy violation case. Google skips the answer if there is a potential policy violation detected. This includes content that may be violent or toxic.",
+              "The no relevant content case. Google skips the answer if there is no relevant content in the retrieved search results."
             ],
             "type": "string"
           },
@@ -11280,6 +11564,47 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1betaCompletionSuggestion": {
+      "description": "Autocomplete suggestions that are imported from Customer.",
+      "id": "GoogleCloudDiscoveryengineV1betaCompletionSuggestion",
+      "properties": {
+        "alternativePhrases": {
+          "description": "Alternative matching phrases for this suggestion.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "frequency": {
+          "description": "Frequency of this suggestion. Will be used to rank suggestions when score is not available.",
+          "format": "int64",
+          "type": "string"
+        },
+        "globalScore": {
+          "description": "Global score of this suggestion. Control how this suggestion would be scored / ranked.",
+          "format": "double",
+          "type": "number"
+        },
+        "groupId": {
+          "description": "If two suggestions have the same groupId, they will not be returned together. Instead the one ranked higher will be returned. This can be used to deduplicate semantically identical suggestions.",
+          "type": "string"
+        },
+        "groupScore": {
+          "description": "The score of this suggestion within its group.",
+          "format": "double",
+          "type": "number"
+        },
+        "languageCode": {
+          "description": "BCP-47 language code of this suggestion.",
+          "type": "string"
+        },
+        "suggestion": {
+          "description": "Required. The suggestion text.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1betaCondition": {
       "description": "Defines circumstances to be checked before allowing a behavior",
       "id": "GoogleCloudDiscoveryengineV1betaCondition",
@@ -12043,7 +12368,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "The URI of the content. Only Cloud Storage URIs (e.g. `gs://bucket-name/path/to/file`) are supported. The maximum file size is 2.5 MB for text-based formats, 100 MB for other formats.",
+          "description": "The URI of the content. Only Cloud Storage URIs (e.g. `gs://bucket-name/path/to/file`) are supported. The maximum file size is 2.5 MB for text-based formats, 200 MB for other formats.",
           "type": "string"
         }
       },
@@ -12539,6 +12864,88 @@
         "factText": {
           "description": "Text content of the fact. Can be at most 10K characters long.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsMetadata": {
+      "description": "Metadata related to the progress of the ImportCompletionSuggestions operation. This will be returned by the google.longrunning.Operation.metadata field.",
+      "id": "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsMetadata",
+      "properties": {
+        "createTime": {
+          "description": "Operation create time.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "failureCount": {
+          "description": "Count of CompletionSuggestions that failed to be imported.",
+          "format": "int64",
+          "type": "string"
+        },
+        "successCount": {
+          "description": "Count of CompletionSuggestions successfully imported.",
+          "format": "int64",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Operation last update time. If the operation is done, this is also the finish time.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsRequest": {
+      "description": "Request message for CompletionService.ImportCompletionSuggestions method.",
+      "id": "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsRequest",
+      "properties": {
+        "bigquerySource": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaBigQuerySource",
+          "description": "BigQuery input source."
+        },
+        "errorConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaImportErrorConfig",
+          "description": "The desired location of errors incurred during the Import."
+        },
+        "gcsSource": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaGcsSource",
+          "description": "Cloud Storage location for the input content."
+        },
+        "inlineSource": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsRequestInlineSource",
+          "description": "The Inline source for suggestion entries."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsRequestInlineSource": {
+      "description": "The inline source for CompletionSuggestions.",
+      "id": "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsRequestInlineSource",
+      "properties": {
+        "suggestions": {
+          "description": "Required. A list of all denylist entries to import. Max of 1000 items.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1betaCompletionSuggestion"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsResponse": {
+      "description": "Response of the CompletionService.ImportCompletionSuggestions method. If the long running operation is done, this message is returned by the google.longrunning.Operations.response field if the operation is successful.",
+      "id": "GoogleCloudDiscoveryengineV1betaImportCompletionSuggestionsResponse",
+      "properties": {
+        "errorConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaImportErrorConfig",
+          "description": "The desired location of errors incurred during the Import."
+        },
+        "errorSamples": {
+          "description": "A sample of errors encountered while processing the request.",
+          "items": {
+            "$ref": "GoogleRpcStatus"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -13251,6 +13658,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaPurgeCompletionSuggestionsRequest": {
+      "description": "Request message for CompletionService.PurgeCompletionSuggestions method.",
+      "id": "GoogleCloudDiscoveryengineV1betaPurgeCompletionSuggestionsRequest",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudDiscoveryengineV1betaPurgeDocumentsMetadata": {
@@ -14098,7 +14511,7 @@
           "description": "Required. The facet key specification."
         },
         "limit": {
-          "description": "Maximum facet values that are returned for this facet. If unspecified, defaults to 20. The maximum allowed value is 300. Values above 300 are coerced to 300. If this field is negative, an `INVALID_ARGUMENT` is returned.",
+          "description": "Maximum facet values that are returned for this facet. If unspecified, defaults to 20. The maximum allowed value is 300. Values above 300 are coerced to 300. For aggregation in healthcare search, when the [FacetKey.key] is \"healthcare_aggregation_key\", the limit will be overridden to 10,000 internally, regardless of the value set here. If this field is negative, an `INVALID_ARGUMENT` is returned.",
           "format": "int32",
           "type": "integer"
         }

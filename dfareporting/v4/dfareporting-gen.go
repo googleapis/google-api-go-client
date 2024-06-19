@@ -1242,7 +1242,7 @@ type AccountUserProfile struct {
 	CampaignFilter *ObjectFilter `json:"campaignFilter,omitempty"`
 	// Comments: Comments for this user profile.
 	Comments string `json:"comments,omitempty"`
-	// Email: Email of the user profile. The email addresss must be linked to a
+	// Email: Email of the user profile. The email address must be linked to a
 	// Google Account. This field is required on insertion and is read-only after
 	// insertion.
 	Email string `json:"email,omitempty"`
@@ -2653,63 +2653,6 @@ func (s *ChangeLogsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ChannelGrouping: Represents a DfaReporting channel grouping.
-type ChannelGrouping struct {
-	// FallbackName: ChannelGrouping fallback name.
-	FallbackName string `json:"fallbackName,omitempty"`
-	// Kind: The kind of resource this is, in this case
-	// dfareporting#channelGrouping.
-	Kind string `json:"kind,omitempty"`
-	// Name: ChannelGrouping name.
-	Name string `json:"name,omitempty"`
-	// Rules: The rules contained within this channel grouping.
-	Rules []*ChannelGroupingRule `json:"rules,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FallbackName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FallbackName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *ChannelGrouping) MarshalJSON() ([]byte, error) {
-	type NoMethod ChannelGrouping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// ChannelGroupingRule: Represents a DfaReporting channel grouping rule.
-type ChannelGroupingRule struct {
-	// DisjunctiveMatchStatements: The disjunctive match statements contained
-	// within this rule.
-	DisjunctiveMatchStatements []*DisjunctiveMatchStatement `json:"disjunctiveMatchStatements,omitempty"`
-	// Kind: The kind of resource this is, in this case
-	// dfareporting#channelGroupingRule.
-	Kind string `json:"kind,omitempty"`
-	// Name: Rule name.
-	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisjunctiveMatchStatements")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisjunctiveMatchStatements") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *ChannelGroupingRule) MarshalJSON() ([]byte, error) {
-	type NoMethod ChannelGroupingRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // CitiesListResponse: City List Response
 type CitiesListResponse struct {
 	// Cities: City collection.
@@ -2938,12 +2881,6 @@ type CompatibleFields struct {
 	// Kind: The kind of resource this is, in this case
 	// dfareporting#compatibleFields.
 	Kind string `json:"kind,omitempty"`
-	// PathAttributionReportCompatibleFields: Contains items that are compatible to
-	// be selected for a report of type "PATH_ATTRIBUTION".
-	PathAttributionReportCompatibleFields *PathReportCompatibleFields `json:"pathAttributionReportCompatibleFields,omitempty"`
-	// PathReportCompatibleFields: Contains items that are compatible to be
-	// selected for a report of type "PATH".
-	PathReportCompatibleFields *PathReportCompatibleFields `json:"pathReportCompatibleFields,omitempty"`
 	// PathToConversionReportCompatibleFields: Contains items that are compatible
 	// to be selected for a report of type "PATH_TO_CONVERSION".
 	PathToConversionReportCompatibleFields *PathToConversionReportCompatibleFields `json:"pathToConversionReportCompatibleFields,omitempty"`
@@ -4490,14 +4427,12 @@ type CreativeAssetMetadata struct {
 	//   "ORPHANED_ASSET" - Orphaned asset not referenced.
 	//   "PRIMARY_HTML_MISSING" - Primary html file missing.
 	//   "EXTERNAL_FILE_REFERENCED" - Reference to a third-party resource.
-	// Problematic because the volume of ad serving could bring down unprepared web
-	// servers due to high load. e.g. http://www.zibble.net/smiles.gif
 	//   "MRAID_REFERENCED" - Reference to INAPP MRAID feature.
 	//   "ADMOB_REFERENCED" - Reference to INAPP ADMOB feature.
 	//   "FILE_TYPE_INVALID" - Invalid file type referenced.
-	//   "ZIP_INVALID" - Invalid zip passed in (could not extract from zip
+	//   "ZIP_INVALID" - Invalid zip passed in
 	//   "LINKED_FILE_NOT_FOUND" - A relative file was linked to that wasn't
-	// included in zip. e.g. images/missing_file.gif
+	// included in zip.
 	//   "MAX_FLASH_VERSION_11" - Max flash version at 11.
 	//   "NOT_SSL_COMPLIANT" - Whether the asset uses secure urls or not.
 	//   "FILE_DETAIL_EMPTY" - File detail empty.
@@ -5891,34 +5826,6 @@ func (s *DirectorySitesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DisjunctiveMatchStatement: Represents a Disjunctive Match Statement
-// resource, which is a conjunction (and) of disjunctive (or) boolean
-// statements.
-type DisjunctiveMatchStatement struct {
-	// EventFilters: The event filters contained within this disjunctive match
-	// statement.
-	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
-	// Kind: The kind of resource this is, in this case
-	// dfareporting#disjunctiveMatchStatement.
-	Kind string `json:"kind,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EventFilters") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EventFilters") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *DisjunctiveMatchStatement) MarshalJSON() ([]byte, error) {
-	type NoMethod DisjunctiveMatchStatement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // DynamicTargetingKey: Contains properties of a dynamic targeting key. Dynamic
 // targeting keys are unique, user-friendly labels, created at the advertiser
 // level in DCM, that can be assigned to ads, creatives, and placements and
@@ -6037,32 +5944,6 @@ type EncryptionInfo struct {
 
 func (s *EncryptionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// EventFilter: Represents a DfaReporting event filter.
-type EventFilter struct {
-	// DimensionFilter: The dimension filter contained within this EventFilter.
-	DimensionFilter *PathReportDimensionValue `json:"dimensionFilter,omitempty"`
-	// Kind: The kind of resource this is, in this case dfareporting#eventFilter.
-	Kind string `json:"kind,omitempty"`
-	// UvarFilter: Filter on a custom variable.
-	UvarFilter *UvarFilter `json:"uvarFilter,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DimensionFilter") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *EventFilter) MarshalJSON() ([]byte, error) {
-	type NoMethod EventFilter
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6366,12 +6247,12 @@ func (s *Flight) MarshalJSON() ([]byte, error) {
 // Response
 type FloodlightActivitiesGenerateTagResponse struct {
 	// FloodlightActivityTag: Generated tag for this Floodlight activity. For
-	// global site tags, this is the event snippet.
+	// Google tags, this is the event snippet.
 	FloodlightActivityTag string `json:"floodlightActivityTag,omitempty"`
-	// GlobalSiteTagGlobalSnippet: The global snippet section of a global site tag.
-	// The global site tag sets new cookies on your domain, which will store a
-	// unique identifier for a user or the ad click that brought the user to your
-	// site. Learn more.
+	// GlobalSiteTagGlobalSnippet: The global snippet section of a Google tag. The
+	// Google tag sets new cookies on your domain, which will store a unique
+	// identifier for a user or the ad click that brought the user to your site.
+	// Learn more.
 	GlobalSiteTagGlobalSnippet string `json:"globalSiteTagGlobalSnippet,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "dfareporting#floodlightActivitiesGenerateTagResponse".
@@ -7632,6 +7513,7 @@ type MeasurementPartnerAdvertiserLink struct {
 	//   "MEASUREMENT_PARTNER_LINK_OPT_OUT_PENDING" - Link opt-out pending sync.
 	//   "MEASUREMENT_PARTNER_LINK_WRAPPING_PENDING" - Link wrap answer pending.
 	//   "MEASUREMENT_PARTNER_MODE_CHANGE_PENDING" - Mode change pending.
+	//   "MEASUREMENT_PARTNER_UNLINK_PENDING" - Partner unlink pending.
 	LinkStatus string `json:"linkStatus,omitempty"`
 	// MeasurementPartner: Measurement partner used for tag wrapping.
 	//
@@ -7672,6 +7554,7 @@ type MeasurementPartnerCampaignLink struct {
 	//   "MEASUREMENT_PARTNER_LINK_OPT_OUT_PENDING" - Link opt-out pending sync.
 	//   "MEASUREMENT_PARTNER_LINK_WRAPPING_PENDING" - Link wrap answer pending.
 	//   "MEASUREMENT_PARTNER_MODE_CHANGE_PENDING" - Mode change pending.
+	//   "MEASUREMENT_PARTNER_UNLINK_PENDING" - Partner unlink pending.
 	LinkStatus string `json:"linkStatus,omitempty"`
 	// MeasurementPartner: Measurement partner used for tag wrapping.
 	//
@@ -7714,6 +7597,7 @@ type MeasurementPartnerWrappingData struct {
 	//   "MEASUREMENT_PARTNER_LINK_OPT_OUT_PENDING" - Link opt-out pending sync.
 	//   "MEASUREMENT_PARTNER_LINK_WRAPPING_PENDING" - Link wrap answer pending.
 	//   "MEASUREMENT_PARTNER_MODE_CHANGE_PENDING" - Mode change pending.
+	//   "MEASUREMENT_PARTNER_UNLINK_PENDING" - Partner unlink pending.
 	LinkStatus string `json:"linkStatus,omitempty"`
 	// MeasurementPartner: Measurement partner used for wrapping the placement.
 	//
@@ -8448,119 +8332,6 @@ type OrdersListResponse struct {
 
 func (s *OrdersListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod OrdersListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// PathFilter: Represents a DfaReporting path filter.
-type PathFilter struct {
-	// EventFilters: Event filters in path report.
-	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
-	// Kind: The kind of resource this is, in this case dfareporting#pathFilter.
-	Kind string `json:"kind,omitempty"`
-	// PathMatchPosition: Determines how the 'value' field is matched when
-	// filtering. If not specified, defaults to EXACT. If set to
-	// WILDCARD_EXPRESSION, '*' is allowed as a placeholder for variable length
-	// character sequences, and it can be escaped with a backslash. Note, only paid
-	// search dimensions ('dfa:paidSearch*') allow a matchType other than EXACT.
-	//
-	// Possible values:
-	//   "PATH_MATCH_POSITION_UNSPECIFIED"
-	//   "ANY"
-	//   "FIRST"
-	//   "LAST"
-	PathMatchPosition string `json:"pathMatchPosition,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EventFilters") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EventFilters") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *PathFilter) MarshalJSON() ([]byte, error) {
-	type NoMethod PathFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// PathReportCompatibleFields: Represents fields that are compatible to be
-// selected for a report of type "PATH".
-type PathReportCompatibleFields struct {
-	// ChannelGroupings: Dimensions which are compatible to be selected in the
-	// "channelGroupings" section of the report.
-	ChannelGroupings []*Dimension `json:"channelGroupings,omitempty"`
-	// Dimensions: Dimensions which are compatible to be selected in the
-	// "dimensions" section of the report.
-	Dimensions []*Dimension `json:"dimensions,omitempty"`
-	// Kind: The kind of resource this is, in this case
-	// dfareporting#pathReportCompatibleFields.
-	Kind string `json:"kind,omitempty"`
-	// Metrics: Metrics which are compatible to be selected in the "metricNames"
-	// section of the report.
-	Metrics []*Metric `json:"metrics,omitempty"`
-	// PathFilters: Dimensions which are compatible to be selected in the
-	// "pathFilters" section of the report.
-	PathFilters []*Dimension `json:"pathFilters,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChannelGroupings") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChannelGroupings") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *PathReportCompatibleFields) MarshalJSON() ([]byte, error) {
-	type NoMethod PathReportCompatibleFields
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// PathReportDimensionValue: Represents a PathReportDimensionValue resource.
-type PathReportDimensionValue struct {
-	// DimensionName: The name of the dimension.
-	DimensionName string `json:"dimensionName,omitempty"`
-	// Ids: The possible ID's associated with the value if available.
-	Ids []string `json:"ids,omitempty"`
-	// Kind: The kind of resource this is, in this case
-	// dfareporting#pathReportDimensionValue.
-	Kind string `json:"kind,omitempty"`
-	// MatchType: Determines how the 'value' field is matched when filtering. If
-	// not specified, defaults to EXACT. If set to WILDCARD_EXPRESSION, '*' is
-	// allowed as a placeholder for variable length character sequences, and it can
-	// be escaped with a backslash. Note, only paid search dimensions
-	// ('dfa:paidSearch*') allow a matchType other than EXACT.
-	//
-	// Possible values:
-	//   "EXACT"
-	//   "BEGINS_WITH"
-	//   "CONTAINS"
-	//   "WILDCARD_EXPRESSION"
-	MatchType string `json:"matchType,omitempty"`
-	// Values: The possible values of the dimension.
-	Values []string `json:"values,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DimensionName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DimensionName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *PathReportDimensionValue) MarshalJSON() ([]byte, error) {
-	type NoMethod PathReportDimensionValue
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9937,11 +9708,6 @@ type Report struct {
 	Name string `json:"name,omitempty"`
 	// OwnerProfileId: The user profile id of the owner of this report.
 	OwnerProfileId int64 `json:"ownerProfileId,omitempty,string"`
-	// PathAttributionCriteria: The report criteria for a report of type
-	// "PATH_ATTRIBUTION".
-	PathAttributionCriteria *ReportPathAttributionCriteria `json:"pathAttributionCriteria,omitempty"`
-	// PathCriteria: The report criteria for a report of type "PATH".
-	PathCriteria *ReportPathCriteria `json:"pathCriteria,omitempty"`
 	// PathToConversionCriteria: The report criteria for a report of type
 	// "PATH_TO_CONVERSION".
 	PathToConversionCriteria *ReportPathToConversionCriteria `json:"pathToConversionCriteria,omitempty"`
@@ -9960,8 +9726,6 @@ type Report struct {
 	//   "PATH_TO_CONVERSION"
 	//   "CROSS_DIMENSION_REACH"
 	//   "FLOODLIGHT"
-	//   "PATH"
-	//   "PATH_ATTRIBUTION"
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -10163,79 +9927,6 @@ type ReportFloodlightCriteriaReportProperties struct {
 
 func (s *ReportFloodlightCriteriaReportProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportFloodlightCriteriaReportProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// ReportPathAttributionCriteria: The report criteria for a report of type
-// "PATH_ATTRIBUTION".
-type ReportPathAttributionCriteria struct {
-	// ActivityFilters: The list of 'dfa:activity' values to filter on.
-	ActivityFilters []*DimensionValue `json:"activityFilters,omitempty"`
-	// CustomChannelGrouping: Channel Grouping.
-	CustomChannelGrouping *ChannelGrouping `json:"customChannelGrouping,omitempty"`
-	// DateRange: The date range this report should be run for.
-	DateRange *DateRange `json:"dateRange,omitempty"`
-	// Dimensions: The list of dimensions the report should include.
-	Dimensions []*SortedDimension `json:"dimensions,omitempty"`
-	// FloodlightConfigId: The floodlight ID for which to show data in this report.
-	// All advertisers associated with that ID will automatically be added. The
-	// dimension of the value needs to be 'dfa:floodlightConfigId'.
-	FloodlightConfigId *DimensionValue `json:"floodlightConfigId,omitempty"`
-	// MetricNames: The list of names of metrics the report should include.
-	MetricNames []string `json:"metricNames,omitempty"`
-	// PathFilters: Path Filters.
-	PathFilters []*PathFilter `json:"pathFilters,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ActivityFilters") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActivityFilters") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *ReportPathAttributionCriteria) MarshalJSON() ([]byte, error) {
-	type NoMethod ReportPathAttributionCriteria
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// ReportPathCriteria: The report criteria for a report of type "PATH".
-type ReportPathCriteria struct {
-	// ActivityFilters: The list of 'dfa:activity' values to filter on.
-	ActivityFilters []*DimensionValue `json:"activityFilters,omitempty"`
-	// CustomChannelGrouping: Channel Grouping.
-	CustomChannelGrouping *ChannelGrouping `json:"customChannelGrouping,omitempty"`
-	// DateRange: The date range this report should be run for.
-	DateRange *DateRange `json:"dateRange,omitempty"`
-	// Dimensions: The list of dimensions the report should include.
-	Dimensions []*SortedDimension `json:"dimensions,omitempty"`
-	// FloodlightConfigId: The floodlight ID for which to show data in this report.
-	// All advertisers associated with that ID will automatically be added. The
-	// dimension of the value needs to be 'dfa:floodlightConfigId'.
-	FloodlightConfigId *DimensionValue `json:"floodlightConfigId,omitempty"`
-	// MetricNames: The list of names of metrics the report should include.
-	MetricNames []string `json:"metricNames,omitempty"`
-	// PathFilters: Path Filters.
-	PathFilters []*PathFilter `json:"pathFilters,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ActivityFilters") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActivityFilters") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *ReportPathCriteria) MarshalJSON() ([]byte, error) {
-	type NoMethod ReportPathCriteria
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12128,41 +11819,6 @@ func (s *UserRolesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UvarFilter: Defines the filtering on a single uvar.
-type UvarFilter struct {
-	// Complement: Return rows which don't match this filter.
-	Complement bool `json:"complement,omitempty"`
-	// Index: Custom variable index the filter is applied to.
-	Index int64 `json:"index,omitempty,string"`
-	// Kind: The kind of resource this is, in this case dfareporting#uvarFilter.
-	Kind string `json:"kind,omitempty"`
-	// Match: Indicates how the filter should be matched to the values.
-	//
-	// Possible values:
-	//   "UNSPECIFIED"
-	//   "EXACT"
-	//   "CONTAINS"
-	Match string `json:"match,omitempty"`
-	// Values: Values to filter on.
-	Values []string `json:"values,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Complement") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Complement") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *UvarFilter) MarshalJSON() ([]byte, error) {
-	type NoMethod UvarFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // VideoFormat: Contains information about supported video formats.
 type VideoFormat struct {
 	// FileType: File type of the video format.
@@ -13297,7 +12953,8 @@ type AccountUserProfilesPatchCall struct {
 	header_            http.Header
 }
 
-// Patch: Updates an existing user role. This method supports patch semantics.
+// Patch: Updates an existing account user profile. This method supports patch
+// semantics.
 //
 // - id: AccountUserProfile ID.
 // - profileId: User profile ID associated with this request.
@@ -14587,7 +14244,7 @@ type AdsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates an existing event tag. This method supports patch semantics.
+// Patch: Updates an existing ad. This method supports patch semantics.
 //
 // - id: RemarketingList ID.
 // - profileId: User profile ID associated with this request.
@@ -16074,7 +15731,8 @@ type AdvertiserLandingPagesPatchCall struct {
 	header_     http.Header
 }
 
-// Patch: Updates an existing advertiser. This method supports patch semantics.
+// Patch: Updates an existing landing page. This method supports patch
+// semantics.
 //
 // - id: Landing Page ID.
 // - profileId: User profile ID associated with this request.
@@ -18557,7 +18215,7 @@ type CampaignsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates an existing creative. This method supports patch semantics.
+// Patch: Updates an existing campaign. This method supports patch semantics.
 //
 // - id: Campaign ID.
 // - profileId: User profile ID associated with this request.
@@ -26138,7 +25796,8 @@ type FloodlightActivitiesPatchCall struct {
 	header_            http.Header
 }
 
-// Patch: Updates an existing event tag. This method supports patch semantics.
+// Patch: Updates an existing floodlight activity. This method supports patch
+// semantics.
 //
 // - id: EventTag ID.
 // - profileId: User profile ID associated with this request.
@@ -26780,7 +26439,8 @@ type FloodlightActivityGroupsPatchCall struct {
 	header_                 http.Header
 }
 
-// Patch: Updates an existing event tag. This method supports patch semantics.
+// Patch: Updates an existing floodlight activity group. This method supports
+// patch semantics.
 //
 // - id: EventTag ID.
 // - profileId: User profile ID associated with this request.
@@ -27218,7 +26878,8 @@ type FloodlightConfigurationsPatchCall struct {
 	header_                 http.Header
 }
 
-// Patch: Updates an existing event tag. This method supports patch semantics.
+// Patch: Updates an existing floodlight configuration. This method supports
+// patch semantics.
 //
 // - id: EventTag ID.
 // - profileId: User profile ID associated with this request.
@@ -32603,8 +32264,8 @@ type RemarketingListSharesPatchCall struct {
 	header_              http.Header
 }
 
-// Patch: Updates an existing RemarketingListShare. This method supports patch
-// semantics.
+// Patch: Updates an existing remarketing list share. This method supports
+// patch semantics.
 //
 // - id: RemarketingList ID.
 // - profileId: User profile ID associated with this request.
@@ -33220,7 +32881,7 @@ type RemarketingListsPatchCall struct {
 	header_         http.Header
 }
 
-// Patch: Updates an existing RemarketingList. This method supports patch
+// Patch: Updates an existing remarketing list. This method supports patch
 // semantics.
 //
 // - id: RemarketingList ID.

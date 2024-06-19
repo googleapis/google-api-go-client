@@ -2427,7 +2427,7 @@
       }
     }
   },
-  "revision": "20240606",
+  "revision": "20240612",
   "rootUrl": "https://connectors.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -3111,6 +3111,23 @@
       "properties": {
         "category": {
           "description": "Output only. Category of the connector.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "connectorType": {
+          "description": "Output only. The type of the connector.",
+          "enum": [
+            "CONNECTOR_TYPE_UNSPECIFIED",
+            "CONNECTOR_TYPE_GOOGLE",
+            "CONNECTOR_TYPE_TECHNICAL",
+            "CONNECTOR_TYPE_THIRD_PARTY"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Google connectors.",
+            "Technical connectors.",
+            "Third Party connectors."
+          ],
           "readOnly": true,
           "type": "string"
         },

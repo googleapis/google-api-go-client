@@ -198,6 +198,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.ModelDeploymentMonitoringJobs = NewProjectsLocationsModelDeploymentMonitoringJobsService(s)
 	rs.Models = NewProjectsLocationsModelsService(s)
 	rs.NasJobs = NewProjectsLocationsNasJobsService(s)
+	rs.NotebookExecutionJobs = NewProjectsLocationsNotebookExecutionJobsService(s)
 	rs.NotebookRuntimeTemplates = NewProjectsLocationsNotebookRuntimeTemplatesService(s)
 	rs.NotebookRuntimes = NewProjectsLocationsNotebookRuntimesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
@@ -249,6 +250,8 @@ type ProjectsLocationsService struct {
 	Models *ProjectsLocationsModelsService
 
 	NasJobs *ProjectsLocationsNasJobsService
+
+	NotebookExecutionJobs *ProjectsLocationsNotebookExecutionJobsService
 
 	NotebookRuntimeTemplates *ProjectsLocationsNotebookRuntimeTemplatesService
 
@@ -956,21 +959,66 @@ type ProjectsLocationsNasJobsNasTrialDetailsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsNotebookExecutionJobsService(s *Service) *ProjectsLocationsNotebookExecutionJobsService {
+	rs := &ProjectsLocationsNotebookExecutionJobsService{s: s}
+	rs.Operations = NewProjectsLocationsNotebookExecutionJobsOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsNotebookExecutionJobsService struct {
+	s *Service
+
+	Operations *ProjectsLocationsNotebookExecutionJobsOperationsService
+}
+
+func NewProjectsLocationsNotebookExecutionJobsOperationsService(s *Service) *ProjectsLocationsNotebookExecutionJobsOperationsService {
+	rs := &ProjectsLocationsNotebookExecutionJobsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNotebookExecutionJobsOperationsService struct {
+	s *Service
+}
+
 func NewProjectsLocationsNotebookRuntimeTemplatesService(s *Service) *ProjectsLocationsNotebookRuntimeTemplatesService {
 	rs := &ProjectsLocationsNotebookRuntimeTemplatesService{s: s}
+	rs.Operations = NewProjectsLocationsNotebookRuntimeTemplatesOperationsService(s)
 	return rs
 }
 
 type ProjectsLocationsNotebookRuntimeTemplatesService struct {
 	s *Service
+
+	Operations *ProjectsLocationsNotebookRuntimeTemplatesOperationsService
+}
+
+func NewProjectsLocationsNotebookRuntimeTemplatesOperationsService(s *Service) *ProjectsLocationsNotebookRuntimeTemplatesOperationsService {
+	rs := &ProjectsLocationsNotebookRuntimeTemplatesOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNotebookRuntimeTemplatesOperationsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsNotebookRuntimesService(s *Service) *ProjectsLocationsNotebookRuntimesService {
 	rs := &ProjectsLocationsNotebookRuntimesService{s: s}
+	rs.Operations = NewProjectsLocationsNotebookRuntimesOperationsService(s)
 	return rs
 }
 
 type ProjectsLocationsNotebookRuntimesService struct {
+	s *Service
+
+	Operations *ProjectsLocationsNotebookRuntimesOperationsService
+}
+
+func NewProjectsLocationsNotebookRuntimesOperationsService(s *Service) *ProjectsLocationsNotebookRuntimesOperationsService {
+	rs := &ProjectsLocationsNotebookRuntimesOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNotebookRuntimesOperationsService struct {
 	s *Service
 }
 
@@ -1298,6 +1346,8 @@ type CloudAiLargeModelsVisionGenerateVideoResponse struct {
 	RaiMediaFilteredCount int64 `json:"raiMediaFilteredCount,omitempty"`
 	// RaiMediaFilteredReasons: Returns rai failure reasons if any.
 	RaiMediaFilteredReasons []string `json:"raiMediaFilteredReasons,omitempty"`
+	// ReportingMetrics: Billable prediction metrics.
+	ReportingMetrics *IntelligenceCloudAutomlXpsReportingMetrics `json:"reportingMetrics,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GeneratedSamples") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1465,6 +1515,11 @@ func (s *CloudAiLargeModelsVisionNamedBoundingBox) UnmarshalJSON(data []byte) er
 type CloudAiLargeModelsVisionRaiInfo struct {
 	// DetectedLabels: The list of detected labels for different rai categories.
 	DetectedLabels []*CloudAiLargeModelsVisionRaiInfoDetectedLabels `json:"detectedLabels,omitempty"`
+	// ModelName: The model name used to indexing into the RaiFilterConfig map.
+	// Would either be one of imagegeneration@002-006, imagen-3.0-... api endpoint
+	// names, or internal names used for mapping to different filter configs
+	// (genselfie, ai_watermark) than its api endpoint.
+	ModelName string `json:"modelName,omitempty"`
 	// RaiCategories: List of rai categories' information to return
 	RaiCategories []string `json:"raiCategories,omitempty"`
 	// Scores: List of rai scores mapping to the rai categories. Rounded to 1
@@ -3517,6 +3572,8 @@ type GoogleCloudAiplatformV1Candidate struct {
 	// was flagged for the prohibited contents.
 	//   "SPII" - The token generation was stopped as the response was flagged for
 	// Sensitive Personally Identifiable Information (SPII) contents.
+	//   "MALFORMED_FUNCTION_CALL" - The function call generated by the model is
+	// invalid.
 	FinishReason string `json:"finishReason,omitempty"`
 	// GroundingMetadata: Output only. Metadata specifies sources used to ground
 	// generated content.
@@ -5168,157 +5225,6 @@ func (s *GoogleCloudAiplatformV1Dataset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAiplatformV1DatasetDistribution: Distribution computed over a
-// tuning dataset.
-type GoogleCloudAiplatformV1DatasetDistribution struct {
-	// Buckets: Output only. Defines the histogram bucket.
-	Buckets []*GoogleCloudAiplatformV1DatasetDistributionDistributionBucket `json:"buckets,omitempty"`
-	// Max: Output only. The maximum of the population values.
-	Max float64 `json:"max,omitempty"`
-	// Mean: Output only. The arithmetic mean of the values in the population.
-	Mean float64 `json:"mean,omitempty"`
-	// Median: Output only. The median of the values in the population.
-	Median float64 `json:"median,omitempty"`
-	// Min: Output only. The minimum of the population values.
-	Min float64 `json:"min,omitempty"`
-	// P5: Output only. The 5th percentile of the values in the population.
-	P5 float64 `json:"p5,omitempty"`
-	// P95: Output only. The 95th percentile of the values in the population.
-	P95 float64 `json:"p95,omitempty"`
-	// Sum: Output only. Sum of a given population of values.
-	Sum float64 `json:"sum,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Buckets") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Buckets") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1DatasetDistribution) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1DatasetDistribution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudAiplatformV1DatasetDistribution) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudAiplatformV1DatasetDistribution
-	var s1 struct {
-		Max    gensupport.JSONFloat64 `json:"max"`
-		Mean   gensupport.JSONFloat64 `json:"mean"`
-		Median gensupport.JSONFloat64 `json:"median"`
-		Min    gensupport.JSONFloat64 `json:"min"`
-		P5     gensupport.JSONFloat64 `json:"p5"`
-		P95    gensupport.JSONFloat64 `json:"p95"`
-		Sum    gensupport.JSONFloat64 `json:"sum"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Max = float64(s1.Max)
-	s.Mean = float64(s1.Mean)
-	s.Median = float64(s1.Median)
-	s.Min = float64(s1.Min)
-	s.P5 = float64(s1.P5)
-	s.P95 = float64(s1.P95)
-	s.Sum = float64(s1.Sum)
-	return nil
-}
-
-// GoogleCloudAiplatformV1DatasetDistributionDistributionBucket: Dataset bucket
-// used to create a histogram for the distribution given a population of
-// values.
-type GoogleCloudAiplatformV1DatasetDistributionDistributionBucket struct {
-	// Count: Output only. Number of values in the bucket.
-	Count int64 `json:"count,omitempty,string"`
-	// Left: Output only. Left bound of the bucket.
-	Left float64 `json:"left,omitempty"`
-	// Right: Output only. Right bound of the bucket.
-	Right float64 `json:"right,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Count") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1DatasetDistributionDistributionBucket) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1DatasetDistributionDistributionBucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudAiplatformV1DatasetDistributionDistributionBucket) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudAiplatformV1DatasetDistributionDistributionBucket
-	var s1 struct {
-		Left  gensupport.JSONFloat64 `json:"left"`
-		Right gensupport.JSONFloat64 `json:"right"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Left = float64(s1.Left)
-	s.Right = float64(s1.Right)
-	return nil
-}
-
-// GoogleCloudAiplatformV1DatasetStats: Statistics computed over a tuning
-// dataset.
-type GoogleCloudAiplatformV1DatasetStats struct {
-	// TotalBillableCharacterCount: Output only. Number of billable characters in
-	// the tuning dataset.
-	TotalBillableCharacterCount int64 `json:"totalBillableCharacterCount,omitempty,string"`
-	// TotalTuningCharacterCount: Output only. Number of tuning characters in the
-	// tuning dataset.
-	TotalTuningCharacterCount int64 `json:"totalTuningCharacterCount,omitempty,string"`
-	// TuningDatasetExampleCount: Output only. Number of examples in the tuning
-	// dataset.
-	TuningDatasetExampleCount int64 `json:"tuningDatasetExampleCount,omitempty,string"`
-	// TuningStepCount: Output only. Number of tuning steps for this Tuning Job.
-	TuningStepCount int64 `json:"tuningStepCount,omitempty,string"`
-	// UserDatasetExamples: Output only. Sample user messages in the training
-	// dataset uri.
-	UserDatasetExamples []*GoogleCloudAiplatformV1Content `json:"userDatasetExamples,omitempty"`
-	// UserInputTokenDistribution: Output only. Dataset distributions for the user
-	// input tokens.
-	UserInputTokenDistribution *GoogleCloudAiplatformV1DatasetDistribution `json:"userInputTokenDistribution,omitempty"`
-	// UserMessagePerExampleDistribution: Output only. Dataset distributions for
-	// the messages per example.
-	UserMessagePerExampleDistribution *GoogleCloudAiplatformV1DatasetDistribution `json:"userMessagePerExampleDistribution,omitempty"`
-	// UserOutputTokenDistribution: Output only. Dataset distributions for the user
-	// output tokens.
-	UserOutputTokenDistribution *GoogleCloudAiplatformV1DatasetDistribution `json:"userOutputTokenDistribution,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "TotalBillableCharacterCount") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TotalBillableCharacterCount") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1DatasetStats) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1DatasetStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudAiplatformV1DatasetVersion: Describes the dataset version.
 type GoogleCloudAiplatformV1DatasetVersion struct {
 	// BigQueryDatasetName: Output only. Name of the associated BigQuery dataset.
@@ -6322,30 +6228,6 @@ type GoogleCloudAiplatformV1DiskSpec struct {
 
 func (s *GoogleCloudAiplatformV1DiskSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1DiskSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudAiplatformV1DistillationDataStats: Statistics computed for
-// datasets used for distillation.
-type GoogleCloudAiplatformV1DistillationDataStats struct {
-	// TrainingDatasetStats: Output only. Statistics computed for the training
-	// dataset.
-	TrainingDatasetStats *GoogleCloudAiplatformV1DatasetStats `json:"trainingDatasetStats,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "TrainingDatasetStats") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TrainingDatasetStats") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1DistillationDataStats) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1DistillationDataStats
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16718,6 +16600,9 @@ type GoogleCloudAiplatformV1PipelineJob struct {
 	Network string `json:"network,omitempty"`
 	// PipelineSpec: The spec of the pipeline.
 	PipelineSpec googleapi.RawMessage `json:"pipelineSpec,omitempty"`
+	// PreflightValidations: Optional. Whether to do component level validations
+	// before job creation.
+	PreflightValidations bool `json:"preflightValidations,omitempty"`
 	// ReservedIpRanges: A list of names for the reserved ip ranges under the VPC
 	// network that can be used for this Pipeline Job's workload. If set, we will
 	// deploy the Pipeline Job's workload within the provided ip ranges. Otherwise,
@@ -18747,34 +18632,6 @@ func (s *GoogleCloudAiplatformV1RebootPersistentResourceOperationMetadata) Marsh
 // GoogleCloudAiplatformV1RebootPersistentResourceRequest: Request message for
 // PersistentResourceService.RebootPersistentResource.
 type GoogleCloudAiplatformV1RebootPersistentResourceRequest struct {
-}
-
-// GoogleCloudAiplatformV1ReinforcementLearningDataStats: Statistics computed
-// for datasets used for reinforcement learning.
-type GoogleCloudAiplatformV1ReinforcementLearningDataStats struct {
-	// PreferenceDatasetStats: Output only. Statistics computed for the preference
-	// dataset. This can be either a human preference dataset or a preference
-	// dataset generated from AI feedback.
-	PreferenceDatasetStats *GoogleCloudAiplatformV1DatasetStats `json:"preferenceDatasetStats,omitempty"`
-	// PromptDatasetStats: Output only. Statistics computed for the prompt dataset
-	// used during reinforcement learning.
-	PromptDatasetStats *GoogleCloudAiplatformV1DatasetStats `json:"promptDatasetStats,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PreferenceDatasetStats") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PreferenceDatasetStats") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1ReinforcementLearningDataStats) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1ReinforcementLearningDataStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1RemoveContextChildrenRequest: Request message for
@@ -28842,19 +28699,15 @@ func (s *GoogleCloudAiplatformV1TunedModel) MarshalJSON() ([]byte, error) {
 // GoogleCloudAiplatformV1TuningDataStats: The tuning data statistic values for
 // TuningJob.
 type GoogleCloudAiplatformV1TuningDataStats struct {
-	// DistillationDataStats: Statistics for distillation.
-	DistillationDataStats *GoogleCloudAiplatformV1DistillationDataStats `json:"distillationDataStats,omitempty"`
-	// ReinforcementLearningDataStats: Statistics for reinforcement learning.
-	ReinforcementLearningDataStats *GoogleCloudAiplatformV1ReinforcementLearningDataStats `json:"reinforcementLearningDataStats,omitempty"`
 	// SupervisedTuningDataStats: The SFT Tuning data stats.
 	SupervisedTuningDataStats *GoogleCloudAiplatformV1SupervisedTuningDataStats `json:"supervisedTuningDataStats,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DistillationDataStats") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "SupervisedTuningDataStats")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DistillationDataStats") to
+	// NullFields is a list of field names (e.g. "SupervisedTuningDataStats") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -30575,6 +30428,101 @@ type GoogleTypeMoney struct {
 
 func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type IntelligenceCloudAutomlXpsMetricEntry struct {
+	// ArgentumMetricId: For billing metrics that are using legacy sku's, set the
+	// legacy billing metric id here. This will be sent to Chemist as the
+	// "cloudbilling.googleapis.com/argentum_metric_id" label. Otherwise leave
+	// empty.
+	ArgentumMetricId string `json:"argentumMetricId,omitempty"`
+	// DoubleValue: A double value.
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+	// Int64Value: A signed 64-bit integer value.
+	Int64Value int64 `json:"int64Value,omitempty,string"`
+	// MetricName: The metric name defined in the service configuration.
+	MetricName string `json:"metricName,omitempty"`
+	// SystemLabels: Billing system labels for this (metric, value) pair.
+	SystemLabels []*IntelligenceCloudAutomlXpsMetricEntryLabel `json:"systemLabels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArgentumMetricId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArgentumMetricId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntelligenceCloudAutomlXpsMetricEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod IntelligenceCloudAutomlXpsMetricEntry
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *IntelligenceCloudAutomlXpsMetricEntry) UnmarshalJSON(data []byte) error {
+	type NoMethod IntelligenceCloudAutomlXpsMetricEntry
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	return nil
+}
+
+type IntelligenceCloudAutomlXpsMetricEntryLabel struct {
+	// LabelName: The name of the label.
+	LabelName string `json:"labelName,omitempty"`
+	// LabelValue: The value of the label.
+	LabelValue string `json:"labelValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LabelName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LabelName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntelligenceCloudAutomlXpsMetricEntryLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod IntelligenceCloudAutomlXpsMetricEntryLabel
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type IntelligenceCloudAutomlXpsReportingMetrics struct {
+	// EffectiveTrainingDuration: The effective time training used. If set, this is
+	// used for quota management and billing. Deprecated. AutoML BE doesn't use
+	// this. Don't set.
+	EffectiveTrainingDuration string `json:"effectiveTrainingDuration,omitempty"`
+	// MetricEntries: One entry per metric name. The values must be aggregated per
+	// metric name.
+	MetricEntries []*IntelligenceCloudAutomlXpsMetricEntry `json:"metricEntries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveTrainingDuration")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveTrainingDuration") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntelligenceCloudAutomlXpsReportingMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod IntelligenceCloudAutomlXpsReportingMetrics
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -70392,6 +70340,582 @@ func (c *ProjectsLocationsNasJobsNasTrialDetailsListCall) Pages(ctx context.Cont
 	}
 }
 
+type ProjectsLocationsNotebookExecutionJobsOperationsCancelCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *ProjectsLocationsNotebookExecutionJobsOperationsService) Cancel(name string) *ProjectsLocationsNotebookExecutionJobsOperationsCancelCall {
+	c := &ProjectsLocationsNotebookExecutionJobsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookExecutionJobsOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsNotebookExecutionJobsOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookExecutionJobs.operations.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookExecutionJobsOperationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
+func (r *ProjectsLocationsNotebookExecutionJobsOperationsService) Delete(name string) *ProjectsLocationsNotebookExecutionJobsOperationsDeleteCall {
+	c := &ProjectsLocationsNotebookExecutionJobsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookExecutionJobsOperationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsNotebookExecutionJobsOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookExecutionJobs.operations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookExecutionJobsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsNotebookExecutionJobsOperationsService) Get(name string) *ProjectsLocationsNotebookExecutionJobsOperationsGetCall {
+	c := &ProjectsLocationsNotebookExecutionJobsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookExecutionJobsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookExecutionJobsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsNotebookExecutionJobsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookExecutionJobs.operations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookExecutionJobsOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsNotebookExecutionJobsOperationsService) List(name string) *ProjectsLocationsNotebookExecutionJobsOperationsListCall {
+	c := &ProjectsLocationsNotebookExecutionJobsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list filter.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsListCall) Filter(filter string) *ProjectsLocationsNotebookExecutionJobsOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsNotebookExecutionJobsOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsNotebookExecutionJobsOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookExecutionJobsOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookExecutionJobsOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsListCall) Context(ctx context.Context) *ProjectsLocationsNotebookExecutionJobsOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookExecutionJobs.operations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsNotebookExecutionJobsOperationsWaitCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Wait: Waits until the specified long-running operation is done or reaches at
+// most a specified timeout, returning the latest state. If the operation is
+// already done, the latest state is immediately returned. If the timeout
+// specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout
+// is used. If the server does not support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort
+// basis. It may return the latest state before the specified timeout
+// (including immediately), meaning even an immediate response is no guarantee
+// that the operation is done.
+//
+// - name: The name of the operation resource to wait on.
+func (r *ProjectsLocationsNotebookExecutionJobsOperationsService) Wait(name string) *ProjectsLocationsNotebookExecutionJobsOperationsWaitCall {
+	c := &ProjectsLocationsNotebookExecutionJobsOperationsWaitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Timeout sets the optional parameter "timeout": The maximum duration to wait
+// before timing out. If left blank, the wait will be at most the time
+// permitted by the underlying HTTP/RPC protocol. If RPC context deadline is
+// also specified, the shorter one will be used.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsWaitCall) Timeout(timeout string) *ProjectsLocationsNotebookExecutionJobsOperationsWaitCall {
+	c.urlParams_.Set("timeout", timeout)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsWaitCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookExecutionJobsOperationsWaitCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsWaitCall) Context(ctx context.Context) *ProjectsLocationsNotebookExecutionJobsOperationsWaitCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsWaitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:wait")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookExecutionJobs.operations.wait" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookExecutionJobsOperationsWaitCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsNotebookRuntimeTemplatesCreateCall struct {
 	s                                              *Service
 	parent                                         string
@@ -71338,6 +71862,582 @@ func (c *ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall) Do(opt
 	return ret, nil
 }
 
+type ProjectsLocationsNotebookRuntimeTemplatesOperationsCancelCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesOperationsService) Cancel(name string) *ProjectsLocationsNotebookRuntimeTemplatesOperationsCancelCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.operations.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookRuntimeTemplatesOperationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesOperationsService) Delete(name string) *ProjectsLocationsNotebookRuntimeTemplatesOperationsDeleteCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesOperationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.operations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesOperationsService) Get(name string) *ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.operations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesOperationsService) List(name string) *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list filter.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall) Filter(filter string) *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall) PageToken(pageToken string) *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.operations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Wait: Waits until the specified long-running operation is done or reaches at
+// most a specified timeout, returning the latest state. If the operation is
+// already done, the latest state is immediately returned. If the timeout
+// specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout
+// is used. If the server does not support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort
+// basis. It may return the latest state before the specified timeout
+// (including immediately), meaning even an immediate response is no guarantee
+// that the operation is done.
+//
+// - name: The name of the operation resource to wait on.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesOperationsService) Wait(name string) *ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Timeout sets the optional parameter "timeout": The maximum duration to wait
+// before timing out. If left blank, the wait will be at most the time
+// permitted by the underlying HTTP/RPC protocol. If RPC context deadline is
+// also specified, the shorter one will be used.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall) Timeout(timeout string) *ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall {
+	c.urlParams_.Set("timeout", timeout)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:wait")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.operations.wait" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesOperationsWaitCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsNotebookRuntimesAssignCall struct {
 	s                                                   *Service
 	parent                                              string
@@ -72021,6 +73121,582 @@ func (c *ProjectsLocationsNotebookRuntimesUpgradeCall) doRequest(alt string) (*h
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
 func (c *ProjectsLocationsNotebookRuntimesUpgradeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookRuntimesOperationsCancelCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *ProjectsLocationsNotebookRuntimesOperationsService) Cancel(name string) *ProjectsLocationsNotebookRuntimesOperationsCancelCall {
+	c := &ProjectsLocationsNotebookRuntimesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookRuntimesOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimesOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookRuntimesOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimesOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookRuntimesOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimes.operations.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebookRuntimesOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookRuntimesOperationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
+func (r *ProjectsLocationsNotebookRuntimesOperationsService) Delete(name string) *ProjectsLocationsNotebookRuntimesOperationsDeleteCall {
+	c := &ProjectsLocationsNotebookRuntimesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookRuntimesOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimesOperationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookRuntimesOperationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimesOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookRuntimesOperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimes.operations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebookRuntimesOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookRuntimesOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsNotebookRuntimesOperationsService) Get(name string) *ProjectsLocationsNotebookRuntimesOperationsGetCall {
+	c := &ProjectsLocationsNotebookRuntimesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookRuntimesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimesOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNotebookRuntimesOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookRuntimesOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookRuntimesOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimesOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookRuntimesOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimes.operations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimesOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsNotebookRuntimesOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsNotebookRuntimesOperationsService) List(name string) *ProjectsLocationsNotebookRuntimesOperationsListCall {
+	c := &ProjectsLocationsNotebookRuntimesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list filter.
+func (c *ProjectsLocationsNotebookRuntimesOperationsListCall) Filter(filter string) *ProjectsLocationsNotebookRuntimesOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
+func (c *ProjectsLocationsNotebookRuntimesOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsNotebookRuntimesOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
+func (c *ProjectsLocationsNotebookRuntimesOperationsListCall) PageToken(pageToken string) *ProjectsLocationsNotebookRuntimesOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookRuntimesOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimesOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNotebookRuntimesOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookRuntimesOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookRuntimesOperationsListCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimesOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookRuntimesOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimesOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimes.operations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimesOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNotebookRuntimesOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsNotebookRuntimesOperationsWaitCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Wait: Waits until the specified long-running operation is done or reaches at
+// most a specified timeout, returning the latest state. If the operation is
+// already done, the latest state is immediately returned. If the timeout
+// specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout
+// is used. If the server does not support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort
+// basis. It may return the latest state before the specified timeout
+// (including immediately), meaning even an immediate response is no guarantee
+// that the operation is done.
+//
+// - name: The name of the operation resource to wait on.
+func (r *ProjectsLocationsNotebookRuntimesOperationsService) Wait(name string) *ProjectsLocationsNotebookRuntimesOperationsWaitCall {
+	c := &ProjectsLocationsNotebookRuntimesOperationsWaitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Timeout sets the optional parameter "timeout": The maximum duration to wait
+// before timing out. If left blank, the wait will be at most the time
+// permitted by the underlying HTTP/RPC protocol. If RPC context deadline is
+// also specified, the shorter one will be used.
+func (c *ProjectsLocationsNotebookRuntimesOperationsWaitCall) Timeout(timeout string) *ProjectsLocationsNotebookRuntimesOperationsWaitCall {
+	c.urlParams_.Set("timeout", timeout)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebookRuntimesOperationsWaitCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimesOperationsWaitCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebookRuntimesOperationsWaitCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimesOperationsWaitCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebookRuntimesOperationsWaitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimesOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:wait")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimes.operations.wait" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimesOperationsWaitCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

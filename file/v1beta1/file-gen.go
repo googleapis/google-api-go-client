@@ -306,6 +306,10 @@ type Backup struct {
 	// backups share storage, this number is expected to change with backup
 	// creation/deletion.
 	StorageBytes int64 `json:"storageBytes,omitempty,string"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -962,6 +966,10 @@ type Instance struct {
 	//   "KMS_KEY_ISSUE" - The KMS key used by the instance is either revoked or
 	// denied access to.
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// Tier: The service tier of the instance.
 	//
 	// Possible values:
@@ -1793,6 +1801,10 @@ type Snapshot struct {
 	//   "READY" - Snapshot is available for use.
 	//   "DELETING" - Snapshot is being deleted.
 	State string `json:"state,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

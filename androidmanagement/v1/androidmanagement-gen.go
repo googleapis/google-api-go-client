@@ -2322,6 +2322,30 @@ func (s *Display) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// DisplaySettings: Controls for the display settings.
+type DisplaySettings struct {
+	// ScreenBrightnessSettings: Optional. Controls the screen brightness settings.
+	ScreenBrightnessSettings *ScreenBrightnessSettings `json:"screenBrightnessSettings,omitempty"`
+	// ScreenTimeoutSettings: Optional. Controls the screen timeout settings.
+	ScreenTimeoutSettings *ScreenTimeoutSettings `json:"screenTimeoutSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScreenBrightnessSettings")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScreenBrightnessSettings") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *DisplaySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod DisplaySettings
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // DnsEvent: A DNS lookup event was initiated through the standard network
 // stack.
 type DnsEvent struct {
@@ -4838,6 +4862,8 @@ type Policy struct {
 	// DeviceRadioState: Covers controls for radio state such as Wi-Fi, bluetooth,
 	// and more.
 	DeviceRadioState *DeviceRadioState `json:"deviceRadioState,omitempty"`
+	// DisplaySettings: Optional. Controls for the display settings.
+	DisplaySettings *DisplaySettings `json:"displaySettings,omitempty"`
 	// EncryptionPolicy: Whether encryption is enabled
 	//
 	// Possible values:
@@ -5430,6 +5456,99 @@ type RemoteLockEvent struct {
 
 func (s *RemoteLockEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteLockEvent
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ScreenBrightnessSettings: Controls for the screen brightness settings.
+type ScreenBrightnessSettings struct {
+	// ScreenBrightness: Optional. The screen brightness between 1 and 255 where 1
+	// is the lowest and 255 is the highest brightness. A value of 0 (default)
+	// means no screen brightness set. Any other value is rejected.
+	// screenBrightnessMode must be either BRIGHTNESS_AUTOMATIC or BRIGHTNESS_FIXED
+	// to set this. Supported on Android 9 and above on fully managed devices. A
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 9.
+	ScreenBrightness int64 `json:"screenBrightness,omitempty"`
+	// ScreenBrightnessMode: Optional. Controls the screen brightness mode.
+	//
+	// Possible values:
+	//   "SCREEN_BRIGHTNESS_MODE_UNSPECIFIED" - Unspecified. Defaults to
+	// BRIGHTNESS_USER_CHOICE.
+	//   "BRIGHTNESS_USER_CHOICE" - The user is allowed to configure the screen
+	// brightness. screenBrightness must not be set.
+	//   "BRIGHTNESS_AUTOMATIC" - The screen brightness mode is automatic in which
+	// the brightness is automatically adjusted and the user is not allowed to
+	// configure the screen brightness. screenBrightness can still be set and it is
+	// taken into account while the brightness is automatically adjusted. Supported
+	// on Android 9 and above on fully managed devices. A NonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 9.
+	//   "BRIGHTNESS_FIXED" - The screen brightness mode is fixed in which the
+	// brightness is set to screenBrightness and the user is not allowed to
+	// configure the screen brightness. screenBrightness must be set. Supported on
+	// Android 9 and above on fully managed devices. A NonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 9.
+	ScreenBrightnessMode string `json:"screenBrightnessMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScreenBrightness") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScreenBrightness") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScreenBrightnessSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ScreenBrightnessSettings
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ScreenTimeoutSettings: Controls the screen timeout settings.
+type ScreenTimeoutSettings struct {
+	// ScreenTimeout: Optional. Controls the screen timeout duration. The screen
+	// timeout duration must be greater than 0, otherwise it is rejected.
+	// Additionally, it should not be greater than maximumTimeToLock, otherwise the
+	// screen timeout is set to maximumTimeToLock and a NonComplianceDetail with
+	// INVALID_VALUE reason and SCREEN_TIMEOUT_GREATER_THAN_MAXIMUM_TIME_TO_LOCK
+	// specific reason is reported. If the screen timeout is less than a certain
+	// lower bound, it is set to the lower bound. The lower bound may vary across
+	// devices. If this is set, screenTimeoutMode must be SCREEN_TIMEOUT_ENFORCED.
+	// Supported on Android 9 and above on fully managed devices. A
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 9.
+	ScreenTimeout string `json:"screenTimeout,omitempty"`
+	// ScreenTimeoutMode: Optional. Controls whether the user is allowed to
+	// configure the screen timeout.
+	//
+	// Possible values:
+	//   "SCREEN_TIMEOUT_MODE_UNSPECIFIED" - Unspecified. Defaults to
+	// SCREEN_TIMEOUT_USER_CHOICE.
+	//   "SCREEN_TIMEOUT_USER_CHOICE" - The user is allowed to configure the screen
+	// timeout. screenTimeout must not be set.
+	//   "SCREEN_TIMEOUT_ENFORCED" - The screen timeout is set to screenTimeout and
+	// the user is not allowed to configure the timeout. screenTimeout must be set.
+	// Supported on Android 9 and above on fully managed devices. A
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 9.
+	ScreenTimeoutMode string `json:"screenTimeoutMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScreenTimeout") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScreenTimeout") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScreenTimeoutSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ScreenTimeoutSettings
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

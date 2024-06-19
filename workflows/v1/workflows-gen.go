@@ -504,10 +504,10 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // Workflow: Workflow program to be executed by Workflows.
 type Workflow struct {
 	// AllKmsKeys: Output only. A list of all KMS crypto keys used to encrypt or
-	// decrpt the data associated with the workflow.
+	// decrypt the data associated with the workflow.
 	AllKmsKeys []string `json:"allKmsKeys,omitempty"`
-	// AllKmsKeysVersions: Output only. A list of all KMS crypto keys versions used
-	// to encrypt or decrpt the data associated with the workflow.
+	// AllKmsKeysVersions: Output only. A list of all KMS crypto key versions used
+	// to encrypt or decrypt the data associated with the workflow.
 	AllKmsKeysVersions []string `json:"allKmsKeysVersions,omitempty"`
 	// CallLogLevel: Optional. Describes the level of platform logging to apply to
 	// calls and call responses during executions of this workflow. If both the

@@ -65,6 +65,9 @@ func WithCredentialsJSON(p []byte) ClientOption {
 type withCredentialsJSON []byte
 
 func (w withCredentialsJSON) Apply(o *internal.DialSettings) {
+	if w == nil {
+		return
+	}
 	o.CredentialsJSON = make([]byte, len(w))
 	copy(o.CredentialsJSON, w)
 }

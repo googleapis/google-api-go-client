@@ -5,10 +5,9 @@
 package option
 
 import (
-	"testing"
-
 	"crypto/tls"
 	"math/big"
+	"testing"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -132,4 +131,34 @@ func TestApplyClientCertSource(t *testing.T) {
 	if !cmp.Equal(certGot, certWant, cmpopts.IgnoreUnexported(big.Int{}), cmpopts.IgnoreFields(tls.Certificate{}, "Leaf")) {
 		t.Errorf(cmp.Diff(certGot, certWant, cmpopts.IgnoreUnexported(big.Int{}), cmpopts.IgnoreFields(tls.Certificate{}, "Leaf")))
 	}
+}
+
+func TestCredentialsJSON(t *testing.T) {
+	t.Run("nil", func(t *testing.T) {
+		var got internal.DialSettings
+
+		WithCredentialsJSON(nil).Apply(&got)
+
+		want := internal.DialSettings{
+			CredentialsJSON: nil,
+		}
+
+		if !cmp.Equal(got, want) {
+			t.Errorf(cmp.Diff(got, want))
+		}
+	})
+
+	t.Run("empty", func(t *testing.T) {
+		var got internal.DialSettings
+
+		WithCredentialsJSON([]byte{}).Apply(&got)
+
+		want := internal.DialSettings{
+			CredentialsJSON: []byte{},
+		}
+
+		if !cmp.Equal(got, want) {
+			t.Errorf(cmp.Diff(got, want))
+		}
+	})
 }

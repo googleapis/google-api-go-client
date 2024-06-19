@@ -1041,6 +1041,14 @@ func (s *ConnectionStatus) MarshalJSON() ([]byte, error) {
 type Connector struct {
 	// Category: Output only. Category of the connector.
 	Category string `json:"category,omitempty"`
+	// ConnectorType: Output only. The type of the connector.
+	//
+	// Possible values:
+	//   "CONNECTOR_TYPE_UNSPECIFIED" - Default value.
+	//   "CONNECTOR_TYPE_GOOGLE" - Google connectors.
+	//   "CONNECTOR_TYPE_TECHNICAL" - Technical connectors.
+	//   "CONNECTOR_TYPE_THIRD_PARTY" - Third Party connectors.
+	ConnectorType string `json:"connectorType,omitempty"`
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Output only. Description of the resource.

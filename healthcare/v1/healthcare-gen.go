@@ -1218,26 +1218,31 @@ func (s *CryptoHashConfig) MarshalJSON() ([]byte, error) {
 // patients. This may include multiple modalities of healthcare data, such as
 // electronic medical records or medical imaging data.
 type Dataset struct {
+	// EncryptionSpec: Optional. Customer-managed encryption key spec for a
+	// Dataset. If set, this Dataset and all of its sub-resources will be secured
+	// by this key. If empty, the Dataset is secured by the default Google
+	// encryption key.
+	EncryptionSpec *EncryptionSpec `json:"encryptionSpec,omitempty"`
 	// Name: Identifier. Resource name of the dataset, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.
 	Name string `json:"name,omitempty"`
-	// TimeZone: The default timezone used by this dataset. Must be a either a
-	// valid IANA time zone name such as "America/New_York" or empty, which
-	// defaults to UTC. This is used for parsing times in resources, such as HL7
-	// messages, where no explicit timezone is specified.
+	// TimeZone: Optional. The default timezone used by this dataset. Must be a
+	// either a valid IANA time zone name such as "America/New_York" or empty,
+	// which defaults to UTC. This is used for parsing times in resources, such as
+	// HL7 messages, where no explicit timezone is specified.
 	TimeZone string `json:"timeZone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "EncryptionSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1650,6 +1655,33 @@ func (s *DicomStoreMetrics) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EncryptionSpec: Represents a customer-managed encryption key spec that can
+// be applied to a resource.
+type EncryptionSpec struct {
+	// KmsKeyName: Required. The resource name of customer-managed encryption key
+	// that is used to secure a resource and its sub-resources. Only the key in the
+	// same location as this Dataset is allowed to be used for encryption. Format
+	// is:
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{key}`
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionSpec
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Entity: The candidate entities that an entity mention could link to.

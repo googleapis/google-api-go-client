@@ -596,10 +596,10 @@ type Backup struct {
 	// EndTime: Output only. `end_time` is the time that the backup was finished.
 	// The row data in the backup will be no newer than this timestamp.
 	EndTime string `json:"endTime,omitempty"`
-	// ExpireTime: Required. The expiration time of the backup, with microseconds
-	// granularity that must be at least 6 hours and at most 90 days from the time
-	// the request is received. Once the `expire_time` has passed, Cloud Bigtable
-	// will delete the backup and free the resources used by the backup.
+	// ExpireTime: Required. The expiration time of the backup. When creating a
+	// backup or updating its `expire_time`, the new value must: - Be at most 90
+	// days in the future - Be at least 6 hours in the future Once the
+	// `expire_time` has passed, Cloud Bigtable will delete the backup.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Name: A globally unique identifier for the backup which cannot be changed.
 	// Values are of the form

@@ -2813,6 +2813,7 @@ type MigrationJob struct {
 	//   "PREPARING_THE_DUMP" - Only RDS flow - the sources writes stopped, waiting
 	// for dump to begin
 	//   "READY_FOR_PROMOTE" - The migration job is ready to be promoted.
+	//   "DIFF_BACKUP" - The migration job is in the differential backup phase.
 	Phase string `json:"phase,omitempty"`
 	// ReverseSshConnectivity: The details needed to communicate to the source over
 	// Reverse SSH tunnel connectivity.

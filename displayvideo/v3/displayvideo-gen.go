@@ -9355,7 +9355,9 @@ type InsertionOrder struct {
 	// Name: Output only. The resource name of the insertion order.
 	Name string `json:"name,omitempty"`
 	// OptimizationObjective: Optional. The optimization objective of the insertion
-	// order.
+	// order. **This field is only available to allowlisted customers.** If a
+	// customer is not allowlisted, this field will be null and attempts to set it
+	// will return an error.
 	//
 	// Possible values:
 	//   "OPTIMIZATION_OBJECTIVE_UNSPECIFIED" - Type value is not specified or is
@@ -27069,7 +27071,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
-//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
+//     `TARGETING_TYPE_KEYWORD`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -27187,7 +27190,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsListCall struct {
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
-//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
+//     `TARGETING_TYPE_KEYWORD`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, targetingType string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId

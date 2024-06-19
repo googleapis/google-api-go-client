@@ -1398,21 +1398,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "cloudcommerceprocurement:v1",
-      "name": "cloudcommerceprocurement",
-      "version": "v1",
-      "title": "Cloud Commerce Partner Procurement API",
-      "description": "Partner API for the Cloud Commerce Procurement Service.",
-      "discoveryRestUrl": "https://cloudcommerceprocurement.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/marketplace/docs/partners/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "cloudcontrolspartner:v1beta",
       "name": "cloudcontrolspartner",
       "version": "v1beta",
@@ -4084,6 +4069,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/analytics/devguides/config/gmp/v1",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "meet:v2",
+      "name": "meet",
+      "version": "v2",
+      "title": "Google Meet API",
+      "description": "Create and manage meetings in Google Meet.",
+      "discoveryRestUrl": "https://meet.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/meet/api",
       "preferred": true
     },
     {

@@ -910,8 +910,6 @@ func (s *DashboardAnnotations) MarshalJSON() ([]byte, error) {
 // DashboardFilter: A filter to reduce the amount of data charted in relevant
 // widgets.
 type DashboardFilter struct {
-	// ApplyToNewWidgets: Whether to apply this filter to new widgets by default
-	ApplyToNewWidgets bool `json:"applyToNewWidgets,omitempty"`
 	// FilterType: The specified filter type
 	//
 	// Possible values:
@@ -931,15 +929,15 @@ type DashboardFilter struct {
 	// string or MQL query. If omitted, the dashboard filter will be applied to all
 	// relevant widgets in the dashboard.
 	TemplateVariable string `json:"templateVariable,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ApplyToNewWidgets") to
+	// ForceSendFields is a list of field names (e.g. "FilterType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApplyToNewWidgets") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "FilterType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2278,8 +2276,15 @@ type Scorecard struct {
 	// BlankView: Will cause the Scorecard to show only the value, with no
 	// indicator to its value relative to its thresholds.
 	BlankView *Empty `json:"blankView,omitempty"`
+	// Dimensions: Optional. A dimension is a structured label, class, or category
+	// for a set of measurements in your data.
+	Dimensions []*Dimension `json:"dimensions,omitempty"`
 	// GaugeView: Will cause the scorecard to show a gauge chart.
 	GaugeView *GaugeView `json:"gaugeView,omitempty"`
+	// Measures: Optional. A measure is a measured value of a property in your
+	// data. For example, rainfall in inches, number of units sold, revenue gained,
+	// etc.
+	Measures []*Measure `json:"measures,omitempty"`
 	// SparkChartView: Will cause the scorecard to show a spark chart.
 	SparkChartView *SparkChartView `json:"sparkChartView,omitempty"`
 	// Thresholds: The thresholds used to determine the state of the scorecard

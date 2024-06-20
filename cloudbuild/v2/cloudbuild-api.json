@@ -844,7 +844,7 @@
       }
     }
   },
-  "revision": "20240609",
+  "revision": "20240616",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1873,14 +1873,16 @@
             "BUNDLES",
             "GCB_REPO",
             "GIT",
-            "DEVELOPER_CONNECT"
+            "DEVELOPER_CONNECT",
+            "DEFAULT"
           ],
           "enumDescriptions": [
             "Default enum type; should not be used.",
             "Bundles resolver. https://tekton.dev/docs/pipelines/bundle-resolver/",
             "GCB repo resolver.",
             "Simple Git resolver. https://tekton.dev/docs/pipelines/git-resolver/",
-            "Developer Connect resolver."
+            "Developer Connect resolver.",
+            "Default resolver."
           ],
           "type": "string"
         }
@@ -2797,14 +2799,16 @@
             "BUNDLES",
             "GCB_REPO",
             "GIT",
-            "DEVELOPER_CONNECT"
+            "DEVELOPER_CONNECT",
+            "DEFAULT"
           ],
           "enumDescriptions": [
             "Default enum type; should not be used.",
             "Bundles resolver. https://tekton.dev/docs/pipelines/bundle-resolver/",
             "GCB repo resolver.",
             "Simple Git resolver. https://tekton.dev/docs/pipelines/git-resolver/",
-            "Developer Connect resolver."
+            "Developer Connect resolver.",
+            "Default resolver."
           ],
           "type": "string"
         }
@@ -2855,14 +2859,16 @@
             "BUNDLES",
             "GCB_REPO",
             "GIT",
-            "DEVELOPER_CONNECT"
+            "DEVELOPER_CONNECT",
+            "DEFAULT"
           ],
           "enumDescriptions": [
             "Default enum type; should not be used.",
             "Bundles resolver. https://tekton.dev/docs/pipelines/bundle-resolver/",
             "GCB repo resolver.",
             "Simple Git resolver. https://tekton.dev/docs/pipelines/git-resolver/",
-            "Developer Connect resolver."
+            "Developer Connect resolver.",
+            "Default resolver."
           ],
           "type": "string"
         }

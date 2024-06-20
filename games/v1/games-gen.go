@@ -147,6 +147,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Accesstokens = NewAccesstokensService(s)
 	s.AchievementDefinitions = NewAchievementDefinitionsService(s)
 	s.Achievements = NewAchievementsService(s)
 	s.Applications = NewApplicationsService(s)
@@ -166,6 +167,8 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	Accesstokens *AccesstokensService
 
 	AchievementDefinitions *AchievementDefinitionsService
 
@@ -197,6 +200,15 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewAccesstokensService(s *Service) *AccesstokensService {
+	rs := &AccesstokensService{s: s}
+	return rs
+}
+
+type AccesstokensService struct {
+	s *Service
 }
 
 func NewAchievementDefinitionsService(s *Service) *AchievementDefinitionsService {
@@ -1275,6 +1287,58 @@ func (s *GamesAchievementSetStepsAtLeast) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GeneratePlayGroupingApiTokenResponse: Response for the
+// GeneratePlayGroupingApiToken RPC.
+type GeneratePlayGroupingApiTokenResponse struct {
+	// Token: Token for accessing the Play Grouping API.
+	Token *PlayGroupingApiToken `json:"token,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Token") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Token") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeneratePlayGroupingApiTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GeneratePlayGroupingApiTokenResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateRecallPlayGroupingApiTokenResponse: Response for the
+// GenerateRecallPlayGroupingApiToken RPC.
+type GenerateRecallPlayGroupingApiTokenResponse struct {
+	// Token: Token for accessing the Play Grouping API.
+	Token *PlayGroupingApiToken `json:"token,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Token") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Token") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateRecallPlayGroupingApiTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateRecallPlayGroupingApiTokenResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GetMultipleApplicationPlayerIdsResponse: Response message for
 // GetMultipleApplicationPlayerIds rpc.
 type GetMultipleApplicationPlayerIdsResponse struct {
@@ -1801,6 +1865,29 @@ type MetagameConfig struct {
 
 func (s *MetagameConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MetagameConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// PlayGroupingApiToken: Token data returned from GeneratePlayGroupingApiToken
+// RPC.
+type PlayGroupingApiToken struct {
+	// TokenValue: Value of the token.
+	TokenValue string `json:"tokenValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TokenValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TokenValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *PlayGroupingApiToken) MarshalJSON() ([]byte, error) {
+	type NoMethod PlayGroupingApiToken
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2902,6 +2989,230 @@ type UnlinkPersonaResponse struct {
 func (s *UnlinkPersonaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UnlinkPersonaResponse
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type AccesstokensGeneratePlayGroupingApiTokenCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// GeneratePlayGroupingApiToken: Generates a Play Grouping API token for the
+// PGS user identified by the attached credential.
+func (r *AccesstokensService) GeneratePlayGroupingApiToken() *AccesstokensGeneratePlayGroupingApiTokenCall {
+	c := &AccesstokensGeneratePlayGroupingApiTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PackageName sets the optional parameter "packageName": Required. App package
+// name to generate the token for (e.g. com.example.mygame).
+func (c *AccesstokensGeneratePlayGroupingApiTokenCall) PackageName(packageName string) *AccesstokensGeneratePlayGroupingApiTokenCall {
+	c.urlParams_.Set("packageName", packageName)
+	return c
+}
+
+// Persona sets the optional parameter "persona": Required. Persona to
+// associate with the token. Persona is a developer-provided stable identifier
+// of the user. Must be deterministically generated (e.g. as a one-way hash)
+// from the user account ID and user profile ID (if the app has the concept),
+// according to the developer's own user identity system.
+func (c *AccesstokensGeneratePlayGroupingApiTokenCall) Persona(persona string) *AccesstokensGeneratePlayGroupingApiTokenCall {
+	c.urlParams_.Set("persona", persona)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccesstokensGeneratePlayGroupingApiTokenCall) Fields(s ...googleapi.Field) *AccesstokensGeneratePlayGroupingApiTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccesstokensGeneratePlayGroupingApiTokenCall) Context(ctx context.Context) *AccesstokensGeneratePlayGroupingApiTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccesstokensGeneratePlayGroupingApiTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccesstokensGeneratePlayGroupingApiTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "games/v1/accesstokens/generatePlayGroupingApiToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "games.accesstokens.generatePlayGroupingApiToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GeneratePlayGroupingApiTokenResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccesstokensGeneratePlayGroupingApiTokenCall) Do(opts ...googleapi.CallOption) (*GeneratePlayGroupingApiTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GeneratePlayGroupingApiTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccesstokensGenerateRecallPlayGroupingApiTokenCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// GenerateRecallPlayGroupingApiToken: Generates a Play Grouping API token for
+// the PGS user identified by the Recall session ID provided in the request.
+func (r *AccesstokensService) GenerateRecallPlayGroupingApiToken() *AccesstokensGenerateRecallPlayGroupingApiTokenCall {
+	c := &AccesstokensGenerateRecallPlayGroupingApiTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PackageName sets the optional parameter "packageName": Required. App package
+// name to generate the token for (e.g. com.example.mygame).
+func (c *AccesstokensGenerateRecallPlayGroupingApiTokenCall) PackageName(packageName string) *AccesstokensGenerateRecallPlayGroupingApiTokenCall {
+	c.urlParams_.Set("packageName", packageName)
+	return c
+}
+
+// Persona sets the optional parameter "persona": Required. Persona to
+// associate with the token. Persona is a developer-provided stable identifier
+// of the user. Must be deterministically generated (e.g. as a one-way hash)
+// from the user account ID and user profile ID (if the app has the concept),
+// according to the developer's own user identity system.
+func (c *AccesstokensGenerateRecallPlayGroupingApiTokenCall) Persona(persona string) *AccesstokensGenerateRecallPlayGroupingApiTokenCall {
+	c.urlParams_.Set("persona", persona)
+	return c
+}
+
+// RecallSessionId sets the optional parameter "recallSessionId": Required.
+// Opaque server-generated string that encodes all the necessary information to
+// identify the PGS player / Google user and application. See
+// https://developer.android.com/games/pgs/recall/recall-setup on how to
+// integrate with Recall and get session ID.
+func (c *AccesstokensGenerateRecallPlayGroupingApiTokenCall) RecallSessionId(recallSessionId string) *AccesstokensGenerateRecallPlayGroupingApiTokenCall {
+	c.urlParams_.Set("recallSessionId", recallSessionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccesstokensGenerateRecallPlayGroupingApiTokenCall) Fields(s ...googleapi.Field) *AccesstokensGenerateRecallPlayGroupingApiTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccesstokensGenerateRecallPlayGroupingApiTokenCall) Context(ctx context.Context) *AccesstokensGenerateRecallPlayGroupingApiTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccesstokensGenerateRecallPlayGroupingApiTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccesstokensGenerateRecallPlayGroupingApiTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "games/v1/accesstokens/generateRecallPlayGroupingApiToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "games.accesstokens.generateRecallPlayGroupingApiToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateRecallPlayGroupingApiTokenResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccesstokensGenerateRecallPlayGroupingApiTokenCall) Do(opts ...googleapi.CallOption) (*GenerateRecallPlayGroupingApiTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateRecallPlayGroupingApiTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type AchievementDefinitionsListCall struct {

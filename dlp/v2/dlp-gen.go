@@ -5034,6 +5034,7 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "GLOBAL" - The infoType is not issued by or tied to a specific region, but
 	// is used almost everywhere.
 	//   "ARGENTINA" - The infoType is typically used in Argentina.
+	//   "ARMENIA" - The infoType is typically used in Armenia.
 	//   "AUSTRALIA" - The infoType is typically used in Australia.
 	//   "AZERBAIJAN" - The infoType is typically used in Azerbaijan.
 	//   "BELARUS" - The infoType is typically used in Belarus.

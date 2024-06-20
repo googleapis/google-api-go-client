@@ -3531,19 +3531,22 @@ func (s *GoogleCloudDataplexV1DataScanExecutionSpec) MarshalJSON() ([]byte, erro
 // GoogleCloudDataplexV1DataScanExecutionStatus: Status of the data scan
 // execution.
 type GoogleCloudDataplexV1DataScanExecutionStatus struct {
+	// LatestJobCreateTime: Optional. The time when the DataScanJob execution was
+	// created.
+	LatestJobCreateTime string `json:"latestJobCreateTime,omitempty"`
 	// LatestJobEndTime: The time when the latest DataScanJob ended.
 	LatestJobEndTime string `json:"latestJobEndTime,omitempty"`
 	// LatestJobStartTime: The time when the latest DataScanJob started.
 	LatestJobStartTime string `json:"latestJobStartTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LatestJobEndTime") to
+	// ForceSendFields is a list of field names (e.g. "LatestJobCreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LatestJobEndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "LatestJobCreateTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

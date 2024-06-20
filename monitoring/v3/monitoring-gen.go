@@ -1601,8 +1601,11 @@ type Documentation struct {
 	// The content may not exceed 8,192 Unicode characters and may not exceed more
 	// than 10,240 bytes when encoded in UTF-8 format, whichever is smaller. This
 	// text can be templatized by using variables
-	// (https://cloud.google.com/monitoring/alerts/doc-variables).
+	// (https://cloud.google.com/monitoring/alerts/doc-variables#doc-vars).
 	Content string `json:"content,omitempty"`
+	// Links: Optional. Links to content such as playbooks, repositories, and other
+	// resources. This field can contain up to 3 entries.
+	Links []*Link `json:"links,omitempty"`
 	// MimeType: The format of the content field. Presently, only the value
 	// "text/markdown" is supported. See Markdown
 	// (https://en.wikipedia.org/wiki/Markdown) for more information.
@@ -1616,8 +1619,8 @@ type Documentation struct {
 	// It is both the limit imposed by some third-party ticketing products and it
 	// is common to define textual fields in databases as VARCHAR(255).The contents
 	// of the subject line can be templatized by using variables
-	// (https://cloud.google.com/monitoring/alerts/doc-variables). If this field is
-	// missing or empty, a default subject line will be generated.
+	// (https://cloud.google.com/monitoring/alerts/doc-variables#doc-vars). If this
+	// field is missing or empty, a default subject line will be generated.
 	Subject string `json:"subject,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2576,6 +2579,34 @@ func (s *Linear) UnmarshalJSON(data []byte) error {
 	s.Offset = float64(s1.Offset)
 	s.Width = float64(s1.Width)
 	return nil
+}
+
+// Link: Links to content such as playbooks, repositories, and other resources.
+type Link struct {
+	// DisplayName: A short display name for the link. The display name must not be
+	// empty or exceed 63 characters. Example: "playbook".
+	DisplayName string `json:"displayName,omitempty"`
+	// Url: The url of a webpage. A url can be templatized by using variables in
+	// the path or the query parameters. The total length of a URL should not
+	// exceed 2083 characters before and after variable expansion. Example:
+	// "https://my_domain.com/playbook?name=${resource.name}"
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Link) MarshalJSON() ([]byte, error) {
+	type NoMethod Link
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAlertPoliciesResponse: The protocol for the ListAlertPolicies response.
@@ -4262,9 +4293,9 @@ type PrometheusQueryLanguageCondition struct {
 	// Label names must be valid
 	// (https://prometheus.io/docs/concepts/data_model/#metric-names-and-labels).
 	// Label values can be templatized by using variables
-	// (https://cloud.google.com/monitoring/alerts/doc-variables). The only
-	// available variable names are the names of the labels in the PromQL result,
-	// including "__name__" and "value". "labels" may be empty.
+	// (https://cloud.google.com/monitoring/alerts/doc-variables#doc-vars). The
+	// only available variable names are the names of the labels in the PromQL
+	// result, including "__name__" and "value". "labels" may be empty.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Query: Required. The PromQL expression to evaluate. Every evaluation cycle
 	// this expression is evaluated at the current time, and all resultant time
@@ -4671,7 +4702,7 @@ type ServiceLevelObjective struct {
 	// DisplayName: Name used for UI elements listing this SLO.
 	DisplayName string `json:"displayName,omitempty"`
 	// Goal: The fraction of service that must be good in order for this objective
-	// to be met. 0 < goal <= 0.999.
+	// to be met. 0 < goal <= 0.9999.
 	Goal float64 `json:"goal,omitempty"`
 	// Name: Identifier. Resource name for this ServiceLevelObjective. The format
 	// is:

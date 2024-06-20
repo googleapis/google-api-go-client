@@ -1036,7 +1036,9 @@ type Disk struct {
 	Snapshot string `json:"snapshot,omitempty"`
 	// Type: Disk type as shown in `gcloud compute disk-types list`. For example,
 	// local SSD uses type "local-ssd". Persistent disks and boot disks use
-	// "pd-balanced", "pd-extreme", "pd-ssd" or "pd-standard".
+	// "pd-balanced", "pd-extreme", "pd-ssd" or "pd-standard". If not specified,
+	// "pd-standard" will be used as the default type for non-boot disks,
+	// "pd-balanced" will be used as the default type for boot disks.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskInterface") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1184,6 +1186,9 @@ type InstancePolicyOrTemplate struct {
 	// Container-Optimized Image cases, following
 	// https://github.com/GoogleCloudPlatform/compute-gpu-installation/blob/main/linux/install_gpu_driver.py.
 	InstallGpuDrivers bool `json:"installGpuDrivers,omitempty"`
+	// InstallOpsAgent: Optional. Set this field true if you want Batch to install
+	// Ops Agent on your behalf. Default is false.
+	InstallOpsAgent bool `json:"installOpsAgent,omitempty"`
 	// InstanceTemplate: Name of an instance template used to create VMs. Named the
 	// field as 'instance_template' instead of 'template' to avoid c++ keyword
 	// conflict.
@@ -1305,11 +1310,15 @@ type JobNotification struct {
 	// Message: The attribute requirements of messages to be sent to this Pub/Sub
 	// topic. Without this field, no message will be sent.
 	Message *Message `json:"message,omitempty"`
-	// PubsubTopic: The Pub/Sub topic where notifications like the job state
-	// changes will be published. The topic must exist in the same project as the
-	// job and billings will be charged to this project. If not specified, no
-	// Pub/Sub messages will be sent. Topic format:
-	// `projects/{project}/topics/{topic}`.
+	// PubsubTopic: The Pub/Sub topic where notifications for the job, like state
+	// changes, will be published. If undefined, no Pub/Sub notifications are sent
+	// for this job. Specify the topic using the following format:
+	// `projects/{project}/topics/{topic}`. Notably, if you want to specify a
+	// Pub/Sub topic that is in a different project than the job, your
+	// administrator must grant your project's Batch service agent permission to
+	// publish to that topic. For more information about configuring Pub/Sub
+	// notifications for a job, see
+	// https://cloud.google.com/batch/docs/enable-notifications.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2418,16 +2427,15 @@ type Volume struct {
 	DeviceName string `json:"deviceName,omitempty"`
 	// Gcs: A Google Cloud Storage (GCS) volume.
 	Gcs *GCS `json:"gcs,omitempty"`
-	// MountOptions: For Google Cloud Storage (GCS), mount options are the options
-	// supported by the gcsfuse tool
-	// (https://github.com/GoogleCloudPlatform/gcsfuse). For existing persistent
-	// disks, mount options provided by the mount command
+	// MountOptions: Mount options vary based on the type of storage volume: * For
+	// a Cloud Storage bucket, all the mount options provided by the `gcsfuse` tool
+	// (https://cloud.google.com/storage/docs/gcsfuse-cli) are supported. * For an
+	// existing persistent disk, all mount options provided by the `mount` command
 	// (https://man7.org/linux/man-pages/man8/mount.8.html) except writing are
 	// supported. This is due to restrictions of multi-writer mode
-	// (https://cloud.google.com/compute/docs/disks/sharing-disks-between-vms). For
-	// other attached disks and Network File System (NFS), mount options are these
-	// supported by the mount command
-	// (https://man7.org/linux/man-pages/man8/mount.8.html).
+	// (https://cloud.google.com/compute/docs/disks/sharing-disks-between-vms). *
+	// For any other disk or a Network File System (NFS), all the mount options
+	// provided by the `mount` command are supported.
 	MountOptions []string `json:"mountOptions,omitempty"`
 	// MountPath: The mount path for the volume, e.g. /mnt/disks/share.
 	MountPath string `json:"mountPath,omitempty"`

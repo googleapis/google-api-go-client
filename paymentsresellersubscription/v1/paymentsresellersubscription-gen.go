@@ -231,7 +231,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	// CancelImmediately: Optional. If true, Google will cancel the subscription
 	// immediately, and may or may not (based on the contract) issue a prorated
 	// refund for the remainder of the billing cycle. Otherwise, Google defers the
-	// cancelation at renewal_time, and will not issue a refund.
+	// cancelation at renewal_time, and will not issue a refund. - YouTube
+	// subscriptions must use this option currently. However, the user will still
+	// have access to the subscription until the end of the billing cycle.
 	CancelImmediately bool `json:"cancelImmediately,omitempty"`
 	// CancellationReason: Specifies the reason for the cancellation.
 	//
@@ -330,9 +332,10 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Duration) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest: Partner
-// request for entitling the previously provisioned subscription to an end
-// user. The end user identity is inferred from the request OAuth context.
+// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest:
+// LINT.IfChange Partner request for entitling the previously provisioned
+// subscription to an end user. The end user identity is inferred from the
+// request OAuth context.
 type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest struct {
 	// LineItemEntitlementDetails: Optional. The line items to be entitled. If
 	// unspecified, all line items will be entitled.
@@ -1556,7 +1559,8 @@ type PartnersProductsListCall struct {
 }
 
 // List: To retrieve the products that can be resold by the partner. It should
-// be autenticated with a service account.
+// be autenticated with a service account. - This API doesn't apply to YouTube
+// products currently.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -1847,8 +1851,9 @@ type PartnersPromotionsListCall struct {
 	header_      http.Header
 }
 
-// List: To retrieve the promotions, such as free trial, that can be used by
-// the partner. It should be autenticated with a service account.
+// List: Retrieves the promotions, such as free trial, that can be used by the
+// partner. - This API doesn't apply to YouTube promotions currently. It should
+// be autenticated with a service account.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -2672,10 +2677,11 @@ type PartnersSubscriptionsUndoCancelCall struct {
 	header_                                                                http.Header
 }
 
-// UndoCancel: Used by partners to revoke the pending cancellation of a
-// subscription, which is currently in `STATE_CANCEL_AT_END_OF_CYCLE` state. If
-// the subscription is already cancelled, the request will fail. It should be
-// called directly by the partner using service accounts.
+// UndoCancel: Revokes the pending cancellation of a subscription, which is
+// currently in `STATE_CANCEL_AT_END_OF_CYCLE` state. If the subscription is
+// already cancelled, the request will fail. - **This API doesn't apply to
+// YouTube subscriptions.** It should be called directly by the partner using
+// service accounts.
 //
 //   - name: The name of the subscription resource whose pending cancellation
 //     needs to be undone. It will have the format of

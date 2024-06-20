@@ -1427,6 +1427,8 @@ type ComputeEnginePreferences struct {
 	// MachinePreferences: Preferences concerning the machine types to consider on
 	// Compute Engine.
 	MachinePreferences *MachinePreferences `json:"machinePreferences,omitempty"`
+	// OsPricingPreferences: Optional. Pricing options for OS images.
+	OsPricingPreferences *OperatingSystemPricingPreferences `json:"osPricingPreferences,omitempty"`
 	// PersistentDiskType: Persistent disk type to use. If unspecified (default),
 	// all types are considered, based on available usage data.
 	//
@@ -1996,6 +1998,12 @@ type DatabasePreferencesCloudSqlCommon struct {
 	//   "COMMITMENT_PLAN_NONE" - No commitment plan.
 	//   "COMMITMENT_PLAN_ONE_YEAR" - 1-year regular committed use discount.
 	//   "COMMITMENT_PLAN_THREE_YEARS" - 3-year regular committed use discount.
+	//   "COMMITMENT_PLAN_FLEXIBLE_ONE_YEAR" - 1-year flexible committed use
+	// discount. While not supported in the v1 API, this value is converted to
+	// UNSPECIFIED in conversions to the v1 API.
+	//   "COMMITMENT_PLAN_FLEXIBLE_THREE_YEARS" - 3-year flexible committed use
+	// discount. While not supported in the v1 API, this value is converted to
+	// UNSPECIFIED in conversions to the v1 API.
 	CommitmentPlan string `json:"commitmentPlan,omitempty"`
 	// Edition: Optional. Cloud SQL edition. For SQL Server, only Enterprise is
 	// available.
@@ -2158,11 +2166,11 @@ type DatabasePreferencesCloudSqlSqlServer struct {
 	// Multithreading: Optional. Preferences for multithreading support.
 	//
 	// Possible values:
-	//   "MULTITHREADING_UNSPECIFIED" - Same as MULTITHREADING_AUTO_SELECT.
-	//   "MULTITHREADING_DISABLED" - No multithreading support.
-	//   "MULTITHREADING_ENABLED" - Allow multithreading support.
-	//   "MULTITHREADING_AUTO_SELECT" - Choose to enable/disable multithreading
-	// according to which is lowest cost for your workload.
+	//   "MULTITHREADING_UNSPECIFIED" - Same as
+	// MULTITHREADING_DISABLED_WITH_COMPENSATION.
+	//   "MULTITHREADING_DISABLED" - Disable simultaneous multithreading if doing
+	// so is lower cost.
+	//   "MULTITHREADING_ENABLED" - Always enable simultaneous multithreading.
 	Multithreading string `json:"multithreading,omitempty"`
 	// VersionType: Optional. Edition of Microsoft SQL version that is used on a
 	// Cloud SQL for SQL server instance.
@@ -4007,8 +4015,8 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 }
 
 // MachinePreferences: The type of machines to consider when calculating
-// virtual machine migration insights and recommendations. Not all machine
-// types are available in all zones and regions.
+// virtual machine migration insights and recommendations for GCE. Not all
+// machine types are available in all zones and regions.
 type MachinePreferences struct {
 	// AllowedMachineSeries: Compute Engine machine series to consider for insights
 	// and recommendations. If empty, no restriction is applied on the machine
@@ -4629,6 +4637,74 @@ type OpenFileList struct {
 
 func (s *OpenFileList) MarshalJSON() ([]byte, error) {
 	type NoMethod OpenFileList
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// OperatingSystemPricingPreferences: Pricing options for OS images.
+type OperatingSystemPricingPreferences struct {
+	// Rhel: Optional. Pricing options for RHEL images.
+	Rhel *OperatingSystemPricingPreferencesOperatingSystemPricing `json:"rhel,omitempty"`
+	// Sles: Optional. Pricing options for SLES images.
+	Sles *OperatingSystemPricingPreferencesOperatingSystemPricing `json:"sles,omitempty"`
+	// SlesForSap: Optional. Pricing options for SLES for SAP images.
+	SlesForSap *OperatingSystemPricingPreferencesOperatingSystemPricing `json:"slesForSap,omitempty"`
+	// Windows: Optional. Pricing options for Windows images. No commitment plans
+	// are available, set it to unspecified.
+	Windows *OperatingSystemPricingPreferencesOperatingSystemPricing `json:"windows,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Rhel") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Rhel") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperatingSystemPricingPreferences) MarshalJSON() ([]byte, error) {
+	type NoMethod OperatingSystemPricingPreferences
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// OperatingSystemPricingPreferencesOperatingSystemPricing: Pricing options of
+// an OS image.
+type OperatingSystemPricingPreferencesOperatingSystemPricing struct {
+	// CommitmentPlan: Optional. The plan of commitments for committed use
+	// discounts (CUD).
+	//
+	// Possible values:
+	//   "COMMITMENT_PLAN_UNSPECIFIED" - Unspecified commitment plan.
+	//   "COMMITMENT_PLAN_ON_DEMAND" - No commitment plan (on-demand usage).
+	//   "COMMITMENT_PLAN_1_YEAR" - 1-year committed use discount.
+	//   "COMMITMENT_PLAN_3_YEAR" - 3-year committed use discount.
+	CommitmentPlan string `json:"commitmentPlan,omitempty"`
+	// LicenseType: Optional. License type of the OS image.
+	//
+	// Possible values:
+	//   "LICENSE_TYPE_UNSPECIFIED" - Unspecified (default value).
+	//   "LICENSE_TYPE_DEFAULT" - Default Google Cloud licensing plan. Licensing is
+	// charged per usage. This a good value to start with.
+	//   "LICENSE_TYPE_BRING_YOUR_OWN_LICENSE" - Bring-your-own-license (BYOL)
+	// plan. User provides the OS license.
+	LicenseType string `json:"licenseType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommitmentPlan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommitmentPlan") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperatingSystemPricingPreferencesOperatingSystemPricing) MarshalJSON() ([]byte, error) {
+	type NoMethod OperatingSystemPricingPreferencesOperatingSystemPricing
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6158,6 +6234,12 @@ type SoleTenancyPreferences struct {
 	//   "ON_DEMAND" - No commitment plan (on-demand usage).
 	//   "COMMITMENT_1_YEAR" - 1-year regular committed use discount.
 	//   "COMMITMENT_3_YEAR" - 3-year regular committed use discount.
+	//   "COMMITMENT_FLEXIBLE_1_YEAR" - 1-year flexible committed use discount.
+	// While not supported in the v1 API, this value is converted to UNSPECIFIED in
+	// conversions to the v1 API.
+	//   "COMMITMENT_FLEXIBLE_3_YEAR" - 3-year flexible committed use discount.
+	// While not supported in the v1 API, this value is converted to UNSPECIFIED in
+	// conversions to the v1 API.
 	CommitmentPlan string `json:"commitmentPlan,omitempty"`
 	// CpuOvercommitRatio: CPU overcommit ratio. Acceptable values are between 1.0
 	// and 2.0 inclusive.
@@ -6176,6 +6258,8 @@ type SoleTenancyPreferences struct {
 	// NodeTypes: A list of sole tenant node types. An empty list means that all
 	// possible node types will be considered.
 	NodeTypes []*SoleTenantNodeType `json:"nodeTypes,omitempty"`
+	// OsPricingPreferences: Optional. Pricing options for OS images.
+	OsPricingPreferences *OperatingSystemPricingPreferences `json:"osPricingPreferences,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommitmentPlan") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6770,6 +6854,12 @@ type VirtualMachinePreferences struct {
 	//   "COMMITMENT_PLAN_NONE" - No commitment plan.
 	//   "COMMITMENT_PLAN_ONE_YEAR" - 1-year regular committed use discount.
 	//   "COMMITMENT_PLAN_THREE_YEARS" - 3-year regular committed use discount.
+	//   "COMMITMENT_PLAN_FLEXIBLE_ONE_YEAR" - 1-year flexible committed use
+	// discount. While not supported in the v1 API, this value is converted to
+	// UNSPECIFIED in conversions to the v1 API.
+	//   "COMMITMENT_PLAN_FLEXIBLE_THREE_YEARS" - 3-year flexible committed use
+	// discount. While not supported in the v1 API, this value is converted to
+	// UNSPECIFIED in conversions to the v1 API.
 	CommitmentPlan string `json:"commitmentPlan,omitempty"`
 	// ComputeEnginePreferences: Compute Engine preferences concern insights and
 	// recommendations for Compute Engine target.

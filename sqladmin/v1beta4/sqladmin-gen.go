@@ -3581,6 +3581,10 @@ type Settings struct {
 	//   "ENTERPRISE" - The instance is an enterprise edition.
 	//   "ENTERPRISE_PLUS" - The instance is an Enterprise Plus edition.
 	Edition string `json:"edition,omitempty"`
+	// EnableDataplexIntegration: Optional. By default, Cloud SQL instances have
+	// schema extraction disabled for Dataplex. When this parameter is set to true,
+	// schema extraction for Dataplex on Cloud SQL instances is activated.
+	EnableDataplexIntegration bool `json:"enableDataplexIntegration,omitempty"`
 	// EnableGoogleMlIntegration: Optional. When this parameter is set to true,
 	// Cloud SQL instances can connect to Vertex AI to pass requests for real-time
 	// predictions and insights to the AI. The default value is false. This applies
@@ -3800,6 +3804,10 @@ type SqlExternalSyncSettingError struct {
 	//   "PG_CRON_FLAG_ENABLED_IN_REPLICA" - The error message indicates that
 	// pg_cron flags are enabled on the destination which is not supported during
 	// the migration.
+	//   "EXTENSIONS_NOT_ENABLED_IN_REPLICA" - This error message indicates that
+	// the specified extensions are not enabled on destination instance. For
+	// example, before you can migrate data to the destination instance, you must
+	// enable the PGAudit extension on the instance.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

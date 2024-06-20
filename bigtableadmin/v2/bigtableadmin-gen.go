@@ -596,10 +596,10 @@ type Backup struct {
 	// EndTime: Output only. `end_time` is the time that the backup was finished.
 	// The row data in the backup will be no newer than this timestamp.
 	EndTime string `json:"endTime,omitempty"`
-	// ExpireTime: Required. The expiration time of the backup, with microseconds
-	// granularity that must be at least 6 hours and at most 90 days from the time
-	// the request is received. Once the `expire_time` has passed, Cloud Bigtable
-	// will delete the backup and free the resources used by the backup.
+	// ExpireTime: Required. The expiration time of the backup. When creating a
+	// backup or updating its `expire_time`, the new value must: - Be at most 90
+	// days in the future - Be at least 6 hours in the future Once the
+	// `expire_time` has passed, Cloud Bigtable will delete the backup.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Name: A globally unique identifier for the backup which cannot be changed.
 	// Values are of the form
@@ -3290,17 +3290,17 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // defines the following properties: * Natural sort: Does the encoded value
 // sort consistently with the original typed value? Note that Bigtable will
 // always sort data based on the raw encoded value, *not* the decoded type. -
-// Example: STRING values sort in the same order as their UTF-8 encodings. -
+// Example: BYTES values sort in the same order as their raw encodings. -
 // Counterexample: Encoding INT64 to a fixed-width STRING does *not* preserve
 // sort order when dealing with negative numbers. INT64(1) > INT64(-1), but
-// STRING("-00001") > STRING("00001). - The overall encoding chain sorts
-// naturally if *every* link does. * Self-delimiting: If we concatenate two
+// STRING("-00001") > STRING("00001). - The overall encoding chain has this
+// property if *every* link does. * Self-delimiting: If we concatenate two
 // encoded values, can we always tell where the first one ends and the second
 // one begins? - Example: If we encode INT64s to fixed-width STRINGs, the first
 // value will always contain exactly N digits, possibly preceded by a sign. -
 // Counterexample: If we concatenate two UTF-8 encoded STRINGs, we have no way
-// to tell where the first one ends. - The overall encoding chain is
-// self-delimiting if *any* link is. * Compatibility: Which other systems have
+// to tell where the first one ends. - The overall encoding chain has this
+// property if *any* link does. * Compatibility: Which other systems have
 // matching encoding schemes? For example, does this encoding have a GoogleSQL
 // equivalent? HBase? Java?
 type Type struct {

@@ -3136,7 +3136,10 @@ type StorageDatabasecenterPartnerapiV1mainObservabilityMetricData struct {
 	//
 	// Possible values:
 	//   "AGGREGATION_TYPE_UNSPECIFIED" - Unspecified aggregation type.
-	//   "MAXIMUM" - Maximum aggregation type.
+	//   "PEAK" - PEAK aggregation type.
+	//   "P99" - P99 aggregation type.
+	//   "P95" - P95 aggregation type.
+	//   "CURRENT" - current aggregation type.
 	AggregationType string `json:"aggregationType,omitempty"`
 	// MetricType: Required. Type of metric like CPU, Memory, etc.
 	//
@@ -3147,6 +3150,9 @@ type StorageDatabasecenterPartnerapiV1mainObservabilityMetricData struct {
 	//   "MEMORY_UTILIZATION" - Memory utilization for a resource. The value is a
 	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
 	//   "NETWORK_CONNECTIONS" - Number of network connections for a resource.
+	//   "STORAGE_UTILIZATION" - Storage utilization for a resource. The value is a
+	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
+	//   "STORAGE_USED_BYTES" - Sotrage used by a resource.
 	MetricType string `json:"metricType,omitempty"`
 	// ObservationTime: Required. The time the metric value was observed.
 	ObservationTime string `json:"observationTime,omitempty"`

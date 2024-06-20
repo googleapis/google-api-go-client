@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20240611",
+  "revision": "20240617",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -728,10 +728,136 @@
       "properties": {},
       "type": "object"
     },
+    "GoogleCloudAiplatformV1beta1GroundingAttribution": {
+      "description": "Grounding attribution.",
+      "id": "GoogleCloudAiplatformV1beta1GroundingAttribution",
+      "properties": {
+        "confidenceScore": {
+          "description": "Optional. Output only. Confidence score of the attribution. Ranges from 0 to 1. 1 is the most confident.",
+          "format": "float",
+          "readOnly": true,
+          "type": "number"
+        },
+        "retrievedContext": {
+          "$ref": "GoogleCloudAiplatformV1beta1GroundingAttributionRetrievedContext",
+          "description": "Optional. Attribution from context retrieved by the retrieval tools."
+        },
+        "segment": {
+          "$ref": "GoogleCloudAiplatformV1beta1Segment",
+          "description": "Output only. Segment of the content this attribution belongs to.",
+          "readOnly": true
+        },
+        "web": {
+          "$ref": "GoogleCloudAiplatformV1beta1GroundingAttributionWeb",
+          "description": "Optional. Attribution from the web."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1GroundingAttributionRetrievedContext": {
+      "description": "Attribution from context retrieved by the retrieval tools.",
+      "id": "GoogleCloudAiplatformV1beta1GroundingAttributionRetrievedContext",
+      "properties": {
+        "title": {
+          "description": "Output only. Title of the attribution.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "uri": {
+          "description": "Output only. URI reference of the attribution.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1GroundingAttributionWeb": {
+      "description": "Attribution from the web.",
+      "id": "GoogleCloudAiplatformV1beta1GroundingAttributionWeb",
+      "properties": {
+        "title": {
+          "description": "Output only. Title of the attribution.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "uri": {
+          "description": "Output only. URI reference of the attribution.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1GroundingChunk": {
+      "description": "Grounding chunk.",
+      "id": "GoogleCloudAiplatformV1beta1GroundingChunk",
+      "properties": {
+        "retrievedContext": {
+          "$ref": "GoogleCloudAiplatformV1beta1GroundingChunkRetrievedContext",
+          "description": "Grounding chunk from context retrieved by the retrieval tools."
+        },
+        "web": {
+          "$ref": "GoogleCloudAiplatformV1beta1GroundingChunkWeb",
+          "description": "Grounding chunk from the web."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1GroundingChunkRetrievedContext": {
+      "description": "Chunk from context retrieved by the retrieval tools.",
+      "id": "GoogleCloudAiplatformV1beta1GroundingChunkRetrievedContext",
+      "properties": {
+        "title": {
+          "description": "Title of the attribution.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "URI reference of the attribution.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1GroundingChunkWeb": {
+      "description": "Chunk from the web.",
+      "id": "GoogleCloudAiplatformV1beta1GroundingChunkWeb",
+      "properties": {
+        "title": {
+          "description": "Title of the chunk.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "URI reference of the chunk.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1beta1GroundingMetadata": {
       "description": "Metadata returned to client when grounding is enabled.",
       "id": "GoogleCloudAiplatformV1beta1GroundingMetadata",
       "properties": {
+        "groundingAttributions": {
+          "description": "Optional. List of grounding attributions.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1GroundingAttribution"
+          },
+          "type": "array"
+        },
+        "groundingChunks": {
+          "description": "List of supporting references retrieved from specified grounding source.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1GroundingChunk"
+          },
+          "type": "array"
+        },
+        "groundingSupports": {
+          "description": "Optional. List of grounding support.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1GroundingSupport"
+          },
+          "type": "array"
+        },
         "retrievalQueries": {
           "description": "Optional. Queries executed by the retrieval tools.",
           "items": {
@@ -749,6 +875,33 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1GroundingSupport": {
+      "description": "Grounding support.",
+      "id": "GoogleCloudAiplatformV1beta1GroundingSupport",
+      "properties": {
+        "confidenceScores": {
+          "description": "Confidence score of the support references. Ranges from 0 to 1. 1 is the most confident. This list must have the same size as the grounding_chunk_indices.",
+          "items": {
+            "format": "float",
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "groundingChunkIndices": {
+          "description": "A list of indices (into 'grounding_chunk') specifying the citations associated with the claim. For instance [1,3,4] means that grounding_chunk[1], grounding_chunk[3], grounding_chunk[4] are the retrieved content attributed to the claim.",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "segment": {
+          "$ref": "GoogleCloudAiplatformV1beta1Segment",
+          "description": "Segment of the content this support belongs to."
         }
       },
       "type": "object"
@@ -1074,6 +1227,36 @@
         "sdkBlob": {
           "description": "Optional. Base64 encoded JSON representing array of tuple.",
           "format": "byte",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1Segment": {
+      "description": "Segment of the content.",
+      "id": "GoogleCloudAiplatformV1beta1Segment",
+      "properties": {
+        "endIndex": {
+          "description": "Output only. End index in the given Part, measured in bytes. Offset from the start of the Part, exclusive, starting at zero.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "partIndex": {
+          "description": "Output only. The index of a Part object within its parent Content object.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "startIndex": {
+          "description": "Output only. Start index in the given Part, measured in bytes. Offset from the start of the Part, inclusive, starting at zero.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "text": {
+          "description": "Output only. The text corresponding to the segment from the response.",
+          "readOnly": true,
           "type": "string"
         }
       },

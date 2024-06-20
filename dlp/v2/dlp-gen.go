@@ -1126,8 +1126,8 @@ func (s *GooglePrivacyDlpV2Bucket) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2BucketingConfig: Generalization function that buckets
 // values based on ranges. The ranges and replacement values are dynamically
-// provided by the user for custom behavior, such as 1-30 -> LOW 31-65 ->
-// MEDIUM 66-100 -> HIGH This can be used on data of type: number, long,
+// provided by the user for custom behavior, such as 1-30 -> LOW, 31-65 ->
+// MEDIUM, 66-100 -> HIGH. This can be used on data of type: number, long,
 // string, timestamp. If the bound `Value` type differs from the type of data
 // being transformed, we will first attempt converting the type of the data to
 // be transformed to match the type of the bound before comparing. See
@@ -5034,8 +5034,10 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "GLOBAL" - The infoType is not issued by or tied to a specific region, but
 	// is used almost everywhere.
 	//   "ARGENTINA" - The infoType is typically used in Argentina.
+	//   "ARMENIA" - The infoType is typically used in Armenia.
 	//   "AUSTRALIA" - The infoType is typically used in Australia.
 	//   "AZERBAIJAN" - The infoType is typically used in Azerbaijan.
+	//   "BELARUS" - The infoType is typically used in Belarus.
 	//   "BELGIUM" - The infoType is typically used in Belgium.
 	//   "BRAZIL" - The infoType is typically used in Brazil.
 	//   "CANADA" - The infoType is typically used in Canada.
@@ -9965,10 +9967,9 @@ type OrganizationsDeidentifyTemplatesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -10295,10 +10296,9 @@ type OrganizationsDeidentifyTemplatesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -10581,10 +10581,9 @@ type OrganizationsInspectTemplatesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -10910,10 +10909,9 @@ type OrganizationsInspectTemplatesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -11472,6 +11470,420 @@ func (c *OrganizationsLocationsColumnDataProfilesListCall) Pages(ctx context.Con
 	}
 }
 
+type OrganizationsLocationsConnectionsCreateCall struct {
+	s                                         *Service
+	parent                                    string
+	googleprivacydlpv2createconnectionrequest *GooglePrivacyDlpV2CreateConnectionRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Create: Create a Connection to an external data source.
+//
+//   - parent: Parent resource name. The format of this value varies depending on
+//     the scope of the request (project or organization): + Projects scope:
+//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Organizations scope:
+//     `organizations/`ORG_ID`/locations/`LOCATION_ID.
+func (r *OrganizationsLocationsConnectionsService) Create(parent string, googleprivacydlpv2createconnectionrequest *GooglePrivacyDlpV2CreateConnectionRequest) *OrganizationsLocationsConnectionsCreateCall {
+	c := &OrganizationsLocationsConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleprivacydlpv2createconnectionrequest = googleprivacydlpv2createconnectionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConnectionsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConnectionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConnectionsCreateCall) Context(ctx context.Context) *OrganizationsLocationsConnectionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConnectionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createconnectionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/connections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.connections.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2Connection.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsConnectionsCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2Connection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2Connection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsConnectionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a Connection.
+//
+//   - name: Resource name of the Connection to be deleted, in the format:
+//     `projects/{project}/locations/{location}/connections/{connection}`.
+func (r *OrganizationsLocationsConnectionsService) Delete(name string) *OrganizationsLocationsConnectionsDeleteCall {
+	c := &OrganizationsLocationsConnectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConnectionsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConnectionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConnectionsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsConnectionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConnectionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConnectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.connections.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsConnectionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsConnectionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a Connection by name.
+//
+//   - name: Resource name in the format:
+//     `projects/{project}/locations/{location}/connections/{connection}`.
+func (r *OrganizationsLocationsConnectionsService) Get(name string) *OrganizationsLocationsConnectionsGetCall {
+	c := &OrganizationsLocationsConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConnectionsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConnectionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsConnectionsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsConnectionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConnectionsGetCall) Context(ctx context.Context) *OrganizationsLocationsConnectionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConnectionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConnectionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.connections.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2Connection.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsConnectionsGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2Connection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2Connection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsConnectionsPatchCall struct {
+	s                                         *Service
+	name                                      string
+	googleprivacydlpv2updateconnectionrequest *GooglePrivacyDlpV2UpdateConnectionRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Patch: Update a Connection.
+//
+//   - name: Resource name in the format:
+//     `projects/{project}/locations/{location}/connections/{connection}`.
+func (r *OrganizationsLocationsConnectionsService) Patch(name string, googleprivacydlpv2updateconnectionrequest *GooglePrivacyDlpV2UpdateConnectionRequest) *OrganizationsLocationsConnectionsPatchCall {
+	c := &OrganizationsLocationsConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleprivacydlpv2updateconnectionrequest = googleprivacydlpv2updateconnectionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConnectionsPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConnectionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConnectionsPatchCall) Context(ctx context.Context) *OrganizationsLocationsConnectionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConnectionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updateconnectionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.connections.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2Connection.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsConnectionsPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2Connection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2Connection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type OrganizationsLocationsConnectionsSearchCall struct {
 	s            *Service
 	parent       string
@@ -11642,10 +12054,9 @@ type OrganizationsLocationsDeidentifyTemplatesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -11972,10 +12383,9 @@ type OrganizationsLocationsDeidentifyTemplatesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -12251,8 +12661,10 @@ type OrganizationsLocationsDiscoveryConfigsCreateCall struct {
 
 // Create: Creates a config for discovery to scan and profile storage.
 //
-//   - parent: Parent resource name. The format of this value is as follows:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID The following example
+//   - parent: Parent resource name. The format of this value varies depending on
+//     the scope of the request (project or organization): + Projects scope:
+//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Organizations scope:
+//     `organizations/`ORG_ID`/locations/`LOCATION_ID The following example
 //     `parent` string specifies a parent project with the identifier
 //     `example-project`, and specifies the `europe-west3` location for
 //     processing data: parent=projects/example-project/locations/europe-west3.
@@ -12833,12 +13245,11 @@ type OrganizationsLocationsDlpJobsListCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsDlpJobsService) List(parentid string) *OrganizationsLocationsDlpJobsListCall {
 	c := &OrganizationsLocationsDlpJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13043,10 +13454,9 @@ type OrganizationsLocationsInspectTemplatesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -13372,10 +13782,9 @@ type OrganizationsLocationsInspectTemplatesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -13657,12 +14066,11 @@ type OrganizationsLocationsJobTriggersCreateCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsJobTriggersService) Create(parentid string, googleprivacydlpv2createjobtriggerrequest *GooglePrivacyDlpV2CreateJobTriggerRequest) *OrganizationsLocationsJobTriggersCreateCall {
 	c := &OrganizationsLocationsJobTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13980,12 +14388,11 @@ type OrganizationsLocationsJobTriggersListCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsJobTriggersService) List(parentid string) *OrganizationsLocationsJobTriggersListCall {
 	c := &OrganizationsLocationsJobTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14579,10 +14986,9 @@ type OrganizationsLocationsStoredInfoTypesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -14908,12 +15314,11 @@ type OrganizationsLocationsStoredInfoTypesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsStoredInfoTypesService) List(parentid string) *OrganizationsLocationsStoredInfoTypesListCall {
 	c := &OrganizationsLocationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15581,10 +15986,9 @@ type OrganizationsStoredInfoTypesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -15910,12 +16314,11 @@ type OrganizationsStoredInfoTypesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsStoredInfoTypesService) List(parentid string) *OrganizationsStoredInfoTypesListCall {
 	c := &OrganizationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -16196,12 +16599,11 @@ type ProjectsContentDeidentifyCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsContentService) Deidentify(parentid string, googleprivacydlpv2deidentifycontentrequest *GooglePrivacyDlpV2DeidentifyContentRequest) *ProjectsContentDeidentifyCall {
 	c := &ProjectsContentDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -16313,12 +16715,11 @@ type ProjectsContentInspectCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsContentService) Inspect(parentid string, googleprivacydlpv2inspectcontentrequest *GooglePrivacyDlpV2InspectContentRequest) *ProjectsContentInspectCall {
 	c := &ProjectsContentInspectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -16426,12 +16827,11 @@ type ProjectsContentReidentifyCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsContentService) Reidentify(parentid string, googleprivacydlpv2reidentifycontentrequest *GooglePrivacyDlpV2ReidentifyContentRequest) *ProjectsContentReidentifyCall {
 	c := &ProjectsContentReidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -16541,10 +16941,9 @@ type ProjectsDeidentifyTemplatesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -16871,10 +17270,9 @@ type ProjectsDeidentifyTemplatesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -17267,12 +17665,11 @@ type ProjectsDlpJobsCreateCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsDlpJobsService) Create(parentid string, googleprivacydlpv2createdlpjobrequest *GooglePrivacyDlpV2CreateDlpJobRequest) *ProjectsDlpJobsCreateCall {
 	c := &ProjectsDlpJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -17596,12 +17993,11 @@ type ProjectsDlpJobsListCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsDlpJobsService) List(parentid string) *ProjectsDlpJobsListCall {
 	c := &ProjectsDlpJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -17808,12 +18204,11 @@ type ProjectsImageRedactCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsImageService) Redact(parentid string, googleprivacydlpv2redactimagerequest *GooglePrivacyDlpV2RedactImageRequest) *ProjectsImageRedactCall {
 	c := &ProjectsImageRedactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -17923,10 +18318,9 @@ type ProjectsInspectTemplatesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -18252,10 +18646,9 @@ type ProjectsInspectTemplatesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -18641,12 +19034,11 @@ type ProjectsJobTriggersCreateCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsJobTriggersService) Create(parentid string, googleprivacydlpv2createjobtriggerrequest *GooglePrivacyDlpV2CreateJobTriggerRequest) *ProjectsJobTriggersCreateCall {
 	c := &ProjectsJobTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -18964,12 +19356,11 @@ type ProjectsJobTriggersListCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsJobTriggersService) List(parentid string) *ProjectsJobTriggersListCall {
 	c := &ProjectsJobTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -19568,8 +19959,10 @@ type ProjectsLocationsConnectionsCreateCall struct {
 
 // Create: Create a Connection to an external data source.
 //
-//   - parent: Parent resource name in the format:
-//     `projects/{project}/locations/{location}`.
+//   - parent: Parent resource name. The format of this value varies depending on
+//     the scope of the request (project or organization): + Projects scope:
+//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Organizations scope:
+//     `organizations/`ORG_ID`/locations/`LOCATION_ID.
 func (r *ProjectsLocationsConnectionsService) Create(parent string, googleprivacydlpv2createconnectionrequest *GooglePrivacyDlpV2CreateConnectionRequest) *ProjectsLocationsConnectionsCreateCall {
 	c := &ProjectsLocationsConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20292,12 +20685,11 @@ type ProjectsLocationsContentDeidentifyCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsContentService) Deidentify(parentid string, googleprivacydlpv2deidentifycontentrequest *GooglePrivacyDlpV2DeidentifyContentRequest) *ProjectsLocationsContentDeidentifyCall {
 	c := &ProjectsLocationsContentDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -20409,12 +20801,11 @@ type ProjectsLocationsContentInspectCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsContentService) Inspect(parentid string, googleprivacydlpv2inspectcontentrequest *GooglePrivacyDlpV2InspectContentRequest) *ProjectsLocationsContentInspectCall {
 	c := &ProjectsLocationsContentInspectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -20522,12 +20913,11 @@ type ProjectsLocationsContentReidentifyCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsContentService) Reidentify(parentid string, googleprivacydlpv2reidentifycontentrequest *GooglePrivacyDlpV2ReidentifyContentRequest) *ProjectsLocationsContentReidentifyCall {
 	c := &ProjectsLocationsContentReidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -20637,10 +21027,9 @@ type ProjectsLocationsDeidentifyTemplatesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -20967,10 +21356,9 @@ type ProjectsLocationsDeidentifyTemplatesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -21246,8 +21634,10 @@ type ProjectsLocationsDiscoveryConfigsCreateCall struct {
 
 // Create: Creates a config for discovery to scan and profile storage.
 //
-//   - parent: Parent resource name. The format of this value is as follows:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID The following example
+//   - parent: Parent resource name. The format of this value varies depending on
+//     the scope of the request (project or organization): + Projects scope:
+//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Organizations scope:
+//     `organizations/`ORG_ID`/locations/`LOCATION_ID The following example
 //     `parent` string specifies a parent project with the identifier
 //     `example-project`, and specifies the `europe-west3` location for
 //     processing data: parent=projects/example-project/locations/europe-west3.
@@ -21938,12 +22328,11 @@ type ProjectsLocationsDlpJobsCreateCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsDlpJobsService) Create(parentid string, googleprivacydlpv2createdlpjobrequest *GooglePrivacyDlpV2CreateDlpJobRequest) *ProjectsLocationsDlpJobsCreateCall {
 	c := &ProjectsLocationsDlpJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -22474,12 +22863,11 @@ type ProjectsLocationsDlpJobsListCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsDlpJobsService) List(parentid string) *ProjectsLocationsDlpJobsListCall {
 	c := &ProjectsLocationsDlpJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -22686,12 +23074,11 @@ type ProjectsLocationsImageRedactCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsImageService) Redact(parentid string, googleprivacydlpv2redactimagerequest *GooglePrivacyDlpV2RedactImageRequest) *ProjectsLocationsImageRedactCall {
 	c := &ProjectsLocationsImageRedactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -22801,10 +23188,9 @@ type ProjectsLocationsInspectTemplatesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -23130,10 +23516,9 @@ type ProjectsLocationsInspectTemplatesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -23519,12 +23904,11 @@ type ProjectsLocationsJobTriggersCreateCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsJobTriggersService) Create(parentid string, googleprivacydlpv2createjobtriggerrequest *GooglePrivacyDlpV2CreateJobTriggerRequest) *ProjectsLocationsJobTriggersCreateCall {
 	c := &ProjectsLocationsJobTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -23947,12 +24331,11 @@ type ProjectsLocationsJobTriggersListCall struct {
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsJobTriggersService) List(parentid string) *ProjectsLocationsJobTriggersListCall {
 	c := &ProjectsLocationsJobTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -24546,10 +24929,9 @@ type ProjectsLocationsStoredInfoTypesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -24875,12 +25257,11 @@ type ProjectsLocationsStoredInfoTypesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsStoredInfoTypesService) List(parentid string) *ProjectsLocationsStoredInfoTypesListCall {
 	c := &ProjectsLocationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -25548,10 +25929,9 @@ type ProjectsStoredInfoTypesCreateCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID + Organizations scope, location specified:
 //     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
 //     location specified (defaults to global): `organizations/`ORG_ID The
 //     following example `parent` string specifies a parent project with the
@@ -25877,12 +26257,11 @@ type ProjectsStoredInfoTypesListCall struct {
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
-//   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
-//     following example `parent` string specifies a parent project with the
-//     identifier `example-project`, and specifies the `europe-west3` location
-//     for processing data:
+//   - Projects scope, location specified: `projects/`PROJECT_ID`/locations/`
+//     LOCATION_ID + Projects scope, no location specified (defaults to global):
+//     `projects/`PROJECT_ID The following example `parent` string specifies a
+//     parent project with the identifier `example-project`, and specifies the
+//     `europe-west3` location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsStoredInfoTypesService) List(parentid string) *ProjectsStoredInfoTypesListCall {
 	c := &ProjectsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}

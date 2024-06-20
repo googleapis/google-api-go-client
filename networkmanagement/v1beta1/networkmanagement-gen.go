@@ -631,6 +631,10 @@ type CloudRunRevisionInfo struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Location: Location in which this revision is deployed.
 	Location string `json:"location,omitempty"`
+	// ServiceName: ID of Cloud Run Service this revision belongs to. Was never
+	// set, is not exported to v1 proto and public protos. Do not export to v1beta1
+	// public proto.
+	ServiceName string `json:"serviceName,omitempty"`
 	// ServiceUri: URI of Cloud Run service this revision belongs to.
 	ServiceUri string `json:"serviceUri,omitempty"`
 	// Uri: URI of a Cloud Run revision.
@@ -946,6 +950,9 @@ type DropInfo struct {
 	// Cloud SQL instance with only a public IP address to a private IP address.
 	//   "CLOUD_SQL_INSTANCE_NO_ROUTE" - Packet was dropped because there is no
 	// route from a Cloud SQL instance to a destination network.
+	//   "CLOUD_SQL_CONNECTOR_REQUIRED" - Packet was dropped because the Cloud SQL
+	// instance requires all connections to use Cloud SQL connectors and to target
+	// the Cloud SQL proxy port (3307).
 	//   "CLOUD_FUNCTION_NOT_ACTIVE" - Packet could be dropped because the Cloud
 	// Function is not in an active status.
 	//   "VPC_CONNECTOR_NOT_SET" - Packet could be dropped because no VPC connector

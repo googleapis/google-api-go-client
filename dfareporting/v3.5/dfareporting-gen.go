@@ -679,8 +679,9 @@ type MediaResponseInfo struct {
 	//   "NC0" - Network control
 	//   "BE0" - Best effort at high packet loss
 	//   "LLQ" - Low-latency queue (LLQ) best effort (go/llq)
-	//   "LLQ1" - LLQ best effort (go/llq2)
+	//   "LLQ1" - LLQ assured forwarding priority 1 (go/llq2)
 	//   "LLQ2" - LLQ assured forwarding priority 2 (go/llq2)
+	//   "LLQ3" - LLQ assured forwarding priority 3 (go/llq3)
 	TrafficClassField string `json:"trafficClassField,omitempty"`
 	// VerifyHashFromHeader: Tells Scotty to verify hashes on the agent's behalf by
 	// parsing out the X-Goog-Hash header.

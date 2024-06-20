@@ -2344,8 +2344,8 @@ type DirectoryChromeosdevicesCommand struct {
 	//
 	// Possible values:
 	//   "COMMAND_TYPE_UNSPECIFIED" - The command type was unspecified.
-	//   "REBOOT" - Reboot the device. Can only be issued to Kiosk and managed
-	// guest session devices.
+	//   "REBOOT" - Reboot the device. Can be issued to Kiosk and managed guest
+	// session devices, and regular devices running ChromeOS version 113 or later.
 	//   "TAKE_A_SCREENSHOT" - Take a screenshot of the device. Only available if
 	// the device is in Kiosk Mode.
 	//   "SET_VOLUME" - Set the volume of the device. Can only be issued to Kiosk
@@ -2438,8 +2438,8 @@ type DirectoryChromeosdevicesIssueCommandRequest struct {
 	//
 	// Possible values:
 	//   "COMMAND_TYPE_UNSPECIFIED" - The command type was unspecified.
-	//   "REBOOT" - Reboot the device. Can only be issued to Kiosk and managed
-	// guest session devices.
+	//   "REBOOT" - Reboot the device. Can be issued to Kiosk and managed guest
+	// session devices, and regular devices running ChromeOS version 113 or later.
 	//   "TAKE_A_SCREENSHOT" - Take a screenshot of the device. Only available if
 	// the device is in Kiosk Mode.
 	//   "SET_VOLUME" - Set the volume of the device. Can only be issued to Kiosk

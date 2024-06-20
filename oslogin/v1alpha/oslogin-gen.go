@@ -919,10 +919,7 @@ type UsersProjectsLocationsSignSshPublicKeyCall struct {
 // SignSshPublicKey: Signs an SSH public key for a user to authenticate to a
 // virtual machine on Google Compute Engine.
 //
-//   - parent: The parent project and zone for the signing request. This is
-//     needed to properly ensure per-organization ISS processing and potentially
-//     to provide for the possibility of zone-specific certificates used in the
-//     signing process.
+// - parent: The parent project and region for the signing request.
 func (r *UsersProjectsLocationsService) SignSshPublicKey(parent string, signsshpublickeyrequest *SignSshPublicKeyRequest) *UsersProjectsLocationsSignSshPublicKeyCall {
 	c := &UsersProjectsLocationsSignSshPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1025,10 +1022,7 @@ type UsersProjectsZonesSignSshPublicKeyCall struct {
 // SignSshPublicKey: Signs an SSH public key for a user to authenticate to a
 // virtual machine on Google Compute Engine.
 //
-//   - parent: The parent project and zone for the signing request. This is
-//     needed to properly ensure per-organization ISS processing and potentially
-//     to provide for the possibility of zone-specific certificates used in the
-//     signing process.
+// - parent: The parent project and region for the signing request.
 func (r *UsersProjectsZonesService) SignSshPublicKey(parent string, signsshpublickeyrequest *SignSshPublicKeyRequest) *UsersProjectsZonesSignSshPublicKeyCall {
 	c := &UsersProjectsZonesSignSshPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

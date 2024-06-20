@@ -12157,14 +12157,15 @@ type GoogleCloudDialogflowV2beta1Conversation struct {
 	// configure this Conversation. This field cannot be updated. Format:
 	// `projects//locations//conversationProfiles/`.
 	ConversationProfile string `json:"conversationProfile,omitempty"`
-	// ConversationStage: The stage of a conversation. It indicates whether the
-	// virtual agent or a human agent is handling the conversation. If the
+	// ConversationStage: Optional. The stage of a conversation. It indicates
+	// whether the virtual agent or a human agent is handling the conversation. If
+	// the conversation is created with the conversation profile that has
+	// Dialogflow config set, defaults to ConversationStage.VIRTUAL_AGENT_STAGE;
+	// Otherwise, defaults to ConversationStage.HUMAN_ASSIST_STAGE. If the
 	// conversation is created with the conversation profile that has Dialogflow
-	// config set, defaults to ConversationStage.VIRTUAL_AGENT_STAGE; Otherwise,
-	// defaults to ConversationStage.HUMAN_ASSIST_STAGE. If the conversation is
-	// created with the conversation profile that has Dialogflow config set but
-	// explicitly sets conversation_stage to ConversationStage.HUMAN_ASSIST_STAGE,
-	// it skips ConversationStage.VIRTUAL_AGENT_STAGE stage and directly goes to
+	// config set but explicitly sets conversation_stage to
+	// ConversationStage.HUMAN_ASSIST_STAGE, it skips
+	// ConversationStage.VIRTUAL_AGENT_STAGE stage and directly goes to
 	// ConversationStage.HUMAN_ASSIST_STAGE.
 	//
 	// Possible values:
@@ -12184,8 +12185,8 @@ type GoogleCloudDialogflowV2beta1Conversation struct {
 	//   "IN_PROGRESS" - Conversation is currently open for media analysis.
 	//   "COMPLETED" - Conversation has been completed.
 	LifecycleState string `json:"lifecycleState,omitempty"`
-	// Name: Output only. The unique identifier of this conversation. Format:
-	// `projects//locations//conversations/`.
+	// Name: Output only. Identifier. The unique identifier of this conversation.
+	// Format: `projects//locations//conversations/`.
 	Name string `json:"name,omitempty"`
 	// PhoneNumber: Output only. Required if the conversation is to be connected
 	// over telephony.
@@ -13392,12 +13393,12 @@ type GoogleCloudDialogflowV2beta1GenerateStatelessSummaryRequest struct {
 	// required for Summary generation. Required fields: {language_code,
 	// security_settings} Optional fields: {agent_assistant_config}
 	ConversationProfile *GoogleCloudDialogflowV2beta1ConversationProfile `json:"conversationProfile,omitempty"`
-	// LatestMessage: The name of the latest conversation message used as context
-	// for generating a Summary. If empty, the latest message of the conversation
-	// will be used. The format is specific to the user and the names of the
-	// messages provided.
+	// LatestMessage: Optional. The name of the latest conversation message used as
+	// context for generating a Summary. If empty, the latest message of the
+	// conversation will be used. The format is specific to the user and the names
+	// of the messages provided.
 	LatestMessage string `json:"latestMessage,omitempty"`
-	// MaxContextSize: Max number of messages prior to and including
+	// MaxContextSize: Optional. Max number of messages prior to and including
 	// [latest_message] to use as context when compiling the suggestion. By default
 	// 500 and at most 1000.
 	MaxContextSize int64 `json:"maxContextSize,omitempty"`
@@ -13726,7 +13727,7 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionConfig struc
 	// human_agent_assistant_config.notification_config must be configured and
 	// enable_event_based_suggestion must be set to true to receive the responses
 	// from high latency features in Pub/Sub. High latency feature(s):
-	// KNOWLEDGE_ASSIST.
+	// KNOWLEDGE_ASSIST
 	DisableHighLatencyFeaturesSyncDelivery bool `json:"disableHighLatencyFeaturesSyncDelivery,omitempty"`
 	// FeatureConfigs: Configuration of different suggestion features. One feature
 	// can have only one config.
@@ -17855,26 +17856,29 @@ func (s *GoogleCloudDialogflowV2beta1SearchKnowledgeAnswerAnswerSource) MarshalJ
 // GoogleCloudDialogflowV2beta1SearchKnowledgeRequest: The request message for
 // Conversations.SearchKnowledge.
 type GoogleCloudDialogflowV2beta1SearchKnowledgeRequest struct {
-	// Conversation: The conversation (between human agent and end user) where the
-	// search request is triggered. Format: `projects//locations//conversations/`.
+	// Conversation: Optional. The conversation (between human agent and end user)
+	// where the search request is triggered. Format:
+	// `projects//locations//conversations/`.
 	Conversation string `json:"conversation,omitempty"`
 	// ConversationProfile: Required. The conversation profile used to configure
 	// the search. Format: `projects//locations//conversationProfiles/`.
 	ConversationProfile string `json:"conversationProfile,omitempty"`
-	// LatestMessage: The name of the latest conversation message when the request
-	// is triggered. Format: `projects//locations//conversations//messages/`.
+	// LatestMessage: Optional. The name of the latest conversation message when
+	// the request is triggered. Format:
+	// `projects//locations//conversations//messages/`.
 	LatestMessage string `json:"latestMessage,omitempty"`
-	// Parent: The parent resource contains the conversation profile Format:
-	// 'projects/' or `projects//locations/`.
+	// Parent: Required. The parent resource contains the conversation profile
+	// Format: 'projects/' or `projects//locations/`.
 	Parent string `json:"parent,omitempty"`
 	// Query: Required. The natural language text query for knowledge search.
 	Query *GoogleCloudDialogflowV2beta1TextInput `json:"query,omitempty"`
-	// SessionId: The ID of the search session. The session_id can be combined with
-	// Dialogflow V3 Agent ID retrieved from conversation profile or on its own to
-	// identify a search session. The search history of the same session will
-	// impact the search result. It's up to the API caller to choose an appropriate
-	// `Session ID`. It can be a random number or some type of session identifiers
-	// (preferably hashed). The length must not exceed 36 characters.
+	// SessionId: Optional. The ID of the search session. The session_id can be
+	// combined with Dialogflow V3 Agent ID retrieved from conversation profile or
+	// on its own to identify a search session. The search history of the same
+	// session will impact the search result. It's up to the API caller to choose
+	// an appropriate `Session ID`. It can be a random number or some type of
+	// session identifiers (preferably hashed). The length must not exceed 36
+	// characters.
 	SessionId string `json:"sessionId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Conversation") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -18430,16 +18434,17 @@ func (s *GoogleCloudDialogflowV2beta1SuggestArticlesResponse) MarshalJSON() ([]b
 // GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest: The request
 // message for Conversations.SuggestConversationSummary.
 type GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest struct {
-	// AssistQueryParams: Parameters for a human assist query. Only used for
-	// POC/demo purpose.
+	// AssistQueryParams: Optional. Parameters for a human assist query. Only used
+	// for POC/demo purpose.
 	AssistQueryParams *GoogleCloudDialogflowV2beta1AssistQueryParameters `json:"assistQueryParams,omitempty"`
-	// ContextSize: Max number of messages prior to and including [latest_message]
-	// to use as context when compiling the suggestion. By default 500 and at most
-	// 1000.
+	// ContextSize: Optional. Max number of messages prior to and including
+	// [latest_message] to use as context when compiling the suggestion. By default
+	// 500 and at most 1000.
 	ContextSize int64 `json:"contextSize,omitempty"`
-	// LatestMessage: The name of the latest conversation message used as context
-	// for compiling suggestion. If empty, the latest message of the conversation
-	// will be used. Format: `projects//locations//conversations//messages/`.
+	// LatestMessage: Optional. The name of the latest conversation message used as
+	// context for compiling suggestion. If empty, the latest message of the
+	// conversation will be used. Format:
+	// `projects//locations//conversations//messages/`.
 	LatestMessage string `json:"latestMessage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssistQueryParams") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -30661,16 +30666,10 @@ func (r *ProjectsConversationsService) List(parent string) *ProjectsConversation
 }
 
 // Filter sets the optional parameter "filter": A filter expression that
-// filters conversations listed in the response. In general, the expression
-// must specify the field name, a comparison operator, and the value to use for
-// filtering: - The value must be a string, a number, or a boolean. - The
-// comparison operator must be either `=`,`!=`, `>`, or `<`. - To filter on
-// multiple expressions, separate the expressions with `AND` or `OR` (omitting
-// both implies `AND`). - For clarity, expressions can be enclosed in
-// parentheses. Only `lifecycle_state` can be filtered on in this way. For
-// example, the following expression only returns `COMPLETED` conversations:
-// `lifecycle_state = "COMPLETED" For more information about filtering, see
-// API Filtering (https://aip.dev/160).
+// filters conversations listed in the response. Only `lifecycle_state` can be
+// filtered on in this way. For example, the following expression only returns
+// `COMPLETED` conversations: `lifecycle_state = "COMPLETED" For more
+// information about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsConversationsListCall) Filter(filter string) *ProjectsConversationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -32342,8 +32341,8 @@ type ProjectsConversationsSuggestionsSearchKnowledgeCall struct {
 // SearchKnowledge: Get answers for the given query based on knowledge
 // documents.
 //
-//   - conversation: The conversation (between human agent and end user) where
-//     the search request is triggered. Format:
+//   - conversation: Optional. The conversation (between human agent and end
+//     user) where the search request is triggered. Format:
 //     `projects//locations//conversations/`.
 func (r *ProjectsConversationsSuggestionsService) SearchKnowledge(conversation string, googleclouddialogflowv2beta1searchknowledgerequest *GoogleCloudDialogflowV2beta1SearchKnowledgeRequest) *ProjectsConversationsSuggestionsSearchKnowledgeCall {
 	c := &ProjectsConversationsSuggestionsSearchKnowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -43710,16 +43709,10 @@ func (r *ProjectsLocationsConversationsService) List(parent string) *ProjectsLoc
 }
 
 // Filter sets the optional parameter "filter": A filter expression that
-// filters conversations listed in the response. In general, the expression
-// must specify the field name, a comparison operator, and the value to use for
-// filtering: - The value must be a string, a number, or a boolean. - The
-// comparison operator must be either `=`,`!=`, `>`, or `<`. - To filter on
-// multiple expressions, separate the expressions with `AND` or `OR` (omitting
-// both implies `AND`). - For clarity, expressions can be enclosed in
-// parentheses. Only `lifecycle_state` can be filtered on in this way. For
-// example, the following expression only returns `COMPLETED` conversations:
-// `lifecycle_state = "COMPLETED" For more information about filtering, see
-// API Filtering (https://aip.dev/160).
+// filters conversations listed in the response. Only `lifecycle_state` can be
+// filtered on in this way. For example, the following expression only returns
+// `COMPLETED` conversations: `lifecycle_state = "COMPLETED" For more
+// information about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsConversationsListCall) Filter(filter string) *ProjectsLocationsConversationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -45115,8 +45108,8 @@ type ProjectsLocationsConversationsSuggestionsSearchKnowledgeCall struct {
 // SearchKnowledge: Get answers for the given query based on knowledge
 // documents.
 //
-//   - conversation: The conversation (between human agent and end user) where
-//     the search request is triggered. Format:
+//   - conversation: Optional. The conversation (between human agent and end
+//     user) where the search request is triggered. Format:
 //     `projects//locations//conversations/`.
 func (r *ProjectsLocationsConversationsSuggestionsService) SearchKnowledge(conversation string, googleclouddialogflowv2beta1searchknowledgerequest *GoogleCloudDialogflowV2beta1SearchKnowledgeRequest) *ProjectsLocationsConversationsSuggestionsSearchKnowledgeCall {
 	c := &ProjectsLocationsConversationsSuggestionsSearchKnowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}

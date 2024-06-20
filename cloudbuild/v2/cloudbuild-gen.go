@@ -1590,6 +1590,7 @@ type PipelineRef struct {
 	//   "GIT" - Simple Git resolver.
 	// https://tekton.dev/docs/pipelines/git-resolver/
 	//   "DEVELOPER_CONNECT" - Developer Connect resolver.
+	//   "DEFAULT" - Default resolver.
 	Resolver string `json:"resolver,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2503,6 +2504,7 @@ type StepRef struct {
 	//   "GIT" - Simple Git resolver.
 	// https://tekton.dev/docs/pipelines/git-resolver/
 	//   "DEVELOPER_CONNECT" - Developer Connect resolver.
+	//   "DEFAULT" - Default resolver.
 	Resolver string `json:"resolver,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2569,6 +2571,7 @@ type TaskRef struct {
 	//   "GIT" - Simple Git resolver.
 	// https://tekton.dev/docs/pipelines/git-resolver/
 	//   "DEVELOPER_CONNECT" - Developer Connect resolver.
+	//   "DEFAULT" - Default resolver.
 	Resolver string `json:"resolver,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

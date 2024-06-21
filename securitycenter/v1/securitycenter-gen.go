@@ -1546,6 +1546,107 @@ func (s *AwsOrganizationalUnit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// AzureManagementGroup: Represents an Azure management group.
+type AzureManagementGroup struct {
+	// DisplayName: The display name of the Azure management group.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: The UUID of the Azure management group, for example,
+	// "20000000-0001-0000-0000-000000000000".
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AzureManagementGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureManagementGroup
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// AzureMetadata: Azure metadata associated with the resource, only applicable
+// if the finding's cloud provider is Microsoft Azure.
+type AzureMetadata struct {
+	// ManagementGroups: A list of Azure management groups associated with the
+	// resource, ordered from lowest level (closest to the subscription) to highest
+	// level.
+	ManagementGroups []*AzureManagementGroup `json:"managementGroups,omitempty"`
+	// ResourceGroup: The Azure resource group associated with the resource.
+	ResourceGroup *AzureResourceGroup `json:"resourceGroup,omitempty"`
+	// Subscription: The Azure subscription associated with the resource.
+	Subscription *AzureSubscription `json:"subscription,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ManagementGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ManagementGroups") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AzureMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// AzureResourceGroup: Represents an Azure resource group.
+type AzureResourceGroup struct {
+	// Name: The name of the Azure resource group. This is not a UUID.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AzureResourceGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureResourceGroup
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// AzureSubscription: Represents an Azure subscription.
+type AzureSubscription struct {
+	// DisplayName: The display name of the Azure subscription.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: The UUID of the Azure subscription, for example,
+	// "291bba3f-e0a5-47bc-a099-3bdcb2a50a05".
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AzureSubscription) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureSubscription
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupDisasterRecovery: Information related to Google Cloud Backup and DR
 // Service findings.
 type BackupDisasterRecovery struct {
@@ -2925,7 +3026,14 @@ type Finding struct {
 	//   "SCC_ERROR" - Describes an error that prevents some SCC functionality.
 	//   "POSTURE_VIOLATION" - Describes a potential security risk due to a change
 	// in the security posture.
+	//   "TOXIC_COMBINATION" - Describes a group of security issues that, when the
+	// issues occur together, represent a greater risk than when the issues occur
+	// independently. A group of such issues is referred to as a toxic combination.
 	FindingClass string `json:"findingClass,omitempty"`
+	// GroupMemberships: Contains details about groups of which this finding is a
+	// member. A group is a collection of findings that are related in some way.
+	// This field cannot be updated. Its value is ignored in all update requests.
+	GroupMemberships []*GroupMembership `json:"groupMemberships,omitempty"`
 	// IamBindings: Represents IAM bindings associated with the finding.
 	IamBindings []*IamBinding `json:"iamBindings,omitempty"`
 	// Indicator: Represents what's commonly known as an *indicator of compromise*
@@ -3061,6 +3169,12 @@ type Finding struct {
 	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
 	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
+	// ToxicCombination: Contains details about a group of security issues that,
+	// when the issues occur together, represent a greater risk than when the
+	// issues occur independently. A group of such issues is referred to as a toxic
+	// combination. This field cannot be updated. Its value is ignored in all
+	// update requests.
+	ToxicCombination *ToxicCombination `json:"toxicCombination,omitempty"`
 	// Vulnerability: Represents vulnerability-specific fields like CVE and CVSS
 	// scores. CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
@@ -3631,6 +3745,8 @@ func (s *GoogleCloudSecuritycenterV1Property) MarshalJSON() ([]byte, error) {
 type GoogleCloudSecuritycenterV1Resource struct {
 	// AwsMetadata: The AWS metadata associated with the finding.
 	AwsMetadata *AwsMetadata `json:"awsMetadata,omitempty"`
+	// AzureMetadata: The Azure metadata associated with the finding.
+	AzureMetadata *AzureMetadata `json:"azureMetadata,omitempty"`
 	// CloudProvider: Indicates which cloud provider the resource resides in.
 	//
 	// Possible values:
@@ -4617,6 +4733,111 @@ type GoogleCloudSecuritycenterV2AwsOrganizationalUnit struct {
 
 func (s *GoogleCloudSecuritycenterV2AwsOrganizationalUnit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2AwsOrganizationalUnit
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2AzureManagementGroup: Represents an Azure
+// management group.
+type GoogleCloudSecuritycenterV2AzureManagementGroup struct {
+	// DisplayName: The display name of the Azure management group.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: The UUID of the Azure management group, for example,
+	// "20000000-0001-0000-0000-000000000000".
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV2AzureManagementGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AzureManagementGroup
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2AzureMetadata: Azure metadata associated with the
+// resource, only applicable if the finding's cloud provider is Microsoft
+// Azure.
+type GoogleCloudSecuritycenterV2AzureMetadata struct {
+	// ManagementGroups: A list of Azure management groups associated with the
+	// resource, ordered from lowest level (closest to the subscription) to highest
+	// level.
+	ManagementGroups []*GoogleCloudSecuritycenterV2AzureManagementGroup `json:"managementGroups,omitempty"`
+	// ResourceGroup: The Azure resource group associated with the resource.
+	ResourceGroup *GoogleCloudSecuritycenterV2AzureResourceGroup `json:"resourceGroup,omitempty"`
+	// Subscription: The Azure subscription associated with the resource.
+	Subscription *GoogleCloudSecuritycenterV2AzureSubscription `json:"subscription,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ManagementGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ManagementGroups") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV2AzureMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AzureMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2AzureResourceGroup: Represents an Azure resource
+// group.
+type GoogleCloudSecuritycenterV2AzureResourceGroup struct {
+	// Name: The name of the Azure resource group. This is not a UUID.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV2AzureResourceGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AzureResourceGroup
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2AzureSubscription: Represents an Azure
+// subscription.
+type GoogleCloudSecuritycenterV2AzureSubscription struct {
+	// DisplayName: The display name of the Azure subscription.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: The UUID of the Azure subscription, for example,
+	// "291bba3f-e0a5-47bc-a099-3bdcb2a50a05".
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV2AzureSubscription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AzureSubscription
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5685,7 +5906,13 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	//   "SCC_ERROR" - Describes an error that prevents some SCC functionality.
 	//   "POSTURE_VIOLATION" - Describes a potential security risk due to a change
 	// in the security posture.
+	//   "TOXIC_COMBINATION" - Describes a combination of security issues that
+	// represent a more severe security problem when taken together.
 	FindingClass string `json:"findingClass,omitempty"`
+	// GroupMemberships: Contains details about groups of which this finding is a
+	// member. A group is a collection of findings that are related in some way.
+	// This field cannot be updated. Its value is ignored in all update requests.
+	GroupMemberships []*GoogleCloudSecuritycenterV2GroupMembership `json:"groupMemberships,omitempty"`
 	// IamBindings: Represents IAM bindings associated with the finding.
 	IamBindings []*GoogleCloudSecuritycenterV2IamBinding `json:"iamBindings,omitempty"`
 	// Indicator: Represents what's commonly known as an *indicator of compromise*
@@ -5832,6 +6059,12 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
 	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
+	// ToxicCombination: Contains details about a group of security issues that,
+	// when the issues occur together, represent a greater risk than when the
+	// issues occur independently. A group of such issues is referred to as a toxic
+	// combination. This field cannot be updated. Its value is ignored in all
+	// update requests.
+	ToxicCombination *GoogleCloudSecuritycenterV2ToxicCombination `json:"toxicCombination,omitempty"`
 	// Vulnerability: Represents vulnerability-specific fields like CVE and CVSS
 	// scores. CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
@@ -5900,6 +6133,36 @@ type GoogleCloudSecuritycenterV2Geolocation struct {
 
 func (s *GoogleCloudSecuritycenterV2Geolocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Geolocation
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2GroupMembership: Contains details about groups of
+// which this finding is a member. A group is a collection of findings that are
+// related in some way.
+type GoogleCloudSecuritycenterV2GroupMembership struct {
+	// GroupId: ID of the group.
+	GroupId string `json:"groupId,omitempty"`
+	// GroupType: Type of group.
+	//
+	// Possible values:
+	//   "GROUP_TYPE_UNSPECIFIED" - Default value.
+	//   "GROUP_TYPE_TOXIC_COMBINATION" - Group represents a toxic combination.
+	GroupType string `json:"groupType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV2GroupMembership) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2GroupMembership
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6251,7 +6514,10 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1613
+	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by this
 	// finding, if any.
@@ -6340,7 +6606,10 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1613
+	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 	// Version: The MITRE ATT&CK version referenced by the above fields. E.g. "8".
 	Version string `json:"version,omitempty"`
@@ -6833,6 +7102,8 @@ func (s *GoogleCloudSecuritycenterV2Requests) UnmarshalJSON(data []byte) error {
 type GoogleCloudSecuritycenterV2Resource struct {
 	// AwsMetadata: The AWS metadata associated with the finding.
 	AwsMetadata *GoogleCloudSecuritycenterV2AwsMetadata `json:"awsMetadata,omitempty"`
+	// AzureMetadata: The Azure metadata associated with the finding.
+	AzureMetadata *GoogleCloudSecuritycenterV2AzureMetadata `json:"azureMetadata,omitempty"`
 	// CloudProvider: Indicates which cloud provider the finding is from.
 	//
 	// Possible values:
@@ -7361,6 +7632,51 @@ func (s *GoogleCloudSecuritycenterV2TicketInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2ToxicCombination: Contains details about a group
+// of security issues that, when the issues occur together, represent a greater
+// risk than when the issues occur independently. A group of such issues is
+// referred to as a toxic combination.
+type GoogleCloudSecuritycenterV2ToxicCombination struct {
+	// AttackExposureScore: The Attack exposure score
+	// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_exposure_scores)
+	// of this toxic combination. The score is a measure of how much this toxic
+	// combination exposes one or more high-value resources to potential attack.
+	AttackExposureScore float64 `json:"attackExposureScore,omitempty"`
+	// RelatedFindings: List of resource names of findings associated with this
+	// toxic combination. For example, organizations/123/sources/456/findings/789.
+	RelatedFindings []string `json:"relatedFindings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttackExposureScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttackExposureScore") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV2ToxicCombination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2ToxicCombination
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudSecuritycenterV2ToxicCombination) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudSecuritycenterV2ToxicCombination
+	var s1 struct {
+		AttackExposureScore gensupport.JSONFloat64 `json:"attackExposureScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AttackExposureScore = float64(s1.AttackExposureScore)
+	return nil
+}
+
 // GoogleCloudSecuritycenterV2Vulnerability: Refers to common vulnerability
 // fields e.g. cve, cvss, cwe etc.
 type GoogleCloudSecuritycenterV2Vulnerability struct {
@@ -7666,6 +7982,35 @@ type GroupFindingsResponse struct {
 
 func (s *GroupFindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupFindingsResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GroupMembership: Contains details about groups of which this finding is a
+// member. A group is a collection of findings that are related in some way.
+type GroupMembership struct {
+	// GroupId: ID of the group.
+	GroupId string `json:"groupId,omitempty"`
+	// GroupType: Type of group.
+	//
+	// Possible values:
+	//   "GROUP_TYPE_UNSPECIFIED" - Default value.
+	//   "GROUP_TYPE_TOXIC_COMBINATION" - Group represents a toxic combination.
+	GroupType string `json:"groupType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GroupMembership) MarshalJSON() ([]byte, error) {
+	type NoMethod GroupMembership
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8619,7 +8964,10 @@ type MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by this
 	// finding, if any.
@@ -8708,7 +9056,10 @@ type MitreAttack struct {
 	//   "OBTAIN_CAPABILITIES" - T1588
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 	// Version: The MITRE ATT&CK version referenced by the above fields. E.g. "8".
 	Version string `json:"version,omitempty"`
@@ -9372,6 +9723,8 @@ func (s *Requests) UnmarshalJSON(data []byte) error {
 type Resource struct {
 	// AwsMetadata: The AWS metadata associated with the finding.
 	AwsMetadata *AwsMetadata `json:"awsMetadata,omitempty"`
+	// AzureMetadata: The Azure metadata associated with the finding.
+	AzureMetadata *AzureMetadata `json:"azureMetadata,omitempty"`
 	// CloudProvider: Indicates which cloud provider the finding is from.
 	//
 	// Possible values:
@@ -10266,6 +10619,51 @@ type TicketInfo struct {
 func (s *TicketInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod TicketInfo
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ToxicCombination: Contains details about a group of security issues that,
+// when the issues occur together, represent a greater risk than when the
+// issues occur independently. A group of such issues is referred to as a toxic
+// combination.
+type ToxicCombination struct {
+	// AttackExposureScore: The Attack exposure score
+	// (https://cloud.google.com/security-command-center/docs/attack-exposure-learn#attack_exposure_scores)
+	// of this toxic combination. The score is a measure of how much this toxic
+	// combination exposes one or more high-value resources to potential attack.
+	AttackExposureScore float64 `json:"attackExposureScore,omitempty"`
+	// RelatedFindings: List of resource names of findings associated with this
+	// toxic combination. For example, organizations/123/sources/456/findings/789.
+	RelatedFindings []string `json:"relatedFindings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttackExposureScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttackExposureScore") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ToxicCombination) MarshalJSON() ([]byte, error) {
+	type NoMethod ToxicCombination
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ToxicCombination) UnmarshalJSON(data []byte) error {
+	type NoMethod ToxicCombination
+	var s1 struct {
+		AttackExposureScore gensupport.JSONFloat64 `json:"attackExposureScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AttackExposureScore = float64(s1.AttackExposureScore)
+	return nil
 }
 
 // ValidateEventThreatDetectionCustomModuleRequest: Request to validate an

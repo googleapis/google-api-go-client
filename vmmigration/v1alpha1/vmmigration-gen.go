@@ -533,6 +533,9 @@ type AwsSourceDetails struct {
 	// tags that are set as part of the migration process. The tags must not begin
 	// with the reserved prefix `m2vm`.
 	MigrationResourcesUserTags map[string]string `json:"migrationResourcesUserTags,omitempty"`
+	// NetworkInsights: Output only. Information about the network coniguration of
+	// the source. Only gatherred upon request.
+	NetworkInsights *NetworkInsights `json:"networkInsights,omitempty"`
 	// PublicIp: Output only. The source's public IP. All communication initiated
 	// by this source will originate from this IP.
 	PublicIp string `json:"publicIp,omitempty"`
@@ -2809,6 +2812,32 @@ type MigrationWarning struct {
 
 func (s *MigrationWarning) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrationWarning
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// NetworkInsights: Information about the network coniguration of the source.
+type NetworkInsights struct {
+	// SourceNetworkConfig: Output only. The gathered network configuration of the
+	// source. Presented in json format.
+	SourceNetworkConfig string `json:"sourceNetworkConfig,omitempty"`
+	// SourceNetworkTerraform: Output only. The gathered network configuration of
+	// the source. Presented in terraform format.
+	SourceNetworkTerraform string `json:"sourceNetworkTerraform,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceNetworkConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceNetworkConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *NetworkInsights) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkInsights
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

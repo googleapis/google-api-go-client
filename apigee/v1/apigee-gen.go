@@ -5849,8 +5849,6 @@ func (s *GoogleCloudApigeeV1ListApiProductsResponse) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1ListApiProxiesResponse: To change this message, in the
-// same CL add a change log in go/changing-api-proto-breaks-ui
 type GoogleCloudApigeeV1ListApiProxiesResponse struct {
 	Proxies []*GoogleCloudApigeeV1ApiProxy `json:"proxies,omitempty"`
 
@@ -6708,8 +6706,6 @@ func (s *GoogleCloudApigeeV1ListSecurityReportsResponse) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1ListSharedFlowsResponse: To change this message, in the
-// same CL add a change log in go/changing-api-proto-breaks-ui
 type GoogleCloudApigeeV1ListSharedFlowsResponse struct {
 	SharedFlows []*GoogleCloudApigeeV1SharedFlow `json:"sharedFlows,omitempty"`
 

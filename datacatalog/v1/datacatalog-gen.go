@@ -3254,6 +3254,8 @@ type GoogleCloudDatacatalogV1TagTemplate struct {
 	// its tags are only visible and editable in DataCatalog.
 	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex service.
 	// Visible in both services. Editable in DataCatalog, read-only in Dataplex.
+	// Deprecated: Individual TagTemplate migration is deprecated in favor of
+	// organization or project wide TagTemplate migration opt-in.
 	DataplexTransferStatus string `json:"dataplexTransferStatus,omitempty"`
 	// DisplayName: Display name for this template. Defaults to an empty string.
 	// The name must contain only Unicode letters, numbers (0-9), underscores (_),

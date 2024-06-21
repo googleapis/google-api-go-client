@@ -2629,8 +2629,8 @@ type GatewayAPIConfig struct {
 	// Possible values:
 	//   "CHANNEL_UNSPECIFIED" - Default value.
 	//   "CHANNEL_DISABLED" - Gateway API support is disabled
-	//   "CHANNEL_EXPERIMENTAL" - Gateway API support is enabled, experimental CRDs
-	// are installed
+	//   "CHANNEL_EXPERIMENTAL" - Deprecated: use CHANNEL_STANDARD instead. Gateway
+	// API support is enabled, experimental CRDs are installed
 	//   "CHANNEL_STANDARD" - Gateway API support is enabled, standard CRDs are
 	// installed
 	Channel string `json:"channel,omitempty"`

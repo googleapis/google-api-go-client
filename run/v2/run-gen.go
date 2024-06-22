@@ -1159,7 +1159,8 @@ type GoogleCloudRunV2Job struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Creator: Output only. Email address of the authenticated creator.
 	Creator string `json:"creator,omitempty"`
-	// DeleteTime: Output only. The deletion time.
+	// DeleteTime: Output only. The deletion time. It is only populated as a
+	// response to a Delete request.
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// Etag: Output only. A system-generated fingerprint for this version of the
 	// resource. May be used to detect modification conflict during updates.
@@ -2115,7 +2116,8 @@ type GoogleCloudRunV2Service struct {
 	// DefaultUriDisabled: Optional. Disables public resolution of the default URI
 	// of this service.
 	DefaultUriDisabled bool `json:"defaultUriDisabled,omitempty"`
-	// DeleteTime: Output only. The deletion time.
+	// DeleteTime: Output only. The deletion time. It is only populated as a
+	// response to a Delete request.
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// Description: User-provided description of the Service. This field currently
 	// has a 512-character limit.

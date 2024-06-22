@@ -2750,6 +2750,13 @@ type GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription struct {
 	//   "INACTIVE" - Represents an upcomming subscription.
 	//   "COMPLETED" - Represents a completed subscription.
 	State string `json:"state,omitempty"`
+	// SubscriberType: Output only. Type of subscriber.
+	//
+	// Possible values:
+	//   "SUBSCRIBER_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ONLINE" - Represents an online subscription.
+	//   "OFFLINE" - Represents an offline subscription.
+	SubscriberType string `json:"subscriberType,omitempty"`
 	// Type: Required. Type of subscription.
 	//
 	// Possible values:

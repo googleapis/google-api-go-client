@@ -2565,7 +2565,7 @@
       }
     }
   },
-  "revision": "20240604",
+  "revision": "20240608",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -5455,12 +5455,14 @@
               "DEPLOYMENT",
               "STATEFULSET",
               "CADVISOR",
-              "KUBELET"
+              "KUBELET",
+              "DCGM"
             ],
             "enumDeprecated": [
               false,
               false,
               true,
+              false,
               false,
               false,
               false,
@@ -5487,7 +5489,8 @@
               "Deployment",
               "Statefulset",
               "CADVISOR",
-              "KUBELET"
+              "KUBELET",
+              "NVIDIA Data Center GPU Manager (DCGM)"
             ],
             "type": "string"
           },

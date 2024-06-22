@@ -1404,6 +1404,16 @@ func (s *DiagnoseClusterResults) MarshalJSON() ([]byte, error) {
 // DiskConfig: Specifies the config of disk options for a group of VM
 // instances.
 type DiskConfig struct {
+	// BootDiskProvisionedIops: Optional. Indicates how many IOPS to provision for
+	// the disk. This sets the number of I/O operations per second that the disk
+	// can handle. Note: This field is only supported if boot_disk_type is
+	// hyperdisk-balanced.
+	BootDiskProvisionedIops int64 `json:"bootDiskProvisionedIops,omitempty,string"`
+	// BootDiskProvisionedThroughput: Optional. Indicates how much throughput to
+	// provision for the disk. This sets the number of throughput mb per second
+	// that the disk can handle. Values must be greater than or equal to 1. Note:
+	// This field is only supported if boot_disk_type is hyperdisk-balanced.
+	BootDiskProvisionedThroughput int64 `json:"bootDiskProvisionedThroughput,omitempty,string"`
 	// BootDiskSizeGb: Optional. Size in GB of the boot disk (default is 500GB).
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
 	// BootDiskType: Optional. Type of the boot disk (default is "pd-standard").
@@ -1424,15 +1434,15 @@ type DiskConfig struct {
 	// and the boot disk contains only basic config and installed binaries.Note:
 	// Local SSD options may vary by machine type and number of vCPUs selected.
 	NumLocalSsds int64 `json:"numLocalSsds,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BootDiskSizeGb") to
+	// ForceSendFields is a list of field names (e.g. "BootDiskProvisionedIops") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BootDiskSizeGb") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BootDiskProvisionedIops") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1809,8 +1819,8 @@ type GceClusterConfig struct {
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/regions/[region]/subnetworks/sub0
 	// projects/[project_id]/regions/[region]/subnetworks/sub0 sub0
 	SubnetworkUri string `json:"subnetworkUri,omitempty"`
-	// Tags: The Compute Engine tags to add to all instances (see Tagging instances
-	// (https://cloud.google.com/compute/docs/label-or-tag-resources#tags)).
+	// Tags: The Compute Engine network tags to add to all instances (see Tagging
+	// instances (https://cloud.google.com/vpc/docs/add-remove-network-tags)).
 	Tags []string `json:"tags,omitempty"`
 	// ZoneUri: Optional. The Compute Engine zone where the Dataproc cluster will
 	// be located. If omitted, the service will pick a zone in the cluster's

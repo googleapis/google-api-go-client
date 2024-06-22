@@ -4020,6 +4020,7 @@ type MonitoringComponentConfig struct {
 	//   "STATEFULSET" - Statefulset
 	//   "CADVISOR" - CADVISOR
 	//   "KUBELET" - KUBELET
+	//   "DCGM" - NVIDIA Data Center GPU Manager (DCGM)
 	EnableComponents []string `json:"enableComponents,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableComponents") to
 	// unconditionally include in API requests. By default, fields with empty or

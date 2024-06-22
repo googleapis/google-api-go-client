@@ -979,6 +979,8 @@ type DropInfo struct {
 	// service attachment, but this configuration is not supported.
 	//   "NO_NAT_SUBNETS_FOR_PSC_SERVICE_ATTACHMENT" - No NAT subnets are defined
 	// for the PSC service attachment.
+	//   "PSC_TRANSITIVITY_NOT_PROPAGATED" - PSC endpoint is accessed via NCC, but
+	// PSC transitivity configuration is not yet propagated.
 	//   "HYBRID_NEG_NON_DYNAMIC_ROUTE_MATCHED" - The packet sent from the hybrid
 	// NEG proxy matches a non-dynamic route, but such a configuration is not
 	// supported.

@@ -519,17 +519,17 @@ func (s *Execution) MarshalJSON() ([]byte, error) {
 
 // ExecutionResult: Message describing the result of an execution
 type ExecutionResult struct {
-	// DocumentationUrl: the document url of the rule
+	// DocumentationUrl: The URL for the documentation of the rule.
 	DocumentationUrl string `json:"documentationUrl,omitempty"`
-	// Resource: the violate resource
+	// Resource: The resource that violates the rule.
 	Resource *Resource `json:"resource,omitempty"`
-	// Rule: the rule which violate in execution
+	// Rule: The rule that is violated in an evaluation.
 	Rule string `json:"rule,omitempty"`
-	// Severity: severity of violation
+	// Severity: The severity of violation.
 	Severity string `json:"severity,omitempty"`
-	// ViolationDetails: the details of violation in result
+	// ViolationDetails: The details of violation in an evaluation result.
 	ViolationDetails *ViolationDetails `json:"violationDetails,omitempty"`
-	// ViolationMessage: the violation message of an execution
+	// ViolationMessage: The violation message of an execution.
 	ViolationMessage string `json:"violationMessage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DocumentationUrl") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1005,6 +1005,7 @@ type LocationData struct {
 	ChildAssetLocation *CloudAssetComposition    `json:"childAssetLocation,omitempty"`
 	DirectLocation     *DirectLocationAssignment `json:"directLocation,omitempty"`
 	GcpProjectProxy    *TenantProjectProxy       `json:"gcpProjectProxy,omitempty"`
+	PlacerLocation     *PlacerLocation           `json:"placerLocation,omitempty"`
 	SpannerLocation    *SpannerLocation          `json:"spannerLocation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BlobstoreLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1109,6 +1110,30 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// PlacerLocation: Message describing that the location of the customer
+// resource is tied to placer allocations
+type PlacerLocation struct {
+	// PlacerConfig: Directory with a config related to it in placer (e.g.
+	// "/placer/prod/home/my-root/my-dir")
+	PlacerConfig string `json:"placerConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PlacerConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PlacerConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *PlacerLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod PlacerLocation
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // RegionalMigDistributionPolicy: To be used for specifying the intended
 // distribution of regional compute.googleapis.com/InstanceGroupManager
 // instances
@@ -1138,11 +1163,11 @@ func (s *RegionalMigDistributionPolicy) MarshalJSON() ([]byte, error) {
 
 // Resource: Message represent resource in execution result
 type Resource struct {
-	// Name: the name of the resource
+	// Name: The name of the resource.
 	Name string `json:"name,omitempty"`
-	// ServiceAccount: the service account accosiate with resource
+	// ServiceAccount: The service account associated with the resource.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
-	// Type: the type of reresource
+	// Type: The type of resource.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1350,6 +1375,9 @@ type SapDiscoveryComponent struct {
 	HaHosts []string `json:"haHosts,omitempty"`
 	// HostProject: Required. Pantheon Project in which the resources reside.
 	HostProject string `json:"hostProject,omitempty"`
+	// ReplicationSites: Optional. A list of replication sites used in Disaster
+	// Recovery (DR) configurations.
+	ReplicationSites []*SapDiscoveryComponent `json:"replicationSites,omitempty"`
 	// Resources: Optional. The resources in a component.
 	Resources []*SapDiscoveryResource `json:"resources,omitempty"`
 	// Sid: Optional. The SAP identifier, used by the SAP software and helps
@@ -1383,8 +1411,8 @@ func (s *SapDiscoveryComponent) MarshalJSON() ([]byte, error) {
 // SapDiscoveryComponentApplicationProperties: A set of properties describing
 // an SAP Application layer.
 type SapDiscoveryComponentApplicationProperties struct {
-	// Abap: Optional. Indicates whether this is a Java or ABAP Netweaver instance.
-	// true means it is ABAP, false means it is Java.
+	// Abap: Optional. Deprecated: ApplicationType now tells you whether this is
+	// ABAP or Java.
 	Abap bool `json:"abap,omitempty"`
 	// AppInstanceNumber: Optional. Instance number of the SAP application
 	// instance.
@@ -1394,6 +1422,8 @@ type SapDiscoveryComponentApplicationProperties struct {
 	// Possible values:
 	//   "APPLICATION_TYPE_UNSPECIFIED" - Unspecified application type
 	//   "NETWEAVER" - SAP Netweaver
+	//   "NETWEAVER_ABAP" - SAP Netweaver ABAP
+	//   "NETWEAVER_JAVA" - SAP Netweaver Java
 	ApplicationType string `json:"applicationType,omitempty"`
 	// AscsInstanceNumber: Optional. Instance number of the ASCS instance.
 	AscsInstanceNumber string `json:"ascsInstanceNumber,omitempty"`
@@ -1971,13 +2001,13 @@ func (s *TenantProjectProxy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ViolationDetails: Message describing the violdation in execution result
+// ViolationDetails: Message describing the violation in an evaluation result.
 type ViolationDetails struct {
-	// Asset: the name of asset
+	// Asset: The name of the asset.
 	Asset string `json:"asset,omitempty"`
-	// Observed: observed
+	// Observed: Details of the violation.
 	Observed map[string]string `json:"observed,omitempty"`
-	// ServiceAccount: the service account associate with resource
+	// ServiceAccount: The service account associated with the resource.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2687,7 +2717,8 @@ func (r *ProjectsLocationsEvaluationsService) List(parent string) *ProjectsLocat
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filter to be applied when
+// listing the evaluation results.
 func (c *ProjectsLocationsEvaluationsListCall) Filter(filter string) *ProjectsLocationsEvaluationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3314,7 +3345,7 @@ type ProjectsLocationsEvaluationsExecutionsResultsListCall struct {
 	header_      http.Header
 }
 
-// List: List the running result of a single Execution.
+// List: Lists the result of a single evaluation.
 //
 //   - parent: The execution results. Format:
 //     {parent}/evaluations/*/executions/*/results.

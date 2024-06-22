@@ -1374,6 +1374,9 @@ func (s *PkixPublicKeySet) MarshalJSON() ([]byte, error) {
 type PlatformPolicy struct {
 	// Description: Optional. A description comment about the policy.
 	Description string `json:"description,omitempty"`
+	// Etag: Optional. Used to prevent updating the policy when another request has
+	// updated it since it was retrieved.
+	Etag string `json:"etag,omitempty"`
 	// GkePolicy: Optional. GKE platform-specific policy.
 	GkePolicy *GkePolicy `json:"gkePolicy,omitempty"`
 	// Name: Output only. The relative resource name of the Binary Authorization
@@ -3590,6 +3593,13 @@ type ProjectsPlatformsPoliciesDeleteCall struct {
 func (r *ProjectsPlatformsPoliciesService) Delete(name string) *ProjectsPlatformsPoliciesDeleteCall {
 	c := &ProjectsPlatformsPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": Used to prevent deleting the policy
+// when another request has updated it since it was retrieved.
+func (c *ProjectsPlatformsPoliciesDeleteCall) Etag(etag string) *ProjectsPlatformsPoliciesDeleteCall {
+	c.urlParams_.Set("etag", etag)
 	return c
 }
 

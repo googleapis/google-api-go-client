@@ -1067,7 +1067,8 @@ func (s *Canary) MarshalJSON() ([]byte, error) {
 type CanaryDeployment struct {
 	// Percentages: Required. The percentage based deployments that will occur as a
 	// part of a `Rollout`. List is expected in ascending order and each integer n
-	// is 0 <= n < 100.
+	// is 0 <= n < 100. If the GatewayServiceMesh is configured for Kubernetes,
+	// then the range for n is 0 <= n <= 100.
 	Percentages []int64 `json:"percentages,omitempty"`
 	// Postdeploy: Optional. Configuration for the postdeploy job of the last
 	// phase. If this is not configured, there will be no postdeploy job for this

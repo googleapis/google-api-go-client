@@ -290,12 +290,7 @@ type ContactCenter struct {
 	Normal *Normal `json:"normal,omitempty"`
 	// PrivateAccess: Optional. VPC-SC related networking configuration.
 	PrivateAccess *PrivateAccess `json:"privateAccess,omitempty"`
-	// PrivateComponents: Output only. A list of UJET components that should be
-	// privately accessed. This field is set by reading settings from the data
-	// plane. For more information about the format of the component please refer
-	// to go/ccaip-vpc-sc-org-policy. This field is must be fully populated only
-	// for Create/Update resource operations. The main use case for this field is
-	// OrgPolicy checks via CPE.
+	// PrivateComponents: Output only. TODO(b/283407860) Deprecate this field.
 	PrivateComponents []string `json:"privateComponents,omitempty"`
 	// SamlParams: Optional. Params that sets up Google as IdP.
 	SamlParams *SAMLParams `json:"samlParams,omitempty"`

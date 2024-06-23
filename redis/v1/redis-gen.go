@@ -416,8 +416,8 @@ type Cluster struct {
 	// for Redis clients to connect to the cluster. Currently only one discovery
 	// endpoint is supported.
 	DiscoveryEndpoints []*DiscoveryEndpoint `json:"discoveryEndpoints,omitempty"`
-	// Name: Required. Unique name of the resource in this scope including project
-	// and location using the form:
+	// Name: Required. Identifier. Unique name of the resource in this scope
+	// including project and location using the form:
 	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
 	Name string `json:"name,omitempty"`
 	// NodeType: Optional. The type of a redis node in the cluster. NodeType
@@ -3876,8 +3876,8 @@ type ProjectsLocationsClustersPatchCall struct {
 // response field. The returned operation is automatically deleted after a few
 // hours, so there is no need to call DeleteOperation.
 //
-//   - name: Unique name of the resource in this scope including project and
-//     location using the form:
+//   - name: Identifier. Unique name of the resource in this scope including
+//     project and location using the form:
 //     `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`.
 func (r *ProjectsLocationsClustersService) Patch(name string, cluster *Cluster) *ProjectsLocationsClustersPatchCall {
 	c := &ProjectsLocationsClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

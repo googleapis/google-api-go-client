@@ -823,7 +823,7 @@ type CryptoKey struct {
 	// KeyAccessJustificationsPolicy: Optional. The policy used for Key Access
 	// Justifications Policy Enforcement. If this field is present and this key is
 	// enrolled in Key Access Justifications Policy Enforcement, the policy will be
-	// evaluated in Encrypt, Decrypt, and Sign operations, and the operation will
+	// evaluated in encrypt, decrypt, and sign operations, and the operation will
 	// fail if rejected by the policy. The policy is defined by specifying zero or
 	// more allowed justification codes.
 	// https://cloud.google.com/assured-workloads/key-access-justifications/docs/justification-codes
@@ -1932,11 +1932,11 @@ func (s *ImportJob) MarshalJSON() ([]byte, error) {
 }
 
 // KeyAccessJustificationsPolicy: A KeyAccessJustificationsPolicy specifies
-// zero or more allowed AccessReason values for Encrypt, Decrypt, and Sign
-// requests on a CryptoKey.
+// zero or more allowed AccessReason values for encrypt, decrypt, and sign
+// operations on a CryptoKey.
 type KeyAccessJustificationsPolicy struct {
 	// AllowedAccessReasons: The list of allowed reasons for access to a CryptoKey.
-	// Zero allowed access reasons means all Encrypt, Decrypt, and Sign requests
+	// Zero allowed access reasons means all encrypt, decrypt, and sign operations
 	// for the CryptoKey associated with this policy will fail.
 	//
 	// Possible values:

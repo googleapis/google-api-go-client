@@ -231,6 +231,61 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata: Metadata for
+// google.longrunning.Operation results from
+// FirestoreAdmin.BulkDeleteDocuments.
+type GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata struct {
+	// CollectionIds: The ids of the collection groups that are being deleted.
+	CollectionIds []string `json:"collectionIds,omitempty"`
+	// EndTime: The time this operation completed. Will be unset if operation still
+	// in progress.
+	EndTime string `json:"endTime,omitempty"`
+	// NamespaceIds: Which namespace ids are being deleted.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
+	// OperationState: The state of the operation.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
+	OperationState string `json:"operationState,omitempty"`
+	// ProgressBytes: The progress, in bytes, of this operation.
+	ProgressBytes *GoogleFirestoreAdminV1Progress `json:"progressBytes,omitempty"`
+	// ProgressDocuments: The progress, in documents, of this operation.
+	ProgressDocuments *GoogleFirestoreAdminV1Progress `json:"progressDocuments,omitempty"`
+	// SnapshotTime: The timestamp that corresponds to the version of the database
+	// that is being read to get the list of documents to delete. This time can
+	// also be used as the timestamp of PITR in case of disaster recovery (subject
+	// to PITR window limit).
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+	// StartTime: The time this operation started.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CollectionIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1CreateDatabaseMetadata: Metadata related to the create
 // database operation.
 type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {

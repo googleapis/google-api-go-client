@@ -235,23 +235,21 @@ type ProjectsLocationsVersionsService struct {
 	s *Service
 }
 
-// Accelerator: Identifies Data Fusion accelerators for an instance.
+// Accelerator: Identifies Cloud Data Fusion accelerators for an instance.
 type Accelerator struct {
-	// AcceleratorType: The type of an accelator for a CDF instance.
+	// AcceleratorType: Optional. The type of an accelator for a Cloud Data Fusion
+	// instance.
 	//
 	// Possible values:
 	//   "ACCELERATOR_TYPE_UNSPECIFIED" - Default value, if unspecified.
-	//   "CDC" - Change Data Capture accelerator for CDF.
-	//   "HEALTHCARE" - Cloud Healthcare accelerator for CDF. This accelerator is
-	// to enable Cloud Healthcare specific CDF plugins developed by Healthcare
-	// team.
+	//   "CDC" - Change Data Capture accelerator for Cloud Data Fusion.
+	//   "HEALTHCARE" - Reserved for internal use.
 	//   "CCAI_INSIGHTS" - Contact Center AI Insights This accelerator is used to
 	// enable import and export pipelines custom built to streamline CCAI Insights
 	// processing.
-	//   "CLOUDSEARCH" - Cloud search accelerator for CDF. This accelerator is to
-	// enable Cloud search specific CDF plugins developed by Cloudsearch team.
+	//   "CLOUDSEARCH" - Reserved for internal use.
 	AcceleratorType string `json:"acceleratorType,omitempty"`
-	// State: The state of the accelerator.
+	// State: Output only. The state of the accelerator.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value, do not use.
@@ -431,7 +429,11 @@ type Binding struct {
 	// ol-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 	// Role: Role that is assigned to the list of `members`, or principals. For
-	// example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview
+	// of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -477,46 +479,6 @@ type CryptoKeyConfig struct {
 
 func (s *CryptoKeyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CryptoKeyConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// DataResidencyAugmentedView: Next tag: 7
-type DataResidencyAugmentedView struct {
-	// CrGopoGuris: Cloud resource to Google owned production object mapping in the
-	// form of GURIs. The GURIs should be available in DG KB storage/cns tables.
-	// This is the preferred way of providing cloud resource mappings. For further
-	// details please read go/cloud-resource-monitoring_sig
-	CrGopoGuris []string `json:"crGopoGuris,omitempty"`
-	// CrGopoPrefixes: Cloud resource to Google owned production object mapping in
-	// the form of prefixes. These should be available in DG KB storage/cns tables.
-	// The entity type, which is the part of the string before the first colon in
-	// the GURI, must be completely specified in prefix. For details about GURI
-	// please read go/guri. For further details about the field please read
-	// go/cloud-resource-monitoring_sig.
-	CrGopoPrefixes []string `json:"crGopoPrefixes,omitempty"`
-	// ServiceData: Service-specific data. Only required for pre-determined
-	// services. Generally used to bind a Cloud Resource to some a TI container
-	// that uniquely specifies a customer. See milestone 2 of DRZ KR8 SIG for more
-	// information.
-	ServiceData *ServiceData `json:"serviceData,omitempty"`
-	// TpIds: The list of project_id's of the tenant projects in the 'google.com'
-	// org which serve the Cloud Resource. See go/drz-mst-sig for more details.
-	TpIds []string `json:"tpIds,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CrGopoGuris") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CrGopoGuris") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *DataResidencyAugmentedView) MarshalJSON() ([]byte, error) {
-	type NoMethod DataResidencyAugmentedView
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -718,6 +680,9 @@ type Instance struct {
 	// underlying resources such as Compute Engine VMs. The character '=' is not
 	// allowed to be used within the labels.
 	Labels map[string]string `json:"labels,omitempty"`
+	// MaintenancePolicy: Optional. Configure the maintenance policy for this
+	// instance.
+	MaintenancePolicy *MaintenancePolicy `json:"maintenancePolicy,omitempty"`
 	// Name: Output only. The name of this instance is in the form of
 	// projects/{project}/locations/{location}/instances/{instance}.
 	Name string `json:"name,omitempty"`
@@ -727,7 +692,7 @@ type Instance struct {
 	// Options: Map of additional options used to configure the behavior of Data
 	// Fusion instance.
 	Options map[string]string `json:"options,omitempty"`
-	// P4ServiceAccount: Output only. P4 service account for the customer project.
+	// P4ServiceAccount: Output only. Service agent for the customer project.
 	P4ServiceAccount string `json:"p4ServiceAccount,omitempty"`
 	// PatchRevision: Optional. Current patch revision of the Data Fusion.
 	PatchRevision string `json:"patchRevision,omitempty"`
@@ -1019,6 +984,54 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// MaintenancePolicy: Maintenance policy of the instance.
+type MaintenancePolicy struct {
+	// MaintenanceExclusionWindow: Optional. The maintenance exclusion window of
+	// the instance.
+	MaintenanceExclusionWindow *TimeWindow `json:"maintenanceExclusionWindow,omitempty"`
+	// MaintenanceWindow: Optional. The maintenance window of the instance.
+	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaintenanceExclusionWindow")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaintenanceExclusionWindow") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenancePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenancePolicy
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// MaintenanceWindow: Maintenance window of the instance.
+type MaintenanceWindow struct {
+	// RecurringTimeWindow: Required. The recurring time window of the maintenance
+	// window.
+	RecurringTimeWindow *RecurringTimeWindow `json:"recurringTimeWindow,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RecurringTimeWindow") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RecurringTimeWindow") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceWindow
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // Namespace: Represents the information of a namespace
 type Namespace struct {
 	// IamPolicy: IAM policy associated with this namespace.
@@ -1072,11 +1085,11 @@ type NetworkConfig struct {
 	// 192.168.0.0/22
 	IpAllocation string `json:"ipAllocation,omitempty"`
 	// Network: Optional. Name of the network in the customer project with which
-	// the Tenant Project will be peered for executing pipelines. This is required
-	// only when using connection type VPC peering. In case of shared VPC where the
-	// network resides in another host project the network should specified in the
-	// form of projects/{host-project-id}/global/networks/{network}. This is only
-	// required for connectivity type VPC_PEERING.
+	// the Tenant Project will be peered for executing pipelines. In case of shared
+	// VPC where the network resides in another host project the network should
+	// specified in the form of
+	// projects/{host-project-id}/global/networks/{network}. This is only required
+	// for connectivity type VPC_PEERING.
 	Network string `json:"network,omitempty"`
 	// PrivateServiceConnectConfig: Optional. Configuration for Private Service
 	// Connect. This is required only when using connection type
@@ -1186,46 +1199,6 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// PersistentDiskData: Persistent Disk service-specific Data. Contains
-// information that may not be appropriate for the generic DRZ Augmented View.
-// This currently includes LSV Colossus Roots and GCS Buckets.
-type PersistentDiskData struct {
-	// CfsRoots: Path to Colossus root for an LSV. NOTE: Unlike `cr_ti_guris` and
-	// `cr_ti_prefixes`, the field `cfs_roots` below does not need to be a GUri or
-	// GUri prefix. It can simply be any valid CFS or CFS2 Path. The DRZ KR8 SIG
-	// has more details overall, but generally the `cfs_roots` provided here should
-	// be scoped to an individual Persistent Disk. An example for a PD Disk with a
-	// disk ID 3277719120423414466, follows: * `cr_ti_guris` could be
-	// ‘/cfs2/pj/pd-cloud-prod’ as this is a valid GUri present in the DG KB
-	// and contains enough information to perform location monitoring and scope
-	// ownership of the Production Object. * `cfs_roots` would be:
-	// ‘/cfs2/pj/pd-cloud-staging/lsv000001234@/
-	// lsv/projects~773365403387~zones~2700~disks~3277719120423414466
-	// ~bank-blue-careful-3526-lsv00054DB1B7254BA3/’ as this allows us to
-	// enumerate the files on CFS2 that belong to an individual Disk.
-	CfsRoots []string `json:"cfsRoots,omitempty"`
-	// GcsBucketNames: The GCS Buckets that back this snapshot or image. This is
-	// required as `cr_ti_prefixes` and `cr_ti_guris` only accept TI resources.
-	// This should be the globally unique bucket name.
-	GcsBucketNames []string `json:"gcsBucketNames,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CfsRoots") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CfsRoots") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *PersistentDiskData) MarshalJSON() ([]byte, error) {
-	type NoMethod PersistentDiskData
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1362,6 +1335,41 @@ func (s *PrivateServiceConnectConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// RecurringTimeWindow: Represents an arbitrary window of time that recurs.
+type RecurringTimeWindow struct {
+	// Recurrence: Required. An RRULE with format RFC-5545
+	// (https://tools.ietf.org/html/rfc5545#section-3.8.5.3) for how this window
+	// reccurs. They go on for the span of time between the start and end time. The
+	// only supported FREQ value is "WEEKLY". To have something repeat every
+	// weekday, use: "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR". This specifies how
+	// frequently the window starts. To have a 9 am - 5 pm UTC-4 window every
+	// weekday, use something like: ``` start time = 2019-01-01T09:00:00-0400 end
+	// time = 2019-01-01T17:00:00-0400 recurrence =
+	// FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR ```
+	Recurrence string `json:"recurrence,omitempty"`
+	// Window: Required. The window representing the start and end time of
+	// recurrences. This field ignores the date components of the provided
+	// timestamps. Only the time of day and duration between start and end time are
+	// relevant.
+	Window *TimeWindow `json:"window,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Recurrence") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Recurrence") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecurringTimeWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod RecurringTimeWindow
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // RemoveIamPolicyRequest: Request message for RemoveIamPolicy method.
 type RemoveIamPolicyRequest struct {
 }
@@ -1375,31 +1383,6 @@ type RemoveIamPolicyResponse struct {
 // RestartInstanceRequest: Request message for restarting a Data Fusion
 // instance.
 type RestartInstanceRequest struct {
-}
-
-// ServiceData: This message defines service-specific data that certain service
-// teams must provide as part of the Data Residency Augmented View for a
-// resource. Next ID: 2
-type ServiceData struct {
-	// Pd: Auxiliary data for the persistent disk pipeline provided to provide the
-	// LSV Colossus Roots and GCS Buckets.
-	Pd *PersistentDiskData `json:"pd,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Pd") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Pd") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *ServiceData) MarshalJSON() ([]byte, error) {
-	type NoMethod ServiceData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -1514,6 +1497,34 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// TimeWindow: Represents an arbitrary window of time.
+type TimeWindow struct {
+	// EndTime: Required. The end time of the time window provided in RFC 3339
+	// (https://www.ietf.org/rfc/rfc3339.txt) format. The end time should take
+	// place after the start time. Example: "2024-01-02T12:04:06-06:00"
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: Required. The start time of the time window provided in RFC 3339
+	// (https://www.ietf.org/rfc/rfc3339.txt) format. Example:
+	// "2024-01-01T12:04:06-04:00"
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeWindow
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1690,14 +1701,6 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 // (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// IncludeUnrevealedLocations sets the optional parameter
-// "includeUnrevealedLocations": If true, the returned list will include
-// locations which are not yet revealed.
-func (c *ProjectsLocationsListCall) IncludeUnrevealedLocations(includeUnrevealedLocations bool) *ProjectsLocationsListCall {
-	c.urlParams_.Set("includeUnrevealedLocations", fmt.Sprint(includeUnrevealedLocations))
 	return c
 }
 

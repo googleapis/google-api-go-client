@@ -1497,6 +1497,96 @@ func (s *GoogleFirestoreAdminV1BackupSchedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata: Metadata for
+// google.longrunning.Operation results from
+// FirestoreAdmin.BulkDeleteDocuments.
+type GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata struct {
+	// CollectionIds: The ids of the collection groups that are being deleted.
+	CollectionIds []string `json:"collectionIds,omitempty"`
+	// EndTime: The time this operation completed. Will be unset if operation still
+	// in progress.
+	EndTime string `json:"endTime,omitempty"`
+	// NamespaceIds: Which namespace ids are being deleted.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
+	// OperationState: The state of the operation.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
+	OperationState string `json:"operationState,omitempty"`
+	// ProgressBytes: The progress, in bytes, of this operation.
+	ProgressBytes *GoogleFirestoreAdminV1Progress `json:"progressBytes,omitempty"`
+	// ProgressDocuments: The progress, in documents, of this operation.
+	ProgressDocuments *GoogleFirestoreAdminV1Progress `json:"progressDocuments,omitempty"`
+	// SnapshotTime: The timestamp that corresponds to the version of the database
+	// that is being read to get the list of documents to delete. This time can
+	// also be used as the timestamp of PITR in case of disaster recovery (subject
+	// to PITR window limit).
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+	// StartTime: The time this operation started.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CollectionIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1BulkDeleteDocumentsRequest: The request for
+// FirestoreAdmin.BulkDeleteDocuments. When both collection_ids and
+// namespace_ids are set, only documents satisfying both conditions will be
+// deleted. Requests with namespace_ids and collection_ids both empty will be
+// rejected. Please use FirestoreAdmin.DeleteDatabase instead.
+type GoogleFirestoreAdminV1BulkDeleteDocumentsRequest struct {
+	// CollectionIds: Optional. IDs of the collection groups to delete. Unspecified
+	// means all collection groups. Each collection group in this list must be
+	// unique.
+	CollectionIds []string `json:"collectionIds,omitempty"`
+	// NamespaceIds: Optional. Namespaces to delete. An empty list means all
+	// namespaces. This is the recommended usage for databases that don't use
+	// namespaces. An empty string element represents the default namespace. This
+	// should be used if the database has data in non-default namespaces, but
+	// doesn't want to delete from them. Each namespace in this list must be
+	// unique.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CollectionIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1BulkDeleteDocumentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1BulkDeleteDocumentsRequest
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1CmekConfig: The CMEK (Customer Managed Encryption Key)
 // configuration for a Firestore database. If not present, the database is
 // secured by the default Google encryption key.
@@ -1654,8 +1744,7 @@ type GoogleFirestoreAdminV1Database struct {
 	// information about how to choose.
 	//
 	// Possible values:
-	//   "DATABASE_TYPE_UNSPECIFIED" - The default value. This value is used if the
-	// database type is omitted.
+	//   "DATABASE_TYPE_UNSPECIFIED" - Not used.
 	//   "FIRESTORE_NATIVE" - Firestore Native Mode
 	//   "DATASTORE_MODE" - Firestore in Datastore Mode.
 	Type string `json:"type,omitempty"`
@@ -1689,34 +1778,6 @@ type GoogleFirestoreAdminV1Database struct {
 
 func (s *GoogleFirestoreAdminV1Database) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1Database
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleFirestoreAdminV1DatabaseSnapshot: A consistent snapshot of a database
-// at a specific point in time.
-type GoogleFirestoreAdminV1DatabaseSnapshot struct {
-	// Database: Required. A name of the form
-	// `projects/{project_id}/databases/{database_id}`
-	Database string `json:"database,omitempty"`
-	// SnapshotTime: Required. The timestamp at which the database snapshot is
-	// taken. The requested timestamp must be a whole minute within the PITR
-	// window.
-	SnapshotTime string `json:"snapshotTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Database") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Database") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleFirestoreAdminV1DatabaseSnapshot) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirestoreAdminV1DatabaseSnapshot
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2537,10 +2598,6 @@ type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
 	// /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database id is also
 	// valid.
 	DatabaseId string `json:"databaseId,omitempty"`
-	// DatabaseSnapshot: Database snapshot to restore from. The source database
-	// must exist and have enabled PITR. The restored database will be created in
-	// the same location as the source database.
-	DatabaseSnapshot *GoogleFirestoreAdminV1DatabaseSnapshot `json:"databaseSnapshot,omitempty"`
 	// KmsKeyName: Use Customer Managed Encryption Keys (CMEK) for encryption. Only
 	// keys in the same location as this database are allowed to be used for
 	// encryption. For Firestore's nam5 multi-region, this corresponds to Cloud KMS
@@ -4142,6 +4199,114 @@ type WriteResult struct {
 func (s *WriteResult) MarshalJSON() ([]byte, error) {
 	type NoMethod WriteResult
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsDatabasesBulkDeleteDocumentsCall struct {
+	s                                                *Service
+	name                                             string
+	googlefirestoreadminv1bulkdeletedocumentsrequest *GoogleFirestoreAdminV1BulkDeleteDocumentsRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// BulkDeleteDocuments: Bulk deletes a subset of documents from Google Cloud
+// Firestore. Documents created or updated after the underlying system starts
+// to process the request will not be deleted. The bulk delete occurs in the
+// background and its progress can be monitored and managed via the Operation
+// resource that is created. For more details on bulk delete behavior, refer
+// to: https://cloud.google.com/firestore/docs/manage-data/bulk-delete
+//
+//   - name: Database to operate. Should be of the form:
+//     `projects/{project_id}/databases/{database_id}`.
+func (r *ProjectsDatabasesService) BulkDeleteDocuments(name string, googlefirestoreadminv1bulkdeletedocumentsrequest *GoogleFirestoreAdminV1BulkDeleteDocumentsRequest) *ProjectsDatabasesBulkDeleteDocumentsCall {
+	c := &ProjectsDatabasesBulkDeleteDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlefirestoreadminv1bulkdeletedocumentsrequest = googlefirestoreadminv1bulkdeletedocumentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsDatabasesBulkDeleteDocumentsCall) Fields(s ...googleapi.Field) *ProjectsDatabasesBulkDeleteDocumentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsDatabasesBulkDeleteDocumentsCall) Context(ctx context.Context) *ProjectsDatabasesBulkDeleteDocumentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsDatabasesBulkDeleteDocumentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesBulkDeleteDocumentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1bulkdeletedocumentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:bulkDeleteDocuments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.bulkDeleteDocuments" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDatabasesBulkDeleteDocumentsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsDatabasesCreateCall struct {

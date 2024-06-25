@@ -1797,10 +1797,11 @@ func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ManagedConfiguration: A managed configuration resource contains the set of
-// managed properties defined by the app developer in the app's managed
-// configurations schema, as well as any configuration variables defined for
-// the user.
+// ManagedConfiguration:  *Deprecated:* New integrations cannot use this method
+// and can refer to our new recommendations. A managed configuration resource
+// contains the set of managed properties defined by the app developer in the
+// app's managed configurations schema, as well as any configuration variables
+// defined for the user.
 type ManagedConfiguration struct {
 	// ConfigurationVariables: Contains the ID of the managed configuration profile
 	// and the set of configuration variables (if any) defined for the user.
@@ -3099,10 +3100,7 @@ func (s *StoreLayoutPagesListResponse) MarshalJSON() ([]byte, error) {
 
 // StorePage: Definition of a managed Google Play store page, made of a
 // localized name and links to other pages. A page also contains clusters
-// defined as a subcollection. *Deprecated* The managed Google Play Store
-// homepage shows all apps listed in the Devices policy. If IT admins want to
-// customize the homepage layout, they can organize apps into collections in
-// the managed Google Play iframe.
+// defined as a subcollection.
 type StorePage struct {
 	// Id: Unique ID of this page. Assigned by the server. Immutable once assigned.
 	Id string `json:"id,omitempty"`

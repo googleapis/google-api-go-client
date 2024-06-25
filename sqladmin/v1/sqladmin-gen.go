@@ -2766,29 +2766,32 @@ func (s *LocationPreference) MarshalJSON() ([]byte, error) {
 // MaintenanceWindow: Maintenance window. This specifies when a Cloud SQL
 // instance is restarted for system maintenance purposes.
 type MaintenanceWindow struct {
-	// Day: day of week (1-7), starting on Monday.
+	// Day: Day of week - `MONDAY`, `TUESDAY`, `WEDNESDAY`, `THURSDAY`, `FRIDAY`,
+	// `SATURDAY`, or `SUNDAY`. Specify in the UTC time zone. Returned in output as
+	// an integer, 1 to 7, where `1` equals Monday.
 	Day int64 `json:"day,omitempty"`
-	// Hour: hour of day - 0 to 23.
+	// Hour: Hour of day - 0 to 23. Specify in the UTC time zone.
 	Hour int64 `json:"hour,omitempty"`
 	// Kind: This is always `sql#maintenanceWindow`.
 	Kind string `json:"kind,omitempty"`
-	// UpdateTrack: Maintenance timing setting: `canary` (Earlier) or `stable`
-	// (Later). Learn more
-	// (https://cloud.google.com/sql/docs/mysql/instance-settings#maintenance-timing-2ndgen).
+	// UpdateTrack: Maintenance timing settings: `canary`, `stable`, or `week5`.
+	// For more information, see About maintenance on Cloud SQL instances
+	// (https://cloud.google.com/sql/docs/mysql/maintenance).
 	//
 	// Possible values:
 	//   "SQL_UPDATE_TRACK_UNSPECIFIED" - This is an unknown maintenance timing
 	// preference.
-	//   "canary" - For instance update that requires a restart, this update track
-	// indicates your instance prefer to restart for new version early in
-	// maintenance window.
-	//   "stable" - For instance update that requires a restart, this update track
-	// indicates your instance prefer to let Cloud SQL choose the timing of restart
-	// (within its Maintenance window, if applicable).
-	//   "week5" - For instance update that requires a restart, this update track
-	// indicates your instance prefer to let Cloud SQL choose the timing of restart
-	// (within its Maintenance window, if applicable) to be at least 5 weeks after
-	// the notification.
+	//   "canary" - For an instance with a scheduled maintenance window, this
+	// maintenance timing indicates that the maintenance update is scheduled 7 to
+	// 14 days after the notification is sent out. Also referred to as `Week 1`
+	// (Console) and `preview` (gcloud CLI).
+	//   "stable" - For an instance with a scheduled maintenance window, this
+	// maintenance timing indicates that the maintenance update is scheduled 15 to
+	// 21 days after the notification is sent out. Also referred to as `Week 2`
+	// (Console) and `production` (gcloud CLI).
+	//   "week5" - For instance with a scheduled maintenance window, this
+	// maintenance timing indicates that the maintenance update is scheduled 35 to
+	// 42 days after the notification is sent out.
 	UpdateTrack string `json:"updateTrack,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

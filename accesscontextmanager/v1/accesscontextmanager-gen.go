@@ -263,7 +263,7 @@ type AccessLevel struct {
 	// Description: Description of the `AccessLevel` and its use. Does not affect
 	// behavior.
 	Description string `json:"description,omitempty"`
-	// Name: Resource name for the `AccessLevel`. Format:
+	// Name: Identifier. Resource name for the `AccessLevel`. Format:
 	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
 	// `access_level` component must begin with a letter, followed by alphanumeric
 	// characters or `_`. Its maximum length is 50 characters. After you create an
@@ -301,10 +301,10 @@ func (s *AccessLevel) MarshalJSON() ([]byte, error) {
 type AccessPolicy struct {
 	// Etag: Output only. An opaque identifier for the current version of the
 	// `AccessPolicy`. This will always be a strongly validated etag, meaning that
-	// two Access Polices will be identical if and only if their etags are
+	// two Access Policies will be identical if and only if their etags are
 	// identical. Clients should not expect this to be in any specific format.
 	Etag string `json:"etag,omitempty"`
-	// Name: Output only. Resource name of the `AccessPolicy`. Format:
+	// Name: Output only. Identifier. Resource name of the `AccessPolicy`. Format:
 	// `accessPolicies/{access_policy}`
 	Name string `json:"name,omitempty"`
 	// Parent: Required. The parent of this `AccessPolicy` in the Cloud Resource
@@ -515,7 +515,7 @@ type AuthorizedOrgsDesc struct {
 	//   "AUTHORIZATION_TYPE_UNSPECIFIED" - No authorization type specified.
 	//   "AUTHORIZATION_TYPE_TRUST" - This authorization relationship is "trust".
 	AuthorizationType string `json:"authorizationType,omitempty"`
-	// Name: Resource name for the `AuthorizedOrgsDesc`. Format:
+	// Name: Identifier. Resource name for the `AuthorizedOrgsDesc`. Format:
 	// `accessPolicies/{access_policy}/authorizedOrgsDescs/{authorized_orgs_desc}`.
 	// The `authorized_orgs_desc` component must begin with a letter, followed by
 	// alphanumeric characters or `_`. After you create an `AuthorizedOrgsDesc`,
@@ -1905,7 +1905,7 @@ type ServicePerimeter struct {
 	// Description: Description of the `ServicePerimeter` and its use. Does not
 	// affect behavior.
 	Description string `json:"description,omitempty"`
-	// Name: Resource name for the `ServicePerimeter`. Format:
+	// Name: Identifier. Resource name for the `ServicePerimeter`. Format:
 	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The
 	// `service_perimeter` component must begin with a letter, followed by
 	// alphanumeric characters or `_`. After you create a `ServicePerimeter`, you
@@ -2096,6 +2096,17 @@ type SupportedService struct {
 	// Name: The service name or address of the supported service, such as
 	// `service.googleapis.com`.
 	Name string `json:"name,omitempty"`
+	// ServiceSupportStage: The support stage of the service.
+	//
+	// Possible values:
+	//   "SERVICE_SUPPORT_STAGE_UNSPECIFIED" - Do not use this default value.
+	//   "GA" - GA features are open to all developers and are considered stable
+	// and fully qualified for production use.
+	//   "PREVIEW" - PREVIEW indicates a pre-release stage where the product is
+	// functionally complete but undergoing real-world testing.
+	//   "DEPRECATED" - Deprecated features are scheduled to be shut down and
+	// removed.
+	ServiceSupportStage string `json:"serviceSupportStage,omitempty"`
 	// SupportStage: The support stage of the service.
 	//
 	// Possible values:
@@ -2858,8 +2869,8 @@ type AccessPoliciesPatchCall struct {
 // has a successful status after the changes to the access policy propagate to
 // long-lasting storage.
 //
-//   - name: Output only. Resource name of the `AccessPolicy`. Format:
-//     `accessPolicies/{access_policy}`.
+//   - name: Output only. Identifier. Resource name of the `AccessPolicy`.
+//     Format: `accessPolicies/{access_policy}`.
 func (r *AccessPoliciesService) Patch(name string, accesspolicy *AccessPolicy) *AccessPoliciesPatchCall {
 	c := &AccessPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3681,7 +3692,7 @@ type AccessPoliciesAccessLevelsPatchCall struct {
 // long-lasting storage. If access levels contain errors, an error response is
 // returned for the first error encountered.
 //
-//   - name: Resource name for the `AccessLevel`. Format:
+//   - name: Identifier. Resource name for the `AccessLevel`. Format:
 //     `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
 //     `access_level` component must begin with a letter, followed by
 //     alphanumeric characters or `_`. Its maximum length is 50 characters. After
@@ -4473,7 +4484,7 @@ type AccessPoliciesAuthorizedOrgsDescsPatchCall struct {
 // list in `AuthorizedOrgsDesc` can be updated. The name, authorization_type,
 // asset_type and authorization_direction cannot be updated.
 //
-//   - name: Resource name for the `AuthorizedOrgsDesc`. Format:
+//   - name: Identifier. Resource name for the `AuthorizedOrgsDesc`. Format:
 //     `accessPolicies/{access_policy}/authorizedOrgsDescs/{authorized_orgs_desc}`
 //     . The `authorized_orgs_desc` component must begin with a letter, followed
 //     by alphanumeric characters or `_`. After you create an
@@ -5158,7 +5169,7 @@ type AccessPoliciesServicePerimetersPatchCall struct {
 // long-lasting storage. If a service perimeter contains errors, an error
 // response is returned for the first error encountered.
 //
-//   - name: Resource name for the `ServicePerimeter`. Format:
+//   - name: Identifier. Resource name for the `ServicePerimeter`. Format:
 //     `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`.
 //     The `service_perimeter` component must begin with a letter, followed by
 //     alphanumeric characters or `_`. After you create a `ServicePerimeter`, you

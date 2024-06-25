@@ -3787,10 +3787,6 @@
             "Student chose to \"unsubmit\" the assignment."
           ],
           "type": "string"
-        },
-        "userId": {
-          "description": "Identifier for the student that owns this submission. This field is part of an experimental API change and is populated only if sufficient scopes are granted.",
-          "type": "string"
         }
       },
       "type": "object"

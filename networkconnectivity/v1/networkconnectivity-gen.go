@@ -606,6 +606,12 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // ConsumerPscConfig: Allow the producer to specify which consumers can connect
 // to it.
 type ConsumerPscConfig struct {
+	// ConsumerInstanceProject: Required. The project ID or project number of the
+	// consumer project. This project is the one that the consumer uses to interact
+	// with the producer instance. From the perspective of a consumer who's created
+	// a producer instance, this is the project of the producer instance. Format:
+	// 'projects/' Eg. 'projects/consumer-project' or 'projects/1234'
+	ConsumerInstanceProject string `json:"consumerInstanceProject,omitempty"`
 	// DisableGlobalAccess: This is used in PSC consumer ForwardingRule to control
 	// whether the PSC endpoint can be accessed from another region.
 	DisableGlobalAccess bool `json:"disableGlobalAccess,omitempty"`
@@ -638,15 +644,15 @@ type ConsumerPscConfig struct {
 	//   "POLICY_LIMIT_REACHED" - Service Connection Policy limit reached for this
 	// network and Service Class
 	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisableGlobalAccess") to
+	// ForceSendFields is a list of field names (e.g. "ConsumerInstanceProject") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisableGlobalAccess") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConsumerInstanceProject") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1294,6 +1300,10 @@ func (s *InternalRange) MarshalJSON() ([]byte, error) {
 // prefixes to Google Cloud. Alternatively, in active/passive configurations,
 // all attachments should be capable of advertising the same prefixes.
 type LinkedInterconnectAttachments struct {
+	// IncludeImportRanges: Optional. IP ranges allowed to be included during
+	// import from hub.(does not control transit connectivity) The only allowed
+	// value for now is "ALL_IPV4_RANGES".
+	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
 	// supported locations
@@ -1304,15 +1314,15 @@ type LinkedInterconnectAttachments struct {
 	// VpcNetwork: Output only. The VPC network where these VLAN attachments are
 	// located.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// ForceSendFields is a list of field names (e.g. "IncludeImportRanges") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "IncludeImportRanges") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1327,6 +1337,10 @@ func (s *LinkedInterconnectAttachments) MarshalJSON() ([]byte, error) {
 // the same set of sites outside of Google Cloud, we recommend that you
 // associate those instances with the same spoke.
 type LinkedRouterApplianceInstances struct {
+	// IncludeImportRanges: Optional. IP ranges allowed to be included during
+	// import from hub.(does not control transit connectivity) The only allowed
+	// value for now is "ALL_IPV4_RANGES".
+	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// Instances: The list of router appliance instances.
 	Instances []*RouterApplianceInstance `json:"instances,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
@@ -1337,15 +1351,15 @@ type LinkedRouterApplianceInstances struct {
 	// VpcNetwork: Output only. The VPC network where these router appliance
 	// instances are located.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Instances") to
+	// ForceSendFields is a list of field names (e.g. "IncludeImportRanges") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Instances") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "IncludeImportRanges") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1388,6 +1402,10 @@ func (s *LinkedVpcNetwork) MarshalJSON() ([]byte, error) {
 // prefixes to Google Cloud. Alternatively, in a passive/active configuration,
 // all tunnels should be capable of advertising the same prefixes.
 type LinkedVpnTunnels struct {
+	// IncludeImportRanges: Optional. IP ranges allowed to be included during
+	// import from hub.(does not control transit connectivity) The only allowed
+	// value for now is "ALL_IPV4_RANGES".
+	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
 	// supported locations
@@ -1398,15 +1416,15 @@ type LinkedVpnTunnels struct {
 	// VpcNetwork: Output only. The VPC network where these VPN tunnels are
 	// located.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// ForceSendFields is a list of field names (e.g. "IncludeImportRanges") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "IncludeImportRanges") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2262,21 +2280,51 @@ func (s *ProducerPscConfig) MarshalJSON() ([]byte, error) {
 // PscConfig: Configuration used for Private Service Connect connections. Used
 // when Infrastructure is PSC.
 type PscConfig struct {
+	// AllowedGoogleProducersResourceHierarchyLevel: Optional. List of Projects,
+	// Folders, or Organizations from where the Producer instance can be within.
+	// For example, a network administrator can provide both 'organizations/foo'
+	// and 'projects/bar' as allowed_google_producers_resource_hierarchy_levels.
+	// This allowlists this network to connect with any Producer instance within
+	// the 'foo' organization or the 'bar' project. By default,
+	// allowed_google_producers_resource_hierarchy_level is empty. The format for
+	// each allowed_google_producers_resource_hierarchy_level is / where is one of
+	// 'projects', 'folders', or 'organizations' and is either the ID or the number
+	// of the resource type. Format for each
+	// allowed_google_producers_resource_hierarchy_level value: 'projects/' or
+	// 'folders/' or 'organizations/' Eg. [projects/my-project-id, projects/567,
+	// folders/891, organizations/123]
+	AllowedGoogleProducersResourceHierarchyLevel []string `json:"allowedGoogleProducersResourceHierarchyLevel,omitempty"`
 	// Limit: Optional. Max number of PSC connections for this policy.
 	Limit int64 `json:"limit,omitempty,string"`
+	// ProducerInstanceLocation: Required. ProducerInstanceLocation is used to
+	// specify which authorization mechanism to use to determine which projects the
+	// Producer instance can be within.
+	//
+	// Possible values:
+	//   "PRODUCER_INSTANCE_LOCATION_UNSPECIFIED" - Producer instance location is
+	// not specified. When this option is chosen, then the PSC connections created
+	// by this ServiceConnectionPolicy must be within the same project as the
+	// Producer instance. This is the default ProducerInstanceLocation value. To
+	// allow for PSC connections from this network to other networks, use the
+	// CUSTOM_RESOURCE_HIERARCHY_LEVELS option.
+	//   "CUSTOM_RESOURCE_HIERARCHY_LEVELS" - Producer instance must be within one
+	// of the values provided in allowed_google_producers_resource_hierarchy_level.
+	ProducerInstanceLocation string `json:"producerInstanceLocation,omitempty"`
 	// Subnetworks: The resource paths of subnetworks to use for IP address
 	// management. Example:
 	// projects/{projectNumOrId}/regions/{region}/subnetworks/{resourceId}.
 	Subnetworks []string `json:"subnetworks,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Limit") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedGoogleProducersResourceHierarchyLevel") to unconditionally include
+	// in API requests. By default, fields with empty or default values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Limit") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g.
+	// "AllowedGoogleProducersResourceHierarchyLevel") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

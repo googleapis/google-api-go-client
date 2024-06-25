@@ -2717,6 +2717,15 @@ type ExternalTransaction struct {
 	// TestPurchase: Output only. If set, this transaction was a test purchase.
 	// Google will not charge for a test transaction.
 	TestPurchase *ExternalTransactionTestPurchase `json:"testPurchase,omitempty"`
+	// TransactionProgramCode: Optional. The transaction program code, used to help
+	// determine service fee for apps partcipating in special partner programs.
+	// This field can not be used for external offers transactions. Developers
+	// participating in the Play Media Experience Program
+	// (https://play.google.com/console/about/programs/mediaprogram/) must provide
+	// the program code when reporting alternative billing external transactions.
+	// If you are an eligible developer, please contact your BDM for more
+	// information on how to set this field.
+	TransactionProgramCode int64 `json:"transactionProgramCode,omitempty"`
 	// TransactionState: Output only. The current state of the transaction.
 	//
 	// Possible values:

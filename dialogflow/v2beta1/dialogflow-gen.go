@@ -3551,15 +3551,13 @@ func (s *GoogleCloudDialogflowCxV3TestCaseResult) MarshalJSON() ([]byte, error) 
 type GoogleCloudDialogflowCxV3TestConfig struct {
 	// Flow: Flow name to start the test case with. Format:
 	// `projects//locations//agents//flows/`. Only one of `flow` and `page` should
-	// be set to indicate the starting point of the test case. If both are set,
-	// `page` takes precedence over `flow`. If neither is set, the test case will
-	// start with start page on the default start flow.
+	// be set to indicate the starting point of the test case. If neither is set,
+	// the test case will start with start page on the default start flow.
 	Flow string `json:"flow,omitempty"`
 	// Page: The page to start the test case with. Format:
 	// `projects//locations//agents//flows//pages/`. Only one of `flow` and `page`
-	// should be set to indicate the starting point of the test case. If both are
-	// set, `page` takes precedence over `flow`. If neither is set, the test case
-	// will start with start page on the default start flow.
+	// should be set to indicate the starting point of the test case. If neither is
+	// set, the test case will start with start page on the default start flow.
 	Page string `json:"page,omitempty"`
 	// TrackingParameters: Session parameters to be compared when calculating
 	// differences.
@@ -6988,15 +6986,13 @@ func (s *GoogleCloudDialogflowCxV3beta1TestCaseResult) MarshalJSON() ([]byte, er
 type GoogleCloudDialogflowCxV3beta1TestConfig struct {
 	// Flow: Flow name to start the test case with. Format:
 	// `projects//locations//agents//flows/`. Only one of `flow` and `page` should
-	// be set to indicate the starting point of the test case. If both are set,
-	// `page` takes precedence over `flow`. If neither is set, the test case will
-	// start with start page on the default start flow.
+	// be set to indicate the starting point of the test case. If neither is set,
+	// the test case will start with start page on the default start flow.
 	Flow string `json:"flow,omitempty"`
 	// Page: The page to start the test case with. Format:
 	// `projects//locations//agents//flows//pages/`. Only one of `flow` and `page`
-	// should be set to indicate the starting point of the test case. If both are
-	// set, `page` takes precedence over `flow`. If neither is set, the test case
-	// will start with start page on the default start flow.
+	// should be set to indicate the starting point of the test case. If neither is
+	// set, the test case will start with start page on the default start flow.
 	Page string `json:"page,omitempty"`
 	// TrackingParameters: Session parameters to be compared when calculating
 	// differences.
@@ -18275,6 +18271,58 @@ func (s *GoogleCloudDialogflowV2beta1SpeechContext) UnmarshalJSON(data []byte) e
 // GoogleCloudDialogflowV2beta1SpeechToTextConfig: Configures speech
 // transcription for ConversationProfile.
 type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
+	// AlternativeLanguageCodes: Defines the list of other language codes in
+	// addition to the one provided by the conversation profile that may be
+	// detected as the language code for the utterances over the conversation. See
+	// Language Support
+	// (https://cloud.google.com/dialogflow/docs/reference/language) for a list of
+	// the currently supported language codes.
+	AlternativeLanguageCodes []string `json:"alternativeLanguageCodes,omitempty"`
+	// AudioEncoding: Audio encoding of the audio content to process.
+	//
+	// Possible values:
+	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
+	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
+	// samples (Linear PCM).
+	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
+	// (Free Lossless Audio Codec) is the recommended encoding because it is
+	// lossless (therefore recognition is not compromised) and requires only about
+	// half the bandwidth of `LINEAR16`. `FLAC` stream encoding supports 16-bit and
+	// 24-bit samples, however, not all fields in `STREAMINFO` are supported.
+	//   "AUDIO_ENCODING_MULAW" - 8-bit samples that compand 14-bit audio samples
+	// using G.711 PCMU/mu-law.
+	//   "AUDIO_ENCODING_AMR" - Adaptive Multi-Rate Narrowband codec.
+	// `sample_rate_hertz` must be 8000.
+	//   "AUDIO_ENCODING_AMR_WB" - Adaptive Multi-Rate Wideband codec.
+	// `sample_rate_hertz` must be 16000.
+	//   "AUDIO_ENCODING_OGG_OPUS" - Opus encoded audio frames in Ogg container
+	// ([OggOpus](https://wiki.xiph.org/OggOpus)). `sample_rate_hertz` must be
+	// 16000.
+	//   "AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE" - Although the use of lossy
+	// encodings is not recommended, if a very low bitrate encoding is required,
+	// `OGG_OPUS` is highly preferred over Speex encoding. The
+	// [Speex](https://speex.org/) encoding supported by Dialogflow API has a
+	// header byte in each block, as in MIME type `audio/x-speex-with-header-byte`.
+	// It is a variant of the RTP Speex encoding defined in [RFC
+	// 5574](https://tools.ietf.org/html/rfc5574). The stream is a sequence of
+	// blocks, one block per RTP packet. Each block starts with a byte containing
+	// the length of the block, in bytes, followed by one or more frames of Speex
+	// data, padded to an integral number of bytes (octets) as specified in RFC
+	// 5574. In other words, each RTP header is replaced with a single byte
+	// containing the block length. Only Speex wideband is supported.
+	// `sample_rate_hertz` must be 16000.
+	AudioEncoding string `json:"audioEncoding,omitempty"`
+	// EnableWordInfo: If `true`, Dialogflow returns SpeechWordInfo in
+	// StreamingRecognitionResult with information about the recognized speech
+	// words, e.g. start and end time offsets. If false or unspecified, Speech
+	// doesn't return any word-level information.
+	EnableWordInfo bool `json:"enableWordInfo,omitempty"`
+	// LanguageCode: The language of the supplied audio. Dialogflow does not do
+	// translations. See Language Support
+	// (https://cloud.google.com/dialogflow/docs/reference/language) for a list of
+	// the currently supported language codes. Note that queries in the same
+	// session do not necessarily need to specify the same language.
+	LanguageCode string `json:"languageCode,omitempty"`
 	// Model: Which Speech model to select. Select the model best suited to your
 	// domain to get best results. If a model is not explicitly specified, then
 	// Dialogflow auto-selects a model based on other parameters in the
@@ -18290,6 +18338,10 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	// (https://cloud.google.com/dialogflow/cx/docs/concept/agent#settings-speech)
 	// for model selection.
 	Model string `json:"model,omitempty"`
+	// SampleRateHertz: Sample rate (in Hertz) of the audio content sent in the
+	// query. Refer to Cloud Speech API documentation
+	// (https://cloud.google.com/speech-to-text/docs/basics) for more details.
+	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 	// SpeechModelVariant: The speech model used in speech to text.
 	// `SPEECH_MODEL_VARIANT_UNSPECIFIED`, `USE_BEST_AVAILABLE` will be treated as
 	// `USE_ENHANCED`. It can be overridden in AnalyzeContentRequest and
@@ -18320,15 +18372,15 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	// UseTimeoutBasedEndpointing: Use timeout based endpointing, interpreting
 	// endpointer sensitivy as seconds of timeout value.
 	UseTimeoutBasedEndpointing bool `json:"useTimeoutBasedEndpointing,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Model") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AlternativeLanguageCodes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Model") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AlternativeLanguageCodes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

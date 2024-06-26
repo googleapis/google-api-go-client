@@ -1965,7 +1965,8 @@ type OrganizationsLocationsCustomersWorkloadsAccessApprovalRequestsListCall stru
 	header_      http.Header
 }
 
-// List: Lists access requests associated with a workload
+// List: Deprecated: Only returns access approval requests directly associated
+// with an assured workload folder.
 //
 //   - parent: Parent resource Format:
 //     `organizations/{organization}/locations/{location}/customers/{customer}/wor

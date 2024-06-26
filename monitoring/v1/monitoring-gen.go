@@ -1537,8 +1537,8 @@ type LogsPanel struct {
 	// log entries.
 	Filter string `json:"filter,omitempty"`
 	// ResourceNames: The names of logging resources to collect logs for. Currently
-	// only projects are supported. If empty, the widget will default to the host
-	// project.
+	// projects and storage views are supported. If empty, the widget will default
+	// to the host project.
 	ResourceNames []string `json:"resourceNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

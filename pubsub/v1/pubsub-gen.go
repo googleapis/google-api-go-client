@@ -270,6 +270,37 @@ func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// AnalyticsHubSubscriptionInfo: Information about an associated Analytics Hub
+// subscription
+// (https://cloud.google.com/bigquery/docs/analytics-hub-manage-subscriptions).
+type AnalyticsHubSubscriptionInfo struct {
+	// Listing: Optional. The name of the associated Analytics Hub listing
+	// resource. Pattern:
+	// "projects/{project}/locations/{location}/dataExchanges/{data_exchange}/listin
+	// gs/{listing}"
+	Listing string `json:"listing,omitempty"`
+	// Subscription: Optional. The name of the associated Analytics Hub
+	// subscription resource. Pattern:
+	// "projects/{project}/locations/{location}/subscriptions/{subscription}"
+	Subscription string `json:"subscription,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Listing") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Listing") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyticsHubSubscriptionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyticsHubSubscriptionInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // AvroConfig: Configuration for writing message data in Avro format. Message
 // payloads and metadata will be written to files as an Avro binary.
 type AvroConfig struct {
@@ -1783,6 +1814,10 @@ type Subscription struct {
 	// the push endpoint. If the subscriber never acknowledges the message, the
 	// Pub/Sub system will eventually redeliver the message.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
+	// AnalyticsHubSubscriptionInfo: Output only. Information about the associated
+	// Analytics Hub subscription. Only set if the subscritpion is created by
+	// Analytics Hub.
+	AnalyticsHubSubscriptionInfo *AnalyticsHubSubscriptionInfo `json:"analyticsHubSubscriptionInfo,omitempty"`
 	// BigqueryConfig: Optional. If delivery to BigQuery is used with this
 	// subscription, this field is used to configure it.
 	BigqueryConfig *BigQueryConfig `json:"bigqueryConfig,omitempty"`

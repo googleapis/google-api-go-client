@@ -3239,15 +3239,13 @@ func (s *GoogleCloudDialogflowCxV3TestCaseResult) MarshalJSON() ([]byte, error) 
 type GoogleCloudDialogflowCxV3TestConfig struct {
 	// Flow: Flow name to start the test case with. Format:
 	// `projects//locations//agents//flows/`. Only one of `flow` and `page` should
-	// be set to indicate the starting point of the test case. If both are set,
-	// `page` takes precedence over `flow`. If neither is set, the test case will
-	// start with start page on the default start flow.
+	// be set to indicate the starting point of the test case. If neither is set,
+	// the test case will start with start page on the default start flow.
 	Flow string `json:"flow,omitempty"`
 	// Page: The page to start the test case with. Format:
 	// `projects//locations//agents//flows//pages/`. Only one of `flow` and `page`
-	// should be set to indicate the starting point of the test case. If both are
-	// set, `page` takes precedence over `flow`. If neither is set, the test case
-	// will start with start page on the default start flow.
+	// should be set to indicate the starting point of the test case. If neither is
+	// set, the test case will start with start page on the default start flow.
 	Page string `json:"page,omitempty"`
 	// TrackingParameters: Session parameters to be compared when calculating
 	// differences.
@@ -11950,15 +11948,13 @@ func (s *GoogleCloudDialogflowCxV3beta1TestCaseResult) MarshalJSON() ([]byte, er
 type GoogleCloudDialogflowCxV3beta1TestConfig struct {
 	// Flow: Flow name to start the test case with. Format:
 	// `projects//locations//agents//flows/`. Only one of `flow` and `page` should
-	// be set to indicate the starting point of the test case. If both are set,
-	// `page` takes precedence over `flow`. If neither is set, the test case will
-	// start with start page on the default start flow.
+	// be set to indicate the starting point of the test case. If neither is set,
+	// the test case will start with start page on the default start flow.
 	Flow string `json:"flow,omitempty"`
 	// Page: The page to start the test case with. Format:
 	// `projects//locations//agents//flows//pages/`. Only one of `flow` and `page`
-	// should be set to indicate the starting point of the test case. If both are
-	// set, `page` takes precedence over `flow`. If neither is set, the test case
-	// will start with start page on the default start flow.
+	// should be set to indicate the starting point of the test case. If neither is
+	// set, the test case will start with start page on the default start flow.
 	Page string `json:"page,omitempty"`
 	// TrackingParameters: Session parameters to be compared when calculating
 	// differences.

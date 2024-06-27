@@ -3286,6 +3286,9 @@ type DiscoveryOccurrence struct {
 	LastScanTime string `json:"lastScanTime,omitempty"`
 	// SbomStatus: The status of an SBOM generation.
 	SbomStatus *SBOMStatus `json:"sbomStatus,omitempty"`
+	// VulnerabilityAttestation: The status of an vulnerability attestation
+	// generation.
+	VulnerabilityAttestation *VulnerabilityAttestation `json:"vulnerabilityAttestation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisCompleted") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6091,6 +6094,39 @@ type VulnerabilityAssessmentNote struct {
 
 func (s *VulnerabilityAssessmentNote) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityAssessmentNote
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// VulnerabilityAttestation: The status of an vulnerability attestation
+// generation.
+type VulnerabilityAttestation struct {
+	// Error: If failure, the error reason for why the attestation generation
+	// failed.
+	Error string `json:"error,omitempty"`
+	// LastAttemptTime: The last time we attempted to generate an attestation.
+	LastAttemptTime string `json:"lastAttemptTime,omitempty"`
+	// State: The success/failure state of the latest attestation attempt.
+	//
+	// Possible values:
+	//   "VULNERABILITY_ATTESTATION_STATE_UNSPECIFIED" - Default unknown state.
+	//   "SUCCESS" - Attestation was successfully generated and stored.
+	//   "FAILURE" - Attestation was unsuccessfully generated and stored.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *VulnerabilityAttestation) MarshalJSON() ([]byte, error) {
+	type NoMethod VulnerabilityAttestation
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

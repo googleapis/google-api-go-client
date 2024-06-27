@@ -706,6 +706,11 @@ type LinkedResource struct {
 	// LinkedDataset: Output only. Name of the linked dataset, e.g.
 	// projects/subscriberproject/datasets/linked_dataset
 	LinkedDataset string `json:"linkedDataset,omitempty"`
+	// LinkedPubsubSubscription: Output only. Name of the Pub/Sub subscription,
+	// e.g. projects/subscriberproject/subscriptions/subscriptions/sub_id
+	LinkedPubsubSubscription string `json:"linkedPubsubSubscription,omitempty"`
+	// Listing: Output only. Listing for which linked resource is created.
+	Listing string `json:"listing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LinkedDataset") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -874,7 +879,8 @@ type Listing struct {
 	// bytes.
 	RequestAccess string `json:"requestAccess,omitempty"`
 	// RestrictedExportConfig: Optional. If set, restricted export configuration
-	// will be propagated and enforced on the linked dataset.
+	// will be propagated and enforced on the linked dataset. This is a required
+	// field for data clean room exchanges.
 	RestrictedExportConfig *RestrictedExportConfig `json:"restrictedExportConfig,omitempty"`
 	// State: Output only. Current state of the listing.
 	//
@@ -1212,6 +1218,9 @@ type Subscription struct {
 	// projects/123/datasets/my_dataset For listing-level subscriptions, this is a
 	// map of size 1. Only contains values if state == STATE_ACTIVE.
 	LinkedDatasetMap map[string]LinkedResource `json:"linkedDatasetMap,omitempty"`
+	// LinkedResources: Output only. Linked resources created in the subscription.
+	// Only contains values if state = STATE_ACTIVE.
+	LinkedResources []*LinkedResource `json:"linkedResources,omitempty"`
 	// Listing: Output only. Resource name of the source Listing. e.g.
 	// projects/123/locations/US/dataExchanges/456/listings/789
 	Listing string `json:"listing,omitempty"`
@@ -1224,6 +1233,13 @@ type Subscription struct {
 	// OrganizationId: Output only. Organization of the project this subscription
 	// belongs to.
 	OrganizationId string `json:"organizationId,omitempty"`
+	// ResourceType: Output only. Listing shared asset type.
+	//
+	// Possible values:
+	//   "SHARED_RESOURCE_TYPE_UNSPECIFIED" - Not specified.
+	//   "BIGQUERY_DATASET" - BigQuery Dataset Asset.
+	//   "PUBSUB_TOPIC" - Pub/Sub Topic Asset.
+	ResourceType string `json:"resourceType,omitempty"`
 	// State: Output only. Current state of the subscription.
 	//
 	// Possible values:

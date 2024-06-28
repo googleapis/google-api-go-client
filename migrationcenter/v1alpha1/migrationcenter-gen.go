@@ -1325,6 +1325,9 @@ type CloudSqlForSqlServerShape struct {
 	LogicalCoreCount int64 `json:"logicalCoreCount,omitempty"`
 	// MemoryMb: Output only. Predicted amount of memory in MiB.
 	MemoryMb int64 `json:"memoryMb,omitempty"`
+	// SmtEnabled: Output only. Whether simultaneous multithreading is enabled (see
+	// https://cloud.google.com/sql/docs/sqlserver/create-instance#smt-create-instance).
+	SmtEnabled bool `json:"smtEnabled,omitempty"`
 	// Storage: Output only. Predicted storage shape.
 	Storage *ComputeStorageDescriptor `json:"storage,omitempty"`
 	// Version: Output only. Microsoft SQL Server version to be used on the Cloud
@@ -1412,10 +1415,9 @@ func (s *ComputeEngineMigrationTarget) MarshalJSON() ([]byte, error) {
 // ComputeEnginePreferences: The user preferences relating to Compute Engine
 // target platform.
 type ComputeEnginePreferences struct {
-	// LicenseType: If os_pricing_preferences is specified, it overrides this
-	// field. License type to consider when calculating costs for virtual machine
-	// insights and recommendations. If unspecified, costs are calculated based on
-	// the default licensing plan.
+	// LicenseType: License type to consider when calculating costs for operating
+	// systems. If unspecified, costs are calculated based on the default licensing
+	// plan. If os_pricing_preferences is specified, it overrides this field.
 	//
 	// Possible values:
 	//   "LICENSE_TYPE_UNSPECIFIED" - Unspecified (default value).
@@ -1427,6 +1429,18 @@ type ComputeEnginePreferences struct {
 	// MachinePreferences: Preferences concerning the machine types to consider on
 	// Compute Engine.
 	MachinePreferences *MachinePreferences `json:"machinePreferences,omitempty"`
+	// Multithreading: Optional. Preferences for multithreading support.
+	//
+	// Possible values:
+	//   "MULTITHREADING_UNSPECIFIED" - Same as
+	// MULTITHREADING_DISABLED_WITH_COMPENSATION.
+	//   "MULTITHREADING_DISABLED" - Disable simultaneous multithreading if doing
+	// so is advantageous.
+	//   "MULTITHREADING_ENABLED" - Always enable simultaneous multithreading.
+	//   "MULTITHREADING_DISABLED_WITH_COMPENSATION" - Disable simultaneous
+	// multithreading and increase number of VCPUs to compensate, if doing so is
+	// advantageous.
+	Multithreading string `json:"multithreading,omitempty"`
 	// OsPricingPreferences: Optional. Pricing options for OS images.
 	OsPricingPreferences *OperatingSystemPricingPreferences `json:"osPricingPreferences,omitempty"`
 	// PersistentDiskType: Persistent disk type to use. If unspecified (default),
@@ -1470,6 +1484,9 @@ type ComputeEngineShapeDescriptor struct {
 	PhysicalCoreCount int64 `json:"physicalCoreCount,omitempty"`
 	// Series: Output only. Compute Engine machine series.
 	Series string `json:"series,omitempty"`
+	// SmtEnabled: Output only. Whether simultaneous multithreading is enabled (see
+	// https://cloud.google.com/compute/docs/instances/set-threads-per-core).
+	SmtEnabled bool `json:"smtEnabled,omitempty"`
 	// Storage: Output only. Compute Engine storage. Never empty.
 	Storage []*ComputeStorageDescriptor `json:"storage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LogicalCoreCount") to
@@ -2171,6 +2188,9 @@ type DatabasePreferencesCloudSqlSqlServer struct {
 	//   "MULTITHREADING_DISABLED" - Disable simultaneous multithreading if doing
 	// so is lower cost.
 	//   "MULTITHREADING_ENABLED" - Always enable simultaneous multithreading.
+	//   "MULTITHREADING_DISABLED_WITH_COMPENSATION" - Disable simultaneous
+	// multithreading and increase number of VCPUs to compensate, if doing so is
+	// lower cost.
 	Multithreading string `json:"multithreading,omitempty"`
 	// VersionType: Optional. Edition of Microsoft SQL version that is used on a
 	// Cloud SQL for SQL server instance.
@@ -5523,8 +5543,7 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// preference set. Only present for databases.
 	MonthlyCostDatabaseBackup *Money `json:"monthlyCostDatabaseBackup,omitempty"`
 	// MonthlyCostDatabaseLicensing: Output only. Database licensing monthly cost
-	// for this preference set. For virtual machines denotes the cost of licenses
-	// for hosted databases.
+	// for this preference set. Only present for databases.
 	MonthlyCostDatabaseLicensing *Money `json:"monthlyCostDatabaseLicensing,omitempty"`
 	// MonthlyCostNetworkEgress: Network Egress monthly cost for this preference
 	// set. Only present for virtual machines.
@@ -6722,7 +6741,8 @@ func (s *VirtualMachineArchitectureDetails) MarshalJSON() ([]byte, error) {
 
 // VirtualMachineDetails: Details of a VirtualMachine.
 type VirtualMachineDetails struct {
-	// CoreCount: Number of CPU cores in the VirtualMachine. Must be non-negative.
+	// CoreCount: Number of logical CPU cores in the VirtualMachine. Must be
+	// non-negative.
 	CoreCount int64 `json:"coreCount,omitempty"`
 	// CreateTime: VM creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`

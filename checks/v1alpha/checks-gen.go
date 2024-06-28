@@ -597,6 +597,8 @@ type GoogleChecksReportV1alphaCheck struct {
 	// critical issues.
 	//   "PRIVACY_POLICY_DATA_TYPE_SENSITIVE_INFO" - Checks if the Sensitive
 	// Information data type declaration matches usage.
+	//   "DATA_MONITORING_PII_LOGCAT_LEAK" - Checks if there were any PII leaked to
+	// device logs.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Citations") to
 	// unconditionally include in API requests. By default, fields with empty or

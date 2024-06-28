@@ -1270,17 +1270,20 @@ func (s *DnsZone) MarshalJSON() ([]byte, error) {
 // google/foo/tutorial.md ==) subpages: - name: Java content: (== include
 // google/foo/tutorial_java.md ==) rules: - selector:
 // google.calendar.Calendar.Get description: > ... - selector:
-// google.calendar.Calendar.Put description: > ... Documentation is provided in
-// markdown syntax. In addition to standard markdown features, definition
-// lists, tables and fenced code blocks are supported. Section headers can be
-// provided and are interpreted relative to the section nesting of the context
-// where a documentation fragment is embedded. Documentation from the IDL is
-// merged with documentation defined via the config at normalization time,
-// where documentation provided by config rules overrides IDL provided. A
-// number of constructs specific to the API platform are supported in
-// documentation text. In order to reference a proto element, the following
-// notation can be used: [fully.qualified.proto.name][] To override the display
-// text used for the link, this can be used: [display
+// google.calendar.Calendar.Put description: > ... code_snippet_rules: -
+// selector: google.calendar.Calendar.Delete code_snippets: - includes: -
+// github_include: region_tag: calendar_delete code_language: JAVA account:
+// GoogleCloudPlatform project: java-docs-samples file: calendar/delete.java
+// Documentation is provided in markdown syntax. In addition to standard
+// markdown features, definition lists, tables and fenced code blocks are
+// supported. Section headers can be provided and are interpreted relative to
+// the section nesting of the context where a documentation fragment is
+// embedded. Documentation from the IDL is merged with documentation defined
+// via the config at normalization time, where documentation provided by config
+// rules overrides IDL provided. A number of constructs specific to the API
+// platform are supported in documentation text. In order to reference a proto
+// element, the following notation can be used: [fully.qualified.proto.name][]
+// To override the display text used for the link, this can be used: [display
 // text][fully.qualified.proto.name] Text can be excluded from doc using the
 // following notation: (-- internal comment --) A few directives are available
 // in documentation. Note that directives must appear on a single line to be

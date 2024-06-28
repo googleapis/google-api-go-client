@@ -6294,7 +6294,10 @@ type TextModuleData struct {
 	// characters to ensure full string is displayed on smaller screens.
 	Header string `json:"header,omitempty"`
 	// Id: The ID associated with a text module. This field is here to enable ease
-	// of management of text modules.
+	// of management of text modules and referencing them in template overrides.
+	// The ID should only include alphanumeric characters, '_', or '-'. It can not
+	// include dots, as dots are used to separate fields within
+	// FieldReference.fieldPaths in template overrides.
 	Id string `json:"id,omitempty"`
 	// LocalizedBody: Translated strings for the body. Recommended maximum length
 	// is 500 characters to ensure full string is displayed on smaller screens.

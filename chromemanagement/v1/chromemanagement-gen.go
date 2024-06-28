@@ -2982,6 +2982,8 @@ type GoogleChromeManagementV1TelemetryAppLaunchEvent struct {
 	// welcome tour.
 	//   "APPLICATION_LAUNCH_SOURCE_FOCUS_MODE" - Applicationed launched from focus
 	// panel.
+	//   "APPLICATION_LAUNCH_SOURCE_SPARKY" - Application launched from
+	// experimental feature Sparky.
 	AppLaunchSource string `json:"appLaunchSource,omitempty"`
 	// AppType: Type of app.
 	//

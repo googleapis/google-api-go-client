@@ -9211,6 +9211,10 @@ type IdFilter struct {
 	// AdGroupIds: YouTube Ad Groups to download by ID. All IDs must belong to the
 	// same Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	AdGroupIds googleapi.Int64s `json:"adGroupIds,omitempty"`
+	// AdGroupQaIds: Optional. YouTube Ad Groups QA to download by ID. All IDs must
+	// belong to the same Advertiser or Partner specified in
+	// CreateSdfDownloadTaskRequest.
+	AdGroupQaIds googleapi.Int64s `json:"adGroupQaIds,omitempty"`
 	// CampaignIds: Campaigns to download by ID. All IDs must belong to the same
 	// Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	CampaignIds googleapi.Int64s `json:"campaignIds,omitempty"`
@@ -9220,6 +9224,10 @@ type IdFilter struct {
 	// LineItemIds: Line Items to download by ID. All IDs must belong to the same
 	// Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	LineItemIds googleapi.Int64s `json:"lineItemIds,omitempty"`
+	// LineItemQaIds: Optional. Line Items QA to download by ID. All IDs must
+	// belong to the same Advertiser or Partner specified in
+	// CreateSdfDownloadTaskRequest.
+	LineItemQaIds googleapi.Int64s `json:"lineItemQaIds,omitempty"`
 	// MediaProductIds: Media Products to download by ID. All IDs must belong to
 	// the same Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	MediaProductIds googleapi.Int64s `json:"mediaProductIds,omitempty"`
@@ -12743,6 +12751,8 @@ type ParentEntityFilter struct {
 	//   "FILE_TYPE_LINE_ITEM" - Line Item.
 	//   "FILE_TYPE_AD_GROUP" - YouTube Ad Group.
 	//   "FILE_TYPE_AD" - YouTube Ad.
+	//   "FILE_TYPE_LINE_ITEM_QA" - Line Item QA.
+	//   "FILE_TYPE_AD_GROUP_QA" - YouTube Ad Group QA.
 	FileType []string `json:"fileType,omitempty"`
 	// FilterIds: The IDs of the specified filter type. This is used to filter
 	// entities to fetch. If filter type is not `FILTER_TYPE_NONE`, at least one ID

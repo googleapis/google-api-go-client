@@ -2777,7 +2777,7 @@ func (s *MachineArchitectureDetails) MarshalJSON() ([]byte, error) {
 type MachineDetails struct {
 	// Architecture: Architecture details (vendor, CPU architecture).
 	Architecture *MachineArchitectureDetails `json:"architecture,omitempty"`
-	// CoreCount: Number of CPU cores in the machine. Must be non-negative.
+	// CoreCount: Number of logical CPU cores in the machine. Must be non-negative.
 	CoreCount int64 `json:"coreCount,omitempty"`
 	// CreateTime: Machine creation time.
 	CreateTime string `json:"createTime,omitempty"`

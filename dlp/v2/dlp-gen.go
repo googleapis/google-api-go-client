@@ -241,6 +241,7 @@ func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService
 	rs.DeidentifyTemplates = NewOrganizationsLocationsDeidentifyTemplatesService(s)
 	rs.DiscoveryConfigs = NewOrganizationsLocationsDiscoveryConfigsService(s)
 	rs.DlpJobs = NewOrganizationsLocationsDlpJobsService(s)
+	rs.FileStoreDataProfiles = NewOrganizationsLocationsFileStoreDataProfilesService(s)
 	rs.InspectTemplates = NewOrganizationsLocationsInspectTemplatesService(s)
 	rs.JobTriggers = NewOrganizationsLocationsJobTriggersService(s)
 	rs.ProjectDataProfiles = NewOrganizationsLocationsProjectDataProfilesService(s)
@@ -261,6 +262,8 @@ type OrganizationsLocationsService struct {
 	DiscoveryConfigs *OrganizationsLocationsDiscoveryConfigsService
 
 	DlpJobs *OrganizationsLocationsDlpJobsService
+
+	FileStoreDataProfiles *OrganizationsLocationsFileStoreDataProfilesService
 
 	InspectTemplates *OrganizationsLocationsInspectTemplatesService
 
@@ -315,6 +318,15 @@ func NewOrganizationsLocationsDlpJobsService(s *Service) *OrganizationsLocations
 }
 
 type OrganizationsLocationsDlpJobsService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsFileStoreDataProfilesService(s *Service) *OrganizationsLocationsFileStoreDataProfilesService {
+	rs := &OrganizationsLocationsFileStoreDataProfilesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsFileStoreDataProfilesService struct {
 	s *Service
 }
 
@@ -467,6 +479,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.DeidentifyTemplates = NewProjectsLocationsDeidentifyTemplatesService(s)
 	rs.DiscoveryConfigs = NewProjectsLocationsDiscoveryConfigsService(s)
 	rs.DlpJobs = NewProjectsLocationsDlpJobsService(s)
+	rs.FileStoreDataProfiles = NewProjectsLocationsFileStoreDataProfilesService(s)
 	rs.Image = NewProjectsLocationsImageService(s)
 	rs.InspectTemplates = NewProjectsLocationsInspectTemplatesService(s)
 	rs.JobTriggers = NewProjectsLocationsJobTriggersService(s)
@@ -490,6 +503,8 @@ type ProjectsLocationsService struct {
 	DiscoveryConfigs *ProjectsLocationsDiscoveryConfigsService
 
 	DlpJobs *ProjectsLocationsDlpJobsService
+
+	FileStoreDataProfiles *ProjectsLocationsFileStoreDataProfilesService
 
 	Image *ProjectsLocationsImageService
 
@@ -555,6 +570,15 @@ func NewProjectsLocationsDlpJobsService(s *Service) *ProjectsLocationsDlpJobsSer
 }
 
 type ProjectsLocationsDlpJobsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsFileStoreDataProfilesService(s *Service) *ProjectsLocationsFileStoreDataProfilesService {
+	rs := &ProjectsLocationsFileStoreDataProfilesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsFileStoreDataProfilesService struct {
 	s *Service
 }
 
@@ -1176,6 +1200,9 @@ type GooglePrivacyDlpV2ByteContentItem struct {
 	//   "AVRO" - avro
 	//   "CSV" - csv
 	//   "TSV" - tsv
+	//   "AUDIO" - Audio file types. Only used for profiling.
+	//   "VIDEO" - Video file types. Only used for profiling.
+	//   "EXECUTABLE" - Executable file types. Only used for profiling.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2592,6 +2619,8 @@ func (s *GooglePrivacyDlpV2DataProfileAction) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2DataProfileBigQueryRowSchema struct {
 	// ColumnProfile: Column data profile column
 	ColumnProfile *GooglePrivacyDlpV2ColumnDataProfile `json:"columnProfile,omitempty"`
+	// FileStoreProfile: File store data profile column.
+	FileStoreProfile *GooglePrivacyDlpV2FileStoreDataProfile `json:"fileStoreProfile,omitempty"`
 	// TableProfile: Table data profile column
 	TableProfile *GooglePrivacyDlpV2TableDataProfile `json:"tableProfile,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ColumnProfile") to
@@ -2756,6 +2785,10 @@ type GooglePrivacyDlpV2DataProfilePubSubMessage struct {
 	//   "SCORE_INCREASED" - Table data risk score or sensitivity score increased.
 	//   "ERROR_CHANGED" - A user (non-internal) error occurred.
 	Event string `json:"event,omitempty"`
+	// FileStoreProfile: If `DetailLevel` is `FILE_STORE_PROFILE` this will be
+	// fully populated. Otherwise, if `DetailLevel` is `RESOURCE_NAME`, then only
+	// `name` and `file_store_path` will be populated.
+	FileStoreProfile *GooglePrivacyDlpV2FileStoreDataProfile `json:"fileStoreProfile,omitempty"`
 	// Profile: If `DetailLevel` is `TABLE_PROFILE` this will be fully populated.
 	// Otherwise, if `DetailLevel` is `RESOURCE_NAME`, then only `name` and
 	// `full_resource` will be populated.
@@ -2788,6 +2821,7 @@ type GooglePrivacyDlpV2DataRiskLevel struct {
 	//   "RISK_LOW" - Low risk - Lower indication of sensitive data that appears to
 	// have additional access restrictions in place or no indication of sensitive
 	// data found.
+	//   "RISK_UNKNOWN" - Unable to determine risk.
 	//   "RISK_MODERATE" - Medium risk - Sensitive data may be present but
 	// additional access or fine grain access restrictions appear to be present.
 	// Consider limiting access even further or transform data to mask.
@@ -4172,6 +4206,15 @@ func (s *GooglePrivacyDlpV2EntityId) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2Error struct {
 	// Details: Detailed error codes and messages.
 	Details *GoogleRpcStatus `json:"details,omitempty"`
+	// ExtraInfo: Additional information about the error.
+	//
+	// Possible values:
+	//   "ERROR_INFO_UNSPECIFIED" - Unused.
+	//   "IMAGE_SCAN_UNAVAILABLE_IN_REGION" - Image scan is not available in the
+	// region.
+	//   "FILE_STORE_CLUSTER_UNSUPPORTED" - File store cluster is not supported for
+	// profile generation.
+	ExtraInfo string `json:"extraInfo,omitempty"`
 	// Timestamps: The times the error occurred. List includes the oldest timestamp
 	// and the last 9 timestamps.
 	Timestamps []string `json:"timestamps,omitempty"`
@@ -4421,6 +4464,107 @@ func (s *GooglePrivacyDlpV2FieldTransformation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2FileClusterSummary: The file cluster summary.
+type GooglePrivacyDlpV2FileClusterSummary struct {
+	// DataRiskLevel: The data risk level of this cluster. RISK_LOW if nothing has
+	// been scanned.
+	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
+	// Errors: A list of Errors detected while scanning this cluster. The list is
+	// truncated to 10 per cluster.
+	Errors []*GooglePrivacyDlpV2Error `json:"errors,omitempty"`
+	// FileClusterType: The file cluster type.
+	FileClusterType *GooglePrivacyDlpV2FileClusterType `json:"fileClusterType,omitempty"`
+	// FileExtensionsScanned: A sample of file types scanned in this cluster. Empty
+	// if no files were scanned.
+	FileExtensionsScanned []*GooglePrivacyDlpV2FileExtensionInfo `json:"fileExtensionsScanned,omitempty"`
+	// FileExtensionsSeen: A sample of file types seen in this cluster. Empty if no
+	// files were seen.
+	FileExtensionsSeen []*GooglePrivacyDlpV2FileExtensionInfo `json:"fileExtensionsSeen,omitempty"`
+	// FileStoreInfoTypeSummaries: InfoTypes detected in this cluster.
+	FileStoreInfoTypeSummaries []*GooglePrivacyDlpV2FileStoreInfoTypeSummary `json:"fileStoreInfoTypeSummaries,omitempty"`
+	// NoFilesExist: True if no files exist in this cluster. If the bucket had more
+	// files than could be listed, this will be false even if no files for this
+	// cluster were seen and file_extensions_seen is empty.
+	NoFilesExist bool `json:"noFilesExist,omitempty"`
+	// SensitivityScore: The sensitivity score of this cluster. The score will be
+	// SENSITIVITY_LOW if nothing has been scanned.
+	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataRiskLevel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataRiskLevel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2FileClusterSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileClusterSummary
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileClusterType: Message used to identify file cluster
+// type being profiled.
+type GooglePrivacyDlpV2FileClusterType struct {
+	// Cluster: Cluster type.
+	//
+	// Possible values:
+	//   "CLUSTER_UNSPECIFIED" - Unused.
+	//   "CLUSTER_UNKNOWN" - Unsupported files.
+	//   "CLUSTER_TEXT" - Plain text.
+	//   "CLUSTER_STRUCTURED_DATA" - Structured data like CSV, TSV etc.
+	//   "CLUSTER_SOURCE_CODE" - Source code.
+	//   "CLUSTER_RICH_DOCUMENT" - Rich document like docx, xlsx etc.
+	//   "CLUSTER_IMAGE" - Images like jpeg, bmp.
+	//   "CLUSTER_ARCHIVE" - Archives and containers like .zip, .tar etc.
+	//   "CLUSTER_MULTIMEDIA" - Multimedia like .mp4, .avi etc.
+	//   "CLUSTER_EXECUTABLE" - Executable files like .exe, .class, .apk etc.
+	Cluster string `json:"cluster,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cluster") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cluster") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2FileClusterType) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileClusterType
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileExtensionInfo: Information regarding the discovered
+// file extension.
+type GooglePrivacyDlpV2FileExtensionInfo struct {
+	// FileExtension: The file extension if set. (aka .pdf, .jpg, .txt)
+	FileExtension string `json:"fileExtension,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileExtension") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileExtension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2FileExtensionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileExtensionInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2FileSet: Set of files to scan.
 type GooglePrivacyDlpV2FileSet struct {
 	// RegexFileSet: The regex-filtered set of files to scan. Exactly one of `url`
@@ -4449,6 +4593,131 @@ type GooglePrivacyDlpV2FileSet struct {
 
 func (s *GooglePrivacyDlpV2FileSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2FileSet
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileStoreDataProfile: The profile for a file store. *
+// Google Cloud Storage: maps 1:1 with a bucket.
+type GooglePrivacyDlpV2FileStoreDataProfile struct {
+	// ConfigSnapshot: The snapshot of the configurations used to generate the
+	// profile.
+	ConfigSnapshot *GooglePrivacyDlpV2DataProfileConfigSnapshot `json:"configSnapshot,omitempty"`
+	// CreateTime: The time the file store was first created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DataRiskLevel: The data risk level of this resource.
+	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
+	// DataSourceType: The resource type that was profiled.
+	DataSourceType *GooglePrivacyDlpV2DataSourceType `json:"dataSourceType,omitempty"`
+	// DataStorageLocations: For resources that have multiple storage locations,
+	// these are those regions. For Google Cloud Storage this is the list of
+	// regions chosen for dual-region storage. `file_store_location` will normally
+	// be the corresponding multi-region for the list of individual locations. The
+	// first region is always picked as the processing and storage location for the
+	// data profile.
+	DataStorageLocations []string `json:"dataStorageLocations,omitempty"`
+	// FileClusterSummaries: FileClusterSummary per each cluster.
+	FileClusterSummaries []*GooglePrivacyDlpV2FileClusterSummary `json:"fileClusterSummaries,omitempty"`
+	// FileStoreInfoTypeSummaries: InfoTypes detected in this file store.
+	FileStoreInfoTypeSummaries []*GooglePrivacyDlpV2FileStoreInfoTypeSummary `json:"fileStoreInfoTypeSummaries,omitempty"`
+	// FileStoreIsEmpty: The file store does not have any files.
+	FileStoreIsEmpty bool `json:"fileStoreIsEmpty,omitempty"`
+	// FileStoreLocation: The location of the file store. * Google Cloud Storage:
+	// https://cloud.google.com/storage/docs/locations#available-locations
+	FileStoreLocation string `json:"fileStoreLocation,omitempty"`
+	// FileStorePath: The file store path. * Google Cloud Storage: `gs://{bucket}`
+	FileStorePath string `json:"fileStorePath,omitempty"`
+	// FullResource: The resource name of the resource profiled.
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	FullResource string `json:"fullResource,omitempty"`
+	// LastModifiedTime: The time the file store was last modified.
+	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+	// LocationType: The location type of the bucket (region, dual-region,
+	// multi-region, etc). If dual-region, expect data_storage_locations to be
+	// populated.
+	LocationType string `json:"locationType,omitempty"`
+	// Name: The name of the profile.
+	Name string `json:"name,omitempty"`
+	// ProfileLastGenerated: The last time the profile was generated.
+	ProfileLastGenerated string `json:"profileLastGenerated,omitempty"`
+	// ProfileStatus: Success or error status from the most recent profile
+	// generation attempt. May be empty if the profile is still being generated.
+	ProfileStatus *GooglePrivacyDlpV2ProfileStatus `json:"profileStatus,omitempty"`
+	// ProjectDataProfile: The resource name to the project data profile for this
+	// file store.
+	ProjectDataProfile string `json:"projectDataProfile,omitempty"`
+	// ProjectId: The Google Cloud project ID that owns the resource.
+	ProjectId string `json:"projectId,omitempty"`
+	// ResourceAttributes: Attributes of the resource being profiled. Currently
+	// used attributes: - customer_managed_encryption: boolean true: the resource
+	// is encrypted with a customer-managed key. false: the resource is encrypted
+	// with a provider-managed key.
+	ResourceAttributes map[string]GooglePrivacyDlpV2Value `json:"resourceAttributes,omitempty"`
+	// ResourceLabels: The labels applied to the resource at the time the profile
+	// was generated.
+	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
+	// ResourceVisibility: How broadly a resource has been shared.
+	//
+	// Possible values:
+	//   "RESOURCE_VISIBILITY_UNSPECIFIED" - Unused.
+	//   "RESOURCE_VISIBILITY_PUBLIC" - Visible to any user.
+	//   "RESOURCE_VISIBILITY_INCONCLUSIVE" - May contain public items. For
+	// example, if a Cloud Storage bucket has uniform bucket level access disabled,
+	// some objects inside it may be public, but none are known yet.
+	//   "RESOURCE_VISIBILITY_RESTRICTED" - Visible only to specific users.
+	ResourceVisibility string `json:"resourceVisibility,omitempty"`
+	// SensitivityScore: The sensitivity score of this resource.
+	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
+	// State: State of a profile.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unused.
+	//   "RUNNING" - The profile is currently running. Once a profile has finished
+	// it will transition to DONE.
+	//   "DONE" - The profile is no longer generating. If
+	// profile_status.status.code is 0, the profile succeeded, otherwise, it
+	// failed.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConfigSnapshot") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfigSnapshot") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2FileStoreDataProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileStoreDataProfile
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileStoreInfoTypeSummary: Information regarding the
+// discovered InfoType.
+type GooglePrivacyDlpV2FileStoreInfoTypeSummary struct {
+	// InfoType: The InfoType seen.
+	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InfoType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InfoType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2FileStoreInfoTypeSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileStoreInfoTypeSummary
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6431,6 +6700,34 @@ func (s *GooglePrivacyDlpV2ListDlpJobsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2ListFileStoreDataProfilesResponse: List of file store data
+// profiles generated for a given organization or project.
+type GooglePrivacyDlpV2ListFileStoreDataProfilesResponse struct {
+	// FileStoreDataProfiles: List of data profiles.
+	FileStoreDataProfiles []*GooglePrivacyDlpV2FileStoreDataProfile `json:"fileStoreDataProfiles,omitempty"`
+	// NextPageToken: The next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FileStoreDataProfiles") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileStoreDataProfiles") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ListFileStoreDataProfilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ListFileStoreDataProfilesResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2ListInfoTypesResponse: Response to the ListInfoTypes
 // request.
 type GooglePrivacyDlpV2ListInfoTypesResponse struct {
@@ -7028,6 +7325,9 @@ func (s *GooglePrivacyDlpV2ProfileStatus) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2ProjectDataProfile struct {
 	// DataRiskLevel: The data risk level of this project.
 	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
+	// FileStoreDataProfileCount: The number of file store data profiles generated
+	// for this project.
+	FileStoreDataProfileCount int64 `json:"fileStoreDataProfileCount,omitempty,string"`
 	// Name: The resource name of the profile.
 	Name string `json:"name,omitempty"`
 	// ProfileLastGenerated: The last time the profile was generated.
@@ -7039,6 +7339,9 @@ type GooglePrivacyDlpV2ProjectDataProfile struct {
 	ProjectId string `json:"projectId,omitempty"`
 	// SensitivityScore: The sensitivity score of this project.
 	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
+	// TableDataProfileCount: The number of table data profiles generated for this
+	// project.
+	TableDataProfileCount int64 `json:"tableDataProfileCount,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -7167,6 +7470,7 @@ type GooglePrivacyDlpV2PubSubNotification struct {
 	//   "DETAIL_LEVEL_UNSPECIFIED" - Unused.
 	//   "TABLE_PROFILE" - The full table data profile.
 	//   "RESOURCE_NAME" - The name of the profiled resource.
+	//   "FILE_STORE_PROFILE" - The full file store data profile.
 	DetailOfMessage string `json:"detailOfMessage,omitempty"`
 	// Event: The type of event that triggers a Pub/Sub. At most one
 	// `PubSubNotification` per EventType is permitted.
@@ -8155,6 +8459,7 @@ type GooglePrivacyDlpV2SensitivityScore struct {
 	//   "SENSITIVITY_SCORE_UNSPECIFIED" - Unused.
 	//   "SENSITIVITY_LOW" - No sensitive information detected. The resource isn't
 	// publicly accessible.
+	//   "SENSITIVITY_UNKNOWN" - Unable to determine sensitivity.
 	//   "SENSITIVITY_MODERATE" - Medium risk. Contains personally identifiable
 	// information (PII), potentially sensitive data, or fields with free-text data
 	// that are at a higher risk of having intermittent sensitive data. Consider
@@ -8572,7 +8877,7 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	//   "RESOURCE_VISIBILITY_PUBLIC" - Visible to any user.
 	//   "RESOURCE_VISIBILITY_INCONCLUSIVE" - May contain public items. For
 	// example, if a Cloud Storage bucket has uniform bucket level access disabled,
-	// some objects inside it may be public.
+	// some objects inside it may be public, but none are known yet.
 	//   "RESOURCE_VISIBILITY_RESTRICTED" - Visible only to specific users.
 	ResourceVisibility string `json:"resourceVisibility,omitempty"`
 	// RowCount: Number of rows in the table when the profile was generated. This
@@ -13419,6 +13724,397 @@ func (c *OrganizationsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption)
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsLocationsDlpJobsListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListDlpJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsLocationsFileStoreDataProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a FileStoreDataProfile. Will not prevent the profile from
+// being regenerated if the resource is still included in a discovery
+// configuration.
+//
+// - name: Resource name of the file store data profile.
+func (r *OrganizationsLocationsFileStoreDataProfilesService) Delete(name string) *OrganizationsLocationsFileStoreDataProfilesDeleteCall {
+	c := &OrganizationsLocationsFileStoreDataProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFileStoreDataProfilesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFileStoreDataProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFileStoreDataProfilesDeleteCall) Context(ctx context.Context) *OrganizationsLocationsFileStoreDataProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFileStoreDataProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFileStoreDataProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.fileStoreDataProfiles.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsFileStoreDataProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsFileStoreDataProfilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a file store data profile.
+//
+//   - name: Resource name, for example
+//     `organizations/12345/locations/us/fileStoreDataProfiles/53234423`.
+func (r *OrganizationsLocationsFileStoreDataProfilesService) Get(name string) *OrganizationsLocationsFileStoreDataProfilesGetCall {
+	c := &OrganizationsLocationsFileStoreDataProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFileStoreDataProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsFileStoreDataProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) Context(ctx context.Context) *OrganizationsLocationsFileStoreDataProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.fileStoreDataProfiles.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2FileStoreDataProfile.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2FileStoreDataProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2FileStoreDataProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsFileStoreDataProfilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists file store data profiles for an organization.
+//
+//   - parent: Resource name of the organization or project, for example
+//     `organizations/433245324/locations/europe` or
+//     `projects/project-id/locations/asia`.
+func (r *OrganizationsLocationsFileStoreDataProfilesService) List(parent string) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c := &OrganizationsLocationsFileStoreDataProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering. Supported
+// syntax: * Filter expressions are made up of one or more restrictions. *
+// Restrictions can be combined by `AND` or `OR` logical operators. A sequence
+// of restrictions implicitly uses `AND`. * A restriction has the form of
+// `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
+// The Google Cloud project ID. - `file_store_path` - The path like
+// "gs://bucket". - `sensitivity_level` - HIGH|MODERATE|LOW - `data_risk_level`
+// - HIGH|MODERATE|LOW - `resource_visibility`: PUBLIC|RESTRICTED -
+// `status_code` - an RPC status code as defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
+// The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
+// status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
+// `project_id = 12345 AND resource_visibility = PUBLIC` . * 'file_store_path =
+// "gs://mybucket" The length of this field should be no more than 500
+// characters.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Filter(filter string) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// fields to order by, followed by `asc` or `desc` postfix. This list is case
+// insensitive. The default sorting order is ascending. Redundant space
+// characters are insignificant. Only one order field at a time is allowed.
+// Examples: * `project_id asc` * `name` * `sensitivity_level desc` Supported
+// fields are: - `project_id`: The Google Cloud project ID. -
+// `sensitivity_level`: How sensitive the data in a table is, at most. -
+// `data_risk_level`: How much risk is associated with this data. -
+// `profile_last_generated`: When the profile was last updated in epoch
+// seconds. - `last_modified`: The last time the resource was modified. -
+// `resource_visibility`: Visibility restriction for this resource. - `name`:
+// The name of the profile. - `create_time`: The time the file store was first
+// created.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) OrderBy(orderBy string) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Size of the page. This
+// value can be limited by the server. If zero, server returns a page of max
+// size 100.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) PageSize(pageSize int64) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token to continue
+// retrieval.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) PageToken(pageToken string) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Context(ctx context.Context) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/fileStoreDataProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.fileStoreDataProfiles.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ListFileStoreDataProfilesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListFileStoreDataProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ListFileStoreDataProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListFileStoreDataProfilesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -23037,6 +23733,397 @@ func (c *ProjectsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*Go
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDlpJobsListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListDlpJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsFileStoreDataProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a FileStoreDataProfile. Will not prevent the profile from
+// being regenerated if the resource is still included in a discovery
+// configuration.
+//
+// - name: Resource name of the file store data profile.
+func (r *ProjectsLocationsFileStoreDataProfilesService) Delete(name string) *ProjectsLocationsFileStoreDataProfilesDeleteCall {
+	c := &ProjectsLocationsFileStoreDataProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFileStoreDataProfilesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsFileStoreDataProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFileStoreDataProfilesDeleteCall) Context(ctx context.Context) *ProjectsLocationsFileStoreDataProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFileStoreDataProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFileStoreDataProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.fileStoreDataProfiles.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsFileStoreDataProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsFileStoreDataProfilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a file store data profile.
+//
+//   - name: Resource name, for example
+//     `organizations/12345/locations/us/fileStoreDataProfiles/53234423`.
+func (r *ProjectsLocationsFileStoreDataProfilesService) Get(name string) *ProjectsLocationsFileStoreDataProfilesGetCall {
+	c := &ProjectsLocationsFileStoreDataProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsFileStoreDataProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsFileStoreDataProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) Context(ctx context.Context) *ProjectsLocationsFileStoreDataProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.fileStoreDataProfiles.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2FileStoreDataProfile.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2FileStoreDataProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2FileStoreDataProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsFileStoreDataProfilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists file store data profiles for an organization.
+//
+//   - parent: Resource name of the organization or project, for example
+//     `organizations/433245324/locations/europe` or
+//     `projects/project-id/locations/asia`.
+func (r *ProjectsLocationsFileStoreDataProfilesService) List(parent string) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c := &ProjectsLocationsFileStoreDataProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering. Supported
+// syntax: * Filter expressions are made up of one or more restrictions. *
+// Restrictions can be combined by `AND` or `OR` logical operators. A sequence
+// of restrictions implicitly uses `AND`. * A restriction has the form of
+// `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
+// The Google Cloud project ID. - `file_store_path` - The path like
+// "gs://bucket". - `sensitivity_level` - HIGH|MODERATE|LOW - `data_risk_level`
+// - HIGH|MODERATE|LOW - `resource_visibility`: PUBLIC|RESTRICTED -
+// `status_code` - an RPC status code as defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
+// The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
+// status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
+// `project_id = 12345 AND resource_visibility = PUBLIC` . * 'file_store_path =
+// "gs://mybucket" The length of this field should be no more than 500
+// characters.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Filter(filter string) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// fields to order by, followed by `asc` or `desc` postfix. This list is case
+// insensitive. The default sorting order is ascending. Redundant space
+// characters are insignificant. Only one order field at a time is allowed.
+// Examples: * `project_id asc` * `name` * `sensitivity_level desc` Supported
+// fields are: - `project_id`: The Google Cloud project ID. -
+// `sensitivity_level`: How sensitive the data in a table is, at most. -
+// `data_risk_level`: How much risk is associated with this data. -
+// `profile_last_generated`: When the profile was last updated in epoch
+// seconds. - `last_modified`: The last time the resource was modified. -
+// `resource_visibility`: Visibility restriction for this resource. - `name`:
+// The name of the profile. - `create_time`: The time the file store was first
+// created.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) OrderBy(orderBy string) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Size of the page. This
+// value can be limited by the server. If zero, server returns a page of max
+// size 100.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) PageSize(pageSize int64) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token to continue
+// retrieval.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) PageToken(pageToken string) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Context(ctx context.Context) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/fileStoreDataProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.fileStoreDataProfiles.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ListFileStoreDataProfilesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListFileStoreDataProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ListFileStoreDataProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListFileStoreDataProfilesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

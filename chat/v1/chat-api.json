@@ -1241,7 +1241,7 @@
       }
     }
   },
-  "revision": "20240613",
+  "revision": "20240623",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessoryWidget": {
@@ -1833,7 +1833,7 @@
         },
         "common": {
           "$ref": "CommonEventObject",
-          "description": "Represents information about the user's client, such as locale, host app, and platform. For Chat apps, `CommonEventObject` includes information submitted by users interacting with [dialogs](https://developers.google.com/workspace/chat/dialogs), like data entered on a card."
+          "description": "Represents informatmessage_visibilityion about the user's client, such as locale, host app, and platform. For Chat apps, `CommonEventObject` includes information submitted by users interacting with [dialogs](https://developers.google.com/workspace/chat/dialogs), like data entered on a card."
         },
         "configCompleteRedirectUrl": {
           "description": "The URL the Chat app should redirect the user to after they have completed an authorization or configuration flow outside of Google Chat. For more information, see [Connect a Chat app with other services \u0026 tools](https://developers.google.com/workspace/chat/connect-web-services-tools).",

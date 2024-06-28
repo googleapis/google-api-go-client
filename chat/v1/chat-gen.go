@@ -1246,9 +1246,9 @@ type DeprecatedEvent struct {
 	// data input by users on cards
 	// (https://developers.google.com/workspace/chat/read-form-data).
 	Action *FormAction `json:"action,omitempty"`
-	// Common: Represents information about the user's client, such as locale, host
-	// app, and platform. For Chat apps, `CommonEventObject` includes information
-	// submitted by users interacting with dialogs
+	// Common: Represents informatmessage_visibilityion about the user's client,
+	// such as locale, host app, and platform. For Chat apps, `CommonEventObject`
+	// includes information submitted by users interacting with dialogs
 	// (https://developers.google.com/workspace/chat/dialogs), like data entered on
 	// a card.
 	Common *CommonEventObject `json:"common,omitempty"`

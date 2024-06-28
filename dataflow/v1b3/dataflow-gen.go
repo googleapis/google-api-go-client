@@ -1349,8 +1349,8 @@ type DebugOptions struct {
 	// DataSampling: Configuration options for sampling elements from a running
 	// pipeline.
 	DataSampling *DataSamplingConfig `json:"dataSampling,omitempty"`
-	// EnableHotKeyLogging: When true, enables the logging of the literal hot key
-	// to the user's Cloud Logging.
+	// EnableHotKeyLogging: Optional. When true, enables the logging of the literal
+	// hot key to the user's Cloud Logging.
 	EnableHotKeyLogging bool `json:"enableHotKeyLogging,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataSampling") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1602,18 +1602,18 @@ type Environment struct {
 	// This should be in the form of the API service name, e.g.
 	// "compute.googleapis.com".
 	ClusterManagerApiService string `json:"clusterManagerApiService,omitempty"`
-	// Dataset: The dataset for the current project where various workflow related
-	// tables are stored. The supported resource type is: Google BigQuery:
-	// bigquery.googleapis.com/{dataset}
+	// Dataset: Optional. The dataset for the current project where various
+	// workflow related tables are stored. The supported resource type is: Google
+	// BigQuery: bigquery.googleapis.com/{dataset}
 	Dataset string `json:"dataset,omitempty"`
-	// DebugOptions: Any debugging options to be supplied to the job.
+	// DebugOptions: Optional. Any debugging options to be supplied to the job.
 	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
 	// Experiments: The list of experiments to enable. This field should be used
 	// for SDK related experiments and not for service related experiments. The
 	// proper field for service related experiments is service_options.
 	Experiments []string `json:"experiments,omitempty"`
-	// FlexResourceSchedulingGoal: Which Flexible Resource Scheduling mode to run
-	// in.
+	// FlexResourceSchedulingGoal: Optional. Which Flexible Resource Scheduling
+	// mode to run in.
 	//
 	// Possible values:
 	//   "FLEXRS_UNSPECIFIED" - Run in the default mode.
@@ -1627,11 +1627,12 @@ type Environment struct {
 	// the SDK pipeline options on the worker in a language agnostic and platform
 	// independent way.
 	SdkPipelineOptions googleapi.RawMessage `json:"sdkPipelineOptions,omitempty"`
-	// ServiceAccountEmail: Identity to run virtual machines as. Defaults to the
-	// default account.
+	// ServiceAccountEmail: Optional. Identity to run virtual machines as. Defaults
+	// to the default account.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
-	// ServiceKmsKeyName: If set, contains the Cloud KMS key identifier used to
-	// encrypt data at rest, AKA a Customer Managed Encryption Key (CMEK). Format:
+	// ServiceKmsKeyName: Optional. If set, contains the Cloud KMS key identifier
+	// used to encrypt data at rest, AKA a Customer Managed Encryption Key (CMEK).
+	// Format:
 	// projects/PROJECT_ID/locations/LOCATION/keyRings/KEY_RING/cryptoKeys/KEY
 	ServiceKmsKeyName string `json:"serviceKmsKeyName,omitempty"`
 	// ServiceOptions: Optional. The list of service options to enable. This field
@@ -1684,13 +1685,13 @@ type Environment struct {
 	// WorkerPools: The worker pools. At least one "harness" worker pool must be
 	// specified in order for the job to have workers.
 	WorkerPools []*WorkerPool `json:"workerPools,omitempty"`
-	// WorkerRegion: The Compute Engine region
+	// WorkerRegion: Optional. The Compute Engine region
 	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which
 	// worker processing should occur, e.g. "us-west1". Mutually exclusive with
 	// worker_zone. If neither worker_region nor worker_zone is specified, default
 	// to the control plane's region.
 	WorkerRegion string `json:"workerRegion,omitempty"`
-	// WorkerZone: The Compute Engine zone
+	// WorkerZone: Optional. The Compute Engine zone
 	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which
 	// worker processing should occur, e.g. "us-west1-a". Mutually exclusive with
 	// worker_region. If neither worker_region nor worker_zone is specified, a zone
@@ -2577,7 +2578,7 @@ type Job struct {
 	// [\p{Ll}\p{Lo}\p{N}_-]{0,63} * Both keys and values are additionally
 	// constrained to be <= 128 bytes in size.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Location: The [regional endpoint]
+	// Location: Optional. The [regional endpoint]
 	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that
 	// contains this job.
 	Location string `json:"location,omitempty"`
@@ -2670,6 +2671,9 @@ type Job struct {
 	// SatisfiesPzs: Reserved for future use. This field is set only in responses
 	// from the server; it is ignored if it is set in any requests.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// ServiceResources: Output only. Resources used by the Dataflow Service to run
+	// the job.
+	ServiceResources *ServiceResources `json:"serviceResources,omitempty"`
 	// StageStates: This field may be mutated by the Cloud Dataflow service;
 	// callers cannot mutate it.
 	StageStates []*ExecutionStageState `json:"stageStates,omitempty"`
@@ -2692,8 +2696,8 @@ type Job struct {
 	// files are: Google Cloud Storage: storage.googleapis.com/{bucket}/{object}
 	// bucket.storage.googleapis.com/{object}
 	TempFiles []string `json:"tempFiles,omitempty"`
-	// TransformNameMapping: The map of transform name prefixes of the job to be
-	// replaced to the corresponding name prefixes of the new job.
+	// TransformNameMapping: Optional. The map of transform name prefixes of the
+	// job to be replaced to the corresponding name prefixes of the new job.
 	TransformNameMapping map[string]string `json:"transformNameMapping,omitempty"`
 	// Type: Optional. The type of Dataflow job.
 	//
@@ -4944,6 +4948,29 @@ type SeqMapTaskOutputInfo struct {
 
 func (s *SeqMapTaskOutputInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SeqMapTaskOutputInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceResources: Resources used by the Dataflow Service to run the job.
+type ServiceResources struct {
+	// Zones: Output only. List of Cloud Zones being used by the Dataflow Service
+	// for this job. Example: us-central1-c
+	Zones []string `json:"zones,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Zones") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Zones") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceResources) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceResources
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

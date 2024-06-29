@@ -1755,10 +1755,10 @@ type HttpRequest struct {
 	// meaningful if cache_hit is True.
 	CacheValidatedWithOriginServer bool `json:"cacheValidatedWithOriginServer,omitempty"`
 	// Latency: The request processing latency on the server, from the time the
-	// request was received until the response was sent.
+	// request was received until the response was sent. For WebSocket connections,
+	// this field refers to the entire time duration of the connection.
 	Latency string `json:"latency,omitempty"`
-	// Protocol: Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2",
-	// "websocket"
+	// Protocol: Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2"
 	Protocol string `json:"protocol,omitempty"`
 	// Referer: The referer URL of the request, as defined in HTTP/1.1 Header Field
 	// Definitions (https://datatracker.ietf.org/doc/html/rfc2616#section-14.36).
@@ -8255,6 +8255,15 @@ func (r *BillingAccountsLocationsRecentQueriesService) List(parent string) *Bill
 	return c
 }
 
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") of the recent queries to list. The only valid value for
+// this field is one of the two allowable type function calls, which are the
+// following: type("Logging") type("OpsAnalytics")
+func (c *BillingAccountsLocationsRecentQueriesListCall) Filter(filter string) *BillingAccountsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // results to return from this request. Non-positive values are ignored. The
 // presence of nextPageToken in the response indicates that more results might
@@ -8607,6 +8616,121 @@ func (c *BillingAccountsLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.Ca
 	return ret, nil
 }
 
+type BillingAccountsLocationsSavedQueriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns all data associated with the requested query.
+//
+//   - name: The resource name of the saved query.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUER
+//     Y_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/
+//     [QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]" For
+//     example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *BillingAccountsLocationsSavedQueriesService) Get(name string) *BillingAccountsLocationsSavedQueriesGetCall {
+	c := &BillingAccountsLocationsSavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *BillingAccountsLocationsSavedQueriesGetCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsSavedQueriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BillingAccountsLocationsSavedQueriesGetCall) IfNoneMatch(entityTag string) *BillingAccountsLocationsSavedQueriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *BillingAccountsLocationsSavedQueriesGetCall) Context(ctx context.Context) *BillingAccountsLocationsSavedQueriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *BillingAccountsLocationsSavedQueriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsSavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.savedQueries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsSavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type BillingAccountsLocationsSavedQueriesListCall struct {
 	s            *Service
 	parent       string
@@ -8761,6 +8885,125 @@ func (c *BillingAccountsLocationsSavedQueriesListCall) Pages(ctx context.Context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type BillingAccountsLocationsSavedQueriesPatchCall struct {
+	s          *Service
+	name       string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing SavedQuery.
+//
+//   - name: Output only. Resource name of the saved query.In the format:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     For a list of supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     the saved query is created, the location cannot be changed.If the user
+//     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
+func (r *BillingAccountsLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *BillingAccountsLocationsSavedQueriesPatchCall {
+	c := &BillingAccountsLocationsSavedQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.savedquery = savedquery
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A non-empty
+// list of fields to change in the existing saved query. Fields are relative to
+// the saved_query and new values for the fields are taken from the
+// corresponding fields in the SavedQuery included in this request. Fields not
+// mentioned in update_mask are not changed and are ignored in the request.To
+// update all mutable fields, specify an update_mask of *.For example, to
+// change the description and query filter text of a saved query, specify an
+// update_mask of "description, query.filter".
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) UpdateMask(updateMask string) *BillingAccountsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) Context(ctx context.Context) *BillingAccountsLocationsSavedQueriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.savedQueries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type BillingAccountsLogsDeleteCall struct {
@@ -9061,12 +9304,12 @@ func (r *BillingAccountsSinksService) Create(parent string, logsink *LogSink) *B
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *BillingAccountsSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *BillingAccountsSinksCreateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -9575,12 +9818,12 @@ func (r *BillingAccountsSinksService) Patch(sinkNameid string, logsink *LogSink)
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *BillingAccountsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *BillingAccountsSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -9726,12 +9969,12 @@ func (r *BillingAccountsSinksService) Update(sinkNameid string, logsink *LogSink
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *BillingAccountsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *BillingAccountsSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -14952,6 +15195,15 @@ func (r *FoldersLocationsRecentQueriesService) List(parent string) *FoldersLocat
 	return c
 }
 
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") of the recent queries to list. The only valid value for
+// this field is one of the two allowable type function calls, which are the
+// following: type("Logging") type("OpsAnalytics")
+func (c *FoldersLocationsRecentQueriesListCall) Filter(filter string) *FoldersLocationsRecentQueriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // results to return from this request. Non-positive values are ignored. The
 // presence of nextPageToken in the response indicates that more results might
@@ -15304,6 +15556,121 @@ func (c *FoldersLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 }
 
+type FoldersLocationsSavedQueriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns all data associated with the requested query.
+//
+//   - name: The resource name of the saved query.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUER
+//     Y_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/
+//     [QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]" For
+//     example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *FoldersLocationsSavedQueriesService) Get(name string) *FoldersLocationsSavedQueriesGetCall {
+	c := &FoldersLocationsSavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsSavedQueriesGetCall) Fields(s ...googleapi.Field) *FoldersLocationsSavedQueriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsSavedQueriesGetCall) IfNoneMatch(entityTag string) *FoldersLocationsSavedQueriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsSavedQueriesGetCall) Context(ctx context.Context) *FoldersLocationsSavedQueriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsSavedQueriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsSavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.savedQueries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsSavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type FoldersLocationsSavedQueriesListCall struct {
 	s            *Service
 	parent       string
@@ -15458,6 +15825,125 @@ func (c *FoldersLocationsSavedQueriesListCall) Pages(ctx context.Context, f func
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type FoldersLocationsSavedQueriesPatchCall struct {
+	s          *Service
+	name       string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing SavedQuery.
+//
+//   - name: Output only. Resource name of the saved query.In the format:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     For a list of supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     the saved query is created, the location cannot be changed.If the user
+//     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
+func (r *FoldersLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *FoldersLocationsSavedQueriesPatchCall {
+	c := &FoldersLocationsSavedQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.savedquery = savedquery
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A non-empty
+// list of fields to change in the existing saved query. Fields are relative to
+// the saved_query and new values for the fields are taken from the
+// corresponding fields in the SavedQuery included in this request. Fields not
+// mentioned in update_mask are not changed and are ignored in the request.To
+// update all mutable fields, specify an update_mask of *.For example, to
+// change the description and query filter text of a saved query, specify an
+// update_mask of "description, query.filter".
+func (c *FoldersLocationsSavedQueriesPatchCall) UpdateMask(updateMask string) *FoldersLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsSavedQueriesPatchCall) Fields(s ...googleapi.Field) *FoldersLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsSavedQueriesPatchCall) Context(ctx context.Context) *FoldersLocationsSavedQueriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsSavedQueriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsSavedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.savedQueries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsSavedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type FoldersLogsDeleteCall struct {
@@ -15758,12 +16244,12 @@ func (r *FoldersSinksService) Create(parent string, logsink *LogSink) *FoldersSi
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *FoldersSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *FoldersSinksCreateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -16272,12 +16758,12 @@ func (r *FoldersSinksService) Patch(sinkNameid string, logsink *LogSink) *Folder
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *FoldersSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *FoldersSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -16423,12 +16909,12 @@ func (r *FoldersSinksService) Update(sinkNameid string, logsink *LogSink) *Folde
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *FoldersSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *FoldersSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -24161,6 +24647,15 @@ func (r *OrganizationsLocationsRecentQueriesService) List(parent string) *Organi
 	return c
 }
 
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") of the recent queries to list. The only valid value for
+// this field is one of the two allowable type function calls, which are the
+// following: type("Logging") type("OpsAnalytics")
+func (c *OrganizationsLocationsRecentQueriesListCall) Filter(filter string) *OrganizationsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // results to return from this request. Non-positive values are ignored. The
 // presence of nextPageToken in the response indicates that more results might
@@ -24513,6 +25008,121 @@ func (c *OrganizationsLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.Call
 	return ret, nil
 }
 
+type OrganizationsLocationsSavedQueriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns all data associated with the requested query.
+//
+//   - name: The resource name of the saved query.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUER
+//     Y_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/
+//     [QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]" For
+//     example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *OrganizationsLocationsSavedQueriesService) Get(name string) *OrganizationsLocationsSavedQueriesGetCall {
+	c := &OrganizationsLocationsSavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsSavedQueriesGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSavedQueriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsSavedQueriesGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsSavedQueriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsSavedQueriesGetCall) Context(ctx context.Context) *OrganizationsLocationsSavedQueriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsSavedQueriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.savedQueries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type OrganizationsLocationsSavedQueriesListCall struct {
 	s            *Service
 	parent       string
@@ -24667,6 +25277,125 @@ func (c *OrganizationsLocationsSavedQueriesListCall) Pages(ctx context.Context, 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type OrganizationsLocationsSavedQueriesPatchCall struct {
+	s          *Service
+	name       string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing SavedQuery.
+//
+//   - name: Output only. Resource name of the saved query.In the format:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     For a list of supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     the saved query is created, the location cannot be changed.If the user
+//     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
+func (r *OrganizationsLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *OrganizationsLocationsSavedQueriesPatchCall {
+	c := &OrganizationsLocationsSavedQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.savedquery = savedquery
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A non-empty
+// list of fields to change in the existing saved query. Fields are relative to
+// the saved_query and new values for the fields are taken from the
+// corresponding fields in the SavedQuery included in this request. Fields not
+// mentioned in update_mask are not changed and are ignored in the request.To
+// update all mutable fields, specify an update_mask of *.For example, to
+// change the description and query filter text of a saved query, specify an
+// update_mask of "description, query.filter".
+func (c *OrganizationsLocationsSavedQueriesPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsSavedQueriesPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsSavedQueriesPatchCall) Context(ctx context.Context) *OrganizationsLocationsSavedQueriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsSavedQueriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSavedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.savedQueries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSavedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type OrganizationsLogsDeleteCall struct {
@@ -24967,12 +25696,12 @@ func (r *OrganizationsSinksService) Create(parent string, logsink *LogSink) *Org
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *OrganizationsSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *OrganizationsSinksCreateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -25481,12 +26210,12 @@ func (r *OrganizationsSinksService) Patch(sinkNameid string, logsink *LogSink) *
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *OrganizationsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *OrganizationsSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -25632,12 +26361,12 @@ func (r *OrganizationsSinksService) Update(sinkNameid string, logsink *LogSink) 
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *OrganizationsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *OrganizationsSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -29739,6 +30468,15 @@ func (r *ProjectsLocationsRecentQueriesService) List(parent string) *ProjectsLoc
 	return c
 }
 
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") of the recent queries to list. The only valid value for
+// this field is one of the two allowable type function calls, which are the
+// following: type("Logging") type("OpsAnalytics")
+func (c *ProjectsLocationsRecentQueriesListCall) Filter(filter string) *ProjectsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // results to return from this request. Non-positive values are ignored. The
 // presence of nextPageToken in the response indicates that more results might
@@ -30091,6 +30829,121 @@ func (c *ProjectsLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 }
 
+type ProjectsLocationsSavedQueriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns all data associated with the requested query.
+//
+//   - name: The resource name of the saved query.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUER
+//     Y_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/
+//     [QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]" For
+//     example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *ProjectsLocationsSavedQueriesService) Get(name string) *ProjectsLocationsSavedQueriesGetCall {
+	c := &ProjectsLocationsSavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSavedQueriesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSavedQueriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSavedQueriesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSavedQueriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSavedQueriesGetCall) Context(ctx context.Context) *ProjectsLocationsSavedQueriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSavedQueriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.savedQueries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsSavedQueriesListCall struct {
 	s            *Service
 	parent       string
@@ -30245,6 +31098,125 @@ func (c *ProjectsLocationsSavedQueriesListCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsSavedQueriesPatchCall struct {
+	s          *Service
+	name       string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing SavedQuery.
+//
+//   - name: Output only. Resource name of the saved query.In the format:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     For a list of supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     the saved query is created, the location cannot be changed.If the user
+//     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
+func (r *ProjectsLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *ProjectsLocationsSavedQueriesPatchCall {
+	c := &ProjectsLocationsSavedQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.savedquery = savedquery
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A non-empty
+// list of fields to change in the existing saved query. Fields are relative to
+// the saved_query and new values for the fields are taken from the
+// corresponding fields in the SavedQuery included in this request. Fields not
+// mentioned in update_mask are not changed and are ignored in the request.To
+// update all mutable fields, specify an update_mask of *.For example, to
+// change the description and query filter text of a saved query, specify an
+// update_mask of "description, query.filter".
+func (c *ProjectsLocationsSavedQueriesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSavedQueriesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSavedQueriesPatchCall) Context(ctx context.Context) *ProjectsLocationsSavedQueriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSavedQueriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSavedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.savedQueries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSavedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLogsDeleteCall struct {
@@ -31104,12 +32076,12 @@ func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *Projects
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *ProjectsSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *ProjectsSinksCreateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -31618,12 +32590,12 @@ func (r *ProjectsSinksService) Patch(sinkNameid string, logsink *LogSink) *Proje
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *ProjectsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *ProjectsSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -31769,12 +32741,12 @@ func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *Proj
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *ProjectsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *ProjectsSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -31917,12 +32889,12 @@ func (r *SinksService) Create(parent string, logsink *LogSink) *SinksCreateCall 
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *SinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *SinksCreateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -32431,12 +33403,12 @@ func (r *SinksService) Update(sinkNameid string, logsink *LogSink) *SinksUpdateC
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *SinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *SinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c

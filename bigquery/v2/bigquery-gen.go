@@ -1743,8 +1743,12 @@ func (s *ConfusionMatrix) UnmarshalJSON(data []byte) error {
 // format in which a you can specify a query label, see labels in the
 // JobConfiguration resource type:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#jobconfiguration
-// Additional properties are allowed, but ignored. Specifying multiple
-// connection properties with the same key returns an error.
+// * **service_account**: indicates the service account to use to run a
+// continuous query. If set, the query job uses the service account to access
+// Google Cloud resources. Service account access is bounded by the IAM
+// permissions that you have granted to the service account. Additional
+// properties are allowed, but ignored. Specifying multiple connection
+// properties with the same key returns an error.
 type ConnectionProperty struct {
 	// Key: The key of the property to set.
 	Key string `json:"key,omitempty"`
@@ -6349,7 +6353,7 @@ func (s *PartitionSkew) MarshalJSON() ([]byte, error) {
 
 // PartitionedColumn: The partitioning column information.
 type PartitionedColumn struct {
-	// Field: Output only. The name of the partition column.
+	// Field: Required. The name of the partition column.
 	Field string `json:"field,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6370,11 +6374,17 @@ func (s *PartitionedColumn) MarshalJSON() ([]byte, error) {
 }
 
 // PartitioningDefinition: The partitioning information, which includes managed
-// table and external table partition information.
+// table, external table and metastore partitioned table partition information.
 type PartitioningDefinition struct {
-	// PartitionedColumn: Output only. Details about each partitioning column.
-	// BigQuery native tables only support 1 partitioning column. Other table types
-	// may support 0, 1 or more partitioning columns.
+	// PartitionedColumn: Optional. Details about each partitioning column. This
+	// field is output only for all partitioning types other than metastore
+	// partitioned tables. BigQuery native tables only support 1 partitioning
+	// column. Other table types may support 0, 1 or more partitioning columns. For
+	// metastore partitioned tables, the order must match the definition order in
+	// the Hive Metastore, where it must match the physical layout of the table.
+	// For example, CREATE TABLE a_table(id BIGINT, name STRING) PARTITIONED BY
+	// (city STRING, state STRING). In this case the values must be ['city',
+	// 'state'] in that order.
 	PartitionedColumn []*PartitionedColumn `json:"partitionedColumn,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PartitionedColumn") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7084,9 +7094,8 @@ func (s *QueryTimelineSample) MarshalJSON() ([]byte, error) {
 }
 
 type RangePartitioning struct {
-	// Field: Required. [Experimental] The table is partitioned by this field. The
-	// field must be a top-level NULLABLE/REQUIRED field. The only supported type
-	// is INTEGER/INT64.
+	// Field: Required. The name of the column to partition the table on. It must
+	// be a top-level, INT64 column whose mode is NULLABLE or REQUIRED.
 	Field string `json:"field,omitempty"`
 	// Range: [Experimental] Defines the ranges for range partitioning.
 	Range *RangePartitioningRange `json:"range,omitempty"`
@@ -8537,9 +8546,11 @@ type Table struct {
 	// bytes. This also includes storage used for time travel. This data is not
 	// kept in real time, and might be delayed by a few seconds to a few minutes.
 	NumTotalPhysicalBytes int64 `json:"numTotalPhysicalBytes,omitempty,string"`
-	// PartitionDefinition: Output only. The partition information for all table
-	// formats, including managed partitioned tables, hive partitioned tables, and
-	// iceberg partitioned tables.
+	// PartitionDefinition: Optional. The partition information for all table
+	// formats, including managed partitioned tables, hive partitioned tables,
+	// iceberg partitioned, and metastore partitioned tables. This field is only
+	// populated for metastore partitioned tables. For other table formats, this is
+	// an output only field.
 	PartitionDefinition *PartitioningDefinition `json:"partitionDefinition,omitempty"`
 	// RangePartitioning: If specified, configures range partitioning for this
 	// table.

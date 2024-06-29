@@ -715,6 +715,12 @@ type GceInstance struct {
 	// with this configuration. These network tags enable the creation of firewall
 	// rules (https://cloud.google.com/workstations/docs/configure-firewall-rules).
 	Tags []string `json:"tags,omitempty"`
+	// VmTags: Optional. Resource manager tags to be bound to this instance. Tag
+	// keys and values have the same definition as
+	// https://cloud.google.com/resource-manager/docs/tags/tags-overview Keys must
+	// be in the format `tagKeys/{tag_key_id}`, and values are in the format
+	// `tagValues/456`.
+	VmTags map[string]string `json:"vmTags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -856,6 +862,12 @@ type GenerateAccessTokenRequest struct {
 	// at most 24 hours in the future. If a value is not specified, the token's
 	// expiration time will be set to a default value of 1 hour in the future.
 	ExpireTime string `json:"expireTime,omitempty"`
+	// Port: Optional. Port for which the access token should be generated. If
+	// specified, the generated access token grants access only to the specified
+	// port of the workstation. If specified, values must be within the range [1 -
+	// 65535]. If not specified, the generated access token grants access to all
+	// ports of the workstation.
+	Port int64 `json:"port,omitempty"`
 	// Ttl: Desired lifetime duration of the access token. This value must be at
 	// most 24 hours. If a value is not specified, the token's lifetime will be set
 	// to a default value of 1 hour.

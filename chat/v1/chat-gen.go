@@ -366,6 +366,45 @@ type UsersSpacesThreadsService struct {
 	s *Service
 }
 
+// AccessSettings: Represents the access setting
+// (https://support.google.com/chat/answer/11971020) of the space.
+type AccessSettings struct {
+	// AccessState: Output only. Indicates the access state of the space.
+	//
+	// Possible values:
+	//   "ACCESS_STATE_UNSPECIFIED" - Access state is unknown or not supported in
+	// this API.
+	//   "PRIVATE" - Space is discoverable by added or invited members or groups.
+	//   "DISCOVERABLE" - Space is discoverable by the selected [target
+	// audience](https://support.google.com/a/answer/9934697), as well as added or
+	// invited members or groups.
+	AccessState string `json:"accessState,omitempty"`
+	// Audience: Optional. The resource name of the target audience
+	// (https://support.google.com/a/answer/9934697) who can discover the space,
+	// join the space, and preview the messages in the space. For details, see Make
+	// a space discoverable to a target audience
+	// (https://developers.google.com/workspace/chat/space-target-audience).
+	// Format: `audiences/{audience}` To use the default target audience for the
+	// Google Workspace organization, set to `audiences/default`.
+	Audience string `json:"audience,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessSettings
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // AccessoryWidget: One or more interactive widgets that appear at the bottom
 // of a message. For details, see Add interactive widgets at the bottom of a
 // message
@@ -1958,8 +1997,7 @@ func (s *GoogleAppsCardV1CardHeader) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Column: A column. Google Workspace Add-ons and Chat apps
-// (https://developers.google.com/workspace/extend): Columns for Google
-// Workspace Add-ons are in Developer Preview.
+// (https://developers.google.com/workspace/extend)
 type GoogleAppsCardV1Column struct {
 	// HorizontalAlignment: Specifies whether widgets align to the left, right, or
 	// center of a column.
@@ -3122,8 +3160,7 @@ func (s *GoogleAppsCardV1Widget) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1Widgets: The supported widgets that you can include in a
 // column. Google Workspace Add-ons and Chat apps
-// (https://developers.google.com/workspace/extend): Columns for Google
-// Workspace Add-ons are in Developer Preview.
+// (https://developers.google.com/workspace/extend)
 type GoogleAppsCardV1Widgets struct {
 	// ButtonList: ButtonList widget.
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
@@ -3646,9 +3683,7 @@ type Membership struct {
 	// only, except when used to import historical memberships in import mode
 	// spaces.
 	DeleteTime string `json:"deleteTime,omitempty"`
-	// GroupMember: The Google Group the membership corresponds to. Only supports
-	// read operations. Other operations, like creating or updating a membership,
-	// aren't currently supported.
+	// GroupMember: The Google Group the membership corresponds to.
 	GroupMember *Group `json:"groupMember,omitempty"`
 	// Member: The Google Chat user or app the membership corresponds to. If your
 	// Chat app authenticates as a user
@@ -4428,9 +4463,9 @@ func (s *SelectionItems) MarshalJSON() ([]byte, error) {
 
 // SetUpSpaceRequest: Request to create a space and add specified users to it.
 type SetUpSpaceRequest struct {
-	// Memberships: Optional. The Google Chat users to invite to join the space.
-	// Omit the calling user, as they are added automatically. The set currently
-	// allows up to 20 memberships (in addition to the caller). For human
+	// Memberships: Optional. The Google Chat users or groups to invite to join the
+	// space. Omit the calling user, as they are added automatically. The set
+	// currently allows up to 20 memberships (in addition to the caller). For human
 	// membership, the `Membership.member` field must contain a `user` with `name`
 	// populated (format: `users/{user}`) and `type` set to `User.Type.HUMAN`. You
 	// can only add human users when setting up a space (adding Chat apps is only
@@ -4438,12 +4473,15 @@ type SetUpSpaceRequest struct {
 	// members using the user's email as an alias for {user}. For example, the
 	// `user.name` can be `users/example@gmail.com`. To invite Gmail users or users
 	// from external Google Workspace domains, user's email must be used for
-	// `{user}`. Optional when setting `Space.spaceType` to `SPACE`. Required when
-	// setting `Space.spaceType` to `GROUP_CHAT`, along with at least two
-	// memberships. Required when setting `Space.spaceType` to `DIRECT_MESSAGE`
-	// with a human user, along with exactly one membership. Must be empty when
-	// creating a 1:1 conversation between a human and the calling Chat app (when
-	// setting `Space.spaceType` to `DIRECT_MESSAGE` and `Space.singleUserBotDm` to
+	// `{user}`. For Google group membership, the `Membership.group_member` field
+	// must contain a `group` with `name` populated (format `groups/{group}`). You
+	// can only add Google groups when setting `Space.spaceType` to `SPACE`.
+	// Optional when setting `Space.spaceType` to `SPACE`. Required when setting
+	// `Space.spaceType` to `GROUP_CHAT`, along with at least two memberships.
+	// Required when setting `Space.spaceType` to `DIRECT_MESSAGE` with a human
+	// user, along with exactly one membership. Must be empty when creating a 1:1
+	// conversation between a human and the calling Chat app (when setting
+	// `Space.spaceType` to `DIRECT_MESSAGE` and `Space.singleUserBotDm` to
 	// `true`).
 	Memberships []*Membership `json:"memberships,omitempty"`
 	// RequestId: Optional. A unique identifier for this request. A random UUID is
@@ -4546,6 +4584,10 @@ func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 // Space: A space in Google Chat. Spaces are conversations between two or more
 // users or 1:1 messages between a user and a Chat app.
 type Space struct {
+	// AccessSettings: Optional. Specifies the access setting
+	// (https://support.google.com/chat/answer/11971020) of the space. Only
+	// populated when the `space_type` is `SPACE`.
+	AccessSettings *AccessSettings `json:"accessSettings,omitempty"`
 	// AdminInstalled: Output only. For direct message (DM) spaces with a Chat app,
 	// whether the space was created by a Google Workspace administrator.
 	// Administrators can install and set up a direct message with a Chat app on
@@ -4626,6 +4668,8 @@ type Space struct {
 	//   "DIRECT_MESSAGE" - 1:1 messages between two humans or a human and a Chat
 	// app.
 	SpaceType string `json:"spaceType,omitempty"`
+	// SpaceUri: Output only. The URI for a user to access the space.
+	SpaceUri string `json:"spaceUri,omitempty"`
 	// Threaded: Output only. Deprecated: Use `spaceThreadingState` instead.
 	// Whether messages are threaded in this space.
 	Threaded bool `json:"threaded,omitempty"`
@@ -4642,13 +4686,13 @@ type Space struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AdminInstalled") to
+	// ForceSendFields is a list of field names (e.g. "AccessSettings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdminInstalled") to include in
+	// NullFields is a list of field names (e.g. "AccessSettings") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -6400,11 +6444,11 @@ func (r *SpacesService) Patch(name string, space *Space) *SpacesPatchCall {
 // users to change their history setting
 // (https://support.google.com/a/answer/7664184). Warning: mutually exclusive
 // with all other field paths.) `space_history_state` is not supported with
-// admin access. - Developer Preview: `access_settings.audience` (Supports
-// changing the access setting
-// (https://support.google.com/chat/answer/11971020) of a space. If no audience
-// is specified in the access setting, the space's access setting is updated to
-// restricted. Warning: mutually exclusive with all other field paths.)
+// admin access. - `access_settings.audience` (Supports changing the access
+// setting (https://support.google.com/chat/answer/11971020) of who can
+// discover the space, join the space, and preview the messages in space. If no
+// audience is specified in the access setting, the space's access setting is
+// updated to private. Warning: mutually exclusive with all other field paths.)
 // `access_settings.audience` is not supported with admin access. - Developer
 // Preview: Supports changing the permission settings
 // (https://support.google.com/chat/answer/13340792) of a space, supported
@@ -6521,8 +6565,17 @@ type SpacesSetupCall struct {
 // People API, or the `id` for the user in the Directory API. For example, if
 // the People API Person profile ID for `user@example.com` is `123456789`, you
 // can add the user to the space by setting the `membership.member.name` to
-// `users/user@example.com` or `users/123456789`. For a named space or group
-// chat, if the caller blocks, or is blocked by some members, or doesn't have
+// `users/user@example.com` or `users/123456789`. To specify the Google groups
+// to add, add memberships with the appropriate `membership.group_member.name`.
+// To add or invite a Google group, use `groups/{group}`, where `{group}` is
+// the `id` for the group from the Cloud Identity Groups API. For example, you
+// can use Cloud Identity Groups lookup API
+// (https://cloud.google.com/identity/docs/reference/rest/v1/groups/lookup) to
+// retrieve the ID `123456789` for group email `group@example.com`, then you
+// can add the group to the space by setting the `membership.group_member.name`
+// to `groups/123456789`. Group email is not supported, and Google groups can
+// only be added as members in named spaces. For a named space or group chat,
+// if the caller blocks, or is blocked by some members, or doesn't have
 // permission to add some members, then those members aren't added to the
 // created space. To create a direct message (DM) between the calling user and
 // another human user, specify exactly one membership to represent the human
@@ -6644,15 +6697,23 @@ type SpacesMembersCreateCall struct {
 // specified space. Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 // To specify the member to add, set the `membership.member.name` for the human
-// or app member. - To add the calling app to a space or a direct message
-// between two human users, use `users/app`. Unable to add other apps to the
-// space. - To add a human user, use `users/{user}`, where `{user}` can be the
-// email address for the user. For users in the same Workspace organization
-// `{user}` can also be the `id` for the person from the People API, or the
-// `id` for the user in the Directory API. For example, if the People API
-// Person profile ID for `user@example.com` is `123456789`, you can add the
-// user to the space by setting the `membership.member.name` to
-// `users/user@example.com` or `users/123456789`.
+// or app member, or set the `membership.group_member.name` for the group
+// member. - To add the calling app to a space or a direct message between two
+// human users, use `users/app`. Unable to add other apps to the space. - To
+// add a human user, use `users/{user}`, where `{user}` can be the email
+// address for the user. For users in the same Workspace organization `{user}`
+// can also be the `id` for the person from the People API, or the `id` for the
+// user in the Directory API. For example, if the People API Person profile ID
+// for `user@example.com` is `123456789`, you can add the user to the space by
+// setting the `membership.member.name` to `users/user@example.com` or
+// `users/123456789`. - To add or invite a Google group in a named space, use
+// `groups/{group}`, where `{group}` is the `id` for the group from the Cloud
+// Identity Groups API. For example, you can use Cloud Identity Groups lookup
+// API (https://cloud.google.com/identity/docs/reference/rest/v1/groups/lookup)
+// to retrieve the ID `123456789` for group email `group@example.com`, then you
+// can add or invite the group to a named space by setting the
+// `membership.group_member.name` to `groups/123456789`. Group email is not
+// supported, and Google groups can only be added as members in named spaces.
 //
 //   - parent: The resource name of the space for which to create the membership.
 //     Format: spaces/{space}.

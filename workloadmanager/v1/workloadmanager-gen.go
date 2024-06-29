@@ -259,6 +259,33 @@ type ProjectsLocationsRulesService struct {
 	s *Service
 }
 
+// AgentCommand: * An AgentCommand specifies a one-time executable program for
+// the agent to run.
+type AgentCommand struct {
+	// Command: command is the name of the agent one-time executable that will be
+	// invoked.
+	Command string `json:"command,omitempty"`
+	// Parameters: parameters is a map of key/value pairs that can be used to
+	// specify additional one-time executable settings.
+	Parameters map[string]string `json:"parameters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Command") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Command") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *AgentCommand) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentCommand
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // AssetLocation: Provides the mapping of a cloud asset to a direct physical
 // location or to a proxy that defines the location on its behalf.
 type AssetLocation struct {
@@ -380,6 +407,31 @@ type CloudAssetComposition struct {
 
 func (s *CloudAssetComposition) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAssetComposition
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// Command: * Command specifies the type of command to execute.
+type Command struct {
+	// AgentCommand: AgentCommand specifies a one-time executable program for the
+	// agent to run.
+	AgentCommand *AgentCommand `json:"agentCommand,omitempty"`
+	// ShellCommand: ShellCommand is invoked via the agent's command line executor.
+	ShellCommand *ShellCommand `json:"shellCommand,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentCommand") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentCommand") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Command) MarshalJSON() ([]byte, error) {
+	type NoMethod Command
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -519,6 +571,8 @@ func (s *Execution) MarshalJSON() ([]byte, error) {
 
 // ExecutionResult: Message describing the result of an execution
 type ExecutionResult struct {
+	// Commands: The commands to remediate the violation.
+	Commands []*Command `json:"commands,omitempty"`
 	// DocumentationUrl: The URL for the documentation of the rule.
 	DocumentationUrl string `json:"documentationUrl,omitempty"`
 	// Resource: The resource that violates the rule.
@@ -531,15 +585,15 @@ type ExecutionResult struct {
 	ViolationDetails *ViolationDetails `json:"violationDetails,omitempty"`
 	// ViolationMessage: The violation message of an execution.
 	ViolationMessage string `json:"violationMessage,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DocumentationUrl") to
+	// ForceSendFields is a list of field names (e.g. "Commands") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentationUrl") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Commands") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -551,7 +605,10 @@ func (s *ExecutionResult) MarshalJSON() ([]byte, error) {
 
 // ExternalDataSources: Message for external data sources
 type ExternalDataSources struct {
-	// Name: Required. Name of external data source. The name will be used inside
+	// AssetType: Required. The asset type of the external data source must be one
+	// of go/cai-asset-types
+	AssetType string `json:"assetType,omitempty"`
+	// Name: Optional. Name of external data source. The name will be used inside
 	// the rego/sql to refer the external data
 	Name string `json:"name,omitempty"`
 	// Type: Required. Type of external data source
@@ -563,15 +620,15 @@ type ExternalDataSources struct {
 	// Uri: Required. URI of external data source. example of bq table
 	// {project_ID}.{dataset_ID}.{table_ID}
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AssetType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AssetType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1827,6 +1884,34 @@ type ScannedResource struct {
 
 func (s *ScannedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ScannedResource
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ShellCommand: * A ShellCommand is invoked via the agent's command line
+// executor
+type ShellCommand struct {
+	// Args: args is a string of arguments to be passed to the command.
+	Args string `json:"args,omitempty"`
+	// Command: command is the name of the command to be executed.
+	Command string `json:"command,omitempty"`
+	// TimeoutSeconds: Optional. If not specified, the default timeout is 60
+	// seconds.
+	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ShellCommand) MarshalJSON() ([]byte, error) {
+	type NoMethod ShellCommand
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

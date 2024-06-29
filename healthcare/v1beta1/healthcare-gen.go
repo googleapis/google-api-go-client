@@ -7107,10 +7107,10 @@ type StorageInfo struct {
 	// resource.
 	BlobStorageInfo *BlobStorageInfo `json:"blobStorageInfo,omitempty"`
 	// ReferencedResource: The resource whose storage info is returned. For
-	// example, to specify the resource path of a DICOM Instance:
+	// example:
 	// `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores
-	// /{dicom_store_id}/dicomWeb/studi/{study_uid}/series/{series_uid}/instances/{i
-	// nstance_uid}`
+	// /{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{ins
+	// tanceUID}`
 	ReferencedResource string `json:"referencedResource,omitempty"`
 	// StructuredStorageInfo: Info about the data stored in structured storage for
 	// the resource.
@@ -17638,11 +17638,11 @@ type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorag
 // GetStorageInfo: GetStorageInfo returns the storage info of the specified
 // resource.
 //
-//   - resource: The path of the resource for which the storage info is requested
-//     (for exaxmple for a DICOM Instance:
+//   - resource: The path of the instance to return storage info for, in the
+//     form:
 //     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStor
-//     es/{dicomStoreId}/dicomWeb/studies/{study_uid}/series/{series_uid}/instance
-//     s/{instance_uid}`).
+//     es/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/
+//     {instanceUID}`.
 func (r *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService) GetStorageInfo(resource string) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall {
 	c := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

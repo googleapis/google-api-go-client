@@ -1017,6 +1017,37 @@ func (s *Host) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// HttpOptions: Http options for the running workstations.
+type HttpOptions struct {
+	// AllowedUnauthenticatedCorsPreflightRequests: Optional. By default, the
+	// workstations service makes sure that all requests to the workstation are
+	// authenticated. CORS preflight requests do not include cookies or custom
+	// headers, and so are considered unauthenticated and blocked by the
+	// workstations service. Enabling this option allows these unauthenticated CORS
+	// preflight requests through to the workstation, where it becomes the
+	// responsibility of the destination server in the workstation to validate the
+	// request.
+	AllowedUnauthenticatedCorsPreflightRequests bool `json:"allowedUnauthenticatedCorsPreflightRequests,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedUnauthenticatedCorsPreflightRequests") to unconditionally include in
+	// API requests. By default, fields with empty or default values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AllowedUnauthenticatedCorsPreflightRequests") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *HttpOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpOptions
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for Operations.ListOperations.
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
@@ -1676,6 +1707,9 @@ type Workstation struct {
 	// Reconciling: Output only. Indicates whether this workstation is currently
 	// being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// SourceWorkstation: Optional. The source workstation from which this
+	// workstations persistent directories were cloned on creation.
+	SourceWorkstation string `json:"sourceWorkstation,omitempty"`
 	// StartTime: Output only. Time when this workstation was most recently
 	// successfully started, regardless of the workstation's initial state.
 	StartTime string `json:"startTime,omitempty"`
@@ -1862,6 +1896,9 @@ type WorkstationConfig struct {
 	Etag string `json:"etag,omitempty"`
 	// Host: Optional. Runtime host for the workstation.
 	Host *Host `json:"host,omitempty"`
+	// HttpOptions: Optional. Http options that customize the behavior of the
+	// workstation service's http proxy.
+	HttpOptions *HttpOptions `json:"httpOptions,omitempty"`
 	// IdleTimeout: Optional. Number of seconds to wait before automatically
 	// stopping a workstation after it last received user traffic. A value of
 	// "0s" indicates that Cloud Workstations VMs created with this configuration

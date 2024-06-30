@@ -2192,6 +2192,8 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 	EncryptionInfo *GoogleCloudBeyondcorpPartnerservicesV1alphaEncryptionInfo `json:"encryptionInfo,omitempty"`
 	// Name: Output only. ProxyConfig resource name.
 	Name string `json:"name,omitempty"`
+	// ProxyProtocolConfig: Optional. Protocol config data for the Proxy.
+	ProxyProtocolConfig *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig `json:"proxyProtocolConfig,omitempty"`
 	// ProxyUri: Required. The URI of the proxy server.
 	ProxyUri string `json:"proxyUri,omitempty"`
 	// RoutingInfo: Required. Routing info to direct traffic to the proxy server.
@@ -2219,6 +2221,30 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 
 func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig: The protocol
+// data that specifies how to communicate with Partner's Proxy.
+type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig struct {
+	// Metadata: Optional. Untyped property bag to be sent back to the proxy using
+	// client specific mechanism.
+	Metadata map[string]string `json:"metadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2729,7 +2755,7 @@ type GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// EndTime: Output only. End time of the subscription.
 	EndTime string `json:"endTime,omitempty"`
-	// Name: Required. Unique resource name of the Subscription. The name is
+	// Name: Identifier. Unique resource name of the Subscription. The name is
 	// ignored when creating a subscription.
 	Name string `json:"name,omitempty"`
 	// SeatCount: Optional. Number of seats in the subscription.
@@ -8300,8 +8326,8 @@ type OrganizationsLocationsSubscriptionsPatchCall struct {
 // organization. Location will always be global as BeyondCorp subscriptions are
 // per organization.
 //
-//   - name: Unique resource name of the Subscription. The name is ignored when
-//     creating a subscription.
+//   - name: Identifier. Unique resource name of the Subscription. The name is
+//     ignored when creating a subscription.
 func (r *OrganizationsLocationsSubscriptionsService) Patch(name string, googlecloudbeyondcorpsaasplatformsubscriptionsv1alphasubscription *GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription) *OrganizationsLocationsSubscriptionsPatchCall {
 	c := &OrganizationsLocationsSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

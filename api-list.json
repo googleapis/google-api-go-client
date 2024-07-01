@@ -3293,6 +3293,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "fitness:v1",
+      "name": "fitness",
+      "version": "v1",
+      "title": "Fitness API",
+      "description": "The Fitness API for managing users' fitness tracking data.",
+      "discoveryRestUrl": "https://fitness.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/fit/rest/v1/get-started",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "forms:v1",
       "name": "forms",
       "version": "v1",

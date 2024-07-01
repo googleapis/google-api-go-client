@@ -247,6 +247,7 @@ type ProjectsLocationsFleetsService struct {
 func NewProjectsLocationsMembershipsService(s *Service) *ProjectsLocationsMembershipsService {
 	rs := &ProjectsLocationsMembershipsService{s: s}
 	rs.Bindings = NewProjectsLocationsMembershipsBindingsService(s)
+	rs.Rbacrolebindings = NewProjectsLocationsMembershipsRbacrolebindingsService(s)
 	return rs
 }
 
@@ -254,6 +255,8 @@ type ProjectsLocationsMembershipsService struct {
 	s *Service
 
 	Bindings *ProjectsLocationsMembershipsBindingsService
+
+	Rbacrolebindings *ProjectsLocationsMembershipsRbacrolebindingsService
 }
 
 func NewProjectsLocationsMembershipsBindingsService(s *Service) *ProjectsLocationsMembershipsBindingsService {
@@ -262,6 +265,15 @@ func NewProjectsLocationsMembershipsBindingsService(s *Service) *ProjectsLocatio
 }
 
 type ProjectsLocationsMembershipsBindingsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsMembershipsRbacrolebindingsService(s *Service) *ProjectsLocationsMembershipsRbacrolebindingsService {
+	rs := &ProjectsLocationsMembershipsRbacrolebindingsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsMembershipsRbacrolebindingsService struct {
 	s *Service
 }
 
@@ -3392,6 +3404,38 @@ type ListMembershipBindingsResponse struct {
 
 func (s *ListMembershipBindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMembershipBindingsResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ListMembershipRBACRoleBindingsResponse: List of Membership RBACRoleBindings.
+type ListMembershipRBACRoleBindingsResponse struct {
+	// NextPageToken: A token to request the next page of resources from the
+	// `ListMembershipRBACRoleBindings` method. The value of an empty string means
+	// that there are no more resources to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Rbacrolebindings: The list of Membership RBACRoleBindings.
+	Rbacrolebindings []*RBACRoleBinding `json:"rbacrolebindings,omitempty"`
+	// Unreachable: List of locations that could not be reached while fetching this
+	// list.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListMembershipRBACRoleBindingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMembershipRBACRoleBindingsResponse
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9248,6 +9292,152 @@ func (c *ProjectsLocationsMembershipsBindingsPatchCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	return ret, nil
+}
+
+type ProjectsLocationsMembershipsRbacrolebindingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Membership RBACRoleBindings.
+//
+//   - parent: The parent (project and location) where the Features will be
+//     listed. Specified in the format `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsRbacrolebindingsService) List(parent string) *ProjectsLocationsMembershipsRbacrolebindingsListCall {
+	c := &ProjectsLocationsMembershipsRbacrolebindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": When requesting a 'page' of
+// resources, `page_size` specifies number of resources to return. If
+// unspecified or set to 0, all resources will be returned.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsListCall) PageSize(pageSize int64) *ProjectsLocationsMembershipsRbacrolebindingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned by
+// previous call to `ListMembershipRBACRoleBindings` which specifies the
+// position in the list from where to continue listing the resources.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsListCall) PageToken(pageToken string) *ProjectsLocationsMembershipsRbacrolebindingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsRbacrolebindingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsRbacrolebindingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsListCall) Context(ctx context.Context) *ProjectsLocationsMembershipsRbacrolebindingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsRbacrolebindingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/rbacrolebindings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMembershipRBACRoleBindingsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsListCall) Do(opts ...googleapi.CallOption) (*ListMembershipRBACRoleBindingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMembershipRBACRoleBindingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMembershipsRbacrolebindingsListCall) Pages(ctx context.Context, f func(*ListMembershipRBACRoleBindingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsOperationsCancelCall struct {

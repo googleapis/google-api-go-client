@@ -651,7 +651,7 @@ func (s *Attack) MarshalJSON() ([]byte, error) {
 type AttackExposure struct {
 	// AttackExposureResult: The resource name of the attack path simulation result
 	// that contains the details regarding this attack exposure score. Example:
-	// organizations/123/simulations/456/attackExposureResults/789
+	// `organizations/123/simulations/456/attackExposureResults/789`
 	AttackExposureResult string `json:"attackExposureResult,omitempty"`
 	// ExposedHighValueResourcesCount: The number of high value resources that are
 	// exposed as a result of this finding.
@@ -824,7 +824,7 @@ type AzureManagementGroup struct {
 	// DisplayName: The display name of the Azure management group.
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: The UUID of the Azure management group, for example,
-	// "20000000-0001-0000-0000-000000000000".
+	// `20000000-0001-0000-0000-000000000000`.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -900,7 +900,7 @@ type AzureSubscription struct {
 	// DisplayName: The display name of the Azure subscription.
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: The UUID of the Azure subscription, for example,
-	// "291bba3f-e0a5-47bc-a099-3bdcb2a50a05".
+	// `291bba3f-e0a5-47bc-a099-3bdcb2a50a05`.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2624,12 +2624,12 @@ type GoogleCloudSecuritycenterV1MuteConfig struct {
 	// on config creation or update.
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
 	// Name: This field will be ignored if provided on config creation. Format
-	// "organizations/{organization}/muteConfigs/{mute_config}"
-	// "folders/{folder}/muteConfigs/{mute_config}"
-	// "projects/{project}/muteConfigs/{mute_config}"
-	// "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-	// "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-	// "projects/{project}/locations/global/muteConfigs/{mute_config}"
+	// `organizations/{organization}/muteConfigs/{mute_config}`
+	// `folders/{folder}/muteConfigs/{mute_config}`
+	// `projects/{project}/muteConfigs/{mute_config}`
+	// `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+	// `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+	// `projects/{project}/locations/global/muteConfigs/{mute_config}`
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the mute config was
 	// updated. This field is set by the server and will be ignored if provided on
@@ -2750,14 +2750,14 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	ResourcePath *ResourcePath `json:"resourcePath,omitempty"`
 	// ResourcePathString: A string representation of the resource path. For Google
 	// Cloud, it has the format of
-	// organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proje
-	// cts/{project_id} where there can be any number of folders. For AWS, it has
+	// `organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proj
+	// ects/{project_id}` where there can be any number of folders. For AWS, it has
 	// the format of
-	// org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id}
-	// /account/{account_id} where there can be any number of organizational units.
-	// For Azure, it has the format of
-	// mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription_
-	// id}/rg/{resource_group_name} where there can be any number of management
+	// `org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id
+	// }/account/{account_id}` where there can be any number of organizational
+	// units. For Azure, it has the format of
+	// `mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription
+	// _id}/rg/{resource_group_name}` where there can be any number of management
 	// groups.
 	ResourcePathString string `json:"resourcePathString,omitempty"`
 	// Service: The parent service or product from which the resource is provided,
@@ -2826,12 +2826,13 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	// Name: Name for the resource value configuration
 	Name string `json:"name,omitempty"`
 	// ResourceLabelsSelector: List of resource labels to search for, evaluated
-	// with AND. For example, "resource_labels_selector": {"key": "value", "env":
-	// "prod"} will match resources with labels "key": "value" AND "env": "prod"
+	// with `AND`. For example, "resource_labels_selector": {"key": "value",
+	// "env": "prod"}` will match resources with labels "key": "value" `AND` "env":
+	// "prod"
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
 	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
 	// ResourceType: Apply resource_value only to resources that match
-	// resource_type. resource_type will be checked with AND of other resources.
+	// resource_type. resource_type will be checked with `AND` of other resources.
 	// For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will
 	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
 	ResourceType string `json:"resourceType,omitempty"`
@@ -2846,16 +2847,16 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	ResourceValue string `json:"resourceValue,omitempty"`
 	// Scope: Project or folder to scope this configuration to. For example,
 	// "project/456" would apply this configuration only to resources in
-	// "project/456" scope will be checked with AND of other resources.
+	// "project/456" scope will be checked with `AND` of other resources.
 	Scope string `json:"scope,omitempty"`
 	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
 	// Data Protection finding to resource values. This mapping can only be used in
 	// combination with a resource_type that is related to BigQuery, e.g.
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Required. Tag values combined with AND to check against. Values
-	// in the form "tagValues/123" Example: [ "tagValues/123", "tagValues/456",
-	// "tagValues/789" ]
+	// TagValues: Required. Tag values combined with `AND` to check against. Values
+	// in the form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
+	// "tagValues/789" ]`
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
 	// UpdateTime: Output only. Timestamp this resource value configuration was
@@ -3527,7 +3528,7 @@ func (s *GoogleCloudSecuritycenterV2Attack) MarshalJSON() ([]byte, error) {
 type GoogleCloudSecuritycenterV2AttackExposure struct {
 	// AttackExposureResult: The resource name of the attack path simulation result
 	// that contains the details regarding this attack exposure score. Example:
-	// organizations/123/simulations/456/attackExposureResults/789
+	// `organizations/123/simulations/456/attackExposureResults/789`
 	AttackExposureResult string `json:"attackExposureResult,omitempty"`
 	// ExposedHighValueResourcesCount: The number of high value resources that are
 	// exposed as a result of this finding.
@@ -3704,7 +3705,7 @@ type GoogleCloudSecuritycenterV2AzureManagementGroup struct {
 	// DisplayName: The display name of the Azure management group.
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: The UUID of the Azure management group, for example,
-	// "20000000-0001-0000-0000-000000000000".
+	// `20000000-0001-0000-0000-000000000000`.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3783,7 +3784,7 @@ type GoogleCloudSecuritycenterV2AzureSubscription struct {
 	// DisplayName: The display name of the Azure subscription.
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: The UUID of the Azure subscription, for example,
-	// "291bba3f-e0a5-47bc-a099-3bdcb2a50a05".
+	// `291bba3f-e0a5-47bc-a099-3bdcb2a50a05`.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6088,14 +6089,14 @@ type GoogleCloudSecuritycenterV2Resource struct {
 	ResourcePath *GoogleCloudSecuritycenterV2ResourcePath `json:"resourcePath,omitempty"`
 	// ResourcePathString: A string representation of the resource path. For Google
 	// Cloud, it has the format of
-	// organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proje
-	// cts/{project_id} where there can be any number of folders. For AWS, it has
+	// `organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proj
+	// ects/{project_id}` where there can be any number of folders. For AWS, it has
 	// the format of
-	// org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id}
-	// /account/{account_id} where there can be any number of organizational units.
-	// For Azure, it has the format of
-	// mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription_
-	// id}/rg/{resource_group_name} where there can be any number of management
+	// `org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id
+	// }/account/{account_id}` where there can be any number of organizational
+	// units. For Azure, it has the format of
+	// `mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription
+	// _id}/rg/{resource_group_name}` where there can be any number of management
 	// groups.
 	ResourcePathString string `json:"resourcePathString,omitempty"`
 	// Service: The service or resource provider associated with the resource.
@@ -6204,12 +6205,12 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	// Name: Name for the resource value configuration
 	Name string `json:"name,omitempty"`
 	// ResourceLabelsSelector: List of resource labels to search for, evaluated
-	// with AND. For example, "resource_labels_selector": {"key": "value", "env":
-	// "prod"} will match resources with labels "key": "value" AND "env": "prod"
+	// with `AND`. For example, "resource_labels_selector": {"key": "value", "env":
+	// "prod"} will match resources with labels "key": "value" `AND` "env": "prod"
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
 	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
 	// ResourceType: Apply resource_value only to resources that match
-	// resource_type. resource_type will be checked with AND of other resources.
+	// resource_type. resource_type will be checked with `AND` of other resources.
 	// For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will
 	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
 	ResourceType string `json:"resourceType,omitempty"`
@@ -6225,16 +6226,16 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	ResourceValue string `json:"resourceValue,omitempty"`
 	// Scope: Project or folder to scope this configuration to. For example,
 	// "project/456" would apply this configuration only to resources in
-	// "project/456" scope will be checked with AND of other resources.
+	// "project/456" scope will be checked with `AND` of other resources.
 	Scope string `json:"scope,omitempty"`
 	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
 	// Data Protection finding to resource values. This mapping can only be used in
 	// combination with a resource_type that is related to BigQuery, e.g.
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Required. Tag values combined with AND to check against. Values
-	// in the form "tagValues/123" Example: [ "tagValues/123", "tagValues/456",
-	// "tagValues/789" ]
+	// TagValues: Required. Tag values combined with `AND` to check against. Values
+	// in the form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
+	// "tagValues/789" ]`
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
 	// UpdateTime: Output only. Timestamp this resource value configuration was
@@ -6605,7 +6606,8 @@ type GoogleCloudSecuritycenterV2ToxicCombination struct {
 	// combination exposes one or more high-value resources to potential attack.
 	AttackExposureScore float64 `json:"attackExposureScore,omitempty"`
 	// RelatedFindings: List of resource names of findings associated with this
-	// toxic combination. For example, organizations/123/sources/456/findings/789.
+	// toxic combination. For example,
+	// `organizations/123/sources/456/findings/789`.
 	RelatedFindings []string `json:"relatedFindings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttackExposureScore") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8081,7 +8083,8 @@ type ToxicCombination struct {
 	// combination exposes one or more high-value resources to potential attack.
 	AttackExposureScore float64 `json:"attackExposureScore,omitempty"`
 	// RelatedFindings: List of resource names of findings associated with this
-	// toxic combination. For example, organizations/123/sources/456/findings/789.
+	// toxic combination. For example,
+	// `organizations/123/sources/456/findings/789`.
 	RelatedFindings []string `json:"relatedFindings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttackExposureScore") to
 	// unconditionally include in API requests. By default, fields with empty or

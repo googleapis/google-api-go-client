@@ -1175,7 +1175,7 @@ func (s *Attack) MarshalJSON() ([]byte, error) {
 type AttackExposure struct {
 	// AttackExposureResult: The resource name of the attack path simulation result
 	// that contains the details regarding this attack exposure score. Example:
-	// organizations/123/simulations/456/attackExposureResults/789
+	// `organizations/123/simulations/456/attackExposureResults/789`
 	AttackExposureResult string `json:"attackExposureResult,omitempty"`
 	// ExposedHighValueResourcesCount: The number of high value resources that are
 	// exposed as a result of this finding.
@@ -1298,10 +1298,10 @@ type AttackPathNode struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Resource: The name of the resource at this point in the attack path. The
 	// format of the name follows the Cloud Asset Inventory resource name format
-	// ("https://cloud.google.com/asset-inventory/docs/resource-name-format")
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
 	Resource string `json:"resource,omitempty"`
 	// ResourceType: The supported resource type
-	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types")
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 	ResourceType string `json:"resourceType,omitempty"`
 	// Uuid: Unique id of the attack path node.
 	Uuid string `json:"uuid,omitempty"`
@@ -1551,7 +1551,7 @@ type AzureManagementGroup struct {
 	// DisplayName: The display name of the Azure management group.
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: The UUID of the Azure management group, for example,
-	// "20000000-0001-0000-0000-000000000000".
+	// `20000000-0001-0000-0000-000000000000`.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1627,7 +1627,7 @@ type AzureSubscription struct {
 	// DisplayName: The display name of the Azure subscription.
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: The UUID of the Azure subscription, for example,
-	// "291bba3f-e0a5-47bc-a099-3bdcb2a50a05".
+	// `291bba3f-e0a5-47bc-a099-3bdcb2a50a05`.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2662,12 +2662,12 @@ type EffectiveEventThreatDetectionCustomModule struct {
 	EnablementState string `json:"enablementState,omitempty"`
 	// Name: Output only. The resource name of the effective ETD custom module. Its
 	// format is: *
-	// "organizations/{organization}/eventThreatDetectionSettings/effectiveCustomMod
-	// ules/{module}". *
-	// "folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{module
-	// }". *
-	// "projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{modu
-	// le}".
+	// `organizations/{organization}/eventThreatDetectionSettings/effectiveCustomMod
+	// ules/{module}`. *
+	// `folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{module
+	// }`. *
+	// `projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{modu
+	// le}`.
 	Name string `json:"name,omitempty"`
 	// Type: Output only. Type for the module. e.g. CONFIGURABLE_BAD_IP.
 	Type string `json:"type,omitempty"`
@@ -2758,10 +2758,10 @@ type EventThreatDetectionCustomModule struct {
 	LastEditor string `json:"lastEditor,omitempty"`
 	// Name: Immutable. The resource name of the Event Threat Detection custom
 	// module. Its format is: *
-	// "organizations/{organization}/eventThreatDetectionSettings/customModules/{mod
-	// ule}". *
-	// "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-	// "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+	// `organizations/{organization}/eventThreatDetectionSettings/customModules/{mod
+	// ule}`. *
+	// `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+	// `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 	Name string `json:"name,omitempty"`
 	// Type: Type for the module. e.g. CONFIGURABLE_BAD_IP.
 	Type string `json:"type,omitempty"`
@@ -3653,12 +3653,12 @@ type GoogleCloudSecuritycenterV1MuteConfig struct {
 	// on config creation or update.
 	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
 	// Name: This field will be ignored if provided on config creation. Format
-	// "organizations/{organization}/muteConfigs/{mute_config}"
-	// "folders/{folder}/muteConfigs/{mute_config}"
-	// "projects/{project}/muteConfigs/{mute_config}"
-	// "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-	// "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-	// "projects/{project}/locations/global/muteConfigs/{mute_config}"
+	// `organizations/{organization}/muteConfigs/{mute_config}`
+	// `folders/{folder}/muteConfigs/{mute_config}`
+	// `projects/{project}/muteConfigs/{mute_config}`
+	// `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+	// `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+	// `projects/{project}/locations/global/muteConfigs/{mute_config}`
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the mute config was
 	// updated. This field is set by the server and will be ignored if provided on
@@ -3782,14 +3782,14 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	ResourcePath *ResourcePath `json:"resourcePath,omitempty"`
 	// ResourcePathString: A string representation of the resource path. For Google
 	// Cloud, it has the format of
-	// organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proje
-	// cts/{project_id} where there can be any number of folders. For AWS, it has
+	// `organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proj
+	// ects/{project_id}` where there can be any number of folders. For AWS, it has
 	// the format of
-	// org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id}
-	// /account/{account_id} where there can be any number of organizational units.
-	// For Azure, it has the format of
-	// mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription_
-	// id}/rg/{resource_group_name} where there can be any number of management
+	// `org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id
+	// }/account/{account_id}` where there can be any number of organizational
+	// units. For Azure, it has the format of
+	// `mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription
+	// _id}/rg/{resource_group_name}` where there can be any number of management
 	// groups.
 	ResourcePathString string `json:"resourcePathString,omitempty"`
 	// Service: The parent service or product from which the resource is provided,
@@ -3858,12 +3858,13 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	// Name: Name for the resource value configuration
 	Name string `json:"name,omitempty"`
 	// ResourceLabelsSelector: List of resource labels to search for, evaluated
-	// with AND. For example, "resource_labels_selector": {"key": "value", "env":
-	// "prod"} will match resources with labels "key": "value" AND "env": "prod"
+	// with `AND`. For example, "resource_labels_selector": {"key": "value",
+	// "env": "prod"}` will match resources with labels "key": "value" `AND` "env":
+	// "prod"
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
 	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
 	// ResourceType: Apply resource_value only to resources that match
-	// resource_type. resource_type will be checked with AND of other resources.
+	// resource_type. resource_type will be checked with `AND` of other resources.
 	// For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will
 	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
 	ResourceType string `json:"resourceType,omitempty"`
@@ -3878,16 +3879,16 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	ResourceValue string `json:"resourceValue,omitempty"`
 	// Scope: Project or folder to scope this configuration to. For example,
 	// "project/456" would apply this configuration only to resources in
-	// "project/456" scope will be checked with AND of other resources.
+	// "project/456" scope will be checked with `AND` of other resources.
 	Scope string `json:"scope,omitempty"`
 	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
 	// Data Protection finding to resource values. This mapping can only be used in
 	// combination with a resource_type that is related to BigQuery, e.g.
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Required. Tag values combined with AND to check against. Values
-	// in the form "tagValues/123" Example: [ "tagValues/123", "tagValues/456",
-	// "tagValues/789" ]
+	// TagValues: Required. Tag values combined with `AND` to check against. Values
+	// in the form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
+	// "tagValues/789" ]`
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
 	// UpdateTime: Output only. Timestamp this resource value configuration was
@@ -4565,7 +4566,7 @@ func (s *GoogleCloudSecuritycenterV2Attack) MarshalJSON() ([]byte, error) {
 type GoogleCloudSecuritycenterV2AttackExposure struct {
 	// AttackExposureResult: The resource name of the attack path simulation result
 	// that contains the details regarding this attack exposure score. Example:
-	// organizations/123/simulations/456/attackExposureResults/789
+	// `organizations/123/simulations/456/attackExposureResults/789`
 	AttackExposureResult string `json:"attackExposureResult,omitempty"`
 	// ExposedHighValueResourcesCount: The number of high value resources that are
 	// exposed as a result of this finding.
@@ -4742,7 +4743,7 @@ type GoogleCloudSecuritycenterV2AzureManagementGroup struct {
 	// DisplayName: The display name of the Azure management group.
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: The UUID of the Azure management group, for example,
-	// "20000000-0001-0000-0000-000000000000".
+	// `20000000-0001-0000-0000-000000000000`.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4821,7 +4822,7 @@ type GoogleCloudSecuritycenterV2AzureSubscription struct {
 	// DisplayName: The display name of the Azure subscription.
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: The UUID of the Azure subscription, for example,
-	// "291bba3f-e0a5-47bc-a099-3bdcb2a50a05".
+	// `291bba3f-e0a5-47bc-a099-3bdcb2a50a05`.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7126,14 +7127,14 @@ type GoogleCloudSecuritycenterV2Resource struct {
 	ResourcePath *GoogleCloudSecuritycenterV2ResourcePath `json:"resourcePath,omitempty"`
 	// ResourcePathString: A string representation of the resource path. For Google
 	// Cloud, it has the format of
-	// organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proje
-	// cts/{project_id} where there can be any number of folders. For AWS, it has
+	// `organizations/{organization_id}/folders/{folder_id}/folders/{folder_id}/proj
+	// ects/{project_id}` where there can be any number of folders. For AWS, it has
 	// the format of
-	// org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id}
-	// /account/{account_id} where there can be any number of organizational units.
-	// For Azure, it has the format of
-	// mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription_
-	// id}/rg/{resource_group_name} where there can be any number of management
+	// `org/{organization_id}/ou/{organizational_unit_id}/ou/{organizational_unit_id
+	// }/account/{account_id}` where there can be any number of organizational
+	// units. For Azure, it has the format of
+	// `mg/{management_group_id}/mg/{management_group_id}/subscription/{subscription
+	// _id}/rg/{resource_group_name}` where there can be any number of management
 	// groups.
 	ResourcePathString string `json:"resourcePathString,omitempty"`
 	// Service: The service or resource provider associated with the resource.
@@ -7242,12 +7243,12 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	// Name: Name for the resource value configuration
 	Name string `json:"name,omitempty"`
 	// ResourceLabelsSelector: List of resource labels to search for, evaluated
-	// with AND. For example, "resource_labels_selector": {"key": "value", "env":
-	// "prod"} will match resources with labels "key": "value" AND "env": "prod"
+	// with `AND`. For example, "resource_labels_selector": {"key": "value", "env":
+	// "prod"} will match resources with labels "key": "value" `AND` "env": "prod"
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
 	ResourceLabelsSelector map[string]string `json:"resourceLabelsSelector,omitempty"`
 	// ResourceType: Apply resource_value only to resources that match
-	// resource_type. resource_type will be checked with AND of other resources.
+	// resource_type. resource_type will be checked with `AND` of other resources.
 	// For example, "storage.googleapis.com/Bucket" with resource_value "HIGH" will
 	// apply "HIGH" value only to "storage.googleapis.com/Bucket" resources.
 	ResourceType string `json:"resourceType,omitempty"`
@@ -7263,16 +7264,16 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	ResourceValue string `json:"resourceValue,omitempty"`
 	// Scope: Project or folder to scope this configuration to. For example,
 	// "project/456" would apply this configuration only to resources in
-	// "project/456" scope will be checked with AND of other resources.
+	// "project/456" scope will be checked with `AND` of other resources.
 	Scope string `json:"scope,omitempty"`
 	// SensitiveDataProtectionMapping: A mapping of the sensitivity on Sensitive
 	// Data Protection finding to resource values. This mapping can only be used in
 	// combination with a resource_type that is related to BigQuery, e.g.
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Required. Tag values combined with AND to check against. Values
-	// in the form "tagValues/123" Example: [ "tagValues/123", "tagValues/456",
-	// "tagValues/789" ]
+	// TagValues: Required. Tag values combined with `AND` to check against. Values
+	// in the form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
+	// "tagValues/789" ]`
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
 	// UpdateTime: Output only. Timestamp this resource value configuration was
@@ -7643,7 +7644,8 @@ type GoogleCloudSecuritycenterV2ToxicCombination struct {
 	// combination exposes one or more high-value resources to potential attack.
 	AttackExposureScore float64 `json:"attackExposureScore,omitempty"`
 	// RelatedFindings: List of resource names of findings associated with this
-	// toxic combination. For example, organizations/123/sources/456/findings/789.
+	// toxic combination. For example,
+	// `organizations/123/sources/456/findings/789`.
 	RelatedFindings []string `json:"relatedFindings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttackExposureScore") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9375,7 +9377,7 @@ func (s *Package) MarshalJSON() ([]byte, error) {
 // the attack path.
 type PathNodeAssociatedFinding struct {
 	// CanonicalFinding: Canonical name of the associated findings. Example:
-	// organizations/123/sources/456/findings/789
+	// `organizations/123/sources/456/findings/789`
 	CanonicalFinding string `json:"canonicalFinding,omitempty"`
 	// FindingCategory: The additional taxonomy group within findings from a given
 	// source.
@@ -10361,7 +10363,7 @@ type Simulation struct {
 	// CreateTime: Output only. Time simulation was created
 	CreateTime string `json:"createTime,omitempty"`
 	// Name: Full resource name of the Simulation:
-	// organizations/123/simulations/456
+	// `organizations/123/simulations/456`
 	Name string `json:"name,omitempty"`
 	// ResourceValueConfigsMetadata: Resource value configurations' metadata used
 	// in this simulation. Maximum of 100.
@@ -10632,7 +10634,8 @@ type ToxicCombination struct {
 	// combination exposes one or more high-value resources to potential attack.
 	AttackExposureScore float64 `json:"attackExposureScore,omitempty"`
 	// RelatedFindings: List of resource names of findings associated with this
-	// toxic combination. For example, organizations/123/sources/456/findings/789.
+	// toxic combination. For example,
+	// `organizations/123/sources/456/findings/789`.
 	RelatedFindings []string `json:"relatedFindings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttackExposureScore") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10907,8 +10910,8 @@ type FoldersAssetsGroupCall struct {
 // properties.
 //
 //   - parent: The name of the parent to group the assets by. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *FoldersAssetsGroupCall {
 	c := &FoldersAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11034,8 +11037,8 @@ type FoldersAssetsListCall struct {
 //   - parent: The name of the parent resource that contains the assets. The
 //     value that you can specify on parent depends on the method in which you
 //     specify parent. You can specify one of the following values:
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersAssetsService) List(parent string) *FoldersAssetsListCall {
 	c := &FoldersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11404,8 +11407,8 @@ type FoldersBigQueryExportsCreateCall struct {
 // Create: Creates a BigQuery export.
 //
 //   - parent: The name of the parent resource of the new BigQuery export. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *FoldersBigQueryExportsCreateCall {
 	c := &FoldersBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11517,9 +11520,9 @@ type FoldersBigQueryExportsDeleteCall struct {
 // Delete: Deletes an existing BigQuery export.
 //
 //   - name: The name of the BigQuery export to delete. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *FoldersBigQueryExportsService) Delete(name string) *FoldersBigQueryExportsDeleteCall {
 	c := &FoldersBigQueryExportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11616,9 +11619,9 @@ type FoldersBigQueryExportsGetCall struct {
 // Get: Gets a BigQuery export.
 //
 //   - name: Name of the BigQuery export to retrieve. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *FoldersBigQueryExportsService) Get(name string) *FoldersBigQueryExportsGetCall {
 	c := &FoldersBigQueryExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11731,8 +11734,8 @@ type FoldersBigQueryExportsListCall struct {
 // the folder are returned.
 //
 //   - parent: The parent, which owns the collection of BigQuery exports. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *FoldersBigQueryExportsService) List(parent string) *FoldersBigQueryExportsListCall {
 	c := &FoldersBigQueryExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12734,10 +12737,10 @@ type FoldersEventThreatDetectionSettingsCustomModulesPatchCall struct {
 //
 //   - name: Immutable. The resource name of the Event Threat Detection custom
 //     module. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *FoldersEventThreatDetectionSettingsCustomModulesService) Patch(name string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *FoldersEventThreatDetectionSettingsCustomModulesPatchCall {
 	c := &FoldersEventThreatDetectionSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13120,8 +13123,8 @@ type FoldersFindingsBulkMuteCall struct {
 // findings matched by the filter will be muted after the LRO is done.
 //
 //   - parent: The parent, at which bulk action needs to be applied. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *FoldersFindingsService) BulkMute(parent string, bulkmutefindingsrequest *BulkMuteFindingsRequest) *FoldersFindingsBulkMuteCall {
 	c := &FoldersFindingsBulkMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13223,8 +13226,8 @@ type FoldersLocationsMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersLocationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *FoldersLocationsMuteConfigsCreateCall {
 	c := &FoldersLocationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13336,12 +13339,12 @@ type FoldersLocationsMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *FoldersLocationsMuteConfigsService) Delete(name string) *FoldersLocationsMuteConfigsDeleteCall {
 	c := &FoldersLocationsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13438,12 +13441,12 @@ type FoldersLocationsMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *FoldersLocationsMuteConfigsService) Get(name string) *FoldersLocationsMuteConfigsGetCall {
 	c := &FoldersLocationsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13552,8 +13555,8 @@ type FoldersLocationsMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *FoldersLocationsMuteConfigsService) List(parent string) *FoldersLocationsMuteConfigsListCall {
 	c := &FoldersLocationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13701,12 +13704,12 @@ type FoldersLocationsMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *FoldersLocationsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *FoldersLocationsMuteConfigsPatchCall {
 	c := &FoldersLocationsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13816,8 +13819,8 @@ type FoldersMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *FoldersMuteConfigsCreateCall {
 	c := &FoldersMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13929,12 +13932,12 @@ type FoldersMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *FoldersMuteConfigsService) Delete(name string) *FoldersMuteConfigsDeleteCall {
 	c := &FoldersMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14031,12 +14034,12 @@ type FoldersMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *FoldersMuteConfigsService) Get(name string) *FoldersMuteConfigsGetCall {
 	c := &FoldersMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14145,8 +14148,8 @@ type FoldersMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *FoldersMuteConfigsService) List(parent string) *FoldersMuteConfigsListCall {
 	c := &FoldersMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14294,12 +14297,12 @@ type FoldersMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *FoldersMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *FoldersMuteConfigsPatchCall {
 	c := &FoldersMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14409,8 +14412,8 @@ type FoldersNotificationConfigsCreateCall struct {
 // Create: Creates a notification config.
 //
 //   - parent: Resource name of the new notification config's parent. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *FoldersNotificationConfigsCreateCall {
 	c := &FoldersNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14521,9 +14524,9 @@ type FoldersNotificationConfigsDeleteCall struct {
 // Delete: Deletes a notification config.
 //
 //   - name: Name of the notification config to delete. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *FoldersNotificationConfigsService) Delete(name string) *FoldersNotificationConfigsDeleteCall {
 	c := &FoldersNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14620,9 +14623,9 @@ type FoldersNotificationConfigsGetCall struct {
 // Get: Gets a notification config.
 //
 //   - name: Name of the notification config to get. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *FoldersNotificationConfigsService) Get(name string) *FoldersNotificationConfigsGetCall {
 	c := &FoldersNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14998,9 +15001,9 @@ type FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct {
 // parent. These modules are enabled by default.
 //
 //   - parent: Resource name of the new custom module's parent. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15104,12 +15107,12 @@ type FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct {
 // resident custom modules.
 //
 //   - name: Name of the custom module to delete. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15206,12 +15209,12 @@ type FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
 // Get: Retrieves a SecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15322,9 +15325,9 @@ type FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
 // parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15471,9 +15474,9 @@ type FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall struc
 // the parent’s CRM descendants.
 //
 //   - parent: Name of parent to list descendant custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15847,12 +15850,12 @@ type FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall struct 
 // Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the effective custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
-//     omModules/{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
-//     ustomModule}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
-//     {customModule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
+//     omModules/{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
+//     ustomModule}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
+//     {customModule}`.
 func (r *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15963,9 +15966,9 @@ type FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall struct
 // the parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list effective custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16110,8 +16113,8 @@ type FoldersSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format should
-//     be "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     be `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *FoldersSourcesService) List(parent string) *FoldersSourcesListCall {
 	c := &FoldersSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16261,12 +16264,12 @@ type FoldersSourcesFindingsGroupCall struct {
 // /v1/projects/{project_id}/sources/-/findings
 //
 //   - parent: Name of the source to groupBy. Its format is
-//     "organizations/[organization_id]/sources/[source_id]",
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]. To groupBy across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To groupBy across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-,
-//     or projects/{project_id}/sources/-.
+//     `organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/-`, or `projects/{project_id}/sources/-`.
 func (r *FoldersSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *FoldersSourcesFindingsGroupCall {
 	c := &FoldersSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16392,12 +16395,12 @@ type FoldersSourcesFindingsListCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings
 //
 //   - parent: Name of the source the findings belong to. Its format is
-//     "organizations/[organization_id]/sources/[source_id],
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]". To list across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To list across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-
-//     or projects/{projects_id}/sources/-.
+//     `organizations/{organization_id}/sources/-`,
+//     `folders/{folder_id}/sources/-` or `projects/{projects_id}/sources/-`.
 func (r *FoldersSourcesFindingsService) List(parent string) *FoldersSourcesFindingsListCall {
 	c := &FoldersSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16755,9 +16758,9 @@ type FoldersSourcesFindingsSetMuteCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *FoldersSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *FoldersSourcesFindingsSetMuteCall {
 	c := &FoldersSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16861,9 +16864,9 @@ type FoldersSourcesFindingsSetStateCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *FoldersSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *FoldersSourcesFindingsSetStateCall {
 	c := &FoldersSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17202,7 +17205,7 @@ type OrganizationsGetOrganizationSettingsCall struct {
 // GetOrganizationSettings: Gets the settings for an organization.
 //
 //   - name: Name of the organization to get organization settings for. Its
-//     format is "organizations/[organization_id]/organizationSettings".
+//     format is `organizations/[organization_id]/organizationSettings`.
 func (r *OrganizationsService) GetOrganizationSettings(name string) *OrganizationsGetOrganizationSettingsCall {
 	c := &OrganizationsGetOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17424,8 +17427,8 @@ type OrganizationsAssetsGroupCall struct {
 // properties.
 //
 //   - parent: The name of the parent to group the assets by. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *OrganizationsAssetsGroupCall {
 	c := &OrganizationsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17551,8 +17554,8 @@ type OrganizationsAssetsListCall struct {
 //   - parent: The name of the parent resource that contains the assets. The
 //     value that you can specify on parent depends on the method in which you
 //     specify parent. You can specify one of the following values:
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsListCall {
 	c := &OrganizationsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17800,7 +17803,7 @@ type OrganizationsAssetsRunDiscoveryCall struct {
 // a TOO_MANY_REQUESTS error.
 //
 //   - parent: Name of the organization to run asset discovery for. Its format is
-//     "organizations/[organization_id]".
+//     `organizations/[organization_id]`.
 func (r *OrganizationsAssetsService) RunDiscovery(parent string, runassetdiscoveryrequest *RunAssetDiscoveryRequest) *OrganizationsAssetsRunDiscoveryCall {
 	c := &OrganizationsAssetsRunDiscoveryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18026,8 +18029,8 @@ type OrganizationsBigQueryExportsCreateCall struct {
 // Create: Creates a BigQuery export.
 //
 //   - parent: The name of the parent resource of the new BigQuery export. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *OrganizationsBigQueryExportsCreateCall {
 	c := &OrganizationsBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18139,9 +18142,9 @@ type OrganizationsBigQueryExportsDeleteCall struct {
 // Delete: Deletes an existing BigQuery export.
 //
 //   - name: The name of the BigQuery export to delete. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *OrganizationsBigQueryExportsService) Delete(name string) *OrganizationsBigQueryExportsDeleteCall {
 	c := &OrganizationsBigQueryExportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18238,9 +18241,9 @@ type OrganizationsBigQueryExportsGetCall struct {
 // Get: Gets a BigQuery export.
 //
 //   - name: Name of the BigQuery export to retrieve. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *OrganizationsBigQueryExportsService) Get(name string) *OrganizationsBigQueryExportsGetCall {
 	c := &OrganizationsBigQueryExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18353,8 +18356,8 @@ type OrganizationsBigQueryExportsListCall struct {
 // the folder are returned.
 //
 //   - parent: The parent, which owns the collection of BigQuery exports. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *OrganizationsBigQueryExportsService) List(parent string) *OrganizationsBigQueryExportsListCall {
 	c := &OrganizationsBigQueryExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19356,10 +19359,10 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall struct {
 //
 //   - name: Immutable. The resource name of the Event Threat Detection custom
 //     module. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Patch(name string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall {
 	c := &OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19742,8 +19745,8 @@ type OrganizationsFindingsBulkMuteCall struct {
 // findings matched by the filter will be muted after the LRO is done.
 //
 //   - parent: The parent, at which bulk action needs to be applied. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *OrganizationsFindingsService) BulkMute(parent string, bulkmutefindingsrequest *BulkMuteFindingsRequest) *OrganizationsFindingsBulkMuteCall {
 	c := &OrganizationsFindingsBulkMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19845,8 +19848,8 @@ type OrganizationsLocationsMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsLocationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *OrganizationsLocationsMuteConfigsCreateCall {
 	c := &OrganizationsLocationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19958,12 +19961,12 @@ type OrganizationsLocationsMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *OrganizationsLocationsMuteConfigsService) Delete(name string) *OrganizationsLocationsMuteConfigsDeleteCall {
 	c := &OrganizationsLocationsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20060,12 +20063,12 @@ type OrganizationsLocationsMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *OrganizationsLocationsMuteConfigsService) Get(name string) *OrganizationsLocationsMuteConfigsGetCall {
 	c := &OrganizationsLocationsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20174,8 +20177,8 @@ type OrganizationsLocationsMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *OrganizationsLocationsMuteConfigsService) List(parent string) *OrganizationsLocationsMuteConfigsListCall {
 	c := &OrganizationsLocationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20323,12 +20326,12 @@ type OrganizationsLocationsMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *OrganizationsLocationsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *OrganizationsLocationsMuteConfigsPatchCall {
 	c := &OrganizationsLocationsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20438,8 +20441,8 @@ type OrganizationsMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *OrganizationsMuteConfigsCreateCall {
 	c := &OrganizationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20551,12 +20554,12 @@ type OrganizationsMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *OrganizationsMuteConfigsService) Delete(name string) *OrganizationsMuteConfigsDeleteCall {
 	c := &OrganizationsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20653,12 +20656,12 @@ type OrganizationsMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *OrganizationsMuteConfigsService) Get(name string) *OrganizationsMuteConfigsGetCall {
 	c := &OrganizationsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20767,8 +20770,8 @@ type OrganizationsMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *OrganizationsMuteConfigsService) List(parent string) *OrganizationsMuteConfigsListCall {
 	c := &OrganizationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20916,12 +20919,12 @@ type OrganizationsMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *OrganizationsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *OrganizationsMuteConfigsPatchCall {
 	c := &OrganizationsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21031,8 +21034,8 @@ type OrganizationsNotificationConfigsCreateCall struct {
 // Create: Creates a notification config.
 //
 //   - parent: Resource name of the new notification config's parent. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsCreateCall {
 	c := &OrganizationsNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21143,9 +21146,9 @@ type OrganizationsNotificationConfigsDeleteCall struct {
 // Delete: Deletes a notification config.
 //
 //   - name: Name of the notification config to delete. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *OrganizationsNotificationConfigsService) Delete(name string) *OrganizationsNotificationConfigsDeleteCall {
 	c := &OrganizationsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21242,9 +21245,9 @@ type OrganizationsNotificationConfigsGetCall struct {
 // Get: Gets a notification config.
 //
 //   - name: Name of the notification config to get. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *OrganizationsNotificationConfigsService) Get(name string) *OrganizationsNotificationConfigsGetCall {
 	c := &OrganizationsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22277,7 +22280,7 @@ type OrganizationsResourceValueConfigsGetCall struct {
 // Get: Gets a ResourceValueConfig.
 //
 //   - name: Name of the resource value config to retrieve. Its format is
-//     organizations/{organization}/resourceValueConfigs/{config_id}.
+//     `organizations/{organization}/resourceValueConfigs/{config_id}`.
 func (r *OrganizationsResourceValueConfigsService) Get(name string) *OrganizationsResourceValueConfigsGetCall {
 	c := &OrganizationsResourceValueConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22386,7 +22389,7 @@ type OrganizationsResourceValueConfigsListCall struct {
 // List: Lists all ResourceValueConfigs.
 //
 //   - parent: The parent, which owns the collection of resource value configs.
-//     Its format is "organizations/[organization_id]".
+//     Its format is `organizations/[organization_id]`.
 func (r *OrganizationsResourceValueConfigsService) List(parent string) *OrganizationsResourceValueConfigsListCall {
 	c := &OrganizationsResourceValueConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22647,9 +22650,9 @@ type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct 
 // parent. These modules are enabled by default.
 //
 //   - parent: Resource name of the new custom module's parent. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22753,12 +22756,12 @@ type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct 
 // resident custom modules.
 //
 //   - name: Name of the custom module to delete. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22855,12 +22858,12 @@ type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
 // Get: Retrieves a SecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22971,9 +22974,9 @@ type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
 // parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23120,9 +23123,9 @@ type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall
 // the parent’s CRM descendants.
 //
 //   - parent: Name of parent to list descendant custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23496,12 +23499,12 @@ type OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall s
 // Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the effective custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
-//     omModules/{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
-//     ustomModule}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
-//     {customModule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
+//     omModules/{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
+//     ustomModule}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
+//     {customModule}`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23612,9 +23615,9 @@ type OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall 
 // the parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list effective custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23760,8 +23763,8 @@ type OrganizationsSimulationsGetCall struct {
 // organization.
 //
 //   - name: The organization name or simulation name of this simulation Valid
-//     format: "organizations/{organization}/simulations/latest"
-//     "organizations/{organization}/simulations/{simulation}".
+//     format: `organizations/{organization}/simulations/latest`
+//     `organizations/{organization}/simulations/{simulation}`.
 func (r *OrganizationsSimulationsService) Get(name string) *OrganizationsSimulationsGetCall {
 	c := &OrganizationsSimulationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23870,12 +23873,12 @@ type OrganizationsSimulationsAttackExposureResultsAttackPathsListCall struct {
 // resources and filter.
 //
 //   - parent: Name of parent to list attack paths. Valid formats:
-//     "organizations/{organization}",
-//     "organizations/{organization}/simulations/{simulation}"
-//     "organizations/{organization}/simulations/{simulation}/attackExposureResult
-//     s/{attack_exposure_result_v2}"
-//     "organizations/{organization}/simulations/{simulation}/valuedResources/{val
-//     ued_resource}".
+//     `organizations/{organization}`,
+//     `organizations/{organization}/simulations/{simulation}`
+//     `organizations/{organization}/simulations/{simulation}/attackExposureResult
+//     s/{attack_exposure_result_v2}`
+//     `organizations/{organization}/simulations/{simulation}/valuedResources/{val
+//     ued_resource}`.
 func (r *OrganizationsSimulationsAttackExposureResultsAttackPathsService) List(parent string) *OrganizationsSimulationsAttackExposureResultsAttackPathsListCall {
 	c := &OrganizationsSimulationsAttackExposureResultsAttackPathsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24030,10 +24033,10 @@ type OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall struct
 // List: Lists the valued resources for a set of simulation results and filter.
 //
 //   - parent: Name of parent to list valued resources. Valid formats:
-//     "organizations/{organization}",
-//     "organizations/{organization}/simulations/{simulation}"
-//     "organizations/{organization}/simulations/{simulation}/attackExposureResult
-//     s/{attack_exposure_result_v2}".
+//     `organizations/{organization}`,
+//     `organizations/{organization}/simulations/{simulation}`
+//     `organizations/{organization}/simulations/{simulation}/attackExposureResult
+//     s/{attack_exposure_result_v2}`.
 func (r *OrganizationsSimulationsAttackExposureResultsValuedResourcesService) List(parent string) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
 	c := &OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24053,8 +24056,8 @@ func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) F
 // `resource_value` * `resource_type` * `resource` * `display_name` Values
 // should be a comma separated list of fields. For example:
 // `exposed_score,resource_value`. The default sorting order is descending. To
-// specify ascending or descending order for a field, append a " ASC" or a "
-// DESC" suffix, respectively; for example: `exposed_score DESC`.
+// specify ascending or descending order for a field, append a ` ASC` or a `
+// DESC` suffix, respectively; for example: `exposed_score DESC`.
 func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) OrderBy(orderBy string) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -24201,12 +24204,12 @@ type OrganizationsSimulationsAttackPathsListCall struct {
 // resources and filter.
 //
 //   - parent: Name of parent to list attack paths. Valid formats:
-//     "organizations/{organization}",
-//     "organizations/{organization}/simulations/{simulation}"
-//     "organizations/{organization}/simulations/{simulation}/attackExposureResult
-//     s/{attack_exposure_result_v2}"
-//     "organizations/{organization}/simulations/{simulation}/valuedResources/{val
-//     ued_resource}".
+//     `organizations/{organization}`,
+//     `organizations/{organization}/simulations/{simulation}`
+//     `organizations/{organization}/simulations/{simulation}/attackExposureResult
+//     s/{attack_exposure_result_v2}`
+//     `organizations/{organization}/simulations/{simulation}/valuedResources/{val
+//     ued_resource}`.
 func (r *OrganizationsSimulationsAttackPathsService) List(parent string) *OrganizationsSimulationsAttackPathsListCall {
 	c := &OrganizationsSimulationsAttackPathsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24361,8 +24364,8 @@ type OrganizationsSimulationsValuedResourcesGetCall struct {
 // Get: Get the valued resource by name
 //
 //   - name: The name of this valued resource Valid format:
-//     "organizations/{organization}/simulations/{simulation}/valuedResources/{val
-//     ued_resource}".
+//     `organizations/{organization}/simulations/{simulation}/valuedResources/{val
+//     ued_resource}`.
 func (r *OrganizationsSimulationsValuedResourcesService) Get(name string) *OrganizationsSimulationsValuedResourcesGetCall {
 	c := &OrganizationsSimulationsValuedResourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24470,10 +24473,10 @@ type OrganizationsSimulationsValuedResourcesListCall struct {
 // List: Lists the valued resources for a set of simulation results and filter.
 //
 //   - parent: Name of parent to list valued resources. Valid formats:
-//     "organizations/{organization}",
-//     "organizations/{organization}/simulations/{simulation}"
-//     "organizations/{organization}/simulations/{simulation}/attackExposureResult
-//     s/{attack_exposure_result_v2}".
+//     `organizations/{organization}`,
+//     `organizations/{organization}/simulations/{simulation}`
+//     `organizations/{organization}/simulations/{simulation}/attackExposureResult
+//     s/{attack_exposure_result_v2}`.
 func (r *OrganizationsSimulationsValuedResourcesService) List(parent string) *OrganizationsSimulationsValuedResourcesListCall {
 	c := &OrganizationsSimulationsValuedResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24493,8 +24496,8 @@ func (c *OrganizationsSimulationsValuedResourcesListCall) Filter(filter string) 
 // `resource_value` * `resource_type` * `resource` * `display_name` Values
 // should be a comma separated list of fields. For example:
 // `exposed_score,resource_value`. The default sorting order is descending. To
-// specify ascending or descending order for a field, append a " ASC" or a "
-// DESC" suffix, respectively; for example: `exposed_score DESC`.
+// specify ascending or descending order for a field, append a ` ASC` or a `
+// DESC` suffix, respectively; for example: `exposed_score DESC`.
 func (c *OrganizationsSimulationsValuedResourcesListCall) OrderBy(orderBy string) *OrganizationsSimulationsValuedResourcesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -24641,12 +24644,12 @@ type OrganizationsSimulationsValuedResourcesAttackPathsListCall struct {
 // resources and filter.
 //
 //   - parent: Name of parent to list attack paths. Valid formats:
-//     "organizations/{organization}",
-//     "organizations/{organization}/simulations/{simulation}"
-//     "organizations/{organization}/simulations/{simulation}/attackExposureResult
-//     s/{attack_exposure_result_v2}"
-//     "organizations/{organization}/simulations/{simulation}/valuedResources/{val
-//     ued_resource}".
+//     `organizations/{organization}`,
+//     `organizations/{organization}/simulations/{simulation}`
+//     `organizations/{organization}/simulations/{simulation}/attackExposureResult
+//     s/{attack_exposure_result_v2}`
+//     `organizations/{organization}/simulations/{simulation}/valuedResources/{val
+//     ued_resource}`.
 func (r *OrganizationsSimulationsValuedResourcesAttackPathsService) List(parent string) *OrganizationsSimulationsValuedResourcesAttackPathsListCall {
 	c := &OrganizationsSimulationsValuedResourcesAttackPathsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24801,7 +24804,7 @@ type OrganizationsSourcesCreateCall struct {
 // Create: Creates a source.
 //
 //   - parent: Resource name of the new source's parent. Its format should be
-//     "organizations/[organization_id]".
+//     `organizations/[organization_id]`.
 func (r *OrganizationsSourcesService) Create(parent string, source *Source) *OrganizationsSourcesCreateCall {
 	c := &OrganizationsSourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24903,7 +24906,7 @@ type OrganizationsSourcesGetCall struct {
 // Get: Gets a source.
 //
 //   - name: Relative resource name of the source. Its format is
-//     "organizations/[organization_id]/source/[source_id]".
+//     `organizations/[organization_id]/source/[source_id]`.
 func (r *OrganizationsSourcesService) Get(name string) *OrganizationsSourcesGetCall {
 	c := &OrganizationsSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25114,8 +25117,8 @@ type OrganizationsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format should
-//     be "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     be `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *OrganizationsSourcesService) List(parent string) *OrganizationsSourcesListCall {
 	c := &OrganizationsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25582,7 +25585,7 @@ type OrganizationsSourcesFindingsCreateCall struct {
 // creation to succeed.
 //
 //   - parent: Resource name of the new finding's parent. Its format should be
-//     "organizations/[organization_id]/sources/[source_id]".
+//     `organizations/[organization_id]/sources/[source_id]`.
 func (r *OrganizationsSourcesFindingsService) Create(parent string, finding *Finding) *OrganizationsSourcesFindingsCreateCall {
 	c := &OrganizationsSourcesFindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25697,12 +25700,12 @@ type OrganizationsSourcesFindingsGroupCall struct {
 // /v1/projects/{project_id}/sources/-/findings
 //
 //   - parent: Name of the source to groupBy. Its format is
-//     "organizations/[organization_id]/sources/[source_id]",
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]. To groupBy across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To groupBy across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-,
-//     or projects/{project_id}/sources/-.
+//     `organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/-`, or `projects/{project_id}/sources/-`.
 func (r *OrganizationsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *OrganizationsSourcesFindingsGroupCall {
 	c := &OrganizationsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25828,12 +25831,12 @@ type OrganizationsSourcesFindingsListCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings
 //
 //   - parent: Name of the source the findings belong to. Its format is
-//     "organizations/[organization_id]/sources/[source_id],
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]". To list across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To list across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-
-//     or projects/{projects_id}/sources/-.
+//     `organizations/{organization_id}/sources/-`,
+//     `folders/{folder_id}/sources/-` or `projects/{projects_id}/sources/-`.
 func (r *OrganizationsSourcesFindingsService) List(parent string) *OrganizationsSourcesFindingsListCall {
 	c := &OrganizationsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26191,9 +26194,9 @@ type OrganizationsSourcesFindingsSetMuteCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *OrganizationsSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *OrganizationsSourcesFindingsSetMuteCall {
 	c := &OrganizationsSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26297,9 +26300,9 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26639,8 +26642,8 @@ type ProjectsAssetsGroupCall struct {
 // properties.
 //
 //   - parent: The name of the parent to group the assets by. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *ProjectsAssetsGroupCall {
 	c := &ProjectsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26766,8 +26769,8 @@ type ProjectsAssetsListCall struct {
 //   - parent: The name of the parent resource that contains the assets. The
 //     value that you can specify on parent depends on the method in which you
 //     specify parent. You can specify one of the following values:
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsAssetsService) List(parent string) *ProjectsAssetsListCall {
 	c := &ProjectsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27136,8 +27139,8 @@ type ProjectsBigQueryExportsCreateCall struct {
 // Create: Creates a BigQuery export.
 //
 //   - parent: The name of the parent resource of the new BigQuery export. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *ProjectsBigQueryExportsCreateCall {
 	c := &ProjectsBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27249,9 +27252,9 @@ type ProjectsBigQueryExportsDeleteCall struct {
 // Delete: Deletes an existing BigQuery export.
 //
 //   - name: The name of the BigQuery export to delete. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *ProjectsBigQueryExportsService) Delete(name string) *ProjectsBigQueryExportsDeleteCall {
 	c := &ProjectsBigQueryExportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27348,9 +27351,9 @@ type ProjectsBigQueryExportsGetCall struct {
 // Get: Gets a BigQuery export.
 //
 //   - name: Name of the BigQuery export to retrieve. Its format is
-//     organizations/{organization}/bigQueryExports/{export_id},
-//     folders/{folder}/bigQueryExports/{export_id}, or
-//     projects/{project}/bigQueryExports/{export_id}.
+//     `organizations/{organization}/bigQueryExports/{export_id}`,
+//     `folders/{folder}/bigQueryExports/{export_id}`, or
+//     `projects/{project}/bigQueryExports/{export_id}`.
 func (r *ProjectsBigQueryExportsService) Get(name string) *ProjectsBigQueryExportsGetCall {
 	c := &ProjectsBigQueryExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27463,8 +27466,8 @@ type ProjectsBigQueryExportsListCall struct {
 // the folder are returned.
 //
 //   - parent: The parent, which owns the collection of BigQuery exports. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     format is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *ProjectsBigQueryExportsService) List(parent string) *ProjectsBigQueryExportsListCall {
 	c := &ProjectsBigQueryExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28466,10 +28469,10 @@ type ProjectsEventThreatDetectionSettingsCustomModulesPatchCall struct {
 //
 //   - name: Immutable. The resource name of the Event Threat Detection custom
 //     module. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings/customModules/{m
-//     odule}". *
-//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module}". *
-//     "projects/{project}/eventThreatDetectionSettings/customModules/{module}".
+//     `organizations/{organization}/eventThreatDetectionSettings/customModules/{m
+//     odule}`. *
+//     `folders/{folder}/eventThreatDetectionSettings/customModules/{module}`. *
+//     `projects/{project}/eventThreatDetectionSettings/customModules/{module}`.
 func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) Patch(name string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall {
 	c := &ProjectsEventThreatDetectionSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28852,8 +28855,8 @@ type ProjectsFindingsBulkMuteCall struct {
 // findings matched by the filter will be muted after the LRO is done.
 //
 //   - parent: The parent, at which bulk action needs to be applied. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *ProjectsFindingsService) BulkMute(parent string, bulkmutefindingsrequest *BulkMuteFindingsRequest) *ProjectsFindingsBulkMuteCall {
 	c := &ProjectsFindingsBulkMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28955,8 +28958,8 @@ type ProjectsLocationsMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsLocationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *ProjectsLocationsMuteConfigsCreateCall {
 	c := &ProjectsLocationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29068,12 +29071,12 @@ type ProjectsLocationsMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *ProjectsLocationsMuteConfigsService) Delete(name string) *ProjectsLocationsMuteConfigsDeleteCall {
 	c := &ProjectsLocationsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29170,12 +29173,12 @@ type ProjectsLocationsMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *ProjectsLocationsMuteConfigsService) Get(name string) *ProjectsLocationsMuteConfigsGetCall {
 	c := &ProjectsLocationsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29284,8 +29287,8 @@ type ProjectsLocationsMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *ProjectsLocationsMuteConfigsService) List(parent string) *ProjectsLocationsMuteConfigsListCall {
 	c := &ProjectsLocationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29433,12 +29436,12 @@ type ProjectsLocationsMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *ProjectsLocationsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *ProjectsLocationsMuteConfigsPatchCall {
 	c := &ProjectsLocationsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29548,8 +29551,8 @@ type ProjectsMuteConfigsCreateCall struct {
 // Create: Creates a mute config.
 //
 //   - parent: Resource name of the new mute configs's parent. Its format is
-//     "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *ProjectsMuteConfigsCreateCall {
 	c := &ProjectsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29661,12 +29664,12 @@ type ProjectsMuteConfigsDeleteCall struct {
 // Delete: Deletes an existing mute config.
 //
 //   - name: Name of the mute config to delete. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *ProjectsMuteConfigsService) Delete(name string) *ProjectsMuteConfigsDeleteCall {
 	c := &ProjectsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29763,12 +29766,12 @@ type ProjectsMuteConfigsGetCall struct {
 // Get: Gets a mute config.
 //
 //   - name: Name of the mute config to retrieve. Its format is
-//     organizations/{organization}/muteConfigs/{config_id},
-//     folders/{folder}/muteConfigs/{config_id},
-//     projects/{project}/muteConfigs/{config_id},
-//     organizations/{organization}/locations/global/muteConfigs/{config_id},
-//     folders/{folder}/locations/global/muteConfigs/{config_id}, or
-//     projects/{project}/locations/global/muteConfigs/{config_id}.
+//     `organizations/{organization}/muteConfigs/{config_id}`,
+//     `folders/{folder}/muteConfigs/{config_id}`,
+//     `projects/{project}/muteConfigs/{config_id}`,
+//     `organizations/{organization}/locations/global/muteConfigs/{config_id}`,
+//     `folders/{folder}/locations/global/muteConfigs/{config_id}`, or
+//     `projects/{project}/locations/global/muteConfigs/{config_id}`.
 func (r *ProjectsMuteConfigsService) Get(name string) *ProjectsMuteConfigsGetCall {
 	c := &ProjectsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29877,8 +29880,8 @@ type ProjectsMuteConfigsListCall struct {
 // List: Lists mute configs.
 //
 //   - parent: The parent, which owns the collection of mute configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]",
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`,
+//     `projects/[project_id]`.
 func (r *ProjectsMuteConfigsService) List(parent string) *ProjectsMuteConfigsListCall {
 	c := &ProjectsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30026,12 +30029,12 @@ type ProjectsMuteConfigsPatchCall struct {
 // Patch: Updates a mute config.
 //
 //   - name: This field will be ignored if provided on config creation. Format
-//     "organizations/{organization}/muteConfigs/{mute_config}"
-//     "folders/{folder}/muteConfigs/{mute_config}"
-//     "projects/{project}/muteConfigs/{mute_config}"
-//     "organizations/{organization}/locations/global/muteConfigs/{mute_config}"
-//     "folders/{folder}/locations/global/muteConfigs/{mute_config}"
-//     "projects/{project}/locations/global/muteConfigs/{mute_config}".
+//     `organizations/{organization}/muteConfigs/{mute_config}`
+//     `folders/{folder}/muteConfigs/{mute_config}`
+//     `projects/{project}/muteConfigs/{mute_config}`
+//     `organizations/{organization}/locations/global/muteConfigs/{mute_config}`
+//     `folders/{folder}/locations/global/muteConfigs/{mute_config}`
+//     `projects/{project}/locations/global/muteConfigs/{mute_config}`.
 func (r *ProjectsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *ProjectsMuteConfigsPatchCall {
 	c := &ProjectsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30141,8 +30144,8 @@ type ProjectsNotificationConfigsCreateCall struct {
 // Create: Creates a notification config.
 //
 //   - parent: Resource name of the new notification config's parent. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     is `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *ProjectsNotificationConfigsCreateCall {
 	c := &ProjectsNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30253,9 +30256,9 @@ type ProjectsNotificationConfigsDeleteCall struct {
 // Delete: Deletes a notification config.
 //
 //   - name: Name of the notification config to delete. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *ProjectsNotificationConfigsService) Delete(name string) *ProjectsNotificationConfigsDeleteCall {
 	c := &ProjectsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30352,9 +30355,9 @@ type ProjectsNotificationConfigsGetCall struct {
 // Get: Gets a notification config.
 //
 //   - name: Name of the notification config to get. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]",
-//     "folders/[folder_id]/notificationConfigs/[config_id]", or
-//     "projects/[project_id]/notificationConfigs/[config_id]".
+//     `organizations/[organization_id]/notificationConfigs/[config_id]`,
+//     `folders/[folder_id]/notificationConfigs/[config_id]`, or
+//     `projects/[project_id]/notificationConfigs/[config_id]`.
 func (r *ProjectsNotificationConfigsService) Get(name string) *ProjectsNotificationConfigsGetCall {
 	c := &ProjectsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30730,9 +30733,9 @@ type ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct {
 // parent. These modules are enabled by default.
 //
 //   - parent: Resource name of the new custom module's parent. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30836,12 +30839,12 @@ type ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct {
 // resident custom modules.
 //
 //   - name: Name of the custom module to delete. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30938,12 +30941,12 @@ type ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
 // Get: Retrieves a SecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/customModules
-//     /{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
-//     le}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
-//     dule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/customModules
+//     /{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModu
+//     le}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/customModules/{customMo
+//     dule}`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31054,9 +31057,9 @@ type ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
 // parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31203,9 +31206,9 @@ type ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall stru
 // the parent’s CRM descendants.
 //
 //   - parent: Name of parent to list descendant custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31579,12 +31582,12 @@ type ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall struct
 // Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
 //
 //   - name: Name of the effective custom module to get. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
-//     omModules/{customModule}",
-//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
-//     ustomModule}", or
-//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
-//     {customModule}".
+//     `organizations/{organization}/securityHealthAnalyticsSettings/effectiveCust
+//     omModules/{customModule}`,
+//     `folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
+//     ustomModule}`, or
+//     `projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/
+//     {customModule}`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31695,9 +31698,9 @@ type ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall struc
 // the parent, and inherited modules, inherited from CRM ancestors.
 //
 //   - parent: Name of parent to list effective custom modules. Its format is
-//     "organizations/{organization}/securityHealthAnalyticsSettings",
-//     "folders/{folder}/securityHealthAnalyticsSettings", or
-//     "projects/{project}/securityHealthAnalyticsSettings".
+//     `organizations/{organization}/securityHealthAnalyticsSettings`,
+//     `folders/{folder}/securityHealthAnalyticsSettings`, or
+//     `projects/{project}/securityHealthAnalyticsSettings`.
 func (r *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31842,8 +31845,8 @@ type ProjectsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format should
-//     be "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//     be `organizations/[organization_id]`, `folders/[folder_id]`, or
+//     `projects/[project_id]`.
 func (r *ProjectsSourcesService) List(parent string) *ProjectsSourcesListCall {
 	c := &ProjectsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31993,12 +31996,12 @@ type ProjectsSourcesFindingsGroupCall struct {
 // /v1/projects/{project_id}/sources/-/findings
 //
 //   - parent: Name of the source to groupBy. Its format is
-//     "organizations/[organization_id]/sources/[source_id]",
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]. To groupBy across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To groupBy across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-,
-//     or projects/{project_id}/sources/-.
+//     `organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/-`, or `projects/{project_id}/sources/-`.
 func (r *ProjectsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *ProjectsSourcesFindingsGroupCall {
 	c := &ProjectsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32124,12 +32127,12 @@ type ProjectsSourcesFindingsListCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings
 //
 //   - parent: Name of the source the findings belong to. Its format is
-//     "organizations/[organization_id]/sources/[source_id],
-//     folders/[folder_id]/sources/[source_id], or
-//     projects/[project_id]/sources/[source_id]". To list across all sources
+//     `organizations/[organization_id]/sources/[source_id]`,
+//     `folders/[folder_id]/sources/[source_id]`, or
+//     `projects/[project_id]/sources/[source_id]`. To list across all sources
 //     provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-
-//     or projects/{projects_id}/sources/-.
+//     `organizations/{organization_id}/sources/-`,
+//     `folders/{folder_id}/sources/-` or `projects/{projects_id}/sources/-`.
 func (r *ProjectsSourcesFindingsService) List(parent string) *ProjectsSourcesFindingsListCall {
 	c := &ProjectsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32487,9 +32490,9 @@ type ProjectsSourcesFindingsSetMuteCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *ProjectsSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *ProjectsSourcesFindingsSetMuteCall {
 	c := &ProjectsSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32593,9 +32596,9 @@ type ProjectsSourcesFindingsSetStateCall struct {
 //   - name: The relative resource name
 //     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 //     of the finding. Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{finding_id}"
-//     , "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+//     `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
+//     , `folders/{folder_id}/sources/{source_id}/findings/{finding_id}`,
+//     `projects/{project_id}/sources/{source_id}/findings/{finding_id}`.
 func (r *ProjectsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *ProjectsSourcesFindingsSetStateCall {
 	c := &ProjectsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

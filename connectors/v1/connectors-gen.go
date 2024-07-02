@@ -553,6 +553,8 @@ type AuthorizationCodeLink struct {
 	ClientId string `json:"clientId,omitempty"`
 	// EnablePkce: Whether to enable PKCE for the auth code flow.
 	EnablePkce bool `json:"enablePkce,omitempty"`
+	// OmitQueryParams: Optional. Omit query params from the redirect URI.
+	OmitQueryParams string `json:"omitQueryParams,omitempty"`
 	// Scopes: The scopes for which the user will authorize Google Cloud Connectors
 	// on the connector data source.
 	Scopes []string `json:"scopes,omitempty"`

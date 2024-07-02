@@ -3839,8 +3839,8 @@ type NotificationChannel struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// MutationRecords: Records of the modification of this channel.
 	MutationRecords []*MutationRecord `json:"mutationRecords,omitempty"`
-	// Name: The full REST resource name for this channel. The format is:
-	// projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID] The
+	// Name: Identifier. The full REST resource name for this channel. The format
+	// is: projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID] The
 	// [CHANNEL_ID] is automatically assigned by the server on creation.
 	Name string `json:"name,omitempty"`
 	// Type: The type of the notification channel. This field matches the value of
@@ -10309,8 +10309,8 @@ type ProjectsNotificationChannelsPatchCall struct {
 // includes calls to CreateNotificationChannel, DeleteNotificationChannel and
 // UpdateNotificationChannel.
 //
-//   - name: The full REST resource name for this channel. The format is:
-//     projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID] The
+//   - name: Identifier. The full REST resource name for this channel. The format
+//     is: projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID] The
 //     [CHANNEL_ID] is automatically assigned by the server on creation.
 func (r *ProjectsNotificationChannelsService) Patch(name string, notificationchannel *NotificationChannel) *ProjectsNotificationChannelsPatchCall {
 	c := &ProjectsNotificationChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

@@ -1,5 +1,17 @@
 # Changes
 
+## [0.188.0](https://github.com/googleapis/google-api-go-client/compare/v0.187.0...v0.188.0) (2024-07-02)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2665](https://github.com/googleapis/google-api-go-client/issues/2665)) ([e84fa65](https://github.com/googleapis/google-api-go-client/commit/e84fa6508ebc498c3435668c48001185fbc9ce83))
+
+
+### Bug Fixes
+
+* Check []bytes &gt; 0 instead of nil ([#2667](https://github.com/googleapis/google-api-go-client/issues/2667)) ([711eb91](https://github.com/googleapis/google-api-go-client/commit/711eb913fe455ffe5c9d717b44762801820c0e8c)), refs [#2647](https://github.com/googleapis/google-api-go-client/issues/2647)
+
 ## [0.187.0](https://github.com/googleapis/google-api-go-client/compare/v0.186.0...v0.187.0) (2024-07-01)
 
 

@@ -209,11 +209,12 @@ type BuildingInsights struct {
 	//
 	// Possible values:
 	//   "IMAGERY_QUALITY_UNSPECIFIED" - No quality is known.
-	//   "HIGH" - The underlying imagery and DSM data were processed at 0.1
-	// m/pixel.
-	//   "MEDIUM" - The underlying imagery and DSM data were processed at 0.25
-	// m/pixel.
-	//   "LOW" - The underlying imagery and DSM data were processed at 0.5 m/pixel.
+	//   "HIGH" - Solar data is derived from aerial imagery captured at
+	// low-altitude and processed at 0.1 m/pixel.
+	//   "MEDIUM" - Solar data is derived from enhanced aerial imagery captured at
+	// high-altitude and processed at 0.25 m/pixel.
+	//   "LOW" - Solar data is derived from enhanced satellite imagery processed at
+	// 0.25 m/pixel.
 	ImageryQuality string `json:"imageryQuality,omitempty"`
 	// Name: The resource name for the building, of the format `building/`.
 	Name string `json:"name,omitempty"`
@@ -352,11 +353,12 @@ type DataLayers struct {
 	//
 	// Possible values:
 	//   "IMAGERY_QUALITY_UNSPECIFIED" - No quality is known.
-	//   "HIGH" - The underlying imagery and DSM data were processed at 0.1
-	// m/pixel.
-	//   "MEDIUM" - The underlying imagery and DSM data were processed at 0.25
-	// m/pixel.
-	//   "LOW" - The underlying imagery and DSM data were processed at 0.5 m/pixel.
+	//   "HIGH" - Solar data is derived from aerial imagery captured at
+	// low-altitude and processed at 0.1 m/pixel.
+	//   "MEDIUM" - Solar data is derived from enhanced aerial imagery captured at
+	// high-altitude and processed at 0.25 m/pixel.
+	//   "LOW" - Solar data is derived from enhanced satellite imagery processed at
+	// 0.25 m/pixel.
 	ImageryQuality string `json:"imageryQuality,omitempty"`
 	// MaskUrl: The URL for the building mask image: one bit per pixel saying
 	// whether that pixel is considered to be part of a rooftop or not.
@@ -1230,15 +1232,17 @@ func (c *BuildingInsightsFindClosestCall) LocationLongitude(locationLongitude fl
 // Possible values:
 //
 //	"IMAGERY_QUALITY_UNSPECIFIED" - No quality is known.
-//	"HIGH" - The underlying imagery and DSM data were processed at 0.1
+//	"HIGH" - Solar data is derived from aerial imagery captured at
 //
-// m/pixel.
+// low-altitude and processed at 0.1 m/pixel.
 //
-//	"MEDIUM" - The underlying imagery and DSM data were processed at 0.25
+//	"MEDIUM" - Solar data is derived from enhanced aerial imagery captured at
 //
-// m/pixel.
+// high-altitude and processed at 0.25 m/pixel.
 //
-//	"LOW" - The underlying imagery and DSM data were processed at 0.5 m/pixel.
+//	"LOW" - Solar data is derived from enhanced satellite imagery processed at
+//
+// 0.25 m/pixel.
 func (c *BuildingInsightsFindClosestCall) RequiredQuality(requiredQuality string) *BuildingInsightsFindClosestCall {
 	c.urlParams_.Set("requiredQuality", requiredQuality)
 	return c
@@ -1405,15 +1409,17 @@ func (c *DataLayersGetCall) RadiusMeters(radiusMeters float64) *DataLayersGetCal
 // Possible values:
 //
 //	"IMAGERY_QUALITY_UNSPECIFIED" - No quality is known.
-//	"HIGH" - The underlying imagery and DSM data were processed at 0.1
+//	"HIGH" - Solar data is derived from aerial imagery captured at
 //
-// m/pixel.
+// low-altitude and processed at 0.1 m/pixel.
 //
-//	"MEDIUM" - The underlying imagery and DSM data were processed at 0.25
+//	"MEDIUM" - Solar data is derived from enhanced aerial imagery captured at
 //
-// m/pixel.
+// high-altitude and processed at 0.25 m/pixel.
 //
-//	"LOW" - The underlying imagery and DSM data were processed at 0.5 m/pixel.
+//	"LOW" - Solar data is derived from enhanced satellite imagery processed at
+//
+// 0.25 m/pixel.
 func (c *DataLayersGetCall) RequiredQuality(requiredQuality string) *DataLayersGetCall {
 	c.urlParams_.Set("requiredQuality", requiredQuality)
 	return c

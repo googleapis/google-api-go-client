@@ -408,8 +408,8 @@ type GoogleCloudKmsV1CryptoKey struct {
 	CryptoKeyBackend string `json:"cryptoKeyBackend,omitempty"`
 	// DestroyScheduledDuration: Immutable. The period of time that versions of
 	// this key spend in the DESTROY_SCHEDULED state before transitioning to
-	// DESTROYED. If not specified at creation time, the default duration is 24
-	// hours.
+	// DESTROYED. If not specified at creation time, the default duration is 30
+	// days.
 	DestroyScheduledDuration string `json:"destroyScheduledDuration,omitempty"`
 	// ImportOnly: Immutable. Whether this key may contain imported versions only.
 	ImportOnly bool `json:"importOnly,omitempty"`

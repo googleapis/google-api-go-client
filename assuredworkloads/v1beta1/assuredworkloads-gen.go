@@ -386,6 +386,13 @@ func (s *GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata) Mars
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1beta1EnableComplianceUpdatesResponse: Response
+// for EnableComplianceUpdates endpoint.
+type GoogleCloudAssuredworkloadsV1beta1EnableComplianceUpdatesResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleCloudAssuredworkloadsV1beta1EnableResourceMonitoringResponse: Response
 // for EnableResourceMonitoring endpoint.
 type GoogleCloudAssuredworkloadsV1beta1EnableResourceMonitoringResponse struct {
@@ -882,6 +889,10 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// ComplianceStatus: Output only. Count of active Violations in the Workload.
 	ComplianceStatus *GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus `json:"complianceStatus,omitempty"`
+	// ComplianceUpdatesEnabled: Output only. Indicates whether the compliance
+	// updates feature is enabled for a workload. The compliance updates feature
+	// can be enabled via the EnableComplianceUpdates endpoint.
+	ComplianceUpdatesEnabled bool `json:"complianceUpdatesEnabled,omitempty"`
 	// CompliantButDisallowedServices: Output only. Urls for services which are
 	// compliant for this Assured Workload, but which are currently disallowed by
 	// the ResourceUsageRestriction org policy. Invoke RestrictAllowedResources
@@ -2118,6 +2129,109 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Do(opts ...googleapi.CallOpt
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// EnableComplianceUpdates: This endpoint enables Assured Workloads service to
+// offer compliance updates for the folder based assured workload. It sets up
+// an Assured Workloads Service Agent, having permissions to read compliance
+// controls (for example: Org Policies) applied on the workload. The caller
+// must have `resourcemanager.folders.getIamPolicy` and
+// `resourcemanager.folders.setIamPolicy` permissions on the assured workload
+// folder.
+//
+//   - name: The `name` field is used to identify the workload. Format:
+//     organizations/{org_id}/locations/{location_id}/workloads/{workload_id}.
+func (r *OrganizationsLocationsWorkloadsService) EnableComplianceUpdates(name string) *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall {
+	c := &OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall) Fields(s ...googleapi.Field) *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall) Context(ctx context.Context) *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:enableComplianceUpdates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.workloads.enableComplianceUpdates" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1beta1EnableComplianceUpdatesResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1beta1EnableComplianceUpdatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1beta1EnableComplianceUpdatesResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

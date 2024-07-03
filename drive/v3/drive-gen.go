@@ -1368,6 +1368,7 @@ type File struct {
 	SharingUser *User `json:"sharingUser,omitempty"`
 	// ShortcutDetails: Shortcut file details. Only populated for shortcut files,
 	// which have the mimeType field set to `application/vnd.google-apps.shortcut`.
+	// Can only be set on `files.create` requests.
 	ShortcutDetails *FileShortcutDetails `json:"shortcutDetails,omitempty"`
 	// Size: Output only. Size in bytes of blobs and first party editor files.
 	// Won't be populated for files that have no size, like shortcuts and folders.
@@ -1840,9 +1841,11 @@ func (s *FileLinkShareMetadata) MarshalJSON() ([]byte, error) {
 
 // FileShortcutDetails: Shortcut file details. Only populated for shortcut
 // files, which have the mimeType field set to
-// `application/vnd.google-apps.shortcut`.
+// `application/vnd.google-apps.shortcut`. Can only be set on `files.create`
+// requests.
 type FileShortcutDetails struct {
-	// TargetId: The ID of the file that this shortcut points to.
+	// TargetId: The ID of the file that this shortcut points to. Can only be set
+	// on `files.create` requests.
 	TargetId string `json:"targetId,omitempty"`
 	// TargetMimeType: Output only. The MIME type of the file that this shortcut
 	// points to. The value of this field is a snapshot of the target's MIME type,

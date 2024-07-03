@@ -361,12 +361,12 @@ func (s *AdditionalNodeNetworkConfig) MarshalJSON() ([]byte, error) {
 // for additional pod networks within the NodeNetworkConfig message
 type AdditionalPodNetworkConfig struct {
 	// MaxPodsPerNode: The maximum number of pods per node which use this pod
-	// network
+	// network.
 	MaxPodsPerNode *MaxPodsConstraint `json:"maxPodsPerNode,omitempty"`
 	// SecondaryPodRange: The name of the secondary range on the subnet which
-	// provides IP address for this pod range
+	// provides IP address for this pod range.
 	SecondaryPodRange string `json:"secondaryPodRange,omitempty"`
-	// Subnetwork: Name of the subnetwork where the additional pod network belongs
+	// Subnetwork: Name of the subnetwork where the additional pod network belongs.
 	Subnetwork string `json:"subnetwork,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaxPodsPerNode") to
 	// unconditionally include in API requests. By default, fields with empty or

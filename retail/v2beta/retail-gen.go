@@ -3192,10 +3192,6 @@ type GoogleCloudRetailV2betaCatalogAttributeFacetConfigMergedFacet struct {
 	// path of length 2). This merged facet key needs to be either a textual custom
 	// attribute or a numerical custom attribute.
 	MergedFacetKey string `json:"mergedFacetKey,omitempty"`
-	// MergedFacetValues: Each instance is a list of facet values that map into the
-	// same (possibly different) merged facet value. For the current attribute
-	// config, each facet value should map to at most one merged facet value.
-	MergedFacetValues []*GoogleCloudRetailV2betaCatalogAttributeFacetConfigMergedFacetValue `json:"mergedFacetValues,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MergedFacetKey") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3391,8 +3387,8 @@ func (s *GoogleCloudRetailV2betaCompleteQueryResponseCompletionResult) MarshalJS
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2betaCompleteQueryResponseRecentSearchResult: Recent
-// search of this user.
+// GoogleCloudRetailV2betaCompleteQueryResponseRecentSearchResult: Deprecated:
+// Recent search of this user.
 type GoogleCloudRetailV2betaCompleteQueryResponseRecentSearchResult struct {
 	// RecentSearch: The recent search query.
 	RecentSearch string `json:"recentSearch,omitempty"`
